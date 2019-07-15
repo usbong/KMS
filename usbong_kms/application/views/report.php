@@ -68,9 +68,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<!-- Form -->
-	<form id="report-form" method="post" action="<?php echo site_url('')?>">
+	<form id="report-form" method="post" action="<?php echo site_url('report/confirm')?>">
 		<?php
-			$itemCounter = 0;
+			$itemCounter = 1;
 		?>
 		<div>
 			<table width="100%">
