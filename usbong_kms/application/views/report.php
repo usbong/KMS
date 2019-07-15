@@ -9,8 +9,11 @@
 '
 ' @author: Michael Syson
 ' @date created: 20190320
-' @date updated: 20190320
+' @date updated: 20190715
 -->
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -40,7 +43,11 @@
 						{
 								text-align: center;
 						}
-
+						
+						textarea.report-input
+						{
+							width: 42%
+						}
 
     /**/
     </style>
@@ -60,209 +67,260 @@
 	</span>
 	<br />
 	<br />
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>Name (Last Name, First Name)*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-			  <b><span>__________________</span></b>
-			</td>
-		  </tr>
-		</table>
-	</div>
-	<br />
-	<br />
-	<!-- Question 1 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>1) Were the project goals met?*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-				<div class="checkBox"></div><div class="option">Yes</div>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-			  <div class="checkBox"></div><div class="option">No</div>
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+	<!-- Form -->
+	<form id="report-form" method="post" action="<?php echo site_url('')?>">
+		<?php
+			$itemCounter = 0;
+		?>
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>Name (Last Name, First Name)*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <b><span>__________________</span></b>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br />
+		<br />
+		<!-- Question 1 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>1) Were the project goals met?*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+					<div class="checkBox"></div><div class="option">Yes</div>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <div class="checkBox"></div><div class="option">No</div>
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 2 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>2) Was the project successful?*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-				<div class="checkBox"></div><div class="option">Yes</div>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-			  <div class="checkBox"></div><div class="option">No</div>
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+		<!-- Question 2 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>2) Was the project successful?*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+					<div class="checkBox"></div><div class="option">Yes</div>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <div class="checkBox"></div><div class="option">No</div>
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 3 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>3) Your reflections on #1 & #2?*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-					<!-- Answer 3 -->
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+		<!-- Question 3 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>3) Your reflections on #1 & #2?*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+						<!-- Answer 3 -->
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 4 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>4) Give comments on the use of different project management tools and techniques.*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-					<!-- Answer 4 -->
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+		<!-- Question 4 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>4) Give comments on the use of different project management tools and techniques.*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+						<!-- Answer 4 -->
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 5 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>5) What are the causes of variances (i.e. difference between what is expected and what is actually accomplished) on the project?*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-					<!-- Answer 5 -->
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+		<!-- Question 5 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>5) What are the causes of variances (i.e. difference between what is expected and what is actually accomplished) on the project?*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+						<!-- Answer 5 -->
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 6 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>6) What is your reasoning behind the corrective actions that your team chose?*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-					<!-- Answer 6 -->
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+		<!-- Question 6 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>6) What is your reasoning behind the corrective actions that your team chose?*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+						<!-- Answer 6 -->
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 7 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>7) Describe one example of what went right on this project.*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-					<!-- Answer 7 -->
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+		<!-- Question 7 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>7) Describe one example of what went right on this project.*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+						<!-- Answer 7 -->
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>			
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 8 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>8) Describe one example of what went wrong on this project.*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-					<!-- Answer 8 -->
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+		<!-- Question 8 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>8) Describe one example of what went wrong on this project.*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+						<!-- Answer 8 -->
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>						
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 9 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>9) What will you do differently on the next project based on your experience working on this project?*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-					<!-- Answer 9 -->
-			</td>
-		  </tr>
-		</table>
-	</div>	
-	<br />
-	<br />
+		<!-- Question 9 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>9) What will you do differently on the next project based on your experience working on this project?*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+						<!-- Answer 9 -->
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>									
+		</div>	
+		<br />
+		<br />
 
-	<!-- Question 10 -->
-	<div>
-		<table width="100%">
-		  <tr>
-			<td>
-			  <b><span>10) Give your personal words of wisdom based on your team's experiences.*</span></b>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-					<!-- Answer 10 -->
-			</td>
-		  </tr>
-		</table>
-	</div>	
+		<!-- Question 10 -->
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>10) Give your personal words of wisdom based on your team's experiences.*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+						<!-- Answer 10 -->
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+			<?php
+				$itemCounter++;
+			?>												
+		</div>	
+		<br />
+		<br />
+		
+		<!-- Buttons -->
+		<button type="submit" class="Button-login">
+			Submit
+		</button>
+	</form>
 	<br />
 	<br />
 	<br />
