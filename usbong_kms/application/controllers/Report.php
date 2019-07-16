@@ -50,7 +50,7 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->model('Report_Model');
 
 		$field = "reportParam";
-		$count = 3; //1; TO-DO: -add: paramaters for the answers to questions 1 and 2 
+		$count = 1;
 		while ($count <= 10) {
 			$data["reportAnswerParam"] = $_POST[$field.$count];		
 			$data["reportItemId"] = $count;

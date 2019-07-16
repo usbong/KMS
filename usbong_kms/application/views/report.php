@@ -98,12 +98,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			  <tr>
 				<td>
-					<div class="checkBox"></div><div class="option">Yes</div>
+					<label><input type="radio" name="reportParam<?php echo $itemCounter;?>" value="1" checked>Yes</label>
 				</td>
 			  </tr>
 			  <tr>
 				<td>
-				  <div class="checkBox"></div><div class="option">No</div>
+					<label><input type="radio" name="reportParam<?php echo $itemCounter;?>" value="2">No</label>
 				</td>
 			  </tr>
 			</table>
@@ -124,12 +124,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			  <tr>
 				<td>
-					<div class="checkBox"></div><div class="option">Yes</div>
+					<label><input type="radio" name="reportParam<?php echo $itemCounter;?>" value="1" checked>Yes</label>
 				</td>
 			  </tr>
 			  <tr>
 				<td>
-				  <div class="checkBox"></div><div class="option">No</div>
+					<label><input type="radio" name="reportParam<?php echo $itemCounter;?>" value="2">No</label>
 				</td>
 			  </tr>
 			</table>
