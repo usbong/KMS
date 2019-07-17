@@ -76,6 +76,16 @@ class Report extends CI_Controller { //MY_Controller {
 		//--------------------------------------------
 		$this->load->view('templates/footer');
 */		
-		$this->load->view('report');
+
+		//edited by Mike, 20190717
+
+/*		$this->load->view('report');
+*/		
+//		redirect('');			
+		
+		echo "<script>
+				alert('You have successfully submitted your report. Thank you. Peace.');
+				window.location.href='".base_url()."';
+			  </script>";			
 	}
 }

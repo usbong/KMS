@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+//added by Mike, 20190717
+//added PHP timezone
+date_default_timezone_set('Asia/Hong_Kong');
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -36,6 +40,8 @@ $config['base_url'] = 'http://localhost:80/usbong_kms/'; //'';
 | variable so that it is blank.
 |
 */
+//TO-DO: -update: this
+//$config['index_page'] = '';//'index.php';
 $config['index_page'] = 'index.php';
 
 /*
