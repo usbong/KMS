@@ -81,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			  <tr>
 				<td>				
-				  <input type="text" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required>
+				  <input type="text" class="report-input" placeholder="" name="memberNameParam" required>
 				</td>
 			  </tr>
 			</table>
