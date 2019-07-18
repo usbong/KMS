@@ -48,9 +48,14 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["is_success"] = $this->Report_Model->insertReport($data);//, $member_id);
 */
 		$this->load->model('Report_Model');
+		$this->load->model('Account_Model');
 
 		$field = "reportParam";
 		$count = 1;
+		
+		$data["memberNameParam"] = $_POST["memberNameParam"];
+		$data["memberId"] = $this->Account_Model->autoRegisterAccount($data);
+		
 		while ($count <= 10) {
 			$data["reportAnswerParam"] = $_POST[$field.$count];		
 			$data["reportItemId"] = $count;
