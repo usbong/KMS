@@ -9,7 +9,7 @@ class Report_Model extends CI_Model
 		//TO-DO: -update: report type id				
 		$data = array(
 					'member_id' => $param['memberId'],
-					'report_type_id' => 1,//$param['reportTypeIdParam'],
+					'report_type_id' => $param['reportTypeId'],
 					'report_item_id' => $param['reportItemId'],
 					'report_answer' => $param['reportAnswerParam'],
 					'added_datetime_stamp' => $addedDateTimeStamp

@@ -72,6 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php
 			$itemCounter = 1;
 		?>
+		<input type="hidden" name="reportTypeIdParam" value="1" required>
 		<div>
 			<table width="100%">
 			  <tr>

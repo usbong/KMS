@@ -55,6 +55,9 @@ class Report extends CI_Controller { //MY_Controller {
 		
 		$data["memberNameParam"] = $_POST["memberNameParam"];
 		$data["memberId"] = $this->Account_Model->autoRegisterAccount($data);
+
+//		$data["reportTypeNameParam"] = $_POST["reportTypeNameParam"];
+		$data["reportTypeId"] = $_POST["reportTypeIdParam"];
 		
 		while ($count <= 10) {
 			$data["reportAnswerParam"] = $_POST[$field.$count];		
