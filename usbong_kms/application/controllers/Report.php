@@ -69,7 +69,7 @@ class Report extends CI_Controller { //MY_Controller {
 			$count++;
 		}
 				
-		$this->session->set_flashdata('data', $data);
+//		$this->session->set_flashdata('data', $data);
 
 /*		
 		//from application/core/MY_Controller

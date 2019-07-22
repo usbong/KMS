@@ -74,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>
 <!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
 -->
-		<input type="hidden" name="reportTypeNameParam" value="asdasdaLessons-learned Report" required>
+		<input type="hidden" name="reportTypeNameParam" value="Lessons-learned Report" required>
 
 		<div>
 			<table width="100%">

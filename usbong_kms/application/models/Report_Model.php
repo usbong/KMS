@@ -10,7 +10,7 @@ class Report_Model extends CI_Model
 		$row = $this->doesReportTypeExistViaReportTypeName($param);
 		
 		if ($row == null) {			
-			return null;
+			return False; //edited by Mike, 20190722
 		}
 		
 		$reportTypeId = $row->report_type_id;
@@ -32,6 +32,8 @@ class Report_Model extends CI_Model
 	//added by Mike, 20190720
 	public function doesReportTypeExistViaReportTypeName($param) 
 	{		
+//		echo "reportTypeNameParam: ".$param['reportTypeNameParam'];
+	
 		$this->db->select('report_type_id');
 		$this->db->where('report_type_name', $param['reportTypeNameParam']);
 		$query = $this->db->get('report_type');

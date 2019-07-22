@@ -27,8 +27,9 @@ date_default_timezone_set('Asia/Hong_Kong');
 | a PHP script and you can easily do that on your own.
 |
 */
-//edited by Mike, 20190715
-$config['base_url'] = 'http://localhost:80/usbong_kms/'; //'';
+//edited by Mike, 20190722
+//$config['base_url'] = 'http://localhost:80/usbong_kms/'; //'';
+$config['base_url'] = 'http://192.168.1.100:80/usbong_kms/'; //'';
 
 /*
 |--------------------------------------------------------------------------
