@@ -56,8 +56,9 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["memberNameParam"] = $_POST["memberNameParam"];
 		$data["memberId"] = $this->Account_Model->autoRegisterAccount($data);
 
-//		$data["reportTypeNameParam"] = $_POST["reportTypeNameParam"];
-		$data["reportTypeId"] = $_POST["reportTypeIdParam"];
+		//edited by Mike, 20190722
+		$data["reportTypeNameParam"] = $_POST["reportTypeNameParam"];
+//		$data["reportTypeId"] = $_POST["reportTypeIdParam"];
 		
 		while ($count <= 10) {
 			$data["reportAnswerParam"] = $_POST[$field.$count];		
@@ -91,9 +92,18 @@ class Report extends CI_Controller { //MY_Controller {
 */		
 //		redirect('');			
 		
-		echo "<script>
-				alert('You have successfully submitted your report. Thank you. Peace.');
-				window.location.href='".base_url()."';
-			  </script>";			
+		//added by Mike, 20190722
+		if ($data["is_success"]) {
+			echo "<script>
+					alert('You have successfully submitted your report. Thank you. Peace.');
+					window.location.href='".base_url()."';
+				  </script>";			
+		}			
+		else {
+			echo "<script>
+					alert('PROBLEM: Your report is unclassified. We have automatically filed an incident report with the system administrator. We shall notify you of our analysis and the corresponding action to resolve it. Thank you. Peace.');
+					window.location.href='".base_url()."';
+				  </script>";			
+		}
 	}
 }
