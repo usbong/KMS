@@ -20,8 +20,19 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		//added by Mike, 20190725
+		$this->load->library('QRcode');
+
+		//note by Mike, 20190725: object instance, i.e. "qrcode", must be lower case
+		$this->qrcode->png('the quick brown');
+		
+		//note by Mike, 20190725: escape the apostrophe character, i.e. "'", by replacing it with "\'" in the encrypted input text		
+		//$this->qrcode->png('Salted...');
+		
 		//edited by Mike, 20190714
 		//$this->load->view('welcome_message');
-		$this->load->view('report');
+		
+		//removed by Mike, 20190725
+		//$this->load->view('report');
 	}
 }
