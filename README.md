@@ -1,5 +1,11 @@
-# KMS
-Knowledge Management System (KMS)
+# Knowledge Management System (KMS)
+
+# Add-on Software Requirements
+## XAMPP
+https://www.apachefriends.org/index.html
+
+<b>Technologies:</b> Apache Web Server, MySQL, PHP, phpMyAdmin
+
 
 # Open Source Software License
 Copyright 2019 Usbong Social Systems, Inc.
