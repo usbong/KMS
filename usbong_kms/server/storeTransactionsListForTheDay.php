@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20190805
+  @date updated: 20190811
 
   Given:
   1) List with the details of the transactions for the day
@@ -29,6 +29,20 @@
             printf("Current character set: %s\n", $mysqli->character_set_name());
     }
 
+	$data = json_decode(file_get_contents('php://input'), true);
+	print_r($data);
+//	echo "hello".$data["myKey"];
+	
+	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('usbong');"))
+//	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".echo $data["myKey"]."');"))
+	{
+	}
+	// show an error if there is an issue with the database query
+	else
+	{
+			echo "Error: " . $mysqli->error;
+	}
+		
 	// close database connection
 	$mysqli->close();
 ?>
