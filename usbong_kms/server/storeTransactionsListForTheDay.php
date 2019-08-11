@@ -30,11 +30,11 @@
     }
 
 	$data = json_decode(file_get_contents('php://input'), true);
-	print_r($data);
+//	print_r($data);
 //	echo "hello".$data["myKey"];
 	
-	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('usbong');"))
-//	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".echo $data["myKey"]."');"))
+//	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('usbong');"))
+	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".$data["myKey"]."');"))
 	{
 	}
 	// show an error if there is an issue with the database query
