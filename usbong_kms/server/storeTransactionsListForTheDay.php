@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20190811
+  @date updated: 20190812
 
   Given:
   1) List with the details of the transactions for the day
@@ -34,7 +34,10 @@
 //	echo "hello".$data["myKey"];
 	
 //	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('usbong');"))
-	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".$data["myKey"]."');"))
+//	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".$data["myKey"]."');"))
+//	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".$data["dateTimeStamp"]."');"))
+	
+	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".json_encode($data)."');"))
 	{
 	}
 	// show an error if there is an issue with the database query
