@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20190812
+  @date updated: 20190902
 
   Given:
   1) List with the details of the transactions for the day
@@ -39,6 +39,9 @@
 	
 	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".json_encode($data)."');"))
 	{
+		//added by Mike, 20190902
+		//update the file locations, e.g. batch file, accordingly
+		exec('C:\Windows\System32\cmd.exe /C START C:\Usbong\java\VBA\generatePayslipForTheDay\unit\"add-on software"\generatePayslipForTheDay.bat');
 	}
 	// show an error if there is an issue with the database query
 	else
