@@ -37,7 +37,9 @@
 //	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".$data["myKey"]."');"))
 //	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".$data["dateTimeStamp"]."');"))
 	
-	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".json_encode($data)."');"))
+	//edited by Mike, 20190917
+//	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_description`) VALUES ('".json_encode($data)."');"))
+	if ($result = $mysqli->query("INSERT INTO `payslip` (`payslip_type_id`, `payslip_description`) VALUES ('".$data["payslip_type_id"]."', '".json_encode($data)."');"))
 	{
 		//added by Mike, 20190902
 		//update the file locations, e.g. batch file, accordingly

@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190813
-  @date updated: 20190813
+  @date updated: 20190917
 
   Given:
   1) Existing payslips with the transactions for the day in the database (DB)
@@ -45,6 +45,7 @@
 			{
 				$jsonResponse = array(
 						"payslip_id" => $row->payslip_id,
+						"payslip_type_id" => $row->payslip_type_id,
 						"payslip_description" => $row->payslip_description,
 						"added_datetime_stamp" => $row->added_datetime_stamp
 				);
