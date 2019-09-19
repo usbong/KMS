@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20190320
-' @date updated: 20190715
+' @date updated: 20190919
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     /**/
     </style>
     <title>
-      Lessons-learned Report
+      Incident Report
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -60,10 +60,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </head>
   <body>
 	<h3>
-	Lessons-learned Report (Usbong Training Template)
+	Incident Report (Usbong Training Template)
 	</h3>
 	<span>
-	a reflective statement documenting important things you have learned from doing the training project
+	a factual statement documenting important things
 	</span>
 	<br />
 	<br />
@@ -74,13 +74,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>
 <!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
 -->
-		<input type="hidden" name="reportTypeNameParam" value="Lessons-learned Report" required>
+		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
 
 		<div>
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>Name (Last Name, First Name)*</span></b>
+				  <b><span>Pangalan (Last Name, First Name) <font color="red">*</font></span></b>
 				</td>
 			  </tr>
 			  <tr>
@@ -92,22 +92,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 		<br />
 		<br />
-		<!-- Question 1 -->
+		<!-- Question 1 -->		
 		<div>
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>1) Were the project goals met?*</span></b>
+				  <b><span>1) Petsa: <font color="red">*</font></span></b>
 				</td>
 			  </tr>
 			  <tr>
 				<td>
-					<label><input type="radio" name="reportParam<?php echo $itemCounter;?>" value="1" checked>Yes</label>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-					<label><input type="radio" name="reportParam<?php echo $itemCounter;?>" value="2">No</label>
+						<!-- Answer 1 -->
+						<input type="text" class="report-input" placeholder="halimbawa: 2019-09-19" name="reportParam<?php echo $itemCounter;?>" required>	
 				</td>
 			  </tr>
 			</table>
@@ -123,17 +119,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>2) Was the project successful?*</span></b>
+				  <b><span>2) Oras: <font color="red">*</font></span></b>
 				</td>
 			  </tr>
 			  <tr>
 				<td>
-					<label><input type="radio" name="reportParam<?php echo $itemCounter;?>" value="1" checked>Yes</label>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-					<label><input type="radio" name="reportParam<?php echo $itemCounter;?>" value="2">No</label>
+						<!-- Answer 2 -->
+						<input type="text" class="report-input" placeholder="halimbawa: 15:00" name="reportParam<?php echo $itemCounter;?>" required>						
 				</td>
 			  </tr>
 			</table>
@@ -149,13 +141,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>3) Your reflections on #1 & #2?*</span></b>
+				  <b><span>3) Lugar: <font color="red">*</font></span></b>
 				</td>
 			  </tr>
 			  <tr>
 				<td>
 						<!-- Answer 3 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+						<textarea rows="1" class="report-input" placeholder="halimbawa: Marikina Orthopedic Specialty Clinic (MOSC)" name="reportParam<?php echo $itemCounter;?>" required></textarea>											
 				</td>
 			  </tr>
 			</table>
@@ -171,14 +163,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>4) Give comments on the use of different project management tools and techniques.*</span></b>
+				  <b><span>4) Keywords: <font color="red">*</font></span></b>
 				</td>
 			  </tr>
 			  <tr>
 				<td>
 						<!-- Answer 4 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
-				</td>
+						<textarea rows="1" class="report-input" placeholder="halimbawa: noise, regulation, theft, crime" name="reportParam<?php echo $itemCounter;?>" required></textarea>					</td>
 			  </tr>
 			</table>
 			<?php
@@ -193,51 +184,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>5) What are the causes of variances (i.e. difference between what is expected and what is actually accomplished) on the project?*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-						<!-- Answer 5 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
-				</td>
-			  </tr>
-			</table>
-			<?php
-				$itemCounter++;
-			?>
-		</div>	
-		<br />
-		<br />
-
-		<!-- Question 6 -->
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>6) What is your reasoning behind the corrective actions that your team chose?*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-						<!-- Answer 6 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
-				</td>
-			  </tr>
-			</table>
-			<?php
-				$itemCounter++;
-			?>
-		</div>	
-		<br />
-		<br />
-
-		<!-- Question 7 -->
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>7) Describe one example of what went right on this project.*</span></b>
+				  <b><span>5) Salaysay: <font color="red">*</font></span></b>
 				</td>
 			  </tr>
 			  <tr>
@@ -250,72 +197,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<?php
 				$itemCounter++;
 			?>			
-		</div>	
-		<br />
-		<br />
-
-		<!-- Question 8 -->
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>8) Describe one example of what went wrong on this project.*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-						<!-- Answer 8 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
-				</td>
-			  </tr>
-			</table>
-			<?php
-				$itemCounter++;
-			?>						
-		</div>	
-		<br />
-		<br />
-
-		<!-- Question 9 -->
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>9) What will you do differently on the next project based on your experience working on this project?*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-						<!-- Answer 9 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
-				</td>
-			  </tr>
-			</table>
-			<?php
-				$itemCounter++;
-			?>									
-		</div>	
-		<br />
-		<br />
-
-		<!-- Question 10 -->
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>10) Give your personal words of wisdom based on your team's experiences.*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-						<!-- Answer 10 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
-				</td>
-			  </tr>
-			</table>
-			<?php
-				$itemCounter++;
-			?>												
 		</div>	
 		<br />
 		<br />
@@ -335,17 +216,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<table width="100%">
 		  <tr>
 			<td>
-			  <b><span>References:</span></b>
+			  <b><span>Reference:</span></b>
 			</td>
 		  </tr>
 		  <tr>
 			<td>
-			  <span>[1] Schwalbe, K. 2008. Information Technology Project Management, Fifth Edition. Philippines: Cengage Learning Asia Pte Ltd.</span>
-			</td>
-		  </tr>
-		  <tr>
-			<td>
-			  <span>[2] HireRight Inc.'s Employment Verification Request</span>
+			  <span>[1] Barangay Sto. Niño, Marikina City, 1800, Philippines</span>
 			</td>
 		  </tr>
 		</table>

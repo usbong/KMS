@@ -60,8 +60,7 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["reportTypeNameParam"] = $_POST["reportTypeNameParam"];
 //		$data["reportTypeId"] = $_POST["reportTypeIdParam"];
 		
-//		while ($count <= 10) {
-		while ($count <= 5) {
+		while ($count <= 10) {
 			$data["reportAnswerParam"] = $_POST[$field.$count];		
 			$data["reportItemId"] = $count;
 
