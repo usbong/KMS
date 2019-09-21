@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20190320
-' @date updated: 20190919
+' @date updated: 20190921
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -18,6 +18,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta charset="utf-8">
+
+    <!-- Reference: Apache Friends Dashboard index.html -->
+    <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
     <style type="text/css">
 	/**/
 	                    body
