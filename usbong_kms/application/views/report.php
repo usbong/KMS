@@ -196,7 +196,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			  <tr>
 				<td>
-						<!-- Answer 7 -->
+						<!-- Answer 5 -->
 						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
 				</td>
 			  </tr>
