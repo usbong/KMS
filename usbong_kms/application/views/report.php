@@ -53,7 +53,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						textarea.report-input
 						{
-							width: 42%
+							width: 42%;
+							
+							resize: none;
+							min-height: 50px;
+							max-height: 500px;
 						}
 
     /**/
@@ -65,6 +69,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <style type="text/css">
     </style>
   </head>
+	  <script>
+		  function auto_grow(element) {
+			element.style.height = "5px";
+			element.style.height = (element.scrollHeight*4)+"px";
+			
+			element.style.width = (element.scrollWidth+element.scrollWidth*0.42)+"px";			
+		}
+	  </script>
   <body>
 	<h3>
 	Incident Report (Usbong Training Template)
@@ -197,7 +209,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>
 						<!-- Answer 5 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
+						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" onmousedown="auto_grow(this)" required></textarea>						
 				</td>
 			  </tr>
 			</table>
