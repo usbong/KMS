@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20190320
-' @date updated: 20190921
+' @date updated: 20190930
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -53,13 +53,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						textarea.report-input
 						{
-							width: 42%;
-							
+							width: 100%;
+							max-width: 500px;
+														
 							resize: none;
-							min-height: 50px;
-							max-height: 500px;
-						}
 
+							height: 100%;
+						}
     /**/
     </style>
     <title>
@@ -70,12 +70,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </style>
   </head>
 	  <script>
+/*	  
+		  defaultScrollWidth = 0;
+		  
 		  function auto_grow(element) {
 			element.style.height = "5px";
 			element.style.height = (element.scrollHeight*4)+"px";
-			
-			element.style.width = (element.scrollWidth+element.scrollWidth*0.42)+"px";			
-		}
+
+			if (defaultScrollWidth == 0) {
+				defaultScrollWidth = element.scrollWidth; //i.e. 42% of the width of the full width of the Browser Window
+				alert("defaultScrollWidth: "+defaultScrollWidth);
+			}
+			else if (element.scrollWidth < defaultScrollWidth){
+//				defaultScrollWidth = 100%;
+				defaultScrollWidth = element.scrollWidth;
+//				alert("defaultScrollWidth: "+defaultScrollWidth);
+
+			}
+				
+			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
+		  }
+*/
 	  </script>
   <body>
 	<h3>
@@ -122,7 +137,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>
 						<!-- Answer 1 -->
-						<input type="text" class="report-input" placeholder="halimbawa: 2019-09-19" name="reportParam<?php echo $itemCounter;?>" required>	
+						<input type="date" class="report-input" placeholder="halimbawa: 2019-09-19" name="reportParam<?php echo $itemCounter;?>" required>	
 				</td>
 			  </tr>
 			</table>
@@ -144,7 +159,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>
 						<!-- Answer 2 -->
-						<input type="text" class="report-input" placeholder="halimbawa: 15:00" name="reportParam<?php echo $itemCounter;?>" required>						
+						<input type="time" class="report-input" placeholder="halimbawa: 03:00 PM" name="reportParam<?php echo $itemCounter;?>" required>						
 				</td>
 			  </tr>
 			</table>
@@ -166,7 +181,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>
 						<!-- Answer 3 -->
-						<textarea rows="1" class="report-input" placeholder="halimbawa: Marikina Orthopedic Specialty Clinic (MOSC)" name="reportParam<?php echo $itemCounter;?>" required></textarea>											
+						<textarea rows="2" class="report-input" placeholder="halimbawa: Marikina Orthopedic Specialty Clinic (MOSC)" name="reportParam<?php echo $itemCounter;?>" required></textarea>											
 				</td>
 			  </tr>
 			</table>
@@ -188,7 +203,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>
 						<!-- Answer 4 -->
-						<textarea rows="1" class="report-input" placeholder="halimbawa: noise, regulation, theft, crime" name="reportParam<?php echo $itemCounter;?>" required></textarea>					</td>
+						<textarea rows="2" class="report-input" placeholder="halimbawa: noise, regulation, theft, crime" name="reportParam<?php echo $itemCounter;?>" required></textarea>					</td>
 			  </tr>
 			</table>
 			<?php
@@ -209,7 +224,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>
 						<!-- Answer 5 -->
-						<textarea rows="5" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" onmousedown="auto_grow(this)" required></textarea>						
+						<textarea rows="6" class="report-input" placeholder="" name="reportParam<?php echo $itemCounter;?>" required></textarea>						
 				</td>
 			  </tr>
 			</table>
