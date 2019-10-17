@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20191014
-  @date updated: 20191014
+  @date updated: 20191017
 
   Given:
   1) Existing reports for the day in the database (DB)
@@ -31,6 +31,16 @@
     }
 */	
 	date_default_timezone_set('Asia/Hong_Kong');
+
+	//added by Mike, 20191017
+	$dateToday = (new DateTime())->format('Y-m-d');
+
+	//added by Mike, 20191017
+	//note: update "svgh" to pertain to the correct location
+	$filename="svgh-".$dateToday.".txt";//"download.txt";
+	header('Content-Type: text/plain');
+	header('Content-Disposition: attachment;filename=$filename');
+	//readfile($filename);	
 
 	//automatically get the reports for the day from the database (DB)
 //	if ($result = $mysqli->query("SELECT * FROM `payslip` WHERE CAST(`added_datetime_stamp` AS DATE) = CAST('2019-08-12' AS DATE)"))
@@ -57,12 +67,14 @@
 				$responses[] = $jsonResponse;
 				
 			}
+			//edited by Mike, 20191017
 			echo json_encode($responses);
-		}
+
 		//if there are no reports in the database, display an alert message
 		else
 		{
-			$dateToday = (new DateTime())->format('Y-m-d');
+			//edited by Mike, 20191017
+//			$dateToday = (new DateTime())->format('Y-m-d');
 
 			echo "No reports in the database for today, ".$dateToday."!";
 		}
