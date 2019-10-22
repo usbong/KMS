@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20191014
-  @date updated: 20191017
+  @date updated: 20191022
 
   Given:
   1) Existing reports for the day in the database (DB)
@@ -39,7 +39,7 @@
 	//note: update "svgh" to pertain to the correct location
 	$filename="svgh-".$dateToday.".txt";//"download.txt";
 	header('Content-Type: text/plain');
-	header('Content-Disposition: attachment;filename=$filename');
+	header('Content-Disposition: attachment;filename='.$filename); //edited by Mike, 20191022
 	//readfile($filename);	
 
 	//automatically get the reports for the day from the database (DB)
