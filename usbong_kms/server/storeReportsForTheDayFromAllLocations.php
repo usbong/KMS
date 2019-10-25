@@ -43,12 +43,11 @@
 		Store Reports for the Day from All Locations
 	</h2>
 	<br/>
-		Pakipili ang lahat ng mga report mula sa ito:<br/>
+		Pakipili ang lahat ng mga report mula sa mga ito:<br/>
 		1) MOSC<br/>
 		2) SVGH<br/>
 		3) SLHCC<br/>
 	<br/>	
-	<br/>
 	<form action="upload.php" method="post" id="myFormId" enctype="multipart/form-data">
 		<input style="font-size: 52px;" id="uploadFilesId" name="upload[]" type="file" multiple="multiple" accept="text/plain" onInput="showAlert();"/>
 <!--		<button style="font-size: 52px;" name="submit" class="btn btn-primary" type="submit">Ipasa ang mga report</button>
@@ -62,7 +61,6 @@
 		}
 	</script>
 	
-	<br/>
 	<br/>
 <?php
 /*
