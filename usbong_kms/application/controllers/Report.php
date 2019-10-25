@@ -53,46 +53,59 @@ class Report extends CI_Controller { //MY_Controller {
 		$field = "reportParam";
 		$count = 1;
 		
+		//removed by Mike, 20191025
+/*		
 		$data["memberNameParam"] = $_POST["memberNameParam"];
 		$data["memberId"] = $this->Account_Model->autoRegisterAccount($data);
-
-		//edited by Mike, 20190722
+*/
+		//edited by Mike, 20191025		
 		$data["reportTypeNameParam"] = $_POST["reportTypeNameParam"];
 //		$data["reportTypeId"] = $_POST["reportTypeIdParam"];
 		
-//		while ($count <= 10) {
-		while ($count <= 5) {
-			$data["reportAnswerParam"] = $_POST[$field.$count];		
-			$data["reportItemId"] = $count;
+		$data["reportTypeId"] = $this->Report_Model->getReportTypeIdViaReportTypeName($data);
 
-			$data["is_success"] = $this->Report_Model->insertReport($data);//, $member_id);
+//		if ($data["reportTypeId"] == 3) { //Incident Report
+		switch ($data["reportTypeId"]) {
+			//TO-DO: -update: 3, 4.. with name constant 
+			case 3: //Incident Report
+				$data["memberNameParam"] = $_POST["memberNameParam"];
+				$data["memberId"] = $this->Account_Model->autoRegisterAccount($data);
 
-			$count++;
+		//		while ($count <= 10) {
+				while ($count <= 5) {
+					$data["reportAnswerParam"] = $_POST[$field.$count];		
+					$data["reportItemId"] = $count;
+
+					$data["is_success"] = $this->Report_Model->insertReport($data);//, $member_id);
+
+					$count++;
+				}
+				break;
+			case 4: //Reports from All Locations
+					$data["memberId"] = 1;
+					$data["reportItemId"] = $count; //1
+
+//					$data["reportAnswerParam"] = $_FILES['reportParamUploadFiles']['name'];
+					$fileCount = count($_FILES['reportParamUploadFiles']['name']);
+//					echo "File count: ".$fileCount;
+					
+//				    $fileContents = "";
+				   
+					for($i=0;$i<$fileCount;$i++)
+					{
+						//get the contents of each file
+//						$fileContents = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
+						$data["reportAnswerParam"] = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
+						
+						//echo "File contents: ".$fileContents."<br/>";
+
+						$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
+					}
+					
+//					$data["is_success"] = $this->Report_Model->insertReportsFromAllLocations($data);//, $member_id);
+				break;				
 		}
-				
-//		$this->session->set_flashdata('data', $data);
-
-/*		
-		//from application/core/MY_Controller
-		$this::initStyle();
-		$this::initHeader();
-		//--------------------------------------------
-		
-		$this->load->library('session');
-		$this->load->library('form_validation');
-								
-		$this->load->view('request');
-		
-		//--------------------------------------------
-		$this->load->view('templates/footer');
-*/		
-
-		//edited by Mike, 20190717
-
-/*		$this->load->view('report');
-*/		
-//		redirect('');			
-		
+						
 		//added by Mike, 20190722
 		if ($data["is_success"]) {
 			echo "<script>
@@ -106,5 +119,11 @@ class Report extends CI_Controller { //MY_Controller {
 					window.location.href='".base_url()."';
 				  </script>";			
 		}
+	}
+	
+	//added by Mike, 20191025
+	public function storeReportsForTheDayFromAllLocations()
+	{
+		$this->load->view('storeReportsForTheDayFromAllLocations');
 	}
 }
