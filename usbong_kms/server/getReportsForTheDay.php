@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20191014
-  @date updated: 20191104
+  @date updated: 20191105
 
   Given:
   1) Existing reports for the day in the database (DB)
@@ -45,8 +45,8 @@
 	//added by Mike, 20191017
 	$dateToday = (new DateTime())->format('Y-m-d');
 	
-	//added by Mike, 20191017
-	$filename="mosc_".$dateToday.".txt";//"download.txt";
+	//added by Mike, 20191017; edited by Mike, 20191105
+	$filename="mosc-".$dateToday.".txt";//"download.txt";
 //	header('Content-Type: text/plain');
 	header('Content-Type: text/plain; charset=utf-8');
 	header('Content-Disposition: attachment;filename='.$filename);
@@ -81,6 +81,7 @@
 			echo json_encode($responses);
 		}
 		//if there are no reports in the database, display an alert message
+		//note at present, this is not stored in the USBONG Data Center upon upload using Android and the PHP Command, "storeReportsForTheDayFromAllLocations.php"
 		else
 		{
 			//edited by Mike, 20191017
@@ -92,6 +93,7 @@
 		}
 	}
 	//show an error if there is an issue with the database query
+	//note at present, this is not stored in the USBONG Data Center upon upload using Android and the PHP Command, "storeReportsForTheDayFromAllLocations.php"
 	else
 	{
 			//edited by Mike, 20191027
