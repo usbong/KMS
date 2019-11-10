@@ -126,4 +126,10 @@ class Report extends CI_Controller { //MY_Controller {
 	{
 		$this->load->view('storeReportsForTheDayFromAllLocations');
 	}
+
+	//added by Mike, 20191110
+	public function viewListOfAllReportsFromAllLocations()
+	{
+		$this->load->view('viewListOfAllReportsFromAllLocations');
+	}
 }
