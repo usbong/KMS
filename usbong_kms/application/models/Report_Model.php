@@ -118,6 +118,20 @@ class Report_Model extends CI_Model
 		//$reportTypeId = $row->report_type_id;
 		//return $row;
 		return $row->report_type_id;
-	}	
+	}
+
+	//added by Mike, 20191110
+	public function getListOfAllReportsFromAllLocations()//$param)
+	{			
+//		date_default_timezone_set('Asia/Hong_Kong');
+//		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');		
+		
+		$this->db->select('report_answer');
+		//TO-DO: -update this
+		$this->db->where('report_type_id',4); //4 = "Reports from All Locations"
+		$this->db->order_by('added_datetime_stamp', 'DESC');
+		$query = $this->db->get('report');
+		return $query->result_array();		
+	}		
 }
 ?>
