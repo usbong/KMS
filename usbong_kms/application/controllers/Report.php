@@ -130,6 +130,10 @@ class Report extends CI_Controller { //MY_Controller {
 	//added by Mike, 20191110
 	public function viewListOfAllReportsFromAllLocations()
 	{
-		$this->load->view('viewListOfAllReportsFromAllLocations');
+		$this->load->model('Report_Model');
+
+		$data["result"] = $this->Report_Model->getListOfAllReportsFromAllLocations();//$data);//, $member_id);
+
+		$this->load->view('viewListOfAllReportsFromAllLocations', $data);
 	}
 }
