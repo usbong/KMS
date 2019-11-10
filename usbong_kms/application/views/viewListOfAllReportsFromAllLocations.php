@@ -27,9 +27,9 @@
   where: ... = web address of the computer server
 		   
   Examples: 
-	a) localhost/usbong_kms/index.php/report/storeReportsForTheDayFromAllLocations
-	b) 192.168.1.3/usbong_kms/index.php/report/storeReportsForTheDayFromAllLocations
-	c) www.usbong.ph/usbong_kms/index.php/report/storeReportsForTheDayFromAllLocations
+	a) localhost/usbong_kms/index.php/report/viewListOfAllReportsFromAllLocations
+	b) 192.168.1.3/usbong_kms/index.php/report/viewListOfAllReportsFromAllLocations
+	c) www.usbong.ph/usbong_kms/index.php/report/viewListOfAllReportsFromAllLocations
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -49,6 +49,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
+	/**/
+			body
+			{
+				font-family: Arial;
+				font-size: 9pt
+			}
+			
+			div.search-result
+			{
+				font-size: 12pt
+			}
+			
+			div.container-search
+			{
+				font-size: 12pt
+			}
+						
+			div.copyright
+			{
+				text-align: center;
+			}
+    /**/
     </style>
   </head>
   <body>
@@ -61,30 +83,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h1>
 		View List of All the Reports From All Locations
 	</h1>
-	Pakipili ang lahat ng mga report mula sa mga ito:<br/>
-	1) MOSC<br/>
-	2) SVGH<br/>
-	3) SLHCC<br/>
-	<br/>
-	<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('report/confirm')?>">
-		<input type="hidden" name="reportTypeNameParam" value="Reports from All Locations">
-		<input style="font-size: 16px;" id="uploadFilesId" name="reportParamUploadFiles[]" type="file" multiple="multiple" accept="text/plain" onInput="showAlert();"/>
-	</form>
-
-	<script language="javascript" type="text/javascript">
-		function showAlert() {
-			document.getElementById('myFormId').submit();
-//			alert("Hey there!" + document.getElementById("uploadFilesId").value);
+<?php	
+		$resultCount = count($result);
+		if ($resultCount==0) {
+			echo '<div class="search-result"><b>'.count($result).'</b> result found.</div>';
+/*
+			echo '<div class="Search-noResult">';
+			echo 'Your search <b>- '.$param.' -</b> did not match any of our products.';
+			echo '<br><br>Suggestion:';
+			echo '<br>&#x25CF; Make sure that all words are spelled correctly.';				
+			echo '<br>&#x25CF; You may send us a request for the product item <a class="Request-link" href="'.site_url('request/'.$URLFriendlyReformattedProductName.'/b').'">here</a>.';		
+			echo '</div>';
+*/			
 		}
-	</script>
-	<br/>	
-	<br/>
-<?php
+		else {
+			if ($resultCount==1) {
+				echo '<div class="search-result"><b>'.count($result).'</b> result found.</div>';
+			}
+			else {
+				echo '<div class="search-result"><b>'.count($result).'</b> results found.</div>';			
+			}			
+		}
+?>		
+		<br/>
+		<div class="container-search">
+			<?php
+				//TO-DO: -add: process JSON formatted result
+				foreach ($result as $value) {
+					echo $value['report_answer']."<br/>";
+				}
+			?>
+		</div>
+<?php		
 	//removed by Mike, 20191025	
 	// close database connection
 /*	$mysqli->close();
 */
 ?>
+	<br/>
 	<div class="copyright">
 		<!-- TO-DO: -add: automatically write the present year -->
 		<span>© Usbong Social Systems, Inc. 2011~2019. All rights reserved.</span>
