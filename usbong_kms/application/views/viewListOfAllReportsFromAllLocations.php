@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
   @date created: 20191110
-  @date updated: 20191110
+  @date updated: 20191112
 
   Given:
   1) Database (DB) containing the list of all the reports from all locations
@@ -108,9 +108,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<br/>
 		<div class="container-search">
 			<?php
-				//TO-DO: -add: process JSON formatted result
+				//edited by Mike, 20191112
+				//+added: process JSON formatted result
+				//note: list is based on added_datetime_stamp
 				foreach ($result as $value) {
-					echo $value['report_answer']."<br/>";
+//					echo $value['report_answer']."<br/>";
+					$data = json_decode($value['report_answer'], true);
+					
+					if (is_array($data)) {
+						foreach ($data as $item) {
+							//identify report_type_id
+							if ($item["report_type_id"]===null) {	
+								//echo $dataValue["report_answer"]."<br/><br/>";					
+							}
+							else {
+								echo $item["report_answer"];	
+							}
+							echo "<br/>";
+						}
+					}
+					else {
+						echo $data;
+						echo "<br/>";						
+					}
+					
+					echo "----------<br/>";
+					
+					//	print_r($data);					
 				}
 			?>
 		</div>
