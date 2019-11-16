@@ -126,9 +126,14 @@ class Report_Model extends CI_Model
 //		date_default_timezone_set('Asia/Hong_Kong');
 //		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');		
 		
-		$this->db->select('report_answer');
+		$this->db->select('report_answer, report_item_id');
 		//TO-DO: -update this
-		$this->db->where('report_type_id',4); //4 = "Reports from All Locations"
+		$this->db->where('report_type_id BETWEEN 3 AND 4'); //3 = "MOSC HQ"
+//		$this->db->where('report_type_id',3); //3 = "MOSC HQ"
+//		$this->db->where('report_type_id',4); //4 = "Reports from All Locations"
+
+//		$this->db->where('report_type_id >=',3); //3 = "MOSC HQ"
+//		$this->db->where('report_type_id <=',4); //4 = "Reports from All Locations"
 		$this->db->order_by('added_datetime_stamp', 'DESC');
 		$query = $this->db->get('report');
 		return $query->result_array();		
