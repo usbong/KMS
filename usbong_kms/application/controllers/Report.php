@@ -105,9 +105,17 @@ class Report extends CI_Controller { //MY_Controller {
 //					$data["is_success"] = $this->Report_Model->insertReportsFromAllLocations($data);//, $member_id);
 				break;				
 		}
-						
+								
 		//added by Mike, 20190722
-		if ($data["is_success"]) {
+		if ($data["is_success"]) {		
+			//added by Mike, 20191116
+			$this->load->library('QRcode');
+
+			//TO-DO: -fix: alert message not displayed
+
+			//note by Mike, 20191116: object instance, i.e. "qrcode", must be lower case
+			$this->qrcode->png('the quick brown');
+
 			echo "<script>
 					alert('You have successfully submitted your report. Thank you. Peace.');
 					window.location.href='".base_url()."';
