@@ -130,6 +130,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $item["report_answer"];	
 									
 									if ($item["report_item_id"]==5) {
+										//added by Mike, 20191116
+										echo "<br/>";
+										echo $item["member_last_name"].", ".$item["member_first_name"];	
 										echo "<br/>--";	
 									}
 								}						
@@ -145,12 +148,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//edited by Mike, 20191116
 					else {
 						echo $value['report_answer'];
-						echo "<br/>";					
+//						echo "<br/>";					
 						
 						if ($value["report_item_id"]==5) {
-							echo "--<br/>";	
+							//added by Mike, 20191116
+							echo "<br/>";
+							echo $value["member_last_name"].", ".$value["member_first_name"];	
+							echo "<br/>--";	
 						}
-					
+						echo "<br/>";					
+						
 	
 /*
 						//TO-DO: -update: this
