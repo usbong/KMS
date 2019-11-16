@@ -34,7 +34,13 @@ class Report_Model extends CI_Model
 		
 		$this->db->insert('report', $data);
 		
-		return $this->db->insert_id();		
+		//edited by Mike, 20191116		
+		//return $this->db->insert_id();		
+		
+		if ($this->db->insert_id()) {
+			return $data;
+		}
+		return false;
 	}	
 	
 	//added by Mike, 20191025
