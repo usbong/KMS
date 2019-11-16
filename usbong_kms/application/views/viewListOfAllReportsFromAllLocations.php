@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
   @date created: 20191110
-  @date updated: 20191112
+  @date updated: 20191116
 
   Given:
   1) Database (DB) containing the list of all the reports from all locations
@@ -122,17 +122,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//echo $dataValue["report_answer"]."<br/><br/>";					
 							}
 							else {
-								echo $item["report_answer"];	
+								//edited by Mike, 20191116
+//								echo $item["report_answer"];	
+
+								//TO-DO: -update: this
+								if ($item["report_type_id"]==3) { //Incident Report at location, MOSC HQ 									
+									echo $item["report_answer"];	
+									
+									if ($item["report_item_id"]==5) {
+										echo "<br/>--";	
+									}
+								}						
+/*								else if ($item["report_type_id"]==4) { //Incident Report at All Locations
+									echo $item["report_answer"];	
+
+								}
+*/								
 							}
 							echo "<br/>";
 						}
 					}
+					//edited by Mike, 20191116
 					else {
-						echo $data;
-						echo "<br/>";						
+						echo $value['report_answer'];
+						echo "<br/>";					
+						
+						if ($value["report_item_id"]==5) {
+							echo "--<br/>";	
+						}
+					
+	
+/*
+						//TO-DO: -update: this
+						if ($data["report_type_id"]==3) { //Incident Report at location, MOSC HQ 
+							echo "hello";
+						}						
+*/						
 					}
 					
-					echo "----------<br/>";
+//					echo "----------<br/>";
 					
 					//	print_r($data);					
 				}
