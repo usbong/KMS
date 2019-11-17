@@ -943,6 +943,12 @@ defined('BASEPATH') OR exit('No direct script access allowed'); //added by Mike,
         {
             $image = self::image($frame, $pixelPerPoint, $outerFrame);
             
+			//added by Mike, 20191117
+			//ask unit member to save the auto-generated QR code image file in storage
+			//reference: https://www.php.net/manual/en/function.imagepng.php;
+			//last accessed: 20191117
+			header('Content-Disposition: Attachment;filename=image.png'); 
+			
             if ($filename === false) {
                 Header("Content-type: image/png");
                 ImagePng($image);
