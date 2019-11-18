@@ -943,11 +943,16 @@ defined('BASEPATH') OR exit('No direct script access allowed'); //added by Mike,
         {
             $image = self::image($frame, $pixelPerPoint, $outerFrame);
             
-			//added by Mike, 20191117
+			//added by Mike, 20191117; edited by Mike, 20191118
 			//ask unit member to save the auto-generated QR code image file in storage
 			//reference: https://www.php.net/manual/en/function.imagepng.php;
 			//last accessed: 20191117
-			header('Content-Disposition: Attachment;filename=image.png'); 
+			//header('Content-Disposition: Attachment;filename=image.png'); 
+			
+			date_default_timezone_set('Asia/Hong_Kong');
+			$dateToday = (new DateTime())->format('Y-m-d');			
+			$imageOutputFilename="reportImage-".$dateToday.".png";
+			header('Content-Disposition: attachment;filename='.$imageOutputFilename);
 			
             if ($filename === false) {
                 Header("Content-type: image/png");
