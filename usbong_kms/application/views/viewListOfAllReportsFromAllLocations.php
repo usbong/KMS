@@ -149,8 +149,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					else {
 						echo $value['report_answer'];
 //						echo "<br/>";					
-						
-						if ($value["report_item_id"]==5) {
+
+						//edited by Mike, 20191118
+						if ($value["report_item_id"]==1) {	
+							//if report_answer contains "no reports"
+							//note that this is instead of the date stamp for report_item_id 1
+							if (strpos(strtolower($value['report_answer']), 'no reports') !== false) {
+								echo "<br/>--";
+							}
+						}
+						else if ($value["report_item_id"]==5) {
 							//added by Mike, 20191116
 							echo "<br/>";
 							echo $value["member_last_name"].", ".$value["member_first_name"];	
