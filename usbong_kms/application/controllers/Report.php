@@ -71,6 +71,9 @@ class Report extends CI_Controller { //MY_Controller {
 				$data["memberNameParam"] = $_POST["memberNameParam"];
 				$data["memberId"] = $this->Account_Model->autoRegisterAccount($data);
 
+				//added by Mike, 20191118
+				$responses = array($data["memberNameParam"], $data["memberId"]);
+
 		//		while ($count <= 10) {
 				while ($count <= 5) {
 					$data["reportAnswerParam"] = $_POST[$field.$count];		
@@ -78,8 +81,18 @@ class Report extends CI_Controller { //MY_Controller {
 
 					$data["is_success"] = $this->Report_Model->insertReport($data);//, $member_id);
 
+					//TO-DO: -fix: 1 second lag by count 3
+					//example: counts 1 and 2: 10:52:49
+					//counts 3 until 5: 10:52:50
+					//where: hour:minutes:seconds 
+					$responses[] = $data["is_success"];
+
 					$count++;
 				}
+				
+				//added by Mike, 20191118
+				//echo json_encode($responses);
+				
 				break;
 			case 4: //Reports from All Locations
 					$data["memberId"] = 1;
@@ -107,19 +120,79 @@ class Report extends CI_Controller { //MY_Controller {
 		}
 								
 		//added by Mike, 20190722
-		if ($data["is_success"]) {		
-			//added by Mike, 20191116
+		if ($data["is_success"]) {					
+/*
+			//added by Mike, 20191118
+			header('Set-Cookie: fileLoading=true'); 
+
+			echo "<script>			  
+				setInterval(function(){
+				  if ($.cookie('fileLoading')) {
+					// clean the cookie for future downoads
+					$.removeCookie('fileLoading');
+
+					//redirect
+					location.href = '".base_url()."';
+				  }
+				},1000);
+			</script>";	
+*/			
+
+			//added by Mike, 20191116; removed by Mike, 20191117
+			//$this->load->library('QRcode');
 			$this->load->library('QRcode');
 
-			//TO-DO: -fix: alert message not displayed
-
 			//note by Mike, 20191116: object instance, i.e. "qrcode", must be lower case
-			$this->qrcode->png('the quick brown');
+			//$this->qrcode->png('the quick brown');
 
+			$this->qrcode->png(json_encode($responses));
+
+			//TO-DO: -fix: alert message not displayed
+/*
+			echo "<script>
+				alert('You have successfully submitted your report. Thank you. Peace.');
+				window.location.href='".site_url('report/autoGenerateQRCode/')."';
+			  </script>";			
+//.$data)."';
+*/
+
+/*
+			echo "<script>
+					alert('You have successfully submitted your report. Thank you. Peace.');
+					window.open('".base_url()."', '_blank');
+				  </script>";			
+*/
+
+/*
 			echo "<script>
 					alert('You have successfully submitted your report. Thank you. Peace.');
 					window.location.href='".base_url()."';
 				  </script>";			
+*/
+
+/*
+		  echo '<div class="modal" tabindex="-1" role="dialog">';
+		  echo '  <div class="modal-dialog" role="document">';
+		  echo '   <div class="modal-content">';
+		  echo '     <div class="modal-header">';
+		  echo '     <h5 class="modal-title">Alert</h5>';
+		  echo '       <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+		  echo '         <span aria-hidden="true">&times;</span>';
+		  echo '       </button>';
+		  echo '     </div>';
+		  echo '     <div class="modal-body">';
+		  echo '     <p>You have successfully submitted your report. Thank you. Peace.</p>';
+		  echo '     </div>';
+		  echo '     <div class="modal-footer">';
+		  echo '       <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>';
+		  echo '     </div>';
+		  echo '    </div>';
+		  echo '  </div>';
+		  echo '</div>';	
+*/		  
+/*
+			$this->load->view(base_url());
+*/			
 		}			
 		else {
 			echo "<script>
@@ -127,6 +200,44 @@ class Report extends CI_Controller { //MY_Controller {
 					window.location.href='".base_url()."';
 				  </script>";			
 		}
+	}
+
+	//added by Mike, 20191117
+	public function autoGenerateQRCode()//$param)
+	{				
+/*		$customer_id = $this->session->userdata('customer_id');
+
+		if (!isset($customer_id)) {
+			redirect('account/login'); //home page
+		}
+	
+		$fields = array('productNameParam', 'productLinkParam', 'productTypeParam', 'quantityParam', 'totalBudgetParam', 'commentsParam');
+		
+		foreach ($fields as $field)
+		{
+			$data[$field] = $_POST[$field];
+		}
+*/
+
+/*
+		$field = "reportParam";
+//		while ($i = 1; $i <= 10; $i++) {
+		$count = 0; 
+		while ($count < 10) {
+			$data[$field.$count] = $_POST[$field.$count];			
+			$count++;
+		}
+		
+		$this->load->model('Report_Model');
+		$data["is_success"] = $this->Report_Model->insertReport($data);//, $member_id);
+*/
+
+		$this->load->library('QRcode');
+
+		//TO-DO: -fix: alert message not displayed
+
+		//note by Mike, 20191116: object instance, i.e. "qrcode", must be lower case
+		$this->qrcode->png('the quick brown');
 	}
 	
 	//added by Mike, 20191025
