@@ -20,7 +20,15 @@ class Report extends CI_Controller { //MY_Controller {
 	 */
 	 
 	public function confirm()
-	{				
+	{	
+		//added by Mike, 20191119
+		if (isset($_SESSION['jsonResponses'])) {
+//		if (empty($_POST["reportTypeNameParam"])) {
+			unset($_SESSION['jsonResponses']);
+
+			redirect(base_url()); //Report page
+		}
+	
 /*		$customer_id = $this->session->userdata('customer_id');
 
 		if (!isset($customer_id)) {
@@ -122,6 +130,9 @@ class Report extends CI_Controller { //MY_Controller {
 //					$data["is_success"] = $this->Report_Model->insertReportsFromAllLocations($data);//, $member_id);
 				break;				
 		}
+
+		//added by Mike, 20191119
+		$_POST = array();
 								
 		//added by Mike, 20190722; edited by Mike, 20191118
 		if ($data["is_success"]) {							
@@ -135,7 +146,7 @@ class Report extends CI_Controller { //MY_Controller {
 			$this->qrcode->png(json_encode($responses));
 */
 			$_SESSION['jsonResponses'] = json_encode($responses);
-
+			
 /*
 			echo "<script>
 					alert('You have successfully submitted your report. Thank you. Peace.');
@@ -183,6 +194,12 @@ class Report extends CI_Controller { //MY_Controller {
 		//note by Mike, 20191116: object instance, i.e. "qrcode", must be lower case
 //		$this->qrcode->png('the quick brown');
 		$this->qrcode->png($_SESSION['jsonResponses']);
+		
+		//added by Mike, 20191119		
+		//unset($_SESSION['jsonResponses']);
+
+		//added by Mike, 20191119
+		//redirect(base_url()); //Report page
 	}
 	
 	//added by Mike, 20191025
