@@ -74,6 +74,10 @@ class Report extends CI_Controller { //MY_Controller {
 				//added by Mike, 20191118
 				$responses = array($data["memberNameParam"], $data["memberId"]);
 
+				//added by Mike, 20191119
+				date_default_timezone_set('Asia/Hong_Kong');
+				$data['addedDateTimeStamp'] = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+
 		//		while ($count <= 10) {
 				while ($count <= 5) {
 					$data["reportAnswerParam"] = $_POST[$field.$count];		
@@ -81,7 +85,7 @@ class Report extends CI_Controller { //MY_Controller {
 
 					$data["is_success"] = $this->Report_Model->insertReport($data);//, $member_id);
 
-					//TO-DO: -fix: 1 second lag by count 3
+					//+fixed: 1 second lag by count 3
 					//example: counts 1 and 2: 10:52:49
 					//counts 3 until 5: 10:52:50
 					//where: hour:minutes:seconds 
@@ -89,7 +93,7 @@ class Report extends CI_Controller { //MY_Controller {
 
 					$count++;
 				}
-				
+			
 				//added by Mike, 20191118
 				//echo json_encode($responses);
 				
