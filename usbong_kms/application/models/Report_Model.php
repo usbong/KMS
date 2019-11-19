@@ -2,9 +2,12 @@
 class Report_Model extends CI_Model
 {
 	public function insertReport($param)
-	{			
+	{					
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+
+		//edited by Mike, 20191119
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+
 
 		//added by Mike, 20190722; edited by Mike, 20191025
 //		$row = $this->doesReportTypeExistViaReportTypeName($param);
@@ -29,7 +32,8 @@ class Report_Model extends CI_Model
 					'report_type_id' => $reportTypeId,
 					'report_item_id' => $param['reportItemId'],
 					'report_answer' => $param['reportAnswerParam'],
-					'added_datetime_stamp' => $addedDateTimeStamp
+//					'added_datetime_stamp' => $addedDateTimeStamp
+					'added_datetime_stamp' => $param['addedDateTimeStamp']					
 				);
 		
 		$this->db->insert('report', $data);
@@ -83,6 +87,8 @@ class Report_Model extends CI_Model
 	public function insertReportFromEachLocation($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
+
+		//edited by Mike, 20191119
 		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
 
 		//added by Mike, 20190722; edited by Mike, 20191025
@@ -145,6 +151,10 @@ class Report_Model extends CI_Model
 		$this->db->join('member as t2', 't1.member_id = t2.member_id', 'LEFT');
 		$this->db->where('t1.report_type_id BETWEEN 3 AND 4'); //3 = "MOSC HQ"
 		$this->db->order_by('t1.added_datetime_stamp', 'DESC');
+//		$this->db->order_by('t1.added_datetime_stamp', 'DESC');
+//		$this->db->order_by('t1.report_item_id', 'ASC');		
+//		$this->db->order_by('t1.added_datetime_stamp DESC, t1.report_item_id ASC');
+		// Produces: ORDER BY `title` DESC, `name` ASC
 
 		$query = $this->db->get();
 		
