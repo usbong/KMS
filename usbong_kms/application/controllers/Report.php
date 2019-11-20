@@ -92,13 +92,36 @@ class Report extends CI_Controller { //MY_Controller {
 					$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
 				}
 				break;				
+			case 5: //Report Image
+				$data["memberId"] = 1;
+				$data["reportItemId"] = $count; //1
+				
+				//TO-DO: -update: this
+				$data["is_success"] = "Report Image";
+				
+/*
+				$fileCount = count($_FILES['reportParamUploadFiles']['name']);
+								   
+				for($i=0;$i<$fileCount;$i++)
+				{
+					//get the contents of each file
+					$data["reportAnswerParam"] = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
+					
+					//echo "File contents: ".$fileContents."<br/>";
+
+					$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
+				}
+*/				
+				break;				
+
 		}
 
 		//added by Mike, 20191119
 		$_POST = array();
 								
-		//added by Mike, 20190722; edited by Mike, 20191118
-		if ($data["is_success"]) {									
+		//added by Mike, 20190722; edited by Mike, 20191120
+//		if ($data["is_success"]) {									
+		if (!empty($data["is_success"])) {									
 			if (!empty($responses)) {
 				$_SESSION['jsonResponses'] = json_encode($responses);
 								
@@ -143,6 +166,12 @@ class Report extends CI_Controller { //MY_Controller {
 	public function storeReportsForTheDayFromAllLocations()
 	{
 		$this->load->view('storeReportsForTheDayFromAllLocations');
+	}
+
+	//added by Mike, 20191120
+	public function storeReportImage()
+	{
+		$this->load->view('storeReportImage');
 	}
 
 	//added by Mike, 20191110
