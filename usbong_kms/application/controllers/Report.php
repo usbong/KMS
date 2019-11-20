@@ -29,43 +29,14 @@ class Report extends CI_Controller { //MY_Controller {
 			redirect(base_url()); //Report page
 		}
 	
-/*		$customer_id = $this->session->userdata('customer_id');
-
-		if (!isset($customer_id)) {
-			redirect('account/login'); //home page
-		}
+		$responses = array(); //added by Mike, 20191120
 	
-		$fields = array('productNameParam', 'productLinkParam', 'productTypeParam', 'quantityParam', 'totalBudgetParam', 'commentsParam');
-		
-		foreach ($fields as $field)
-		{
-			$data[$field] = $_POST[$field];
-		}
-*/
-
-/*
-		$field = "reportParam";
-//		while ($i = 1; $i <= 10; $i++) {
-		$count = 0; 
-		while ($count < 10) {
-			$data[$field.$count] = $_POST[$field.$count];			
-			$count++;
-		}
-		
-		$this->load->model('Report_Model');
-		$data["is_success"] = $this->Report_Model->insertReport($data);//, $member_id);
-*/
 		$this->load->model('Report_Model');
 		$this->load->model('Account_Model');
 
 		$field = "reportParam";
 		$count = 1;
-		
-		//removed by Mike, 20191025
-/*		
-		$data["memberNameParam"] = $_POST["memberNameParam"];
-		$data["memberId"] = $this->Account_Model->autoRegisterAccount($data);
-*/
+
 		//edited by Mike, 20191025		
 		$data["reportTypeNameParam"] = $_POST["reportTypeNameParam"];
 //		$data["reportTypeId"] = $_POST["reportTypeIdParam"];
@@ -103,31 +74,23 @@ class Report extends CI_Controller { //MY_Controller {
 				}
 			
 				//added by Mike, 20191118
-				//echo json_encode($responses);
-				
+				//echo json_encode($responses);				
 				break;
 			case 4: //Reports from All Locations
-					$data["memberId"] = 1;
-					$data["reportItemId"] = $count; //1
+				$data["memberId"] = 1;
+				$data["reportItemId"] = $count; //1
 
-//					$data["reportAnswerParam"] = $_FILES['reportParamUploadFiles']['name'];
-					$fileCount = count($_FILES['reportParamUploadFiles']['name']);
-//					echo "File count: ".$fileCount;
+				$fileCount = count($_FILES['reportParamUploadFiles']['name']);
+								   
+				for($i=0;$i<$fileCount;$i++)
+				{
+					//get the contents of each file
+					$data["reportAnswerParam"] = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
 					
-//				    $fileContents = "";
-				   
-					for($i=0;$i<$fileCount;$i++)
-					{
-						//get the contents of each file
-//						$fileContents = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
-						$data["reportAnswerParam"] = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
-						
-						//echo "File contents: ".$fileContents."<br/>";
+					//echo "File contents: ".$fileContents."<br/>";
 
-						$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
-					}
-					
-//					$data["is_success"] = $this->Report_Model->insertReportsFromAllLocations($data);//, $member_id);
+					$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
+				}
 				break;				
 		}
 
@@ -135,50 +98,24 @@ class Report extends CI_Controller { //MY_Controller {
 		$_POST = array();
 								
 		//added by Mike, 20190722; edited by Mike, 20191118
-		if ($data["is_success"]) {							
-/*			//removed by Mike, 20191118
-			//added by Mike, 20191116; removed by Mike, 20191117
-			$this->load->library('QRcode');
-
-			//note by Mike, 20191116: object instance, i.e. "qrcode", must be lower case
-			//$this->qrcode->png('the quick brown');
-
-			$this->qrcode->png(json_encode($responses));
-*/
-			$_SESSION['jsonResponses'] = json_encode($responses);
-			
-/*
-			echo "<script>
-					alert('You have successfully submitted your report. Thank you. Peace.');
-					
-					let newTab = window.open();
-					newTab.location.href = '".base_url()."';
-					
-					window.location.href='".site_url('report/autoGenerateQRCode/')."';
-				  </script>";			
-*/
-/*
-			//note: pop-up window is automatically blocked by default
-			echo "<script>
-					alert('You have successfully submitted your report. Thank you. Peace.');
-					
-					window.open('".base_url()."', '_blank');
-					window.location.href='".site_url('report/autoGenerateQRCode/')."';
-				  </script>";			
-*/
-			echo "<script>
-					alert('You have successfully submitted your report. Thank you. Peace.');					
-					window.location.href='".site_url('report/autoGenerateQRCodeImage/')."';
-				  </script>";			
-
-/*
-			echo "<script>
-					alert('You have successfully submitted your report. Thank you. Peace.');
-					window.location.href='".base_url()."';
-				  </script>";			
-*/
+		if ($data["is_success"]) {									
+			if (!empty($responses)) {
+				$_SESSION['jsonResponses'] = json_encode($responses);
+								
+				echo "<script>
+						alert('You have successfully submitted your report. Thank you. Peace.');					
+						window.location.href='".site_url('report/autoGenerateQRCodeImage/')."';
+					  </script>";			
+			}
+			else {
+				echo "<script>
+						alert('You have successfully submitted your report. Thank you. Peace.');
+						window.location.href='".base_url()."';
+					  </script>";			
+			}			
 		}			
 		else {
+			//TO-DO: -add: instructions to automatically file the unclassified incident report
 			echo "<script>
 					alert('PROBLEM: Your report is unclassified. We have automatically filed an incident report with the system administrator. We shall notify you of our analysis and the corresponding action to resolve it. Thank you. Peace.');
 					window.location.href='".base_url()."';
