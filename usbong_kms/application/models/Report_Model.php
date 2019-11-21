@@ -160,5 +160,32 @@ class Report_Model extends CI_Model
 		
 		return $query->result_array();
 	}		
+	
+	//added by Mike, 20191121
+	//TO-DO: -update: this
+	public function getListOfAllReportsFromSetLocation($param)
+	{			
+//		date_default_timezone_set('Asia/Hong_Kong');
+//		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');		
+
+/*		
+		$this->db->select('report_answer, report_item_id');
+		$this->db->where('report_type_id BETWEEN 3 AND 4'); //3 = "MOSC HQ"
+		$this->db->order_by('added_datetime_stamp', 'DESC');
+		$query = $this->db->get('report');
+		return $query->result_array();		
+*/
+
+		$this->db->select('t1.report_answer, t1.report_item_id, t2.member_last_name, t2.member_first_name');
+		$this->db->from('report as t1');
+		$this->db->join('member as t2', 't1.member_id = t2.member_id', 'LEFT');
+		$this->db->where('t1.report_type_id BETWEEN 3 AND 4'); //3 = "MOSC HQ"
+		$this->db->order_by('t1.added_datetime_stamp', 'DESC');
+
+		$query = $this->db->get();
+		
+		return $query->result_array();
+	}		
+
 }
 ?>
