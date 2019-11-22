@@ -195,4 +195,16 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewListOfAllReportsFromSVGH', $data);
 	}
+	
+	//added by Mike, 20191122
+	public function viewListOfAllReportsFromSLHCC()
+	{
+		$this->load->model('Report_Model');
+
+		//note that this function outputs the correct result when used in the correct location, i.e. Sta. Lucia Health Care Centre
+		//TO-DO: -update: this to not use the function, "getListOfAllReportsFromAllLocations()"
+		$data["result"] = $this->Report_Model->getListOfAllReportsFromAllLocations();
+
+		$this->load->view('viewListOfAllReportsFromSLHCC', $data);
+	}
 }
