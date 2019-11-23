@@ -95,23 +95,30 @@ class Report extends CI_Controller { //MY_Controller {
 			case 5: //Report Image
 				$data["memberId"] = 1;
 				$data["reportItemId"] = $count; //1
-				
+
+				//TO-DO: -add: store the QR Code image file location in the database				
+				//TO-DO: -add: store the contents, i.e. Report details, of the QR Code image file in the database				
 				//TO-DO: -update: this
 				$data["is_success"] = "Report Image";
 				
-/*
 				$fileCount = count($_FILES['reportParamUploadFiles']['name']);
 								   
 				for($i=0;$i<$fileCount;$i++)
 				{
 					//get the contents of each file
 					$data["reportAnswerParam"] = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
-					
-					//echo "File contents: ".$fileContents."<br/>";
 
-					$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
-				}
-*/				
+					//added by Mike, 20191123
+					$outputFolder = "pictures"; //note: this folder already exists
+					$outputFilename = $_FILES['reportParamUploadFiles']['name'][$i]; //.png
+					//$outputFile = "image.png";
+					
+					//echo "File contents: ".$data["reportAnswerParam"]."<br/>";
+
+					file_put_contents($outputFolder."/".$outputFilename, $data["reportAnswerParam"]);										
+
+//					$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
+				}				
 				break;				
 
 		}
