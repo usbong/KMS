@@ -1,14 +1,21 @@
 # Knowledge Management System (KMS)
 
-# Add-on Software Requirements
-## XAMPP
+## 1) Add-on Software Requirements
+### XAMPP
 https://www.apachefriends.org/index.html
 
 <b>Technologies:</b> Apache Web Server, MySQL, PHP, phpMyAdmin
 
+## 2) Add-on Software Tools
+### Chat
+[LAN Messenger Instant Messenger (Official Website)](http://lanmsngr.sourceforge.net/) <br/>
+Action: [Download](https://sourceforge.net/projects/lanmsngr/)
+
+#### Note
+1) LAN = Local Area Network
 
 # Open Source Software License
-Copyright 2019 Usbong Social Systems, Inc.
+Copyright 2019~2020 Usbong Social Systems, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
