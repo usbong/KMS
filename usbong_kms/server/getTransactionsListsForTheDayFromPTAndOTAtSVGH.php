@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190813
-  @date updated: 20200229
+  @date updated: 20200301
 
   Given:
   1) Existing reports with the transactions for the day in the database (DB)
@@ -48,8 +48,13 @@
 		if ($resultNewestDateTimeStamp->num_rows > 0)
 		{	
 			$sResultNewestAddedDateTimeStamp = $resultNewestDateTimeStamp->fetch_object()->added_datetime_stamp;
+			
+			//delete seconds in the datetime stamp
+			$sResultNewestAddedDateTimeStamp = substr($sResultNewestAddedDateTimeStamp,0, strlen($sResultNewestAddedDateTimeStamp)-3);
 
-			if ($result = $mysqli->query("SELECT * FROM `report` WHERE `added_datetime_stamp` ='".$sResultNewestAddedDateTimeStamp."'")) {
+//			echo $sResultNewestAddedDateTimeStamp;
+
+			if ($result = $mysqli->query("SELECT * FROM `report` WHERE `added_datetime_stamp` >='".$sResultNewestAddedDateTimeStamp."'")) {
 
 				$responses = array();
 			

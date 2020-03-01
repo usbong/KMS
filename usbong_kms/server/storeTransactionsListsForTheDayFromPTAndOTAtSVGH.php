@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20200227
+  @date updated: 20200301
 
   Given:
   1) List with the details of the transactions for the day at St. Vincent General Hospital (SVGH) : Orthopedic and Physical Rehabilitation Unit
@@ -49,7 +49,10 @@
 /*
 		//computer server
 		exec('C:\Windows\System32\cmd.exe /C START C:\Usbong\java\VBA\generatePayslipForTheDay\unit\"add-on software"\generateOTAndPTReportForTheDay.bat');
-*/				
+*/
+		//computer server
+		exec('C:\Windows\System32\cmd.exe /C START C:\Usbong\unit\"add-on software"\generatePTAndOTReportForTheDay_Download.bat');				
+				
 	}
 	// show an error if there is an issue with the database query
 	else
