@@ -46,17 +46,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
-	
-/*	
-		$searchData = array(
-				'customer_id' => $customer_id,
-				'searched_item' => $this->input->get('param'),
-				'added_datetime_stamp' => $dateTimeStamp
-		);
-		
-		$this->Search_Model->addSearchedField($searchData);
-*/		
-		
+
 		$this->load->view('browse', $data);
 
 /*		
@@ -110,8 +100,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		);
 
 		$data = $this->Browse_Model->getNamesListViaName($searchData);
-
-		echo $data;
+		
+		//TO-DO: -add: get only name strings from array 
+		echo $data[2]['report_description'];
 		
 		$this->load->view('browse', $data);
 
