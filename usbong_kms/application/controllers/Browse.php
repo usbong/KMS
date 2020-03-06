@@ -102,7 +102,21 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data = $this->Browse_Model->getNamesListViaName($searchData);
 		
 		//TO-DO: -add: get only name strings from array 
-		echo $data[2]['report_description'];
+		foreach ($data as $value) {
+			echo $value['report_description'];
+			
+			
+			echo "<br/><br/>";
+		}
+
+/*
+		foreach ($data as $value) {
+			echo $value['report_description'];
+			echo "<br/><br/>";
+		}
+*/
+		
+//		echo $data[2]['report_description'];
 		
 		$this->load->view('browse', $data);
 
