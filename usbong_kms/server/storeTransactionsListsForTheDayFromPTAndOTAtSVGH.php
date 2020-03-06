@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20200301
+  @date updated: 20200306
 
   Given:
   1) List with the details of the transactions for the day at St. Vincent General Hospital (SVGH) : Orthopedic and Physical Rehabilitation Unit
@@ -39,17 +39,30 @@
 */
 	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))		
 	{
+		
 		//TO-DO: -update: this to include further action by Computer Server after receiving and storing data into the database
+
+//			echo $reportDescription;
+			$iTotal = $data["iTotal"];
+			
+			for ($i=0; $i<$iTotal; $i++) {
+				$patientName = $data["i".$i]["1"];
+
+				if ($insertedResult = $mysqli->query("INSERT INTO `patient` (`patient_name`) VALUES ('".$patientName."');"))	{
+				}
+				// show an error if there is an issue with the database query
+				else
+				{
+						echo "Error: " . $mysqli->error;
+				}					
+			}				
+/*
+		if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))		
+		{
+*/
 		//Example: download from the database the uploaded data and store as .txt files in the correct location
 		//added by Mike, 20190902; edited by Mike, 20200227
 		//update the file locations, e.g. batch file, accordingly		
-/*		
-		exec('C:\Windows\System32\cmd.exe /C START C:\Usbong\java\VBA\generatePayslipForTheDay\unit\"add-on software"\generatePayslipForTheDay.bat');
-*/
-/*
-		//computer server
-		exec('C:\Windows\System32\cmd.exe /C START C:\Usbong\java\VBA\generatePayslipForTheDay\unit\"add-on software"\generateOTAndPTReportForTheDay.bat');
-*/
 		//computer server
 		exec('C:\Windows\System32\cmd.exe /C START C:\Usbong\unit\"add-on software"\generatePTAndOTReportForTheDay_Download.bat');				
 				
