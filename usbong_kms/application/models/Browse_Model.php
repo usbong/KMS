@@ -5,18 +5,27 @@ class Browse_Model extends CI_Model
 	{		
 //		echo "reportTypeNameParam: ".$param['reportTypeNameParam'];
 	
-		$this->db->select('report_description');
+		$this->db->select('report_description, report_id');
 //		$this->db->where('report_description', $param['name']);
-		$query = $this->db->get('report');
-		$row = $query->row();
+//		$this->db->where('report_description', $param['name']);
+		$this->db->order_by('added_datetime_stamp`', 'DESC');//ASC');
+		$this->db->limit(8);//1);
 		
-		if ($row == null) {			
+		$query = $this->db->get('report');
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
 			return False; //edited by Mike, 20190722
 		}
 		
-		//$reportTypeId = $row->report_type_id;
-		//return $row;
-		return $row->report_description;
+//		echo "report_id: ".$rowArray[0]['report_id'];
+		
+/*		return $row->report_description;
+*/
+//		return $rowArray[0]['report_description'];
+
+		return $rowArray;
 	}	
 }
 ?>
