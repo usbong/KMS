@@ -70,6 +70,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </style>
   </head>
 	  <script>
+		function copyText(iCount){
+//			alert("hello"+iCount);
+	 
+			//Reference: https://stackoverflow.com/questions/51625169/click-on-text-to-copy-a-link-to-the-clipboard;
+			//last accessed: 20200307
+			//answer by: colxi on 20180801; edited by: Lord Nazo on 20180801
+	 
+			var holdText = document.getElementById("patientNameId"+iCount).innerText;
+
+			const el = document.createElement('textarea');
+		    el.value = holdText;
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+			  
+			//alert("text: "+holdText);
+		}
 /*	  
 		  defaultScrollWidth = 0;
 		  
@@ -132,14 +150,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 	<br />
 	<br />
-	
+
+<!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
+-->	
 	<?php
 		//get only name strings from array 
 		if (isset($result)) {
+			$iCount = 1;
 			foreach ($result as $value) {
 	//			echo $value['report_description'];			
+/*	
 				echo $value['patient_name'];				
 				echo "<br/><br/>";
+*/
+	?>				
+				<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)" value="abc">
+					<div>
+	<?php
+					echo $value['patient_name'];
+					$iCount++;
+	?>		
+					</div>
+				</a>
+	<?php				
+				echo "<br/>";
 			}
 		}
 	?>
