@@ -4,14 +4,23 @@ class Browse_Model extends CI_Model
 	public function getNamesListViaName($param) 
 	{		
 //		echo "reportTypeNameParam: ".$param['reportTypeNameParam'];
-	
+/*	
 		$this->db->select('report_description, report_id');
-//		$this->db->where('report_description', $param['name']);
-//		$this->db->where('report_description', $param['name']);
+//		$this->db->where('report_description', $param['name']);		
 		$this->db->order_by('added_datetime_stamp`', 'DESC');//ASC');
 		$this->db->limit(8);//1);
 		
 		$query = $this->db->get('report');
+*/
+		$this->db->select('patient_name, patient_id');
+		$this->db->like('patient_name', $param['nameParam']);
+//		$this->db->order_by('added_datetime_stamp`', 'DESC');//ASC');
+		$this->db->limit(8);//1);
+		
+		$query = $this->db->get('patient');
+
+
+
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
 		
