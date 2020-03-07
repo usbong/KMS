@@ -12,7 +12,8 @@ class Browse_Model extends CI_Model
 		
 		$query = $this->db->get('report');
 */
-		$this->db->select('patient_name, patient_id');
+		$this->db->select('patient_name');//, patient_id');
+		$this->db->distinct();
 		$this->db->like('patient_name', $param['nameParam']);
 //		$this->db->order_by('added_datetime_stamp`', 'DESC');//ASC');
 		$this->db->limit(8);//1);
