@@ -59,7 +59,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							resize: none;
 
 							height: 100%;
-						}						
+						}	
+
+						img.Image-companyLogo {
+							max-width: 60%;
+							height: auto;
+						}
+						
     /**/
     </style>
     <title>
@@ -111,9 +117,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 	  </script>
   <body>
-	<h2>
-	Search Patient Names
-	</h2>
+	<table>
+	  <tr>
+		<td>				
+			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
+		</td>
+		<td>				
+			<h2>
+				Search Patient Names
+			</h2>
+		</td>
+	  </tr>
+	</table>
 	<span>
 	</span>
 	<!-- Form -->
@@ -155,25 +170,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->	
 	<?php
 		//get only name strings from array 
-		if (isset($result)) {
-			$iCount = 1;
-			foreach ($result as $value) {
-	//			echo $value['report_description'];			
-/*	
-				echo $value['patient_name'];				
-				echo "<br/><br/>";
-*/
-	?>				
-				<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)" value="abc">
-					<div>
-	<?php
-					echo $value['patient_name'];
-					$iCount++;
-	?>		
-					</div>
-				</a>
-	<?php				
+		if (isset($result)) {			
+			if ($result!=null) {		
+				$resultCount = count($result);
+				if ($resultCount==1) {
+					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
+				}			
+
 				echo "<br/>";
+				
+				$iCount = 1;
+				foreach ($result as $value) {
+		//			echo $value['report_description'];			
+	/*	
+					echo $value['patient_name'];				
+					echo "<br/><br/>";
+	*/
+		?>				
+					<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+						<div>
+		<?php
+						echo $value['patient_name'];
+						$iCount++;
+		?>		
+						</div>
+					</a>
+		<?php				
+					echo "<br/>";
+				}
+
+				echo '<div>***NOTHING FOLLOWS***';							
+			}
+			else {					
+				echo '<div>';					
+				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our patients\' names.';
+				echo '<br><br>Recommendation:';
+				echo '<br>&#x25CF; Reverify that the patient is <b>not</b> new.';				
+				echo '<br>&#x25CF; Reverify that the spelling is correct.';				
+				echo '</div>';					
 			}
 		}
 	?>
