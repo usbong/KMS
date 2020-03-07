@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200306
+' @date updated: 20200307
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -132,9 +132,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 	<br />
 	<br />
+	
+	<?php
+		//get only name strings from array 
+		if (isset($result)) {
+			foreach ($result as $value) {
+	//			echo $value['report_description'];			
+				echo $value['patient_name'];				
+				echo "<br/><br/>";
+			}
+		}
+	?>
 	<br />
 	<br />
-
+	<br />
+	<br />
 	<div class="copyright">
 		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
 	</div>		 
