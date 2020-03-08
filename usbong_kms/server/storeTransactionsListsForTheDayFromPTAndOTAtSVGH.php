@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20200307
+  @date updated: 20200308
 
   Given:
   1) List with the details of the transactions for the day at St. Vincent General Hospital (SVGH) : Orthopedic and Physical Rehabilitation Unit
@@ -49,6 +49,18 @@
 				$patientName = $data["i".$i]["1"];
 
 				if ($insertedResult = $mysqli->query("INSERT INTO `patient` (`patient_name`) VALUES ('".$patientName."');"))	{
+					
+					$patientId = $mysqli->insert_id;
+	
+					//TO-DO: -update: this to use the correct transaction_type_id
+					//TO-DO: -update: this to use the correct fee column index for in-pt					
+					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '1');"))	{
+					}
+					// show an error if there is an issue with the database query
+					else
+					{
+							echo "Error: " . $mysqli->error;
+					}											
 				}
 				// show an error if there is an issue with the database query
 				else
