@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200307
+' @date updated: 20200310
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -86,8 +86,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	 
 			//Reference: https://stackoverflow.com/questions/51625169/click-on-text-to-copy-a-link-to-the-clipboard;
 			//last accessed: 20200307
-			//answer by: colxi on 20180801; edited by: Lord Nazo on 20180801
-	 
+			//answer by: colxi on 20180801; edited by: Lord Nazo on 20180801	 
+/*	 
 			var holdText = document.getElementById("patientNameId"+iCount).innerText;
 
 			const el = document.createElement('textarea');
@@ -96,8 +96,69 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			el.select();
 			document.execCommand('copy');
 			document.body.removeChild(el);
-			  
+
 			//alert("text: "+holdText);
+*/
+			var sHoldTextPatientName = document.getElementById("patientNameId"+iCount).innerText;
+			var sHoldTextFee = document.getElementById("feeId"+iCount).innerText; //.innerText;
+
+//			alert("sHoldTextPatientName: "+sHoldTextPatientName);
+//			alert("sHoldTextFee: "+sHoldTextFee);
+
+			var sHoldTextTransactionTypeName = document.getElementById("transactionTypeNameId"+iCount).innerText;
+
+			var sTreatmentTypeName = document.getElementById("treatmentTypeNameId"+iCount).innerText;
+
+			var sDiscountAmount = "";
+			var sTotalAmount = "0";
+			
+			if (sHoldTextTransactionTypeName=="CASH") {
+				//alert("CASH!");
+				sTotalAmount = sHoldTextFee;
+			}
+			else if (sHoldTextTransactionTypeName=="SC/PWD") {
+				//note: solve the values of the other variables using one (1) known variable value
+				sTotalAmount = sHoldTextFee
+				sHoldTextFee = -sHoldTextFee/(0.20-1);
+				sDiscountAmount = "" + sHoldTextFee*0.20;
+			}
+			else if (sHoldTextTransactionTypeName=="NC") {
+				sHoldTextFee = "NC";				
+				sTotalAmount = "NC";				
+			}						
+			else { //hmo
+				sHoldTextFee = "HMO";				
+				sTotalAmount = sHoldTextTransactionTypeName.toLowerCase();				
+			}
+			
+			const el = document.createElement('textarea');
+/*		    
+			el.value = sHoldTextPatientName+ "\t" + sHoldTextFee + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
+			document.body.appendChild(el);
+*/			
+			if (sTreatmentTypeName=="SWT") {
+				el.value = sHoldTextPatientName + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" +sHoldTextFee + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
+			}
+			else if (sTreatmentTypeName=="LASER") {
+				el.value = sHoldTextPatientName + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" +sHoldTextFee + "\t" + "\t" + sDiscountAmount + "\t" + "\t" + sTotalAmount;
+			}
+			else if (sTreatmentTypeName=="OT") {
+				el.value = sHoldTextPatientName + "\t" + "\t" + sHoldTextFee + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
+			}
+			else if (sTreatmentTypeName=="IN-PT") {
+				el.value = sHoldTextPatientName + "\t" + "\t" + "\t" + "\t" + sHoldTextFee + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
+			}
+			else {
+				el.value = sHoldTextPatientName+ "\t" + sHoldTextFee + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
+			}
+			
+			document.body.appendChild(el);							
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+
+//			alert("text: "+sHoldTextPatientName + sHoldTextFee);//el.value);
+
 		}
 /*	  
 		  defaultScrollWidth = 0;
@@ -203,29 +264,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div>
 				<?php
 								echo $value['patient_name'];
-								$iCount++;
 				?>		
-								</div>
+								</div>								
 							</a>
 						</td>
 						<td>
+								<div id="transactionDateId<?php echo $iCount?>">
 							<?php
 								echo $value['transaction_date'];
 							?>
+								</div>
 						</td>
 						<td>
+<!--								<span id="99">
+-->
+								<span id="feeId<?php echo $iCount?>">
 							<?php
 								echo $value['fee'];
 							?>
+								</span>
 						</td>
 						<td>
+								<div id="transactionTypeNameId<?php echo $iCount?>">
 							<?php
 								echo $value['transaction_type_name'];
 							?>
+								</div>
 						</td>
+						<td>
+								<div id="treatmentTypeNameId<?php echo $iCount?>">
+							<?php
+								echo $value['treatment_type_name'];
+							?>
+								</div>
+						</td>
+
 					  </tr>
 					</table>					
 		<?php				
+					$iCount++;		
 					echo "<br/>";
 				}
 
