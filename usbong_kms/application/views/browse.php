@@ -66,6 +66,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							height: auto;
 						}
 						
+						table.search-result
+						{
+							border: 1pt
+						}
+						
     /**/
     </style>
     <title>
@@ -190,14 +195,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo "<br/><br/>";
 	*/
 		?>				
-					<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
-						<div>
-		<?php
-						echo $value['patient_name'];
-						$iCount++;
-		?>		
-						</div>
-					</a>
+		
+					<table>
+					  <tr>
+						<td>				
+							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+								<div>
+				<?php
+								echo $value['patient_name'];
+								$iCount++;
+				?>		
+								</div>
+							</a>
+						</td>
+						<td>
+							<?php
+								echo $value['transaction_date'];
+							?>
+						</td>
+						<td>
+							<?php
+								echo $value['fee'];
+							?>
+						</td>
+						<td>
+							<?php
+								echo $value['transaction_type_name'];
+							?>
+						</td>
+					  </tr>
+					</table>					
 		<?php				
 					echo "<br/>";
 				}
