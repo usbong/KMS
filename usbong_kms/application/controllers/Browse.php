@@ -101,7 +101,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data = $this->Browse_Model->getNamesListViaName($searchData);
 */
 
-		$data['result'] = $this->Browse_Model->getNamesListViaName($data);
+/*		$data['result'] = $this->Browse_Model->getNamesListViaName($data);
+*/
+	
+		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
 
 /*		
 		//TO-DO: -add: get only name strings from array 
