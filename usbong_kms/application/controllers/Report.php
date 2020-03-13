@@ -115,9 +115,15 @@ class Report extends CI_Controller { //MY_Controller {
 					
 					//echo "File contents: ".$data["reportAnswerParam"]."<br/>";
 
-					file_put_contents($outputFolder."/".$outputFilename, $data["reportAnswerParam"]);										
+					$data["outputFileLocation"] = $outputFolder."/".$outputFilename;
 
+					//file_put_contents($outputFolder."/".$outputFilename, $data["reportAnswerParam"]);										
+
+					file_put_contents($data["outputFileLocation"], $data["reportAnswerParam"]);										
 //					$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
+
+					$data["is_success"] = $this->Report_Model->insertReportImage($data);
+
 				}				
 				break;				
 
@@ -214,4 +220,15 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewListOfAllReportsFromSLHCC', $data);
 	}
+
+	//added by Mike, 20200313
+	public function viewAllReportImages()
+	{
+		$this->load->model('Report_Model');
+
+		$data["result"] = $this->Report_Model->getAllReportImages();
+
+		$this->load->view('viewAllReportImages', $data);
+	}
+
 }
