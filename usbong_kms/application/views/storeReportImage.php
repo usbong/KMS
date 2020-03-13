@@ -1,5 +1,5 @@
 <!--
-' Copyright 2019 Usbong Social Systems, Inc.
+' Copyright 2019~2020 Usbong Social Systems, Inc.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -9,11 +9,9 @@
 '
 ' @author: Michael Syson
   @date created: 20191120
-  @date updated: 20191120
-
+  @date updated: 20200313
   Given:
   1) Image with the details of the report
-
   Output:
   1) Automatically connect to the database (DB) and store the report image in the Knowledge Management System (KMS)
   
@@ -81,7 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 	<div class="copyright">
 		<!-- TO-DO: -add: automatically write the present year -->
-		<span>© Usbong Social Systems, Inc. 2011~2019. All rights reserved.</span>
+		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
 	</div>	
   </body>
 </html>
