@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200310
+' @date updated: 20200313
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -68,8 +68,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						table.search-result
 						{
-							border: 1pt
-						}
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}						
+
+						td.column
+						{
+							border: 1px dotted #ab9c7d;		
+						}						
 						
     /**/
     </style>
@@ -249,7 +255,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}			
 
 				echo "<br/>";
-				echo "<table>";
+				echo "<table class='search-result'>";
 				
 				$iCount = 1;
 				foreach ($result as $value) {
@@ -260,8 +266,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	*/
 		?>				
 		
-					  <tr>
-						<td>				
+					  <tr class="row">
+						<td class ="column">				
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
 								<div>
 				<?php
@@ -270,14 +276,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td>
+						<td class ="column">				
 								<div id="transactionDateId<?php echo $iCount?>">
 							<?php
 								echo $value['transaction_date'];
 							?>
 								</div>
 						</td>
-						<td>
+						<td class ="column">				
 <!--								<span id="99">
 -->
 								<span id="feeId<?php echo $iCount?>">
@@ -286,22 +292,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</span>
 						</td>
-						<td>
+						<td class ="column">				
 								<div id="transactionTypeNameId<?php echo $iCount?>">
 							<?php
 								echo $value['transaction_type_name'];
 							?>
 								</div>
 						</td>
-						<td>
+						<td class ="column">				
 								<div id="treatmentTypeNameId<?php echo $iCount?>">
 							<?php
 								echo $value['treatment_type_name'];
 							?>
 								</div>
 						</td>
-						<td>
-						<div id="treatmentDiagnosisId<?php echo $iCount?>">
+						<td class ="column">				
+								<div id="treatmentDiagnosisId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20200313
 								//echo $value['treatment_diagnosis'];
