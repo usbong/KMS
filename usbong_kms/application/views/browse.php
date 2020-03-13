@@ -301,6 +301,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<td>
+						<div id="treatmentDiagnosisId<?php echo $iCount?>">
+							<?php
+								//edited by Mike, 20200313
+								//echo $value['treatment_diagnosis'];
+								echo $value['treatment_diagnosis'] = str_replace("u00b0", "˚", $value['treatment_diagnosis']);							
+							?>
+								</div>
+						</td>
 
 					  </tr>
 					</table>					
