@@ -226,10 +226,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</table>
 		</div>
 		<br />
-		<br />		
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
-			Submit
+			Enter
 		</button>
 	</form>
 	<br />
@@ -250,6 +249,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}			
 
 				echo "<br/>";
+				echo "<table>";
 				
 				$iCount = 1;
 				foreach ($result as $value) {
@@ -260,7 +260,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	*/
 		?>				
 		
-					<table>
 					  <tr>
 						<td>				
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
@@ -310,15 +309,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-
 					  </tr>
-					</table>					
 		<?php				
 					$iCount++;		
-					echo "<br/>";
-				}
-
-				echo '<div>***NOTHING FOLLOWS***';							
+//					echo "<br/>";
+				}				
+				
+				echo "</table>";				
+				echo "<br/>";				
+				echo '<div>***NOTHING FOLLOWS***';	
 			}
 			else {					
 				echo '<div>';					
@@ -327,7 +326,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo '<br>&#x25CF; Reverify that the patient is <b>not</b> new.';				
 				echo '<br>&#x25CF; Reverify that the spelling is correct.';				
 				echo '</div>';					
-			}
+			}			
 		}
 	?>
 	<br />
