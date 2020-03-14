@@ -8,24 +8,27 @@
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
 ' @author: Michael Syson
-  @date created: 20191120
-  @date updated: 20200313
+  @date created: 20191110
+  @date updated: 20200314
   Given:
-  1) Image with the details of the report
+  1) Database (DB) containing the list of all the reports from all locations
+	
   Output:
-  1) Automatically connect to the database (DB) and store the report image in the Knowledge Management System (KMS)
+  1) Automatically connect to the DB and display on the Web Browser the list of all the reports in the DB  
   
   Note:
-  1) At present, use this web address to access the page to store the reports in the DB.
+  1) The details of each report in the list from the DB is in the JSON format.
+  
+  2) At present, use this web address to access the page to view the list of all the reports in the DB.
 	
-	.../usbong_kms/index.php/report/storeReportImage
+	.../usbong_kms/index.php/report/viewListOfAllReportsFromAllLocations
 	
   where: ... = web address of the computer server
 		   
   Examples: 
-	a) localhost/usbong_kms/index.php/report/storeReportsForTheDayFromAllLocations
-	b) 192.168.1.3/usbong_kms/index.php/report/storeReportsForTheDayFromAllLocations
-	c) www.usbong.ph/usbong_kms/index.php/report/storeReportsForTheDayFromAllLocations
+	a) localhost/usbong_kms/index.php/report/viewListOfAllReportsFromAllLocations
+	b) 192.168.1.3/usbong_kms/index.php/report/viewListOfAllReportsFromAllLocations
+	c) www.usbong.ph/usbong_kms/index.php/report/viewListOfAllReportsFromAllLocations
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -40,8 +43,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>
+      View All Report Images
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
-	/**/
+		/**/
 	                    body
                         {
                                 font-family: Arial;
@@ -81,6 +88,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							height: auto;
 						}
 						
+						img.Image-file {
+							max-width: 20%;
+							height: auto;
+						}			
+						
 						table.search-result
 						{
 <!--							border: 1px solid #ab9c7d;		
@@ -95,7 +107,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     /**/
     </style>
 	<title>
-      Store Report Image
+      View Report Image
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -156,7 +168,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<h2>
-		Store Report Image
+		View Report Image
 	</h2>
 	<?php
 		$iCount = 0
@@ -210,7 +222,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 			</td>
 			<td class ="column">			
-				<a href='<?php echo site_url('report/viewReportImage/'.$result[0]['patient_id'].'/'.$result[0]['transaction_id'])?>' id="viewImageId<?php echo $iCount?>">
+				<a href="#" id="viewImageId<?php echo $iCount?>">
 					<div>
 					View
 					</div>								
@@ -228,27 +240,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>				
 
 	<br/>
-	<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('image/confirm/'.$result[0]['transaction_id'])?>">
-		<input type="hidden" name="reportTypeNameParam" value="Report Image">
-		<input style="font-size: 16px;" id="uploadFilesId" name="reportParamUploadFiles[]" type="file" multiple="multiple" accept="image/*" onInput="showAlert();"/>
-	</form>
 
-	<script language="javascript" type="text/javascript">
-		function showAlert() {
-			document.getElementById('myFormId').submit();
-//			alert("Hey there!" + document.getElementById("uploadFilesId").value);
+	<?php	
+		//get only name strings from array 
+		if (isset($imageResult)) {			
+			if ($imageResult!=null) {		
+				$resultCount = count($imageResult);
+				if ($resultCount==1) {
+					echo '<div>Showing <b>'.count($imageResult).'</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.count($imageResult).'</b> results found.</div>';			
+				}			
+
+				echo "<br/>";
+				echo "<table class='search-result'>";
+				
+				$iCount = 1;
+				foreach ($imageResult as $value) {
+		//			echo $value['report_description'];			
+	/*	
+					echo $value['patient_name'];				
+					echo "<br/><br/>";
+	*/
+		?>						
+					  <tr class="row">
+						<td class ="column">				
+							<a href="#" id="imageFileId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+								<div>
+									<img class="Image-file" src="<?php echo base_url($value["image_filename"]);?>">
+								</div>								
+							</a>
+						</td>
+					  </tr>
+		<?php				
+					$iCount++;		
+//					echo "<br/>";
+				}				
+				
+				echo "</table>";				
+				echo "<br/>";				
+				echo '<div>***NOTHING FOLLOWS***';	
+			}
+			else {		
+				echo '<div>';					
+				echo 'No additional image.';
+				echo '</div>';
+
+/*			
+				echo '<div>';					
+				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our patients\' names.';
+				echo '<br><br>Recommendation:';
+				echo '<br>&#x25CF; Reverify that the patient is <b>not</b> new.';				
+				echo '<br>&#x25CF; Reverify that the spelling is correct.';				
+				echo '</div>';					
+*/				
+			}						
 		}
-	</script>
-	<br />
-	<br />
-	<br/>	
+	?>
+	
 	<br/>
-<?php
-	//removed by Mike, 20191025	
-	// close database connection
-/*	$mysqli->close();
-*/
-?>
 	<div class="copyright">
 		<!-- TO-DO: -add: automatically write the present year -->
 		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
