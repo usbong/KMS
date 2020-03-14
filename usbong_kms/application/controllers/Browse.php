@@ -58,6 +58,11 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function confirm()
 	{
 		$data['nameParam'] = $_POST["nameParam"]; //added by Mike, 20170616
+/*
+		if (!isset($_POST["nameParam"])) { //$data['nameParam'])) {
+			redirect('browse');
+		}
+*/
 
 /*
 		//from application/core/MY_Controller
