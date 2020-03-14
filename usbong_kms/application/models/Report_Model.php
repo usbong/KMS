@@ -93,7 +93,7 @@ class Report_Model extends CI_Model
 		$data = array(
 
 					'image_filename' => $param['outputFileLocation'],
-					'transaction_id' => 1 //$param['outputFileLocation'] //TO-DO: update this
+					'transaction_id' => $param["transactionId"], //1
 //					'added_datetime_stamp' => $addedDateTimeStamp
 				);
 		
