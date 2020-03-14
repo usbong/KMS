@@ -322,8 +322,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>						
 						</td>
+						<!--TO-DO: make into number $value['patient_name'] -->						
 						<td class ="column">			
-							<a href='<?php echo site_url('report/storeReportImage')?>' id="addImageId<?php echo $iCount?>">
+							<a href='<?php echo site_url('report/storeReportImage/'.$value['patient_id'])?>' id="addImageId<?php echo $iCount?>">
 								<div>
 								+Image
 								</div>								

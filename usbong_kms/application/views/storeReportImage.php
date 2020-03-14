@@ -158,6 +158,76 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h2>
 		Store Report Image
 	</h2>
+	<?php
+		$iCount = 0
+	?>
+	<table class='search-result'>
+		  <tr class="row">
+			<td class ="column">				
+				<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+					<div>
+	<?php
+					echo $result[0]['patient_name'];
+	?>		
+					</div>								
+				</a>
+			</td>
+			<td class ="column">				
+					<div id="transactionDateId<?php echo $iCount?>">
+				<?php
+					echo $result[0]['transaction_date'];
+				?>
+					</div>
+			</td>
+			<td class ="column">				
+					<span id="feeId<?php echo $iCount?>">
+				<?php
+					echo $result[0]['fee'];
+				?>
+					</span>
+			</td>
+			<td class ="column">				
+					<div id="transactionTypeNameId<?php echo $iCount?>">
+				<?php
+					echo $result[0]['transaction_type_name'];
+				?>
+					</div>
+			</td>
+			<td class ="column">				
+					<div id="treatmentTypeNameId<?php echo $iCount?>">
+				<?php
+					echo $result[0]['treatment_type_name'];
+				?>
+					</div>
+			</td>
+			<td class ="column">				
+					<div id="treatmentDiagnosisId<?php echo $iCount?>">
+				<?php
+					//edited by Mike, 20200313
+					//echo $value['treatment_diagnosis'];
+					echo $result[0]['treatment_diagnosis'] = str_replace("u00b0", "˚", $result[0]['treatment_diagnosis']);							
+				?>
+					</div>
+			</td>
+			<td class ="column">			
+				<a href="#" id="viewImageId<?php echo $iCount?>">
+					<div>
+					View
+					</div>								
+				</a>						
+			</td>
+			<!--TO-DO: make into number $value['patient_name'] -->
+			<td class ="column">
+				<a href='<?php echo site_url('report/storeReportImage/'.$result[0]['patient_id'])?>' id="addImageId<?php echo $iCount?>">
+					<div>
+					+Image
+					</div>								
+				</a>						
+			</td>
+		  </tr>
+	</table>				
+
+	<br/>
 	<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('image/confirm')?>">
 		<input type="hidden" name="reportTypeNameParam" value="Report Image">
 		<input style="font-size: 16px;" id="uploadFilesId" name="reportParamUploadFiles[]" type="file" multiple="multiple" accept="image/*" onInput="showAlert();"/>
