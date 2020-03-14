@@ -69,7 +69,9 @@ class Browse_Model extends CI_Model
 		$query = $this->db->get('transaction');
 */
 
-		$this->db->select('t1.patient_name, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis');
+/*		$this->db->select('t1.patient_name, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis');
+*/
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis');
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->distinct('t1.patient_name');
@@ -93,6 +95,27 @@ class Browse_Model extends CI_Model
 */
 //		return $rowArray[0]['report_description'];
 
+		return $rowArray;
+	}	
+
+	public function getDetailsListViaId($nameId) 
+	{		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+//		$this->db->distinct('t1.patient_name');
+//		$this->db->like('t1.patient_name', $param['nameParam']);
+		$this->db->where('t1.patient_id', $nameId);		
+		
+		$query = $this->db->get('patient');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
 		return $rowArray;
 	}	
 }
