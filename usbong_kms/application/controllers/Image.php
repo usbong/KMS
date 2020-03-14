@@ -64,14 +64,16 @@ class Image extends CI_Controller { //MY_Controller {
 					//get the contents of each file
 					$data["reportAnswerParam"] = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
 
-					//added by Mike, 20191123
-					$outputFolder = "pictures"; //note: this folder already exists
+					//added by Mike, 20191123; edited by Mike, 20200314
+//					$outputFolder = "pictures"; //note: this folder already exists
+					$outputFolder = "assets"; //note: this folder already exists	
+
 					$outputFilename = $_FILES['reportParamUploadFiles']['name'][$i]; //.png
 					//$outputFile = "image.png";
 					
 					//echo "File contents: ".$data["reportAnswerParam"]."<br/>";
 
-					$data["outputFileLocation"] = $outputFolder."/".$outputFilename;
+					$data["outputFileLocation"] = $outputFolder."/".$transactionId."-".$outputFilename;
 					
 					//added by Mike, 20200314
 					$data["transactionId"] = $transactionId;
