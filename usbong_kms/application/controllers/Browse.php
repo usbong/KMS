@@ -128,7 +128,7 @@ class Browse extends CI_Controller { //MY_Controller {
 */
 		
 //		echo $data[2]['report_description'];
-		
+				
 		$this->load->view('browse', $data);
 
 /*		

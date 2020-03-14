@@ -158,7 +158,7 @@ class Report extends CI_Controller { //MY_Controller {
 				  </script>";			
 		}
 	}
-
+	
 	//added by Mike, 20191117; edited by Mike, 20191118
 	public function autoGenerateQRCodeImage()//$param)
 	{				
@@ -181,10 +181,15 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('storeReportsForTheDayFromAllLocations');
 	}
 
-	//added by Mike, 20191120
-	public function storeReportImage()
-	{
-		$this->load->view('storeReportImage');
+	//added by Mike, 20191120; edited by Mike, 20200314
+//	public function storeReportImage()
+	public function storeReportImage($nameId)
+	{			
+		$this->load->model('Browse_Model');	
+	
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($nameId);
+	
+		$this->load->view('storeReportImage', $data);
 	}
 
 	//added by Mike, 20191110
