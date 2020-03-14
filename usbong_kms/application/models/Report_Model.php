@@ -164,5 +164,21 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20200313
+	public function getReportImageViaTransacionId($param) 
+	{			
+		$this->db->select('image_filename');
+//		$this->db->where('report_type_name', $param['reportTypeNameParam']);
+		$this->db->where('transaction_id', $param);
+		$query = $this->db->get('image');
+		$rowArray = $query->result_array();
+
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+
+		return $rowArray;
+	}	
+
 }
 ?>
