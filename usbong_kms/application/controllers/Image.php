@@ -75,6 +75,12 @@ class Image extends CI_Controller { //MY_Controller {
 
 					$data["outputFileLocation"] = $outputFolder."/".$transactionId."-".$outputFilename;
 					
+					//update filename if it already exists
+					$iCountFilename = 1;
+					while (file_exists($data["outputFileLocation"])) {
+						$data["outputFileLocation"] = str_replace(".", "(".$iCountFilename.").",$data["outputFileLocation"]);
+					}
+					
 					//added by Mike, 20200314
 					$data["transactionId"] = $transactionId;
 
