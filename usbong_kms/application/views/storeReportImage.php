@@ -228,7 +228,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>				
 
 	<br/>
-	<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('image/confirm')?>">
+	<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('image/confirm/'.$result[0]['transaction_id'])?>">
 		<input type="hidden" name="reportTypeNameParam" value="Report Image">
 		<input style="font-size: 16px;" id="uploadFilesId" name="reportParamUploadFiles[]" type="file" multiple="multiple" accept="image/*" onInput="showAlert();"/>
 	</form>
