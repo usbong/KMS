@@ -192,6 +192,18 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('storeReportImage', $data);
 	}
 
+	//added by Mike, 20200314
+	public function viewReportImage($nameId, $transactionId)
+	{				
+		$this->load->model('Browse_Model');	
+		$this->load->model('Report_Model');	
+	
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($nameId);
+		$data["imageResult"] = $this->Report_Model->getReportImageViaTransacionId($transactionId);
+
+		$this->load->view('viewReportImage', $data);
+	}
+
 	//added by Mike, 20191110
 	public function viewListOfAllReportsFromAllLocations()
 	{
