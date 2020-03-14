@@ -315,6 +315,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<td class ="column">			
+							<a href="#" id="viewImageId<?php echo $iCount?>">
+								<div>
+								View
+								</div>								
+							</a>						
+						</td>
+						<td class ="column">			
+							<a href='<?php echo site_url('report/storeReportImage')?>' id="addImageId<?php echo $iCount?>">
+								<div>
+								+Image
+								</div>								
+							</a>						
+						</td>
 					  </tr>
 		<?php				
 					$iCount++;		

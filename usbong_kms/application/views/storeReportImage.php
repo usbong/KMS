@@ -40,6 +40,60 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+	/**/
+	                    body
+                        {
+                                font-family: Arial;
+								font-size: 11pt
+                        }
+						
+						div.checkBox
+						{
+								border: 1.5pt solid black; height: 9pt; width: 9pt;
+								text-align: center;
+								float: left
+						}
+						
+						div.option
+						{
+								padding: 2pt;
+								display: inline-block;
+						}
+						
+						div.copyright
+						{
+								text-align: center;
+						}
+
+						input.browse-input
+						{
+							width: 100%;
+							max-width: 500px;
+														
+							resize: none;
+
+							height: 100%;
+						}	
+
+						img.Image-companyLogo {
+							max-width: 60%;
+							height: auto;
+						}
+						
+						table.search-result
+						{
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}						
+
+						td.column
+						{
+							border: 1px dotted #ab9c7d;		
+						}						
+						
+    /**/
+    </style>
 	<title>
       Store Report Image
     </title>
@@ -54,11 +108,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*	include('usbong-kms-connect.php');
 */	
 ?>	
-	<h1>
+	<table>
+	  <tr>
+		<td>				
+			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
+		</td>
+		<td>				
+			<h2>
+				Search Patient Names
+			</h2>
+		</td>
+	  </tr>
+	</table>
+	<span>
+	</span>
+	<!-- Form -->
+	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirm')?>">
+		<?php
+			$itemCounter = 1;
+		?>
+<!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
+		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
+-->
+
+		<div>
+			<table width="100%">
+<!--
+			  <tr>
+				<td>
+				  <b><span>Pangalan</span></b>
+				</td>
+			  </tr>
+-->
+			  <tr>
+				<td>				
+				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br />
+		<!-- Buttons -->
+		<button type="submit" class="Button-login">
+			Enter
+		</button>
+	</form>
+	<br />
+	<br />
+	<h2>
 		Store Report Image
-	</h1>
-	<br/>
-	<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('report/confirm')?>">
+	</h2>
+	<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('image/confirm')?>">
 		<input type="hidden" name="reportTypeNameParam" value="Report Image">
 		<input style="font-size: 16px;" id="uploadFilesId" name="reportParamUploadFiles[]" type="file" multiple="multiple" accept="image/*" onInput="showAlert();"/>
 	</form>
@@ -69,6 +169,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //			alert("Hey there!" + document.getElementById("uploadFilesId").value);
 		}
 	</script>
+	<br />
+	<br />
 	<br/>	
 	<br/>
 <?php

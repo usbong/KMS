@@ -1,5 +1,5 @@
 <!--
-' Copyright 2019 Usbong Social Systems, Inc.
+' Copyright 2019~2020 Usbong Social Systems, Inc.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -9,8 +9,7 @@
 '
 ' @author: Michael Syson
   @date created: 20191110
-  @date updated: 20191116
-
+  @date updated: 20200313
   Given:
   1) Database (DB) containing the list of all the reports from all locations
 	
@@ -138,7 +137,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}						
 /*								else if ($item["report_type_id"]==4) { //Incident Report at All Locations
 									echo $item["report_answer"];	
-
 								}
 */								
 							}
@@ -190,7 +188,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 	<div class="copyright">
 		<!-- TO-DO: -add: automatically write the present year -->
-		<span>© Usbong Social Systems, Inc. 2011~2019. All rights reserved.</span>
+		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
 	</div>	
   </body>
 </html>
