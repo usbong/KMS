@@ -53,8 +53,15 @@
 					$patientId = $mysqli->insert_id;
 	
 					//TO-DO: -update: this to use the correct transaction_type_id
-					//TO-DO: -update: this to use the correct fee column index for in-pt					
-					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '1');"))	{
+					//TO-DO: -update: this to use the correct fee column index for in-pt				
+/*					
+					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '".$data["i".$i]["transactionType"]."');"))	
+*/					
+/*
+					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `treatment_type_name`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '".$data["i".$i]["transactionType"]."', '".$data["i".$i]["treatmentType"]."');"))	
+*/						
+					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `treatment_type_name`, `treatment_diagnosis`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '".$data["i".$i]["transactionType"]."', '".$data["i".$i]["treatmentType"]."', '".$data["i".$i]["treatmentDiagnosis"]."');"))	
+					{
 					}
 					// show an error if there is an issue with the database query
 					else
