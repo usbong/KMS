@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20200308
+  @date updated: 20200317
 
   Given:
   1) List with the details of the transactions for the day at St. Vincent General Hospital (SVGH) : Orthopedic and Physical Rehabilitation Unit
@@ -37,7 +37,7 @@
 /*
 	if ($result = $mysqli->query("INSERT INTO `report` (`report_description`) VALUES ('usbong');"))
 */
-	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))		
+	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))
 	{
 		
 		//TO-DO: -update: this to include further action by Computer Server after receiving and storing data into the database
@@ -48,18 +48,40 @@
 			for ($i=0; $i<$iTotal; $i++) {
 				$patientName = $data["i".$i]["1"];
 
+				$patientId = null;
+
+				//TO-DO: -verify if patient name already exists
+				if ($selectedResult = $mysqli->query("SELECT `patient_id` FROM `patient` WHERE `patient_name` = '".$patientName."';"))	{
+//					$patientId = $selectedResult;
+
+					if ($selectedResult->num_rows > 0) {
+//						$row = $selectedResult->fetch_array();
+						$row = mysqli_fetch_array($selectedResult);
+						$patientId = $row["patient_id"];
+					}
+				}
+				// show an error if there is an issue with the database query
+				else
+				{
+					echo "Error: " . $mysqli->error;
+				}
+
+				if (!isset($patientId)) {
+					if ($insertedResult = $mysqli->query("INSERT INTO `patient` (`patient_name`) VALUES ('".$patientName."');"))	{						
+						$patientId = $mysqli->insert_id;
+					}
+					else
+					{
+						echo "Error: " . $mysqli->error;
+					}
+				}
+/*
 				if ($insertedResult = $mysqli->query("INSERT INTO `patient` (`patient_name`) VALUES ('".$patientName."');"))	{
 					
 					$patientId = $mysqli->insert_id;
-	
+*/	
 					//TO-DO: -update: this to use the correct transaction_type_id
 					//TO-DO: -update: this to use the correct fee column index for in-pt				
-/*					
-					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '".$data["i".$i]["transactionType"]."');"))	
-*/					
-/*
-					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `treatment_type_name`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '".$data["i".$i]["transactionType"]."', '".$data["i".$i]["treatmentType"]."');"))	
-*/						
 					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `treatment_type_name`, `treatment_diagnosis`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '".$data["i".$i]["transactionType"]."', '".$data["i".$i]["treatmentType"]."', '".$data["i".$i]["treatmentDiagnosis"]."');"))	
 					{
 					}
@@ -68,12 +90,15 @@
 					{
 							echo "Error: " . $mysqli->error;
 					}											
+
+/*
 				}
 				// show an error if there is an issue with the database query
 				else
 				{
 						echo "Error: " . $mysqli->error;
 				}					
+*/				
 			}				
 /*
 		if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))		
