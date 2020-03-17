@@ -37,6 +37,10 @@
 /*
 	if ($result = $mysqli->query("INSERT INTO `report` (`report_description`) VALUES ('usbong');"))
 */
+/*  //use this if location is SVGH
+	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`, `member_id`, `report_item_id`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."', '3', '10');"))		
+	{
+*/		
 	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))
 	{
 		
@@ -81,7 +85,7 @@
 					$patientId = $mysqli->insert_id;
 */	
 					//TO-DO: -update: this to use the correct transaction_type_id
-					//TO-DO: -update: this to use the correct fee column index for in-pt				
+					//TO-DO: -update: this to use the correct fee column index for in-pt					
 					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `treatment_type_name`, `treatment_diagnosis`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '".$data["i".$i]["transactionType"]."', '".$data["i".$i]["treatmentType"]."', '".$data["i".$i]["treatmentDiagnosis"]."');"))	
 					{
 					}
