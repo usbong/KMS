@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200314
+' @date updated: 20200321
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -75,8 +75,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-						}						
-						
+						}
+
+<!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
+	last accessed: 20200321
+	answer by: Rich Bradshaw on 20110903T0759
+	edited by: Peter Mortensen on 20190511T2239
+-->
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */												
     /**/
     </style>
     <title>
