@@ -44,6 +44,8 @@
 	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))
 	{
 		
+		$reportId = $mysqli->insert_id;
+		
 		//TO-DO: -update: this to include further action by Computer Server after receiving and storing data into the database
 /*		
 			private static final int INPUT_PATIENT_NAME_COLUMN_MOSC_HQ = 2; //column C
@@ -133,7 +135,11 @@
 /*
 					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["transactionType"]."');"))	
 */						
-					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `medical_doctor_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."');"))	
+/*
+					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))	
+*/
+					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))	
+				
 					{
 					}
 					// show an error if there is an issue with the database query
