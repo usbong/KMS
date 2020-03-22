@@ -90,6 +90,36 @@
 						echo "Error: " . $mysqli->error;
 					}
 				}
+
+				$reportFilenameArray = explode("\\",$data["report_filename"]);				
+				$medicalDoctorName = str_replace(".txt", "", $reportFilenameArray[array_key_last($reportFilenameArray)]);
+
+				//verify if medical doctor name already exists
+				if ($selectedResult = $mysqli->query("SELECT `medical_doctor_id` FROM `medical_doctor` WHERE `medical_doctor_name` = '".$medicalDoctorName."';"))	{
+//					$patientId = $selectedResult;
+
+					if ($selectedResult->num_rows > 0) {
+//						$row = $selectedResult->fetch_array();
+						$row = mysqli_fetch_array($selectedResult);
+						$medicalDoctorId = $row["medical_doctor_id"];
+					}
+				}
+				// show an error if there is an issue with the database query
+				else
+				{
+					echo "Error: " . $mysqli->error;
+				}
+
+				if (!isset($medicalDoctorId)) {
+					if ($insertedResult = $mysqli->query("INSERT INTO `medical_doctor` (`medical_doctor_name`) VALUES ('".$medicalDoctorName."');"))	{						
+						$medicalDoctorId = $mysqli->insert_id;
+					}
+					else
+					{
+						echo "Error: " . $mysqli->error;
+					}
+				}
+				
 /*
 				if ($insertedResult = $mysqli->query("INSERT INTO `patient` (`patient_name`) VALUES ('".$patientName."');"))	{
 					
@@ -100,14 +130,17 @@
 /*
 					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `treatment_type_name`, `treatment_diagnosis`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["17"]."', '".$data["i".$i]["transactionType"]."', '".$data["i".$i]["treatmentType"]."', '".$data["i".$i]["treatmentDiagnosis"]."');"))	
 */						
+/*
 					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["transactionType"]."');"))	
+*/						
+					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `medical_doctor_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."');"))	
 					{
 					}
 					// show an error if there is an issue with the database query
 					else
 					{
 							echo "Error: " . $mysqli->error;
-					}											
+					}																
 			}				
 
 		//Example: download from the database the uploaded data and store as .txt files in the correct location
