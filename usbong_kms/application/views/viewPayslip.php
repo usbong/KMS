@@ -75,6 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
+							text-align: right
 						}						
 						
     /**/
@@ -226,6 +227,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "<br/>";
 				echo "<table class='search-result'>";
 				
+				//TO-DO: -add: table headers
+?>				
+					  <tr class="row">
+						<td class ="column">				
+								<span>
+							<?php
+								echo "COUNT";
+							?>
+								</span>
+						</td>
+
+						<td class ="column">				
+								<div>
+				<?php
+								echo "PATIENT NAME";
+				?>		
+								</div>								
+						</td>
+						<td class ="column">				
+								<span>
+							<?php
+								echo "FEE";
+							?>
+								</span>
+						</td>
+						<td class ="column">				
+								<div>
+							<?php
+									echo "MOSC";
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div>
+							<?php
+									echo "NET PF";
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div>
+							<?php
+									echo "NOTES";
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div>
+							<?php
+									echo "X-RAY FEE";
+							?>
+								</div>
+						</td>						
+					  </tr>
+<?php				
 				$iCount = 1;
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
@@ -236,6 +292,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>				
 		
 					  <tr class="row">
+						<td class ="column">				
+								<span id="countId<?php echo $iCount?>">
+							<?php
+								echo $iCount;
+							?>
+								</span>
+						</td>
+
 						<td class ="column">				
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
 								<div>
@@ -263,20 +327,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</span>
 						</td>
+
 						<td class ="column">				
-								<div id="transactionTypeNameId<?php echo $iCount?>">
+								<div id="moscFeeId<?php echo $iCount?>">
 							<?php
-								echo $value['transaction_type_name'];
+									echo $value['fee']*.30;
 							?>
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="treatmentTypeNameId<?php echo $iCount?>">
+								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
-								echo $value['treatment_type_name'];
+									echo $value['fee']*.70;
 							?>
 								</div>
 						</td>
+						<td class ="column">				
+								<div id="notesId<?php echo $iCount?>">
+							<?php
+									if ($value['notes']=="") {
+										echo "none";
+									}
+									else {
+										echo $value['notes'];
+									}
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div id="notesId<?php echo $iCount?>">
+							<?php
+									echo $value['x_ray_fee'];
+							?>
+								</div>
+						</td>						
 					  </tr>
 		<?php				
 					$iCount++;		
