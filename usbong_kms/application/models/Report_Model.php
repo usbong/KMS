@@ -229,6 +229,34 @@ class Report_Model extends CI_Model
 
 		return $rowArray;
 	}	
+	
+	//added by Mike, 20191110
+	public function getListOfAllReportsFromAllLocations()//$param)
+	{			
+//		date_default_timezone_set('Asia/Hong_Kong');
+//		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');		
 
+/*		
+		$this->db->select('report_answer, report_item_id');
+		$this->db->where('report_type_id BETWEEN 3 AND 4'); //3 = "MOSC HQ"
+		$this->db->order_by('added_datetime_stamp', 'DESC');
+		$query = $this->db->get('report');
+		return $query->result_array();		
+*/
+
+		$this->db->select('t1.report_answer, t1.report_item_id, t2.member_last_name, t2.member_first_name');
+		$this->db->from('report as t1');
+		$this->db->join('member as t2', 't1.member_id = t2.member_id', 'LEFT');
+		$this->db->where('t1.report_type_id BETWEEN 3 AND 4'); //3 = "MOSC HQ"
+		$this->db->order_by('t1.added_datetime_stamp', 'DESC');
+//		$this->db->order_by('t1.added_datetime_stamp', 'DESC');
+//		$this->db->order_by('t1.report_item_id', 'ASC');		
+//		$this->db->order_by('t1.added_datetime_stamp DESC, t1.report_item_id ASC');
+		// Produces: ORDER BY `title` DESC, `name` ASC
+
+		$query = $this->db->get();
+		
+		return $query->result_array();
+	}		
 }
 ?>
