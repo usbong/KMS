@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200323
+' @date updated: 20200324
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -478,21 +478,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td class ="column">				
 						<div>
 					<?php
-						echo $iTotalFee;
+						echo "<b>".$iTotalFee."</b>";
 					?>
 						</div>
 				</td>
 				<td class ="column">				
 						<div>
 					<?php
-						echo $iTotalMOSC;
+						echo "<b>".$iTotalMOSC."</b>";
 					?>
 						</div>
 				</td>
 				<td class ="column">				
 						<div>
 					<?php
-						echo $iTotalNetPF;
+						echo "<b>".$iTotalNetPF."</b>";
 					?>
 						</div>
 				</td>
@@ -506,7 +506,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td class ="column">				
 						<div>
 					<?php
-						echo $iTotalXRayFee;
+						echo "<b>".$iTotalXRayFee."</b>";
 					?>
 						</div>
 				</td>						
