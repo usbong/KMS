@@ -29,21 +29,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	/**/
 	                    body
                         {
-                                font-family: Arial;
-								font-size: 11pt
+							font-family: Arial;
+							font-size: 11pt
                         }
 						
 						div.checkBox
 						{
-								border: 1.5pt solid black; height: 9pt; width: 9pt;
-								text-align: center;
-								float: left
+							border: 1.5pt solid black; height: 9pt; width: 9pt;
+							text-align: center;
+							float: left
 						}
 						
 						div.option
 						{
-								padding: 2pt;
-								display: inline-block;
+							padding: 2pt;
+							display: inline-block;
 						}
 						
 						div.copyright
@@ -77,10 +77,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
+							float: left;
+							text-align: center;
+							padding-left: 20px;
+							padding-top: 10px;
+						}
+
+						img.Image-moscLogo {
+							max-width: 20%;
+							height: auto;
+							float: left;
+							text-align: center;
 						}
 						
 						table.search-result
 						{
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}						
+
+						table.imageTable
+						{
+							width: 50%;
 <!--							border: 1px solid #ab9c7d;		
 -->
 						}						
@@ -91,6 +109,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right
 						}						
 						
+						td.imageColumn
+						{
+							width: 40%;
+							display: inline-block;
+						}						
+
+						td.pageNameColumn
+						{
+							width: 50%;
+							display: inline-block;
+							text-align: right;
+						}						
+
     /**/
     </style>
     <title>
@@ -206,20 +237,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 	  </script>
   <body>
-	<table>
+	<table class="imageTable">
 	  <tr>
-		<td>				
+		<td class="imageColumn">				
+			<img class="Image-moscLogo" src="<?php echo base_url('assets/images/moscLogo.jpg');?>">		
 			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
 		</td>
-		<td>				
+		<td class="pageNameColumn">
 			<h2>
 				Payslip for the Day
-			</h2>
+			</h2>		
 		</td>
 	  </tr>
 	</table>
-	<span>
-	</span>
 	<br/>
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
