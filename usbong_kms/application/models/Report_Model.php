@@ -207,7 +207,9 @@ class Report_Model extends CI_Model
 		$this->db->distinct('t1.patient_name');
 		$this->db->where('t2.report_id=',$row->report_id);
 		$this->db->like('t3.medical_doctor_name', $param['medicalDoctorName']);
-		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
+//		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
+		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
+
 		//$this->db->limit(8);//1);
 		
 		$query = $this->db->get('patient');
