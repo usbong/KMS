@@ -41,10 +41,21 @@
 	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`, `member_id`, `report_item_id`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."', '3', '10');"))		
 	{
 */		
-	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))
-	{
+
+//	echo "report_filename: " .$data["report_filename"];
+//	echo "report_type_id: " .$data["report_type_id"];
+//	$data["report_item_id"] = 1;
+//	$data["member_id"] = 3;
+
+//	$data["report_filename"] = "hello";
+//	$data["report_type_id"] = 2;
 		
+	//note: verify that member_id and report_item_id in report table structure is automatically defined to use a default value
+	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))
+	{		
 		$reportId = $mysqli->insert_id;
+
+		echo "reportId: " .$reportId;
 		
 		//TO-DO: -update: this to include further action by Computer Server after receiving and storing data into the database
 /*		
@@ -66,7 +77,7 @@
 				$patientName = $data["i".$i]["2"];
 
 				$patientId = null;
-
+				
 				//TO-DO: -verify if patient name already exists
 				if ($selectedResult = $mysqli->query("SELECT `patient_id` FROM `patient` WHERE `patient_name` = '".$patientName."';"))	{
 //					$patientId = $selectedResult;
