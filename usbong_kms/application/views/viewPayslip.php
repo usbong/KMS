@@ -48,7 +48,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						div.copyright
 						{
-								text-align: center;
+							text-align: center;
+						}
+						
+						div.patientName
+						{
+							text-align: left;
+						}
+
+						div.tableHeader
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;
 						}
 
 						input.browse-input
@@ -200,22 +213,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td>				
 			<h2>
-				Payslip for the Day [<?php echo date("Y-m-d, l");?>]
+				Payslip for the Day
 			</h2>
 		</td>
 	  </tr>
 	</table>
 	<span>
 	</span>
-	<br />
-	<br />
-
+	<br/>
+	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
+	</div>
+	<b>MEDICAL DOCTOR: </b><?php echo $result[0]["medical_doctor_name"];?>
+	<br/>
+	<br/>
+	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
 		//get only name strings from array 
 		if (isset($result)) {			
 			if ($result!=null) {		
+/*			
+				echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];
+				echo "<br/>";
+				echo "<br/>";
+*/			
 				$resultCount = count($result);
 				if ($resultCount==1) {
 					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
@@ -231,50 +253,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>				
 					  <tr class="row">
 						<td class ="column">				
-								<span>
+								<div class="tableHeader">
 							<?php
 								echo "COUNT";
 							?>
-								</span>
+								</div>
 						</td>
 
 						<td class ="column">				
-								<div>
+								<div class="tableHeader">
 				<?php
 								echo "PATIENT NAME";
 				?>		
 								</div>								
 						</td>
 						<td class ="column">				
-								<span>
+								<div class="tableHeader">
 							<?php
 								echo "FEE";
 							?>
-								</span>
+								</div>
 						</td>
 						<td class ="column">				
-								<div>
+								<div class="tableHeader">
 							<?php
 									echo "MOSC";
 							?>
 								</div>
 						</td>
 						<td class ="column">				
-								<div>
+								<div class="tableHeader">
 							<?php
 									echo "NET PF";
 							?>
 								</div>
 						</td>
 						<td class ="column">				
-								<div>
+								<div class="tableHeader">
 							<?php
 									echo "NOTES";
 							?>
 								</div>
 						</td>
 						<td class ="column">				
-								<div>
+								<div class="tableHeader">
 							<?php
 									echo "X-RAY FEE";
 							?>
@@ -302,7 +324,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<td class ="column">				
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
-								<div>
+								<div class="patientName">
 				<?php
 								echo $value['patient_name'];
 				?>		
@@ -330,15 +352,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<td class ="column">				
 								<div id="moscFeeId<?php echo $iCount?>">
-							<?php
+							<?php							
+								if (strtoupper($value['notes'])=="PRIVATE") {
+									echo 0;
+								}
+								else {
 									echo $value['fee']*.30;
+								}
 							?>
 								</div>
 						</td>
 						<td class ="column">				
 								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
+								if (strtoupper($value['notes'])=="PRIVATE") {
+									echo $value['fee'];
+								}
+								else {
 									echo $value['fee']*.70;
+								}
 							?>
 								</div>
 						</td>
@@ -346,10 +378,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="notesId<?php echo $iCount?>">
 							<?php
 									if ($value['notes']=="") {
-										echo "none";
+										echo "NONE";
 									}
 									else {
-										echo $value['notes'];
+										echo strtoupper($value['notes']);
 									}
 							?>
 								</div>
