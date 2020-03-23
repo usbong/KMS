@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200322
+' @date updated: 20200323
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -223,13 +223,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
-	<b>MEDICAL DOCTOR: </b><?php echo $result[0]["medical_doctor_name"];?>
+	<?php 
+		if ($result[0]["medical_doctor_name"]==""){
+			echo "<br/>There are no transactions for the day.";
+		}
+		else {
+			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
+		}
+	?>
 	<br/>
 	<br/>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
+		$iTotalFee = 0;
+		$iTotalMOSC = 0;
+		$iTotalNetPF = 0;
+		$iTotalXRayFee = 0;
+	
 		//get only name strings from array 
 		if (isset($result)) {			
 			if ($result!=null) {		
@@ -249,7 +261,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "<br/>";
 				echo "<table class='search-result'>";
 				
-				//TO-DO: -add: table headers
+				//add: table headers
 ?>				
 					  <tr class="row">
 						<td class ="column">				
@@ -346,6 +358,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<span id="feeId<?php echo $iCount?>">
 							<?php
 								echo $value['fee'];
+								
+								$iTotalFee += $value['fee'];
 							?>
 								</span>
 						</td>
@@ -355,10 +369,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php							
 								if (strtoupper($value['notes'])=="PRIVATE") {
 									echo 0;
+									
+									$iMOSC = 0;
 								}
 								else {
 									echo $value['fee']*.30;
+
+									$iMOSC = $value['fee']*.30;
 								}
+
+								$iTotalMOSC += $iMOSC;
 							?>
 								</div>
 						</td>
@@ -367,10 +387,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								if (strtoupper($value['notes'])=="PRIVATE") {
 									echo $value['fee'];
+									
+									$iNetPF = $value['fee'];
 								}
 								else {
 									echo $value['fee']*.70;
+
+									$iNetPF = $value['fee']*.70;
 								}
+
+								$iTotalNetPF += $iNetPF;
 							?>
 								</div>
 						</td>
@@ -389,7 +415,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="notesId<?php echo $iCount?>">
 							<?php
-									echo $value['x_ray_fee'];
+								echo $value['x_ray_fee'];
+
+								$iTotalXRayFee += $value['x_ray_fee'];
 							?>
 								</div>
 						</td>						
@@ -398,7 +426,62 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$iCount++;		
 //					echo "<br/>";
 				}				
-				
+
+// add row for total counts
+?>
+			  <tr class="row">
+				<td class ="column">				
+						<div>
+					<?php
+//								echo "COUNT";
+					?>
+						</div>
+				</td>
+
+				<td class ="column">				
+						<div>
+		<?php
+//								echo "PATIENT NAME";
+		?>		
+						</div>								
+				</td>
+				<td class ="column">				
+						<div>
+					<?php
+						echo $iTotalFee;
+					?>
+						</div>
+				</td>
+				<td class ="column">				
+						<div>
+					<?php
+						echo $iTotalMOSC;
+					?>
+						</div>
+				</td>
+				<td class ="column">				
+						<div>
+					<?php
+						echo $iTotalNetPF;
+					?>
+						</div>
+				</td>
+				<td class ="column">				
+						<div>
+					<?php
+//									echo "NOTES";
+					?>
+						</div>
+				</td>
+				<td class ="column">				
+						<div>
+					<?php
+						echo $iTotalXRayFee;
+					?>
+						</div>
+				</td>						
+			  </tr>
+<?php				
 				echo "</table>";				
 				echo "<br/>";				
 				echo '<div>***NOTHING FOLLOWS***';	
