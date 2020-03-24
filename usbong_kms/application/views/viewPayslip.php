@@ -140,14 +140,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//answer by: colxi on 20180801; edited by: Lord Nazo on 20180801	 
 /*	 
 			var holdText = document.getElementById("patientNameId"+iCount).innerText;
-
 			const el = document.createElement('textarea');
 		    el.value = holdText;
 			document.body.appendChild(el);
 			el.select();
 			document.execCommand('copy');
 			document.body.removeChild(el);
-
 			//alert("text: "+holdText);
 */
 			var sHoldTextPatientName = document.getElementById("patientNameId"+iCount).innerText;
@@ -220,7 +218,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  function auto_grow(element) {
 			element.style.height = "5px";
 			element.style.height = (element.scrollHeight*4)+"px";
-
 			if (defaultScrollWidth == 0) {
 				defaultScrollWidth = element.scrollWidth; //i.e. 42% of the width of the full width of the Browser Window
 				alert("defaultScrollWidth: "+defaultScrollWidth);
@@ -229,7 +226,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //				defaultScrollWidth = 100%;
 				defaultScrollWidth = element.scrollWidth;
 //				alert("defaultScrollWidth: "+defaultScrollWidth);
-
 			}
 				
 			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
@@ -397,7 +393,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="moscFeeId<?php echo $iCount?>">
 							<?php							
-								if (strtoupper($value['notes'])=="PRIVATE") {
+								//edited by Mike, 20200324
+//								if (strtoupper($value['notes'])=="PRIVATE") {
+								if (strpos(strtoupper($value['notes']), "PRIVATE") !== false) {
 									echo 0;
 									
 									$iMOSC = 0;
@@ -415,7 +413,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
-								if (strtoupper($value['notes'])=="PRIVATE") {
+//								if (strtoupper($value['notes'])=="PRIVATE") {
+								if (strpos(strtoupper($value['notes']), "PRIVATE") !== false) {
 									echo $value['fee'];
 									
 									$iNetPF = $value['fee'];
