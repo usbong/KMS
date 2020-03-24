@@ -30,7 +30,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt
+							font-size: 11pt;
+
+							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							width: 670px
                         }
 						
 						div.checkBox
@@ -98,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						table.imageTable
 						{
-							width: 50%;
+							width: 100%;
 <!--							border: 1px solid #ab9c7d;		
 -->
 						}						
@@ -140,12 +143,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//answer by: colxi on 20180801; edited by: Lord Nazo on 20180801	 
 /*	 
 			var holdText = document.getElementById("patientNameId"+iCount).innerText;
+
 			const el = document.createElement('textarea');
 		    el.value = holdText;
 			document.body.appendChild(el);
 			el.select();
 			document.execCommand('copy');
 			document.body.removeChild(el);
+
 			//alert("text: "+holdText);
 */
 			var sHoldTextPatientName = document.getElementById("patientNameId"+iCount).innerText;
@@ -218,6 +223,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  function auto_grow(element) {
 			element.style.height = "5px";
 			element.style.height = (element.scrollHeight*4)+"px";
+
 			if (defaultScrollWidth == 0) {
 				defaultScrollWidth = element.scrollWidth; //i.e. 42% of the width of the full width of the Browser Window
 				alert("defaultScrollWidth: "+defaultScrollWidth);
@@ -226,6 +232,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //				defaultScrollWidth = 100%;
 				defaultScrollWidth = element.scrollWidth;
 //				alert("defaultScrollWidth: "+defaultScrollWidth);
+
 			}
 				
 			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
@@ -393,9 +400,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="moscFeeId<?php echo $iCount?>">
 							<?php							
-								//edited by Mike, 20200324
-//								if (strtoupper($value['notes'])=="PRIVATE") {
-								if (strpos(strtoupper($value['notes']), "PRIVATE") !== false) {
+								if (strtoupper($value['notes'])=="PRIVATE") {
 									echo 0;
 									
 									$iMOSC = 0;
@@ -413,8 +418,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
-//								if (strtoupper($value['notes'])=="PRIVATE") {
-								if (strpos(strtoupper($value['notes']), "PRIVATE") !== false) {
+								if (strtoupper($value['notes'])=="PRIVATE") {
 									echo $value['fee'];
 									
 									$iNetPF = $value['fee'];
