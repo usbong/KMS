@@ -185,6 +185,7 @@ class Report_Model extends CI_Model
 	{	
 		$this->db->select('report_id'); //, t2.treatment_diagnosis');
 		$this->db->like('report_filename', $param['medicalDoctorName']);
+		$this->db->like('added_datetime_stamp',date("Y-m-d"));
 		$this->db->order_by('added_datetime_stamp', 'DESC');
 		$query = $this->db->get('report');
 
