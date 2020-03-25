@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200314
+' @date updated: 20200325
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -302,7 +302,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="treatmentTypeNameId<?php echo $iCount?>">
 							<?php
-								echo $value['treatment_type_name'];
+								//edited by Mike, 20200325
+								if ($value['treatment_type_name']=="") {
+									echo "CONSULT";
+								}
+								else {
+									echo $value['treatment_type_name'];
+								}
 							?>
 								</div>
 						</td>
