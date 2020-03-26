@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200325
+' @date updated: 20200326
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -96,6 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </style>
   </head>
 	  <script>
+		//SVGH
 		function copyText(iCount){
 //			alert("hello"+iCount);
 	 
@@ -199,6 +200,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
 		  }
 */
+
+		function copyTextMOSC(iCount){
+//			alert("hello"+iCount);
+	 
+			//Reference: https://stackoverflow.com/questions/51625169/click-on-text-to-copy-a-link-to-the-clipboard;
+			//last accessed: 20200307
+			//answer by: colxi on 20180801; edited by: Lord Nazo on 20180801	 
+
+			var sHoldTextPatientName = document.getElementById("patientNameId"+iCount).innerText;
+			
+			const el = document.createElement('textarea');
+
+			el.value = sHoldTextPatientName;
+			
+			document.body.appendChild(el);							
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+
+//			alert("text: "+sHoldTextPatientName + sHoldTextFee);//el.value);
+
+		}
 	  </script>
   <body>
 	<table>
@@ -277,7 +300,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
-							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
 								<div>
 				<?php
 								echo $value['patient_name'];
