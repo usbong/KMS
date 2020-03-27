@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200326
+' @date updated: 20200327
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -29,8 +29,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	/**/
 	                    body
                         {
-                                font-family: Arial;
-								font-size: 11pt
+                            font-family: Arial;
+							font-size: 11pt;
+								
+							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							width: 670px								
                         }
 						
 						div.checkBox
@@ -50,6 +53,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 								text-align: center;
 						}
+						
+						div.tableHeader
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;
+						}						
 
 						input.browse-input
 						{
@@ -64,7 +75,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
+							float: left;
+							text-align: center;
+							padding-left: 20px;
+							padding-top: 10px;
 						}
+
+						img.Image-moscLogo {
+							max-width: 20%;
+							height: auto;
+							float: left;
+							text-align: center;
+						}						
 						
 						table.search-result
 						{
@@ -72,10 +94,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+						table.imageTable
+						{
+							width: 100%;
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}						
+
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-						}
+							text-align: right
+						}						
+						
+						td.imageColumn
+						{
+							width: 40%;
+							display: inline-block;
+						}				
+
+						td.pageNameColumn
+						{
+							width: 50%;
+							display: inline-block;
+							text-align: right;
+						}						
 
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
 	last accessed: 20200321
@@ -224,20 +267,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 	  </script>
   <body>
-	<table>
+    <table class="imageTable">
 	  <tr>
-		<td>				
+		<td class="imageColumn">				
+			<img class="Image-moscLogo" src="<?php echo base_url('assets/images/moscLogo.jpg');?>">		
 			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
 		</td>
-		<td>				
+		<td class="pageNameColumn">
 			<h2>
 				Search Patient Names
-			</h2>
+			</h2>		
 		</td>
 	  </tr>
 	</table>
-	<span>
-	</span>
+	<br/>
 	<!-- Form -->
 	<form id="browse-form" method="post" action="<?php echo site_url('browseLite/confirm')?>">
 		<?php
@@ -289,13 +332,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "<br/>";
 				echo "<table class='search-result'>";
 				
+				//add: table headers
+?>
+				<tr class="row">
+						<td class ="column">				
+								<div class="tableHeader">
+				<?php
+								echo "PATIENT NAME";
+				?>		
+								</div>								
+						</td>
+						<td class ="column">				
+								<div class="tableHeader">
+							<?php
+								echo "DATE";
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div class="tableHeader">
+							<?php
+									echo "MEDICAL DOCTOR";
+							?>
+								</div>
+						</td>											
+					  </tr>
+<?php				
 				$iCount = 1;
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
 	/*	
 					echo $value['patient_name'];				
 					echo "<br/><br/>";
-	*/
+	*/	
+/*
+					if (($value['fee'] == 0) and ($value['x_ray_fee'] == 0)) {
+						continue;
+					}
+*/					
 		?>				
 		
 					  <tr class="row">
@@ -314,36 +388,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo $value['transaction_date'];
 							?>
 								</div>
-						</td>
+						</td>						
 						<td class ="column">				
-<!--								<span id="99">
--->
-								<span id="feeId<?php echo $iCount?>">
+								<div id="medicalDoctorId<?php echo $iCount?>">
 							<?php
-								echo $value['fee'];
-							?>
-								</span>
-						</td>
-						<td class ="column">				
-								<div id="transactionTypeNameId<?php echo $iCount?>">
-							<?php
-								echo $value['transaction_type_name'];
+								echo $value['medical_doctor_name'];
 							?>
 								</div>
-						</td>
-						<td class ="column">				
-								<div id="treatmentTypeNameId<?php echo $iCount?>">
-							<?php
-								//edited by Mike, 20200325
-								if ($value['treatment_type_name']=="") {
-									echo "CONSULT";
-								}
-								else {
-									echo $value['treatment_type_name'];
-								}
-							?>
-								</div>
-						</td>
+						</td>						
 					  </tr>
 		<?php				
 					$iCount++;		
