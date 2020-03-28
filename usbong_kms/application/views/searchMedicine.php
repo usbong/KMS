@@ -339,7 +339,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
-							<a href="#" id="itemNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
 								echo $value['item_name'];
