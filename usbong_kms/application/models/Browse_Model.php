@@ -132,7 +132,7 @@ class Browse_Model extends CI_Model
 		
 		$query = $this->db->get('item');
 */
-		$this->db->select('item_name, item_price');
+		$this->db->select('item_name, item_price, ,item_id');
 
 //		$this->db->from('item as t1');
 //		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -185,5 +185,30 @@ class Browse_Model extends CI_Model
 		
 		return $rowArray;
 	}	
+
+	//added by Mike, 20200328
+	public function getMedicineDetailsListViaItemId($itemId) 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date');
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->distinct('t1.item_name');
+//		$this->db->like('t1.patient_name', $param['nameParam']);
+		$this->db->where('t1.item_id', $itemId);		
+//		$this->db->where('t2.transaction_date!=', 0);		
+
+		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}		
 }
 ?>
