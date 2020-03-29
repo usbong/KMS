@@ -272,7 +272,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 		//added by Mike, 20200329
-		function myPopupFunction() {				
+//		function myPopupFunction() {				
+		function myPopupFunction(itemId) {				
+			var quantity = document.getElementById("quantityParam").value;
+
+/*
 			var product_id = document.getElementById("product_idParam").value;
 			var customer_id = document.getElementById("customer_idParam").value;
 			var quantity = document.getElementById("quantityParam").value;
@@ -283,8 +287,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var textCart3Digits = document.getElementById("Text-cart-3digitsId");
 	
 			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
+*/
 			//do the following only if quantity is a Number, i.e. not NaN
 			if (!isNaN(quantity)) {	
+/*
 				//added by Mike, 20170701
 				var quantityField = document.getElementById("quantityId");			
 				if (quantity>1) {
@@ -306,7 +312,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 	
 				document.getElementById("totalItemsInCartId").value = totalItemsInCart;
-						
+*/						
+				//TO-DO: -add: transaction in database
+				alert("itemId: " + itemId);
+				alert("quantity: " + quantity);
+				window.location.href = "<?php echo site_url('browse/searchMedicine/');?>";
+
+/*
 				//added by Mike, 20170627
 				if (customer_id=="") {
 					window.location.href = "<?php echo site_url('account/login/');?>";
@@ -343,6 +355,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				    });
 				    event.preventDefault();
 				}
+*/
 			}
 		}	
 
@@ -466,14 +479,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							x
 						</td>
 						<td>
-							<input type="tel" id="quantityParam" class="Quantity-textbox no-spin" value="1" min="1" max="99" 
+							<input type="tel" id="quantityParam" class="Quantity-textbox no-spin" value="1" min="1" max="999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
 									const keyLeftArrow = 37;
 									const keyRightArrow = 39;
 						
-									if (this.value.length == 2) {			
+									if (this.value.length == 3) {			
 										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
 											return true;
 										}
@@ -481,7 +494,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											return false;										
 										}
 									}" required>						
-							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase">BUY</button>									
+<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+-->
 						</td>						
 					  </tr>
 		<?php				
