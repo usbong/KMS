@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200328
+' @date updated: 20200329
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -125,6 +125,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right;
 						}						
 
+						.Quantity-textbox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 12px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							width: 20%;
+							border-radius: 3px;	    	    
+
+							float: left;
+						}
+						
+						.Button-purchase {
+/*							padding: 8px 42px 8px 42px;
+*/
+							padding: 12px;
+							background-color: #ffe400;
+							color: #222222;
+							font-size: 16px;
+							font-weight: bold;
+
+							border: 0px solid;		
+							border-radius: 4px;
+
+							float: left;
+							margin-left: 4px;
+						}
+
+						.Button-purchase:hover {
+							background-color: #d4be00;
+						}
+						
     /**/
     </style>
     <title>
@@ -238,6 +270,82 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
 		  }
 */
+
+		//added by Mike, 20200329
+		function myPopupFunction() {				
+			var product_id = document.getElementById("product_idParam").value;
+			var customer_id = document.getElementById("customer_idParam").value;
+			var quantity = document.getElementById("quantityParam").value;
+			var price = document.getElementById("priceParam").value;
+			
+			var textCart = document.getElementById("Text-cartId");
+			var textCart2Digits = document.getElementById("Text-cart-2digitsId");
+			var textCart3Digits = document.getElementById("Text-cart-3digitsId");
+	
+			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
+			//do the following only if quantity is a Number, i.e. not NaN
+			if (!isNaN(quantity)) {	
+				//added by Mike, 20170701
+				var quantityField = document.getElementById("quantityId");			
+				if (quantity>1) {
+					quantityField.innerHTML = "Added <b>" +quantity +"</b> units of ";
+				}
+				else {
+					quantityField.innerHTML = "Added <b>1</b> unit of ";
+					quantity=1; //added by Mike, 20181029
+				}
+
+				var productPriceField = document.getElementById("productPriceId");
+				var totalPrice = quantity*price;
+				productPriceField.innerHTML = totalPrice;								
+				//-----------------------------------------------------------
+				
+				totalItemsInCart+=parseInt(quantity);
+				if (totalItemsInCart>99) {
+					totalItemsInCart=99;
+				}
+	
+				document.getElementById("totalItemsInCartId").value = totalItemsInCart;
+						
+				//added by Mike, 20170627
+				if (customer_id=="") {
+					window.location.href = "<?php echo site_url('account/login/');?>";
+				}
+				else {				
+		//			var base_url = window.location.origin;
+					var site_url = "<?php echo site_url('cart/addToCart/');?>";
+					var my_url = site_url.concat(product_id,'/',customer_id,'/',quantity,'/',price);
+					
+					$.ajax({
+				        type:"POST",
+				        url:my_url,
+		
+				        success:function() {			        	
+				        	if (totalItemsInCart<10) {
+					        	textCart.innerHTML=totalItemsInCart;
+								textCart2Digits.innerHTML="";
+								textCart3Digits.innerHTML="";
+				        	}
+							else if (totalItemsInCart<100) {
+					        	textCart.innerHTML="";
+								textCart2Digits.innerHTML=totalItemsInCart;
+								textCart3Digits.innerHTML="";
+							}
+							else {
+					        	textCart.innerHTML="";
+								textCart2Digits.innerHTML="";
+								textCart3Digits.innerHTML=totalItemsInCart;
+							}
+							
+							$('#myPopup').modal('show');
+				        }
+		
+				    });
+				    event.preventDefault();
+				}
+			}
+		}	
+
 	  </script>
   <body>
 	<table class="imageTable">
@@ -354,6 +462,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<td>
+							x
+						</td>
+						<td>
+							<input type="tel" id="quantityParam" class="Quantity-textbox no-spin" value="1" min="1" max="99" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 2) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>						
+							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+						</td>						
 					  </tr>
 		<?php				
 					$iCount++;		
