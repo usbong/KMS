@@ -165,6 +165,28 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20200330
+	public function addTransactionMedicinePurchase($param) 
+	{		
+		$this->db->select('item_price');
+		$this->db->where('item_id', $param['itemId']);
+		$query = $this->db->get('item');
+		$row = $query->row();
+	
+		$data = array(
+					'patient_id' => -1,
+					'item_id' => $param['itemId'],
+					'transaction_date' => $param['transactionDate'],
+					'medical_doctor_id' => -1,
+					'fee' => $param['quantity'] * $row->item_price,
+					'transaction_type_name' => "CASH",
+					'report_id' => -1
+				);
+			
+		$this->db->insert('transaction', $data);
+		return $this->db->insert_id();
+	}	
+
 	public function getDetailsListViaId($nameId) 
 	{		
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis');
@@ -186,10 +208,10 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200328
+	//added by Mike, 20200328; edited by Mike, 20200330
 	public function getMedicineDetailsListViaItemId($itemId) 
 	{		
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->distinct('t1.item_name');
@@ -198,6 +220,7 @@ class Browse_Model extends CI_Model
 //		$this->db->where('t2.transaction_date!=', 0);		
 
 		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+//		$this->db->limit(1);
 		
 		$query = $this->db->get('item');
 
