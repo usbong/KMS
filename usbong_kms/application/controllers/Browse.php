@@ -139,7 +139,7 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	//added by Mike, 20200328
 	public function searchMedicine()
-	{
+	{		
 		$data['param'] = $this->input->get('param'); //added by Mike, 20170616
 		
 		date_default_timezone_set('Asia/Hong_Kong');
@@ -152,6 +152,11 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function confirmMedicine()
 	{
 		$data['nameParam'] = $_POST["nameParam"];
+		
+		//added by Mike, 20200328
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchMedicine');
+		}
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -177,4 +182,39 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewItemMedicine', $data);
 	}
+	
+	//added by Mike, 20200330
+	public function addTransactionMedicinePurchase($itemId,$quantity)
+	{
+/*
+		$data['nameParam'] = $_POST["nameParam"];
+		
+		//added by Mike, 20200328
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchMedicine');
+		}
+*/		
+/*
+		echo "itemId: ".$itemId;
+		echo "quantity: ".$quantity;
+*/		
+		$data['itemId'] = $itemId;
+		$data['quantity'] = $quantity;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		$data['transactionId'] = $this->Browse_Model->addTransactionMedicinePurchase($data);
+		
+		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
+
+		$this->load->view('viewItemMedicine', $data);
+	}
+
 }
