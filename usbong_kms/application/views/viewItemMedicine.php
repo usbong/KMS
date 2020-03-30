@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200329
+' @date updated: 20200330
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -313,10 +313,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 				document.getElementById("totalItemsInCartId").value = totalItemsInCart;
 */						
+/*
 				//TO-DO: -add: transaction in database
 				alert("itemId: " + itemId);
 				alert("quantity: " + quantity);
 				window.location.href = "<?php echo site_url('browse/searchMedicine/');?>";
+*/
+				//added by Mike, 20200330
+				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
 
 /*
 				//added by Mike, 20170627
@@ -418,12 +422,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//get only name strings from array 
 		if (isset($result)) {			
 			if ($result!=null) {		
-/*			
-				echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];
-				echo "<br/>";
-				echo "<br/>";
-*/			
-
+/*
 				$resultCount = count($result);
 				if ($resultCount==1) {
 					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
@@ -431,7 +430,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				else {
 					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
 				}			
-
+*/
 				echo "<br/>";
 				echo "<table class='search-result'>";
 				
@@ -455,7 +454,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  </tr>
 <?php				
 				$iCount = 1;
-				foreach ($result as $value) {
+/*				foreach ($result as $value) {
+*/	
+				$value = $result[0];
 		?>				
 		
 					  <tr class="row">
@@ -502,8 +503,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php				
 					$iCount++;		
 //					echo "<br/>";
-				}				
-
+/*				}				
+*/
 				echo "</table>";				
 				echo "<br/>";				
 //				echo '<div>***NOTHING FOLLOWS***';	
@@ -517,11 +518,78 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo '</div>';					
 			}			
 
-			if ($value['transaction_date']=="") {
-				
+			if ($value['transaction_date']=="") {				
 				echo '<div>';					
 				echo 'There are no transactions.';
 				echo '</div>';					
+			}
+			else {
+				$resultCount = count($result);
+				if ($resultCount==1) {
+					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
+				}			
+				echo '<br/>';
+				
+				echo "<table class='search-result'>";
+				
+				//add: table headers
+				$iCount = 1;
+				foreach ($result as $value) {
+/*	
+				$value = $result[0];
+*/				
+		?>				
+		
+					  <tr class="row">
+						<td class ="column">				
+							<div class="itemName">
+				<?php
+								echo $value['transaction_date'];
+				?>		
+							</div>								
+						</td>
+						<td class ="column">				
+								<div id="itemPriceId<?php echo $iCount?>">
+							<?php
+								echo $value['item_price'];
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+						x
+						</td>
+						<td class ="column">				
+								<div id="itemQuantityId<?php echo $iCount?>">
+							<?php
+								echo $value['fee']/$value['item_price'];
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+						=
+						</td>
+						<td class ="column">				
+								<div id="itemQuantityId<?php echo $iCount?>">
+							<?php
+								echo $value['fee'];
+							?>
+								</div>
+						</td>
+						<td>
+							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-delete">DELETE</button>									
+<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+-->
+						</td>						
+					  </tr>
+		<?php				
+					$iCount++;		
+//					echo "<br/>";
+				}				
+				echo "</table>";				
+				
 			}
 		}
 	?>
