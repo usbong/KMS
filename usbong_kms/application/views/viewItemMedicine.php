@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200330
+' @date updated: 20200331
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -363,6 +363,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 		}	
 
+		//added by Mike, 20200331
+		function myPopupFunctionDelete(itemId,transactionId) {				
+			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+		}	
+
 	  </script>
   <body>
 	<table class="imageTable">
@@ -579,7 +584,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
-							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-delete">DELETE</button>									
+							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
