@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200331
+' @date updated: 20200401
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -156,7 +156,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase:hover {
 							background-color: #d4be00;
 						}
-						
+
+        /*------------------*/
+        /* Modal            */
+        /*------------------*/
+
+        .modal-header {
+            padding-bottom: 0px;
+            border-bottom: none;
+        }
+
+        .modal-body {
+            font-size: 15px;
+            color: rgb(75, 75, 75);
+        }
+
+        .modal-footer {
+            padding-top: 0px;
+            border-top: none;
+        }
+		
     /**/
     </style>
     <title>
@@ -360,6 +379,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				    event.preventDefault();
 				}
 */
+
+				//added by Mike, 20200331
+//				$('#myPopup').modal('show');
+
+//				document.getElementById("myPopup").classList.toggle("show");
 			}
 		}	
 
@@ -415,8 +439,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
-
-
 	<br/>
 	<br/>
 	
@@ -462,6 +484,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*				foreach ($result as $value) {
 */	
 				$value = $result[0];
+
 		?>				
 		
 					  <tr class="row">
@@ -516,13 +539,145 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "<br/>";				
 			}
 			else {					
-				echo '<div>';					
-				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our medicine names.';
-				echo '<br><br>Recommendation:';
-				echo '<br>&#x25CF; Reverify that the spelling is correct.';				
-				echo '</div>';					
+				//edited by Mike, 20200331
+				if (isset($nameParam)) {
+					echo '<div>';					
+					echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our medicine names.';
+					echo '<br><br>Recommendation:';
+					echo '<br>&#x25CF; Reverify that the spelling is correct.';				
+					echo '</div>';					
+				}
 			}			
 
+			//added by Mike, 20200401
+			echo '<h3>Cart List</h3>';
+			$cartListResultCount = 0;
+			
+			if ((isset($cartListResult)) and ($cartListResult!=False)) {
+				$cartListResultCount = count($cartListResult);
+			}
+
+			//cart list			
+			if ($cartListResultCount==0) {				
+				echo '<div>';					
+				echo 'There are no transactions.';
+				echo '</div>';					
+			}
+			else {
+//				$cartListResultCount = count($cartListResult);
+				if ($cartListResultCount==1) {
+					echo '<div>Showing <b>'.count($cartListResult).'</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.count($cartListResult).'</b> results found.</div>';			
+				}			
+				echo '<br/>';
+				
+				echo "<table class='search-result'>";
+				
+				//add: table headers
+				$iCount = 1;
+				$cartFeeTotal = 0;
+				foreach ($cartListResult as $cartValue) {
+/*	
+				$value = $result[0];
+*/				
+		?>				
+		
+					  <tr class="row">
+						<td class ="column">				
+							<div class="transactionDate">
+				<?php
+								echo $cartValue['transaction_date'];
+				?>		
+							</div>								
+						</td>
+						<td class ="column">				
+							<a href='<?php echo site_url('browse/viewItemMedicine/'.$cartValue['item_id'])?>'>
+								<div class="itemName">
+				<?php
+								echo $cartValue['item_name'];
+				?>		
+								</div>								
+							</a>
+						</td>
+						<td class ="column">				
+								<div id="cartItemPriceId<?php echo $iCount?>">
+							<?php
+								echo $cartValue['item_price'];
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+						x
+						</td>
+						<td class ="column">				
+								<div id="cartItemQuantityId<?php echo $iCount?>">
+							<?php
+								echo $cartValue['fee']/$cartValue['item_price'];
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+						=
+						</td>
+						<td class ="column">				
+								<div id="cartFeeId<?php echo $iCount?>">
+							<?php
+								echo $cartValue['fee'];
+								
+								$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
+							?>
+								</div>
+						</td>
+						<td>
+							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+-->
+						</td>						
+					  </tr>
+		<?php				
+					$iCount++;		
+//					echo "<br/>";
+				}				
+?>
+				<!-- TOTAL -->				
+					  <tr class="row">
+						<td class ="column">				
+							<div class="total">
+				<?php
+								echo "<b>TOTAL</b>";
+				?>		
+							</div>								
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						=
+						</td>
+						<td class ="column">				
+								<div id="feeTotalId<?php echo $iCount?>">
+							<?php
+								echo "<b>".$cartFeeTotal."<b/>";
+							?>
+								</div>
+						</td>
+						<td>
+						</td>						
+					  </tr>
+<?php
+				echo "</table>";				
+			}
+			
+			echo "<br/>";
+
+			echo '<h3>Item Purchased History Today</h3>';
 			if ($value['transaction_date']=="") {				
 				echo '<div>';					
 				echo 'There are no transactions.';
@@ -550,11 +705,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
-							<div class="itemName">
+							<div class="transactionDate">
 				<?php
 								echo $value['transaction_date'];
 				?>		
 							</div>								
+						</td>
+						<td class ="column">				
+							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+								<div class="itemName">
+				<?php
+								echo $value['item_name'];
+				?>		
+								</div>								
+							</a>
 						</td>
 						<td class ="column">				
 								<div id="itemPriceId<?php echo $iCount?>">
