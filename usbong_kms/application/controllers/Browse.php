@@ -209,12 +209,37 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->model('Browse_Model');
 	
 //		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+//		$data['transactionId'] = $this->Browse_Model->addTransactionMedicinePurchase($data);
 
-		$data['transactionId'] = $this->Browse_Model->addTransactionMedicinePurchase($data);
+		$this->Browse_Model->addTransactionMedicinePurchase($data);
 		
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
 
 		$this->load->view('viewItemMedicine', $data);
 	}
 
+	//added by Mike, 20200331
+	public function deleteTransactionMedicinePurchase($itemId, $transactionId)
+	{
+/*
+		echo "itemId: ".$itemId;
+*/		
+		$data['itemId'] = $itemId;
+		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		$this->Browse_Model->deleteTransactionMedicinePurchase($data);
+		
+		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
+
+		$this->load->view('viewItemMedicine', $data);
+	}
 }
