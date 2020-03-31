@@ -392,6 +392,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
 		}	
 
+		//added by Mike, 20200331
+		function myPopupFunctionPay(itemId) {				
+			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
+		}	
+
 	  </script>
   <body>
 	<table class="imageTable">
@@ -483,6 +488,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$iCount = 1;
 /*				foreach ($result as $value) {
 */	
+
 				$value = $result[0];
 
 		?>				
@@ -669,6 +675,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
+							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id']?>)" class="Button-purchase">PAY</button>
 						</td>						
 					  </tr>
 <?php
@@ -677,8 +684,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			echo "<br/>";
 
-			echo '<h3>Item Purchased History Today</h3>';
-			if ($value['transaction_date']=="") {				
+			echo '<h3>Item Purchased History</h3>';
+
+			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
 				echo 'There are no transactions.';
 				echo '</div>';					
