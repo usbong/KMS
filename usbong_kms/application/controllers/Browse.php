@@ -180,6 +180,8 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
 
+		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
+
 		$this->load->view('viewItemMedicine', $data);
 	}
 	
@@ -215,6 +217,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
 
+		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
+
 		$this->load->view('viewItemMedicine', $data);
 	}
 
@@ -239,6 +243,35 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->Browse_Model->deleteTransactionMedicinePurchase($data);
 		
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
+
+		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
+
+		$this->load->view('viewItemMedicine', $data);
+	}
+	
+	//added by Mike, 20200401
+	public function payTransactionMedicinePurchase($itemId)
+	{
+/*
+		echo "itemId: ".$itemId;
+*/		
+		$data['itemId'] = $itemId;
+//		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		$this->Browse_Model->payTransactionMedicinePurchase();
+		
+		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
+
+		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
 
 		$this->load->view('viewItemMedicine', $data);
 	}
