@@ -187,6 +187,13 @@ class Browse_Model extends CI_Model
 		return $this->db->insert_id();
 	}	
 
+	//added by Mike, 20200331
+	public function deleteTransactionMedicinePurchase($param) 
+	{			
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+	}	
+
 	public function getDetailsListViaId($nameId) 
 	{		
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis');
