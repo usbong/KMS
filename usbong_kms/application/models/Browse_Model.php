@@ -116,16 +116,12 @@ class Browse_Model extends CI_Model
 */
 /*
 		$this->db->select('t1.item_name, t1.item_price');
-
 		$this->db->from('item as t1');
 //		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 //		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
-
 //		$this->db->distinct('t1.patient_name');
 		$this->db->group_by('t1.item_name');
-
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
-
 		$this->db->like('t1.item_name', $param['nameParam']);
 //		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
 		$this->db->limit(8);//1);
@@ -286,8 +282,12 @@ class Browse_Model extends CI_Model
 		$this->db->like('t2.notes', "UNPAID");
 		
 //		$this->db->where('t2.transaction_date!=', 0);		
-
+/*
 		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+*/
+		//edited by Mike, 20200401
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
 //		$this->db->limit(1);
 		
 		$query = $this->db->get('item');
