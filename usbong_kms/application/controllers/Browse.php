@@ -35,10 +35,8 @@ class Browse extends CI_Controller { //MY_Controller {
 /*		
 		$this->load->model('Search_Model');
 		$data['result'] = $this->Search_Model->getSearchResult($this->input->get('param'));//$param);
-
 		//added by Mike, 20170825
 		$customer_id = $this->session->userdata('customer_id');
-
 		if ($customer_id==null) {
 			$customer_id=-1;
 		}
@@ -76,10 +74,8 @@ class Browse extends CI_Controller { //MY_Controller {
 /*		
 		$this->load->model('Search_Model');
 		$data['result'] = $this->Search_Model->getSearchResult($this->input->get('param'));//$param);
-
 		//added by Mike, 20170825
 		$customer_id = $this->session->userdata('customer_id');
-
 		if ($customer_id==null) {
 			$customer_id=-1;
 		}
