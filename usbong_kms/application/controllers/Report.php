@@ -222,8 +222,22 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->model('Report_Model');
 
 		$data["result"] = $this->Report_Model->getMedicineTransactionsForTheDay();
-
+/*
+		//Glucosamine Sulphate 1500mg and Calcium + Vitamin D only
+		$data["resultAsterisk"] = $this->Report_Model->getMedicineTransactionsForTheDayAsterisk();
+*/
 		$this->load->view('viewReportMedicine', $data);
+	}
+
+	//added by Mike, 20200402
+	//Glucosamine Sulphate 1500mg and Calcium + Vitamin D only
+	public function viewReportMedicineAsterisk()
+	{
+		$this->load->model('Report_Model');
+
+		$data["result"] = $this->Report_Model->getMedicineTransactionsForTheDayAsterisk();
+
+		$this->load->view('viewReportMedicineAsterisk', $data);
 	}
 
 	//added by Mike, 20191110
