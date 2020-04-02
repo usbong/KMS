@@ -414,6 +414,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	<?php	
 		$dTotalFee = 0;
+		$iTotalQuantity = 0;
 		
 
 		if (isset($result)) {			
@@ -508,8 +509,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="itemQuantityId<?php echo $iCount?>">
 							<?php
-								echo floor(($value['fee']/$value['item_price']*100)/100);
+//								echo floor(($value['fee']/$value['item_price']*100)/100);
 
+								$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								
+								echo $iQuantity;
+								
+								$iTotalQuantity = $iTotalQuantity + $iQuantity;
 							?>
 								</div>
 						</td>
@@ -547,6 +553,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<td class ="column">				
 					</td>
 					<td class ="column">				
+						<div>
+					<?php
+						//echo "<b>".$dTotalFee."</b>";
+						echo "<b>".$iTotalQuantity."</b>";					
+					?>
+						</div>
+
 					</td>
 					<td class ="column">				
 					</td>
@@ -554,7 +567,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 						//echo "<b>".$dTotalFee."</b>";
-						echo "<b>".number_format((float)$dTotalFee, 2, '.', '');					
+						echo "<b>".number_format((float)$dTotalFee, 2, '.', '')."</b>";					
 					?>
 						</div>
 					</td>
