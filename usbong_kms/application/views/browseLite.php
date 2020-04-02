@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200327
+' @date updated: 20200402
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -53,6 +53,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 								text-align: center;
 						}
+						
+						div.patientName
+						{
+							text-align: left;
+						}						
 						
 						div.tableHeader
 						{
@@ -375,9 +380,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="column">				
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
-								<div>
+								<div class="patientName">
 				<?php
-								echo $value['patient_name'];
+//								echo $value['patient_name'];
+								echo str_replace("�","Ñ",$value['patient_name']);
+//								echo str_replace("ufffd","Ñ",$value['patient_name']);
 				?>		
 								</div>								
 							</a>
