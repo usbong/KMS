@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200325
+' @date updated: 20200402
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -388,7 +388,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 								<span id="feeId<?php echo $iCount?>">
 							<?php
-								echo $value['fee'];
+								//edited by Mike, 20200402
+//								echo $value['fee'];
+								//output: whole numbers							
+								echo floor(($value['fee']*100)/100);
 								
 								$iTotalFee += $value['fee'];
 							?>
@@ -446,7 +449,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="notesId<?php echo $iCount?>">
 							<?php
-								echo $value['x_ray_fee'];
+								//edited by Mike, 20200402
+//								echo $value['x_ray_fee'];
+								//output: whole numbers
+								echo floor(($value['x_ray_fee']*100)/100);
 
 								$iTotalXRayFee += $value['x_ray_fee'];
 							?>
