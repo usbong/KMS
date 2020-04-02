@@ -205,7 +205,7 @@ class Report extends CI_Controller { //MY_Controller {
 	}
 
 	//added by Mike, 20200322
-	public function viewPayslip() //TO-DO: -add: parameter of of medical doctor
+	public function viewPayslip() //TO-DO: -add: parameter, i.e. medical doctor
 	{
 		$this->load->model('Report_Model');
 
@@ -214,6 +214,16 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["result"] = $this->Report_Model->getPayslipForTheDay($data);//, $member_id);
 
 		$this->load->view('viewPayslip', $data);
+	}
+
+	//added by Mike, 20200402
+	public function viewReportMedicine()
+	{
+		$this->load->model('Report_Model');
+
+		$data["result"] = $this->Report_Model->getMedicineTransactionsForTheDay();
+
+		$this->load->view('viewReportMedicine', $data);
 	}
 
 	//added by Mike, 20191110
