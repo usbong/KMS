@@ -58,6 +58,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							text-align: left;
 						}						
+
+						div.medicalDoctorName
+						{
+							text-align: left;
+						}						
 						
 						div.tableHeader
 						{
@@ -397,7 +402,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>						
 						<td class ="column">				
-								<div id="medicalDoctorId<?php echo $iCount?>">
+								<div class="medicalDoctorName" id="medicalDoctorId<?php echo $iCount?>">
 							<?php
 								echo $value['medical_doctor_name'];
 							?>
