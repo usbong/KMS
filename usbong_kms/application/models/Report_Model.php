@@ -234,6 +234,36 @@ class Report_Model extends CI_Model
 
 		return $rowArray;
 	}	
+
+	//added by Mike, 20200402
+	public function getMedicineTransactionsForTheDay() 
+	{	
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee');
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->distinct('t1.item_name');
+
+//		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+		$this->db->like('t2.notes', "PAID");
+		
+		//edited by Mike, 20200401
+		$this->db->order_by('t2.added_datetime_stamp`', 'ASC'); //'DESC');//ASC');
+
+		//added by Mike, 20200401
+//		$this->db->limit(8);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}	
 	
 	//added by Mike, 20191110
 	public function getListOfAllReportsFromAllLocations()//$param)
