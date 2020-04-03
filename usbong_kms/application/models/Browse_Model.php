@@ -195,8 +195,9 @@ class Browse_Model extends CI_Model
 
 		$this->db->like('item_name', $param['nameParam']);
 //		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+/* removed by Mike, 20200403
 		$this->db->limit(8);//1);
-		
+*/		
 		$query = $this->db->get('item');
 
 //		$row = $query->row();		
