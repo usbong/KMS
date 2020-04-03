@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200402
+' @date updated: 20200403
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -401,7 +401,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="moscFeeId<?php echo $iCount?>">
 							<?php							
-								if (strtoupper($value['notes'])=="PRIVATE") {
+								//edited by Mike, 20200403
+//								if (strtoupper($value['notes'])=="PRIVATE") {
+								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
 									echo 0;
 									
 									$iMOSC = 0;
@@ -419,10 +421,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
-								if (strtoupper($value['notes'])=="PRIVATE") {
+								//edited by Mike, 20200403
+//								if (strtoupper($value['notes'])=="PRIVATE") {
+								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
 									echo $value['fee'];
 									
 									$iNetPF = $value['fee'];
+								}
+								//added by Mike, 20200403
+//								elseif (strtoupper($value['notes'])=="DEXA") {
+								elseif (strpos(strtoupper($value['notes']), "DEXA")!==false) {
+									echo $value['fee']*.70+500;
+									
+									$iNetPF = $value['fee']*.70+500;
 								}
 								else {
 									echo $value['fee']*.70;
