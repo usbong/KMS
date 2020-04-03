@@ -278,9 +278,12 @@ class Report_Model extends CI_Model
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
 		$this->db->like('t2.notes', "PAID");
 
-		foreach ($rowArray as $value) {			
-//			echo "value: ".$value['item_id']."<br/>";
-			$this->db->where('t1.item_id !=', $value['item_id']);		
+		//edited by Mike, 20200403
+		if ($rowArray!=False) { //if value exists in array
+			foreach ($rowArray as $value) {			
+	//			echo "value: ".$value['item_id']."<br/>";
+				$this->db->where('t1.item_id !=', $value['item_id']);		
+			}
 		}
 
 		//edited by Mike, 20200401
