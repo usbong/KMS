@@ -133,6 +133,37 @@ class Browse extends CI_Controller { //MY_Controller {
 */		
 	}
 
+	//added by Mike, 20200403
+	public function searchNonMedicine()
+	{		
+		$data['param'] = $this->input->get('param'); //added by Mike, 20170616
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->view('searchNonMedicine', $data);
+	}
+
+	//added by Mike, 20200403
+	public function confirmNonMedicine()
+	{
+		$data['nameParam'] = $_POST["nameParam"];
+		
+		//added by Mike, 20200328
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchNonMedicine');
+		}
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+	
+		$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaName($data);
+
+		$this->load->view('searchNonMedicine', $data);
+	}
+
 	//added by Mike, 20200328
 	public function searchMedicine()
 	{		
