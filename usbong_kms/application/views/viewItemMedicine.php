@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200401
+' @date updated: 20200406
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -110,6 +110,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right
+						}						
+
+						td.columnTableHeader
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
 						}						
 						
 						td.imageColumn
@@ -464,19 +473,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="columnTableHeader">				
 				<?php
-								echo "ITEM NAME";
+							echo "ITEM NAME";
 				?>		
-								</div>								
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="columnTableHeader">				
 							<?php
-								echo "ITEM PRICE";
+								echo "AVAILABLE"; //IN-STOCK
 							?>
-								</div>
+						</td>
+						<td class ="columnTableHeader">				
+							<?php
+								echo "EXPIRATION";
+							?>
+						</td>
+						<td class ="columnTableHeader">				
+							<?php
+								echo "PRICE"; //"ITEM PRICE";
+							?>
 						</td>
 					  </tr>
 <?php				
@@ -498,6 +513,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
+						<td class ="column">				
+								<div id="itemPriceId<?php echo $iCount?>">
+							<?php
+								//echo $value['quantity_in_stock'];
+
+								if ($value['quantity_in_stock']==-1) {
+									echo 9999;
+								}
+								else {
+									echo $value['quantity_in_stock'];
+								}
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div id="itemPriceId<?php echo $iCount?>">
+							<?php
+								//echo $value['expiration_date'];
+
+								if ($value['expiration_date']==0) {
+
+									if ($value['quantity_in_stock']==-1) {
+										echo "UNKNOWN";
+									}
+									else {
+										echo "NONE";
+									}
+								}
+								else {
+									echo $value['expiration_date'];
+								}
+							?>
+								</div>
+						</td>						
 						<td class ="column">				
 								<div id="itemPriceId<?php echo $iCount?>">
 							<?php
@@ -691,82 +740,96 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo '</div>';					
 			}
 			else {
-				$resultCount = count($result);
-				if ($resultCount==1) {
-					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
+				//edited by Mike, 20200406
+				$resultCount = 0;
+
+				if ((isset($resultPaid)) and ($resultPaid!=False)) {
+					$resultCount = count($resultPaid);
+				}
+	
+				//item purchase history			
+				if ($resultCount==0) {				
+					echo '<div>';					
+					echo 'There are no transactions.';
+					echo '</div>';					
 				}
 				else {
-					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
-				}			
-				echo '<br/>';
-				
-				echo "<table class='search-result'>";
-				
-				//add: table headers
-				$iCount = 1;
-				foreach ($result as $value) {
-/*	
-				$value = $result[0];
-*/				
-		?>				
-		
-					  <tr class="row">
-						<td class ="column">				
-							<div class="transactionDate">
-				<?php
-								echo $value['transaction_date'];
-				?>		
-							</div>								
-						</td>
-						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-								<div class="itemName">
-				<?php
-								echo $value['item_name'];
-				?>		
+	//				$resultCount = count($resultPaid);
+					if ($resultCount==1) {
+						echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
+					}
+					else {
+						echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
+					}			
+					echo '<br/>';
+					
+					echo "<table class='search-result'>";
+					
+					//add: table headers
+					$iCount = 1;
+					foreach ($resultPaid as $value) {
+	/*	
+					$value = $result[0];
+	*/				
+			?>				
+			
+						  <tr class="row">
+							<td class ="column">				
+								<div class="transactionDate">
+					<?php
+									echo $value['transaction_date'];
+					?>		
 								</div>								
-							</a>
-						</td>
-						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
-							<?php
-								echo $value['item_price'];
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-						x
-						</td>
-						<td class ="column">				
-								<div id="itemQuantityId<?php echo $iCount?>">
-							<?php
-//								echo $value['fee']/$value['item_price'];
-								echo floor(($value['fee']/$value['item_price']*100)/100);
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-						=
-						</td>
-						<td class ="column">				
-								<div id="itemQuantityId<?php echo $iCount?>">
-							<?php
-								echo $value['fee'];
-							?>
-								</div>
-						</td>
-						<td>
-							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
-<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
--->
-						</td>						
-					  </tr>
-		<?php				
-					$iCount++;		
-//					echo "<br/>";
+							</td>
+							<td class ="column">				
+								<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+									<div class="itemName">
+					<?php
+									echo $value['item_name'];
+					?>		
+									</div>								
+								</a>
+							</td>
+							<td class ="column">				
+									<div id="itemPriceId<?php echo $iCount?>">
+								<?php
+									echo $value['item_price'];
+								?>
+									</div>
+							</td>
+							<td class ="column">				
+							x
+							</td>
+							<td class ="column">				
+									<div id="itemQuantityId<?php echo $iCount?>">
+								<?php
+	//								echo $value['fee']/$value['item_price'];
+									echo floor(($value['fee']/$value['item_price']*100)/100);
+								?>
+									</div>
+							</td>
+							<td class ="column">				
+							=
+							</td>
+							<td class ="column">				
+									<div id="itemQuantityId<?php echo $iCount?>">
+								<?php
+									echo $value['fee'];
+								?>
+									</div>
+							</td>
+							<td>
+								<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+	<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+	-->
+							</td>						
+						  </tr>
+			<?php				
+						$iCount++;		
+	//					echo "<br/>";
+					}				
+					echo "</table>";				
 				}				
-				echo "</table>";				
-				
 			}
 		}
 	?>
