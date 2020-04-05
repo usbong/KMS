@@ -128,19 +128,22 @@ class Browse_Model extends CI_Model
 		
 		$query = $this->db->get('item');
 */
-		$this->db->select('item_name, item_price, ,item_id');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
 
-//		$this->db->from('item as t1');
+		$this->db->from('item as t1');
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+
 //		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 //		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
 //		$this->db->distinct('t1.patient_name');
-		$this->db->group_by('item_name');
+		$this->db->group_by('t1.item_name');
+		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
 
-		$this->db->where('item_type_id', 1); //1 = Medicine
+		$this->db->where('t1.item_type_id', 1); //1 = Medicine
 
-		$this->db->like('item_name', $param['nameParam']);
-//		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+		$this->db->like('t1.item_name', $param['nameParam']);
+//		$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
 		$this->db->limit(8);//1);
 		
 		$query = $this->db->get('item');
@@ -161,8 +164,8 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200328; edited by Mike, 20200403
-	public function getNonMedicineDetailsListViaName($param) 
+	//added by Mike, 20200328; 20200406
+	public function getMedicineDetailsListViaNamePrev($param) 
 	{		
 		//we use this at MOSC
 /*		
@@ -182,7 +185,7 @@ class Browse_Model extends CI_Model
 		
 		$query = $this->db->get('item');
 */
-		$this->db->select('item_name, item_price, ,item_id');
+		$this->db->select('item_name, item_price, item_id');
 
 //		$this->db->from('item as t1');
 //		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -191,13 +194,12 @@ class Browse_Model extends CI_Model
 //		$this->db->distinct('t1.patient_name');
 		$this->db->group_by('item_name');
 
-		$this->db->where('item_type_id', 2); //2 = Non-medicine; 1 = Medicine
+		$this->db->where('item_type_id', 1); //1 = Medicine
 
 		$this->db->like('item_name', $param['nameParam']);
 //		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
-/* removed by Mike, 20200403
 		$this->db->limit(8);//1);
-*/		
+		
 		$query = $this->db->get('item');
 
 //		$row = $query->row();		
@@ -234,7 +236,7 @@ class Browse_Model extends CI_Model
 					'report_id' => -1,
 					'notes' => "UNPAID"
 				);
-*/
+*/			
 		$data = array(
 					'patient_id' => 0,
 					'item_id' => $param['itemId'],
@@ -245,7 +247,7 @@ class Browse_Model extends CI_Model
 					'report_id' => 0,
 					'notes' => "UNPAID"
 				);
-			
+
 		$this->db->insert('transaction', $data);
 		return $this->db->insert_id();
 	}	
@@ -290,8 +292,85 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200328; edited by Mike, 20200330
+	//added by Mike, 20200406
+	public function getPaidMedicineDetailsListViaItemId($itemId) 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+		$this->db->distinct('t1.item_name');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+		$this->db->where('t2.notes', 'PAID'); //TO-DO: -update: to not include "UNPAID" if we use "like(...)"
+		$this->db->where('t1.item_id', $itemId);
+
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
+		$this->db->limit(8);
+		
+		$query = $this->db->get('item');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+		
+		return $rowArray;
+	}		
+
+	//added by Mike, 20200328; edited by Mike, 20200406
 	public function getMedicineDetailsListViaItemId($itemId) 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+		$this->db->distinct('t1.item_name');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+//		$this->db->like('t1.patient_name', $param['nameParam']);
+
+		$this->db->where('t1.item_id', $itemId);
+
+/*
+		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');
+*/		
+//		$this->db->where('t2.transaction_date!=', 0);		
+
+/*
+		//added by Mike, 20200401
+		$this->db->where('t2.transaction_date', date("m/d/Y"));
+*/
+
+/*
+		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+*/		
+		//edited by Mike, 20200401
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
+		//added by Mike, 20200401
+		$this->db->limit(8);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}		
+
+	//added by Mike, 20200328; edited by Mike, 20200406
+	public function getMedicineDetailsListViaItemIdPrev($itemId) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee');
 		$this->db->from('item as t1');
@@ -332,13 +411,16 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 	
-	//added by Mike, 20200328; edited by Mike, 20200331
+	//added by Mike, 20200328; edited by Mike, 20200406
 	public function getMedicineDetailsListViaNotesUnpaid() 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
-		$this->db->distinct('t1.item_name');
+//		$this->db->distinct('t1.item_name');
+		$this->db->distinct('t1.item_id');
+		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+
 //		$this->db->like('t1.patient_name', $param['nameParam']);
 /*
 		$this->db->where('t1.item_id', $itemId);
