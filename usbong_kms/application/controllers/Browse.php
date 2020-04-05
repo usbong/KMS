@@ -133,37 +133,6 @@ class Browse extends CI_Controller { //MY_Controller {
 */		
 	}
 
-	//added by Mike, 20200403
-	public function searchNonMedicine()
-	{		
-		$data['param'] = $this->input->get('param'); //added by Mike, 20170616
-		
-		date_default_timezone_set('Asia/Hong_Kong');
-		$dateTimeStamp = date('Y/m/d H:i:s');
-
-		$this->load->view('searchNonMedicine', $data);
-	}
-
-	//added by Mike, 20200403
-	public function confirmNonMedicine()
-	{
-		$data['nameParam'] = $_POST["nameParam"];
-		
-		//added by Mike, 20200328
-		if (!isset($data['nameParam'])) {
-			redirect('browse/searchNonMedicine');
-		}
-		
-		date_default_timezone_set('Asia/Hong_Kong');
-		$dateTimeStamp = date('Y/m/d H:i:s');
-
-		$this->load->model('Browse_Model');
-	
-		$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaName($data);
-
-		$this->load->view('searchNonMedicine', $data);
-	}
-
 	//added by Mike, 20200328
 	public function searchMedicine()
 	{		
@@ -195,7 +164,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchMedicine', $data);
 	}
 
-	//added by Mike, 20200328	
+	//added by Mike, 20200328; edited by Mike, 20200406
 	public function viewItemMedicine($itemId)
 	{
 //		$data['nameParam'] = $_POST["nameParam"];
@@ -207,12 +176,15 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
 
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidMedicineDetailsListViaItemId($itemId);
+
 		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
 
 		$this->load->view('viewItemMedicine', $data);
 	}
 	
-	//added by Mike, 20200330
+	//added by Mike, 20200330; edited by Mike, 20200406
 	public function addTransactionMedicinePurchase($itemId,$quantity)
 	{
 /*
@@ -244,12 +216,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
 
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidMedicineDetailsListViaItemId($itemId);
+
 		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
 
 		$this->load->view('viewItemMedicine', $data);
 	}
 
-	//added by Mike, 20200331
+	//added by Mike, 20200331; edited by Mike, 20200406
 	public function deleteTransactionMedicinePurchase($itemId, $transactionId)
 	{
 /*
@@ -271,12 +246,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
 
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidMedicineDetailsListViaItemId($itemId);
+
 		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
 
 		$this->load->view('viewItemMedicine', $data);
 	}
 	
-	//added by Mike, 20200401
+	//added by Mike, 20200401; edited by Mike, 20200406
 	public function payTransactionMedicinePurchase($itemId)
 	{
 /*
@@ -297,6 +275,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->Browse_Model->payTransactionMedicinePurchase();
 		
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaItemId($itemId);
+
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidMedicineDetailsListViaItemId($itemId);
 
 		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
 
