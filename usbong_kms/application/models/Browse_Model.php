@@ -3,7 +3,7 @@ class Browse_Model extends CI_Model
 {
 	public function getNamesListViaName($param) 
 	{		
-//		echo "reportTypeNameParam: ".$param['reportTypeNameParam'];
+//		echo reportTypeNameParam: .$param['reportTypeNameParam'];
 /*	
 		$this->db->select('report_description, report_id');
 //		$this->db->where('report_description', $param['name']);		
@@ -27,7 +27,7 @@ class Browse_Model extends CI_Model
 			return False; //edited by Mike, 20190722
 		}
 		
-//		echo "report_id: ".$rowArray[0]['report_id'];
+//		echo report_id: .$rowArray[0]['report_id'];
 		
 /*		return $row->report_description;
 */
@@ -38,7 +38,7 @@ class Browse_Model extends CI_Model
 
 	public function getDetailsListViaName($param) 
 	{		
-//		echo "reportTypeNameParam: ".$param['reportTypeNameParam'];
+//		echo reportTypeNameParam: .$param['reportTypeNameParam'];
 /*	
 		$this->db->select('report_description, report_id');
 //		$this->db->where('report_description', $param['name']);		
@@ -98,7 +98,7 @@ class Browse_Model extends CI_Model
 			return False; //edited by Mike, 20190722
 		}
 		
-//		echo "report_id: ".$rowArray[0]['report_id'];
+//		echo report_id: .$rowArray[0]['report_id'];
 		
 /*		return $row->report_description;
 */
@@ -135,7 +135,7 @@ class Browse_Model extends CI_Model
 			return False; //edited by Mike, 20190722
 		}
 		
-//		echo "report_id: ".$rowArray[0]['report_id'];
+//		echo report_id: .$rowArray[0]['report_id'];
 		
 /*		return $row->report_description;
 */
@@ -192,7 +192,7 @@ class Browse_Model extends CI_Model
 			return False; //edited by Mike, 20190722
 		}
 		
-//		echo "report_id: ".$rowArray[0]['report_id'];
+//		echo report_id: .$rowArray[0]['report_id'];
 		
 /*		return $row->report_description;
 */
@@ -246,7 +246,7 @@ class Browse_Model extends CI_Model
 			return False; //edited by Mike, 20190722
 		}
 		
-//		echo "report_id: ".$rowArray[0]['report_id'];
+//		echo report_id: .$rowArray[0]['report_id'];
 		
 /*		return $row->report_description;
 */
@@ -269,9 +269,9 @@ class Browse_Model extends CI_Model
 					'transaction_date' => $param['transactionDate'],
 					'medical_doctor_id' => -1,
 					'fee' => $param['quantity'] * $row->item_price,
-					'transaction_type_name' => "CASH",
+					'transaction_type_name' => CASH,
 					'report_id' => -1,
-					'notes' => "UNPAID"
+					'notes' => UNPAID
 				);
 */			
 		$data = array(
@@ -304,7 +304,7 @@ class Browse_Model extends CI_Model
 				);
 
         $this->db->where('notes',"UNPAID");
-		$this->db->where('transaction_date', date("m/d/Y"));
+		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
 	}	
 
@@ -341,7 +341,7 @@ class Browse_Model extends CI_Model
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
 		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
 
-		$this->db->where('t2.notes', 'PAID'); //TO-DO: -update: to not include "UNPAID" if we use "like(...)"
+		$this->db->where('t2.notes', 'PAID'); //TO-DO: -update: to not include UNPAID if we use like(...)
 		$this->db->where('t1.item_id', $itemId);
 
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
@@ -359,6 +359,54 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
+	//added by Mike, 20200406; edited by Mike, 20200407
+	public function getMedicineAvailableQuantityInStockItemId($itemId)
+	{
+		$this->db->select('t2.quantity_in_stock');
+		$this->db->from('item as t1');
+		
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->where('t1.item_id', $itemId);
+
+		$query = $this->db->get('item');
+
+		$row = $query->row();		
+		
+		$iQuantity = $row->quantity_in_stock;
+				
+		if ($iQuantity==0) {
+			return 0;
+		}
+		
+		$this->db->select('t1.item_price, t2.fee');
+		$this->db->from('item as t1');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t2.notes', "PAID");
+		$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
+
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return $iQuantity;
+//			return False; //edited by Mike, 20190722
+		}
+		
+		foreach ($rowArray as $value) {	
+			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
+		}
+
+		return $iQuantity;
+	}
+
 	//added by Mike, 20200328; edited by Mike, 20200406
 	public function getMedicineDetailsListViaItemId($itemId) 
 	{		
@@ -371,23 +419,8 @@ class Browse_Model extends CI_Model
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
 		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
 
-//		$this->db->like('t1.patient_name', $param['nameParam']);
-
 		$this->db->where('t1.item_id', $itemId);
 
-/*
-		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');
-*/		
-//		$this->db->where('t2.transaction_date!=', 0);		
-
-/*
-		//added by Mike, 20200401
-		$this->db->where('t2.transaction_date', date("m/d/Y"));
-*/
-
-/*
-		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
-*/		
 		//edited by Mike, 20200401
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 
@@ -418,13 +451,13 @@ class Browse_Model extends CI_Model
 		$this->db->where('t1.item_id', $itemId);
 
 /*
-		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');
+		$this->db->where('t2.transaction_date', date(m/d/Y));//ASC');
 */		
 //		$this->db->where('t2.transaction_date!=', 0);		
 
 /*
 		//added by Mike, 20200401
-		$this->db->where('t2.transaction_date', date("m/d/Y"));
+		$this->db->where('t2.transaction_date', date(m/d/Y));
 */
 
 /*
@@ -448,33 +481,19 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 	
-	//added by Mike, 20200328; edited by Mike, 20200406
+	//added by Mike, 20200328; edited by Mike, 20200407
 	public function getMedicineDetailsListViaNotesUnpaid() 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
-//		$this->db->distinct('t1.item_name');
-		$this->db->distinct('t1.item_id');
-		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
-
-//		$this->db->like('t1.patient_name', $param['nameParam']);
-/*
-		$this->db->where('t1.item_id', $itemId);
-*/
-
-		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');
+		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200407
+		
+		$this->db->where('t2.transaction_date', date('m/d/Y'));//ASC');
 		$this->db->like('t2.notes', "UNPAID");
 		
-//		$this->db->where('t2.transaction_date!=', 0);		
-/*
-		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
-*/
 		//edited by Mike, 20200401
-		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
-
-//		$this->db->limit(1);
-		
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');		
 		$query = $this->db->get('item');
 
 //		$row = $query->row();		
@@ -486,6 +505,5 @@ class Browse_Model extends CI_Model
 		
 		return $rowArray;
 	}		
-
 }
 ?>
