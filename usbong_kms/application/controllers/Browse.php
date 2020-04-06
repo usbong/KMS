@@ -55,9 +55,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 	public function confirm()
 	{
-		$data['nameParam'] = $_POST["nameParam"]; //added by Mike, 20170616
+		$data['nameParam'] = $_POST[nameParam]; //added by Mike, 20170616
 /*
-		if (!isset($_POST["nameParam"])) { //$data['nameParam'])) {
+		if (!isset($_POST[nameParam])) { //$data['nameParam'])) {
 			redirect('browse');
 		}
 */
@@ -113,13 +113,13 @@ class Browse extends CI_Controller { //MY_Controller {
 //			echo $value['report_description'];			
 			echo $value['patient_name'];
 			
-			echo "<br/><br/>";
+			echo <br/><br/>;
 		}
 */
 /*
 		foreach ($data as $value) {
 			echo $value['report_description'];
-			echo "<br/><br/>";
+			echo <br/><br/>;
 		}
 */
 		
@@ -146,7 +146,7 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	public function confirmNonMedicine()
 	{
-		$data['nameParam'] = $_POST["nameParam"];
+		$data['nameParam'] = $_POST[nameParam];
 		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
@@ -177,7 +177,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	//added by Mike, 20200328	
 	public function confirmMedicine()
 	{
-		$data['nameParam'] = $_POST["nameParam"];
+		$data['nameParam'] = $_POST['nameParam'];
 		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
@@ -194,10 +194,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchMedicine', $data);
 	}
 
-	//added by Mike, 20200328; edited by Mike, 20200406
+	//added by Mike, 20200328; edited by Mike, 20200407
 	public function viewItemMedicine($itemId)
 	{
-//		$data['nameParam'] = $_POST["nameParam"];
+//		$data['nameParam'] = $_POST[nameParam];
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -211,14 +211,17 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
 
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getMedicineAvailableQuantityInStockItemId($itemId);
+	
 		$this->load->view('viewItemMedicine', $data);
 	}
 	
-	//added by Mike, 20200330; edited by Mike, 20200406
+	//added by Mike, 20200330; edited by Mike, 20200407
 	public function addTransactionMedicinePurchase($itemId,$quantity)
 	{
 /*
-		$data['nameParam'] = $_POST["nameParam"];
+		$data['nameParam'] = $_POST[nameParam];
 		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
@@ -226,8 +229,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 */		
 /*
-		echo "itemId: ".$itemId;
-		echo "quantity: ".$quantity;
+		echo itemId: .$itemId;
+		echo quantity: .$quantity;
 */		
 		$data['itemId'] = $itemId;
 		$data['quantity'] = $quantity;
@@ -251,14 +254,17 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
 
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getMedicineAvailableQuantityInStockItemId($itemId);
+
 		$this->load->view('viewItemMedicine', $data);
 	}
 
-	//added by Mike, 20200331; edited by Mike, 20200406
+	//added by Mike, 20200331; edited by Mike, 20200407
 	public function deleteTransactionMedicinePurchase($itemId, $transactionId)
 	{
 /*
-		echo "itemId: ".$itemId;
+		echo itemId: .$itemId;
 */		
 		$data['itemId'] = $itemId;
 		$data['transactionId'] = $transactionId;
@@ -281,14 +287,17 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
 
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getMedicineAvailableQuantityInStockItemId($itemId);
+
 		$this->load->view('viewItemMedicine', $data);
 	}
 	
-	//added by Mike, 20200401; edited by Mike, 20200406
+	//added by Mike, 20200401; edited by Mike, 20200407
 	public function payTransactionMedicinePurchase($itemId)
 	{
 /*
-		echo "itemId: ".$itemId;
+		echo itemId: .$itemId;
 */		
 		$data['itemId'] = $itemId;
 //		$data['transactionId'] = $transactionId;
@@ -310,6 +319,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultPaid'] = $this->Browse_Model->getPaidMedicineDetailsListViaItemId($itemId);
 
 		$data['cartListResult'] = $this->Browse_Model->getMedicineDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getMedicineAvailableQuantityInStockItemId($itemId);
 
 		$this->load->view('viewItemMedicine', $data);
 	}
