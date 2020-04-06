@@ -756,10 +756,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				else {
 	//				$resultCount = count($resultPaid);
 					if ($resultCount==1) {
-						echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
+						echo '<div>Showing <b>'.count($resultPaid).'</b> result found.</div>';
 					}
 					else {
-						echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
+						echo '<div>Showing <b>'.count($resultPaid).'</b> results found.</div>';			
 					}			
 					echo '<br/>';
 					
