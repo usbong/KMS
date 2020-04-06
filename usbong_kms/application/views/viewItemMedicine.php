@@ -514,16 +514,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</a>
 						</td>
 						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
+								<div id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
-
+/*
 								if ($value['quantity_in_stock']==-1) {
 									echo 9999;
 								}
 								else {
 									echo $value['quantity_in_stock'];
 								}
+*/
+								//edited by Mike, 20200406
+								if ($resultQuantityInStockNow==-1) {
+									echo 9999;
+								}
+								else {
+									echo $resultQuantityInStockNow;
+								}								
 							?>
 								</div>
 						</td>

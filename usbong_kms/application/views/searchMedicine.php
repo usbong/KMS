@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200406
+' @date updated: 20200330
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -110,7 +110,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right
-						}				
+						}						
 
 						td.columnTableHeader
 						{
@@ -120,7 +120,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
-						
 						
 						td.imageColumn
 						{
@@ -327,25 +326,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeader">				
 				<?php
 								echo "ITEM NAME";
 				?>		
 						</td>
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeader">				
 							<?php
-								echo "AVAILABLE"; //"IN-STOCK";
+								echo "AVAILABLE"; //IN-STOCK;
 							?>
 						</td>
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeader">				
 							<?php
 								echo "EXPIRATION";
 							?>
-								</div>
 						</td>
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeader">				
 							<?php
-								echo "PRICE"; //"ITEM PRICE";
+								echo "PRICE"; //ITEM PRICE;
 							?>
 						</td>
 					  </tr>
@@ -364,8 +362,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
+						<td class =column>				
+								<div id=quantityInStockId<?php echo $iCount?>>
 							<?php
 								//echo $value['quantity_in_stock'];
 
@@ -378,8 +376,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
+						<td class =column>				
+								<div id=expirationId<?php echo $iCount?>>
 							<?php
 								//echo $value['expiration_date'];
 
@@ -392,8 +390,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
+						<td class =column>				
+								<div id=itemPriceId<?php echo $iCount?>>
 							<?php
 								echo $value['item_price'];
 							?>
