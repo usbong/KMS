@@ -107,6 +107,43 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	public function getNonMedicineDetailsListViaName($param) 
+	{		
+/*		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+*/
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id');
+
+		$this->db->from('item as t1');
+//		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->group_by('t1.item_name');
+//		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
+
+		$this->db->where('t1.item_type_id', 2); //2 = Non-medicine; 1 = Medicine
+
+		$this->db->like('t1.item_name', $param['nameParam']);
+//		$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
+//		$this->db->limit(8);//1);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+//		echo "report_id: ".$rowArray[0]['report_id'];
+		
+/*		return $row->report_description;
+*/
+//		return $rowArray[0]['report_description'];
+		
+		return $rowArray;
+	}	
+
 	//added by Mike, 20200328
 	public function getMedicineDetailsListViaName($param) 
 	{		
