@@ -367,7 +367,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//echo $value['quantity_in_stock'];
 
-								if ($value['quantity_in_stock']==-1) {
+								//edited by Mike, 20200408
+								if ($value['quantity_in_stock']<0) {
 									echo 9999;
 								}
 								else {
@@ -380,9 +381,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id=expirationId<?php echo $iCount?>>
 							<?php
 								//echo $value['expiration_date'];
-
 								if ($value['expiration_date']==0) {
-									echo "UNKNOWN";
+
+									if ($value['quantity_in_stock']==-1) {
+										echo "UNKNOWN";
+									}
+									else {
+										echo "NONE";
+									}
 								}
 								else {
 									echo $value['expiration_date'];
