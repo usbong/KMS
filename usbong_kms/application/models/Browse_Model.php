@@ -505,5 +505,19 @@ class Browse_Model extends CI_Model
 		
 		return $rowArray;
 	}		
+
+/*
+	//added by Mike, 20200408
+	public function getMedicalDoctorIdViaName($param) 
+	{
+		$this->db->select('medical_doctor_name', 'medical_doctor_id');
+//		$this->db->distinct('medical_doctor_name');
+		$this->db->like('medical_doctor_name', $param['nameParam']);
+
+		$row = $query->row();		
+
+		return $row;
+	}	
+*/
 }
 ?>
