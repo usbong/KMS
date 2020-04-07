@@ -147,7 +147,8 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	public function confirmNonMedicine()
 	{
-		$data['nameParam'] = $_POST[nameParam];
+		//edited by Mike, 20200407
+		$data['nameParam'] = $_POST['nameParam'];
 		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
