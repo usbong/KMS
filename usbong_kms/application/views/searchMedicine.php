@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200330
+' @date updated: 20200408
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -382,7 +382,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//echo $value['expiration_date'];
 
 								if ($value['expiration_date']==0) {
-									echo "NONE";
+									echo "UNKNOWN";
 								}
 								else {
 									echo $value['expiration_date'];
