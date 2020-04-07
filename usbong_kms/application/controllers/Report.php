@@ -205,13 +205,31 @@ class Report extends CI_Controller { //MY_Controller {
 	}
 
 	//added by Mike, 20200322
-	public function viewPayslip() //TO-DO: -add: parameter, i.e. medical doctor
-	{
+	public function viewPayslip()
+	{				
 		$this->load->model('Report_Model');
 
 		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
 
 		$data["result"] = $this->Report_Model->getPayslipForTheDay($data);//, $member_id);
+
+		$this->load->view('viewPayslip', $data);
+	}
+
+	//added by Mike, 20200322; edited by Mike, 20200408
+	public function viewPayslipFor($medicalDoctorName)
+	{		
+/*	
+		$this->load->model('Browse_Model');
+		$data["medicalDoctorName"] = $this->Report_Model->getMedicalDoctorIdViaName	 //medical doctor keyword in report filename
+*/
+				
+		$this->load->model('Report_Model');
+
+//		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+		$data["medicalDoctorName"] = $medicalDoctorName; //medical doctor keyword in report filename
+
+		$data["result"] = $this->Report_Model->getPayslipForTheDay($data);
 
 		$this->load->view('viewPayslip', $data);
 	}
