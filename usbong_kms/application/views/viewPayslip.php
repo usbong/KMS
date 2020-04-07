@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200403
+' @date updated: 20200407
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -421,25 +421,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200403
+								//edited by Mike, 20200403; edited by Mike, 20200407
 //								if (strtoupper($value['notes'])=="PRIVATE") {
 								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
-									echo $value['fee'];
+//									echo $value['fee'];
 									
 									$iNetPF = $value['fee'];
 								}
-								//added by Mike, 20200403
+								//added by Mike, 20200403; edited by Mike, 20200407
 //								elseif (strtoupper($value['notes'])=="DEXA") {
 								elseif (strpos(strtoupper($value['notes']), "DEXA")!==false) {
-									echo $value['fee']*.70+500;
+//									echo $value['fee']*.70+500;
 									
 									$iNetPF = $value['fee']*.70+500;
 								}
 								else {
-									echo $value['fee']*.70;
+//									echo $value['fee']*.70;
 
 									$iNetPF = $value['fee']*.70;
 								}
+								
+								//added by Mike, 20200407
+								//output: whole numbers
+								echo floor(($iNetPF*100)/100);
 
 								$iTotalNetPF += $iNetPF;
 							?>
