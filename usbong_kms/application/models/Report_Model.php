@@ -179,8 +179,65 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200322
+	//added by Mike, 20200322; edited by Mike, 20200408
 	public function getPayslipForTheDay($param) 
+	{	
+		$this->db->select('report_id'); //, t2.treatment_diagnosis');
+		$this->db->like('report_filename', $param['medicalDoctorName']);
+		$this->db->like('added_datetime_stamp',date("Y-m-d"));
+		$this->db->order_by('added_datetime_stamp', 'DESC');
+		$query = $this->db->get('report');
+
+		$row = $query->row();
+		
+		if ($row == null) {			
+			return False; //edited by Mike, 20190722
+		}		
+		
+		//max(report_id) error
+		//echo "dito".$row->report_id;
+
+//select max(`report_id`) from `report`
+//select max(`report_id`) from `report` where `report_filename` like '%PETER%' 
+
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->distinct('t1.patient_name');
+		
+		$this->db->where('t2.report_id=',$row->report_id);
+		
+		//added by Mike, 20200324
+		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+
+		$this->db->like('t3.medical_doctor_name', $param['medicalDoctorName']);
+//		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
+		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
+
+		//$this->db->limit(8);//1);
+		
+		$query = $this->db->get('patient');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+//		echo "report_id: ".$rowArray[0]['report_id'];
+		
+/*		return $row->report_description;
+*/
+//		return $rowArray[0]['report_description'];
+
+		return $rowArray;
+	}
+
+
+	//added by Mike, 20200322; edited by Mike, 20200408
+	public function getPayslipForTheDayPrev($param) 
 	{	
 		$this->db->select('report_id'); //, t2.treatment_diagnosis');
 		$this->db->like('report_filename', $param['medicalDoctorName']);
@@ -232,7 +289,9 @@ class Report_Model extends CI_Model
 //		return $rowArray[0]['report_description'];
 
 		return $rowArray;
-	}	
+	}
+
+	
 /*
 	//added by Mike, 20200402
 	public function getMedicineTransactionsForTheDay() 
