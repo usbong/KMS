@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20200322
+  @date updated: 20200408
 
   Given:
   1) List with the details of the transactions for the day at the Marikina Orthopedic Specialty Clinic (MOSC) Headquarters
@@ -149,6 +149,7 @@
 /*
 					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))	
 */
+/*
 					if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["7"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))
 					{
 					}
@@ -157,6 +158,27 @@
 					{
 							echo "Error: " . $mysqli->error;
 					}																
+*/
+					if (strpos(strtoupper($medicalDoctorName), "PEDRO")!==false) {
+						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `lab_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["4"]."', '".$data["i".$i]["5"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))
+						{
+						}
+						// show an error if there is an issue with the database query
+						else
+						{
+								echo "Error: " . $mysqli->error;
+						}																
+					}
+					else {
+						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["7"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))
+						{
+						}
+						// show an error if there is an issue with the database query
+						else
+						{
+								echo "Error: " . $mysqli->error;
+						}																
+					}
 			}				
 
 		//Example: download from the database the uploaded data and store as .txt files in the correct location
