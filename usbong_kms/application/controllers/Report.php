@@ -231,7 +231,14 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["result"] = $this->Report_Model->getPayslipForTheDay($data);
 
-		$this->load->view('viewPayslip', $data);
+//		$this->load->view('viewPayslip', $data);
+
+		if (strtoupper($data["medicalDoctorName"])=="PEDRO") {
+			$this->load->view('viewPayslipMOSC', $data);
+		}
+		else {
+			$this->load->view('viewPayslip', $data);
+		}
 	}
 
 	//added by Mike, 20200402
