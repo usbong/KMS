@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200408
+' @date updated: 20200410
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -310,21 +310,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div class="tableHeader">
 							<?php
-								echo "NET FEE";
+								echo "NET PF";
 							?>
 								</div>
 						</td>
 						<td class ="column">				
 								<div class="tableHeader">
 							<?php
-									echo "X-RAY";
+									echo "X-RAY FEE";
 							?>
 								</div>
 						</td>
 						<td class ="column">				
 								<div class="tableHeader">
 							<?php
-									echo "LAB";
+									echo "LAB FEE";
 							?>
 								</div>
 						</td>
