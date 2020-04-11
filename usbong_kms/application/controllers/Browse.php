@@ -196,6 +196,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchMedicine', $data);
 	}
 
+	//TO-DO: -update: to use one (1) method regardless of the item type
+	//note: identify item type via item ID
 	//added by Mike, 20200328; edited by Mike, 20200407
 	public function viewItemMedicine($itemId)
 	{
@@ -327,4 +329,140 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewItemMedicine', $data);
 	}
+	
+	//---------------------------------------
+	//TO-DO: -update: to use one (1) method regardless of the item type
+	//note: identify item type via item ID
+	//added by Mike, 20200411
+	public function viewItemNonMedicine($itemId)
+	{
+//		$data['nameParam'] = $_POST[nameParam];
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+	
+		$data['result'] = $this->Browse_Model->getItemDetailsListViaItemId($itemId);
+
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsListViaItemId($itemId);
+
+		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStockItemId($itemId);
+	
+		$this->load->view('viewItemNonMedicine', $data);
+	}
+	
+	//added by Mike, 20200411
+	public function addTransactionItemPurchase($itemId,$quantity)
+	{
+/*
+		$data['nameParam'] = $_POST[nameParam];
+		
+		//added by Mike, 20200328
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchMedicine');
+		}
+*/		
+/*
+		echo itemId: .$itemId;
+		echo quantity: .$quantity;
+*/		
+		$data['itemId'] = $itemId;
+		$data['quantity'] = $quantity;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+//		$data['transactionId'] = $this->Browse_Model->addTransactionMedicinePurchase($data);
+
+		$this->Browse_Model->addTransactionItemPurchase($data);
+		
+		$data['result'] = $this->Browse_Model->getItemDetailsListViaItemId($itemId);
+
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsListViaItemId($itemId);
+
+		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStockItemId($itemId);
+		
+		//TO-DO: -update this
+		$this->load->view('viewItemNonMedicine', $data);
+	}
+
+	//added by Mike, 20200411
+	public function deleteTransactionItemPurchase($itemId, $transactionId)
+	{
+/*
+		echo itemId: .$itemId;
+*/		
+		$data['itemId'] = $itemId;
+		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		$this->Browse_Model->deleteTransactionItemPurchase($data);
+		
+		$data['result'] = $this->Browse_Model->getItemDetailsListViaItemId($itemId);
+
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsListViaItemId($itemId);
+
+		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStockItemId($itemId);
+
+		$this->load->view('viewItemNonMedicine', $data);
+	}
+	
+	//added by Mike, 20200411
+	public function payTransactionItemPurchase($itemId)
+	{
+/*
+		echo itemId: .$itemId;
+*/		
+		$data['itemId'] = $itemId;
+//		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		$this->Browse_Model->payTransactionItemPurchase();
+		
+		$data['result'] = $this->Browse_Model->getItemDetailsListViaItemId($itemId);
+
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsListViaItemId($itemId);
+
+		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStockItemId($itemId);
+
+		$this->load->view('viewItemNonMedicine', $data);
+	}		
 }
