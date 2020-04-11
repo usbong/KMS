@@ -107,18 +107,18 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//edited by Mike, 20200411
 	public function getNonMedicineDetailsListViaName($param) 
 	{		
-/*		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
-*/
+/*
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id');
-
+*/
 		$this->db->from('item as t1');
-//		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
 
 		$this->db->group_by('t1.item_name');
-//		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
+		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
 
 		$this->db->where('t1.item_type_id', 2); //2 = Non-medicine; 1 = Medicine
 
