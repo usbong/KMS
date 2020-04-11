@@ -345,7 +345,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200330; edited by Mike, 20200411
 /*				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
 */
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/"+itemId+"/"+quantity+"');?>";
+				//2 = Non-medicine
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"');?>";
 
 
 /*
@@ -401,7 +402,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}	
 */
 		function myPopupFunctionDelete(itemId,transactionId) {				
-			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/"+itemId +"/"+transactionId+"');?>";
+			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/2/"+itemId +"/"+transactionId+"');?>";
 		}	
 
 		//added by Mike, 20200331; edited by Mike, 20200411
@@ -411,7 +412,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}	
 */
 		function myPopupFunctionPay(itemId) {				
+/*
 			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
+*/			
+			//edited by Mike, 20200411
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
+			
 		}	
 
 	  </script>

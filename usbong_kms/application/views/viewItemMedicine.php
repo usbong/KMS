@@ -342,8 +342,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				alert("quantity: " + quantity);
 				window.location.href = "<?php echo site_url('browse/searchMedicine/');?>";
 */
+/*
 				//added by Mike, 20200330
 				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
+*/
+				//added by Mike, 20200330; edited by Mike, 20200411
+				//1 = Medicine
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/1/"+itemId+"/"+quantity+"');?>";
 
 /*
 				//added by Mike, 20170627
@@ -393,12 +398,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		//added by Mike, 20200331
 		function myPopupFunctionDelete(itemId,transactionId) {				
+/*
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+*/			
+			//edited by Mike, 20200411
+			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/1/"+itemId +"/"+transactionId+"');?>";
+
 		}	
 
 		//added by Mike, 20200331
 		function myPopupFunctionPay(itemId) {				
+/*
 			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
+*/
+			//edited by Mike, 20200411
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/1/"+itemId+"');?>";
 		}	
 
 	  </script>
