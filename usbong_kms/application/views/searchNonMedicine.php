@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200403
+' @date updated: 20200411
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -110,8 +110,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right
+						}	
+
+						td.columnTableHeader
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
 						}						
-						
+												
 						td.imageColumn
 						{
 							width: 40%;
@@ -313,19 +322,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="column">				
+						<td class="columnTableHeader">				
 								<div class="tableHeader">
 				<?php
 								echo "ITEM NAME";
 				?>		
 								</div>								
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class="columnTableHeader">				
 							<?php
-								echo "ITEM PRICE";
+								echo "AVAILABLE"; //IN-STOCK;
 							?>
-								</div>
+						</td>
+						<td class="columnTableHeader">				
+							<?php
+								echo "EXPIRATION";
+							?>
+						</td>
+						<td class="columnTableHeader">				
+							<?php
+								echo "PRICE"; //ITEM PRICE;
+							?>
 						</td>
 					  </tr>
 <?php				
@@ -340,6 +357,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo $value['item_name'];
 				?>		
 								</div>								
+						</td>
+						<td class =column>				
+								<div id=quantityInStockId<?php echo $iCount?>>
+							<?php
+								//echo $value['quantity_in_stock'];
+
+								//edited by Mike, 20200411
+								if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
+									echo 9999;
+								}
+								else {
+									echo $value['quantity_in_stock'];
+								}
+							?>
+								</div>
+						</td>
+						<td class =column>				
+								<div id=expirationId<?php echo $iCount?>>
+							<?php
+								//echo $value['expiration_date'];
+								if ($value['expiration_date']==0) {
+
+									if ($value['quantity_in_stock']==-1) {
+										echo "UNKNOWN";
+									}
+									else {
+										echo "NONE";
+									}
+								}
+								else {
+									echo $value['expiration_date'];
+								}
+							?>
+								</div>
 						</td>
 						<td class ="column">				
 								<div id="itemPriceId<?php echo $iCount?>">
