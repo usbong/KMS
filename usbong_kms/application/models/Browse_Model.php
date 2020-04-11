@@ -255,6 +255,7 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
+/*  //removed by Mike, 20200411
 	//added by Mike, 20200330
 	public function addTransactionMedicinePurchase($param) 
 	{		
@@ -262,18 +263,7 @@ class Browse_Model extends CI_Model
 		$this->db->where('item_id', $param['itemId']);
 		$query = $this->db->get('item');
 		$row = $query->row();
-/*	
-		$data = array(
-					'patient_id' => -1,
-					'item_id' => $param['itemId'],
-					'transaction_date' => $param['transactionDate'],
-					'medical_doctor_id' => -1,
-					'fee' => $param['quantity'] * $row->item_price,
-					'transaction_type_name' => CASH,
-					'report_id' => -1,
-					'notes' => UNPAID
-				);
-*/			
+
 		$data = array(
 					'patient_id' => 0,
 					'item_id' => $param['itemId'],
@@ -288,7 +278,7 @@ class Browse_Model extends CI_Model
 		$this->db->insert('transaction', $data);
 		return $this->db->insert_id();
 	}	
-
+*/
 	//added by Mike, 20200331
 	public function deleteTransactionMedicinePurchase($param) 
 	{			
@@ -420,7 +410,7 @@ class Browse_Model extends CI_Model
 	}	
 
 	//added by Mike, 20200406
-	public function getPaidMedicineDetailsListViaItemId($itemId) 
+	public function getPaidMedicineDetailsList($itemId) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
 		$this->db->from('item as t1');
@@ -498,7 +488,7 @@ class Browse_Model extends CI_Model
 	}
 
 	//added by Mike, 20200328; edited by Mike, 20200406
-	public function getMedicineDetailsListViaItemId($itemId) 
+	public function getMedicineDetailsList($itemId) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
 		$this->db->from('item as t1');
@@ -611,7 +601,7 @@ class Browse_Model extends CI_Model
 */
 
 	//added by Mike, 20200328; edited by Mike, 20200411
-	public function getItemDetailsListViaItemId($itemId) 
+	public function getItemDetailsList($itemTypeId, $itemId) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
 		$this->db->from('item as t1');
@@ -625,7 +615,7 @@ class Browse_Model extends CI_Model
 		$this->db->where('t1.item_id', $itemId);
 
 		//TO-DO: -add: auto-identify item_type
-		$this->db->where('t1.item_type_id', 2); //2 = Non-medicine
+		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 
 
 		//edited by Mike, 20200401
@@ -647,7 +637,7 @@ class Browse_Model extends CI_Model
 	}		
 
 	//added by Mike, 20200406; edited by Mike, 20200411
-	public function getPaidItemDetailsListViaItemId($itemId) 
+	public function getPaidItemDetailsList($itemTypeId, $itemId) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
 		$this->db->from('item as t1');
@@ -660,7 +650,7 @@ class Browse_Model extends CI_Model
 
 		$this->db->where('t2.notes', 'PAID'); //TO-DO: -update: to not include UNPAID if we use like(...)
 		$this->db->where('t1.item_id', $itemId);
-		$this->db->where('t1.item_type_id', 2); //2 = Non-medicine
+		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 
@@ -686,7 +676,7 @@ class Browse_Model extends CI_Model
 		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200407
 		
 		$this->db->where('t2.transaction_date', date('m/d/Y'));//ASC');
-		$this->db->where('t1.item_type_id', 2); //2 = Non-medicine
+//		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 		$this->db->like('t2.notes', "UNPAID");
 		
 		//edited by Mike, 20200401
@@ -704,21 +694,25 @@ class Browse_Model extends CI_Model
 	}		
 
 	//added by Mike, 20200406; edited by Mike, 20200411
-	public function getItemAvailableQuantityInStockItemId($itemId)
+	public function getItemAvailableQuantityInStock($itemTypeId, $itemId)
 	{
 		$this->db->select('t2.quantity_in_stock');
 		$this->db->from('item as t1');
 		
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->where('t1.item_id', $itemId);
-		$this->db->where('t1.item_type_id', 2); //2 = Non-medicine
+		$this->db->where('t1.item_type_id', $itemTypeId); //2); //2 = Non-medicine
 
 		$query = $this->db->get('item');
 
 		$row = $query->row();		
 		
-		$iQuantity = $row->quantity_in_stock;
-				
+		$iQuantity = 0;
+		//added by Mike, 20200411
+		if (isset($row->quantity_in_stock)) {
+			$iQuantity = $row->quantity_in_stock;
+		}
+		
 		if ($iQuantity==0) {
 			return 0;
 		}
