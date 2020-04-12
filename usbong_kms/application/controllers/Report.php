@@ -241,16 +241,34 @@ class Report extends CI_Controller { //MY_Controller {
 		}
 	}
 
-	//added by Mike, 20200402
+	//added by Mike, 20200412
+	public function viewReportNonMedicine()
+	{
+		$this->load->model('Report_Model');
+		
+		$itemTypeId = 2; //2 = Non-medicine
+
+		$data["result"] = $this->Report_Model->getPurchasedItemTransactionsForTheDay($itemTypeId);
+
+		$this->load->view('viewReportNonMedicine', $data);
+	}
+
+	//added by Mike, 20200402; edited by Mike, 20200412
 	public function viewReportMedicine()
 	{
 		$this->load->model('Report_Model');
-
-		$data["result"] = $this->Report_Model->getMedicineTransactionsForTheDay();
 /*
-		//Glucosamine Sulphate 1500mg and Calcium + Vitamin D only
-		$data["resultAsterisk"] = $this->Report_Model->getMedicineTransactionsForTheDayAsterisk();
+		$data["result"] = $this->Report_Model->getMedicineTransactionsForTheDay();
+
+//		//Glucosamine Sulphate 1500mg and Calcium + Vitamin D only
+//		$data["resultAsterisk"] = $this->Report_Model->getMedicineTransactionsForTheDayAsterisk();
+
+		$this->load->view('viewReportMedicine', $data);
 */
+		$itemTypeId = 1; //1 = Medicine
+
+		$data["result"] = $this->Report_Model->getPurchasedItemTransactionsForTheDay($itemTypeId);
+
 		$this->load->view('viewReportMedicine', $data);
 	}
 
