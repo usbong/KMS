@@ -352,11 +352,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
+							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
 								echo $value['item_name'];
 				?>		
 								</div>								
+							</a>
 						</td>
 						<td class =column>				
 								<div id=quantityInStockId<?php echo $iCount?>>
