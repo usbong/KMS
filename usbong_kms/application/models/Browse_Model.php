@@ -335,7 +335,7 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200330; edited by Mike, 20200411
+	//added by Mike, 20200330; edited by Mike, 20200414
 	public function addTransactionItemPurchase($param) 
 	{		
 		$this->db->select('item_price');
@@ -359,7 +359,8 @@ class Browse_Model extends CI_Model
 					'item_id' => $param['itemId'],
 					'transaction_date' => $param['transactionDate'],
 					'medical_doctor_id' => 0,
-					'fee' => $param['quantity'] * $row->item_price,
+//					'fee' => $param['quantity'] * $row->item_price,
+					'fee' => $param['quantity'] * $param['fee'], //edited by Mike, 20200414
 					'transaction_type_name' => "CASH",
 					'report_id' => 0,
 					'notes' => "UNPAID"
