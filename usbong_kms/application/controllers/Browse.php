@@ -369,9 +369,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewItemNonMedicine', $data);
 	}
 	
-	//added by Mike, 20200411
+	//added by Mike, 20200411; edited by Mike, 20200414
 //	public function addTransactionItemPurchase($itemId,$quantity)
-	public function addTransactionItemPurchase($itemTypeId, $itemId, $quantity)
+//	public function addTransactionItemPurchase($itemTypeId, $itemId, $quantity)
+	public function addTransactionItemPurchase($itemTypeId, $itemId, $quantity, $fee)
 	{
 /*
 		$data['nameParam'] = $_POST[nameParam];
@@ -388,6 +389,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
 		$data['quantity'] = $quantity;
+		$data['fee'] = $fee;
 				
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
