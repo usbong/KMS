@@ -572,10 +572,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $value['quantity_in_stock'];
 								}
 */
-								//edited by Mike, 20200411
-								if (($resultQuantityInStockNow<0) or ($resultQuantityInStockNow=="") ){
-/*								if ($resultQuantityInStockNow<0) {
-*/	
+								//edited by Mike, 20200414; edited by Mike, 20200414
+								if (($resultQuantityInStockNow<0)) {
 									echo 9999;
 								}
 								else {

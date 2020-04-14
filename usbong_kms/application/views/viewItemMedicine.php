@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200411
+' @date updated: 20200414
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -295,10 +295,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  }
 */
 
-		//added by Mike, 20200329
+		//added by Mike, 20200329; edited by Mike, 20200414
 //		function myPopupFunction() {				
 		function myPopupFunction(itemId) {				
 			var quantity = document.getElementById("quantityParam").value;
+			var fee = document.getElementById("feeParam").value;
+
+//			alert("quantity: " + quantity);
+//			alert("fee: " + fee);
 
 /*
 			var product_id = document.getElementById("product_idParam").value;
@@ -313,7 +317,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
 */
 			//do the following only if quantity is a Number, i.e. not NaN
-			if (!isNaN(quantity)) {	
+			if ((!isNaN(quantity)) && (!isNaN(fee))) {	
 /*
 				//added by Mike, 20170701
 				var quantityField = document.getElementById("quantityId");			
@@ -348,7 +352,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 				//added by Mike, 20200330; edited by Mike, 20200411
 				//1 = Medicine
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/1/"+itemId+"/"+quantity+"');?>";
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/1/"+itemId+"/"+quantity+"/"+fee+"');?>";
 
 /*
 				//added by Mike, 20170627
@@ -539,10 +543,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $value['quantity_in_stock'];
 								}
 */
-								//edited by Mike, 20200411
-								if (($resultQuantityInStockNow<0) or ($resultQuantityInStockNow=="") ){
-/*								if ($resultQuantityInStockNow<0) {
-*/	
+								//edited by Mike, 20200411; edited by Mike, 20200414
+								if (($resultQuantityInStockNow<0)) {
 									echo 9999;
 								}
 								else {
@@ -552,7 +554,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
+								<div id="itemExpirationId<?php echo $iCount?>">
 							<?php
 								//echo $value['expiration_date'];
 
@@ -571,7 +573,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
-						<td class ="column">				
+						<td class ="column">		
+								<!-- added by Mike, 20200414 -->
+								<input type="hidden" id="feeParam" value="<?php echo $value['item_price']?>">
+								</input>
+					
 								<div id="itemPriceId<?php echo $iCount?>">
 							<?php
 								echo $value['item_price'];
