@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200411
+' @date updated: 20200414
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -120,6 +120,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
+
+						td.columnTableHeaderFee
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 12%;
+						}		
 						
 						td.imageColumn
 						{
@@ -133,6 +143,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 							text-align: right;
 						}						
+
+						.Fee-textbox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 12px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							width: 64%;
+
+							float: left;
+						}
 
 						.Quantity-textbox { 
 							background-color: #fCfCfC;
@@ -295,10 +317,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  }
 */
 
-		//added by Mike, 20200329
+		//added by Mike, 20200329; edited by Mike, 20200414
 //		function myPopupFunction() {				
 		function myPopupFunction(itemId) {				
 			var quantity = document.getElementById("quantityParam").value;
+			var fee = document.getElementById("feeParam").value;
 
 /*
 			var product_id = document.getElementById("product_idParam").value;
@@ -313,7 +336,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
 */
 			//do the following only if quantity is a Number, i.e. not NaN
-			if (!isNaN(quantity)) {	
+			if ((!isNaN(quantity)) && (!isNaN(fee))) {	
 /*
 				//added by Mike, 20170701
 				var quantityField = document.getElementById("quantityId");			
@@ -346,7 +369,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
 */
 				//2 = Non-medicine
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"');?>";
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"');?>";
 
 
 /*
@@ -512,6 +535,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "PRICE"; //"ITEM PRICE";
 							?>
 						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
+							?>
+						</td>
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -576,12 +604,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
-						<td class ="column">				
+						<td class ="column">
 								<div id="itemPriceId<?php echo $iCount?>">
 							<?php
 								echo $value['item_price'];
 							?>
 								</div>
+						</td>
+						<td class ="column">				
+							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 3) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>						
 						</td>
 						<td>
 							x
@@ -683,7 +728,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="cartItemPriceId<?php echo $iCount?>">
 							<?php
-								echo $cartValue['item_price'];
+								//edited by Mike, 20200414
+//								echo $cartValue['item_price'];
+								echo $cartValue['fee'];
 							?>
 								</div>
 						</td>
@@ -694,8 +741,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="cartItemQuantityId<?php echo $iCount?>">
 							<?php
 //								echo $cartValue['fee']/$cartValue['item_price'];
-								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
-
+//								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
+								//edited by Mike, 20200414
+								echo floor(($cartValue['fee']/$cartValue['fee']*100)/100);
 							?>
 								</div>
 						</td>
@@ -822,7 +870,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 									<div id="itemPriceId<?php echo $iCount?>">
 								<?php
-									echo $value['item_price'];
+									//edited by Mike, 20200414
+//									echo $value['item_price'];
+									echo $value['fee'];
 								?>
 									</div>
 							</td>
@@ -833,7 +883,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<div id="itemQuantityId<?php echo $iCount?>">
 								<?php
 	//								echo $value['fee']/$value['item_price'];
-									echo floor(($value['fee']/$value['item_price']*100)/100);
+//									echo floor(($value['fee']/$value['item_price']*100)/100);
+									//edited by Mike, 20200414
+									echo floor(($value['fee']/$value['fee']*100)/100);
 								?>
 									</div>
 							</td>
