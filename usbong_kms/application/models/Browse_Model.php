@@ -713,7 +713,11 @@ class Browse_Model extends CI_Model
 		if (isset($row->quantity_in_stock)) {
 			$iQuantity = $row->quantity_in_stock;
 		}
-		
+		//added by Mike, 20200414
+		else {
+			return -1; //9999;
+		}
+				
 		if ($iQuantity==0) {
 			return 0;
 		}
