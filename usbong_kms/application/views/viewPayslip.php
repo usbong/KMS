@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200407
+' @date updated: 20200415
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -266,6 +266,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
+		//added by Mike, 20200415
+		$iFee = 0;
+		$iMOSC = 0;
+		$iNetPF = 0;
+		$iXRayFee = 0;
+
 		$iTotalFee = 0;
 		$iTotalMOSC = 0;
 		$iTotalNetPF = 0;
@@ -388,12 +394,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 								<span id="feeId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200402
+								//edited by Mike, 20200415
 //								echo $value['fee'];
 								//output: whole numbers							
-								echo floor(($value['fee']*100)/100);
+//								echo floor(($value['fee']*100)/100);
+								$iFee = floor(($value['fee']*100)/100);
+								echo $iFee;
 								
-								$iTotalFee += $value['fee'];
+								$iTotalFee += $iFee; //$value['fee'];
 							?>
 								</span>
 						</td>
@@ -452,8 +460,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="notesId<?php echo $iCount?>">
 							<?php
-									if ($value['notes']=="") {
-										echo "NONE";
+									$iXRayFee = floor(($value['x_ray_fee']*100)/100);
+
+									if ($value['notes']=="") {	
+										//edited by Mike, 20200415
+//										echo "NONE";								
+										if (($iFee==0) and ($iMOSC==0) and ($iNetPF==0) and ($iXRayFee==0)) {
+											echo "UNPAID";
+										}
+										else {
+											echo "NONE";
+										}
 									}
 									else {
 										echo strtoupper($value['notes']);
@@ -464,12 +481,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="notesId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200402
+								//edited by Mike, 20200415
 //								echo $value['x_ray_fee'];
 								//output: whole numbers
-								echo floor(($value['x_ray_fee']*100)/100);
+//								echo floor(($value['x_ray_fee']*100)/100);								
+//								$iXRayFee = floor(($value['x_ray_fee']*100)/100);
 
-								$iTotalXRayFee += $value['x_ray_fee'];
+								echo $iXRayFee;
+
+								$iTotalXRayFee += $iXRayFee; //$value['x_ray_fee'];
 							?>
 								</div>
 						</td>						
