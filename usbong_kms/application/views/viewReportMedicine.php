@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200402
+' @date updated: 20200415
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -499,6 +499,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="itemPriceId<?php echo $iCount?>">
 							<?php
+								//note: the price is pre-set.
 								echo $value['item_price'];
 							?>
 								</div>
@@ -510,9 +511,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="itemQuantityId<?php echo $iCount?>">
 							<?php
 //								echo floor(($value['fee']/$value['item_price']*100)/100);
+//								$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								//edited by Mike, 20200415
+								if ($value['fee_quantity']==0) {
+//									$iQuantity =  1;
+									$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								}
+								else {
+									$iQuantity =  $value['fee_quantity'];
+								}
 
-								$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
-								
 								echo $iQuantity;
 								
 								$iTotalQuantity = $iTotalQuantity + $iQuantity;

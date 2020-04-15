@@ -502,7 +502,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//edited by Mike, 20200414
 //								echo $value['item_price'];
-								echo $value['fee'];
+//								echo $value['fee'];
+
+								//added by Mike, 20200415
+								if ($value['fee_quantity']==0) {
+				//									$iQuantity =  1;
+									$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								}
+								else {
+									$iQuantity =  $value['fee_quantity'];
+								}
+
+								echo $value['fee']/$iQuantity;
 							?>
 								</div>
 						</td>
@@ -513,10 +524,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="itemQuantityId<?php echo $iCount?>">
 							<?php
 //								echo floor(($value['fee']/$value['item_price']*100)/100);
-								//edited by Mike, 20200414
+								//edited by Mike, 20200415
 //								$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
-								$iQuantity =  floor(($value['fee']/$value['fee']*100)/100);
-								
+//								$iQuantity =  floor(($value['fee']/$value['fee']*100)/100);
+/*
+								if ($value['fee_quantity']==0) {
+//									$iQuantity =  1;
+									$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								}
+								else {
+									$iQuantity =  $value['fee_quantity'];
+								}
+*/								
 								echo $iQuantity;
 								
 								$iTotalQuantity = $iTotalQuantity + $iQuantity;
