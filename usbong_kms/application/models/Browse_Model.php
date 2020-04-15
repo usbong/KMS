@@ -361,6 +361,7 @@ class Browse_Model extends CI_Model
 					'medical_doctor_id' => 0,
 //					'fee' => $param['quantity'] * $row->item_price,
 					'fee' => $param['quantity'] * $param['fee'], //edited by Mike, 20200414
+					'fee_quantity' => $param['quantity'], //edited by Mike, 20200415					
 					'transaction_type_name' => "CASH",
 					'report_id' => 0,
 					'notes' => "UNPAID"
@@ -637,10 +638,10 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200406; edited by Mike, 20200411
+	//added by Mike, 20200406; edited by Mike, 20200415
 	public function getPaidItemDetailsList($itemTypeId, $itemId) 
 	{		
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.quantity_in_stock, t3.expiration_date');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
@@ -668,10 +669,10 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200328; edited by Mike, 20200411
+	//added by Mike, 20200328; edited by Mike, 20200415
 	public function getItemDetailsListViaNotesUnpaid() 
 	{		
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200407
