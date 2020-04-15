@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200414
+' @date updated: 20200415
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -128,7 +128,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 12%;
+							width: 13%;
 						}		
 						
 						td.imageColumn
@@ -147,11 +147,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Fee-textbox { 
 							background-color: #fCfCfC;
 							color: #68502b;
-							padding: 12px;
+							padding: 10px;
 							font-size: 16px;
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
-							width: 64%;
+							width: 72%;
 
 							float: left;
 						}
