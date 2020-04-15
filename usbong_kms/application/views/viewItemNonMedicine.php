@@ -728,7 +728,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//edited by Mike, 20200414
 //								echo $cartValue['item_price'];
-								echo $cartValue['fee'];
+
+								//added by Mike, 20200415
+								if ($cartValue['fee_quantity']==0) {
+//									$iQuantity =  1;
+									$iQuantity =  floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
+								}
+								else {
+									$iQuantity =  $cartValue['fee_quantity'];
+								}
+
+
+								echo $cartValue['fee']/$iQuantity;
 							?>
 								</div>
 						</td>
@@ -742,12 +753,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
 								//edited by Mike, 20200415
 								//echo floor(($cartValue['fee']/$cartValue['fee']*100)/100);							
+/*								
 								if ($cartValue['fee_quantity']==0) {
 									echo 1;
 								}
 								else {
 									echo $cartValue['fee_quantity'];
 								}
+*/								
+								echo $iQuantity;
 							?>
 								</div>
 						</td>
@@ -876,7 +890,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php
 									//edited by Mike, 20200414
 //									echo $value['item_price'];
-									echo $value['fee'];
+
+									//added by Mike, 20200415
+									if ($value['fee_quantity']==0) {
+	//									$iQuantity =  1;
+										$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+									}
+									else {
+										$iQuantity =  $value['fee_quantity'];
+									}
+									
+//									echo $value['fee'];
+									echo $value['fee']/$iQuantity;
 								?>
 									</div>
 							</td>
@@ -890,13 +915,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //									echo floor(($value['fee']/$value['item_price']*100)/100);
 									//edited by Mike, 20200415
 //									echo floor(($value['fee']/$value['fee']*100)/100);
-									
+/*									
 									if ($value['fee_quantity']==0) {
 										echo 1;
 									}
 									else {
 										echo $value['fee_quantity'];									
 									}
+*/									
+									echo $iQuantity;
 								?>
 									</div>
 							</td>
