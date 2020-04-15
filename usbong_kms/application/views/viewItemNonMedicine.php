@@ -715,7 +715,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>								
 						</td>
 						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewItemMedicine/'.$cartValue['item_id'])?>'>
+							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$cartValue['item_id'])?>'>
 								<div class="itemName">
 				<?php
 								echo $cartValue['item_name'];
@@ -740,8 +740,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 //								echo $cartValue['fee']/$cartValue['item_price'];
 //								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
-								//edited by Mike, 20200414
-								echo floor(($cartValue['fee']/$cartValue['fee']*100)/100);
+								//edited by Mike, 20200415
+								//echo floor(($cartValue['fee']/$cartValue['fee']*100)/100);							
+								if ($cartValue['fee_quantity']==0) {
+									echo 1;
+								}
+								else {
+									echo $cartValue['fee_quantity'];
+								}
 							?>
 								</div>
 						</td>
@@ -857,7 +863,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</td>
 							<td class ="column">				
-								<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+								<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 									<div class="itemName">
 					<?php
 									echo $value['item_name'];
@@ -882,8 +888,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php
 	//								echo $value['fee']/$value['item_price'];
 //									echo floor(($value['fee']/$value['item_price']*100)/100);
-									//edited by Mike, 20200414
-									echo floor(($value['fee']/$value['fee']*100)/100);
+									//edited by Mike, 20200415
+//									echo floor(($value['fee']/$value['fee']*100)/100);
+									
+									if ($value['fee_quantity']==0) {
+										echo 1;
+									}
+									else {
+										echo $value['fee_quantity'];									
+									}
 								?>
 									</div>
 							</td>
