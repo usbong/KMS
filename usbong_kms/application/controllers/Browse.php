@@ -176,7 +176,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchMedicine', $data);
 	}
 
-	//added by Mike, 20200328	
+	//added by Mike, 20200328; edited by Mike, 20200417
 	public function confirmMedicine()
 	{
 		$data['nameParam'] = $_POST['nameParam'];
@@ -192,6 +192,22 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->model('Browse_Model');
 	
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		//added by Mike, 20200417
+		$itemTypeId = 1; //1 = Medicine
+		$iCount = 0;
+		
+		foreach ($data['result'] as $value) {
+			$itemId = $value['item_id'];
+				
+//			echo "itemId: " . $itemId;
+			
+			$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
+
+			//['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+			
+			$iCount = $iCount + 1;
+		}
 
 		$this->load->view('searchMedicine', $data);
 	}
