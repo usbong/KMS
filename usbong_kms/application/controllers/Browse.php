@@ -202,9 +202,18 @@ class Browse extends CI_Controller { //MY_Controller {
 				$itemId = $value['item_id'];
 					
 	//			echo "itemId: " . $itemId;
-				
+/*				
 				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
-
+*/				
+				//added by Mike, 20200417
+				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp
+				if ($iCount==0) {
+					$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
+				}
+				else {
+					$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+				}
+				
 //				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId, $value['expiration_date']); //"0";
 
 				//['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
