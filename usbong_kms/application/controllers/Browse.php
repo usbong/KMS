@@ -197,18 +197,22 @@ class Browse extends CI_Controller { //MY_Controller {
 		$itemTypeId = 1; //1 = Medicine
 		$iCount = 0;
 		
-		foreach ($data['result'] as $value) {
-			$itemId = $value['item_id'];
+		if ($data['result'] == True) {
+			foreach ($data['result'] as $value) {
+				$itemId = $value['item_id'];
+					
+	//			echo "itemId: " . $itemId;
 				
-//			echo "itemId: " . $itemId;
-			
-			$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
+				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
 
-			//['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
-			
-			$iCount = $iCount + 1;
+//				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId, $value['expiration_date']); //"0";
+
+				//['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+				
+				$iCount = $iCount + 1;
+			}
 		}
-
+		
 		$this->load->view('searchMedicine', $data);
 	}
 
@@ -231,8 +235,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 
-		//added by Mike, 20200406; edited by Mike, 20200407
+		//added by Mike, 20200406; edited by Mike, 20200417
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+//		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId, $data['result'][0]['expiration_date']);
 	
 		$this->load->view('viewItemMedicine', $data);
 	}
