@@ -695,8 +695,9 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200406; edited by Mike, 20200411
+	//added by Mike, 20200406; edited by Mike, 20200417
 	public function getItemAvailableQuantityInStock($itemTypeId, $itemId)
+//	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
 	{
 		$this->db->select('t2.quantity_in_stock');
 		$this->db->from('item as t1');
@@ -704,6 +705,8 @@ class Browse_Model extends CI_Model
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t1.item_type_id', $itemTypeId); //2); //2 = Non-medicine
+
+
 
 		$query = $this->db->get('item');
 
