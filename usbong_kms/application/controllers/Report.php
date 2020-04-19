@@ -204,6 +204,19 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportImage', $data);
 	}
 
+	//added by Mike, 20200420
+	//TO-DO: -update: this
+	public function viewReceiptReport()
+	{				
+		$this->load->model('Report_Model');
+
+		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+
+		$data["result"] = $this->Report_Model->getPayslipForTheDay($data);//, $member_id);
+
+		$this->load->view('viewReceiptReportMOSC', $data);
+	}
+
 	//added by Mike, 20200322
 	public function viewPayslip()
 	{				
