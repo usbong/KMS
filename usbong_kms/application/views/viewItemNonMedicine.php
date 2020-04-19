@@ -752,19 +752,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 
 								//edited by Mike, 20200419
-								//echo $cartValue['fee']/$iQuantity;
-	
-								if ($iQuantity==0) {
-//									$iQuantity = 1;
-//									echo $cartValue['fee'];
-//									echo (double)$cartValue['item_price'];
-
-									echo number_format($cartValue['fee'], 2, '.', '');
-
-								} 
-								else {
-									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-								}								
+								//echo $cartValue['fee']/$iQuantity;	
+								echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
 							?>
 								</div>
 						</td>
