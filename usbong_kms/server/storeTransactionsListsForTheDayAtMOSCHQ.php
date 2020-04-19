@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20200408
+  @date updated: 20200419
 
   Given:
   1) List with the details of the transactions for the day at the Marikina Orthopedic Specialty Clinic (MOSC) Headquarters
@@ -78,7 +78,7 @@
 
 				$patientId = null;
 				
-				//TO-DO: -verify if patient name already exists
+				//verify if patient name already exists
 				if ($selectedResult = $mysqli->query("SELECT `patient_id` FROM `patient` WHERE `patient_name` = '".$patientName."';"))	{
 //					$patientId = $selectedResult;
 
@@ -95,7 +95,7 @@
 				}
 
 				if (!isset($patientId)) {
-					if ($insertedResult = $mysqli->query("INSERT INTO `patient` (`patient_name`) VALUES ('".$patientName."');"))	{						
+					if ($insertedResult = $mysqli->query("INSERT INTO `patient` (`patient_name`) VALUES ('".$patientName."');"))	{
 						$patientId = $mysqli->insert_id;
 					}
 					else
@@ -105,8 +105,14 @@
 				}
 
 				$reportFilenameArray = explode("\\",$data["report_filename"]);				
-				$medicalDoctorName = str_replace(".txt", "", $reportFilenameArray[array_key_last($reportFilenameArray)]);
+				//edited by Mike, 20200418
+				//note: array_key_last(...) exists only by PHP 7.3 
+				//reference: https://www.php.net/manual/en/function.array-key-last.php;
+				//last accessed: 20200418
+//				$medicalDoctorName = str_replace(".txt", "", $reportFilenameArray[array_key_last($reportFilenameArray)]);
 
+				$medicalDoctorName = str_replace(".txt", "", end($reportFilenameArray));
+								
 				//verify if medical doctor name already exists
 				if ($selectedResult = $mysqli->query("SELECT `medical_doctor_id` FROM `medical_doctor` WHERE `medical_doctor_name` = '".$medicalDoctorName."';"))	{
 //					$patientId = $selectedResult;
@@ -159,9 +165,15 @@
 							echo "Error: " . $mysqli->error;
 					}																
 */
+/*
 					if (strpos(strtoupper($medicalDoctorName), "PEDRO")!==false) {
 						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `lab_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["4"]."', '".$data["i".$i]["5"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))
+*/
+					if (strpos(strtoupper($medicalDoctorName), "PEDRO")!==false) {
+						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `lab_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`, `med_fee`, `pas_fee`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["4"]."', '".$data["i".$i]["5"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."', '".$data["i".$i]["7"]."', '".$data["i".$i]["8"]."');"))
 						{
+							//TO-DO: -add: values receipt table
+							
 						}
 						// show an error if there is an issue with the database query
 						else
@@ -170,8 +182,12 @@
 						}																
 					}
 					else {
+/*						
 						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["7"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))
+*/							
+						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`, `med_fee`, `pas_fee`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["7"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."', '".$data["i".$i]["8"]."', '".$data["i".$i]["9"]."');"))
 						{
+							//TO-DO: -add: values receipt table
 						}
 						// show an error if there is an issue with the database query
 						else
