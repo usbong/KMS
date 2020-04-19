@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200417
+' @date updated: 20200419
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -316,6 +316,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
 */
+
+			//added by Mike, 20200419
+			if (quantity==0) {	
+			  alert("Kailangang hindi zero (0) ang QUANTITY.");
+			  return;
+			}
+
+			//added by Mike, 20200419			
+			if (fee==0){	
+			  alert("Kailangang hindi zero (0) ang FEE.");
+			  return;
+			}
+
 			//do the following only if quantity is a Number, i.e. not NaN
 			if ((!isNaN(quantity)) && (!isNaN(fee))) {	
 /*

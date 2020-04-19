@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200416
+' @date updated: 20200419
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -335,6 +335,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
 */
+			//added by Mike, 20200419
+			if (quantity==0) {	
+			  alert("Kailangang hindi zero (0) ang QUANTITY.");
+			  return;
+			}
+
+			//added by Mike, 20200419			
+			if (fee==0){	
+			  alert("Kailangang hindi zero (0) ang FEE.");
+			  return;
+			}
+			
 			//do the following only if quantity is a Number, i.e. not NaN
 			if ((!isNaN(quantity)) && (!isNaN(fee))) {	
 /*
@@ -368,6 +380,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200330; edited by Mike, 20200411
 /*				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
 */
+
 				//2 = Non-medicine
 				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"');?>";
 
@@ -738,8 +751,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$iQuantity =  $cartValue['fee_quantity'];
 								}
 
+								//edited by Mike, 20200419
+								//echo $cartValue['fee']/$iQuantity;
+	
+								if ($iQuantity==0) {
+//									$iQuantity = 1;
+//									echo $cartValue['fee'];
+//									echo (double)$cartValue['item_price'];
 
-								echo $cartValue['fee']/$iQuantity;
+									echo number_format($cartValue['fee'], 2, '.', '');
+
+								} 
+								else {
+									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
+								}								
 							?>
 								</div>
 						</td>
