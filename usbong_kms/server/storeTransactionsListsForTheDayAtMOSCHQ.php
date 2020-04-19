@@ -169,10 +169,37 @@
 					if (strpos(strtoupper($medicalDoctorName), "PEDRO")!==false) {
 						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `lab_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["4"]."', '".$data["i".$i]["5"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."');"))
 */
+
+					$moscReceiptType = 1;
+					$pasReceiptType = 2;
+					$mdReceiptType = 3;
+
 					if (strpos(strtoupper($medicalDoctorName), "PEDRO")!==false) {
 						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `lab_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`, `med_fee`, `pas_fee`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["4"]."', '".$data["i".$i]["5"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."', '".$data["i".$i]["7"]."', '".$data["i".$i]["8"]."');"))
 						{
-							//TO-DO: -add: values receipt table
+							$transactionId = $mysqli->insert_id;
+
+							//MOSC Official Receipt
+							if ($receiptInsertedResult = $mysqli->query("INSERT INTO `receipt` (`receipt_type_id`, `transaction_id`, `receipt_number`) VALUES ('".$moscReceiptType."', '".$transactionId."', '".$data["i".$i]["9"]."');"))
+							{
+								
+							}
+							// show an error if there is an issue with the database query
+							else
+							{
+									echo "Error: " . $mysqli->error;
+							}																
+
+							//PAS Official Receipt
+							if ($receiptInsertedResult = $mysqli->query("INSERT INTO `receipt` (`receipt_type_id`, `transaction_id`, `receipt_number`) VALUES ('".$pasReceiptType."', '".$transactionId."', '".$data["i".$i]["10"]."');"))
+							{
+								
+							}
+							// show an error if there is an issue with the database query
+							else
+							{
+									echo "Error: " . $mysqli->error;
+							}																
 							
 						}
 						// show an error if there is an issue with the database query
@@ -187,7 +214,39 @@
 */							
 						if ($transactionInsertedResult = $mysqli->query("INSERT INTO `transaction` (`patient_id`, `transaction_date`, `fee`, `notes`, `x_ray_fee`, `transaction_type_name`, `medical_doctor_id`, `report_id`, `med_fee`, `pas_fee`) VALUES ('".$patientId."', '".$data["i".$i]["0"]."', '".$data["i".$i]["3"]."', '".$data["i".$i]["6"]."', '".$data["i".$i]["7"]."', '".$data["i".$i]["transactionType"]."', '".$medicalDoctorId."', '".$reportId."', '".$data["i".$i]["8"]."', '".$data["i".$i]["9"]."');"))
 						{
-							//TO-DO: -add: values receipt table
+							$transactionId = $mysqli->insert_id;
+
+							//MD Official Receipt
+							if ($receiptInsertedResult = $mysqli->query("INSERT INTO `receipt` (`receipt_type_id`, `transaction_id`, `receipt_number`) VALUES ('".$mdReceiptType."', '".$transactionId."', '".$data["i".$i]["10"]."');"))
+							{								
+							}
+							// show an error if there is an issue with the database query
+							else
+							{
+									echo "Error: " . $mysqli->error;
+							}																
+
+							//MOSC Official Receipt
+							if ($receiptInsertedResult = $mysqli->query("INSERT INTO `receipt` (`receipt_type_id`, `transaction_id`, `receipt_number`) VALUES ('".$moscReceiptType."', '".$transactionId."', '".$data["i".$i]["11"]."');"))
+							{								
+							}
+							// show an error if there is an issue with the database query
+							else
+							{
+									echo "Error: " . $mysqli->error;
+							}																
+
+							//PAS Official Receipt
+							if ($receiptInsertedResult = $mysqli->query("INSERT INTO `receipt` (`receipt_type_id`, `transaction_id`, `receipt_number`) VALUES ('".$pasReceiptType."', '".$transactionId."', '".$data["i".$i]["12"]."');"))
+							{								
+							}
+							// show an error if there is an issue with the database query
+							else
+							{
+									echo "Error: " . $mysqli->error;
+							}																
+
+
 						}
 						// show an error if there is an issue with the database query
 						else
