@@ -33,7 +33,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 11pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							/* Legal Size; Landscape*/							
+							width: 802px; /* 670px */
                         }
 						
 						div.checkBox
@@ -59,14 +60,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}
 
-						div.tableHeader
+/*						div.tableHeader
 						{
 							font-weight: bold;
 							text-align: center;
 							background-color: #00ff00; <!--#93d151; lime green-->
 							border: 1pt solid #00ff00;
 						}
-
+*/
 						input.browse-input
 						{
 							width: 100%;
@@ -106,10 +107,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+
+						td.tableHeaderColumn
+						{
+							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;		
+							text-align: center;
+							font-weight: bold;
+						}						
+
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: right
+							text-align: right;
 						}						
 						
 						td.imageColumn
@@ -252,7 +262,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  </tr>
 	</table>
 	<br/>
-	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
+	<div><b>TODAY: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<?php 
 		//TO-DO: -update: this
@@ -260,7 +270,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<br/>There are no transactions for the day.";
 		}
 		else {
-			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
+//			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
 		}
 	?>
 	<br/>
@@ -269,16 +279,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
-		//added by Mike, 20200415
-		$iFee = 0;
-		$iMOSC = 0;
-		$iNetPF = 0;
-		$iXRayFee = 0;
+		$fFee = 0.00;
+		$fXRayFee = 0.00;
+		$fNonMedFee = 0.00;
+		$fMedFee = 0.00;
+		$fLabFee = 0.00;
+		$fAmountPaid = 0.00;
 
-		$iTotalFee = 0;
-		$iTotalMOSC = 0;
-		$iTotalNetPF = 0;
-		$iTotalXRayFee = 0;
+		$fTotalFee = 0.00;
+		$fTotalXRayFee = 0.00;
+		$fTotalNonMedFee = 0.00;
+		$fTotalMedFee = 0.00;
+		$fTotalLabFee = 0.00;
+		$fTotalAmountPaid = 0.00;
 	
 		//get only name strings from array 
 		if (isset($result)) {			
@@ -302,55 +315,65 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 								echo "COUNT";
 							?>
-								</div>
 						</td>
 
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
+							<?php
+								echo "DATE";
+							?>
+						</td>
+	
+						<td class ="tableHeaderColumn">				
+							<?php
+								echo "OR NO.";
+							?>
+						</td>
+
+						<td class ="tableHeaderColumn">				
 				<?php
 								echo "PATIENT NAME";
 				?>		
-								</div>								
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
-							<?php
-								echo "FEE";
-							?>
-								</div>
+
+						<td class ="tableHeaderColumn">				
+				<?php
+								echo "CLASSIFI-<br/>CATION";
+				?>		
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+
+						<td class ="tableHeaderColumn">				
 							<?php
-									echo "MOSC";
+								echo "PF";
 							?>
-								</div>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
-									echo "NET PF";
+								echo "X-RAY<br/>FEE";
 							?>
-								</div>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
-									echo "NOTES";
+								echo "NON-MED<br/>FEE";
 							?>
-								</div>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
-									echo "X-RAY FEE";
+								echo "MEDICINE<br/>FEE";
 							?>
-								</div>
+						</td>
+						<td class ="tableHeaderColumn">				
+							<?php
+								echo "LAB<br/>FEE";
+							?>
+						</td>						
+						<td class ="tableHeaderColumn">				
+							<?php
+								echo "TOTAL<br/>AMT. PAID";
+							?>
 						</td>						
 					  </tr>
 <?php				
@@ -373,6 +396,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 
 						<td class ="column">				
+								<span id="transactionDateId<?php echo $iCount?>">
+							<?php
+								echo $value['transaction_date'];
+							?>
+								</span>
+						</td>
+
+						<td class ="column">				
+								<span id="receiptNumberId<?php echo $iCount?>">
+							<?php
+								echo $value['receipt_number'];
+							?>
+								</span>
+						</td>
+
+						<td class ="column">				
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
 								<div class="patientName">
 				<?php
@@ -383,116 +422,81 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-<!--						
 						<td class ="column">				
-								<div id="transactionDateId<?php echo $iCount?>">
+								<div id="classificationId<?php echo $iCount?>">
 							<?php
-								echo $value['transaction_date'];
+//								echo $value['transaction_date'];								
+								//TO-DO: -update: this
+								echo "WI"; 								
 							?>
 								</div>
 						</td>
--->						
 						<td class ="column">				
-<!--								<span id="99">
--->
-								<span id="feeId<?php echo $iCount?>">
+								<div id="feeId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200415
-//								echo $value['fee'];
-								//output: whole numbers							
-//								echo floor(($value['fee']*100)/100);
-								$iFee = floor(($value['fee']*100)/100);
-								echo $iFee;
+								$fFee = $value['fee'];
 								
-								$iTotalFee += $iFee; //$value['fee'];
+								echo $fFee;
+
+								$fAmountPaid += $fFee;								
+								$fTotalFee += $fFee;
 							?>
-								</span>
+								</div>
 						</td>
 
 						<td class ="column">				
-								<div id="moscFeeId<?php echo $iCount?>">
+								<div id="xrayFeeId<?php echo $iCount?>">
 							<?php							
-								//edited by Mike, 20200403
-//								if (strtoupper($value['notes'])=="PRIVATE") {
-								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
-									echo 0;
-									
-									$iMOSC = 0;
-								}
-								else {
-									echo $value['fee']*.30;
-
-									$iMOSC = $value['fee']*.30;
-								}
-
-								$iTotalMOSC += $iMOSC;
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-								<div id="medicalDoctorFeeId<?php echo $iCount?>">
-							<?php
-								//edited by Mike, 20200403; edited by Mike, 20200407
-//								if (strtoupper($value['notes'])=="PRIVATE") {
-								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
-//									echo $value['fee'];
-									
-									$iNetPF = $value['fee'];
-								}
-								//added by Mike, 20200403; edited by Mike, 20200407
-//								elseif (strtoupper($value['notes'])=="DEXA") {
-								elseif (strpos(strtoupper($value['notes']), "DEXA")!==false) {
-//									echo $value['fee']*.70+500;
-									
-									$iNetPF = $value['fee']*.70+500;
-								}
-								else {
-//									echo $value['fee']*.70;
-
-									$iNetPF = $value['fee']*.70;
-								}
+								$fXRayFee = $value['x_ray_fee'];
 								
-								//added by Mike, 20200407
-								//output: whole numbers
-								echo floor(($iNetPF*100)/100);
+								echo $fXRayFee;
 
-								$iTotalNetPF += $iNetPF;
+								$fAmountPaid += $fXRayFee;														
+								$fTotalXRayFee += $fXRayFee;
 							?>
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="notesId<?php echo $iCount?>">
-							<?php
-									$iXRayFee = floor(($value['x_ray_fee']*100)/100);
+								<div id="nonMedFeeId<?php echo $iCount?>">
+							<?php							
+								$fNonMedFee = $value['pas_fee'];
+								
+								echo $fNonMedFee;
 
-									if ($value['notes']=="") {	
-										//edited by Mike, 20200415
-//										echo "NONE";								
-										if (($iFee==0) and ($iMOSC==0) and ($iNetPF==0) and ($iXRayFee==0)) {
-											echo "UNPAID";
-										}
-										else {
-											echo "NONE";
-										}
-									}
-									else {
-										echo strtoupper($value['notes']);
-									}
+								$fAmountPaid += $fNonMedFee;												$fTotalNonMedFee += $fNonMedFee;
 							?>
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="notesId<?php echo $iCount?>">
+								<div id="medId<?php echo $iCount?>">
+							<?php							
+								$fMedFee = $value['med_fee'];
+								
+								echo $fMedFee;
+
+								$fAmountPaid += $fMedFee;				
+								$fTotalMedFee += $fMedFee;
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div id="labFeeId<?php echo $iCount?>">
+							<?php							
+								$fLabFee = $value['lab_fee'];
+								
+								echo $fLabFee;
+
+								$fAmountPaid += $fLabFee;												
+								$fTotalLabFee += $fLabFee;
+							?>
+								</div>
+						</td>						
+						<td class ="column">				
+								<div id="totalAmtPaidId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200415
-//								echo $value['x_ray_fee'];
-								//output: whole numbers
-//								echo floor(($value['x_ray_fee']*100)/100);								
-//								$iXRayFee = floor(($value['x_ray_fee']*100)/100);
+								echo $fAmountPaid;
 
-								echo $iXRayFee;
-
-								$iTotalXRayFee += $iXRayFee; //$value['x_ray_fee'];
+								$fTotalAmountPaid += $fAmountPaid;
 							?>
 								</div>
 						</td>						
@@ -516,42 +520,80 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td class ="column">				
 						<div>
 		<?php
+//								echo "DATE";
+		?>		
+						</div>								
+				</td>
+
+				<td class ="column">				
+						<div>
+		<?php
+//								echo "OR NO.";
+		?>		
+						</div>								
+				</td>
+
+				<td class ="column">				
+						<div>
+		<?php
 //								echo "PATIENT NAME";
 		?>		
 						</div>								
 				</td>
+				
+				<td class ="column">				
+						<div>
+		<?php
+//								echo "CLASSIFICATION";
+		?>		
+						</div>								
+				</td>
+				
 				<td class ="column">				
 						<div>
 					<?php
-						echo "<b>".$iTotalFee."</b>";
+//						echo "<b>".$fTotalFee."</b>";
+						echo "<b>".number_format($fTotalFee, 2, '.', '')."<b/>";
 					?>
 						</div>
 				</td>
 				<td class ="column">				
 						<div>
 					<?php
-						echo "<b>".$iTotalMOSC."</b>";
+//						echo "<b>".$fTotalXRayFee."</b>";
+						echo "<b>".number_format($fTotalXRayFee, 2, '.', '')."<b/>";		
 					?>
 						</div>
 				</td>
 				<td class ="column">				
 						<div>
 					<?php
-						echo "<b>".$iTotalNetPF."</b>";
+//						echo "<b>".$fTotalNonMedFee."</b>";
+						echo "<b>".number_format($fTotalNonMedFee, 2, '.', '')."<b/>";		
 					?>
 						</div>
 				</td>
 				<td class ="column">				
 						<div>
 					<?php
-//									echo "NOTES";
+//						echo "<b>".$fTotalMedFee."</b>";
+						echo "<b>".number_format($fTotalMedFee, 2, '.', '')."<b/>";		
 					?>
 						</div>
 				</td>
 				<td class ="column">				
 						<div>
 					<?php
-						echo "<b>".$iTotalXRayFee."</b>";
+//						echo "<b>".$fTotalLabFee."</b>";
+						echo "<b>".number_format($fTotalLabFee, 2, '.', '')."<b/>";		
+					?>
+						</div>
+				</td>						
+				<td class ="column">				
+						<div>
+					<?php
+//						echo "<b>".$fTotalAmountPaid."</b>";
+						echo "<b>".number_format($fTotalAmountPaid, 2, '.', '')."<b/>";		
 					?>
 						</div>
 				</td>						
