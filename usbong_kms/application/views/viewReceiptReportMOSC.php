@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200420
+' @date updated: 20200421
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -117,6 +117,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}						
 
 						td.column
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+						}						
+
+						td.columnFee
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right;
@@ -440,7 +446,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="columnFee">				
 								<div id="feeId<?php echo $iCount?>">
 							<?php
 								//added by Mike, 20200420
@@ -461,7 +467,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 
-						<td class ="column">				
+						<td class ="columnFee">				
 								<div id="xrayFeeId<?php echo $iCount?>">
 							<?php							
 								$fXRayFee = $value['x_ray_fee'];
@@ -473,7 +479,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="columnFee">				
 								<div id="medId<?php echo $iCount?>">
 							<?php							
 								$fMedFee = $value['med_fee'];
@@ -485,7 +491,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="columnFee">				
 								<div id="labFeeId<?php echo $iCount?>">
 							<?php							
 								$fLabFee = $value['lab_fee'];
@@ -497,7 +503,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
-						<td class ="column">				
+						<td class ="columnFee">				
 								<div id="totalAmtPaidId<?php echo $iCount?>">
 							<?php
 //								echo $fAmountPaid;
@@ -557,7 +563,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>								
 				</td>
 				
-				<td class ="column">				
+				<td class ="columnFee">				
 						<div>
 					<?php
 //						echo "<b>".$fTotalFee."</b>";
@@ -565,7 +571,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>
 						</div>
 				</td>
-				<td class ="column">				
+				<td class ="columnFee">				
 						<div>
 					<?php
 //						echo "<b>".$fTotalXRayFee."</b>";
@@ -573,7 +579,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>
 						</div>
 				</td>
-				<td class ="column">				
+				<td class ="columnFee">				
 						<div>
 					<?php
 //						echo "<b>".$fTotalMedFee."</b>";
@@ -581,7 +587,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>
 						</div>
 				</td>
-				<td class ="column">				
+				<td class ="columnFee">				
 						<div>
 					<?php
 //						echo "<b>".$fTotalLabFee."</b>";
@@ -589,7 +595,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>
 						</div>
 				</td>						
-				<td class ="column">				
+				<td class ="columnFee">				
 						<div>
 					<?php
 //						echo "<b>".$fTotalAmountPaid."</b>";
