@@ -210,9 +210,11 @@ class Report extends CI_Controller { //MY_Controller {
 	{				
 		$this->load->model('Report_Model');
 
-		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+//		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
 
-		$data["result"] = $this->Report_Model->getPayslipForTheDay($data);//, $member_id);
+		$data["receiptTypeName"] = "Clinic"; //MOSC
+
+		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
 
 		$this->load->view('viewReceiptReportMOSC', $data);
 	}
