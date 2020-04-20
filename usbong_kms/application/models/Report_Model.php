@@ -270,6 +270,9 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200324
 /*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
 */
+
+		$this->db->group_by('t1.patient_name');
+
 		$this->db->like('t2.transaction_date',date("m/d/Y"));
 
 //		$this->db->like('t3.medical_doctor_name', $param['medicalDoctorName']);
