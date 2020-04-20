@@ -255,7 +255,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<td class="pageNameColumn">
 			<h2>
 				Official Receipt Report<br/>
-				MARIKINA ORTHOPEDIC SPECIALTY CLINIC<br/>
+				MARIKINA ORTHOPEDIC<br/>
+				SPECIALTY CLINIC<br/>
 				DATE: <?php echo strtoupper(date("Y-m"));?>
 			</h2>		
 		</td>
@@ -357,12 +358,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="tableHeaderColumn">				
 							<?php
-								echo "NON-MED<br/>FEE";
-							?>
-						</td>
-						<td class ="tableHeaderColumn">				
-							<?php
-								echo "MEDICINE<br/>FEE";
+//								echo "MEDICINE<br/>FEE";
+								echo "MED<br/>FEE";
 							?>
 						</td>
 						<td class ="tableHeaderColumn">				
@@ -398,7 +395,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<span id="transactionDateId<?php echo $iCount?>">
 							<?php
-								echo $value['transaction_date'];
+//								echo $value['transaction_date'];
+								echo DATE("Y-m-d", strtotime($value['transaction_date']));
 							?>
 								</span>
 						</td>
@@ -453,17 +451,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								$fAmountPaid += $fXRayFee;														
 								$fTotalXRayFee += $fXRayFee;
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-								<div id="nonMedFeeId<?php echo $iCount?>">
-							<?php							
-								$fNonMedFee = $value['pas_fee'];
-								
-								echo $fNonMedFee;
-
-								$fAmountPaid += $fNonMedFee;												$fTotalNonMedFee += $fNonMedFee;
 							?>
 								</div>
 						</td>
@@ -562,14 +549,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<?php
 //						echo "<b>".$fTotalXRayFee."</b>";
 						echo "<b>".number_format($fTotalXRayFee, 2, '.', '')."<b/>";		
-					?>
-						</div>
-				</td>
-				<td class ="column">				
-						<div>
-					<?php
-//						echo "<b>".$fTotalNonMedFee."</b>";
-						echo "<b>".number_format($fTotalNonMedFee, 2, '.', '')."<b/>";		
 					?>
 						</div>
 				</td>
