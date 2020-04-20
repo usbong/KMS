@@ -237,20 +237,32 @@ class Report_Model extends CI_Model
 
 	//added by Mike, 20200420
 	public function getReceiptReportForTheMonth($param) 
-	{	
-/*
+	{
 		$this->db->select('report_id'); //, t2.treatment_diagnosis');
-		$this->db->like('report_filename', $param['medicalDoctorName']);
-		$this->db->like('added_datetime_stamp',date("Y-m-d"));
+//		$this->db->like('report_filename', $param['medicalDoctorName']);
+//		$this->db->like('added_datetime_stamp',date("Y-m-d"));
 		$this->db->order_by('added_datetime_stamp', 'DESC');
-		$query = $this->db->get('report');
+		
+		//TO-DO: -update: this to auto-identify the limit number value
+		//note: the number value is based on the total number of variations in the report_filename
+		//example: we use 2 if there are only two (2) report filenames with a unique keyword, i.e. 1) "SYSON, PEDRO" and 2) "SYSON, PETER"
+		$this->db->limit(4);
 
-		$row = $query->row();
+//		$this->db->group_by('report_filename');
+		$query = $this->db->get('report');
+		
+/*		$row = $query->row();
 		
 		if ($row == null) {			
 			return False; //edited by Mike, 20190722
 		}		
-*/		
+*/
+		$reportRowArray = $query->result_array();
+		
+		if ($reportRowArray == null) {
+			return False; //edited by Mike, 20190722
+		}	
+		
 		//max(report_id) error
 		//echo "dito".$row->report_id;
 
@@ -263,15 +275,26 @@ class Report_Model extends CI_Model
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
 		$this->db->join('receipt_type as t5', 't4.receipt_type_id = t5.receipt_type_id', 'LEFT');
-/*		$this->db->distinct('t1.patient_name');
+//		$this->db->join('report as t6', 't2.report_id = t6.report_id', 'LEFT');
+
+/*
+		$this->db->distinct('t1.patient_name');
 		
 		$this->db->where('t2.report_id=',$row->report_id);
 */		
 		//added by Mike, 20200324
 /*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
 */
-
 		$this->db->group_by('t1.patient_name');
+/*
+		$this->db->group_by('t2.report_id');
+		$this->db->distinct('t2.report_id');
+
+		$this->db->group_by('t6.report_filename');
+*/
+		foreach ($reportRowArray as $value) {
+			$this->db->or_where('t2.report_id=',$value['report_id']);						
+		}
 
 		$this->db->like('t2.transaction_date',date("m/d/Y"));
 
@@ -281,6 +304,7 @@ class Report_Model extends CI_Model
 
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
 		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
+//		$this->db->order_by('t2.transaction_id', 'DESC');//ASC');
 
 		//$this->db->limit(8);//1)
 		
