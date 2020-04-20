@@ -427,7 +427,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//TO-DO: -update: this
 								//use value in NOTES if it contains keywords, e.g. "SC"
 								//SC = Senior Citizens
-								echo "WI"; 								
+								//echo "WI"; 			
+								if (strpos(strtoupper($value['notes']),"SC")!==false) {
+									echo "SC"; 															
+								}
+								else if (strpos(strtoupper($value['notes']),"PWD")!==false) {
+									echo "PWD"; 															
+								}
+								else {
+									echo "WI"; 															
+								}								
 							?>
 								</div>
 						</td>
