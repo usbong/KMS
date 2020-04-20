@@ -425,6 +425,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 //								echo $value['transaction_date'];								
 								//TO-DO: -update: this
+								//use value in NOTES if it contains keywords, e.g. "SC"
+								//SC = Senior Citizens
 								echo "WI"; 								
 							?>
 								</div>
@@ -432,9 +434,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="feeId<?php echo $iCount?>">
 							<?php
-								$fFee = $value['fee'];
+								//added by Mike, 20200420
+//								$fFee = $value['fee'];
+								if (strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) {
+									$fFee = $value['fee'];
+								}
+								else {
+									$fFee = 0;
+								}							
 								
-								echo $fFee;
+//								echo $fFee;
+								echo number_format($fFee, 2, '.', '');
 
 								$fAmountPaid += $fFee;								
 								$fTotalFee += $fFee;
@@ -481,7 +491,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="totalAmtPaidId<?php echo $iCount?>">
 							<?php
-								echo $fAmountPaid;
+//								echo $fAmountPaid;
+								echo number_format($fAmountPaid, 2, '.', '');
 
 								$fTotalAmountPaid += $fAmountPaid;
 							?>
@@ -508,7 +519,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 		<?php
 //								echo "DATE";
-		?>		
+		?>								
 						</div>								
 				</td>
 
@@ -524,6 +535,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 		<?php
 //								echo "PATIENT NAME";
+							echo "<b>GRAND TOTAL</b>";
 		?>		
 						</div>								
 				</td>
