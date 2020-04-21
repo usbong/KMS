@@ -386,7 +386,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo $value['patient_name'];				
 					echo "<br/><br/>";
 	*/
-
+	
 				   //added by Mike, 20200421
 				   $fAmountPaid = 0;
 		?>				
@@ -412,7 +412,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<span id="receiptNumberId<?php echo $iCount?>">
 							<?php
+								echo "REVERIFY";
+/*
 								echo $value['receipt_number'];
+*/								
 							?>
 								</span>
 						</td>
