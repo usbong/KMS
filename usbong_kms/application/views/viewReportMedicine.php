@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200415
+' @date updated: 20200421
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -59,14 +59,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}
 
-						div.tableHeader
-						{
-							font-weight: bold;
-							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
-						}
-
 						input.browse-input
 						{
 							width: 100%;
@@ -104,6 +96,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 100%;
 <!--							border: 1px solid #ab9c7d;		
 -->
+						}						
+
+						td.tableHeaderColumn
+						{
+							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;		
+							text-align: center;
+							font-weight: bold;
 						}						
 
 						td.column
@@ -434,44 +434,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 								echo "COUNT";
 							?>
-								</div>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 				<?php
 								echo "ITEM NAME";
 				?>		
-								</div>								
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 								echo "ITEM PRICE";
 							?>
-								</div>
 						</td>
 						<td class ="column">				
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 								echo "QTY";
 							?>
-								</div>
 						</td>
 						<td class ="column">				
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 								echo "TOTAL";
 							?>
-								</div>
 						</td>
 					  </tr>
 <?php				
