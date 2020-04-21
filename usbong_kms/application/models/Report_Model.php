@@ -235,9 +235,10 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}
 
-	//added by Mike, 20200420
+	//added by Mike, 20200420; edited by Mike, 20200421
 	public function getReceiptReportForTheMonth($param) 
 	{
+/*		//removed by Mike, 20200421		
 		$this->db->select('report_id'); //, t2.treatment_diagnosis');
 //		$this->db->like('report_filename', $param['medicalDoctorName']);
 //		$this->db->like('added_datetime_stamp',date("Y-m-d"));
@@ -251,18 +252,18 @@ class Report_Model extends CI_Model
 //		$this->db->group_by('report_filename');
 		$query = $this->db->get('report');
 		
-/*		$row = $query->row();
-		
-		if ($row == null) {			
-			return False; //edited by Mike, 20190722
-		}		
-*/
+//		$row = $query->row();
+//		
+//		if ($row == null) {			
+//			return False; //edited by Mike, 20190722
+//		}		
+
 		$reportRowArray = $query->result_array();
 		
 		if ($reportRowArray == null) {
 			return False; //edited by Mike, 20190722
 		}	
-		
+*/		
 		//max(report_id) error
 		//echo "dito".$row->report_id;
 
@@ -292,9 +293,14 @@ class Report_Model extends CI_Model
 
 		$this->db->group_by('t6.report_filename');
 */
+/*		//removed by Mike, 20200421
 		foreach ($reportRowArray as $value) {
-			$this->db->or_where('t2.report_id=',$value['report_id']);						
+			$this->db->or_where('t2.report_id=',$value['report_id']);					
 		}
+*/
+		//added by Mike, 20200421
+		$this->db->where('t4.receipt_number!=',0);					
+//		$this->db->where('t4.receipt_number=',0);					
 
 		$this->db->like('t2.transaction_date',date("m/d/Y"));
 
