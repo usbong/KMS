@@ -335,62 +335,21 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}
 
-	//added by Mike, 20200421
-	//TO-DO: -update: this to get the newest report of the transaction
+	//added by Mike, 20200421; added by Mike, 20200422
 	public function getReportForTheMonth($param) 
 	{
-/*		//removed by Mike, 20200421		
-		$this->db->select('report_id'); //, t2.treatment_diagnosis');
-//		$this->db->like('report_filename', $param['medicalDoctorName']);
-//		$this->db->like('added_datetime_stamp',date("Y-m-d"));
-		$this->db->order_by('added_datetime_stamp', 'DESC');
-		
-		//TO-DO: -update: this to auto-identify the limit number value
-		//note: the number value is based on the total number of variations in the report_filename
-		//example: we use 2 if there are only two (2) report filenames with a unique keyword, i.e. 1) "SYSON, PEDRO" and 2) "SYSON, PETER"
-		$this->db->limit(4);
-
-//		$this->db->group_by('report_filename');
-		$query = $this->db->get('report');
-		
-//		$row = $query->row();
-//		
-//		if ($row == null) {			
-//			return False; //edited by Mike, 20190722
-//		}		
-
-		$reportRowArray = $query->result_array();
-		
-		if ($reportRowArray == null) {
-			return False; //edited by Mike, 20190722
-		}	
-*/		
-		//max(report_id) error
-		//echo "dito".$row->report_id;
-
-//select max(`report_id`) from `report`
-//select max(`report_id`) from `report` where `report_filename` like '%PETER%' 
-
-/*
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t4.receipt_type_id, t4.receipt_number'); //, t2.treatment_diagnosis');
-		$this->db->from('patient as t1');
-		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
-		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
-		$this->db->join('receipt_type as t5', 't4.receipt_type_id = t5.receipt_type_id', 'LEFT');
-*/
-
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
+		//Reference: https://stackoverflow.com/questions/34917060/getting-the-recent-row-by-join-group-by;
+		//last accessed: 20200422
+		//answer by: Disha V. on 20160121
+		//edited by: Community on 20170523
 
-/*
-		$this->db->distinct('t1.patient_name');
-		
-		$this->db->where('t2.report_id=',$row->report_id);
-*/		
+		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
+
 		//added by Mike, 20200324
 /*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
 */
@@ -401,44 +360,22 @@ class Report_Model extends CI_Model
 
 		$this->db->group_by('t6.report_filename');
 */
-/*		//removed by Mike, 20200421
-		foreach ($reportRowArray as $value) {
-			$this->db->or_where('t2.report_id=',$value['report_id']);					
-		}
-*/
 
-/*
-		//added by Mike, 20200421
-		$this->db->where('t4.receipt_number!=',0);					
-//		$this->db->where('t4.receipt_number=',0);					
-*/
 
 //		$this->db->like('t2.transaction_date',date("m/d/Y"));
 		$this->db->like('t2.transaction_date',date("m"));
+//		$this->db->like('t2.transaction_date',date("Y"));
 
-/*
-		$this->db->like('t5.receipt_type_name', $param['receiptTypeName']);
-*/
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
-		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
-//		$this->db->order_by('t2.transaction_id', 'DESC');//ASC');
-
-		//$this->db->limit(8);//1)
+		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
 		
 		$query = $this->db->get('patient');
 
-//		$row = $query->row();		
 		$rowArray = $query->result_array();
 		
 		if ($rowArray == null) {			
 			return False; //edited by Mike, 20190722
 		}
-		
-//		echo "report_id: ".$rowArray[0]['report_id'];
-		
-/*		return $row->report_description;
-*/
-//		return $rowArray[0]['report_description'];
 
 		return $rowArray;
 	}
