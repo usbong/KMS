@@ -236,6 +236,7 @@ class Report_Model extends CI_Model
 	}
 
 	//added by Mike, 20200420; edited by Mike, 20200421
+	//TO-DO: -update: this
 	public function getReceiptReportForTheMonth($param) 
 	{
 /*		//removed by Mike, 20200421		
@@ -338,10 +339,15 @@ class Report_Model extends CI_Model
 	//added by Mike, 20200421; added by Mike, 20200422
 	public function getReportForTheMonth($param) 
 	{
+/*		
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
+*/		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t4.receipt_number'); //, t2.treatment_diagnosis');
+
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
 
 		//Reference: https://stackoverflow.com/questions/34917060/getting-the-recent-row-by-join-group-by;
 		//last accessed: 20200422
@@ -353,7 +359,24 @@ class Report_Model extends CI_Model
 		//edited by Mike, 20200422
 		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
 
+//		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date and t2.medical_doctor_id =2)',NULL,FALSE);
+
 //		$this->db->where('t2.fee!=',0);
+		
+		//added by Mike, 20200422
+		//TO-DO: -update: this
+		if (strtoupper($param["receiptTypeName"])=="MOSC") {
+			//MOSC
+		}
+		else if (strtoupper($param["receiptTypeName"])=="PAS") {
+			//PAS
+		}		
+		else {
+//			$this->db->like('t3.medical_doctor_name', $param["medicalDoctorName"]);		
+			$this->db->where('t4.receipt_type_id=',3);
+			$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); //"PETER");
+
+		}
 
 		//added by Mike, 20200324
 /*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
