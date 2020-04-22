@@ -246,7 +246,8 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["result"] = $this->Report_Model->getReportForTheMonth($data);//, $member_id);
 
-		$this->load->view('viewReportMOSC', $data);
+		//edited by Mike, 20200422
+		$this->load->view('viewReport', $data);
 	}
 
 	//added by Mike, 20200322
