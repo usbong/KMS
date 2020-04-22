@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200421
+' @date updated: 20200422
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -395,7 +395,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<span id="countId<?php echo $iCount?>">
 							<?php
-								echo $iCount;
+								//TO-DO: -update: this
+								//edited by Mike, 20200422
+//								echo $iCount;
+								echo $value['transaction_id'];
 							?>
 								</span>
 						</td>
@@ -412,10 +415,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<span id="receiptNumberId<?php echo $iCount?>">
 							<?php
-								echo "REVERIFY";
-/*
-								echo $value['receipt_number'];
-*/								
+//								echo "REVERIFY";
+								if (isset($value['receipt_number'])) {
+									echo $value['receipt_number'];
+								}								
 							?>
 								</span>
 						</td>
