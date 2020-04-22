@@ -749,7 +749,9 @@ class Browse_Model extends CI_Model
 		}
 		
 		foreach ($rowArray as $value) {	
-			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
+			//edited by Mike, 20200422
+//			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
+			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
 		}
 
 		return $iQuantity;
