@@ -227,7 +227,22 @@ class Report extends CI_Controller { //MY_Controller {
 
 //		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
 
-		$data["receiptTypeName"] = "Clinic"; //MOSC
+		$data["receiptTypeName"] = "MOSC"; //"Clinic"; //MOSC
+
+		$data["result"] = $this->Report_Model->getReportForTheMonth($data);//, $member_id);
+
+		$this->load->view('viewReportMOSC', $data);
+	}
+
+	public function viewReportFor($param)
+	{				
+		$this->load->model('Report_Model');
+
+//		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+
+		$data["receiptTypeName"] = "MEDICAL DOCTOR NAME"; //"Clinic"; //MOSC
+
+		$data["medicalDoctorName"] = $param;
 
 		$data["result"] = $this->Report_Model->getReportForTheMonth($data);//, $member_id);
 
