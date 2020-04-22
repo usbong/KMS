@@ -196,18 +196,30 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200417
 		$itemTypeId = 1; //1 = Medicine
 		$iCount = 0;
+		$itemId = -1;
 		
 		if ($data['result'] == True) {
-			foreach ($data['result'] as $value) {
-				$itemId = $value['item_id'];
+			foreach ($data['result'] as $value) {				
+				//edited by Mike, 20200422
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+
 					
 	//			echo "itemId: " . $itemId;
 /*				
 				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
 */				
 				//added by Mike, 20200417
-				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp
-				if ($iCount==0) {
+				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
+				//edited by Mike, 20200422
+//				if ($iCount==0) {
+				if (!$bIsSameItemId) {	
 					$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
 				}
 				else {
