@@ -348,7 +348,12 @@ class Report_Model extends CI_Model
 		//answer by: Disha V. on 20160121
 		//edited by: Community on 20170523
 
-		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
+//		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
+
+		//edited by Mike, 20200422
+		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
+
+//		$this->db->where('t2.fee!=',0);
 
 		//added by Mike, 20200324
 /*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
