@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200415
+' @date updated: 20200422
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -110,6 +110,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right
+						}						
+
+						td.NotesColumn
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: left
 						}						
 						
 						td.imageColumn
@@ -380,18 +386,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-<!--						
 						<td class ="column">				
-								<div id="transactionDateId<?php echo $iCount?>">
-							<?php
-								echo $value['transaction_date'];
-							?>
-								</div>
-						</td>
--->						
-						<td class ="column">				
-<!--								<span id="99">
--->
 								<span id="feeId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20200415
@@ -457,7 +452,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="notesColumn">				
 								<div id="notesId<?php echo $iCount?>">
 							<?php
 									$iXRayFee = floor(($value['x_ray_fee']*100)/100);
@@ -479,7 +474,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="notesId<?php echo $iCount?>">
+								<div id="xrayFeeId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20200415
 //								echo $value['x_ray_fee'];
