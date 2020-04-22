@@ -143,7 +143,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     /**/
     </style>
     <title>
-      Receipt Report for the Month (MOSC)
+      Receipt Report for the Month
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -259,9 +259,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Official Receipt Report<br/>
-				MARIKINA ORTHOPEDIC<br/>
-				SPECIALTY CLINIC<br/>
+				Official Receipt Report<br/>				
 				DATE: <?php echo strtoupper(date("Y-m"));?>
 			</h2>		
 		</td>
@@ -275,7 +273,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<br/>There are no transactions for the day.";
 		}
 		else {
-			//edited by Mike, 20200422
 			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
 		}
 	?>
