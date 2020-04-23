@@ -219,13 +219,13 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReceiptReportMOSC', $data);
 	}
 
-	//added by Mike, 20200421
+	//added by Mike, 20200421; edited by Mike, 20200423
 	//TO-DO: -update: this
 	public function viewReport()
 	{				
 		$this->load->model('Report_Model');
 
-//		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
 
 		$data["receiptTypeName"] = "MOSC"; //"Clinic"; //MOSC
 
