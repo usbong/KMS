@@ -367,17 +367,23 @@ class Report_Model extends CI_Model
 		//TO-DO: -update: this
 		if (strtoupper($param["receiptTypeName"])=="MOSC") {
 			//MOSC
+//			$this->db->where('t4.receipt_type_id=',1);
 		}
 		else if (strtoupper($param["receiptTypeName"])=="PAS") {
 			//PAS
+			//added by Mike, 20200423
+			$this->db->where('t4.receipt_type_id=',2);
 		}		
 		else {
 //			$this->db->like('t3.medical_doctor_name', $param["medicalDoctorName"]);		
 			$this->db->where('t4.receipt_type_id=',3);
-			$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); //"PETER");
-
+			//removed by Mike, 20200423
+//			$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); //"PETER");
 		}
 
+		//added by Mike, 20200423
+		$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); 
+		
 		//added by Mike, 20200324
 /*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
 */
