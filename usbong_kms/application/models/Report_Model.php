@@ -365,9 +365,17 @@ class Report_Model extends CI_Model
 		
 		//added by Mike, 20200422
 		//TO-DO: -update: this
+		//added by Mike, 20200423
+//		$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); 
+		
 		if (strtoupper($param["receiptTypeName"])=="MOSC") {
 			//MOSC
 //			$this->db->where('t4.receipt_type_id=',1);
+//			$this->db->where('t3.medical_doctor_id=',1); 
+//			$this->db->or_where('t3.medical_doctor_id=',0); 
+			
+			//added by Mike, 20200423
+            $this->db->where("(t3.medical_doctor_name LIKE '%".$param["medicalDoctorName"]."%' OR t3.medical_doctor_id=0)", NULL, FALSE); 		
 		}
 		else if (strtoupper($param["receiptTypeName"])=="PAS") {
 			//PAS
@@ -382,7 +390,8 @@ class Report_Model extends CI_Model
 		}
 
 		//added by Mike, 20200423
-		$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); 
+//		$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); 
+//		$this->db->or_like('t3.medical_doctor_id',0); 
 		
 		//added by Mike, 20200324
 /*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
@@ -397,11 +406,14 @@ class Report_Model extends CI_Model
 
 
 //		$this->db->like('t2.transaction_date',date("m/d/Y"));
+//		$this->db->like('t2.transaction_date',date("Y-m"));
 		$this->db->like('t2.transaction_date',date("m"));
 //		$this->db->like('t2.transaction_date',date("Y"));
 
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
-		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
+		//edited by Mike, 20200423
+//		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
+		$this->db->order_by('t2.transaction_date', 'ASC');//ASC');
 		
 		$query = $this->db->get('patient');
 
