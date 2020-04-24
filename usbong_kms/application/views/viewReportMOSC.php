@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200422
+' @date updated: 20200424
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -275,8 +275,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<br/>There are no transactions for the day.";
 		}
 		else {
-			//edited by Mike, 20200422
-			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
+			//edited by Mike, 20200422; edited by Mike, 20200424
+			//DR. PEDRO
+			echo "<b>MEDICAL DOCTOR: </b>".$result[1]["medical_doctor_name"];		
 		}
 	?>
 	<br/>
@@ -326,7 +327,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "COUNT";
 							?>
 						</td>
-
+						<td class ="tableHeaderColumn">				
+							<?php
+								echo "TRANS-<br/>ACTION ID";
+							?>
+						</td>
 						<td class ="tableHeaderColumn">				
 							<?php
 								echo "DATE";
@@ -395,14 +400,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<span id="countId<?php echo $iCount?>">
 							<?php
-								//TO-DO: -update: this
 								//edited by Mike, 20200422
-//								echo $iCount;
-								echo $value['transaction_id'];
+								echo $iCount;
 							?>
 								</span>
 						</td>
 
+						<td class ="column">				
+								<span id="countId<?php echo $iCount?>">
+							<?php
+								//edited by Mike, 20200424
+								echo $value['transaction_id'];
+							?>
+								</span>
+						</td>
 						<td class ="column">				
 								<span id="transactionDateId<?php echo $iCount?>">
 							<?php
@@ -534,6 +545,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 //								echo "COUNT";
+					?>
+						</div>
+				</td>
+
+				<td class ="column">				
+						<div>
+					<?php
+//								echo "TRANSACTION ID";
 					?>
 						</div>
 				</td>
