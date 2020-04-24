@@ -396,7 +396,12 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200324
 /*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
 */
-		$this->db->group_by('t1.patient_name');
+
+//		$this->db->group_by('t1.patient_name');
+//		$this->db->group_by('t2.transaction_date');
+//		$this->db->group_by('t2.added_datetime_stamp');
+		$this->db->group_by('t2.transaction_id');
+
 /*
 		$this->db->group_by('t2.report_id');
 		$this->db->distinct('t2.report_id');
