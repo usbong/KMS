@@ -374,8 +374,8 @@ class Report_Model extends CI_Model
 //			$this->db->where('t3.medical_doctor_id=',1); 
 //			$this->db->or_where('t3.medical_doctor_id=',0); 
 			
-			//added by Mike, 20200423
-            $this->db->where("(t3.medical_doctor_name LIKE '%".$param["medicalDoctorName"]."%' OR t3.medical_doctor_id=0)", NULL, FALSE); 		
+			//added by Mike, 20200423; removed by Mike, 20200424
+//            $this->db->where("(t3.medical_doctor_name LIKE '%".$param["medicalDoctorName"]."%' OR t3.medical_doctor_id=0)", NULL, FALSE); 		
 		}
 		else if (strtoupper($param["receiptTypeName"])=="PAS") {
 			//PAS
