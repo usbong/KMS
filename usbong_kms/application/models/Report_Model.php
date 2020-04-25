@@ -235,9 +235,107 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}
 
+
+	//added by Mike, 20200425
+	public function getReceiptReportForTheMonth($param) 
+	{
+/*		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
+*/		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t4.receipt_number'); //, t2.treatment_diagnosis');
+
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
+
+		//Reference: https://stackoverflow.com/questions/34917060/getting-the-recent-row-by-join-group-by;
+		//last accessed: 20200422
+		//answer by: Disha V. on 20160121
+		//edited by: Community on 20170523
+
+//		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
+
+		//edited by Mike, 20200422
+		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
+
+//		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date and t2.medical_doctor_id =2)',NULL,FALSE);
+
+//		$this->db->where('t2.fee!=',0);
+		
+		//added by Mike, 20200422
+		//TO-DO: -update: this
+		//added by Mike, 20200423
+//		$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); 
+		
+		if (strtoupper($param["receiptTypeName"])=="MOSC") {
+			//MOSC
+			$this->db->where('t4.receipt_type_id=',1);
+//			$this->db->where('t3.medical_doctor_id=',1); 
+//			$this->db->or_where('t3.medical_doctor_id=',0); 
+			
+			//added by Mike, 20200423; removed by Mike, 20200424
+//            $this->db->where("(t3.medical_doctor_name LIKE '%".$param["medicalDoctorName"]."%' OR t3.medical_doctor_id=0)", NULL, FALSE); 		
+		}
+		else if (strtoupper($param["receiptTypeName"])=="PAS") {
+			//PAS
+			//added by Mike, 20200423
+			$this->db->where('t4.receipt_type_id=',2);
+		}		
+		else {
+//			$this->db->like('t3.medical_doctor_name', $param["medicalDoctorName"]);		
+			$this->db->where('t4.receipt_type_id=',3);
+			//removed by Mike, 20200423
+//			$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); //"PETER");
+		}
+
+		$this->db->where('t4.receipt_number!=',0);					
+
+		//added by Mike, 20200423
+//		$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); 
+//		$this->db->or_like('t3.medical_doctor_id',0); 
+		
+		//added by Mike, 20200324
+/*		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+*/
+
+//		$this->db->group_by('t1.patient_name');
+//		$this->db->group_by('t2.transaction_date');
+//		$this->db->group_by('t2.added_datetime_stamp');
+		$this->db->group_by('t2.transaction_id');
+
+/*
+		$this->db->group_by('t2.report_id');
+		$this->db->distinct('t2.report_id');
+
+		$this->db->group_by('t6.report_filename');
+*/
+
+
+//		$this->db->like('t2.transaction_date',date("m/d/Y"));
+//		$this->db->like('t2.transaction_date',date("Y-m"));
+		$this->db->like('t2.transaction_date',date("m"));
+//		$this->db->like('t2.transaction_date',date("Y"));
+
+//		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
+		//edited by Mike, 20200423
+//		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
+		$this->db->order_by('t2.transaction_date', 'ASC');//ASC');
+		
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+
+		return $rowArray;
+	}
+
 	//added by Mike, 20200420; edited by Mike, 20200421
 	//TO-DO: -update: this
-	public function getReceiptReportForTheMonth($param) 
+	public function getReceiptReportForTheMonthPrev($param) 
 	{
 /*		//removed by Mike, 20200421		
 		$this->db->select('report_id'); //, t2.treatment_diagnosis');
