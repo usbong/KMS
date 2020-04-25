@@ -204,15 +204,14 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportImage', $data);
 	}
 
-	//added by Mike, 20200420
-	//TO-DO: -update: this
+	//added by Mike, 20200420; edited by Mike, 20200425
 	public function viewReceiptReport()
 	{				
 		$this->load->model('Report_Model');
 
-//		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
 
-		$data["receiptTypeName"] = "Clinic"; //MOSC
+		$data["receiptTypeName"] = "MOSC"; //Clinic
 
 		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
 
@@ -220,7 +219,6 @@ class Report extends CI_Controller { //MY_Controller {
 	}
 
 	//added by Mike, 20200421; edited by Mike, 20200423
-	//TO-DO: -update: this
 	public function viewReport()
 	{				
 		$this->load->model('Report_Model');
