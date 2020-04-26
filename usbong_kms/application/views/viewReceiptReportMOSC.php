@@ -29,12 +29,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	/**/
 	                    body
                         {
+							margin-top: 0px;
+
 							font-family: Arial;
 							font-size: 11pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							/* Legal Size; Landscape*/							
-							width: 1024px; /*802px;*/ /* 670px */
+							/* Legal Size; Landscape */							
+							width: 1128px; /*1024px;*/ /*802px;*/ /* 670px */
                         }
 						
 						div.checkBox
@@ -108,24 +110,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}				
 
 						tr.rowEvenNumber {
-							background-color: #95b3d7; <!--sky blue; use as row background color-->
+							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
 							border: 1pt solid #00ff00;		
 						}
 
 						td.tableHeaderColumn
 						{
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;		
+							border: 1pt solid black;							
 							text-align: center;
-							font-weight: bold;
+							font-weight: bold;							
+							<!--we put this at the bottom; otherwise, the computer browser does not apply the rest of the settings.-->
+							/*background-color: #00ff00;*/ <!--#00ff00; = green; #93d151; = lime green-->
 						}						
 
 						td.tableHeaderColumnPartTwo
 						{
-							background-color: #2984f5; <!--#95b3d7; sky blue; use as row background color-->
-							border: 1pt solid #00ff00;		
+							border: 1pt solid black;		
 							text-align: center;
 							font-weight: bold;
+							<!--we put this at the bottom; otherwise, the computer browser does not apply the rest of the settings.-->
+							/*background-color: #2984f5;*/ <!--#2984f5; = blue-->
+							
 						}						
 
 						td.column
@@ -142,13 +147,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						td.imageColumn
 						{
-							width: 40%;
+							width: 22%;
 							display: inline-block;
 						}						
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 76%;
 							display: inline-block;
 							text-align: right;
 						}										
@@ -271,16 +276,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
 		</td>
 		<td class="pageNameColumn">
-			<h2>
+			<h3>
 				Official Receipt Report<br/>
 				MARIKINA ORTHOPEDIC<br/>
 				SPECIALTY CLINIC<br/>
 				DATE: <?php echo strtoupper(date("Y-m"));?>
-			</h2>		
+			</h3>		
 		</td>
 	  </tr>
 	</table>
-	<br/>
 	<div><b>TODAY: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<?php 
@@ -292,9 +296,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
 		}
 	?>
-	<br/>
-	<br/>
-	
+	<br/>	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
@@ -472,8 +474,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</span>
 						</td>
 
-						<td class ="column">				
+						<td class ="column">
+<!--						
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+-->							
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];
@@ -481,7 +485,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo str_replace("ufffd","Ñ",$value['patient_name']);
 				?>		
 								</div>								
-							</a>
+<!--							</a>-->
 						</td>
 						<td class ="column">				
 								<div id="classificationId<?php echo $iCount?>">
