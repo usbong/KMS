@@ -477,6 +477,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//SC = Senior Citizens
 								//echo "WI"; 			
 								//edited by Mike, 20200426
+								$fAmountNoLess20PercentDiscount = $value['fee'] / (1 - 0.20);
+								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
+								$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
+
 								if (strpos(strtoupper($value['notes']),"SC")!==false) {
 									echo "SC";											
 								}
@@ -485,6 +489,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 								else {
 									echo "WI";										
+
+									$fLess20PercentDiscount = 0;
+/*									$fFee = $value['fee'];
+									$fXRayFee = $value['x_ray_fee'];
+*/									
 								}								
 							?>
 								</div>
@@ -492,7 +501,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnFee">				
 								<div id="feeId<?php echo $iCount?>">
 							<?php
-								//added by Mike, 20200420
+								//added by Mike, 20200420; edited by Mike, 20200426
 //								$fFee = $value['fee'];
 								if (strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) {
 									$fFee = $value['fee'];
@@ -595,7 +604,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="less20PercentDiscountId<?php echo $iCount?>">
 							<?php
 								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
-								   $fLess20PercentDiscount = number_format($fAmountPaid*0.20, 2, '.', '');
+								   //removed by Mike, 20200426
+								   //$fLess20PercentDiscount = number_format($fAmountPaid*0.20, 2, '.', '');
 								}
 								else { //WI								
 								}								
