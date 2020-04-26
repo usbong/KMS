@@ -532,7 +532,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$fTotalFee += $fFee;
 
 								//added by Mike, 20200426
-								if ($fLess20PercentDiscount!=0) {
+//								if ($fLess20PercentDiscount!=0) {
+								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
 									$fAmountNoLess20PercentDiscount += $fFee / (1 - 0.20);
 	//								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
 									$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
