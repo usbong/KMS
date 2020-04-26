@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
-							width: 802px; /* 670px */
+							width: 1024px; /*802px;*/ /* 670px */
                         }
 						
 						div.checkBox
@@ -110,6 +110,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.tableHeaderColumn
 						{
 							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;		
+							text-align: center;
+							font-weight: bold;
+						}						
+
+						td.tableHeaderColumnPartTwo
+						{
+							background-color: #2984f5; <!--#95b3d7; sky blue; use as row background color-->
 							border: 1pt solid #00ff00;		
 							text-align: center;
 							font-weight: bold;
@@ -298,6 +306,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$fTotalMedFee = 0.00;
 		$fTotalLabFee = 0.00;
 		$fTotalAmountPaid = 0.00;
+
+	    //added by Mike, 20200426
+	    $fTotalVatSales = 0.00;
+	    $fTotalVatAmount = 0.00;
+	    $fTotalLess20PercentDiscount = 0.00;
+		$fTotalAmountWithVat = 0.00;
 	
 		//get only name strings from array 
 		if (isset($result)) {			
@@ -377,6 +391,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "TOTAL<br/>AMT. PAID";
 							?>
 						</td>						
+						<td class ="tableHeaderColumnPartTwo">				
+							<?php
+								echo "VAT SALES";
+							?>
+						</td>						
+						<td class ="tableHeaderColumnPartTwo">				
+							<?php
+								echo "VAT<br />AMOUNT";
+							?>
+						</td>						
+						<td class ="tableHeaderColumnPartTwo">				
+							<?php
+								echo "TOTAL";
+							?>
+						</td>						
+						<td class ="tableHeaderColumnPartTwo">				
+							<?php
+								echo "PWD•SC<br/>LESS 20%";
+							?>
+						</td>
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -389,6 +423,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				   //added by Mike, 20200421
 				   $fAmountPaid = 0;
+				   
+				   //added by Mike, 20200426
+				   $fVatSales = 0;
+				   $fVatAmount = 0;
+				   $fAmountWithVat = 0;
+				   $fLess20PercentDiscount = 0;
 		?>				
 		
 					  <tr class="row">
@@ -507,7 +547,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>						
 						<td class ="columnFee">				
-								<div id="totalAmtPaidId<?php echo $iCount?>">
+								<div id="amountPaidId<?php echo $iCount?>">
 							<?php
 //								echo $fAmountPaid;
 								echo number_format($fAmountPaid, 2, '.', '');
@@ -516,6 +556,56 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
+						<td class ="columnFee">				
+								<div id="vatSalesId<?php echo $iCount?>">
+							<?php
+								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
+								}
+								else { //WI								
+								   $fVatAmount = number_format($fAmountPaid/1.12*0.12, 2, '.', '');
+								   $fVatSales = $fTotalAmountPaid - $fVatAmount;							   
+								}								
+
+							    echo number_format($fVatSales, 2, '.', '');									
+								
+								$fTotalVatSales += $fVatSales;
+							?>
+								</div>
+						</td>						
+						<td class ="columnFee">				
+								<div id="vatAmountId<?php echo $iCount?>">
+							<?php
+							    echo number_format($fVatAmount, 2, '.', '');									
+
+								$fTotalVatAmount += $fVatAmount;
+							?>
+								</div>
+						</td>						
+						<td class ="columnFee">				
+								<div id="amountWithVatId<?php echo $iCount?>">
+							<?php
+								$fAmountWithVat = $fAmountPaid;
+							    echo number_format($fAmountWithVat, 2, '.', '');
+
+								$fTotalAmountWithVat += $fAmountWithVat;								
+							?>
+								</div>
+						</td>						
+						<td class ="columnFee">				
+								<div id="less20PercentDiscountId<?php echo $iCount?>">
+							<?php
+								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
+								   $fLess20PercentDiscount = number_format($fAmountPaid*0.20, 2, '.', '');
+								}
+								else { //WI								
+								}								
+
+							    echo number_format($fLess20PercentDiscount, 2, '.', '');							
+								
+								$fTotalLess20PercentDiscount += $fLess20PercentDiscount;
+							?>
+								</div>
+						</td>
 					  </tr>
 		<?php				
 					$iCount++;		
@@ -603,6 +693,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<?php
 //						echo "<b>".$fTotalAmountPaid."</b>";
 						echo "<b>".number_format($fTotalAmountPaid, 2, '.', '')."<b/>";		
+					?>
+						</div>
+				</td>						
+				<td class ="columnFee">				
+						<div>
+					<?php
+						echo "<b>".number_format($fTotalVatSales, 2, '.', '')."<b/>";		
+					?>
+						</div>
+				</td>						
+				<td class ="columnFee">				
+						<div>
+					<?php
+						echo "<b>".number_format($fTotalVatAmount, 2, '.', '')."<b/>";		
+					?>
+						</div>
+				</td>						
+				<td class ="columnFee">				
+						<div>
+					<?php
+						echo "<b>".number_format($fTotalAmountWithVat, 2, '.', '')."<b/>";		
+					?>
+						</div>
+				</td>						
+				<td class ="columnFee">				
+						<div>
+					<?php
+						echo "<b>".number_format($fTotalLess20PercentDiscount, 2, '.', '')."<b/>";		
 					?>
 						</div>
 				</td>						
