@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200421
+' @date updated: 20200426
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -436,14 +436,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//use value in NOTES if it contains keywords, e.g. "SC"
 								//SC = Senior Citizens
 								//echo "WI"; 			
+								//edited by Mike, 20200426
 								if (strpos(strtoupper($value['notes']),"SC")!==false) {
-									echo "SC"; 															
+									echo "SC";											
 								}
 								else if (strpos(strtoupper($value['notes']),"PWD")!==false) {
-									echo "PWD"; 															
+									echo "PWD"; 								
 								}
 								else {
-									echo "WI"; 															
+									echo "WI";										
 								}								
 							?>
 								</div>
