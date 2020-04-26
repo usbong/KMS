@@ -105,7 +105,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 100%;
 <!--							border: 1px solid #ab9c7d;		
 -->
-						}						
+						}				
+
+						tr.rowEvenNumber {
+							background-color: #95b3d7; <!--sky blue; use as row background color-->
+							border: 1pt solid #00ff00;		
+						}
 
 						td.tableHeaderColumn
 						{
@@ -125,7 +130,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.column
 						{
-							border: 1px dotted #ab9c7d;		
+							border: 1px dotted #ab9c7d;
 							text-align: center;
 						}						
 
@@ -146,7 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 50%;
 							display: inline-block;
 							text-align: right;
-						}						
+						}										
 
     /**/
     </style>
@@ -428,10 +433,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				   $fVatSales = 0;
 				   $fVatAmount = 0;
 				   $fAmountWithVat = 0;
+				   $fAmountNoLess20PercentDiscount = 0;
 				   $fLess20PercentDiscount = 0;
+				   
+				   //added by Mike, 20200426
+				   if ($iCount % 2 == 0) { //even number
+				     echo '<tr class="rowEvenNumber">';
+				   }
+				   else {
+				     echo '<tr class="row">';
+				   }				   
 		?>				
 		
-					  <tr class="row">
+<!--				  <tr class="row">
+-->
 						<td class ="column">				
 								<span id="countId<?php echo $iCount?>">
 							<?php
@@ -472,12 +487,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="classificationId<?php echo $iCount?>">
 							<?php
 //								echo $value['transaction_date'];								
-								//TO-DO: -update: this
 								//use value in NOTES if it contains keywords, e.g. "SC"
 								//SC = Senior Citizens
-								//echo "WI"; 			
-								//edited by Mike, 20200426
+/*								//removed by Mike, 20200426
 								$fAmountNoLess20PercentDiscount = $value['fee'] / (1 - 0.20);
+*/
+								//we do fee computation in the next column	
 								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
 								$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
 
@@ -503,7 +518,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//added by Mike, 20200420; edited by Mike, 20200426
 //								$fFee = $value['fee'];
-								if (strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) {
+								if ((strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) or ($value['medical_doctor_id']==0)) {
 									$fFee = $value['fee'];
 								}
 								else {
@@ -515,6 +530,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								$fAmountPaid += $fFee;								
 								$fTotalFee += $fFee;
+
+								//added by Mike, 20200426
+								if ($fLess20PercentDiscount!=0) {
+									$fAmountNoLess20PercentDiscount += $fFee / (1 - 0.20);
+	//								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
+									$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
+								}
 							?>
 								</div>
 						</td>
@@ -572,7 +594,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 								else { //WI								
 								   $fVatAmount = number_format($fAmountPaid/1.12*0.12, 2, '.', '');
-								   $fVatSales = $fTotalAmountPaid - $fVatAmount;							   
+								   $fVatSales = $fAmountPaid - $fVatAmount;	//edited by Mike, 20200426
 								}								
 
 							    echo number_format($fVatSales, 2, '.', '');									
