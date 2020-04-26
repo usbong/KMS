@@ -320,7 +320,10 @@ class Report_Model extends CI_Model
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
 		//edited by Mike, 20200423
 //		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
-		$this->db->order_by('t2.transaction_date', 'ASC');//ASC');
+//		$this->db->order_by('t2.transaction_date', 'ASC');//ASC');
+
+		//edited by Mike, 20200426
+		$this->db->order_by('t4.receipt_number', 'ASC');//ASC');
 		
 		$query = $this->db->get('patient');
 
