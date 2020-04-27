@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200325
+' @date updated: 20200427
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -29,8 +29,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	/**/
 	                    body
                         {
-                                font-family: Arial;
-								font-size: 11pt
+                            font-family: Arial;
+							font-size: 11pt;
+								
+							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							width: 670px								
                         }
 						
 						div.checkBox
@@ -50,6 +53,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 								text-align: center;
 						}
+						
+						div.patientName
+						{
+							text-align: left;
+						}						
+
+						div.medicalDoctorName
+						{
+							text-align: left;
+						}						
+						
+						div.tableHeader
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;
+						}						
 
 						input.browse-input
 						{
@@ -64,7 +85,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
+							float: left;
+							text-align: center;
+							padding-left: 20px;
+							padding-top: 10px;
 						}
+
+						img.Image-moscLogo {
+							max-width: 20%;
+							height: auto;
+							float: left;
+							text-align: center;
+						}						
 						
 						table.search-result
 						{
@@ -72,14 +104,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+						table.imageTable
+						{
+							width: 100%;
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}						
+
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
+							text-align: left
+						}						
+
+						td.columnFee
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: right
 						}						
 						
+						td.imageColumn
+						{
+							width: 40%;
+							display: inline-block;
+						}				
+
+						td.pageNameColumn
+						{
+							width: 50%;
+							display: inline-block;
+							text-align: right;
+						}						
+
+<!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
+	last accessed: 20200321
+	answer by: Rich Bradshaw on 20110903T0759
+	edited by: Peter Mortensen on 20190511T2239
+-->
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */												
     /**/
     </style>
-    <title>
+	<title>
       Search Patient Names
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -192,20 +260,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 	  </script>
   <body>
-	<table>
+    <table class="imageTable">
 	  <tr>
-		<td>				
+		<td class="imageColumn">				
+			<img class="Image-moscLogo" src="<?php echo base_url('assets/images/moscLogo.jpg');?>">		
 			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
 		</td>
-		<td>				
+		<td class="pageNameColumn">
 			<h2>
 				Search Patient Names
 			</h2>
 		</td>
 	  </tr>
 	</table>
-	<span>
-	</span>
 	<!-- Form -->
 	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirm')?>">
 		<?php
@@ -256,7 +323,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				echo "<br/>";
 				echo "<table class='search-result'>";
-				
+
+				//add: table headers
+?>
+				<tr class="row">
+						<td class ="column">				
+								<div class="tableHeader">
+				<?php
+								echo "PATIENT NAME";
+				?>		
+								</div>								
+						</td>
+						<td class ="column">				
+								<div class="tableHeader">
+							<?php
+								echo "DATE";
+							?>
+								</div>
+						</td>
+						<td class ="columnFee">				
+								<div class="tableHeader">
+							<?php
+									echo "FEE";
+							?>
+								</div>
+						</td>											
+						<td class ="column">				
+								<div class="tableHeader">
+							<?php
+									echo "PAYMENT";
+							?>
+								</div>
+						</td>											
+						<td class ="column">				
+								<div class="tableHeader">
+							<?php
+									echo "TYPE";
+							?>
+								</div>
+						</td>											
+						<td class ="column">				
+								<div class="tableHeader">
+							<?php
+									echo "DIAGNOSIS";
+							?>
+								</div>
+						</td>											
+				</tr>
+					  
+<?php			
 				$iCount = 1;
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
@@ -269,9 +384,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="column">				
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
-								<div>
+								<div class="patientName">
 				<?php
-								echo $value['patient_name'];
+//								echo $value['patient_name'];
+								echo str_replace("�","Ñ",$value['patient_name']);
+//								echo str_replace("ufffd","Ñ",$value['patient_name']);
 				?>		
 								</div>								
 							</a>
@@ -279,7 +396,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="transactionDateId<?php echo $iCount?>">
 							<?php
-								echo $value['transaction_date'];
+								//edited by Mike, 20200427
+//								echo $value['transaction_date'];
+								echo DATE("Y-m-d", strtotime($value['transaction_date']));
 							?>
 								</div>
 						</td>
