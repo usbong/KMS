@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200402
+' @date updated: 20200427
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -397,7 +397,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="transactionDateId<?php echo $iCount?>">
 							<?php
-								echo $value['transaction_date'];
+								//edited by Mike, 20200427
+//								echo $value['transaction_date'];
+								echo DATE("Y-m-d", strtotime($value['transaction_date']));
 							?>
 								</div>
 						</td>						
