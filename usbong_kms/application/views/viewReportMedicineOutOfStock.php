@@ -137,7 +137,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     /**/
     </style>
     <title>
-      Search Medicine
+      Medicine Report
+	  Out-of-Stock/Expired Items
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -257,46 +258,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Search Medicine
+				Medicine Inventory Report<br/>
+				Out-of-Stock/Expired Items<br/>
 			</h2>		
 		</td>
 	  </tr>
 	</table>
-	<br/>
-	<!-- Form -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmMedicine')?>">
-		<?php
-			$itemCounter = 1;
-		?>
-<!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
-		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
--->
-
-		<div>
-			<table width="100%">
-<!--
-			  <tr>
-				<td>
-				  <b><span>Pangalan</span></b>
-				</td>
-			  </tr>
--->
-			  <tr>
-				<td>				
-				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
-				</td>
-			  </tr>
-			</table>
-		</div>
-		<br />
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Enter
-		</button>
-	</form>
-
-
-	<br/>
+	<div><b>TODAY: </b><?php echo strtoupper(date("Y-m-d, l"));?>
+	</div>	
 	<br/>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
