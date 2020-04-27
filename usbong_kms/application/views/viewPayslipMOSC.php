@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200422
+' @date updated: 20200427
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -112,7 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right
 						}						
 						
-						td.NotesColumn
+						td.notesColumn
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: left
