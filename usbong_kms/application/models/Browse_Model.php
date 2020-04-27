@@ -85,6 +85,10 @@ class Browse_Model extends CI_Model
 		$this->db->group_by('t1.patient_name');
 
 		$this->db->like('t1.patient_name', $param['nameParam']);
+		
+		//added by Mike, 20200427
+		$this->db->where('t1.patient_name !=', "CANCELLED");
+
 		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
 		$this->db->limit(8);//1);
 		
