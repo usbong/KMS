@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200422
+' @date updated: 20200427
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -112,7 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right
 						}						
 
-						td.NotesColumn
+						td.notesColumn
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: left
@@ -453,25 +453,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class ="notesColumn">				
-								<div id="notesId<?php echo $iCount?>">
-							<?php
-									$iXRayFee = floor(($value['x_ray_fee']*100)/100);
+							<div id="notesId<?php echo $iCount?>">
+						<?php
+								$iXRayFee = floor(($value['x_ray_fee']*100)/100);
 
-									if ($value['notes']=="") {	
-										//edited by Mike, 20200415
+								if ($value['notes']=="") {	
+									//edited by Mike, 20200415
 //										echo "NONE";								
-										if (($iFee==0) and ($iMOSC==0) and ($iNetPF==0) and ($iXRayFee==0)) {
-											echo "UNPAID";
-										}
-										else {
-											echo "NONE";
-										}
+									if (($iFee==0) and ($iMOSC==0) and ($iNetPF==0) and ($iXRayFee==0)) {
+										echo "UNPAID";
 									}
 									else {
-										echo strtoupper($value['notes']);
+										echo "NONE";
 									}
-							?>
-								</div>
+								}
+								else {
+									echo strtoupper($value['notes']);
+								}
+						?>
+							</div>						
 						</td>
 						<td class ="column">				
 								<div id="xrayFeeId<?php echo $iCount?>">
