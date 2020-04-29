@@ -218,6 +218,20 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReceiptReportMOSC', $data);
 	}
 
+	//added by Mike, 20200429
+	public function viewReceiptReportPAS()
+	{				
+		$this->load->model('Report_Model');
+
+		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
+
+		$data["receiptTypeName"] = "PAS"; //Clinic
+
+		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
+
+		$this->load->view('viewReceiptReportPAS', $data);
+	}
+
 	//added by Mike, 20200421; edited by Mike, 20200423
 	public function viewReport()
 	{				
