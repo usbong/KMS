@@ -620,14 +620,16 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 */
-	//added by Mike, 20200412; edited by Mike, 20200415
+	//added by Mike, 20200412; edited by Mike, 20200430
 	public function getPurchasedItemTransactionsForTheDay($itemTypeId) 
 	{	
 		$rowArray = $this->getMedicineTransactionsForTheDayAsterisk();
 
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
+
 		$this->db->distinct('t1.item_name');
 
 		$this->db->where('t1.item_type_id', $itemTypeId);
