@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200422
+' @date updated: 20200430
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -421,10 +421,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	
 	<?php	
-		$dTotalFee = 0;
+		$fFee = 0; //added by Mike, 20200430
+		$fTotalFee = 0;
 		$iTotalQuantity = 0;
-		
 
+		$fTotalAddedVATAmount = 0; //added by Mike, 20200430
+		$fTotalAmountPaid = 0; //added by Mike, 20200430
+		
 		if (isset($result)) {			
 			if ($result!=null) {		
 				$resultCount = count($result);
@@ -471,6 +474,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "TOTAL";
 							?>
 						</td>
+						<td class ="tableHeaderColumn">				
+							<?php
+								echo "ADDED VAT<br/>AMOUNT";
+							?>
+						</td>
+						<td class ="tableHeaderColumn">				
+							<?php
+								echo "TOTAL<br/>AMOUNT PAID";
+							?>
+						</td>
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -502,6 +515,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo $value['item_price'];
 //								echo $value['fee'];
 
+								//added by Mike, 20200430
+								$fFee = 0;
+								if ($value['receipt_id']==0) {
+									$fFee = $value['fee'];
+								}
+								else {
+									$fFee = $value['fee']/ (1 + 0.12);
+								}								
+
 								//added by Mike, 20200415
 								if ($value['fee_quantity']==0) {
 				//									$iQuantity =  1;
@@ -513,8 +535,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								//edited by Mike, 20200422
 								//echo $value['fee']/$iQuantity;
-
-								echo number_format($value['fee']/$iQuantity, 2, '.', '');					
+								//edited by Mike, 20200430
+//								echo number_format($value['fee']/$iQuantity, 2, '.', '');					
+								echo number_format($fFee/$iQuantity, 2, '.', '');					
+																
 							?>
 								</div>
 						</td>
@@ -549,9 +573,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="feeId<?php echo $iCount?>">
 							<?php
-								echo $value['fee'];
+								//edited by Mike, 20200430
+//								echo $value['fee'];
+								echo number_format($fFee, 2, '.', '');					
 								
-								$dTotalFee = $dTotalFee + $value['fee'];
+								$fTotalFee = $fTotalFee + $fFee; //$value['fee'];
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div id="addedVATAmountId<?php echo $iCount?>">
+							<?php
+								//edited by Mike, 20200430
+//								echo $value['fee'];
+								if ($value['receipt_id']==0) {
+									$dAddedVATAmount = 0;
+								}
+								else {
+									$dAddedVATAmount = $fFee * 0.12;
+								}
+
+								echo number_format($dAddedVATAmount, 2, '.', '');					
+								
+								$fTotalAddedVATAmount = $fTotalAddedVATAmount + $dAddedVATAmount;
+							?>
+								</div>
+						</td>
+						<td class ="column">				
+								<div id="amountPaidId<?php echo $iCount?>">
+							<?php
+								$fAmountPaid = $fFee + $dAddedVATAmount;
+
+								echo number_format($fAmountPaid, 2, '.', '');					
+								
+								$fTotalAmountPaid = $fTotalAmountPaid + $fAmountPaid;
 							?>
 								</div>
 						</td>
@@ -579,7 +634,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<td class ="column">				
 						<div>
 					<?php
-						//echo "<b>".$dTotalFee."</b>";
+						//echo "<b>".$fTotalFee."</b>";
 						echo "<b>".$iTotalQuantity."</b>";					
 					?>
 						</div>
@@ -590,8 +645,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<td class ="column">				
 						<div>
 					<?php
-						//echo "<b>".$dTotalFee."</b>";
-						echo "<b>".number_format((float)$dTotalFee, 2, '.', '')."</b>";					
+						//echo "<b>".$fTotalFee."</b>";
+						echo "<b>".number_format((float)$fTotalFee, 2, '.', '')."</b>";					
+					?>
+						</div>
+					</td>
+					<td class ="column">				
+						<div>
+					<?php
+						echo "<b>".number_format((float)$fTotalAddedVATAmount, 2, '.', '')."</b>";					
+					?>
+						</div>
+					</td>
+					<td class ="column">				
+						<div>
+					<?php
+						echo "<b>".number_format((float)$fTotalAmountPaid, 2, '.', '')."</b>";					
 					?>
 						</div>
 					</td>
