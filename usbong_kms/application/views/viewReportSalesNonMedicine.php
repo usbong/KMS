@@ -259,8 +259,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<td class="pageNameColumn">
 			<h2>
 				Sales Report<br/>
-				Purchased Non-Medicine<br/>
-				<?php echo strtoupper(date("Y-m"));?>				
+				Purchased Non-Medicine<br/>				
+				<?php 
+					//echo strtoupper(date("Y-m"));
+
+					if (isset($monthNum)) {
+						echo strtoupper(date("Y"))."-".$monthNum;
+					}
+					else {
+						//Reference: https://www.php.net/manual/en/function.date.php;
+						//last accessed: 20200501
+						$previousMonth = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+						echo date("Y-m", $previousMonth); 
+					}
+				?>				
 			</h2>		
 		</td>
 	  </tr>
@@ -296,6 +308,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
+					  	<td class="columnTableHeader">				
+				<?php
+								echo "COUNT";
+				?>		
+						</td>
+						<td class="columnTableHeader">				
+				<?php
+								echo "DATE";
+				?>		
+						</td>
+
 						<td class="columnTableHeader">				
 				<?php
 								echo "ITEM NAME";
@@ -329,6 +352,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
+							<div id=countId<?php echo $iCount?>>
+							<?php
+								echo $iCount;
+							?>
+							</div>
+						</td>
+						<td class ="column">				
+							<div id=transactionDateId<?php echo $iCount?>>
+							<?php
+								echo $value['transaction_date'];
+							?>
+							</div>
+						</td>
+
+						<td class ="column">				
 							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
@@ -341,7 +379,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id=itemPriceId<?php echo $iCount?>>
 							<?php
 //								echo $value['fee'];
-								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');													
+								//edited by Mike, 20200501
+								//echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');						
+	
+								//added by Mike, 20200415
+								//echo $value['transaction_id'];
+
+								if ($value['fee_quantity']==0) {
+									$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								}
+								else {
+									$iQuantity =  $value['fee_quantity'];
+								}	
+								
+//								echo $iQuantity."<br/>";
+								echo number_format($value['fee']/$iQuantity, 2, '.', '');						
+								
 							?>
 								</div>
 						</td>
@@ -359,7 +412,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$iQuantity =  $value['fee_quantity'];
 								}
 */								
-								$iQuantity =  $value['fee_quantity'];							
+								//edited by Mike, 20200501
+								//$iQuantity =  $value['fee_quantity'];							
 								
 								echo $iQuantity;
 							?>
@@ -388,12 +442,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo '<div>***NOTHING FOLLOWS***';	
 			}
 			else {					
+				echo '<div>';					
+				echo "There are no transactions.";
+				echo '</div>';					
+
+/*	//removed by Mike, 20200501			
 
 				echo '<div>';					
 				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our medicine names.';
 				echo '<br><br>Recommendation:';
 				echo '<br>&#x25CF; Reverify that the spelling is correct.';				
 				echo '</div>';					
+*/			
 			}			
 		}
 	?>
