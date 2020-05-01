@@ -197,6 +197,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$itemTypeId = 1; //1 = Medicine
 		$iCount = 0;
 		$itemId = -1;
+		$remainingPaidItem = 0; //added by Mike, 20200501
 		
 		if ($data['result'] == True) {
 			foreach ($data['result'] as $value) {				
@@ -220,10 +221,37 @@ class Browse extends CI_Controller { //MY_Controller {
 				//edited by Mike, 20200422
 //				if ($iCount==0) {
 				if (!$bIsSameItemId) {	
-					$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
+					
+					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					
+					if ($remainingPaidItem < 0) {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+					}
+					else {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingPaidItem;
+					}
+					
+//					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
 				}
 				else {
-					$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+
+					if ($remainingPaidItem < 0) { //already negative
+						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem < 0) {
+							$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+							
+							$remainingPaidItem = $data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem;
+						}
+						else {						
+							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem;					
+						}
+					}
+					else {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+					}
 				}
 				
 //				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId, $value['expiration_date']); //"0";
@@ -237,7 +265,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchMedicine', $data);
 	}
 
-	//added by Mike, 20200328; edited by Mike, 20200407
+	//added by Mike, 20200328; edited by Mike, 20200501
 	public function viewItemMedicine($itemId)
 	{
 //		$data['nameParam'] = $_POST[nameParam];
@@ -255,10 +283,210 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
 		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+				
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
 
-		//added by Mike, 20200406; edited by Mike, 20200417
-		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
-//		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId, $data['result'][0]['expiration_date']);
+		//added by Mike, 20200501
+		$data['resultItem'] = $this->getResultItemQuantity($data);
+
+
+/*
+		//edited by Mike, 20200501
+		//TO-DO: -update: this
+		$data['nameParam'] = $data['result'][0]['item_name'];
+		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		//added by Mike, 20200417
+		$itemTypeId = 1; //1 = Medicine
+		$iCount = 0;
+		$itemId = -1;
+		$remainingPaidItem = 0; //added by Mike, 20200501
+		
+		if ($data['resultItem'] == True) {
+			foreach ($data['resultItem'] as $value) {				
+				//edited by Mike, 20200422
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+
+					
+	//			echo "itemId: " . $itemId;
+				//added by Mike, 20200417
+				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
+				//edited by Mike, 20200422
+//				if ($iCount==0) {
+				if (!$bIsSameItemId) {	
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
+					
+					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					
+					if ($remainingPaidItem < 0) {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
+					}
+					else {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $remainingPaidItem;
+					}
+					
+//					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+				}
+				else {
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+
+					if ($remainingPaidItem < 0) { //already negative
+						if ($data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem < 0) {
+							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
+							
+							$remainingPaidItem = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem;
+						}
+						else {						
+							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem;					
+						}
+					}
+					else {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] ;					
+					}
+				}
+				
+				$iCount = $iCount + 1;
+			}
+		}		
+*/
+		
+		$this->load->view('viewItemMedicine', $data);
+	}
+
+	//added by Mike, 20200501
+	public function getResultItemQuantity($data) {
+		$data['nameParam'] = $data['result'][0]['item_name'];
+		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		//added by Mike, 20200417
+		$itemTypeId = 1; //1 = Medicine
+		$iCount = 0;
+		$itemId = -1;
+		$remainingPaidItem = 0; //added by Mike, 20200501
+		
+		if ($data['resultItem'] == True) {
+			foreach ($data['resultItem'] as $value) {				
+				//edited by Mike, 20200422
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+
+					
+	//			echo "itemId: " . $itemId;
+/*				
+				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
+*/				
+				//added by Mike, 20200417
+				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
+				//edited by Mike, 20200422
+//				if ($iCount==0) {
+				if (!$bIsSameItemId) {	
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
+					
+					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					
+					if ($remainingPaidItem < 0) {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
+					}
+					else {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $remainingPaidItem;
+					}
+					
+//					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+				}
+				else {
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+
+					if ($remainingPaidItem < 0) { //already negative
+						if ($data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem < 0) {
+							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
+							
+							$remainingPaidItem = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem;
+						}
+						else {						
+							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem;					
+						}
+					}
+					else {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] ;					
+					}
+				}
+				
+				$iCount = $iCount + 1;
+			}
+		}		
+		
+		return $data['resultItem'];
+	}
+
+	//added by Mike, 20200328; edited by Mike, 20200407
+	public function viewItemMedicinePrev($itemId)
+	{
+//		$data['nameParam'] = $_POST[nameParam];
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+
+		$itemTypeId = 1; //1 = Medicine
+	
+		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+
+		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		//edited by Mike, 20200501
+		//TO-DO: -update: this
+
+		//added by Mike, 20200406; edited by Mike, 20200501
+//		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+
+		$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+					
+		if ($remainingPaidItem < 0) {
+			$data['resultQuantityInStockNow'] = 0;
+		}
+		else {
+			$data['resultQuantityInStockNow'] = $remainingPaidItem;
+		}
+
+		//TO-DO: -update: this
+/*
+				}
+				else {
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+
+					if ($remainingPaidItem < 0) { //already negative
+						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem < 0) {
+							$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+							
+							$remainingPaidItem = $data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem;
+						}
+						else {						
+							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem;					
+						}
+*/
 	
 		$this->load->view('viewItemMedicine', $data);
 	}
@@ -458,6 +686,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//TO-DO: -update this
 		//$this->load->view('viewItemNonMedicine', $data);
 
+		//added by Mike, 20200501
+		$data['resultItem'] = $this->getResultItemQuantity($data);
+
 		if ($itemTypeId=="1") {
 			$this->load->view('viewItemMedicine', $data);
 		}
@@ -496,6 +727,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
 
+		//added by Mike, 20200501
+		$data['resultItem'] = $this->getResultItemQuantity($data);
+
 		if ($itemTypeId==1) {
 			$this->load->view('viewItemMedicine', $data);
 		}
@@ -533,6 +767,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+
+		//added by Mike, 20200501
+		$data['resultItem'] = $this->getResultItemQuantity($data);
 
 		if ($itemTypeId==1) {
 			$this->load->view('viewItemMedicine', $data);
