@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200419
+' @date updated: 20200501
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -915,7 +915,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 									
 //									echo $value['fee'];
-									echo $value['fee']/$iQuantity;
+									//edited by Mike, 20200501
+									//echo $value['fee']/$iQuantity;
+									echo number_format((float)$value['fee']/$iQuantity, 2, '.', '');
+
 								?>
 									</div>
 							</td>
