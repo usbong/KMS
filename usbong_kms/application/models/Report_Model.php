@@ -775,7 +775,66 @@ class Report_Model extends CI_Model
 		
 		return $rowArray;
 	}	
-	
+
+	//added by Mike, 20200501
+	public function getSoldNonMedicine($param) 
+	{	
+		//TO-DO: -update: this
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id, t4.item_name, t2.fee, t2.fee_quantity'); //, t4.receipt_number'); //, t2.treatment_diagnosis');
+
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('item as t4', 't2.item_id = t4.item_id', 'LEFT');
+
+/*		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
+*/
+		//Reference: https://stackoverflow.com/questions/34917060/getting-the-recent-row-by-join-group-by;
+		//last accessed: 20200422
+		//answer by: Disha V. on 20160121
+		//edited by: Community on 20170523
+
+//		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
+
+		//edited by Mike, 20200422
+		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
+
+		$this->db->where('t4.item_name!=', "NONE");
+		$this->db->where('t4.item_type_id', 2); //2 = Non-medicine; 1 = Medicine
+
+
+		$this->db->distinct('t1.item_name');
+
+//		$this->db->where('t1.item_type_id', $itemTypeId);
+
+//		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+		$this->db->like('t2.notes', "PAID");
+
+		//edited by Mike, 20200401
+//		$this->db->order_by('t2.added_datetime_stamp`', 'ASC'); //'DESC');//ASC');
+
+
+		$this->db->group_by('t2.transaction_id');
+
+		//TO-DO: -update: this
+		$this->db->like('t2.transaction_date',date("m"));
+
+		//edited by Mike, 20200426
+//		$this->db->order_by('t4.receipt_number', 'ASC');//ASC');
+
+		$this->db->order_by('t2.transaction_date', 'ASC');
+		
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+
+		return $rowArray;		
+	}	
+		
 	//added by Mike, 20191110
 	public function getListOfAllReportsFromAllLocations()//$param)
 	{			
