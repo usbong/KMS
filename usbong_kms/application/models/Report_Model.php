@@ -780,7 +780,7 @@ class Report_Model extends CI_Model
 	public function getSoldNonMedicine($param) 
 	{	
 		//TO-DO: -update: this
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id, t4.item_name, t2.fee, t2.fee_quantity'); //, t4.receipt_number'); //, t2.treatment_diagnosis');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id, t4.item_name, t4.item_price, t2.fee, t2.fee_quantity'); //, t4.receipt_number'); //, t2.treatment_diagnosis');
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -809,6 +809,7 @@ class Report_Model extends CI_Model
 
 //		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
 		$this->db->like('t2.notes', "PAID");
+		$this->db->where('t2.notes!=', "UNPAID"); //added by Mike, 20200501
 
 		//edited by Mike, 20200401
 //		$this->db->order_by('t2.added_datetime_stamp`', 'ASC'); //'DESC');//ASC');
@@ -817,7 +818,8 @@ class Report_Model extends CI_Model
 		$this->db->group_by('t2.transaction_id');
 
 		//TO-DO: -update: this
-		$this->db->like('t2.transaction_date',date("m"));
+//		$this->db->like('t2.transaction_date',date("m")-1); //edited by Mike, 20200501
+		$this->db->like('t2.transaction_date',$param); //edited by Mike, 20200501
 
 		//edited by Mike, 20200426
 //		$this->db->order_by('t4.receipt_number', 'ASC');//ASC');
