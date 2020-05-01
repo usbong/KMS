@@ -393,6 +393,20 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportMedicineOutOfStock', $data);
 	}
 
+	//added by Mike, 20200501
+	public function viewReportSalesNonMedicine()
+	{
+//		$data['nameParam'] = $_POST['nameParam']; //added by Mike, 20170616
+	
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+	
+		$this->load->model('Report_Model');
+	
+		//TO-DO: -update: null parameter to month
+		$data['result'] = $this->Report_Model->getSoldNonMedicine(null); 
+		$this->load->view('viewReportSalesNonMedicine', $data);
+	}
 
 	//added by Mike, 20191110
 	public function viewListOfAllReportsFromAllLocations()
