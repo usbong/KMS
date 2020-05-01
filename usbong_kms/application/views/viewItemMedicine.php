@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200419
+' @date updated: 20200501
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -529,9 +529,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$iCount = 1;
 /*				foreach ($result as $value) {
 */	
+				//edited by Mike, 20200501
+//				$value = $result[0];
 
-				$value = $result[0];
-
+//				if (isset($resultItem)) {
+					$value = $resultItem[sizeof($resultItem)-1];
+//				}
 		?>				
 		
 					  <tr class="row">
@@ -556,6 +559,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $value['quantity_in_stock'];
 								}
 */
+								//added by Mike, 20200501
+								$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
+								
 								//edited by Mike, 20200411; edited by Mike, 20200417
 								if (($resultQuantityInStockNow<0)) {
 									echo 9999;
@@ -778,7 +784,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<br/>";
 
 			echo '<h3>Item Purchased History</h3>';
-
+			
+			$value = $result[0];
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
 				echo 'There are no transactions.';
