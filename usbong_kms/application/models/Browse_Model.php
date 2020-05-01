@@ -179,7 +179,9 @@ class Browse_Model extends CI_Model
 
 //		$this->db->distinct('t1.patient_name');
 		$this->db->group_by('t1.item_name');
-		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
+		//edited by Mike, 20200501
+//		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
+		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
 
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
 
@@ -606,7 +608,7 @@ class Browse_Model extends CI_Model
 	}	
 */
 
-	//added by Mike, 20200328; edited by Mike, 20200411
+	//added by Mike, 20200328; edited by Mike, 20200501
 	public function getItemDetailsList($itemTypeId, $itemId) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
@@ -617,6 +619,9 @@ class Browse_Model extends CI_Model
 
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
 		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+//		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200501
+
 
 		$this->db->where('t1.item_id', $itemId);
 
@@ -699,7 +704,7 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200406; edited by Mike, 20200417
+	//added by Mike, 20200406; edited by Mike, 20200501
 	public function getItemAvailableQuantityInStock($itemTypeId, $itemId)
 //	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
 	{
@@ -709,7 +714,6 @@ class Browse_Model extends CI_Model
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t1.item_type_id', $itemTypeId); //2); //2 = Non-medicine
-
 
 
 		$query = $this->db->get('item');
