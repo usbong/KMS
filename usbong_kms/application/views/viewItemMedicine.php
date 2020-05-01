@@ -716,8 +716,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="cartItemQuantityId<?php echo $iCount?>">
 							<?php
 //								echo $cartValue['fee']/$cartValue['item_price'];
-								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
-
+								//edited by Mike, 20200501
+//								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
+								echo $cartValue['fee_quantity'];
 							?>
 								</div>
 						</td>
@@ -856,7 +857,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<div id="itemQuantityId<?php echo $iCount?>">
 								<?php
 	//								echo $value['fee']/$value['item_price'];
-									echo floor(($value['fee']/$value['item_price']*100)/100);
+									//edited by Mike, 20200501
+//									echo floor(($value['fee']/$value['item_price']*100)/100);
+									echo $value['fee_quantity'];
 								?>
 									</div>
 							</td>
