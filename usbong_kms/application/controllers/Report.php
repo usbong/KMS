@@ -445,8 +445,8 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportMedicineExpired', $data);
 	}
 
-	//added by Mike, 20200501
-	//TO-DO: -update: to automatically use the previous month
+	//added by Mike, 20200502
+	//+updated: to automatically use the previous month
 	public function viewReportSalesNonMedicine()
 	{
 //		$data['nameParam'] = $_POST['nameParam']; //added by Mike, 20170616
@@ -482,6 +482,19 @@ class Report extends CI_Controller { //MY_Controller {
 		
 		$data['monthNum'] = $monthNum;
 		$data['result'] = $this->Report_Model->getSoldNonMedicine($monthNum);		$this->load->view('viewReportSalesNonMedicine', $data);
+	}
+
+	//added by Mike, 20200502
+	public function viewReportPriceNonMedicine()
+	{	
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+	
+		$this->load->model('Report_Model');
+	
+		$data['result'] = $this->Report_Model->getPriceNonMedicine(); 
+	
+		$this->load->view('viewReportPriceNonMedicine', $data);
 	}
 
 	//added by Mike, 20191110
