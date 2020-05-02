@@ -284,7 +284,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
-	
+		//added by Mike, 20200502
+		$iTotalQuantitySold = 0;
+		$iTotalAmount = 0;
+				
 		//get only name strings from array 
 		if (isset($result)) {			
 			if ($result!=null) {		
@@ -343,13 +346,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "TOTAL AMOUNT"; //ITEM PRICE;
 							?>
 						</td>
-
 					  </tr>
 <?php				
 				$iCount = 1;
 				foreach ($result as $value) {
-		?>				
-		
+		?>						
 					  <tr class="row">
 						<td class ="column">				
 							<div id=countId<?php echo $iCount?>>
@@ -414,8 +415,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */								
 								//edited by Mike, 20200501
 								//$iQuantity =  $value['fee_quantity'];							
-								
+
 								echo $iQuantity;
+
+								$iTotalQuantitySold = $iTotalQuantitySold + $iQuantity;
 							?>
 								</div>
 						</td>
@@ -428,6 +431,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//$fTotalAmountPaid = $value['fee'] * $iQuantity;
 //								echo number_format($fTotalAmountPaid, 2, '.', '');
 								echo number_format($value['fee'], 2, '.', '');
+
+								$iTotalAmount = $iTotalAmount + $value['fee'];
 							?>
 							</div>
 						</td>
@@ -436,7 +441,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$iCount++;		
 //					echo "<br/>";
 				}				
-
+		?>
+<!-- added by Mike, 20200502 -->		
+				  <tr class="row">
+					<td class ="column">				
+					</td>
+					<td class ="column">				
+					</td>
+					<td class ="column">				
+							<div>
+						<?php
+							echo "<b>GRAND TOTAL</b>";
+						?>
+							</div>
+					</td>
+					<td class ="column">				
+					</td>
+					<td class ="column">				
+					</td>
+					<td class ="column">				
+							<div>
+						<?php
+							echo "<b>".$iTotalQuantitySold."</b>";
+						?>
+							</div>
+					</td>
+					<td class ="column">				
+					</td>
+					<td class ="column">				
+							<div>
+						<?php
+							echo "<b>".number_format($iTotalAmount, 2, '.', '')."</b>";
+						?>
+							</div>
+					</td>
+				</tr>
+<?php
 				echo "</table>";				
 				echo "<br/>";				
 				echo '<div>***NOTHING FOLLOWS***';	
