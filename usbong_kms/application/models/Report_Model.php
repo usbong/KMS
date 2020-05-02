@@ -796,8 +796,10 @@ class Report_Model extends CI_Model
 
 //		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
 
+		//removed by Mike, 20200502
+		//note: transactions for item payments are unique
 		//edited by Mike, 20200422
-		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
+//		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
 
 		$this->db->where('t4.item_name!=', "NONE");
 		$this->db->where('t4.item_type_id', 2); //2 = Non-medicine; 1 = Medicine
@@ -817,9 +819,11 @@ class Report_Model extends CI_Model
 
 		$this->db->group_by('t2.transaction_id');
 
-		//TO-DO: -update: this
+		//edited by Mike, 20200502
 //		$this->db->like('t2.transaction_date',date("m")-1); //edited by Mike, 20200501
-		$this->db->like('t2.transaction_date',$param); //edited by Mike, 20200501
+		//note: parameter is the month in numbers, e.g. 04 for April
+		$this->db->like('t2.transaction_date',$param."/"); //edited by Mike, 20200502
+//		$this->db->like('t2.transaction_date',"04/"); //edited by Mike, 20200502
 
 		//edited by Mike, 20200426
 //		$this->db->order_by('t4.receipt_number', 'ASC');//ASC');
