@@ -737,6 +737,50 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20200502
+	public function getMedicineExpired() 
+	{	
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+
+		$this->db->from('item as t1');
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->group_by('t1.item_name');
+		//TO-DO: -update: this
+		$this->db->group_by('t2.expiration_date');
+
+		$this->db->where('t1.item_name!=', "NONE");
+
+		$this->db->where('t1.item_type_id', 1); //1 = Medicine
+		
+//		$this->db->where('t2.quantity_in_stock', 0); //1 = Medicine
+
+		//added by Mike, 20200502
+		//items that are expired only
+		$this->db->where('t2.quantity_in_stock!=', 0); //1 = Medicine
+		$this->db->where('t2.expiration_date<=', date("Y-m-d")); //1 = Medicine
+
+/*
+		$this->db->and_where('t1.item_type_id', 1); //1 = Medicine
+
+		getItemAvailableQuantityInStock($itemTypeId, $itemId);
+*/
+//		$this->db->like('t1.item_name', $param['nameParam']);
+//		$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
+//		$this->db->limit(8);//1);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}	
+
 	//added by Mike, 20200427
 	public function getMedicineOutOfStock() 
 	{	
@@ -754,6 +798,13 @@ class Report_Model extends CI_Model
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
 		
 //		$this->db->where('t2.quantity_in_stock', 0); //1 = Medicine
+
+/*
+		//added by Mike, 20200502
+		//items that are expired only
+		$this->db->where('t2.quantity_in_stock!=', 0); //1 = Medicine
+		$this->db->where('t2.expiration_date<=', date("Y-m-d")); //1 = Medicine
+*/
 
 /*
 		$this->db->and_where('t1.item_type_id', 1); //1 = Medicine
