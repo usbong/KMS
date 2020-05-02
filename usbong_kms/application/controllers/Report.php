@@ -393,6 +393,58 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportMedicineOutOfStock', $data);
 	}
 
+	//added by Mike, 20200502
+	public function viewReportMedicineExpired()
+	{
+//		$data['nameParam'] = $_POST['nameParam']; //added by Mike, 20170616
+	
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+	
+		$this->load->model('Report_Model');
+		$this->load->model('Browse_Model');
+	
+		$data['rawResult'] = $this->Report_Model->getMedicineExpired();//$data);
+
+//		$data['result'] = $this->Report_Model->getMedicineOutOfStock();//$data);
+
+		//added by Mike, 20200417
+		$itemTypeId = 1; //1 = Medicine
+		$iCount = 0;
+		$itemId = -1;
+
+		$iCountOutputResult = 0;
+		
+		if ($data['rawResult'] == True) {
+			foreach ($data['rawResult'] as $value) {
+
+				$itemId = $data['rawResult'][$iCount]['item_id'];
+				$resultQuantityInStockNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+
+				//added by Mike, 20200427
+				if ($data['rawResult'][$iCount]['quantity_in_stock']==0) {
+					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+				}
+				
+//				if ($data['rawResult'][$iCount]['quantity_in_stock']-$resultQuantityInStockNow <=0) {
+				if (($data['rawResult'][$iCount]['quantity_in_stock']!=-1) and ($resultQuantityInStockNow <=0)) {
+					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+					$data['result'][$iCountOutputResult]['quantity_in_stock'] = 0;
+				}
+
+				//added by Mike, 20200427
+				if (($data['rawResult'][$iCount]['expiration_date'] <= date("Y-m-d")) and ($data['rawResult'][$iCount]['expiration_date'] != 0)) {
+					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+				}
+							
+				$iCountOutputResult = $iCountOutputResult + 1;				
+				$iCount = $iCount + 1;
+			}
+		}
+
+		$this->load->view('viewReportMedicineExpired', $data);
+	}
+
 	//added by Mike, 20200501
 	//TO-DO: -update: to automatically use the previous month
 	public function viewReportSalesNonMedicine()
