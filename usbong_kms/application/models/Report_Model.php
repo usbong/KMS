@@ -891,6 +891,57 @@ class Report_Model extends CI_Model
 
 		return $rowArray;		
 	}	
+
+	//added by Mike, 20200502
+	public function getPriceNonMedicine() 
+	{	
+		//TO-DO: -update: this
+		$this->db->select('item_name, item_price'); 
+		$this->db->where('item_name!=', "NONE");
+		$this->db->where('item_type_id', 2); //2 = Non-medicine; 1 = Medicine
+
+
+//		$this->db->distinct('t1.item_name');
+
+//		$this->db->where('t1.item_type_id', $itemTypeId);
+
+//		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+/*
+		$this->db->like('t2.notes', "PAID");
+		$this->db->where('t2.notes!=', "UNPAID"); //added by Mike, 20200501
+*/
+		//edited by Mike, 20200401
+//		$this->db->order_by('t2.added_datetime_stamp`', 'ASC'); //'DESC');//ASC');
+
+
+//		$this->db->group_by('t2.transaction_id');
+
+		//edited by Mike, 20200502
+//		$this->db->like('t2.transaction_date',date("m")-1); //edited by Mike, 20200501
+		//note: parameter is the month in numbers, e.g. 04 for April
+/*
+		$this->db->like('t2.transaction_date',$param."/"); //edited by Mike, 20200502
+*/
+//		$this->db->like('t2.transaction_date',"04/"); //edited by Mike, 20200502
+
+		//edited by Mike, 20200426
+//		$this->db->order_by('t4.receipt_number', 'ASC');//ASC');
+
+/*		$this->db->order_by('t2.transaction_date', 'ASC');
+*/
+
+		$this->db->order_by('item_name', 'ASC');
+		
+		$query = $this->db->get('item');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+
+		return $rowArray;		
+	}	
 		
 	//added by Mike, 20191110
 	public function getListOfAllReportsFromAllLocations()//$param)
