@@ -59,13 +59,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}
 
-						div.tableHeader
+						td.tableHeaderColumn
 						{
-							font-weight: bold;
-							text-align: center;
 							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
-						}
+							border: 1pt solid #00ff00;		
+							text-align: center;
+							font-weight: bold;
+						}						
 
 						input.browse-input
 						{
@@ -303,48 +303,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 								echo "COUNT";
 							?>
-								</div>
 						</td>
 
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 				<?php
 								echo "PATIENT NAME";
 				?>		
-								</div>								
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 								echo "NET FEE";
 							?>
-								</div>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 									echo "X-RAY";
 							?>
-								</div>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 									echo "LAB";
 							?>
-								</div>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="tableHeaderColumn">				
 							<?php
 									echo "NOTES";
 							?>
-								</div>
 						</td>
 					  </tr>
 <?php				
