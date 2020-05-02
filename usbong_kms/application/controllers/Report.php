@@ -404,8 +404,12 @@ class Report extends CI_Controller { //MY_Controller {
 	
 		$this->load->model('Report_Model');
 	
-		//TO-DO: -update: null parameter to month
-		$data['result'] = $this->Report_Model->getSoldNonMedicine(null); 
+		//edited by Mike, 20200502
+		$previousMonth = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+//		echo date("m", $previousMonth); 
+//		$data['result'] = $this->Report_Model->getSoldNonMedicine(null); 
+		$data['result'] = $this->Report_Model->getSoldNonMedicine(date("m", $previousMonth)); 
+	
 		$this->load->view('viewReportSalesNonMedicine', $data);
 	}
 
