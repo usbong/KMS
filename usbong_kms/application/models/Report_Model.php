@@ -827,20 +827,9 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200501
+	//added by Mike, 20200501; edited by Mike, 20200503
 	public function getSoldNonMedicine($param) 
 	{	
-/*
-		//TO-DO: -update: this
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id, t4.item_id, t4.item_name, t4.item_price, t2.fee, t2.fee_quantity'); //, t4.receipt_number'); //, t2.treatment_diagnosis');
-
-		$this->db->from('patient as t1');
-		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
-		$this->db->join('item as t4', 't2.item_id = t4.item_id', 'LEFT');
-*/
-
-		//TO-DO: -update: this
 		$this->db->select('t1.transaction_id, t1.transaction_date, t1.fee, t1.fee_quantity, t1.notes, t1.x_ray_fee, t1.lab_fee, t1.med_fee, t1.pas_fee, t1.transaction_type_name, t1.treatment_type_name, t2.item_id, t2.item_name, t2.item_price'); //, t4.receipt_number'); //, t2.treatment_diagnosis');
 
 		$this->db->from('transaction as t1');
