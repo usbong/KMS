@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200417
+' @date updated: 20200504
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -93,6 +93,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}
 						
+						span.alertSpan {
+							color: red;
+							font-weight: bold;
+						}
+
 						table.search-result
 						{
 <!--							border: 1px solid #ab9c7d;		
@@ -393,7 +398,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								}
 								else {
+									//edited by Mike, 20200504
+									//echo $value['expiration_date'];
+									if ($value['expiration_date'] <= date("Y-m-d")) {
+										echo '<span class="alertSpan">';
+									}
+									else {
+										echo '<span>';
+									}
 									echo $value['expiration_date'];
+									echo '</span>';
 								}
 							?>
 								</div>
