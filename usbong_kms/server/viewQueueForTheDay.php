@@ -39,5 +39,35 @@
 
 	//TO-DO: -add: display as Tab-delimited
 	echo $fileContents;
+
+	echo "<br/>";
+	echo "<br/>";
+
+	echo "<table>";
+				
+	//TO-DO: -add: table headers
+	echo '<tr class="row">';
+
+	//TO-DO: -update: this
+	$sToken = strtok($fileContents, "\t");
+
+	while ($sToken !== false) {
+		echo "<td class='column'>".$sToken."</td>";
+
+		$sToken = strtok("\t");
+		
+		if (strpos($sToken,"\n")!==false) {
+			//note: we use explore(...), instead of another strtok(...) to receive correct outputs
+			$sTokenNewLine = explode("\n", $sToken);
+				
+			echo "<td class='column'>".$sTokenNewLine[0]."</td>";
+
+			echo '</tr><tr class="row">';
+			echo "<td class='column'>".$sTokenNewLine[1]."</td>";
+
+			$sToken = strtok("\t");			
+		}
+	}	
 	
+	echo "</tr>";
 ?>
