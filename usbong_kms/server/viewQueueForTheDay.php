@@ -39,11 +39,12 @@
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 18pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
-							width: 802px; /* 670px */
+							/* width: 802px; *//* 670px */
+							width: 100%;
                         }
 						
 						div.copyright
@@ -76,8 +77,8 @@
 
 						td.tableHeaderColumn
 						{
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;		
+							background-color: #00cc00; <!-- #00ff00; --> <!--#93d151; lime green-->
+							border: 1pt solid #00cc00;
 							text-align: center;
 							font-weight: bold;
 						}						
@@ -119,93 +120,101 @@
 
 	//TO-DO: -update: file location
 	$filename="C:/Usbong/Patients".$dateToday.".txt";	
+
 /*		
 	echo $filename;	
 	echo "<br/>";
 	echo "<br/>";
 */
-	
-	$fileContents = file_get_contents($filename);
-//	echo $fileContents;
-
-	$fileContents = str_replace("\"", "", $fileContents);	
-//	$fileContents = str_replace("�", "Ñ", $fileContents);	
-	$fileContents = utf8_encode($fileContents);	
-	
-	//delete the ending \n
-	$fileContents = substr($fileContents,0,-1);	
-
-	//auto-identify max column count
-	$sCellValueArray = explode("\t", $fileContents);
-	$iCountColumn = 0;
-	$iMaxCountColumn = 0;
-	
-	foreach ($sCellValueArray as $sCellValue) {		
-		if (strpos($sCellValue,"\n")!==false) {
-			$iMaxCountColumn = $iCountColumn + 1;
-			break;
-		}
-		else {
-			$iCountColumn = $iCountColumn + 1;
-		}
-	}
-
-	echo "<br/>";
-	echo "<table>";
-				
-	$bHasFinishedTableHeaderRow = false;
-	$iCountColumn = 0;
-	
-//	echo $iMaxCountColumn;
-	
-	echo '<tr class="row">';
-
-	$sToken = strtok($fileContents, "\t");
-
-	while ($sToken !== false) {
-		if ($bHasFinishedTableHeaderRow) {
-			echo "<td class='column'>".$sToken."</td>";
-		}
-		else {
-			echo "<td class='tableHeaderColumn'>".$sToken."</td>";
-		}
-
-		$iCountColumn = $iCountColumn + 1;
-
-		$sToken = strtok("\t");
+	//added by Mike, 20200503
+	if (file_exists($filename)) {
 		
-		if (strpos($sToken,"\n")!==false) {
-			//note: we use explore(...), instead of another strtok(...) to receive correct outputs
-			$sTokenNewLine = explode("\n", $sToken);
+		$fileContents = file_get_contents($filename);
+	//	echo $fileContents;
 
-			if ($bHasFinishedTableHeaderRow) {
-				echo "<td class='column'>".$sTokenNewLine[0]."</td>";				
+		$fileContents = str_replace("\"", "", $fileContents);	
+	//	$fileContents = str_replace("�", "Ñ", $fileContents);	
+		$fileContents = utf8_encode($fileContents);	
+		
+		//delete the ending \n
+		$fileContents = substr($fileContents,0,-1);	
+
+		//auto-identify max column count
+		$sCellValueArray = explode("\t", $fileContents);
+		$iCountColumn = 0;
+		$iMaxCountColumn = 0;
+		
+		foreach ($sCellValueArray as $sCellValue) {		
+			if (strpos($sCellValue,"\n")!==false) {
+				$iMaxCountColumn = $iCountColumn + 1;
+				break;
 			}
 			else {
-				echo "<td class='tableHeaderColumn'>".$sTokenNewLine[0]."</td>";
-			}
-							
-			//we add -2 due to token value includes both the last cell value in the current row and the next cell value after the new line 
-			while ($iCountColumn < $iMaxCountColumn-2) {
-				echo "<td class='column'></td>";
 				$iCountColumn = $iCountColumn + 1;
 			}
+		}
 
-			echo '</tr><tr class="row">';
-			echo "<td class='column'>".$sTokenNewLine[1]."</td>";
+		echo "<br/>";
+		echo "<table>";
+					
+		$bHasFinishedTableHeaderRow = false;
+		$iCountColumn = 0;
+		
+	//	echo $iMaxCountColumn;
+		
+		echo '<tr class="row">';
 
-			$sToken = strtok("\t");			
+		$sToken = strtok($fileContents, "\t");
+
+		while ($sToken !== false) {
+			if ($bHasFinishedTableHeaderRow) {
+				echo "<td class='column'>".$sToken."</td>";
+			}
+			else {
+				echo "<td class='tableHeaderColumn'>".$sToken."</td>";
+			}
+
+			$iCountColumn = $iCountColumn + 1;
+
+			$sToken = strtok("\t");
 			
-			$bHasFinishedTableHeaderRow = True;
-			$iCountColumn = 0;
-		}		
+			if (strpos($sToken,"\n")!==false) {
+				//note: we use explore(...), instead of another strtok(...) to receive correct outputs
+				$sTokenNewLine = explode("\n", $sToken);
 
+				if ($bHasFinishedTableHeaderRow) {
+					echo "<td class='column'>".$sTokenNewLine[0]."</td>";				
+				}
+				else {
+					echo "<td class='tableHeaderColumn'>".$sTokenNewLine[0]."</td>";
+				}
+								
+				//we add -2 due to token value includes both the last cell value in the current row and the next cell value after the new line 
+				while ($iCountColumn < $iMaxCountColumn-2) {
+					echo "<td class='column'></td>";
+					$iCountColumn = $iCountColumn + 1;
+				}
+
+				echo '</tr><tr class="row">';
+				echo "<td class='column'>".$sTokenNewLine[1]."</td>";
+
+				$sToken = strtok("\t");			
+				
+				$bHasFinishedTableHeaderRow = True;
+				$iCountColumn = 0;
+			}		
+
+		}	
+		echo "</tr>";	
+		echo "</table>";
+		echo "<br />";
+		echo "<div>***NOTHING FOLLOWS***</div>";
+	}
+	else {
+		echo "<br/>";		
+		echo "There are no transactions.";
 	}	
-	echo "</tr>";	
 ?>
-	</table>
-	<br />
-	<div>***NOTHING FOLLOWS***</div>;	
 	<br />
 	<br />
 	<div class="copyright">
