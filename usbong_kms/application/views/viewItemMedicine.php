@@ -305,9 +305,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		function myPopupFunction(itemId) {				
 			var quantity = document.getElementById("quantityParam").value;
 			var fee = document.getElementById("feeParam").value;
+			//added by Mike, 20200504
+			var resultQuantityInStockNow  = document.getElementById("resultQuantityInStockNowParam").value;
 
 //			alert("quantity: " + quantity);
 //			alert("fee: " + fee);
+//			alert("resultQuantityInStockNow: " + resultQuantityInStockNow);
 
 /*
 			var product_id = document.getElementById("product_idParam").value;
@@ -368,6 +371,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200330
 				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
 */
+
+				//added by Mike, 20200504
+				if (resultQuantityInStockNow == 0) { //zero
+					alert("Zero (0) o wala na tayo nito sa kasalukuyan.");
+					return;
+				}
+
+				if (resultQuantityInStockNow - quantity < 0) { //negative number
+					alert(resultQuantityInStockNow + " lamang ang mayroon tayo sa kasalukuyan.");
+					return;
+				}
+
 				//added by Mike, 20200330; edited by Mike, 20200411
 				//1 = Medicine
 				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/1/"+itemId+"/"+quantity+"/"+fee+"');?>";
@@ -552,7 +567,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class ="column">				
+						<td class ="column">	
+								<!-- added by Mike, 20200504 -->
+								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php echo $value['resultQuantityInStockNow']?>">
+
 								<div id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
@@ -567,8 +585,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//added by Mike, 20200501
 								$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
 								
-								//edited by Mike, 20200411; edited by Mike, 20200417
-								if (($resultQuantityInStockNow<0)) {
+								//edited by Mike, 20200411; edited by Mike, 20200504
+								if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
 									echo 9999;
 								}
 								else {
