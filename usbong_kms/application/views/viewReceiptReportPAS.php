@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200429
+' @date updated: 20200505
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -280,7 +280,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				Official Receipt Report<br/>
 				P.A.S. ORTHOPEDIC AND<br/>
 				MEDICAL SUPPLIES<br/>
-				DATE: <?php echo strtoupper(date("Y-m"));?>
+				<!-- TO-DO: -add: auto-update: year -->
+				DATE: 2020-<?php echo $monthNum;?>
+<!--				DATE: <?php echo strtoupper(date("Y-m"));?> -->
 			</h3>		
 		</td>
 	  </tr>
