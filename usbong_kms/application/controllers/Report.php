@@ -236,6 +236,8 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
 
 		$data["receiptTypeName"] = "MOSC"; //Clinic
+				
+		//TO-DO: -update: year if monthNum is 01
 		
 		$data["monthNum"] = $monthNum;
 		$data["currentMonthNum"] = $data["monthNum"]+1;
@@ -287,6 +289,8 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
 
 		$data["receiptTypeName"] = "PAS"; //Clinic
+
+		//TO-DO: -update: year if monthNum is 01
 
 		$data["monthNum"] = $monthNum;
 		$data["currentMonthNum"] = $data["monthNum"]+1;
