@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200504
+' @date updated: 20200505
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -371,7 +371,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200330
 				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
 */
-
 				//added by Mike, 20200504
 				if (resultQuantityInStockNow == 0) { //zero
 					alert("Zero (0) o wala na tayo nito sa kasalukuyan.");
@@ -568,8 +567,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</a>
 						</td>
 						<td class ="column">	
-								<!-- added by Mike, 20200504 -->
-								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php echo $value['resultQuantityInStockNow']?>">
+								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->							
+								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 
+									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
+										echo 9999;
+									} 
+									else {
+										echo $value['resultQuantityInStockNow'];
+									}
+								?>">
 
 								<div id="quantityInStockId<?php echo $iCount?>">
 							<?php
