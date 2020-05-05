@@ -204,7 +204,7 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportImage', $data);
 	}
 
-	//added by Mike, 20200420; edited by Mike, 20200425
+	//added by Mike, 20200420; edited by Mike, 20200505
 	public function viewReceiptReport()
 	{				
 		$this->load->model('Report_Model');
@@ -213,12 +213,48 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["receiptTypeName"] = "MOSC"; //Clinic
 
-		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
+		//added by Mike, 20200505
+		$previousMonth = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+//		$previousPreviousMonth = mktime(0, 0, 0, date("m")-2, date("d"), date("Y"));
+		$currentMonth = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+
+//		echo date("m", $previousMonth); 
+
+		$data["monthNum"] = date("m", $previousMonth);
+		$data["currentMonthNum"] = date("m", $currentMonth);
+		
+		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 
 		$this->load->view('viewReceiptReportMOSC', $data);
 	}
 
-	//added by Mike, 20200429
+	//added by Mike, 20200505
+	public function viewReceiptReportFor($monthNum)
+	{				
+		$this->load->model('Report_Model');
+
+		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
+
+		$data["receiptTypeName"] = "MOSC"; //Clinic
+		
+		$data["monthNum"] = $monthNum;
+		$data["currentMonthNum"] = $data["monthNum"]+1;
+
+		if (strlen($data["monthNum"])==1) {
+			$data["monthNum"] = "0".$data["monthNum"];
+		}
+
+		if (strlen($data["currentMonthNum"])==1) {
+			$data["currentMonthNum"]= "0".$data["currentMonthNum"];
+		}		
+//		$data['monthNum'] = $monthNum;
+
+		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
+
+		$this->load->view('viewReceiptReportMOSC', $data);
+	}
+
+	//added by Mike, 20200429; edited by Mike, 20200505
 	public function viewReceiptReportPAS()
 	{				
 		$this->load->model('Report_Model');
@@ -226,7 +262,43 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
 
 		$data["receiptTypeName"] = "PAS"; //Clinic
+		
+		//added by Mike, 20200505
+		$previousMonth = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+//		$previousPreviousMonth = mktime(0, 0, 0, date("m")-2, date("d"), date("Y"));
+		$currentMonth = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
 
+//		echo date("m", $previousMonth); 
+
+		$data["monthNum"] = date("m", $previousMonth);
+		$data["currentMonthNum"] = date("m", $currentMonth);
+		
+		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
+
+		$this->load->view('viewReceiptReportPAS', $data);
+	}
+
+
+	//added by Mike, 20200505
+	public function viewReceiptReportPASFor($monthNum)
+	{				
+		$this->load->model('Report_Model');
+
+		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
+
+		$data["receiptTypeName"] = "PAS"; //Clinic
+
+		$data["monthNum"] = $monthNum;
+		$data["currentMonthNum"] = $data["monthNum"]+1;
+
+		if (strlen($data["monthNum"])==1) {
+			$data["monthNum"] = "0".$data["monthNum"];
+		}
+
+		if (strlen($data["currentMonthNum"])==1) {
+			$data["currentMonthNum"]= "0".$data["currentMonthNum"];
+		}		
+				
 		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
 
 		$this->load->view('viewReceiptReportPAS', $data);
@@ -475,7 +547,6 @@ class Report extends CI_Controller { //MY_Controller {
 	
 		$this->load->model('Report_Model');
 	
-		//TO-DO: -update: null parameter to month
 		if (strlen($monthNum)==1) {
 			$monthNum = "0".$monthNum;
 		}
