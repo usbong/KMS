@@ -315,7 +315,22 @@ class Report_Model extends CI_Model
 
 //		$this->db->like('t2.transaction_date',date("m/d/Y"));
 //		$this->db->like('t2.transaction_date',date("Y-m"));
-		$this->db->like('t2.transaction_date',date("m"));
+		//edited by Mike, 20200505
+		
+//		$this->db->like('t2.transaction_date',date("m"));
+//		$this->db->like('t2.transaction_date',"04/01/2020");//date("m")-1);
+/*
+		$this->db->where('t2.transaction_date>=',"04/01/2020");
+		$this->db->where('t2.transaction_date<',"05/01/2020");
+*/
+		//TO-DO: -update: transaction_date to date format not text
+//		echo "previousMonthNum: ".$param["previousMonthNum"];
+/*		echo "currentMonthNum: ".$param["currentMonthNum"];
+		echo "monthNum: ".$param["monthNum"];
+*/
+		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+
 //		$this->db->like('t2.transaction_date',date("Y"));
 
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
