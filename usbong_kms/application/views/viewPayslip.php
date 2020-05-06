@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200427
+' @date updated: 20200507
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -407,15 +407,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//edited by Mike, 20200403
 //								if (strtoupper($value['notes'])=="PRIVATE") {
 								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
-									echo 0;
+									//removed by Mike, 20200507									
+									//echo 0;
 									
 									$iMOSC = 0;
 								}
+								//added by Mike, 20200507
+								elseif (strpos(strtoupper($value['notes']), "DEXA")!==false) {
+									$iMOSC = ($value['fee']-500)*.30;
+								}
 								else {
-									echo $value['fee']*.30;
+									//removed by Mike, 20200507
+//									echo $value['fee']*.30;
 
 									$iMOSC = $value['fee']*.30;
 								}
+
+								//added by Mike, 20200507
+								//output: whole numbers
+								echo floor(($iMOSC*100)/100);
 
 								$iTotalMOSC += $iMOSC;
 							?>
@@ -424,7 +434,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200403; edited by Mike, 20200407
+								//edited by Mike, 20200403; edited by Mike, 20200507
+								//TO-DO: -add: condition for both PRIVATE and DEXA
 //								if (strtoupper($value['notes'])=="PRIVATE") {
 								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
 //									echo $value['fee'];
@@ -435,8 +446,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								elseif (strtoupper($value['notes'])=="DEXA") {
 								elseif (strpos(strtoupper($value['notes']), "DEXA")!==false) {
 //									echo $value['fee']*.70+500;
-									
-									$iNetPF = $value['fee']*.70+500;
+									//edited by Mike, 20200507
+//									$iNetPF = $value['fee']*.70+500;
+									$iNetPF = ($value['fee']-500)*.70+500;
 								}
 								else {
 //									echo $value['fee']*.70;
