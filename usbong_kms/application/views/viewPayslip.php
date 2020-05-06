@@ -412,15 +412,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									
 									$iMOSC = 0;
 								}
-								//added by Mike, 20200507
-								elseif (strpos(strtoupper($value['notes']), "DEXA")!==false) {
-									$iMOSC = ($value['fee']-500)*.30;
-								}
 								else {
 									//removed by Mike, 20200507
 //									echo $value['fee']*.30;
 
-									$iMOSC = $value['fee']*.30;
+									//added by Mike, 20200507
+									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
+										$iMOSC = ($value['fee']-500)*.30;
+									}
+									else {
+										$iMOSC = $value['fee']*.30;
+									}
 								}
 
 								//added by Mike, 20200507
@@ -435,27 +437,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20200403; edited by Mike, 20200507
-								//TO-DO: -add: condition for both PRIVATE and DEXA
 //								if (strtoupper($value['notes'])=="PRIVATE") {
 								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
 //									echo $value['fee'];
-									
+
 									$iNetPF = $value['fee'];
-								}
-								//added by Mike, 20200403; edited by Mike, 20200407
-//								elseif (strtoupper($value['notes'])=="DEXA") {
-								elseif (strpos(strtoupper($value['notes']), "DEXA")!==false) {
-//									echo $value['fee']*.70+500;
-									//edited by Mike, 20200507
-//									$iNetPF = $value['fee']*.70+500;
-									$iNetPF = ($value['fee']-500)*.70+500;
+/*									
+									//added by Mike, 20200403; edited by Mike, 20200507
+									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
+										$iNetPF = $value['fee']+500;//($value['fee']-500)*.70+500;
+									}
+									else {
+										$iNetPF = $value['fee'];
+									}
+*/									
 								}
 								else {
 //									echo $value['fee']*.70;
 
-									$iNetPF = $value['fee']*.70;
+									//added by Mike, 20200403; edited by Mike, 20200507
+									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
+										$iNetPF = ($value['fee']-500)*.70+500;
+									}
+									else {
+										$iNetPF = $value['fee']*.70;
+
+									}
 								}
-								
+
 								//added by Mike, 20200407
 								//output: whole numbers
 								echo floor(($iNetPF*100)/100);
