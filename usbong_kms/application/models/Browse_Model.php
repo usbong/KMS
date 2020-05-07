@@ -647,10 +647,13 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200406; edited by Mike, 20200415
+	//added by Mike, 20200406; edited by Mike, 20200507
+	//note: items that are added a day or so after the transaction date would be shown in the view item page's history as a transaction on the day it was added
+	//To correct its transaction date, we update its added datetime stamp to the transaction date with time 0.
 	public function getPaidItemDetailsList($itemTypeId, $itemId) 
 	{		
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.quantity_in_stock, t3.expiration_date');
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.quantity_in_stock, t3.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp, t3.quantity_in_stock, t3.expiration_date');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
