@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200505
+' @date updated: 20200507
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -868,7 +868,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 								<div class="transactionDate">
 					<?php
-									echo $value['transaction_date'];
+									//edited by Mike, 20200507
+									//echo $value['transaction_date'];
+									//echo $value['added_datetime_stamp'];
+									echo str_replace(" ","T",$value['added_datetime_stamp']);
 					?>		
 								</div>								
 							</td>
