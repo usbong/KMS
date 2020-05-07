@@ -435,6 +435,17 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewReportMedicineAsterisk', $data);
 	}
+
+	//added by Mike, 20200507
+	//Glucosamine Sulphate 1500mg and Calcium + Vitamin D only
+	public function viewReportMedicineAsteriskUnified()
+	{
+		$this->load->model('Report_Model');
+
+		$data["result"] = $this->Report_Model->getMedicineTransactionsForTheDayAsteriskUnified();
+
+		$this->load->view('viewReportMedicineAsteriskUnified', $data);
+	}
 	
 	//added by Mike, 20200427
 	public function viewReportMedicineOutOfStock()
