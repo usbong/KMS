@@ -855,6 +855,93 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20200507
+	//Glucosamine Sulphate 1500mg and Calcium + Vitamin D only
+	public function getMedicineTransactionsForTheDayAsteriskUnified() 
+	{	
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity');
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->distinct('t1.item_name');
+
+//		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+		$this->db->like('t2.notes', "PAID");
+		$this->db->like('t1.item_name', "*");
+	
+		//edited by Mike, 20200507
+		//$this->db->order_by('t2.added_datetime_stamp`', 'ASC'); //'DESC');//ASC');
+		$this->db->order_by('t1.item_name`', 'ASC'); //'DESC');//ASC');
+
+		//added by Mike, 20200401
+//		$this->db->limit(8);
+		
+		$query = $this->db->get('item');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+
+		//added by Mike, 20200506
+		$iCurrentItemId = -1;
+		$iItemQuantity = 0;
+		$dItemTotalFee = 0;
+		
+		//unify transactions whose item_id are equal
+		$outputArray = [];
+		$currentValue = "";
+		
+		if ($rowArray!=False) { //if value exists in array
+			foreach ($rowArray as $value) {
+			
+//				echo "iCurrentItemId: ".$iCurrentItemId." : ".$value['item_name']." : ".$value['fee_quantity']."<br/>";
+//				echo "iCurrentItemId: ".$iCurrentItemId."<br/>";
+
+				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id'])) {					
+//					echo "push<br/>";
+
+					array_push($outputArray, $currentValue);
+					
+					$iItemQuantity = 0;
+					$dItemTotalFee = 0;
+					
+					$iCurrentItemId=$value['item_id'];
+				}
+
+				//quantity
+				if ($value['fee_quantity']==0) {
+					$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+				}
+				else {
+					$iQuantity =  $value['fee_quantity'];
+				}
+
+				$iItemQuantity = $iItemQuantity + $iQuantity;
+				
+				//total
+				$dItemTotalFee = $dItemTotalFee + $value['fee'];
+
+//				echo "iItemQuantity: " .$iItemQuantity."; ";
+				
+				$value['fee_quantity'] = $iItemQuantity;
+				$value['fee'] = $dItemTotalFee;				
+
+				$iCurrentItemId=$value['item_id'];
+				$currentValue = $value;
+		
+//				echo "value: ".$value['item_id']."<br/>";
+			}
+
+			array_push($outputArray, $currentValue);
+		}
+		
+		//edited by Mike, 20200507
+//		return $rowArray;
+		return $outputArray;
+	}	
+
 	//added by Mike, 20200502
 	public function getMedicineExpired() 
 	{	
