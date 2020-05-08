@@ -771,18 +771,20 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200501
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 
-		//edited by Mike, 20200508
+		//edited by Mike, 20200508; edited by Mike, 20200509
 		if ($itemTypeId==1) {
 //			$this->load->view('viewItemMedicine', $data);
 			$this->load->view('viewItemMedicinePaidReceipt', $data);
 		}
 		else {
-			$this->load->view('viewItemNonMedicine', $data);
+//			$this->load->view('viewItemNonMedicine', $data);
+			$this->load->view('viewItemNonMedicinePaidReceipt', $data);
 		}
 	}		
 	
-	//added by Mike, 20200508
-	public function confirmItemMedicinePaidReceipt() //$transactionId, $receiptNumber)
+	//added by Mike, 20200508; edited by Mike, 20200509
+//	public function confirmItemMedicinePaidReceipt() //$transactionId, $receiptNumber)
+	public function confirmItemMedicinePaidReceipt($itemTypeId)
 	{
 		$data['receiptTypeId'] = 1; //1 = MOSC Receipt
 //		$data['receiptNumber'] = $receiptNumber;
@@ -799,15 +801,15 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->Browse_Model->addTransactionPaidReceipt($data);
 
-		$this->load->view('searchMedicine', $data);
+		//edited by Mike, 20200509
+//		$this->load->view('searchMedicine', $data);
 
-/*
 		if ($itemTypeId=="1") {
 			$this->load->view('searchMedicine', $data);
 		}
 		else { //example: 2
 			$this->load->view('searchNonMedicine', $data);
 		}		
-*/		
+		
 	}
 }
