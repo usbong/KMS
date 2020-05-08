@@ -215,7 +215,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     /**/
     </style>
     <title>
-      Search Medicine
+      Search Non-medicine
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -483,7 +483,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Search Medicine
+				Search Non-medicine
 			</h2>		
 		</td>
 	  </tr>
@@ -531,8 +531,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>
 	
 	<!-- Form -->
-	<!-- 1 = Medicine -->
-	<form method="post" action="<?php echo site_url('browse/confirmItemMedicinePaidReceipt/1')?>">
+	<!-- 2 = Non-medicine -->
+	<form method="post" action="<?php echo site_url('browse/confirmItemMedicinePaidReceipt/2')?>">
 <!--
 		<div>
 			<table width="100%">
