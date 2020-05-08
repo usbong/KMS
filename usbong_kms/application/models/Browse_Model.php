@@ -341,6 +341,19 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20200508
+	public function addTransactionPaidReceipt($param) 
+	{		
+		$data = array(
+					'receipt_type_id' => $param['receiptTypeId'],
+					'transaction_id' => $param['transactionId'],
+					'receipt_number' => $param['receiptNumber']
+				);
+
+		$this->db->insert('receipt', $data);
+		return $this->db->insert_id();
+	}	
+
 	//added by Mike, 20200330; edited by Mike, 20200414
 	public function addTransactionItemPurchase($param) 
 	{		
