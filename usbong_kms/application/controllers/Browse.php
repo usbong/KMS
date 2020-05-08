@@ -786,7 +786,9 @@ class Browse extends CI_Controller { //MY_Controller {
 //	public function confirmItemMedicinePaidReceipt() //$transactionId, $receiptNumber)
 	public function confirmItemMedicinePaidReceipt($itemTypeId)
 	{
-		$data['receiptTypeId'] = 1; //1 = MOSC Receipt
+		//edited by Mike, 20200509
+		$data['receiptTypeId'] = $itemTypeId; //1 = MOSC Receipt; 2 = PAS Receipt
+//		$data['receiptTypeId'] = 1; //1 = MOSC Receipt
 //		$data['receiptNumber'] = $receiptNumber;
 
 		$data['receiptNumber'] = $_POST["officialReceiptNumberParam"];
