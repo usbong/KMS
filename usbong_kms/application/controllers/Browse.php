@@ -771,11 +771,43 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200501
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 
+		//edited by Mike, 20200508
 		if ($itemTypeId==1) {
-			$this->load->view('viewItemMedicine', $data);
+//			$this->load->view('viewItemMedicine', $data);
+			$this->load->view('viewItemMedicinePaidReceipt', $data);
 		}
 		else {
 			$this->load->view('viewItemNonMedicine', $data);
 		}
 	}		
+	
+	//added by Mike, 20200508
+	public function confirmItemMedicinePaidReceipt() //$transactionId, $receiptNumber)
+	{
+		$data['receiptTypeId'] = 1; //1 = MOSC Receipt
+//		$data['receiptNumber'] = $receiptNumber;
+
+		$data['receiptNumber'] = $_POST["officialReceiptNumberParam"];
+		$data['transactionId'] = $_POST["transactionIdParam"];
+
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+
+		$this->Browse_Model->addTransactionPaidReceipt($data);
+
+		$this->load->view('searchMedicine', $data);
+
+/*
+		if ($itemTypeId=="1") {
+			$this->load->view('searchMedicine', $data);
+		}
+		else { //example: 2
+			$this->load->view('searchNonMedicine', $data);
+		}		
+*/		
+	}
 }
