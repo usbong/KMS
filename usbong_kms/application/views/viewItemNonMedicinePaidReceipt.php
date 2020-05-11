@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200509
+' @date updated: 20200511
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -490,7 +490,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>
 	<br/>
 	<!-- Form -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmMedicine')?>">
+	<!-- edited by Mike, 20200511 -->
+	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmNonMedicine')?>">
 		<?php
 			$itemCounter = 1;
 		?>
