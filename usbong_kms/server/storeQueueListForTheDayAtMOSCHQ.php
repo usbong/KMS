@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20200513
+  @date updated: 20200514
 
   Given:
   1) List with the details of the queue for the day at the Marikina Orthopedic Specialty Clinic (MOSC) Headquarters
@@ -54,7 +54,14 @@
 	{		
 		$reportId = $mysqli->insert_id;
 
-		echo "reportId: " .$reportId;
+//		echo "reportId: " .$reportId;
+
+		//update the file location accordingly
+		$sDateToday = date("Y-m-d");
+		$file = "D:\Usbong\MOSC\Forms\Information Desk\output\informationDesk\libreOfficeOutput" . "\Patients".$sDateToday.".csv";
+
+        file_put_contents($file, $data["report_description"], LOCK_EX);
+//        file_put_contents($file, implode('', $data), LOCK_EX);
 
 		//Example: download from the database the uploaded data and store as .txt files in the correct location
 		//added by Mike, 20190902; edited by Mike, 20200227
