@@ -490,8 +490,9 @@ class Report extends CI_Controller { //MY_Controller {
 		
 		if ($data['rawResult'] == True) {
 			foreach ($data['rawResult'] as $value) {
-
-				echo $data['rawResult'][$iCount]['item_name']." : ".$data['rawResult'][$iCount]['quantity_in_stock']."<br/>";
+				
+				//removed by Mike, 20200515
+//				echo $data['rawResult'][$iCount]['item_name']." : ".$data['rawResult'][$iCount]['quantity_in_stock']."<br/>";
 
 				$itemId = $data['rawResult'][$iCount]['item_id'];
 				$resultQuantityInStockNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
