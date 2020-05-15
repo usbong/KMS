@@ -525,13 +525,16 @@ class Report extends CI_Controller { //MY_Controller {
 					}
 				}
 				//edited by Mike, 20200515
-				else {
+				else {					
 					//added by Mike, 20200427
 					if (($data['rawResult'][$iCount]['expiration_date'] <= date("Y-m-d")) and ($data['rawResult'][$iCount]['expiration_date'] != 0)) {
+						//edited by Mike, 20200515
 						$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+						
+						$data['result'][$iCountOutputResult]['quantity_in_stock'] = $resultQuantityInStockNow;
 					}
 				}
-							
+
 				$iCountOutputResult = $iCountOutputResult + 1;				
 				$iCount = $iCount + 1;
 			}
@@ -582,6 +585,9 @@ class Report extends CI_Controller { //MY_Controller {
 				//added by Mike, 20200427
 				if (($data['rawResult'][$iCount]['expiration_date'] <= date("Y-m-d")) and ($data['rawResult'][$iCount]['expiration_date'] != 0)) {
 					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+					
+					//added by Mike, 20200515
+					$data['result'][$iCountOutputResult]['quantity_in_stock'] = $resultQuantityInStockNow;					
 				}
 							
 				$iCountOutputResult = $iCountOutputResult + 1;				
