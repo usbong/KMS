@@ -750,7 +750,8 @@ class Browse_Model extends CI_Model
 			return 0;
 		}
 		
-		$this->db->select('t1.item_price, t2.fee');
+		//edited by Mike, 20200515
+		$this->db->select('t1.item_price, t1.item_name, t2.fee, t2.fee_quantity');
 		$this->db->from('item as t1');
 
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
@@ -759,7 +760,14 @@ class Browse_Model extends CI_Model
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 
 		$this->db->where('t1.item_id', $itemId);
-		$this->db->where('t2.notes', "PAID");
+		//TO-DO: -update: this to be able to use "NC" or gratis, instead of "PAID" as value
+		//edited by Mike, 20200515
+//		$this->db->where('t2.notes', "PAID");
+		$this->db->like('t2.notes', "PAID");
+//		$this->db->or_like('t2.notes', "NC");
+		
+		$this->db->where('t1.item_name!=', "NONE");
+
 		$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
 
 		$query = $this->db->get('item');
@@ -773,9 +781,23 @@ class Browse_Model extends CI_Model
 		}
 		
 		foreach ($rowArray as $value) {	
-			//edited by Mike, 20200422
+
+//			echo $value['item_name']."<br/>"; 		
+//			echo $value['item_price']."<br/>"; 
+			
+			//edited by Mike, 20200515
+//			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+
+			if ($value['fee_quantity']!=0) {
+			  $iQuantity = $iQuantity - $value['fee_quantity'];
+			}
+			else {
+			  $iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+			}
+			
 //			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
-			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+/*			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+*/
 		}
 
 		return $iQuantity;
