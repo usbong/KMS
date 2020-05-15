@@ -466,7 +466,7 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportMedicineAsteriskUnified', $data);
 	}
 	
-	//added by Mike, 20200427
+	//added by Mike, 20200427; edited by Mike, 20200515
 	public function viewReportMedicineOutOfStock()
 	{
 //		$data['nameParam'] = $_POST['nameParam']; //added by Mike, 20170616
@@ -491,11 +491,13 @@ class Report extends CI_Controller { //MY_Controller {
 		if ($data['rawResult'] == True) {
 			foreach ($data['rawResult'] as $value) {
 
+				echo $data['rawResult'][$iCount]['item_name']." : ".$data['rawResult'][$iCount]['quantity_in_stock']."<br/>";
+
 				$itemId = $data['rawResult'][$iCount]['item_id'];
 				$resultQuantityInStockNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
 
-				//added by Mike, 20200427
-				if ($data['rawResult'][$iCount]['quantity_in_stock']==0) {
+				//added by Mike, 20200427; edited by Mike, 20200515
+/*				if ($data['rawResult'][$iCount]['quantity_in_stock']==0) {
 					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
 				}
 				
@@ -508,6 +510,25 @@ class Report extends CI_Controller { //MY_Controller {
 				//added by Mike, 20200427
 				if (($data['rawResult'][$iCount]['expiration_date'] <= date("Y-m-d")) and ($data['rawResult'][$iCount]['expiration_date'] != 0)) {
 					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+				}
+
+*/
+
+				if ($data['rawResult'][$iCount]['quantity_in_stock']==0) {
+//					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+
+	//				if ($data['rawResult'][$iCount]['quantity_in_stock']-$resultQuantityInStockNow <=0) {
+					if (($data['rawResult'][$iCount]['quantity_in_stock']!=-1) and ($resultQuantityInStockNow <=0)) {
+						$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+						$data['result'][$iCountOutputResult]['quantity_in_stock'] = 0;
+					}
+				}
+				//edited by Mike, 20200515
+				else {
+					//added by Mike, 20200427
+					if (($data['rawResult'][$iCount]['expiration_date'] <= date("Y-m-d")) and ($data['rawResult'][$iCount]['expiration_date'] != 0)) {
+						$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+					}
 				}
 							
 				$iCountOutputResult = $iCountOutputResult + 1;				
