@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200517
-' @date updated: 20200517
+' @date updated: 20200518
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -690,6 +690,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="columnNotes">				
 								<?php
 									echo $value['notes'];
+								?>
+							</td>
+							<!-- added by Mike, 20200518 -->
+							<td class ="columnNotes">				
+								<?php
+									$totalFee = $value['fee'] + $value['x_ray_fee'] + $value['lab_fee'];
+									echo $totalFee;
 								?>
 							</td>
 							<td>								

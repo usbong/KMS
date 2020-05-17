@@ -910,6 +910,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $value['notes'];
 								?>
 							</td>
+							<!-- added by Mike, 20200518 -->
+							<td class ="columnNotes">				
+								<?php
+									$totalFee = $value['fee'] + $value['x_ray_fee'] + $value['lab_fee'];
+									echo $totalFee;
+								?>
+							</td>
 							<td>								
 								<?php //edited by Mike, 20200416 
 									if ($value['transaction_date']==date('m/d/Y')) {
