@@ -119,6 +119,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+							width: 26%;
 						}						
 
 						td.columnTableHeaderFee
@@ -129,6 +130,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 13%;
+						}		
+
+						td.columnTableHeaderClassification
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 12%;
 						}		
 
 						td.columnTableHeaderNotes
@@ -186,6 +197,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 16px;
 							border: 1px solid #68502b;
 							width: 82%;
+							border-radius: 3px;	    	    
+
+							float: left;
+						}
+
+						.Classification-select { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 12px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							width: 100%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -517,10 +540,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "LAB";
 							?>
 						</td>
-						<!-- TO-DO: -add: classification -->
+						<td class ="columnTableHeaderClassification">				
+							<?php
+								echo "CLASSIFI-<br/>CATION";
+							?>
+						</td>
+
 						<td class ="columnTableHeaderNotes">				
 							<?php
-								echo "NOTES";
+								echo "ADDITIONAL<br/>NOTES";
 							?>
 						</td>
 					  </tr>
@@ -596,6 +624,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											return false;										
 										}
 									}" required>
+						</td>
+						<td class="column">
+							<select id="classificationParam" class="Classification-select">
+							  <option>WI</option>
+							  <option>SC</option>
+							  <option>PWD</option>
+							</select>						
 						</td>
 						<td class="column">
 							<input type="text" id="notesParam" class="Notes-textbox no-spin" value="NONE" required>
