@@ -583,14 +583,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</a>
 						</td>
 						<td class ="column">				
-							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="600" min="1" max="999" 
+							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="600" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
 									const keyLeftArrow = 37;
 									const keyRightArrow = 39;
 						
-									if (this.value.length == 3) {			
+									if (this.value.length == 5) {			
 										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
 											return true;
 										}
@@ -600,14 +600,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>						
 						</td>
 						<td class ="column">				
-							<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
+							<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
 									const keyLeftArrow = 37;
 									const keyRightArrow = 39;
 						
-									if (this.value.length == 3) {			
+									if (this.value.length == 5) {			
 										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
 											return true;
 										}
@@ -617,14 +617,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>
 						</td>
 						<td class ="column">
-							<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
+							<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
 									const keyLeftArrow = 37;
 									const keyRightArrow = 39;
 						
-									if (this.value.length == 3) {			
+									if (this.value.length == 5) {			
 										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
 											return true;
 										}
