@@ -984,8 +984,33 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 	}
 
-	//added by Mike, 20200517
+	//added by Mike, 20200517; edited by Mike, 20200518 
 	public function confirmPatientPaidReceipt($medicalDoctorId)
+	{
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		$data['transactionDate'] = date('m/d/Y');
+
+		$data['transactionId'] = $_POST["transactionIdParam"];
+
+		$this->load->model('Browse_Model');
+
+		$data['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
+		$data['receiptNumber'] = $_POST["officialReceiptNumberMOSCParam"];
+
+		$this->Browse_Model->addTransactionPaidReceipt($data);
+
+		if ($medicalDoctorId!=1) { //not SYSON, PEDRO
+			$data['receiptTypeId'] = 3;
+		    $data['receiptNumber'] = $_POST["officialReceiptNumberMedicalDoctorParam"];
+
+			$this->Browse_Model->addTransactionPaidReceipt($data);
+		}
+
+		$this->load->view('searchPatient', $data);		
+	}
+	
+	public function confirmPatientPaidReceiptPrev($medicalDoctorId)
 	{
 		$data['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
 
@@ -993,7 +1018,9 @@ class Browse extends CI_Controller { //MY_Controller {
 			$data['receiptTypeId'] = 3;
 		}
 
-		$data['receiptNumber'] = $_POST["officialReceiptNumberParam"];
+		//edited by Mike, 20200518
+//		$data['receiptNumber'] = $_POST["officialReceiptNumberParam"];
+		$data['receiptNumber'] = $_POST["officialReceiptNumberMOSCParam"];
 		$data['transactionId'] = $_POST["transactionIdParam"];
 
 		date_default_timezone_set('Asia/Hong_Kong');
