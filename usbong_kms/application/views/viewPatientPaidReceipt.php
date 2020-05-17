@@ -586,14 +586,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>Official Receipt Number <span class="asterisk">*</span></span></b>
+				  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
 				</td>
 			  </tr>
 			  <tr>
 				<td>
 				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberParam" required>
 				</td>
-			  </tr>
+			  </tr>			  
+			  <?php 
+			    if (strpos($medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'], "PEDRO")==false) {
+			  ?>
+				  <tr>
+				    <td>
+				      <br/>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+					  <b><span>Official Receipt Number <?php echo "(".$medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'].")";?><span class="asterisk">*</span></span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+					  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberParam" required>
+					</td>
+				  </tr>			  
+			  <?php
+				} 
+			  ?>
 			</table>
 		</div>	
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
