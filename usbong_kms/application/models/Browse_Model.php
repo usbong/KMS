@@ -354,6 +354,32 @@ class Browse_Model extends CI_Model
 		return $this->db->insert_id();
 	}	
 
+	//added by Mike, 20200517
+	public function addTransactionServicePurchase($param) 
+	{		
+		//TO-DO: -update: to use Medical Doctor ID
+		$this->db->select('item_price');
+		$this->db->where('item_id', $param['itemId']);
+		$query = $this->db->get('item');
+		$row = $query->row();
+
+		$data = array(
+					'patient_id' => 0,
+					'item_id' => $param['itemId'],
+					'transaction_date' => $param['transactionDate'],
+					'medical_doctor_id' => 0,
+//					'fee' => $param['quantity'] * $row->item_price,
+					'fee' => $param['quantity'] * $param['fee'], //edited by Mike, 20200414
+					'fee_quantity' => $param['quantity'], //edited by Mike, 20200415					
+					'transaction_type_name' => "CASH",
+					'report_id' => 0,
+					'notes' => "UNPAID"
+				);
+
+		$this->db->insert('transaction', $data);
+		return $this->db->insert_id();
+	}	
+
 	//added by Mike, 20200330; edited by Mike, 20200414
 	public function addTransactionItemPurchase($param) 
 	{		
@@ -408,8 +434,47 @@ class Browse_Model extends CI_Model
 		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
 	}	
+	
+	public function getMedicalDoctorList() {
+		$this->db->select('medical_doctor_id, medical_doctor_name');
+		$this->db->where('medical_doctor_id !=', 0); //ANY
+		$this->db->where('medical_doctor_id !=', 3); //SUMMARY
+
+		$query = $this->db->get('medical_doctor');	
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+		
+		return $rowArray;
+	}
 
 	public function getDetailsListViaId($nameId) 
+	{		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_id, t3.medical_doctor_name');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+//		$this->db->distinct('t1.patient_name');
+//		$this->db->like('t1.patient_name', $param['nameParam']);
+		$this->db->where('t1.patient_id', $nameId);		
+		
+		$query = $this->db->get('patient');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}	
+
+	public function getDetailsListViaIdPrev($nameId) 
 	{		
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis');
 		$this->db->from('patient as t1');
@@ -750,8 +815,7 @@ class Browse_Model extends CI_Model
 			return 0;
 		}
 		
-		//edited by Mike, 20200515
-		$this->db->select('t1.item_price, t1.item_name, t2.fee, t2.fee_quantity');
+		$this->db->select('t1.item_price, t2.fee');
 		$this->db->from('item as t1');
 
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
@@ -760,14 +824,7 @@ class Browse_Model extends CI_Model
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 
 		$this->db->where('t1.item_id', $itemId);
-		//TO-DO: -update: this to be able to use "NC" or gratis, instead of "PAID" as value
-		//edited by Mike, 20200515
-//		$this->db->where('t2.notes', "PAID");
-		$this->db->like('t2.notes', "PAID");
-//		$this->db->or_like('t2.notes', "NC");
-		
-		$this->db->where('t1.item_name!=', "NONE");
-
+		$this->db->where('t2.notes', "PAID");
 		$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
 
 		$query = $this->db->get('item');
@@ -781,23 +838,9 @@ class Browse_Model extends CI_Model
 		}
 		
 		foreach ($rowArray as $value) {	
-
-//			echo $value['item_name']."<br/>"; 		
-//			echo $value['item_price']."<br/>"; 
-			
-			//edited by Mike, 20200515
-//			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
-
-			if ($value['fee_quantity']!=0) {
-			  $iQuantity = $iQuantity - $value['fee_quantity'];
-			}
-			else {
-			  $iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
-			}
-			
+			//edited by Mike, 20200422
 //			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
-/*			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
-*/
+			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
 		}
 
 		return $iQuantity;
