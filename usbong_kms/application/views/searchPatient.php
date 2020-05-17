@@ -389,6 +389,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];
+								//TO-DO: -update: this
 								echo str_replace("�","Ñ",$value['patient_name']);
 //								echo str_replace("ufffd","Ñ",$value['patient_name']);
 				?>		

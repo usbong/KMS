@@ -109,7 +109,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: right
+							text-align: left
 						}						
 
 						td.columnTableHeader
@@ -129,6 +129,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 13%;
+						}		
+
+						td.columnTableHeaderNotes
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 26%;
 						}		
 						
 						td.imageColumn
@@ -151,7 +161,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 16px;
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
-							width: 72%;
+							text-align: right;
+							width: 70%;
 
 							float: left;
 						}
@@ -163,6 +174,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 16px;
 							border: 1px solid #68502b;
 							width: 20%;
+							border-radius: 3px;	    	    
+
+							float: left;
+						}
+
+						.Notes-textbox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 12px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							width: 82%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -533,27 +556,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="columnTableHeader">				
 				<?php
-							echo "ITEM NAME";
+							echo "PATIENT NAME";
 				?>		
 						</td>
-						<td class ="columnTableHeader">				
+						<td class ="columnTableHeaderFee">				
 							<?php
-								echo "AVAILABLE"; //IN-STOCK
-							?>
-						</td>
-						<td class ="columnTableHeader">				
-							<?php
-								echo "EXPIRATION";
-							?>
-						</td>
-						<td class ="columnTableHeader">				
-							<?php
-								echo "PRICE"; //"ITEM PRICE";
+								echo "PF";
 							?>
 						</td>
 						<td class ="columnTableHeaderFee">				
 							<?php
-								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
+								echo "X-RAY";
+							?>
+						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "LAB";
+							?>
+						</td>
+						<td class ="columnTableHeaderNotes">				
+							<?php
+								echo "NOTES";
 							?>
 						</td>
 					  </tr>
@@ -568,65 +591,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-								<div class="itemName">
+							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+								<div class="patientName">
 				<?php
-								echo $value['item_name'];
+								//TO-DO: -update: this
+								//echo $value['patient_name'];
+								echo str_replace("�","Ñ",$value['patient_name']);
+
 				?>		
 								</div>								
 							</a>
 						</td>
 						<td class ="column">				
-								<div id="quantityInStockId<?php echo $iCount?>">
-							<?php
-								//echo $value['quantity_in_stock'];
-/*
-								if ($value['quantity_in_stock']==-1) {
-									echo 9999;
-								}
-								else {
-									echo $value['quantity_in_stock'];
-								}
-*/
-								//edited by Mike, 20200414; edited by Mike, 20200414
-								if (($resultQuantityInStockNow<0)) {
-									echo 9999;
-								}
-								else {
-									echo $resultQuantityInStockNow;
-								}								
-							?>
-								</div>
+							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="600" min="1" max="999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 3) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>						
 						</td>
 						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
-							<?php
-								//echo $value['expiration_date'];
-
-								if ($value['expiration_date']==0) {
-
-									if ($value['quantity_in_stock']==-1) {
-										echo "UNKNOWN";
-									}
-									else {
-										echo "NONE";
-									}
-								}
-								else {
-									echo $value['expiration_date'];
-								}
-							?>
-								</div>
-						</td>						
+							<input type="tel" id="xRayParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 3) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>
+						</td>
 						<td class ="column">
-								<div id="itemPriceId<?php echo $iCount?>">
-							<?php
-								echo $value['item_price'];
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="999" 
+							<input type="tel" id="labParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -640,28 +651,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										else {
 											return false;										
 										}
-									}" required>						
+									}" required>
 						</td>
-						<td>
-							x
-						</td>
-						<td>
-							<input type="tel" id="quantityParam" class="Quantity-textbox no-spin" value="1" min="1" max="999" 
-						onKeyPress="var key = event.keyCode || event.charCode;		
-									const keyBackspace = 8;
-									const keyDelete = 46;
-									const keyLeftArrow = 37;
-									const keyRightArrow = 39;
-						
-									if (this.value.length == 3) {			
-										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-											return true;
-										}
-										else {
-											return false;										
-										}
-									}" required>						
-							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase">BUY</button>									
+						<td class="column">
+							<input type="text" id="notesParam" class="Notes-textbox no-spin" value="NONE" required>
+						</td>						
+					    <td>		
+							<button onclick="myPopupFunction(<?php echo $value['patient_id'];?>)" class="Button-purchase">ADD</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
@@ -731,10 +727,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>								
 						</td>
 						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$cartValue['item_id'])?>'>
-								<div class="itemName">
+							<a href='<?php echo site_url('browse/viewPatient/'.$cartValue['patient_id'])?>'>
+								<div class="patientName">
 				<?php
-								echo $cartValue['item_name'];
+								echo $cartValue['patient_name'];
 				?>		
 								</div>								
 							</a>
@@ -844,7 +840,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			echo "<br/>";
 
-			echo '<h3>Item Purchased History</h3>';
+			echo '<h3>Patient Purchased Service History</h3>';
 
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
@@ -897,10 +893,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</td>
 							<td class ="column">				
-								<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-									<div class="itemName">
+								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+									<div class="patientName">
 					<?php
-									echo $value['item_name'];
+									echo $value['patient_name'];
 					?>		
 									</div>								
 								</a>
