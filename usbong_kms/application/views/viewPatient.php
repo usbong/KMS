@@ -340,24 +340,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  }
 */
 
-		//added by Mike, 20200329; edited by Mike, 20200414
+		//added by Mike, 20200329; edited by Mike, 20200517
 //		function myPopupFunction() {				
-		function myPopupFunction(itemId) {				
-			var quantity = document.getElementById("quantityParam").value;
+		function myPopupFunction(patientId) {				
+/*			var quantity = document.getElementById("quantityParam").value;
 			var fee = document.getElementById("feeParam").value;
+*/
+			var professionalFee = document.getElementById("professionalFeeParam").value;
+			var xRayFee = document.getElementById("xRayFeeParam").value;
+			var labFee = document.getElementById("labFeeParam").value;
 
 /*
-			var product_id = document.getElementById("product_idParam").value;
-			var customer_id = document.getElementById("customer_idParam").value;
-			var quantity = document.getElementById("quantityParam").value;
-			var price = document.getElementById("priceParam").value;
-			
-			var textCart = document.getElementById("Text-cartId");
-			var textCart2Digits = document.getElementById("Text-cart-2digitsId");
-			var textCart3Digits = document.getElementById("Text-cart-3digitsId");
-	
-			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
-*/
 			//added by Mike, 20200419
 			if (quantity==0) {	
 			  alert("Kailangang hindi zero (0) ang QUANTITY.");
@@ -369,88 +362,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  alert("Kailangang hindi zero (0) ang FEE.");
 			  return;
 			}
-			
-			//do the following only if quantity is a Number, i.e. not NaN
-			if ((!isNaN(quantity)) && (!isNaN(fee))) {	
-/*
-				//added by Mike, 20170701
-				var quantityField = document.getElementById("quantityId");			
-				if (quantity>1) {
-					quantityField.innerHTML = "Added <b>" +quantity +"</b> units of ";
-				}
-				else {
-					quantityField.innerHTML = "Added <b>1</b> unit of ";
-					quantity=1; //added by Mike, 20181029
-				}
-				var productPriceField = document.getElementById("productPriceId");
-				var totalPrice = quantity*price;
-				productPriceField.innerHTML = totalPrice;								
-				//-----------------------------------------------------------
-				
-				totalItemsInCart+=parseInt(quantity);
-				if (totalItemsInCart>99) {
-					totalItemsInCart=99;
-				}
-	
-				document.getElementById("totalItemsInCartId").value = totalItemsInCart;
-*/						
-/*
-				//TO-DO: -add: transaction in database
-				alert("itemId: " + itemId);
-				alert("quantity: " + quantity);
-				window.location.href = "<?php echo site_url('browse/searchMedicine/');?>";
-*/
-				//added by Mike, 20200330; edited by Mike, 20200411
-/*				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
-*/
-
+*/			
+			//do the following only if value is a Number, i.e. not NaN
+			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {	
 				//2 = Non-medicine
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"');?>";
-
-
-/*
-				//added by Mike, 20170627
-				if (customer_id=="") {
-					window.location.href = "<?php echo site_url('account/login/');?>";
-				}
-				else {				
-		//			var base_url = window.location.origin;
-					var site_url = "<?php echo site_url('cart/addToCart/');?>";
-					var my_url = site_url.concat(product_id,'/',customer_id,'/',quantity,'/',price);
-					
-					$.ajax({
-				        type:"POST",
-				        url:my_url,
-		
-				        success:function() {			        	
-				        	if (totalItemsInCart<10) {
-					        	textCart.innerHTML=totalItemsInCart;
-								textCart2Digits.innerHTML="";
-								textCart3Digits.innerHTML="";
-				        	}
-							else if (totalItemsInCart<100) {
-					        	textCart.innerHTML="";
-								textCart2Digits.innerHTML=totalItemsInCart;
-								textCart3Digits.innerHTML="";
-							}
-							else {
-					        	textCart.innerHTML="";
-								textCart2Digits.innerHTML="";
-								textCart3Digits.innerHTML=totalItemsInCart;
-							}
-							
-							$('#myPopup').modal('show');
-				        }
-		
-				    });
-				    event.preventDefault();
-				}
-*/
-
-				//added by Mike, 20200331
-//				$('#myPopup').modal('show');
-
-//				document.getElementById("myPopup").classList.toggle("show");
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"');?>";
 			}
 		}	
 
@@ -528,7 +444,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 	<br/>
 	<br/>
-
+	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
+	</div>
+	<?php 
+		if ($result[0]["medical_doctor_name"]==""){
+			echo "<br/>There are no transactions for the day.";
+		}
+		else {
+			//TO-DO: -update: this to use dropdown/select
+/*			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
+*/
+			echo "<b>MEDICAL DOCTOR: </b>";		
+			
+			//show only 1 value
+			echo "<select name='medicalDoctorsIdParam' size='1'>";
+			
+			foreach ($medicalDoctorList as $medicalDoctorValue) {
+			  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
+			    echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+			  }
+			  else {
+			    echo "<option value='".$medicalDoctorIdValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
+			  }				
+			}
+			echo "</select>";
+		}
+	?>
+	<br/>
+	<br/> 
 <!--	TO-DO: -update: this
 -->	
 	
@@ -574,6 +517,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "LAB";
 							?>
 						</td>
+						<!-- TO-DO: -add: classification -->
 						<td class ="columnTableHeaderNotes">				
 							<?php
 								echo "NOTES";
@@ -620,7 +564,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>						
 						</td>
 						<td class ="column">				
-							<input type="tel" id="xRayParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
+							<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -637,7 +581,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>
 						</td>
 						<td class ="column">
-							<input type="tel" id="labParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
+							<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
