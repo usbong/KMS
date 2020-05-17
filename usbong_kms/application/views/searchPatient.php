@@ -293,7 +293,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 	<!-- Form -->
 	<!-- TO-DO: -update: site_url value -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browseLite/confirm')?>">
+	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmPatient')?>">
 		<?php
 			$itemCounter = 1;
 		?>
@@ -385,7 +385,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
-							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
+							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];
