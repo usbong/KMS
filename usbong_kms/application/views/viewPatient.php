@@ -366,30 +366,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200329; edited by Mike, 20200517
 //		function myPopupFunction() {				
 		function myPopupFunction(patientId) {				
-/*			var quantity = document.getElementById("quantityParam").value;
-			var fee = document.getElementById("feeParam").value;
-*/
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
 			var professionalFee = document.getElementById("professionalFeeParam").value;
 			var xRayFee = document.getElementById("xRayFeeParam").value;
 			var labFee = document.getElementById("labFeeParam").value;
-
-/*
-			//added by Mike, 20200419
-			if (quantity==0) {	
-			  alert("Kailangang hindi zero (0) ang QUANTITY.");
-			  return;
-			}
-
-			//added by Mike, 20200419			
-			if (fee==0){	
-			  alert("Kailangang hindi zero (0) ang FEE.");
-			  return;
-			}
-*/			
+			var classification = document.getElementById("classificationParam").value;
+			var notes = document.getElementById("notesParam").value;
+			
 			//do the following only if value is a Number, i.e. not NaN
-			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {	
-				//2 = Non-medicine
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"');?>";
+			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
+				window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
 			}
 		}	
 
@@ -480,7 +466,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<b>MEDICAL DOCTOR: </b>";		
 			
 			//show only 1 value
-			echo "<select name='medicalDoctorsIdParam' size='1'>";
+			echo "<select id='medicalDoctorIdParam' size='1'>";
 			
 			foreach ($medicalDoctorList as $medicalDoctorValue) {
 			  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
@@ -627,9 +613,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class="column">
 							<select id="classificationParam" class="Classification-select">
-							  <option>WI</option>
-							  <option>SC</option>
-							  <option>PWD</option>
+							  <option value="0">WI</option>
+							  <option value="1">SC</option>
+							  <option value="2">PWD</option>
 							</select>						
 						</td>
 						<td class="column">
@@ -661,6 +647,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo '</div>';					
 				}
 			}			
+
+			//TO-DO: -add: paid receipt page
+			//TO-DO: -update: this
 
 			//added by Mike, 20200401
 			echo '<h3>Cart List</h3>';
