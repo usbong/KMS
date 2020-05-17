@@ -356,24 +356,36 @@ class Browse_Model extends CI_Model
 
 	//added by Mike, 20200517
 	public function addTransactionServicePurchase($param) 
-	{		
-		//TO-DO: -update: to use Medical Doctor ID
-		$this->db->select('item_price');
-		$this->db->where('item_id', $param['itemId']);
-		$query = $this->db->get('item');
-		$row = $query->row();
+	{	
+		$sNotesValue = "";
 
+		//we do not include 0, i.e. WI
+		if ($param['classification'] == "1") { //SC			
+			$sNotesValue = "SC";
+		}
+		else if ($param['classification'] == "2") { //PWD			
+			$sNotesValue = "PWD";
+		}
+		
+		if ($param['notes']=="") {
+			$sNotesValue = $sNotesValue."; NONE";
+		}
+		else {
+			$sNotesValue = $sNotesValue."; ".$param['notes'];	
+		}
+						
 		$data = array(
-					'patient_id' => 0,
-					'item_id' => $param['itemId'],
+					'patient_id' => $param['patientId'],
+					'item_id' => 0,
 					'transaction_date' => $param['transactionDate'],
-					'medical_doctor_id' => 0,
-//					'fee' => $param['quantity'] * $row->item_price,
-					'fee' => $param['quantity'] * $param['fee'], //edited by Mike, 20200414
-					'fee_quantity' => $param['quantity'], //edited by Mike, 20200415					
+					'medical_doctor_id' => $param['medicalDoctorId'],
+					'fee' => $param['professionalFee'],
+					'fee_quantity' => 0,
+					'x_ray_fee' => $param['xRayFee'],
+					'lab_fee' => $param['labFee'],
 					'transaction_type_name' => "CASH",
 					'report_id' => 0,
-					'notes' => "UNPAID"
+					'notes' => $sNotesValue
 				);
 
 		$this->db->insert('transaction', $data);
