@@ -285,6 +285,14 @@ class Browse_Model extends CI_Model
 		return $this->db->insert_id();
 	}	
 */
+
+	//added by Mike, 20200517
+	public function deleteTransactionServicePurchase($param) 
+	{			
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+	}	
+
 	//added by Mike, 20200331
 	public function deleteTransactionMedicinePurchase($param) 
 	{			
@@ -361,17 +369,17 @@ class Browse_Model extends CI_Model
 
 		//we do not include 0, i.e. WI
 		if ($param['classification'] == "1") { //SC			
-			$sNotesValue = "SC";
+			$sNotesValue = "SC; ";
 		}
 		else if ($param['classification'] == "2") { //PWD			
-			$sNotesValue = "PWD";
+			$sNotesValue = "PWD; ";
 		}
 		
 		if ($param['notes']=="") {
-			$sNotesValue = $sNotesValue."; NONE";
+			$sNotesValue = $sNotesValue."NONE";
 		}
 		else {
-			$sNotesValue = $sNotesValue."; ".$param['notes'];	
+			$sNotesValue = $sNotesValue.$param['notes'];	
 		}
 						
 		$data = array(
@@ -732,6 +740,37 @@ class Browse_Model extends CI_Model
 		
 		if ($rowArray == null) {			
 			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}		
+
+	//added by Mike, 20200517
+	public function getPaidPatientDetailsList($medicalDoctorId, $patientId) 
+	{		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+		$this->db->distinct('t1.patient_name');
+
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+		$this->db->where('t2.notes!=', 'UNPAID');
+		$this->db->where('t1.patient_id', $patientId);
+		$this->db->where('t3.medical_doctor_id', $medicalDoctorId);
+
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
+		$this->db->limit(8);
+		
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
 		}
 		
 		return $rowArray;
