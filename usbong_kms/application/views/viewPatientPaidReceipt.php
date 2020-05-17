@@ -8,7 +8,7 @@
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
 ' @author: Michael Syson
-' @date created: 20200306
+' @date created: 20200517
 ' @date updated: 20200517
 -->
 <?php
@@ -93,10 +93,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}
 						
+						span.alertSpan {
+							color: red;
+							font-weight: bold;
+						}
+						
 						table.search-result
 						{
 <!--							border: 1px solid #ab9c7d;		
 -->
+						}						
+
+						table.receiptDetailsTable
+						{
+							width: 100%;
 						}						
 
 						table.imageTable
@@ -109,7 +119,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: left
+							text-align: right
 						}						
 
 						td.columnNotes
@@ -125,38 +135,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 26%;
 						}						
-
-						td.columnTableHeaderFee
-						{
-							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
-							border: 1px dotted #ab9c7d;		
-							text-align: center;
-							width: 13%;
-						}		
-
-						td.columnTableHeaderClassification
-						{
-							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
-							border: 1px dotted #ab9c7d;		
-							text-align: center;
-							width: 12%;
-						}		
-
-						td.columnTableHeaderNotes
-						{
-							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
-							border: 1px dotted #ab9c7d;		
-							text-align: center;
-							width: 26%;
-						}		
 						
 						td.imageColumn
 						{
@@ -171,18 +150,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right;
 						}						
 
-						.Fee-textbox { 
-							background-color: #fCfCfC;
-							color: #68502b;
-							padding: 10px;
-							font-size: 16px;
-							border: 1px solid #68502b;
-							border-radius: 3px;	    	    
+						td.receiptDetailsColumn
+						{
+							width: 90%;
+							display: inline-block;
 							text-align: right;
-							width: 70%;
-
-							float: left;
-						}
+						}						
 
 						.Quantity-textbox { 
 							background-color: #fCfCfC;
@@ -191,30 +164,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 16px;
 							border: 1px solid #68502b;
 							width: 20%;
-							border-radius: 3px;	    	    
-
-							float: left;
-						}
-
-						.Notes-textbox { 
-							background-color: #fCfCfC;
-							color: #68502b;
-							padding: 12px;
-							font-size: 16px;
-							border: 1px solid #68502b;
-							width: 82%;
-							border-radius: 3px;	    	    
-
-							float: left;
-						}
-
-						.Classification-select { 
-							background-color: #fCfCfC;
-							color: #68502b;
-							padding: 12px;
-							font-size: 16px;
-							border: 1px solid #68502b;
-							width: 100%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -238,6 +187,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						.Button-purchase:hover {
 							background-color: #d4be00;
+						}
+
+						textarea.receipt-input
+						{
+							width: 42%
+						}
+
+						span.asterisk
+						{
+							color: #ff0000;
 						}
 
         /*------------------*/
@@ -369,28 +328,138 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  }
 */
 
-		//added by Mike, 20200329; edited by Mike, 20200517
+		//added by Mike, 20200329; edited by Mike, 20200414
 //		function myPopupFunction() {				
-		function myPopupFunction(patientId) {				
-			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
-			var professionalFee = document.getElementById("professionalFeeParam").value;
-			var xRayFee = document.getElementById("xRayFeeParam").value;
-			var labFee = document.getElementById("labFeeParam").value;
-			var classification = document.getElementById("classificationParam").value;
-			var notes = document.getElementById("notesParam").value;
+		function myPopupFunction(itemId) {				
+			var quantity = document.getElementById("quantityParam").value;
+			var fee = document.getElementById("feeParam").value;
+			//added by Mike, 20200504
+			var resultQuantityInStockNow  = document.getElementById("resultQuantityInStockNowParam").value;
+
+//			alert("quantity: " + quantity);
+//			alert("fee: " + fee);
+//			alert("resultQuantityInStockNow: " + resultQuantityInStockNow);
+
+/*
+			var product_id = document.getElementById("product_idParam").value;
+			var customer_id = document.getElementById("customer_idParam").value;
+			var quantity = document.getElementById("quantityParam").value;
+			var price = document.getElementById("priceParam").value;
 			
-			//do the following only if value is a Number, i.e. not NaN
-			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
-				window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
+			var textCart = document.getElementById("Text-cartId");
+			var textCart2Digits = document.getElementById("Text-cart-2digitsId");
+			var textCart3Digits = document.getElementById("Text-cart-3digitsId");
+	
+			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
+*/
+
+			//added by Mike, 20200419
+			if (quantity==0) {	
+			  alert("Kailangang hindi zero (0) ang QUANTITY.");
+			  return;
+			}
+
+			//added by Mike, 20200419			
+			if (fee==0){	
+			  alert("Kailangang hindi zero (0) ang FEE.");
+			  return;
+			}
+
+			//do the following only if quantity is a Number, i.e. not NaN
+			if ((!isNaN(quantity)) && (!isNaN(fee))) {	
+/*
+				//added by Mike, 20170701
+				var quantityField = document.getElementById("quantityId");			
+				if (quantity>1) {
+					quantityField.innerHTML = "Added <b>" +quantity +"</b> units of ";
+				}
+				else {
+					quantityField.innerHTML = "Added <b>1</b> unit of ";
+					quantity=1; //added by Mike, 20181029
+				}
+				var productPriceField = document.getElementById("productPriceId");
+				var totalPrice = quantity*price;
+				productPriceField.innerHTML = totalPrice;								
+				//-----------------------------------------------------------
+				
+				totalItemsInCart+=parseInt(quantity);
+				if (totalItemsInCart>99) {
+					totalItemsInCart=99;
+				}
+	
+				document.getElementById("totalItemsInCartId").value = totalItemsInCart;
+*/						
+/*
+				//TO-DO: -add: transaction in database
+				alert("itemId: " + itemId);
+				alert("quantity: " + quantity);
+				window.location.href = "<?php echo site_url('browse/searchMedicine/');?>";
+*/
+/*
+				//added by Mike, 20200330
+				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
+*/
+				//added by Mike, 20200504
+				if (resultQuantityInStockNow == 0) { //zero
+					alert("Zero (0) o wala na tayo nito sa kasalukuyan.");
+					return;
+				}
+
+				if (resultQuantityInStockNow - quantity < 0) { //negative number
+					alert(resultQuantityInStockNow + " lamang ang mayroon tayo sa kasalukuyan.");
+					return;
+				}
+
+				//added by Mike, 20200330; edited by Mike, 20200411
+				//1 = Medicine
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/1/"+itemId+"/"+quantity+"/"+fee+"');?>";
+
+/*
+				//added by Mike, 20170627
+				if (customer_id=="") {
+					window.location.href = "<?php echo site_url('account/login/');?>";
+				}
+				else {				
+		//			var base_url = window.location.origin;
+					var site_url = "<?php echo site_url('cart/addToCart/');?>";
+					var my_url = site_url.concat(product_id,'/',customer_id,'/',quantity,'/',price);
+					
+					$.ajax({
+				        type:"POST",
+				        url:my_url,
+		
+				        success:function() {			        	
+				        	if (totalItemsInCart<10) {
+					        	textCart.innerHTML=totalItemsInCart;
+								textCart2Digits.innerHTML="";
+								textCart3Digits.innerHTML="";
+				        	}
+							else if (totalItemsInCart<100) {
+					        	textCart.innerHTML="";
+								textCart2Digits.innerHTML=totalItemsInCart;
+								textCart3Digits.innerHTML="";
+							}
+							else {
+					        	textCart.innerHTML="";
+								textCart2Digits.innerHTML="";
+								textCart3Digits.innerHTML=totalItemsInCart;
+							}
+							
+							$('#myPopup').modal('show');
+				        }
+		
+				    });
+				    event.preventDefault();
+				}
+*/
+
+				//added by Mike, 20200331
+//				$('#myPopup').modal('show');
+
+//				document.getElementById("myPopup").classList.toggle("show");
 			}
 		}	
 
-		//added by Mike, 20200331; edited by Mike, 20200411
-/*
-		function myPopupFunctionDelete(itemId,transactionId) {				
-			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
-		}	
-*/
 		function myPopupFunctionDelete(medicalDoctorId,patientId,transactionId) {				
 /*
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
@@ -400,19 +469,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		}	
 
-		//added by Mike, 20200331; edited by Mike, 20200411
-/*
+		//added by Mike, 20200331
 		function myPopupFunctionPay(itemId) {				
+/*
 			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
-		}	
 */
-		function myPopupFunctionPay(itemId) {				
-/*
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
-*/			
 			//edited by Mike, 20200411
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
-			
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/1/"+itemId+"');?>";
 		}	
 
 	  </script>
@@ -462,367 +525,92 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
-	<br/>
-	<br/>
-	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
-	</div>
-	<?php 
-		if ($result[0]["medical_doctor_name"]==""){
-			echo "<br/>There are no transactions for the day.";
-		}
-		else {
-			//TO-DO: -update: this to use dropdown/select
-/*			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
-*/
-			echo "<b>MEDICAL DOCTOR: </b>";		
-			
-			//show only 1 value
-			echo "<select id='medicalDoctorIdParam' size='1'>";
-			
-			foreach ($medicalDoctorList as $medicalDoctorValue) {
-			  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
-			    echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
-			  }
-			  else {
-			    echo "<option value='".$medicalDoctorIdValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
-			  }				
-			}
-			echo "</select>";
-		}
-	?>
-	<br/>
-<!--	<br/> 
--->
-<!--	TO-DO: -update: this
--->	
+	<table class="receiptDetailsTable">
+	  <tr>
+		<td class="receiptDetailsColumn">
+			<h2>
+				Receipt Details
+			</h2>		
+		</td>
+	  </tr>
+	</table>
 	
-<!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
--->	
-	<?php
-	
-		//get only name strings from array 
-		if (isset($result)) {			
-			if ($result!=null) {		
-/*
-				$resultCount = count($result);
-				if ($resultCount==1) {
-					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
-				}
-				else {
-					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
-				}			
-*/
-				echo "<br/>";
-				echo "<table class='search-result'>";
-				
-				//add: table headers
-?>				
-					  <tr class="row">
-						<td class ="columnTableHeader">				
-				<?php
-							echo "PATIENT NAME";
-				?>		
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "PF";
-							?>
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "X-RAY";
-							?>
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "LAB";
-							?>
-						</td>
-						<td class ="columnTableHeaderClassification">				
-							<?php
-								echo "CLASSIFI-<br/>CATION";
-							?>
-						</td>
-
-						<td class ="columnTableHeaderNotes">				
-							<?php
-								echo "ADDITIONAL<br/>NOTES";
-							?>
-						</td>
-					  </tr>
-<?php				
-				$iCount = 1;
-/*				foreach ($result as $value) {
-*/	
-
-				$value = $result[0];
-
-		?>				
-		
-					  <tr class="row">
-						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
-								<div class="patientName">
-				<?php
-								//TO-DO: -update: this
-								//echo $value['patient_name'];
-								echo str_replace("�","Ñ",$value['patient_name']);
-				?>		
-								</div>								
-							</a>
-						</td>
-						<td class ="column">				
-							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="600" min="1" max="999" 
-						onKeyPress="var key = event.keyCode || event.charCode;		
-									const keyBackspace = 8;
-									const keyDelete = 46;
-									const keyLeftArrow = 37;
-									const keyRightArrow = 39;
-						
-									if (this.value.length == 3) {			
-										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-											return true;
-										}
-										else {
-											return false;										
-										}
-									}" required>						
-						</td>
-						<td class ="column">				
-							<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
-						onKeyPress="var key = event.keyCode || event.charCode;		
-									const keyBackspace = 8;
-									const keyDelete = 46;
-									const keyLeftArrow = 37;
-									const keyRightArrow = 39;
-						
-									if (this.value.length == 3) {			
-										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-											return true;
-										}
-										else {
-											return false;										
-										}
-									}" required>
-						</td>
-						<td class ="column">
-							<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="999" 
-						onKeyPress="var key = event.keyCode || event.charCode;		
-									const keyBackspace = 8;
-									const keyDelete = 46;
-									const keyLeftArrow = 37;
-									const keyRightArrow = 39;
-						
-									if (this.value.length == 3) {			
-										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-											return true;
-										}
-										else {
-											return false;										
-										}
-									}" required>
-						</td>
-						<td class="column">
-							<select id="classificationParam" class="Classification-select">
-							  <option value="0">WI</option>
-							  <option value="1">SC</option>
-							  <option value="2">PWD</option>
-							</select>						
-						</td>
-						<td class="column">
-							<input type="text" id="notesParam" class="Notes-textbox no-spin" value="NONE" required>
-						</td>						
-					    <td>		
-							<button onclick="myPopupFunction(<?php echo $value['patient_id'];?>)" class="Button-purchase">ADD</button>									
-<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+	<!-- Form -->
+	<!-- 1 = Medicine -->
+	<form method="post" action="<?php echo site_url('browse/confirmPatientPaidReceipt/'.$medicalDoctorId)?>">
+<!--
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>Last Name <span class="asterisk">*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>				
+				  <input type="text" class="receipt-input" placeholder="" name="memberLastNameParam" required>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>First Name </span><span class="asterisk">*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="text" class="receipt-input" placeholder="" name="memberFirstNameParam" required>
+				</td>
+			  </tr>
+			</table>
+		</div>	
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>Address <span class="asterisk">*</span></span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+					<textarea rows="5" class="receipt-input" placeholder="" name="memberAddressParam" required></textarea>						
+				</td>
+			  </tr>
+			</table>
+		</div>	
 -->
-						</td>						
-					  </tr>
-		<?php				
-					$iCount++;		
-//					echo "<br/>";
-/*				}				
-*/
-				echo "</table>";				
-				echo "<br/>";				
-//				echo '<div>***NOTHING FOLLOWS***';	
-				echo "<br/>";				
-			}
-			else {					
-				//edited by Mike, 20200331
-				if (isset($nameParam)) {
-					echo '<div>';					
-					echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our medicine names.';
-					echo '<br><br>Recommendation:';
-					echo '<br>&#x25CF; Reverify that the spelling is correct.';				
-					echo '</div>';					
-				}
-			}			
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>Official Receipt Number <span class="asterisk">*</span></span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberParam" required>
+				</td>
+			  </tr>
+			</table>
+		</div>	
+		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
+		<br />
+		<!-- Buttons -->
+		<button type="submit" class="Button-login">
+			Submit
+		</button>
+	</form>
+	<br />
 
-			//TO-DO: -add: paid receipt page
-			//TO-DO: -update: this
-
-			//added by Mike, 20200401
-/*			echo '<h3>Cart List</h3>';
-*/
-			$cartListResultCount = 0;
-			
-			if ((isset($cartListResult)) and ($cartListResult!=False)) {
-				$cartListResultCount = count($cartListResult);
-			}
-
-			//cart list			
-			if ($cartListResultCount==0) {				
-/*				echo '<div>';					
-				echo 'There are no transactions.';
-				echo '</div>';					
-*/				
-			}
-			else {
-//				$cartListResultCount = count($cartListResult);
-				if ($cartListResultCount==1) {
-					echo '<div>Showing <b>'.count($cartListResult).'</b> result found.</div>';
-				}
-				else {
-					echo '<div>Showing <b>'.count($cartListResult).'</b> results found.</div>';			
-				}			
-				echo '<br/>';
-				
-				echo "<table class='search-result'>";
-				
-				//add: table headers
-				$iCount = 1;
-				$cartFeeTotal = 0;
-				foreach ($cartListResult as $cartValue) {
-/*	
-				$value = $result[0];
-*/				
-		?>				
-		
-					  <tr class="row">
-						<td class ="column">				
-							<div class="transactionDate">
-				<?php
-								echo $cartValue['transaction_date'];
-				?>		
-							</div>								
-						</td>
-						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewPatient/'.$cartValue['patient_id'])?>'>
-								<div class="patientName">
-				<?php
-								echo $cartValue['patient_name'];
-				?>		
-								</div>								
-							</a>
-						</td>
-						<td class ="column">				
-								<div id="cartItemPriceId<?php echo $iCount?>">
-							<?php
-								//edited by Mike, 20200414
-//								echo $cartValue['item_price'];
-
-								//added by Mike, 20200415
-								if ($cartValue['fee_quantity']==0) {
-//									$iQuantity =  1;
-									$iQuantity =  floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
-								}
-								else {
-									$iQuantity =  $cartValue['fee_quantity'];
-								}
-
-								//edited by Mike, 20200419
-								//echo $cartValue['fee']/$iQuantity;	
-								echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-						x
-						</td>
-						<td class ="column">				
-								<div id="cartItemQuantityId<?php echo $iCount?>">
-							<?php
-//								echo $cartValue['fee']/$cartValue['item_price'];
-//								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
-								//edited by Mike, 20200415
-								//echo floor(($cartValue['fee']/$cartValue['fee']*100)/100);							
-/*								
-								if ($cartValue['fee_quantity']==0) {
-									echo 1;
-								}
-								else {
-									echo $cartValue['fee_quantity'];
-								}
-*/								
-								echo $iQuantity;
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-						=
-						</td>
-						<td class ="column">				
-								<div id="cartFeeId<?php echo $iCount?>">
-							<?php
-								echo $cartValue['fee'];
-								
-								$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
-							?>
-								</div>
-						</td>
-						<td>
-							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
-<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
--->
-						</td>						
-					  </tr>
-		<?php				
-					$iCount++;		
-//					echo "<br/>";
-				}				
-?>
-				<!-- TOTAL -->				
-					  <tr class="row">
-						<td class ="column">				
-							<div class="total">
-				<?php
-								echo "<b>TOTAL</b>";
-				?>		
-							</div>								
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						=
-						</td>
-						<td class ="column">				
-								<div id="feeTotalId<?php echo $iCount?>">
-							<?php
-//								echo "<b>".$cartFeeTotal."<b/>";
-								
-								echo "<b>".number_format((float)$cartFeeTotal, 2, '.', '')."<b/>";
-							?>
-								</div>
-						</td>
-						<td>
-							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id']?>)" class="Button-purchase">PAY</button>
-						</td>						
-					  </tr>
 <?php
-				echo "</table>";				
-			}
-/*			
-			echo "<br/>";
-*/
-			echo '<h3>Patient Purchased Service History</h3>';
+//			echo "<br/>";
 
+			echo '<h3>Patient Purchased Service History</h3>';
+			
+			$value = $result[0];
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
 				echo 'There are no transactions.';
@@ -880,7 +668,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//TO-DO: -update: this
 									//echo $value['patient_name'];
 									echo str_replace("�","Ñ",$value['patient_name']);
-	
 					?>		
 									</div>								
 								</a>							
@@ -910,7 +697,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									if ($value['transaction_date']==date('m/d/Y')) {
 								?>
 								<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
-									
 	<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 	-->
 								<?php 
@@ -925,7 +711,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo "</table>";				
 				}				
 			}
-		}
 	?>
 
 
