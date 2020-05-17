@@ -122,6 +122,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right
 						}						
 
+						td.columnFee
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: right
+						}
+
 						td.columnNotes
 						{
 							border: 1px dotted #ab9c7d;		
@@ -591,7 +597,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			  <tr>
 				<td>
-				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberParam" required>
+				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMOSCParam" required>
 				</td>
 			  </tr>			  
 			  <?php 
@@ -609,7 +615,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  </tr>
 				  <tr>
 					<td>
-					  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberParam" required>
+					  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMedicalDoctorParam" required>
 					</td>
 				  </tr>			  
 			  <?php
@@ -693,17 +699,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>								
 								</a>							
 							</td>							
-							<td class ="column">				
+							<td class ="columnFee">				
 								<?php
 									echo $value['fee'];
 								?>
 							</td>
-							<td class ="column">				
+							<td class ="columnFee">				
 								<?php
 									echo $value['x_ray_fee'];
 								?>
 							</td>
-							<td class ="column">				
+							<td class ="columnFee">				
 								<?php
 									echo $value['lab_fee'];
 								?>
@@ -714,10 +720,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								?>
 							</td>
 							<!-- added by Mike, 20200518 -->
-							<td class ="columnNotes">				
+							<td class ="columnFee">				
 								<?php
 									$totalFee = $value['fee'] + $value['x_ray_fee'] + $value['lab_fee'];
-									echo $totalFee;
+									//echo $totalFee;
+
+									echo number_format($totalFee, 2, '.', '');
 								?>
 							</td>
 							<td>								
