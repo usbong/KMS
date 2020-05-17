@@ -707,13 +707,15 @@ class Browse extends CI_Controller { //MY_Controller {
 	}
 
 	//added by Mike, 20200411; edited by Mike, 20200517
-	public function addTransactionServicePurchase($patientId, $professionalFee, $xRayFee, $labFee)
-	{
-//		$data['itemTypeId'] = $itemTypeId;
+	public function addTransactionServicePurchase($medicalDoctorId, $patientId, $professionalFee, $xRayFee, $labFee, $classification, $notes)
+	{		
+		$data['medicalDoctorId'] = $medicalDoctorId;
 		$data['patientId'] = $patientId;
 		$data['professionalFee'] = $professionalFee;
 		$data['xRayFee'] = $xRayFee;
 		$data['labFee'] = $labFee;
+		$data['classification'] = $classification;
+		$data['notes'] = $notes;
 				
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -723,10 +725,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->model('Browse_Model');
 
 		$this->Browse_Model->addTransactionServicePurchase($data);
-		
+
+		//edited by Mike, 20200407
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+
+/*		
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 
-		//added by Mike, 20200406
+
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
 		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -746,6 +753,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		else { //example: 2
 			$this->load->view('viewItemNonMedicine', $data);
 		}
+*/
+			$this->load->view('viewPatient', $data);
+		
 	}
 	
 	//added by Mike, 20200411; edited by Mike, 20200414
