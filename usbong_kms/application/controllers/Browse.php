@@ -657,10 +657,12 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->model('Browse_Model');
 
-
 		//edited by Mike, 20200407
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+
+		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
 
 		//TO-DO: -update: this
@@ -730,6 +732,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+
+
 /*		
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 
@@ -754,8 +759,11 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->load->view('viewItemNonMedicine', $data);
 		}
 */
-			$this->load->view('viewPatient', $data);
 		
+/*
+		$this->load->view('viewPatient', $data);
+*/		
+		$this->load->view('viewPatientPaidReceipt', $data);
 	}
 	
 	//added by Mike, 20200411; edited by Mike, 20200414
@@ -815,6 +823,48 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->load->view('viewItemNonMedicine', $data);
 		}
 	}
+
+	//added by Mike, 20200517
+	public function deleteTransactionServicePurchase($medicalDoctorId, $patientId, $transactionId)
+	{
+		$data['patientId'] = $medicalDoctorId;
+		$data['patientId'] = $patientId;
+		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		$this->Browse_Model->deleteTransactionServicePurchase($data);
+
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);		
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+
+/*		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+
+		//added by Mike, 20200501
+		$data['resultItem'] = $this->getResultItemQuantity($data);
+
+		if ($itemTypeId==1) {
+			$this->load->view('viewItemMedicine', $data);
+		}
+		else {
+			$this->load->view('viewItemNonMedicine', $data);
+		}
+*/
+
+		$this->load->view('viewPatient', $data);		
+	}
+	
 
 	//added by Mike, 20200411
 	public function deleteTransactionItemPurchase($itemTypeId, $itemId, $transactionId)
@@ -932,5 +982,29 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->load->view('searchNonMedicine', $data);
 		}		
 		
+	}
+
+	//added by Mike, 20200517
+	public function confirmPatientPaidReceipt($medicalDoctorId)
+	{
+		$data['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
+
+		if ($medicalDoctorId!=1) { //not SYSON, PEDRO
+			$data['receiptTypeId'] = 3;
+		}
+
+		$data['receiptNumber'] = $_POST["officialReceiptNumberParam"];
+		$data['transactionId'] = $_POST["transactionIdParam"];
+
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+
+		$this->Browse_Model->addTransactionPaidReceipt($data);
+
+		$this->load->view('searchPatient', $data);		
 	}
 }
