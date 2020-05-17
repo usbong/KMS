@@ -357,6 +357,18 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewPayslip', $data);
 	}
 
+	//added by Mike, 20200518
+	public function viewPayslipWeb()
+	{				
+		$this->load->model('Report_Model');
+
+		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+
+		$data["result"] = $this->Report_Model->getPayslipForTheDayWeb($data);//, $member_id);
+
+		$this->load->view('viewPayslip', $data);
+	}
+
 	//added by Mike, 20200322; edited by Mike, 20200408
 	public function viewPayslipFor($medicalDoctorName)
 	{		
@@ -371,6 +383,31 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["medicalDoctorName"] = $medicalDoctorName; //medical doctor keyword in report filename
 
 		$data["result"] = $this->Report_Model->getPayslipForTheDay($data);
+
+//		$this->load->view('viewPayslip', $data);
+
+		if (strtoupper($data["medicalDoctorName"])=="PEDRO") {
+			$this->load->view('viewPayslipMOSC', $data);
+		}
+		else {
+			$this->load->view('viewPayslip', $data);
+		}
+	}
+
+	//added by Mike, 20200518
+	public function viewPayslipWebFor($medicalDoctorName)
+	{		
+/*	
+		$this->load->model('Browse_Model');
+		$data["medicalDoctorName"] = $this->Report_Model->getMedicalDoctorIdViaName	 //medical doctor keyword in report filename
+*/
+				
+		$this->load->model('Report_Model');
+
+//		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+		$data["medicalDoctorName"] = $medicalDoctorName; //medical doctor keyword in report filename
+
+		$data["result"] = $this->Report_Model->getPayslipForTheDayWeb($data);
 
 //		$this->load->view('viewPayslip', $data);
 
@@ -490,9 +527,8 @@ class Report extends CI_Controller { //MY_Controller {
 		
 		if ($data['rawResult'] == True) {
 			foreach ($data['rawResult'] as $value) {
-				
-				//removed by Mike, 20200515
-//				echo $data['rawResult'][$iCount]['item_name']." : ".$data['rawResult'][$iCount]['quantity_in_stock']."<br/>";
+
+				echo $data['rawResult'][$iCount]['item_name']." : ".$data['rawResult'][$iCount]['quantity_in_stock']."<br/>";
 
 				$itemId = $data['rawResult'][$iCount]['item_id'];
 				$resultQuantityInStockNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
@@ -525,16 +561,13 @@ class Report extends CI_Controller { //MY_Controller {
 					}
 				}
 				//edited by Mike, 20200515
-				else {					
+				else {
 					//added by Mike, 20200427
 					if (($data['rawResult'][$iCount]['expiration_date'] <= date("Y-m-d")) and ($data['rawResult'][$iCount]['expiration_date'] != 0)) {
-						//edited by Mike, 20200515
 						$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
-						
-						$data['result'][$iCountOutputResult]['quantity_in_stock'] = $resultQuantityInStockNow;
 					}
 				}
-
+							
 				$iCountOutputResult = $iCountOutputResult + 1;				
 				$iCount = $iCount + 1;
 			}
@@ -585,9 +618,6 @@ class Report extends CI_Controller { //MY_Controller {
 				//added by Mike, 20200427
 				if (($data['rawResult'][$iCount]['expiration_date'] <= date("Y-m-d")) and ($data['rawResult'][$iCount]['expiration_date'] != 0)) {
 					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
-					
-					//added by Mike, 20200515
-					$data['result'][$iCountOutputResult]['quantity_in_stock'] = $resultQuantityInStockNow;					
 				}
 							
 				$iCountOutputResult = $iCountOutputResult + 1;				
