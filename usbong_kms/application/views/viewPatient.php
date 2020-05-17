@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200517
+' @date updated: 20200518
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -378,6 +378,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var labFee = document.getElementById("labFeeParam").value;
 			var classification = document.getElementById("classificationParam").value;
 			var notes = document.getElementById("notesParam").value;
+			
+			//added by Mike, 20200518
+			if (notes.includes("DEXA")) {
+				professionalFee = parseInt(professionalFee) + 500;
+			}
 			
 			//do the following only if value is a Number, i.e. not NaN
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
