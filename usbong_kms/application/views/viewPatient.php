@@ -478,11 +478,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<?php 
+		//edited by Mike, 20200518
 		if ($result[0]["medical_doctor_name"]==""){
-			echo "<br/>There are no transactions for the day.";
+//			echo "<br/>There are no transactions for the day.";
+
+			//default value
+			$result[0]["medical_doctor_name"] = 1; //SYSON, PEDRO
 		}
-		else {
-			//TO-DO: -update: this to use dropdown/select
+
 /*			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
 */
 			echo "<b>MEDICAL DOCTOR: </b>";		
@@ -499,7 +502,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  }				
 			}
 			echo "</select>";
-		}
 	?>
 	<br/>
 <!--	<br/> 
