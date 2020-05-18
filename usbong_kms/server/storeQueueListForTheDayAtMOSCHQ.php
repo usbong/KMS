@@ -10,14 +10,13 @@
 
   @author: Michael Syson
   @date created: 20190805
-  @date updated: 20200514
+  @date updated: 20200518
 
   Given:
   1) List with the details of the queue for the day at the Marikina Orthopedic Specialty Clinic (MOSC) Headquarters
 
   Output:
-  1) Automatically connect to the database (DB) and store the queue in the DB  
-//  2) Automatically request the Computer Server to download the stored data from the DB and store as .txt files in the correct location
+  1) Automatically connect to the database (DB) and store the patient names that do not yet exist in the DB  
 */
 	// connect to the database
 	include('usbong-kms-connect.php');
@@ -31,37 +30,85 @@
     }
 
 	$data = json_decode(file_get_contents('php://input'), true);
-//	print_r($data);
-//	echo "hello".$data["myKey"];
-	
-/*
-	if ($result = $mysqli->query("INSERT INTO `report` (`report_description`) VALUES ('usbong');"))
-*/
-/*  //use this if location is SVGH
-	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`, `member_id`, `report_item_id`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."', '3', '10');"))		
-	{
-*/		
-
-//	echo "report_filename: " .$data["report_filename"];
-//	echo "report_type_id: " .$data["report_type_id"];
-//	$data["report_item_id"] = 1;
-//	$data["member_id"] = 3;
-
-//	$data["report_filename"] = "hello";
-//	$data["report_type_id"] = 2;
 		
 	if ($result = $mysqli->query("INSERT INTO `report` (`report_type_id`, `report_filename`, `report_description`) VALUES ('".$data["report_type_id"]."', '".$data["report_filename"]."', '".json_encode($data)."');"))
 	{		
 		$reportId = $mysqli->insert_id;
 
-//		echo "reportId: " .$reportId;
-
 		//update the file location accordingly
 		$sDateToday = date("Y-m-d");
+
 		$file = "D:\Usbong\MOSC\Forms\Information Desk\output\informationDesk\libreOfficeOutput" . "\Patients".$sDateToday.".csv";
 
         file_put_contents($file, $data["report_description"], LOCK_EX);
-//        file_put_contents($file, implode('', $data), LOCK_EX);
+
+		$patientsQueueListArray = [];
+		
+		//delete the ending \n
+		$sReportDescription = substr($data["report_description"],0,-1);	
+
+		//auto-identify max column count
+		$sCellValueArray = explode(",", $sReportDescription); //explode("\t", $fileContents);
+		$iCountColumn = 0;
+		$iMaxCountColumn = 0;
+		
+		foreach ($sCellValueArray as $sCellValue) {		
+			if (strpos($sCellValue,"\n")!==false) {
+				$iMaxCountColumn = $iCountColumn + 1;
+				break;
+			}
+			else {
+				$iCountColumn = $iCountColumn + 1;
+			}
+		}
+			
+		$bHasFinishedTableHeaderRow = false;
+		$iCountColumn = 0;
+		
+		$sReportDescription = str_replace("\n", ",", $sReportDescription);
+		
+		//CSV = comma separated values
+		$inputCSVReportArray = str_getcsv($sReportDescription, ",");
+		
+		foreach ($inputCSVReportArray as $value) {
+			if (($value!="") && (!is_numeric($value)) && ($value!="DATE") && ($value!="COUNT")) {
+				array_push($patientsQueueListArray,$value);
+			}
+		}
+
+		$patientsQueueListTotalCount = count($patientsQueueListArray);
+
+		for ($i=0; $i<$patientsQueueListTotalCount; $i++) {
+				$patientName = $patientsQueueListArray[$i];
+
+				$patientId = null;
+				
+				//verify if patient name already exists
+				if ($selectedResult = $mysqli->query("SELECT `patient_id` FROM `patient` WHERE `patient_name` = '".$patientName."';"))	{
+//					$patientId = $selectedResult;
+
+					if ($selectedResult->num_rows > 0) {
+//						$row = $selectedResult->fetch_array();
+						$row = mysqli_fetch_array($selectedResult);
+						$patientId = $row["patient_id"];
+					}
+				}
+				// show an error if there is an issue with the database query
+				else
+				{
+					echo "Error: " . $mysqli->error;
+				}
+
+				if (!isset($patientId)) {
+					if ($insertedResult = $mysqli->query("INSERT INTO `patient` (`patient_name`) VALUES ('".$patientName."');"))	{
+						$patientId = $mysqli->insert_id;
+					}
+					else
+					{
+						echo "Error: " . $mysqli->error;
+					}
+				}
+			}
 
 		//Example: download from the database the uploaded data and store as .txt files in the correct location
 		//added by Mike, 20190902; edited by Mike, 20200227
