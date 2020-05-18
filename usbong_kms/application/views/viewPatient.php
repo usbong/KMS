@@ -389,6 +389,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			if (notes.includes("DEXA")) {
 				professionalFee = parseInt(professionalFee) + 500;
 			}
+
+			if (notes.trim()==="") {
+				notes = "NONE";
+			}
 			
 			//do the following only if value is a Number, i.e. not NaN
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
@@ -915,7 +919,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</td>
 							<td class ="columnNotes">				
 								<?php
-									echo $value['notes'];
+									//edited by Mike, 20200518
+									//echo $value['notes'];
+									
+									if ($value['notes']=="") {
+										echo "NONE";
+									}
+									else {
+										echo $value['notes'];
+									}
 								?>
 							</td>
 							<!-- added by Mike, 20200518 -->
