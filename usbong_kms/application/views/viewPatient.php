@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200518
+' @date updated: 20200519
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -421,13 +421,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
 		}	
 */
-		function myPopupFunctionPay(itemId) {				
+		//edited by Mike, 20200519
 /*
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
-*/			
+		function myPopupFunctionPay(itemId) {				
 			//edited by Mike, 20200411
 			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
 			
+		}	
+*/
+		function myPopupFunctionPay(medicalDoctorId,patientId) {				
+			window.location.href = "<?php echo site_url('browse/payTransactionServiceAndItemPurchase/"+medicalDoctorId+"/"+patientId+"');?>";			
 		}	
 
 	  </script>
@@ -726,9 +729,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="column">				
 							<a href='<?php echo site_url('browse/viewPatient/'.$cartValue['patient_id'])?>'>
-								<div class="patientName">
+								<div class="itemName">
 				<?php
-								echo $cartValue['patient_name'];
+								//edited by Mike, 20200519
+								if (isset($cartValue['patient_name'])) {
+									echo $cartValue['patient_name'];
+								}
+								else {
+									echo $cartValue['item_name'];
+								}
 				?>		
 								</div>								
 							</a>
@@ -788,8 +797,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td>
-							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+						<td>						
+							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
@@ -829,7 +838,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
-							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id']?>)" class="Button-purchase">PAY</button>
+							<button onclick="myPopupFunctionPay(<?php echo $value['medical_doctor_id'].",".$value['patient_id']?>)" class="Button-purchase">PAY</button>
 						</td>						
 					  </tr>
 <?php
