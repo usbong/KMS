@@ -902,7 +902,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 	}
 	
-	//added by Mike, 20200411
+	//added by Mike, 20200411; edited by Mike, 20200519
 	public function payTransactionItemPurchase($itemTypeId, $itemId)
 	{
 /*
@@ -920,8 +920,10 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 //		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
 
+		//edited by Mike, 20200519
 		$this->Browse_Model->payTransactionItemPurchase();
-				
+		$this->Browse_Model->payTransactionServiceAndItemPurchase();
+	
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 
 		//added by Mike, 20200406
@@ -960,8 +962,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['transactionDate'] = date('m/d/Y');
 		
 		$this->load->model('Browse_Model');
-	
-		$this->Browse_Model->payTransactionItemPurchase();
+
+		$this->Browse_Model->payTransactionItemPurchase();	
+		$this->Browse_Model->payTransactionServiceAndItemPurchase();
 						
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
