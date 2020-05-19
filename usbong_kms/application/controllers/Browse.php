@@ -315,8 +315,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
-				
+			//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+			
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
 
@@ -486,7 +488,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 		//edited by Mike, 20200501
 		//TO-DO: -update: this
@@ -663,8 +667,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 		//TO-DO: -update: this
 /*
@@ -700,8 +705,10 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
-
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		
+		//edited by Mike, 20200519
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
@@ -718,7 +725,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['xRayFee'] = $xRayFee;
 		$data['labFee'] = $labFee;
 		$data['classification'] = $classification;
-		$data['notes'] = $notes;
+		//edited by Mike, 20200519
+//		$data['notes'] = $notes;
+		$data['notes'] = $notes."; "."UNPAID";
 				
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -735,36 +744,14 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
-
-/*		
-		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
-
-
-		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
-
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
-
-		//added by Mike, 20200406; edited by Mike, 20200407
-		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+		//added by Mike, 202005019
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 		
-		//TO-DO: -update this
-		//$this->load->view('viewItemNonMedicine', $data);
-
-		//added by Mike, 20200501
-		$data['resultItem'] = $this->getResultItemQuantity($data);
-
-		if ($itemTypeId=="1") {
-			$this->load->view('viewItemMedicine', $data);
-		}
-		else { //example: 2
-			$this->load->view('viewItemNonMedicine', $data);
-		}
-*/
-		
-/*
+		//edited by Mike, 20200519
 		$this->load->view('viewPatient', $data);
-*/		
+/*		
 		$this->load->view('viewPatientPaidReceipt', $data);
+*/		
 	}
 	
 	//added by Mike, 20200411; edited by Mike, 20200414
@@ -805,8 +792,10 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
-
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		
+		//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
@@ -846,6 +835,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+
+		//added by Mike, 202005019
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 /*		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 
@@ -892,7 +884,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
@@ -933,7 +927,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
@@ -972,7 +968,10 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 		$this->load->view('viewPatientPaidReceipt', $data);
 	}		
