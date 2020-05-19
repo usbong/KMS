@@ -454,6 +454,39 @@ class Browse_Model extends CI_Model
 		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
 	}	
+
+	//added by Mike, 20200519
+	public function payTransactionServiceAndItemPurchase() 
+	{			
+		$this->db->select('notes, transaction_id');
+        $this->db->like('notes',"UNPAID");
+		$this->db->where('transaction_date', date('m/d/Y'));
+
+		$query = $this->db->get('transaction');	
+		
+		$rowArray = $query->result_array();
+
+		foreach ($rowArray as $rowValue) {
+			$updatedValue = str_replace("UNPAID","PAID",$rowValue['notes']);
+			
+			$data = array(
+						'notes' => $updatedValue //"PAID"
+					);
+
+			$this->db->like('notes',"UNPAID");
+			$this->db->where('transaction_date', date('m/d/Y'));
+			$this->db->update('transaction', $data);
+		}
+/*
+		$data = array(
+					'notes' => "PAID"
+				);
+
+        $this->db->like('notes',"UNPAID");
+		$this->db->where('transaction_date', date('m/d/Y'));
+        $this->db->update('transaction', $data);
+*/		
+	}	
 	
 	public function getMedicalDoctorList() {
 		$this->db->select('medical_doctor_id, medical_doctor_name');
@@ -707,12 +740,54 @@ class Browse_Model extends CI_Model
 */
 
 	//added by Mike, 20200328; edited by Mike, 20200501
-	public function getItemDetailsList($itemTypeId, $itemId) 
+	public function getItemDetailsListPrev($itemTypeId, $itemId) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+		$this->db->distinct('t1.item_name');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+//		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200501
+
+
+		$this->db->where('t1.item_id', $itemId);
+
+		//TO-DO: -add: auto-identify item_type
+		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
+
+
+		//edited by Mike, 20200401
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
+		//added by Mike, 20200401
+		$this->db->limit(8);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}		
+
+	//added by Mike, 20200328; edited by Mike, 20200519
+	public function getItemDetailsList($itemTypeId, $itemId) 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date, t4.medical_doctor_name, t4.medical_doctor_id, t5.patient_name, t5.patient_id');
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+		$this->db->join('medical_doctor as t4', 't2.medical_doctor_id = t4.medical_doctor_id', 'LEFT');
+		$this->db->join('patient as t5', 't2.patient_id = t5.patient_id', 'LEFT');
+
 		$this->db->distinct('t1.item_name');
 
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
@@ -757,7 +832,12 @@ class Browse_Model extends CI_Model
 
 		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
 
+		//edited by Mike, 20200519
+		//TO-DO: -update: this
 		$this->db->where('t2.notes!=', 'UNPAID');
+/*		$this->db->like('t2.notes', 'PAID');
+		$this->db->or_like('t2.notes', '; PAID');
+*/
 		$this->db->where('t1.patient_id', $patientId);
 		$this->db->where('t3.medical_doctor_id', $medicalDoctorId);
 
@@ -810,12 +890,40 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200328; edited by Mike, 20200415
+	//added by Mike, 20200328; edited by Mike, 20200519
 	public function getItemDetailsListViaNotesUnpaid() 
 	{		
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200407
+		
+		$this->db->where('t2.transaction_date', date('m/d/Y'));//ASC');
+//		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
+		$this->db->like('t2.notes', "UNPAID");
+		
+		//edited by Mike, 20200401
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}		
+
+	//added by Mike, 20200519
+	public function getServiceAndItemDetailsListViaNotesUnpaid() 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.patient_name, t3.patient_id');
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->join('patient as t3', 't2.patient_id = t3.patient_id', 'LEFT');
+
 		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200407
 		
 		$this->db->where('t2.transaction_date', date('m/d/Y'));//ASC');
