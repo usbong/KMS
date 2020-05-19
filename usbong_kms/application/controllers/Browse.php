@@ -663,6 +663,7 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 
 
 		//TO-DO: -update: this
@@ -827,7 +828,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	//added by Mike, 20200517
 	public function deleteTransactionServicePurchase($medicalDoctorId, $patientId, $transactionId)
 	{
-		$data['patientId'] = $medicalDoctorId;
+		$data['medicalDoctorId'] = $medicalDoctorId;
 		$data['patientId'] = $patientId;
 		$data['transactionId'] = $transactionId;
 				
@@ -843,7 +844,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->Browse_Model->deleteTransactionServicePurchase($data);
 
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
-		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);		
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
 /*		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -949,6 +950,31 @@ class Browse extends CI_Controller { //MY_Controller {
 //			$this->load->view('viewItemNonMedicine', $data);
 			$this->load->view('viewItemNonMedicinePaidReceipt', $data);
 		}
+	}		
+
+	//added by Mike, 20200519
+	public function payTransactionServiceAndItemPurchase($medicalDoctorId, $patientId)
+	{
+		$data['medicalDoctorId'] = $medicalDoctorId;
+		$data['patientId'] = $patientId;
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+		$this->Browse_Model->payTransactionItemPurchase();
+						
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+
+		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		$this->load->view('viewPatientPaidReceipt', $data);
 	}		
 	
 	//added by Mike, 20200508; edited by Mike, 20200509
