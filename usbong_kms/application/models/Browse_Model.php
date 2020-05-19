@@ -370,16 +370,24 @@ class Browse_Model extends CI_Model
 		//we do not include 0, i.e. WI
 		if ($param['classification'] == "1") { //SC			
 			$sNotesValue = "SC; ";
+			
+			$param['notes'] = str_replace("NONE; ","",$param['notes']);
 		}
 		else if ($param['classification'] == "2") { //PWD			
 			$sNotesValue = "PWD; ";
+			
+			$param['notes'] = str_replace("NONE; ","",$param['notes']);
 		}
 		
-		if ($param['notes']=="") {
-			$sNotesValue = $sNotesValue."NONE";
+		//edited by Mike, 20200519
+//		if ($param['notes']=="") {
+		if (($param['notes']=="") && ($sNotesValue=="")){
+//			$sNotesValue = $sNotesValue;//."NONE";
+			$sNotesValue = "NONE";
 		}
-		else {
-			$sNotesValue = $sNotesValue.$param['notes'];	
+		else {			
+			$sNotesValue = $sNotesValue.$param['notes'];
+//			$sNotesValue = $sNotesValue.str_replace("NONE","",$param['notes']);
 		}
 						
 		$data = array(
@@ -853,6 +861,28 @@ class Browse_Model extends CI_Model
 			return False;
 		}
 		
+		//added by Mike, 20200519
+		//delete in the array, rows with notes whose value includes the keyword, "UNPAID"
+		//array_pop($stack);
+/*		foreach ($rowArray as $rowValue) {
+			if (strpos(strtoupper($rowValue['notes']),"UNPAID")!==false) {
+				//TO-DO: -update: this
+				if (($key = array_search($rowValue, $rowArray)) !== false) {
+					unset($rowArray[$key]);
+				}
+//				unset($rowValue);
+			}
+		}
+*/
+		foreach ($rowArray as $key => $rowValue) {
+			if (strpos(strtoupper($rowValue['notes']),"UNPAID")!==false) {
+//				if (($key = array_search($rowValue, $rowArray)) !== false) {
+					unset($rowArray[$key]);
+//				}
+//				unset($rowValue);
+			}
+		}
+		
 		return $rowArray;
 	}		
 
@@ -919,7 +949,7 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200519
 	public function getServiceAndItemDetailsListViaNotesUnpaid() 
 	{		
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.patient_name, t3.patient_id');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t3.patient_name, t3.patient_id');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->join('patient as t3', 't2.patient_id = t3.patient_id', 'LEFT');
