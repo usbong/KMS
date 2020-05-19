@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200507
+' @date updated: 20200519
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -728,27 +728,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>								
 						</td>
 						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$cartValue['item_id'])?>'>
+								<a href='<?php 
+								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+									echo site_url('browse/viewPatient/'.$cartValue['patient_id']);
+								}
+								else {
+									if ($cartValue['item_type_id']==1) { //1 = MEDICINE
+										echo site_url('browse/viewItemMedicine/'.$cartValue['item_id']);
+									}
+									else if ($cartValue['item_type_id']==2) { //2 = NON-MEDICINE
+										echo site_url('browse/viewItemNonMedicine/'.$cartValue['item_id']);
+									}
+								}								
+								?>'>
 								<div class="itemName">
 				<?php
-								echo $cartValue['item_name'];
+								//edited by Mike, 20200519
+								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+									//TO-DO: -update: this
+									//echo $cartValue['patient_name'];
+									echo str_replace("�","Ñ",$cartValue['patient_name']);
+								}
+								else {
+									echo $cartValue['item_name'];
+								}
 				?>		
 								</div>								
 							</a>
-						</td>
+					</td>
 						<td class ="column">				
 								<div id="cartItemPriceId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20200414
 //								echo $cartValue['item_price'];
 
-								//added by Mike, 20200415
-								if ($cartValue['fee_quantity']==0) {
-//									$iQuantity =  1;
-									$iQuantity =  floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
+								//added by Mike, 20200415; edited by Mike, 20200519
+								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+									$iQuantity =  1;
 								}
 								else {
-									$iQuantity =  $cartValue['fee_quantity'];
+									if ($cartValue['fee_quantity']==0) {
+	//									$iQuantity =  1;
+										$iQuantity =  floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
+									}
+									else {
+										$iQuantity =  $cartValue['fee_quantity'];
+									}
 								}
 
 								//edited by Mike, 20200419
