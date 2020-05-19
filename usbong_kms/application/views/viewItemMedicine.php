@@ -117,6 +117,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right
 						}						
 
+						td.columnFee
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: right
+						}						
+
+						td.columnNotes
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: left
+						}						
+
 						td.columnTableHeader
 						{
 							font-weight: bold;
@@ -760,14 +772,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class ="column">				
+						<td class ="columnFee">				
 								<div id="cartItemPriceId<?php echo $iCount?>">
 							<?php
 								//added by Mike, 20200415; edited by Mike, 20200519
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									$iQuantity =  1;
 
-									echo $cartValue['fee'];
+									$patientFee = $cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
+									echo number_format($patientFee, 2, '.', '');
 								}
 								else {
 									if ($cartValue['fee_quantity']==0) {
@@ -777,17 +790,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$iQuantity =  $cartValue['fee_quantity'];
 									}
-
-									echo $cartValue['item_price'];
+									
+									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
 								}
-
 							?>
 								</div>
 						</td>
 						<td class ="column">				
 						x
 						</td>
-						<td class ="column">				
+						<td class ="columnFee">				
 								<div id="cartItemQuantityId<?php echo $iCount?>">
 							<?php
 /*							
@@ -809,12 +821,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						=
 						</td>
-						<td class ="column">				
+						<td class ="columnFee">				
 								<div id="cartFeeId<?php echo $iCount?>">
 							<?php
-								echo $cartValue['fee'];
+								//echo $cartValue['fee'];
 								
-								$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
+								//edited by Mike, 20200519
+								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+									echo number_format($patientFee, 2, '.', '');
+									
+									
+									$cartFeeTotal = $cartFeeTotal + $patientFee;
+								}
+								else {
+									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
+
+									$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
+								}
+				
+//								$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
 							?>
 								</div>
 						</td>
