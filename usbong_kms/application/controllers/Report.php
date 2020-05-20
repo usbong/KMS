@@ -443,6 +443,18 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportNonMedicineUnified', $data);
 	}
 
+	//added by Mike, 20200507
+	public function viewReportNonMedicineUnifiedAll()
+	{
+		$this->load->model('Report_Model');
+		
+		$itemTypeId = 2; //2 = Non-medicine
+
+		$data["result"] = $this->Report_Model->getPurchasedItemTransactionsForTheDayUnifiedAll($itemTypeId);
+
+		$this->load->view('viewReportNonMedicineUnifiedAll', $data);
+	}
+
 	//added by Mike, 20200402; edited by Mike, 20200412
 	public function viewReportMedicine()
 	{
