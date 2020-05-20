@@ -882,10 +882,10 @@ class Report_Model extends CI_Model
 //		$this->db->order_by('t2.added_datetime_stamp`', 'ASC'); //'DESC');//ASC');
 
 		//edited by Mike, 20200520
-/*		$this->db->order_by('t1.item_name`', 'ASC'); //'DESC');//ASC');
-*/		
+		$this->db->order_by('t1.item_name`', 'ASC'); //'DESC');//ASC');
+/*		
 		$this->db->order_by('t2.transaction_date`', 'ASC'); //'DESC');//ASC');
-
+*/
 		//added by Mike, 20200401
 //		$this->db->limit(8);
 		
@@ -909,7 +909,7 @@ class Report_Model extends CI_Model
 		
 		if ($rowArray!=False) { //if value exists in array
 			foreach ($rowArray as $value) {
-			
+							
 //				echo "iCurrentItemId: ".$iCurrentItemId." : ".$value['item_name']." : ".$value['fee_quantity']."<br/>";
 //				echo "iCurrentItemId: ".$iCurrentItemId."<br/>";
 
