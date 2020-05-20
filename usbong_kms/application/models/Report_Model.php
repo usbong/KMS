@@ -850,7 +850,8 @@ class Report_Model extends CI_Model
 	//added by Mike, 20200520
 	public function getPurchasedItemTransactionsForTheDayUnifiedAll($itemTypeId) 
 	{	
-		$rowArray = $this->getMedicineTransactionsForTheDayAsterisk();
+		//removed by Mike, 20200520
+//		$rowArray = $this->getMedicineTransactionsForTheDayAsterisk();
 
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
 		$this->db->from('item as t1');
@@ -861,12 +862,26 @@ class Report_Model extends CI_Model
 
 		$this->db->where('t1.item_type_id', $itemTypeId);
 
+		$this->db->where('t2.transaction_id!=', "-1");
+
 //		$this->db->where('t1.item_id', $itemId);
 
 //		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+/*
+	$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+*/
+
+		$param["monthNum"] = "05";
+		$param["currentMonthNum"] = "05";
+
+		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/30/".date("Y"));
+
 
 		$this->db->like('t2.notes', "PAID");
-
+		
+		//removed by Mike, 20200520
+/*
 		//edited by Mike, 20200403
 		if ($rowArray!=False) { //if value exists in array
 			foreach ($rowArray as $value) {			
@@ -874,7 +889,7 @@ class Report_Model extends CI_Model
 				$this->db->where('t1.item_id !=', $value['item_id']);		
 			}
 		}
-		
+*/		
 		//added by Mike, 20200506
 //		$this->db->group_by('t1.item_name');
 
