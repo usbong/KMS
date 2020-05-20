@@ -128,7 +128,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -410,7 +410,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Report (Unified)<br />Purchased Non-medicine<br />All Time
+				Report (Unified)<br />Purchased Non-medicine<br />
+				<?php 
+					echo $startTransactionDate."~".$endTransactionDate;
+				?>
+				<br />All Time
 			</h2>		
 		</td>
 	  </tr>
@@ -450,28 +454,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "COUNT";
 							?>
 						</td>
+<!--
 						<td class ="tableHeaderColumn">				
 							<?php
 								echo "DATE";
 							?>
 						</td>
+-->						
 						<td class ="tableHeaderColumn">				
 				<?php
 								echo "ITEM NAME";
 				?>		
 						</td>
+<!--
 						<td class ="tableHeaderColumn">				
 							<?php
 								echo "ITEM PRICE";
 							?>
-						</td>
+						</td>					
 						<td class ="column">				
 						</td>
+-->						
 						<td class ="tableHeaderColumn">				
 							<?php
 								echo "QTY";
 							?>
 						</td>
+<!--
 						<td class ="column">				
 						</td>
 						<td class ="tableHeaderColumn">				
@@ -489,6 +498,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "TOTAL<br/>AMOUNT PAID";
 							?>
 						</td>
+-->						
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -503,6 +513,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+<!--						
 						<td class ="column">				
 							<div class="itemName">
 			<?php
@@ -510,6 +521,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			?>		
 							</div>								
 						</td>
+-->						
 						<td class ="column">				
 							<!-- edited by Mike, 20200415 -->
 							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
@@ -520,6 +532,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
+<!--	
 						<td class ="column">				
 								<div id="itemPriceId<?php echo $iCount?>">
 							<?php
@@ -557,6 +570,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						x
 						</td>
+-->						
 						<td class ="column">				
 								<div id="itemQuantityId<?php echo $iCount?>">
 							<?php
@@ -579,6 +593,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+<!--
 						<td class ="column">				
 						=
 						</td>
@@ -622,7 +637,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-
+-->
 					  </tr>
 		<?php				
 					$iCount++;		
@@ -632,8 +647,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  <tr class="row">
 					<td class ="column">				
 					</td>
+<!--					
 					<td class ="column">				
 					</td>
+-->					
 					<td class ="column">				
 							<div>
 						<?php
@@ -641,10 +658,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						?>
 							</div>
 					</td>
+<!--					
 					<td class ="column">				
 					</td>
 					<td class ="column">				
 					</td>
+-->					
 					<td class ="column">				
 						<div>
 					<?php
@@ -654,6 +673,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 
 					</td>
+<!--
 					<td class ="column">				
 					</td>
 					<td class ="column">				
@@ -678,6 +698,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>
 						</div>
 					</td>
+-->
 				  </tr>
 <?php
 				echo "</table>";				
