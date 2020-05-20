@@ -412,7 +412,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<h2>
 				Report (Unified)<br />Purchased Non-medicine<br />
 				<?php 
-					echo $startTransactionDate."~".$endTransactionDate;
+//					echo $startTransactionDate."~".$endTransactionDate;
+					echo "2020-05"
 				?>
 				<br />All Time
 			</h2>		
