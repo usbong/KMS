@@ -452,6 +452,29 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["result"] = $this->Report_Model->getPurchasedItemTransactionsForTheDayUnifiedAll($itemTypeId);
 
+		//added by Mike, 20200520
+		$startTransactionDate = 0;//date("Y-m-d");
+		$endTransactionDate = date("Y-m-d");		
+		
+		if ($data["result"]!=False) { //if value exists in array
+			foreach ($data["result"] as $value) {				
+				//added by Mike, 20200520
+				$currentTransactionDate = strtotime($value['transaction_date']);
+				
+
+				if (($startTransactionDate == 0) or ($startTransactionDate > $currentTransactionDate)) {
+					$startTransactionDate = $currentTransactionDate;
+				}
+
+				if ($endTransactionDate < $currentTransactionDate) {
+					$endTransactionDate = $currentTransactionDate;
+				}
+			}
+		}
+
+		$data["startTransactionDate"] = DATE("Y-m-d", $startTransactionDate);
+		$data["endTransactionDate"] = DATE("Y-m-d", $endTransactionDate);
+
 		$this->load->view('viewReportNonMedicineUnifiedAll', $data);
 	}
 
