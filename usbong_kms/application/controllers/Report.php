@@ -451,9 +451,9 @@ class Report extends CI_Controller { //MY_Controller {
 		$itemTypeId = 2; //2 = Non-medicine
 
 		$data["result"] = $this->Report_Model->getPurchasedItemTransactionsForTheDayUnifiedAll($itemTypeId);
-
+/*
 		//added by Mike, 20200520
-		$startTransactionDate = 0;//date("Y-m-d");
+		$startTransactionDate = date("Y-m-d");
 		$endTransactionDate = date("Y-m-d");		
 		
 		if ($data["result"]!=False) { //if value exists in array
@@ -474,6 +474,10 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["startTransactionDate"] = DATE("Y-m-d", $startTransactionDate);
 		$data["endTransactionDate"] = DATE("Y-m-d", $endTransactionDate);
+*/
+
+		$data["startTransactionDate"] = 0; //DATE("Y-m-d", $startTransactionDate);
+		$data["endTransactionDate"] = 0; //DATE("Y-m-d", $endTransactionDate);
 
 		$this->load->view('viewReportNonMedicineUnifiedAll', $data);
 	}
