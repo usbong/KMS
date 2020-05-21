@@ -715,6 +715,9 @@ class Report_Model extends CI_Model
 
 		$this->db->where('t1.item_type_id', $itemTypeId);
 
+		//added by Mike, 20200521
+		$this->db->where('t1.item_id!=', 0);
+
 //		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
 		$this->db->like('t2.notes', "PAID");
@@ -758,6 +761,9 @@ class Report_Model extends CI_Model
 		$this->db->distinct('t1.item_name');
 
 		$this->db->where('t1.item_type_id', $itemTypeId);
+
+		//added by Mike, 20200521
+		$this->db->where('t1.item_id!=', 0);
 
 //		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
