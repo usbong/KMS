@@ -367,7 +367,9 @@ class Report_Model extends CI_Model
 		//edited by Mike, 20200509
 /*		$this->db->group_by('t2.transaction_id');
 */
-		$this->db->group_by('t4.receipt_id');
+		//edited by Mike, 20200521
+		//$this->db->group_by('t4.receipt_id');
+		$this->db->group_by('t4.receipt_number');
 
 /*
 		$this->db->group_by('t2.report_id');
@@ -871,8 +873,8 @@ class Report_Model extends CI_Model
 	$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
 */
 
-		$param["monthNum"] = "05";
-		$param["currentMonthNum"] = "05";
+		$param["monthNum"] = "04";
+		$param["currentMonthNum"] = "04";
 
 		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
 		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/30/".date("Y"));
