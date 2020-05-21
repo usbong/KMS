@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200519
+' @date updated: 20200521
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -826,12 +826,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//edited by Mike, 20200519
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									echo number_format($patientFee, 2, '.', '');
-									
-									
+																		
 									$cartFeeTotal = $cartFeeTotal + $patientFee;
 								}
 								else {
-									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
+									//edited by Mike, 20200521
+//									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
+									echo number_format($cartValue['fee'], 2, '.', '');
 
 									$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
 								}
