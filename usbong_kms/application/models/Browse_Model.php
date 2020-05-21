@@ -183,6 +183,9 @@ class Browse_Model extends CI_Model
 //		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
 		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
 
+		//added by Mike, 20200521
+		$this->db->where('t1.item_id!=', 0); //0 = NONE
+
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
 
 		$this->db->like('t1.item_name', $param['nameParam']);
