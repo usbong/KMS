@@ -395,6 +395,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 
 			//added by Mike, 20200522
+			//alert(classification);
+			alert(medicalDoctorId);
 			if (medicalDoctorId.trim()==="") {
 				medicalDoctorId = "1"; //default: SYSON, PEDRO
 			}
@@ -501,8 +503,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
 */
 			echo "<b>MEDICAL DOCTOR: </b>";		
-			
-			//show only 1 value
+?>			
+
+<!-- TO-DO: -update: this -->
+			<select id="medicalDoctorIdParam">
+			  <option value="1">SYSON, PEDRO</option>
+			  <option value="2">SYSON, PETER</option>
+			  <option value="3">REJUSO, CHASTITY AMOR</option>
+			</select>						
+
+<?php			
+/*
 			echo "<select id='medicalDoctorIdParam' size='1'>";
 			
 			foreach ($medicalDoctorList as $medicalDoctorValue) {
@@ -514,6 +525,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  }				
 			}
 			echo "</select>";
+*/			
 	?>
 	<br/>
 <!--	<br/> 
