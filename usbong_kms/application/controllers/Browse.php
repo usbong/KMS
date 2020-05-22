@@ -294,6 +294,39 @@ class Browse extends CI_Controller { //MY_Controller {
 				$iCount = $iCount + 1;
 			}
 		}
+
+		//TO-DO: add: in non-medicine items
+		//added by Mike, 20200522
+		$itemId = -1;
+		$outputArray = [];
+
+		if ($data['result'] == True) {
+			foreach ($data['result'] as $value) {				
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+				
+				if ($bIsSameItemId) {
+					if ($value['resultQuantityInStockNow'] == 0) {
+					}
+					else {
+						array_push($outputArray, $value);						
+					}
+				}
+				else {
+					array_push($outputArray, $value);						
+
+				}
+			}
+		}
+
+		$data['result'] = [];
+		$data['result'] = $outputArray;
 		
 		$this->load->view('searchMedicine', $data);
 	}
