@@ -261,6 +261,8 @@ class Browse extends CI_Controller { //MY_Controller {
 					
 					if ($remainingPaidItem < 0) {
 						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+						
+//						$remainingPaidItem = $remainingPaidItem - $data['result'][$iCount]['resultQuantityInStockNow'];
 					}
 					else {
 						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingPaidItem;
@@ -280,6 +282,10 @@ class Browse extends CI_Controller { //MY_Controller {
 						}
 						else {						
 							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem;					
+
+							//TO-DO: -reverify: for cases with multiple additional stock items
+							//added by Mike, 20200522
+							$remainingPaidItem = 0;
 						}
 					}
 					else {
@@ -313,13 +319,22 @@ class Browse extends CI_Controller { //MY_Controller {
 				
 				if ($bIsSameItemId) {
 					if ($value['resultQuantityInStockNow'] == 0) {
+//					if ($value['quantity_in_stock'] == 0) {
 					}
 					else {
 						array_push($outputArray, $value);						
 					}
 				}
+				//added by Mike, 20200522
 				else {
-					array_push($outputArray, $value);						
+					if ($value['resultQuantityInStockNow'] == 0) {
+//					if ($value['quantity_in_stock'] == 0) {
+					}
+					else {
+						array_push($outputArray, $value);						
+					}
+
+//					array_push($outputArray, $value);						
 
 				}
 			}
