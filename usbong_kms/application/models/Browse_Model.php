@@ -82,7 +82,8 @@ class Browse_Model extends CI_Model
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
 //		$this->db->distinct('t1.patient_name');
-		$this->db->group_by('t1.patient_name');
+//		$this->db->group_by('t1.patient_name');
+		$this->db->group_by('t2.added_datetime_stamp');
 
 		$this->db->like('t1.patient_name', $param['nameParam']);
 		
@@ -101,14 +102,38 @@ class Browse_Model extends CI_Model
 		if ($rowArray == null) {			
 			return False; //edited by Mike, 20190722
 		}
-		
+	
+		//added by Mike, 20200522
+		//get only the patient transaction whose transaction date is the newest
+		//note that if the patient consulted with multiple medical doctors,
+		//the patient name will appear multiple times for each medical doctor
+		$outputArray = array();
+
+		$patientId = -1;
+		$bIsSamePatientId = false;
+
+		foreach($rowArray as $row) {			 
+			if ($patientId==$row["patient_id"]) {
+				$bIsSamePatientId = true;
+			}
+			else {
+				$patientId = $row["patient_id"];
+				$bIsSamePatientId = false;
+			}
+			
+			if (!$bIsSamePatientId) {
+				array_push($outputArray, $row);
+			}
+		}		
+	
 //		echo report_id: .$rowArray[0]['report_id'];
 		
 /*		return $row->report_description;
 */
 //		return $rowArray[0]['report_description'];
 
-		return $rowArray;
+//		return $rowArray;
+		return $outputArray;
 	}	
 
 	//edited by Mike, 20200411
