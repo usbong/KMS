@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200521
+' @date updated: 20200522
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -392,6 +392,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			if (notes.trim()==="") {
 				notes = "NONE";
+			}
+
+			//added by Mike, 20200522
+			if (medicalDoctorId.trim()==="") {
+				medicalDoctorId = "1"; //default: SYSON, PEDRO
 			}
 			
 			//do the following only if value is a Number, i.e. not NaN
