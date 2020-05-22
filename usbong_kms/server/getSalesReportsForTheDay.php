@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200521
+  @date updated: 20200522
 
   Input:
   1) Sales reports for the day in the database (DB)
@@ -32,10 +32,7 @@
 */	
 	date_default_timezone_set('Asia/Hong_Kong');
 
-
 	//added by Mike, 20200521
-	//TO-DO: -add: non-medicine
-	//TO-DO: -add: medicine asterisk, i.e. Glucosamine Sulphate and Calcium with Vitamin D
 	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
 	{
 		if ($selectedMedicineResultArray->num_rows > 0) {
@@ -71,15 +68,120 @@
 
 			file_put_contents($file, $outputReportMedicine, LOCK_EX);				
 		}
-
+		else {
+			echo "There are no Medicine item transactions for the day.";
+		}
 	}
+
+	//added by Mike, 20200522
+	echo "<br/><br/>";
+
+	//added by Mike, 20200522
+	$responses = [];
+	
+	//medicine asterisk, i.e. Glucosamine Sulphate and Calcium with Vitamin D
+	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
+	{
+		if ($selectedMedicineAsteriskResultArray->num_rows > 0) {
+//						$row = $selectedResult->fetch_array();
+			//count total
+			$iFeeTotalCount = 0;				
+			$iQuantityTotalCount = 0;				
+
+			foreach ($selectedMedicineAsteriskResultArray as $value) {
+				if (strpos($value['item_name'], "*") === false) {
+				}
+				else {
+					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+					$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+				}					
+			}
+
+			//write as .txt file
+			$jsonResponse = array(
+					"iFeeTotalCount" => $iFeeTotalCount,
+					"iQuantityTotalCount" => $iQuantityTotalCount
+			);
+			$responses[] = $jsonResponse;
+			
+			$outputReportMedicineAsterisk = json_encode($responses);
+							
+			echo $outputReportMedicineAsterisk;
+							
+//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
+			
+			$sDateToday = date("Y-m-d");
+
+			//update the file location accordingly
+			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicineAsterisk".$sDateToday.".txt";
+
+			file_put_contents($file, $outputReportMedicineAsterisk, LOCK_EX);				
+		}
+		else {
+			echo "There are no Medicine item (Asterisk), i.e. Glucosamine Sulphate and Calcium with Vitamin D,  transactions for the day.";
+		}
+	}		
 	// show an error if there is an issue with the database query
 	else
 	{
 			echo "Error: " . $mysqli->error;
 	}																
 	
-		
+	
+	//added by Mike, 20200522
+	echo "<br/><br/>";
+
+	//added by Mike, 20200522
+	$responses = [];
+	
+	//non-medicine
+	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
+	{
+		if ($selectedNonMedicineResultArray->num_rows > 0) {
+//						$row = $selectedResult->fetch_array();
+			//count total
+			$iFeeTotalCount = 0;				
+			$iQuantityTotalCount = 0;				
+
+			foreach ($selectedNonMedicineResultArray as $value) {
+//				if (strpos($value['item_name'], "*") === false) {
+					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+					$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+//				}					
+			}
+
+			//write as .txt file
+			$jsonResponse = array(
+					"iFeeTotalCount" => $iFeeTotalCount,
+					"iQuantityTotalCount" => $iQuantityTotalCount
+			);
+			$responses[] = $jsonResponse;
+			
+			$outputReportNonMedicine = json_encode($responses);
+							
+			echo $outputReportNonMedicine;
+							
+//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
+			
+			$sDateToday = date("Y-m-d");
+
+			//update the file location accordingly
+			//note: \\nonMedicine due to \n is new line
+			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
+
+			file_put_contents($file, $outputReportNonMedicine, LOCK_EX);				
+		}
+		else {
+			echo "There are no Non-medicine item transactions for the day.";
+		}
+	}		
+	// show an error if there is an issue with the database query
+	else
+	{
+			echo "Error: " . $mysqli->error;
+	}																
+	
+	
 	//close database connection
 	$mysqli->close();
 ?>
