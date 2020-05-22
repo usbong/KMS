@@ -378,7 +378,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200329; edited by Mike, 20200517
 //		function myPopupFunction() {				
 		function myPopupFunction(patientId) {				
-			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
+			//edited by Mike, 20200522
+			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
+			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex + 1; //we add a +1 due to the id number begins at 1, not 0
+			
 			var professionalFee = document.getElementById("professionalFeeParam").value;
 			var xRayFee = document.getElementById("xRayFeeParam").value;
 			var labFee = document.getElementById("labFeeParam").value;
@@ -394,13 +398,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				notes = "NONE";
 			}
 
+			//removed by Mike, 20200522
 			//added by Mike, 20200522
 			//alert(classification);
-			alert(medicalDoctorId);
+/*			alert(medicalDoctorId);		
 			if (medicalDoctorId.trim()==="") {
 				medicalDoctorId = "1"; //default: SYSON, PEDRO
 			}
-			
+*/			
 			//do the following only if value is a Number, i.e. not NaN
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
 				window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
@@ -505,27 +510,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<b>MEDICAL DOCTOR: </b>";		
 ?>			
 
-<!-- TO-DO: -update: this -->
+<!-- +updated: this -->
+<!--
 			<select id="medicalDoctorIdParam">
 			  <option value="1">SYSON, PEDRO</option>
 			  <option value="2">SYSON, PETER</option>
 			  <option value="3">REJUSO, CHASTITY AMOR</option>
 			</select>						
-
+-->
 <?php			
-/*
-			echo "<select id='medicalDoctorIdParam' size='1'>";
-			
-			foreach ($medicalDoctorList as $medicalDoctorValue) {
-			  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
-			    echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
-			  }
-			  else {
-			    echo "<option value='".$medicalDoctorIdValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
-			  }				
-			}
+			echo "<select id='medicalDoctorIdParam'>";			
+				foreach ($medicalDoctorList as $medicalDoctorValue) {
+				  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
+					echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+				  }
+				  else {
+					echo "<option value='".$medicalDoctorIdValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
+				  }				
+				}
 			echo "</select>";
-*/			
 	?>
 	<br/>
 <!--	<br/> 
