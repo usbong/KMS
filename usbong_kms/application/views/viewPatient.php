@@ -408,10 +408,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				medicalDoctorId = "1"; //default: SYSON, PEDRO
 			}
 */			
-			alert("professionalFee: " + professionalFee);
-			alert("xRayFee: " + xRayFee);
-			alert("labFee: " + labFee);
-
 
 			//do the following only if value is a Number, i.e. not NaN
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
