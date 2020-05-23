@@ -377,20 +377,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		//added by Mike, 20200329; edited by Mike, 20200517
 //		function myPopupFunction() {				
-		function myPopupFunction(patientId) {				
+		function myPopupFunction(patientId) {	
 			//edited by Mike, 20200522
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
 			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex + 1; //we add a +1 due to the id number begins at 1, not 0
-			
+
 			var professionalFee = document.getElementById("professionalFeeParam").value;
 			var xRayFee = document.getElementById("xRayFeeParam").value;
 			var labFee = document.getElementById("labFeeParam").value;
 			var classification = document.getElementById("classificationParam").value;
 			var notes = document.getElementById("notesParam").value;
 			
-			//added by Mike, 20200518
-			if (notes.includes("DEXA")) {
+			//added by Mike, 20200518; edited by Mike, 20200523
+			//the following instruction is not yet supported by all computer web browsers
+//			if (notes.includes("DEXA")) {
+			if (notes.indexOf("DEXA")!==-1) {
 				professionalFee = parseInt(professionalFee) + 500;
 			}
 
@@ -406,6 +408,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				medicalDoctorId = "1"; //default: SYSON, PEDRO
 			}
 */			
+			alert("professionalFee: " + professionalFee);
+			alert("xRayFee: " + xRayFee);
+			alert("labFee: " + labFee);
+
+
 			//do the following only if value is a Number, i.e. not NaN
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
 				window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
