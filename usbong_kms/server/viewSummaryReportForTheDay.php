@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200522
+  @date updated: 20200523
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -135,26 +135,34 @@
 
 	ini_set('auto_detect_line_endings', true);
 
-	//Reference: https://stackoverflow.com/questions/9139202/how-to-parse-a-csv-file-using-php;
-	//answer by: thenetimp, 20120204T0730
-	//edited by: thenetimp, 20170823T1704
+	//added by Mike, 20200523
+	if (!file_exists($filename)) {
+		//add the day of the week
+		$dateToday = (new DateTime())->format('Y-m-d, l');
+		echo "There are no transactions for the day, ".$dateToday.".";
+	}
+	else {
+		//Reference: https://stackoverflow.com/questions/9139202/how-to-parse-a-csv-file-using-php;
+		//answer by: thenetimp, 20120204T0730
+		//edited by: thenetimp, 20170823T1704
 
-	$row = 1;
-	//if (($handle = fopen("test.csv", "r")) !== FALSE) {
-	if (($handle = fopen($filename, "r")) !== FALSE) {
-	  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-		$num = count($data) -1; //we add -1 for the computer to not include the excess cell due to the ending \n
-	//    echo "<p> $num fields in line $row: <br /></p>\n";
-		$row++;
-		for ($c=0; $c < $num; $c++) {
-	//        echo $data[$c] . "<br />\n";
-			echo "<td class='column'>".utf8_encode($data[$c])."</td>";
+		$row = 1;
+		//if (($handle = fopen("test.csv", "r")) !== FALSE) {
+		if (($handle = fopen($filename, "r")) !== FALSE) {
+		  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+			$num = count($data) -1; //we add -1 for the computer to not include the excess cell due to the ending \n
+		//    echo "<p> $num fields in line $row: <br /></p>\n";
+			$row++;
+			for ($c=0; $c < $num; $c++) {
+		//        echo $data[$c] . "<br />\n";
+				echo "<td class='column'>".utf8_encode($data[$c])."</td>";
+			}
+			echo '</tr><tr class="row">';
+		  }
+		  echo '</tr>';
+		  
+		  fclose($handle);
 		}
-		echo '</tr><tr class="row">';
-	  }
-	  echo '</tr>';
-	  
-	  fclose($handle);
 	}
 
 ?>
