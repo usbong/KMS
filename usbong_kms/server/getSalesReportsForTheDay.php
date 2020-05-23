@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200522
+  @date updated: 20200523
 
   Input:
   1) Sales reports for the day in the database (DB)
@@ -181,6 +181,59 @@
 			echo "Error: " . $mysqli->error;
 	}																
 	
+	//added by Mike, 20200522
+	echo "<br/><br/>";
+
+	//added by Mike, 20200523
+	$responses = [];
+	
+	//x-ray
+	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."'"))
+	{
+		if ($selectedXRayResultArray->num_rows > 0) {
+//						$row = $selectedResult->fetch_array();
+			//count total
+			$iFeeTotalCount = 0;				
+			$iQuantityTotalCount = 0;				
+
+			foreach ($selectedXRayResultArray as $value) {
+//				if (strpos($value['item_name'], "*") === false) {
+				if ($value['x_ray_fee'] !== "0.00") {
+					$iFeeTotalCount = $iFeeTotalCount + $value['x_ray_fee'];
+					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+				}					
+			}
+
+			//write as .txt file
+			$jsonResponse = array(
+					"iFeeTotalCount" => $iFeeTotalCount,
+					"iQuantityTotalCount" => $iQuantityTotalCount
+			);
+			$responses[] = $jsonResponse;
+			
+			$outputReportNonMedicine = json_encode($responses);
+							
+			echo $outputReportNonMedicine;
+							
+//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
+			
+			$sDateToday = date("Y-m-d");
+
+			//update the file location accordingly
+			//note: \\nonMedicine due to \n is new line
+			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\xRay".$sDateToday.".txt";
+
+			file_put_contents($file, $outputReportNonMedicine, LOCK_EX);				
+		}
+		else {
+			echo "There are no Non-medicine item transactions for the day.";
+		}
+	}		
+	// show an error if there is an issue with the database query
+	else
+	{
+			echo "Error: " . $mysqli->error;
+	}																
 	
 	//close database connection
 	$mysqli->close();
