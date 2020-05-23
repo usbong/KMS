@@ -381,25 +381,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//edited by Mike, 20200522
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
-			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
-	
-			//TO-DO: -update: this
-//			alert(medicalDoctorId);
-			
-			//added by Mike, 20200523
-			//this is due to we do not include id number 0 and 2 in the select options
-			//therefore, we need to add a +1 to correctly identify the medical doctor
-/*			alert(medicalDoctorId);
-			if ((medicalDoctorId==0) || (medicalDoctorId==2)) {
-				medicalDoctorId++;
-			}
-*/
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;			
 			var professionalFee = document.getElementById("professionalFeeParam").value;
 			var xRayFee = document.getElementById("xRayFeeParam").value;
 			var labFee = document.getElementById("labFeeParam").value;
 			var classification = document.getElementById("classificationParam").value;
 			var notes = document.getElementById("notesParam").value;
 			
+			//added by Mike, 20200523
+//			alert(medicalDoctorId);
+			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
+			//therefore, we need to add a +1 to correctly identify the medical doctor
+/*			
+			if ((medicalDoctorId==0)) {
+				medicalDoctorId+=1; //to be SYSON, PEDRO
+			}
+			else (medicalDoctorId==2)) {
+				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
+			}
+*/
+
 			//added by Mike, 20200518; edited by Mike, 20200523
 			//the following instruction is not yet supported by all computer web browsers
 //			if (notes.includes("DEXA")) {
@@ -428,6 +429,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
 			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
 
+			//added by Mike, 20200523
+//			alert(medicalDoctorId);
+/*
+			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
+			//therefore, we need to add a +1 to correctly identify the medical doctor
+			if ((medicalDoctorId==0)) {
+				medicalDoctorId+=1; //to be SYSON, PEDRO
+			}
+			else (medicalDoctorId==2)) {
+				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
+			}
+*/
+
 /*
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
 */			
@@ -451,10 +465,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}	
 */
 		function myPopupFunctionPay(medicalDoctorId,patientId) {				
-			//edited by Mike, 20200522
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
 			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
+
+			//added by Mike, 20200523
+//			alert(medicalDoctorId);
+			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
+			//therefore, we need to add a +1 to correctly identify the medical doctor
+/*
+			if ((medicalDoctorId==0)) {
+				medicalDoctorId+=1; //to be SYSON, PEDRO
+			}
+			else (medicalDoctorId==2)) {
+				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
+			}
+*/
 
 			window.location.href = "<?php echo site_url('browse/payTransactionServiceAndItemPurchase/"+medicalDoctorId+"/"+patientId+"');?>";			
 		}	
