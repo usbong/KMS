@@ -181,14 +181,14 @@
 			echo "Error: " . $mysqli->error;
 	}																
 	
-	//added by Mike, 20200522
+	//added by Mike, 20200523
 	echo "<br/><br/>";
 
 	//added by Mike, 20200523
 	$responses = [];
 	
 	//x-ray
-	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."'"))
+	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0'"))
 	{
 		if ($selectedXRayResultArray->num_rows > 0) {
 //						$row = $selectedResult->fetch_array();
@@ -211,9 +211,9 @@
 			);
 			$responses[] = $jsonResponse;
 			
-			$outputReportNonMedicine = json_encode($responses);
+			$outputReportXRay = json_encode($responses);
 							
-			echo $outputReportNonMedicine;
+			echo $outputReportXRay;
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
@@ -221,12 +221,12 @@
 
 			//update the file location accordingly
 			//note: \\nonMedicine due to \n is new line
-			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\xRay".$sDateToday.".txt";
+			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
 
-			file_put_contents($file, $outputReportNonMedicine, LOCK_EX);				
+			file_put_contents($file, $outputReportXRay, LOCK_EX);				
 		}
 		else {
-			echo "There are no Non-medicine item transactions for the day.";
+			echo "There are no X-Ray item transactions for the day.";
 		}
 	}		
 	// show an error if there is an issue with the database query
@@ -234,6 +234,62 @@
 	{
 			echo "Error: " . $mysqli->error;
 	}																
+
+
+	//added by Mike, 20200523
+	echo "<br/><br/>";
+
+	//added by Mike, 20200523
+	$responses = [];
+	
+	//lab
+//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."'"))
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0'"))
+	{
+		if ($selectedLabResultArray->num_rows > 0) {
+//						$row = $selectedResult->fetch_array();
+			//count total
+			$iFeeTotalCount = 0;				
+			$iQuantityTotalCount = 0;				
+
+			foreach ($selectedLabResultArray as $value) {
+//				if (strpos($value['item_name'], "*") === false) {
+				if ($value['lab_fee'] !== "0.00") {
+					$iFeeTotalCount = $iFeeTotalCount + $value['lab_fee'];
+					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+				}					
+			}
+
+			//write as .txt file
+			$jsonResponse = array(
+					"iFeeTotalCount" => $iFeeTotalCount,
+					"iQuantityTotalCount" => $iQuantityTotalCount
+			);
+			$responses[] = $jsonResponse;
+			
+			$outputReportLab = json_encode($responses);
+							
+			echo $outputReportLab;
+							
+//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
+			
+			$sDateToday = date("Y-m-d");
+
+			//update the file location accordingly
+			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\lab".$sDateToday.".txt";
+
+			file_put_contents($file, $outputReportLab, LOCK_EX);				
+		}
+		else {
+			echo "There are no Lab, i.e. Laboratory, item transactions for the day.";
+		}
+	}		
+	// show an error if there is an issue with the database query
+	else
+	{
+			echo "Error: " . $mysqli->error;
+	}																
+
 	
 	//close database connection
 	$mysqli->close();
