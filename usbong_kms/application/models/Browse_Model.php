@@ -526,8 +526,10 @@ class Browse_Model extends CI_Model
 	
 	public function getMedicalDoctorList() {
 		$this->db->select('medical_doctor_id, medical_doctor_name');
-		$this->db->where('medical_doctor_id !=', 0); //ANY
-		$this->db->where('medical_doctor_id !=', 3); //SUMMARY
+		
+		//removed by Mike, 20200523
+//		$this->db->where('medical_doctor_id !=', 0); //ANY
+//		$this->db->where('medical_doctor_id !=', 3); //SUMMARY
 
 		$query = $this->db->get('medical_doctor');	
 		
@@ -536,7 +538,9 @@ class Browse_Model extends CI_Model
 		if ($rowArray == null) {			
 			return False;
 		}
-		
+	
+//		echo $rowArray[0]["medical_doctor_id"]." : ".$rowArray[0]["medical_doctor_name"];
+
 		return $rowArray;
 	}
 
@@ -550,6 +554,10 @@ class Browse_Model extends CI_Model
 //		$this->db->distinct('t1.patient_name');
 //		$this->db->like('t1.patient_name', $param['nameParam']);
 		$this->db->where('t1.patient_id', $nameId);		
+
+		//added by Mike, 20200523
+//		$this->db->order_by('t2.transaction_date`', 'DESC');//ASC');
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 		
 		$query = $this->db->get('patient');
 
