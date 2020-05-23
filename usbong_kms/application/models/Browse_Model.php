@@ -883,8 +883,11 @@ class Browse_Model extends CI_Model
 		$this->db->or_like('t2.notes', '; PAID');
 */
 		$this->db->where('t1.patient_id', $patientId);
-		$this->db->where('t3.medical_doctor_id', $medicalDoctorId);
 
+/*		//removed by Mike, 20200523
+		//this is due to a patient may consult with multiple medical doctors
+		$this->db->where('t3.medical_doctor_id', $medicalDoctorId);
+*/
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 
 		$this->db->limit(8);
