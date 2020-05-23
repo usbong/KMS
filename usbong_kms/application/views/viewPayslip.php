@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200507
+' @date updated: 20200523
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -376,7 +376,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 
 						<td class ="column">				
+<!--						//edited by Mike, 20200523
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+-->
+							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+							
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];
