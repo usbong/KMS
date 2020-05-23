@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200517
-' @date updated: 20200518
+' @date updated: 20200523
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -601,7 +601,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</td>
 			  </tr>			  
 			  <?php 
+				//edited by Mike, 20200523
 			    if (strpos($medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'], "PEDRO")==false) {
+//			    if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")==false) {
 			  ?>
 				  <tr>
 				    <td>
@@ -610,7 +612,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  </tr>
 				  <tr>
 					<td>
-					  <b><span>Official Receipt Number <?php echo "(".$medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'].")";?><span class="asterisk">*</span></span></b>
+<!--			    edited by Mike, 20200523
+-->
+<b><span>Official Receipt Number <?php echo "(".$medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'].")";?><span class="asterisk">*</span></span></b>
+
+<!--					  <b><span>Official Receipt Number <?php echo "(".$medicalDoctorList[$medicalDoctorId]['medical_doctor_name'].")";?><span class="asterisk">*</span></span></b>
+-->
 					</td>
 				  </tr>
 				  <tr>
