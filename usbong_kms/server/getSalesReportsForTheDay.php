@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200523
+  @date updated: 20200524
 
   Input:
   1) Sales reports for the day in the database (DB)
@@ -31,6 +31,9 @@
     }
 */	
 	date_default_timezone_set('Asia/Hong_Kong');
+
+	//added by Mike, 20200524
+	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
 
 	//added by Mike, 20200521
 	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
@@ -64,8 +67,10 @@
 			$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
-			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicine".$sDateToday.".txt";
-
+			//edited by Mike, 20200524
+			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicine".$sDateToday.".txt";
+			$file = $fileBasePath."medicine".$sDateToday.".txt";
+			
 			file_put_contents($file, $outputReportMedicine, LOCK_EX);				
 		}
 		else {
@@ -113,7 +118,9 @@
 			$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
-			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicineAsterisk".$sDateToday.".txt";
+			//edited by Mike, 20200524
+			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicineAsterisk".$sDateToday.".txt";
+			$file = $fileBasePath."medicineAsterisk".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportMedicineAsterisk, LOCK_EX);				
 		}
@@ -166,8 +173,10 @@
 			$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
+			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
-			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
+			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
+			$file = $fileBasePath."nonMedicine".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportNonMedicine, LOCK_EX);				
 		}
@@ -220,8 +229,10 @@
 			$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
+			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
-			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
+			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
+			$file = $fileBasePath."xRay".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportXRay, LOCK_EX);				
 		}
@@ -276,7 +287,10 @@
 			$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
-			$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\lab".$sDateToday.".txt";
+			//edited by Mike, 20200524
+			//note: \\nonMedicine due to \n is new line
+			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\lab".$sDateToday.".txt";
+			$file = $fileBasePath."lab".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportLab, LOCK_EX);				
 		}
