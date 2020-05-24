@@ -304,6 +304,63 @@
 			echo "Error: " . $mysqli->error;
 	}																
 
+
+	//added by Mike, 20200524
+	echo "<br/><br/>";
+
+	//added by Mike, 20200524
+	$responses = [];
+	
+	//medical doctor; SYSON, PEDRO
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1"))	
+	{
+		if ($selectedMedicalDoctorResultArray->num_rows > 0) {
+//						$row = $selectedResult->fetch_array();
+			//count total
+			$iFeeTotalCount = 0;				
+			$iQuantityTotalCount = 0;				
+
+			foreach ($selectedMedicalDoctorResultArray as $value) {
+//				if (strpos($value['item_name'], "*") === false) {
+				if ($value['fee'] !== "0.00") {
+					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+				}					
+			}
+
+			//write as .txt file
+			$jsonResponse = array(
+					"iFeeTotalCount" => $iFeeTotalCount,
+					"iQuantityTotalCount" => $iQuantityTotalCount
+			);
+			$responses[] = $jsonResponse;
+			
+			$outputReportMedicalDoctor = json_encode($responses);
+							
+			echo $outputReportMedicalDoctor;
+							
+//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
+			
+			$sDateToday = date("Y-m-d");
+
+			//update the file location accordingly
+			//edited by Mike, 20200524
+			//note: \\nonMedicine due to \n is new line
+			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
+			$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
+
+			file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
+		}
+		else {
+			echo "There are no SYSON, PEDRO transactions for the day.";
+		}
+	}		
+	// show an error if there is an issue with the database query
+	else
+	{
+			echo "Error: " . $mysqli->error;
+	}																
+
 	
 	//close database connection
 	$mysqli->close();
