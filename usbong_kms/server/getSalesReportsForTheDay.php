@@ -38,7 +38,18 @@
 	//added by Mike, 20200521
 	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
 	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
 		if ($selectedMedicineResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedMedicineResultArray->num_rows == 1) {
+				echo "Medicine transaction for the day.<br /><br />";
+			}
+			else {
+				echo "Medicine transactions for the day.<br /><br />";
+			}
+
 //						$row = $selectedResult->fetch_array();
 			//count total
 			$iFeeTotalCount = 0;				
@@ -79,7 +90,7 @@
 	}
 
 	//added by Mike, 20200522
-	echo "<br/><br/>";
+	echo "<br/>";
 
 	//added by Mike, 20200522
 	$responses = [];
@@ -87,7 +98,18 @@
 	//medicine asterisk, i.e. Glucosamine Sulphate and Calcium with Vitamin D
 	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
 	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
 		if ($selectedMedicineAsteriskResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedMedicineResultArray->num_rows == 1) {
+				echo "Medicine (Asterisk), i.e. Glucosamine Sulphate and Calcium with Vitamin D, transaction for the day.<br /><br />";
+			}
+			else {
+				echo "Medicine (Asterisk), i.e. Glucosamine Sulphate and Calcium with Vitamin D, transactions for the day.<br /><br />";
+			}
+
 //						$row = $selectedResult->fetch_array();
 			//count total
 			$iFeeTotalCount = 0;				
@@ -136,7 +158,7 @@
 	
 	
 	//added by Mike, 20200522
-	echo "<br/><br/>";
+	echo "<br/>";
 
 	//added by Mike, 20200522
 	$responses = [];
@@ -144,7 +166,19 @@
 	//non-medicine
 	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
 	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
 		if ($selectedNonMedicineResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedNonMedicineResultArray->num_rows == 1) {
+				echo "Non-medicine transaction for the day.<br /><br />";
+			}
+			else {
+				echo "Non-medicine transactions for the day.<br /><br />";
+			}
+
+
 //						$row = $selectedResult->fetch_array();
 			//count total
 			$iFeeTotalCount = 0;				
@@ -191,7 +225,7 @@
 	}																
 	
 	//added by Mike, 20200523
-	echo "<br/><br/>";
+	echo "<br/>";
 
 	//added by Mike, 20200523
 	$responses = [];
@@ -199,7 +233,18 @@
 	//x-ray
 	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0'"))
 	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
 		if ($selectedXRayResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedXRayResultArray->num_rows == 1) {
+				echo "X-Ray transaction for the day.<br /><br />";
+			}
+			else {
+				echo "X-Ray transactions for the day.<br /><br />";
+			}
+
 //						$row = $selectedResult->fetch_array();
 			//count total
 			$iFeeTotalCount = 0;				
@@ -248,7 +293,7 @@
 
 
 	//added by Mike, 20200523
-	echo "<br/><br/>";
+	echo "<br/>";
 
 	//added by Mike, 20200523
 	$responses = [];
@@ -257,7 +302,18 @@
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."'"))
 	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0'"))
 	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
 		if ($selectedLabResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedLabResultArray->num_rows == 1) {
+				echo "Laboratory transaction for the day.<br /><br />";
+			}
+			else {
+				echo "Laboratory transactions for the day.<br /><br />";
+			}
+
 //						$row = $selectedResult->fetch_array();
 			//count total
 			$iFeeTotalCount = 0;				
@@ -306,7 +362,7 @@
 
 
 	//added by Mike, 20200524
-	echo "<br/><br/>";
+	echo "<br/>";
 
 	//added by Mike, 20200524
 	$responses = [];
@@ -314,7 +370,18 @@
 	//medical doctor; SYSON, PEDRO
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1"))	
 	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
 		if ($selectedMedicalDoctorResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedMedicalDoctorResultArray->num_rows == 1) {
+				echo "SYSON, PEDRO's transaction for the day.<br /><br />";
+			}
+			else {
+				echo "SYSON, PEDRO's transactions for the day.<br /><br />";
+			}
+
 //						$row = $selectedResult->fetch_array();
 			//count total
 			$iFeeTotalCount = 0;				
@@ -362,7 +429,7 @@
 	}																
 
 	//added by Mike, 20200524
-	echo "<br/><br/>";
+	echo "<br/>";
 
 	//added by Mike, 20200524
 	$responses = [];
@@ -370,7 +437,18 @@
 	//medical doctor; SYSON, PETER
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2"))	
 	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
 		if ($selectedMedicalDoctorResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedMedicalDoctorResultArray->num_rows == 1) {
+				echo "SYSON, PETER's transaction for the day.<br /><br />";
+			}
+			else {
+				echo "SYSON, PETER's transactions for the day.<br /><br />";
+			}
+
 //						$row = $selectedResult->fetch_array();
 			//count total
 			$iFeeTotalCount = 0;				
