@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200522
+' @date updated: 20200526
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -388,6 +388,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var classification = document.getElementById("classificationParam").value;
 			var notes = document.getElementById("notesParam").value;
 			
+			//added by Mike, 20200525
+//			alert(notes);
+			notes = notes.replace(";", "u003B"); //semicolon
+			notes = notes.replace(",", "u002C"); //comma
+			
+//			alert("after: " + notes);
 			//added by Mike, 20200523
 //			alert(medicalDoctorId);
 			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
