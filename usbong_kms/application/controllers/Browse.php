@@ -318,9 +318,7 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 				
 				if ($bIsSameItemId) {
-					//edited by Mike, 20200525
-//					if ($value['resultQuantityInStockNow'] == 0) {
-					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
+					if ($value['resultQuantityInStockNow'] == 0) {
 //					if ($value['quantity_in_stock'] == 0) {
 					}
 					else {
@@ -329,9 +327,7 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 				//added by Mike, 20200522
 				else {
-					//edited by Mike, 20200525
-//					if ($value['resultQuantityInStockNow'] == 0) {
-					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
+					if ($value['resultQuantityInStockNow'] == 0) {
 //					if ($value['quantity_in_stock'] == 0) {
 					}
 					else {
@@ -777,10 +773,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['xRayFee'] = $xRayFee;
 		$data['labFee'] = $labFee;
 		$data['classification'] = $classification;
-		//edited by Mike, 20200519
+		//edited by Mike, 20200526
 //		$data['notes'] = $notes;
+		//$data['notes'] = $notes."; "."UNPAID";
+		$notes = str_replace("u003B", ";", $notes); //semicolon
+		$notes = str_replace("u002C", ",", $notes); //comma
+		$notes = urldecode($notes); //%20 = space, etc		
 		$data['notes'] = $notes."; "."UNPAID";
-				
+		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
