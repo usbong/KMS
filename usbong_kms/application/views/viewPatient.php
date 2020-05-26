@@ -392,7 +392,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //			alert(notes);
 			notes = notes.replace(";", "u003B"); //semicolon
 			notes = notes.replace(",", "u002C"); //comma
-			
+	
+			//added by Mike, 20200526
+			notes = notes.toUpperCase();
+	
 //			alert("after: " + notes);
 			//added by Mike, 20200523
 //			alert(medicalDoctorId);
