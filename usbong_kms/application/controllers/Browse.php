@@ -318,7 +318,9 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 				
 				if ($bIsSameItemId) {
-					if ($value['resultQuantityInStockNow'] == 0) {
+					//edited by Mike, 20200525
+//					if ($value['resultQuantityInStockNow'] == 0) {
+					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
 //					if ($value['quantity_in_stock'] == 0) {
 					}
 					else {
@@ -327,7 +329,9 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 				//added by Mike, 20200522
 				else {
-					if ($value['resultQuantityInStockNow'] == 0) {
+					//edited by Mike, 20200525
+//					if ($value['resultQuantityInStockNow'] == 0) {
+					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
 //					if ($value['quantity_in_stock'] == 0) {
 					}
 					else {
