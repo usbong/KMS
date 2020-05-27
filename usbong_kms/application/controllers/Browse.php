@@ -226,11 +226,16 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
 
+//		echo "count: ".count($data['result']);
+
 		//added by Mike, 20200417
 		$itemTypeId = 1; //1 = Medicine
 		$iCount = 0;
 		$itemId = -1;
-		$remainingPaidItem = 0; //added by Mike, 20200501
+
+		//edited by Mike, 20200527
+		$remainingItemNow = 0;
+//		$remainingPaidItem = 0; //added by Mike, 20200501
 		
 		if ($data['result'] == True) {
 			foreach ($data['result'] as $value) {				
@@ -243,7 +248,6 @@ class Browse extends CI_Controller { //MY_Controller {
 					$itemId = $value['item_id'];
 					$bIsSameItemId = false;
 				}
-
 					
 	//			echo "itemId: " . $itemId;
 /*				
@@ -254,18 +258,22 @@ class Browse extends CI_Controller { //MY_Controller {
 				//edited by Mike, 20200422
 //				if ($iCount==0) {
 				if (!$bIsSameItemId) {	
+
 					//edited by Mike, 20200501
 					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
 					
-					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					
-					if ($remainingPaidItem < 0) {
+					//edited by Mike, 20200527
+//					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+										
+					if ($remainingItemNow < 0) {
+						
 						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
 						
 //						$remainingPaidItem = $remainingPaidItem - $data['result'][$iCount]['resultQuantityInStockNow'];
 					}
 					else {
-						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingPaidItem;
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
 					}
 					
 //					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
@@ -274,18 +282,19 @@ class Browse extends CI_Controller { //MY_Controller {
 					//edited by Mike, 20200501
 					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
 
-					if ($remainingPaidItem < 0) { //already negative
-						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem < 0) {
+					if ($remainingItemNow < 0) { //already negative
+						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
 							$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
 							
-							$remainingPaidItem = $data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem;
+							$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
 						}
-						else {						
-							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingPaidItem;					
+						else {																		
 
-							//TO-DO: -reverify: for cases with multiple additional stock items
+							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;					
+
+							//TO-DO: -reverify: again for cases with multiple additional stock items
 							//added by Mike, 20200522
-							$remainingPaidItem = 0;
+							$remainingItemNow = 0;
 						}
 					}
 					else {
@@ -335,8 +344,8 @@ class Browse extends CI_Controller { //MY_Controller {
 					else {
 						array_push($outputArray, $value);						
 					}
-*/
-						array_push($outputArray, $value);						
+*/						
+					array_push($outputArray, $value);						
 
 				}
 				//added by Mike, 20200522
@@ -346,7 +355,7 @@ class Browse extends CI_Controller { //MY_Controller {
 					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
 //					if ($value['quantity_in_stock'] == 0) {
 					}
-					else {
+					else {						
 						array_push($outputArray, $value);						
 					}
 
@@ -388,7 +397,6 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200501
 		$data['resultItem'] = $this->getResultItemQuantity($data);
-
 
 /*
 		//edited by Mike, 20200501
@@ -462,7 +470,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewItemMedicine', $data);
 	}
 
-	//added by Mike, 20200501
+	//added by Mike, 20200501; edited by Mike, 20200527
 	public function getResultItemQuantity($data) {
 		$data['nameParam'] = $data['result'][0]['item_name'];
 		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
@@ -473,7 +481,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$itemId = -1;
 		$remainingPaidItem = 0; //added by Mike, 20200501
 		
+		$outputArray = []; //added by Mike, 20200527
+		
 		if ($data['resultItem'] == True) {
+						
 			foreach ($data['resultItem'] as $value) {				
 				//edited by Mike, 20200422
 				//$itemId = $value['item_id'];
@@ -498,41 +509,58 @@ class Browse extends CI_Controller { //MY_Controller {
 					//edited by Mike, 20200501
 					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
 					
-					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					//edited by Mike, 20200527
+					//$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 					
-					if ($remainingPaidItem < 0) {
+					if ($remainingItemNow < 0) {
 						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
 					}
 					else {
-						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $remainingPaidItem;
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
+						
+						//added by Mike, 20200527
+						if ($remainingItemNow!=0) {
+							array_push($outputArray, $data['resultItem'][$iCount]);
+						}
 					}
 					
 //					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
 				}
-				else {
+				else {					
 					//edited by Mike, 20200501
 					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
 
-					if ($remainingPaidItem < 0) { //already negative
-						if ($data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem < 0) {
+					if ($remainingItemNow < 0) { //already negative
+						if ($data['resultItem'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
 							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
 							
-							$remainingPaidItem = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem;
+							$remainingItemNow = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingItemNow;
 						}
 						else {						
-							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingPaidItem;					
+							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingItemNow;					
+
+							//added by Mike, 20200527
+							array_push($outputArray, $data['resultItem'][$iCount]);
 						}
 					}
-					else {
-						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] ;					
+					else {						
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] ;
+
+						//added by Mike, 20200527
+//						if ($remainingItemNow!=0) {
+							array_push($outputArray, $data['resultItem'][$iCount]);
+//						}
 					}
 				}
 				
 				$iCount = $iCount + 1;
 			}
 		}		
-		
-		return $data['resultItem'];
+
+		//edited by Mike, 20200527
+//		return $data['resultItem'];
+		return $outputArray;
 	}
 
 	//added by Mike, 20200328; edited by Mike, 20200407
