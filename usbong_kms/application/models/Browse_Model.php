@@ -90,8 +90,12 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20200427
 		$this->db->where('t1.patient_name !=', "CANCELLED");
 
-		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
-		$this->db->limit(8);//1);
+		//edited by Mike, 20200527
+//		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+		$this->db->order_by('t1.patient_name', 'ASC');
+
+		//removed by Mike, 20200527
+//		$this->db->limit(8);//1);
 		
 		$query = $this->db->get('patient');
 
@@ -203,10 +207,14 @@ class Browse_Model extends CI_Model
 //		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
 //		$this->db->distinct('t1.patient_name');
+		//TO-DO: -re-verify: if we can remove
 		$this->db->group_by('t1.item_name');
+		
 		//edited by Mike, 20200501
-//		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
-		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
+		//re-edited by Mike, 20200527
+		//TO-DO: -re-verify due to new inventory stock
+		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
+//		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
 
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0); //0 = NONE
