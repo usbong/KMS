@@ -207,14 +207,16 @@ class Browse_Model extends CI_Model
 //		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
 //		$this->db->distinct('t1.patient_name');
+
 		//TO-DO: -re-verify: if we can remove
-		$this->db->group_by('t1.item_name');
+//		$this->db->group_by('t1.item_name');
 		
 		//edited by Mike, 20200501
 		//re-edited by Mike, 20200527
 		//TO-DO: -re-verify due to new inventory stock
-		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
-//		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
+		//re-verify: simply update quantity_in_stock for new item stock that have the same expiration date 
+//		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
+		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
 
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0); //0 = NONE
@@ -222,7 +224,11 @@ class Browse_Model extends CI_Model
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
 
 		$this->db->like('t1.item_name', $param['nameParam']);
-//		$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
+		
+		//added by Mike, 20200527
+		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
+		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
 		$this->db->limit(8);//1);
 		
 		$query = $this->db->get('item');
@@ -1044,7 +1050,8 @@ class Browse_Model extends CI_Model
 		}
 		//added by Mike, 20200414
 		else {
-			return -1; //9999;
+			//edited by Mike, 20200527
+			return -1;//-9999;//-1; //9999;
 		}
 				
 		if ($iQuantity==0) {
