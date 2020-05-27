@@ -308,6 +308,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		if ($data['result'] == True) {
 			foreach ($data['result'] as $value) {				
+			
+//				echo $value['item_name'];
+			
 				//$itemId = $value['item_id'];
 				if ($itemId==$value['item_id']) {
 					$bIsSameItemId = true;
@@ -318,14 +321,23 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 				
 				if ($bIsSameItemId) {
-					//edited by Mike, 20200525
+					//edited by Mike, 20200527
+					//note: include in results medicine items that are zero in quantity in stock
+					//TO-DO: -re-verify: this
 //					if ($value['resultQuantityInStockNow'] == 0) {
-					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
+/*					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
 //					if ($value['quantity_in_stock'] == 0) {
+	
+					echo $value['item_name'];
+
 					}
+					
 					else {
 						array_push($outputArray, $value);						
 					}
+*/
+						array_push($outputArray, $value);						
+
 				}
 				//added by Mike, 20200522
 				else {
