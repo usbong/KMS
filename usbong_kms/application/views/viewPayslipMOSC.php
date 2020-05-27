@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200427
+' @date updated: 20200527
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -355,7 +355,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 
 						<td class ="column">				
-							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+							
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];
@@ -364,6 +365,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>		
 								</div>								
 							</a>
+
 						</td>
 						<td class ="column">				
 								<span id="feeId<?php echo $iCount?>">
