@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200427
+' @date updated: 20200527
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -397,16 +397,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="transactionDateId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200427
+								//edited by Mike, 20200527
+/*
 //								echo $value['transaction_date'];
 								echo DATE("Y-m-d", strtotime($value['transaction_date']));
+*/
+								if ($value['transaction_date']==0) {
+									echo DATE("Y-m-d");
+								}
+								else {
+									echo DATE("Y-m-d", strtotime($value['transaction_date']));
+								}
+
 							?>
 								</div>
 						</td>						
 						<td class ="column">				
 								<div class="medicalDoctorName" id="medicalDoctorId<?php echo $iCount?>">
 							<?php
+								//edited by Mike, 20200527
+/*							
 								echo $value['medical_doctor_name'];
+*/
+//								echo $value['medical_doctor_name'];
+								if ($value['medical_doctor_name']=="") {
+									echo "NEW; NONE YET";
+								}
+								else {
+									echo $value['medical_doctor_name'];
+								}								
+
 							?>
 								</div>
 						</td>						
