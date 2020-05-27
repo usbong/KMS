@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200521
+' @date updated: 20200527
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -564,7 +564,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //				$value = $result[0];
 
 //				if (isset($resultItem)) {
-					$value = $resultItem[sizeof($resultItem)-1];
+
+					//edited by Mike, 20200527
+//					$value = $resultItem[sizeof($resultItem)-1];
+					$value = $resultItem[0];
+//					$value = $resultItem;
+
 //				}
 		?>				
 		

@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200504
+' @date updated: 20200527
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -354,6 +354,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  </tr>
 <?php				
 				$iCount = 1;
+
 				foreach ($result as $value) {
 		?>				
 		
