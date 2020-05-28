@@ -249,7 +249,7 @@ class Browse extends CI_Controller { //MY_Controller {
 					$bIsSameItemId = false;
 				}
 					
-	//			echo "itemId: " . $itemId;
+//				echo "itemId: " . $itemId;
 /*				
 				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
 */				
@@ -266,6 +266,8 @@ class Browse extends CI_Controller { //MY_Controller {
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 										
+//					echo $remainingItemNow;	
+					
 					if ($remainingItemNow < 0) {
 						
 						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
@@ -288,8 +290,7 @@ class Browse extends CI_Controller { //MY_Controller {
 							
 							$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
 						}
-						else {																		
-
+						else {
 							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;					
 
 							//TO-DO: -reverify: again for cases with multiple additional stock items
@@ -354,6 +355,7 @@ class Browse extends CI_Controller { //MY_Controller {
 //					if ($value['resultQuantityInStockNow'] == 0) {
 					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
 //					if ($value['quantity_in_stock'] == 0) {
+
 					}
 					else {						
 						array_push($outputArray, $value);						
@@ -495,9 +497,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					$itemId = $value['item_id'];
 					$bIsSameItemId = false;
 				}
-
 					
-	//			echo "itemId: " . $itemId;
+//				echo "itemId: " . $itemId;
+
 /*				
 				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
 */				
@@ -512,9 +514,17 @@ class Browse extends CI_Controller { //MY_Controller {
 					//edited by Mike, 20200527
 					//$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					
-					if ($remainingItemNow < 0) {
+
+					//edited by Mike, 20200528
+//					if ($remainingItemNow < 0) {
+					if (strpos($data['resultItem'][$iCount]['item_name'],"*")!==false) {
 						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
+						
+						array_push($outputArray, $data['resultItem'][$iCount]);
+					}
+					else if ($remainingItemNow < 0) {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
+						//do not add in output array
 					}
 					else {
 						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
