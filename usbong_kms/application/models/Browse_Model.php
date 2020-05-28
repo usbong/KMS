@@ -215,9 +215,10 @@ class Browse_Model extends CI_Model
 		//re-edited by Mike, 20200527
 		//TO-DO: -re-verify due to new inventory stock
 		//re-verify: simply update quantity_in_stock for new item stock that have the same expiration date 
-		//note: -update: inventory items that use the same added_timestamp, i.e. 2020-04-06 08:40:44
+		//note: -re-verify: if this solves the issue with inventory items that use the same added_timestamp, i.e. 2020-04-06 08:40:44
 //		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
-		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
+//		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
+		$this->db->group_by('t2.inventory_id');
 
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0); //0 = NONE
