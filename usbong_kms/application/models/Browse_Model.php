@@ -539,6 +539,17 @@ class Browse_Model extends CI_Model
         $this->db->update('transaction', $data);
 */		
 	}	
+
+	//added by Mike, 20200529
+	public function addPatientName($param) 
+	{		
+		$data = array(
+					'patient_name' => $param['nameParam']
+				);
+
+		$this->db->insert('patient', $data);
+		return $this->db->insert_id();
+	}	
 	
 	public function getMedicalDoctorList() {
 		$this->db->select('medical_doctor_id, medical_doctor_name');
@@ -560,6 +571,8 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}
 
+	//TO-DO: -reverify: this
+	//consider eliminating excess steps
 	public function getDetailsListViaId($nameId) 
 	{		
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_id, t3.medical_doctor_name');
@@ -574,6 +587,9 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20200523
 //		$this->db->order_by('t2.transaction_date`', 'DESC');//ASC');
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
+		//added by Mike, 20200529
+		$this->db->group_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 		
 		$query = $this->db->get('patient');
 
