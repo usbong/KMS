@@ -347,6 +347,13 @@ class Browse_Model extends CI_Model
         $this->db->delete('transaction');
 	}	
 
+	//added by Mike, 20200530
+	public function deleteTransactionFromPatient($param) 
+	{
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');		
+	}
+
 	//added by Mike, 20200401
 	public function payTransactionMedicinePurchase() 
 	{			
@@ -554,19 +561,36 @@ class Browse_Model extends CI_Model
 		return $this->db->insert_id();
 	}	
 
-	//added by Mike, 20200529
+	//added by Mike, 20200529; edited by Mike, 20200530
 	public function addNewTransactionForPatient($param) 
-	{		
-		$data = array(
-					'patient_id' => $param['patientId'],
-					'item_id' => 0,
-					'transaction_date' => date('m/d/Y'),
-					'report_id' => 0,
-					'notes' => "IN-QUEUE; UNPAID"
-				);
+	{			
+		$this->db->select('transaction_id, patient_id');
+        $this->db->where('notes',"IN-QUEUE; UNPAID");
+		$this->db->where('transaction_date', date('m/d/Y'));
+		$this->db->where('patient_id', $param['patientId']);
 
-		$this->db->insert('transaction', $data);
-		return $this->db->insert_id();
+		$query = $this->db->get('transaction');	
+		
+		$rowArray = $query->result_array();
+
+//		foreach ($rowArray as $rowValue) {
+//		}
+		
+		if (count($rowArray)==0) {
+			$data = array(
+						'patient_id' => $param['patientId'],
+						'item_id' => 0,
+						'transaction_date' => date('m/d/Y'),
+						'report_id' => 0,
+						'notes' => "IN-QUEUE; UNPAID"
+					);
+
+			$this->db->insert('transaction', $data);
+			return $this->db->insert_id();
+		}
+		else {
+			return False;
+		}
 	}	
 	
 	public function getMedicalDoctorList() {
