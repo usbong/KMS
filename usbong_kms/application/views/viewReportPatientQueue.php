@@ -442,7 +442,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200529
 		function myPopupFunctionDeletePatientTransaction(transactionId) {				
 			//TO-DO: -update: this
-			//window.location.href = "<?php echo site_url('browse/deleteTransactionPatient/"+transactionId+"');?>";
+			window.location.href = "<?php echo site_url('browse/deleteTransactionFromPatient/"+transactionId+"');?>";
 		}	
 
 
@@ -565,6 +565,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
+		//added by Mike, 20200530
+		$resultCount = 0;
 
 		if ((isset($result)) and ($result!=False)) {
 			$resultCount = count($result);
