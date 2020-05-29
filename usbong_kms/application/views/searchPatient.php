@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200518
+' @date updated: 20200529
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						div.copyright
 						{
-								text-align: center;
+							text-align: center;
 						}
 						
 						div.patientName
@@ -129,6 +129,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 							text-align: right;
 						}						
+						
+						span.asterisk
+						{
+							color: #ff0000;							
+						}
 
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
 	last accessed: 20200321
@@ -439,10 +444,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			else {					
 				echo '<div>';					
 				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our patients\' names.';
-				echo '<br><br>Recommendation:';
-				echo '<br>&#x25CF; Reverify that the patient is <b>not</b> new.';				
-				echo '<br>&#x25CF; Reverify that the spelling is correct.';				
-				echo '</div>';					
+				echo '<br/><br/>Recommendation Steps:';
+				echo '<br/>1) Reverify that the patient is <b>not</b> new.';				
+				echo '<br/>2) Reverify that the spelling is correct.';				
+				echo '<br/>3) Add <b>new</b> patient name.';				
+				echo '<br/><br/>';
+				echo '</div>';		
+
+				//added by Mike, 20200529
+?>				
+	<!-- Form -->
+	<form method="post" action="<?php echo site_url('browse/addPatientName/')?>">
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>Last Name <span class="asterisk">*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>				
+				  <input type="text" class="patient-input" placeholder="" name="patientLastNameParam" required>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>First Name </span><span class="asterisk">*</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
+				</td>
+			  </tr>
+			</table>
+		</div>	
+		<br />
+		<!-- Buttons -->
+		<button type="submit" class="Button-login">
+			Submit
+		</button>
+	</form>
+
+<?php
+				
+				
 			}			
 		}
 	?>
