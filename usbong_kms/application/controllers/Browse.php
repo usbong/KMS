@@ -1093,6 +1093,27 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 	}
 	
+	//added by Mike, 20200530	
+	public function deleteTransactionFromPatient($transactionId)
+	{
+		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+		$this->load->model('Report_Model');
+	
+		$this->Browse_Model->deleteTransactionFromPatient($data);
+		
+
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+
+		$this->load->view('viewReportPatientQueue', $data);
+	}
+	
 	//added by Mike, 20200411; edited by Mike, 20200519
 	public function payTransactionItemPurchase($itemTypeId, $itemId)
 	{
