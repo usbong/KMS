@@ -179,6 +179,41 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20200529
+	public function getPatientQueueReportForTheDay()
+	{
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->distinct('t1.patient_name');
+				
+		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+		
+		//added by Mike, 202005029
+		$this->db->where('t1.patient_name!=', 'NONE');
+
+
+//		$this->db->like('t2.notes', "NEW; NONE YET");
+//		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
+		$this->db->order_by('t3.medical_doctor_id', 'ASC');//ASC');
+
+		$this->db->group_by('t1.patient_id');
+
+		//$this->db->limit(8);//1);
+		
+		$query = $this->db->get('patient');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}
+
 	//added by Mike, 20200322; edited by Mike, 20200408
 	public function getPayslipForTheDay($param) 
 	{		

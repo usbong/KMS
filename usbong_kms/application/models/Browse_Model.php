@@ -90,6 +90,9 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20200427
 		$this->db->where('t1.patient_name !=', "CANCELLED");
 
+		//added by Mike, 20200529
+		$this->db->where('t1.patient_name !=', "NONE");
+
 		//edited by Mike, 20200527
 //		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
 		$this->db->order_by('t1.patient_name', 'ASC');
@@ -548,6 +551,21 @@ class Browse_Model extends CI_Model
 				);
 
 		$this->db->insert('patient', $data);
+		return $this->db->insert_id();
+	}	
+
+	//added by Mike, 20200529
+	public function addNewTransactionForPatient($param) 
+	{		
+		$data = array(
+					'patient_id' => $param['patientId'],
+					'item_id' => 0,
+					'transaction_date' => date('m/d/Y'),
+					'report_id' => 0,
+					'notes' => "IN-QUEUE; UNPAID"
+				);
+
+		$this->db->insert('transaction', $data);
 		return $this->db->insert_id();
 	}	
 	
@@ -1030,6 +1048,9 @@ class Browse_Model extends CI_Model
 		$this->db->where('t2.transaction_date', date('m/d/Y'));//ASC');
 //		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 		$this->db->like('t2.notes', "UNPAID");
+		
+		//added by Mike, 202005029
+		$this->db->not_like('t2.notes', "IN-QUEUE");
 		
 		//edited by Mike, 20200401
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');		
