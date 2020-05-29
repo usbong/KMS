@@ -167,6 +167,37 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchPatient', $data);
 	}
 
+	//added by Mike, 20200529
+	public function searchPatientInformationDesk()
+	{		
+		$data['param'] = $this->input->get('param'); //added by Mike, 20170616
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->view('searchPatientInformationDesk', $data);
+	}
+
+	//added by Mike, 20200529
+	public function confirmPatientInformationDesk()
+	{
+		$data['nameParam'] = $_POST['nameParam'];
+		
+		//added by Mike, 20200328
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchPatientInformationDesk');
+		}
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+	
+		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+
+		$this->load->view('searchPatientInformationDesk', $data);
+	}
+
 	//added by Mike, 20200328
 	public function searchNonMedicine()
 	{		
@@ -858,6 +889,25 @@ class Browse extends CI_Controller { //MY_Controller {
 /*		
 		$this->load->view('viewPatientPaidReceipt', $data);
 */		
+	}
+	
+	public function addNewTransactionForPatient($patientId)
+	{		
+		$data['patientId'] = $patientId;
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+		$this->load->model('Report_Model');
+
+		$this->Browse_Model->addNewTransactionForPatient($data);
+
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+
+		$this->load->view('viewReportPatientQueue', $data);
 	}
 	
 	//added by Mike, 20200529
