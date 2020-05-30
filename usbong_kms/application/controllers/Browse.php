@@ -380,7 +380,16 @@ class Browse extends CI_Controller { //MY_Controller {
 						array_push($outputArray, $value);						
 					}
 */						
-					array_push($outputArray, $value);						
+					//edited by Mike, 20200530
+//					array_push($outputArray, $value);						
+
+					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
+//					if ($value['quantity_in_stock'] == 0) {
+
+					}
+					else {						
+						array_push($outputArray, $value);						
+					}
 
 				}
 				//added by Mike, 20200522
@@ -543,11 +552,12 @@ class Browse extends CI_Controller { //MY_Controller {
 //				if ($iCount==0) {
 				if (!$bIsSameItemId) {	
 					//edited by Mike, 20200501
-					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";			
 					
 					//edited by Mike, 20200527
 					//$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+
 
 					//edited by Mike, 20200528
 //					if ($remainingItemNow < 0) {
@@ -559,9 +569,14 @@ class Browse extends CI_Controller { //MY_Controller {
 					else if ($remainingItemNow < 0) {
 						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
 						//do not add in output array
+
+						//added by Mike, 20200530
+						//TO-DO: -update: this
+						$remainingItemNow = $data['resultItem'][$iCount]['quantity_in_stock']-$remainingItemNow;//0;					
 					}
 					else {
 						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
+						
 						
 						//added by Mike, 20200527
 						if ($remainingItemNow!=0) {
