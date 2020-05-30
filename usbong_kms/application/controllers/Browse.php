@@ -891,10 +891,11 @@ class Browse extends CI_Controller { //MY_Controller {
 */		
 	}
 	
-	public function addNewTransactionForPatient($patientId)
+	public function addNewTransactionForPatient($patientId, $medicalDoctorId)
 	{		
 		$data['patientId'] = $patientId;
-		
+		$data['medicalDoctorId'] = $medicalDoctorId;
+				
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
