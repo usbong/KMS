@@ -116,6 +116,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #ab9c7d;		
 							text-align: right
 						}						
+
+						<!-- added by Mike, 20200530 -->
+						td.columnTableHeader
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+						}												
 						
 						td.imageColumn
 						{
