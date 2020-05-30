@@ -66,6 +66,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #00ff00; <!--#93d151; lime green-->
 							border: 1pt solid #00ff00;
 						}
+						
+						div.tableHeaderAddNewPatient
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #ff8000; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+						}						
 
 						input.browse-input
 						{
@@ -97,6 +105,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 <!--							border: 1px solid #ab9c7d;		
 -->
+						}						
+
+						table.addPatientTable
+						{
+							border: 2px dotted #ab9c7d;		
+							margin-top: 10px;
 						}						
 
 						table.imageTable
@@ -805,8 +819,80 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 		
 		?>
-	<br />
-	<br />
+
+	<!-- added by Mike, 20200530 -->
+	<table class="addPatientTable">
+	<tr>
+		<td>
+			<div class="tableHeaderAddNewPatient">
+				ADD NEW PATIENT
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<!-- Form -->
+		<form method="post" action="<?php echo site_url('browse/addPatientNameInformationDesk/')?>">
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>Last Name <span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>				
+					  <input type="text" class="patient-input" placeholder="" name="patientLastNameParam" required>
+					</td>
+				  </tr>
+				</table>
+			</div>
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>First Name </span><span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+					  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
+					</td>
+				  </tr>
+				</table>
+			</div>	
+	<!--		<br /> -->
+	<?php
+				//added by Mike, 20200530
+				//TO-DO: -update: this
+	/*			
+				$medicalDoctorId = 1; //SYSON, PEDRO
+
+				echo "<div>";
+				echo "<select id='medicalDoctorIdParam'>";			
+					foreach ($medicalDoctorList as $medicalDoctorValue) {
+						  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
+							echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+						  }			  	  
+						  else {
+							echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
+						  }				
+					   }
+				echo "</select>";
+				echo "</div>";
+	*/			
+	?>
+
+			<br />
+			<!-- Buttons -->
+			<button type="submit" class="Button-login">
+				Submit
+			</button>
+		</form>
+		</td>
+	</tr>
+	</table>
+
 	<br />
 	<br />
 	<div class="copyright">
