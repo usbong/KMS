@@ -381,8 +381,11 @@ class Browse extends CI_Controller { //MY_Controller {
 					}
 */						
 					//edited by Mike, 20200530
-//					array_push($outputArray, $value);						
-
+					array_push($outputArray, $value);						
+					
+					//TO-DO: -add: auto-verify if there exists another set of the item in the inventory
+					
+/*
 					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
 //					if ($value['quantity_in_stock'] == 0) {
 
@@ -390,10 +393,13 @@ class Browse extends CI_Controller { //MY_Controller {
 					else {						
 						array_push($outputArray, $value);						
 					}
-
+*/
 				}
 				//added by Mike, 20200522
 				else {
+					//edited by Mike, 20200530
+					
+/*
 					//edited by Mike, 20200525
 //					if ($value['resultQuantityInStockNow'] == 0) {
 					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
@@ -403,13 +409,22 @@ class Browse extends CI_Controller { //MY_Controller {
 					else {						
 						array_push($outputArray, $value);						
 					}
+*/
+					array_push($outputArray, $value);						
 
-//					array_push($outputArray, $value);						
-
+					//delete the items with zero in-stock value if there exists another set of such item in the inventory
+					foreach ($outputArray as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							if ($outputValue['resultQuantityInStockNow'] == 0) {
+								$outputValue = $value;
+							}
+						}						
+					}
+					unset($outputValue);
 				}
 			}
 		}
-
+		
 		$data['result'] = [];
 		$data['result'] = $outputArray;
 		
@@ -576,12 +591,13 @@ class Browse extends CI_Controller { //MY_Controller {
 					}
 					else {
 						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
-						
-						
+							
 						//added by Mike, 20200527
-						if ($remainingItemNow!=0) {
+						//edited by Mike, 20200530
+						//TO-DO: -add: auto-identify if there exists another set of the item in the inventory
+//						if ($remainingItemNow!=0) {
 							array_push($outputArray, $data['resultItem'][$iCount]);
-						}
+//						}
 					}
 					
 //					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
@@ -605,14 +621,26 @@ class Browse extends CI_Controller { //MY_Controller {
 					}
 					else {						
 						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] ;
+						
+						//edited by Mike, 20200530
 
 						//added by Mike, 20200527
 //						if ($remainingItemNow!=0) {
-							array_push($outputArray, $data['resultItem'][$iCount]);
+//							array_push($outputArray, $data['resultItem'][$iCount]);
 //						}
+
+						//delete the items with zero in-stock value if there exists another set of such item in the inventory
+						foreach ($outputArray as &$outputValue) {							
+							if ($outputValue['item_id'] == $data['resultItem'][$iCount]['item_id']) {
+								if ($outputValue['resultQuantityInStockNow'] == 0) {
+									$outputValue = $data['resultItem'][$iCount];
+								}
+							}						
+						}
+						unset($outputValue);
 					}
-				}
-				
+				}	
+	
 				$iCount = $iCount + 1;
 			}
 		}		
