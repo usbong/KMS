@@ -74,8 +74,9 @@ class Browse_Model extends CI_Model
 /*
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis');
 */
+		//edited by Mike, 20200530
 		//we use this at MOSC
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -576,12 +577,15 @@ class Browse_Model extends CI_Model
 //		foreach ($rowArray as $rowValue) {
 //		}
 		
+		//TO-DO: -update: this
+				
 		if (count($rowArray)==0) {
 			$data = array(
 						'patient_id' => $param['patientId'],
 						'item_id' => 0,
 						'transaction_date' => date('m/d/Y'),
 						'report_id' => 0,
+						'medical_doctor_id' => $param['medicalDoctorId'],						
 						'notes' => "IN-QUEUE; UNPAID"
 					);
 
