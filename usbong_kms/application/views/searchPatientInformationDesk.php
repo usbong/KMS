@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200529
+' @date updated: 20200530
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -378,13 +378,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*
 					if (($value['fee'] == 0) and ($value['x_ray_fee'] == 0)) {
 						continue;
-					}
+					}					
 */					
+
+					//added by Mike, 20200530
+					if (!isset($value['medical_doctor_id'])) {
+						$value['medical_doctor_id'] = 0; //ANY
+					}
 		?>				
 		
 					  <tr class="row">
 						<td class ="column">			
-							<a href='<?php echo site_url('browse/addNewTransactionForPatient/'.$value['patient_id'])?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
+							<a href='<?php echo site_url('browse/addNewTransactionForPatient/'.$value['patient_id'].'/'.$value['medical_doctor_id'])?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];
@@ -420,13 +425,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*							
 								echo $value['medical_doctor_name'];
 */
+
+//								echo $value['medical_doctor_id'];
 //								echo $value['medical_doctor_name'];
-								if ($value['medical_doctor_name']=="") {
+
+								//edited by Mike, 20200530
+//								if ($value['medical_doctor_name']=="") {
+
+								if ($value['medical_doctor_id']==0) { //ANY
 									echo "NEW; NONE YET";
 								}
 								else {
+									
 									echo $value['medical_doctor_name'];
+
 								}								
+
+//								echo $value['medical_doctor_name'];
 
 							?>
 								</div>

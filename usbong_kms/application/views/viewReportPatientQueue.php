@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20200529
+' @date updated: 20200530
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -597,10 +597,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$iCount = 0;
 ?>
 				<tr class="row">
-						<td class ="column">				
+						<td class ="column">		
 								<div class="tableHeader">
 							<?php
 								echo "COUNT";
+							?>
+								</div>
+						</td>
+						<td class ="column">		
+								<div class="tableHeader">
+							<?php
+								echo "MD COUNT";
 							?>
 								</div>
 						</td>
@@ -638,6 +645,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  </tr>
 <?php				
 				$iCount = 1;
+				$iMedicalDoctorCount = 1;
+				$currentMedicalDoctorId = -1; //added by Mike, 20200530
+				
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
 	/*	
@@ -655,6 +665,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div>
 				<?php
 								echo $iCount;
+				?>		
+								</div>								
+						</td>
+
+						<td class ="columnCount">				
+								<div>
+				<?php							
+								//added by Mike, 20200530
+								if ($currentMedicalDoctorId==-1) {
+									$currentMedicalDoctorId = $value['medical_doctor_id'];
+								}
+								else {									
+									if ($currentMedicalDoctorId!==$value['medical_doctor_id']) {
+										$currentMedicalDoctorId = $value['medical_doctor_id'];
+										$iMedicalDoctorCount = 1;
+									}
+									else {
+										$iMedicalDoctorCount = $iMedicalDoctorCount + 1;
+									}
+								}
+				
+								echo $iMedicalDoctorCount;
 				?>		
 								</div>								
 						</td>
@@ -692,14 +724,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div class="medicalDoctorName" id="medicalDoctorId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200518
+								//edited by Mike, 20200530
 //								echo $value['medical_doctor_name'];
-								if ($value['medical_doctor_name']=="") {
+//								if ($value['medical_doctor_name']=="") {
+
+								if ($value['medical_doctor_id']==0) { //ANY
 									echo "NEW; NONE YET";
 								}
 								else {
+									
 									echo $value['medical_doctor_name'];
+
 								}								
+								
 							?>
 								</div>
 						</td>						
