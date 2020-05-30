@@ -178,7 +178,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchPatientInformationDesk', $data);
 	}
 
-	//added by Mike, 20200529
+	//added by Mike, 20200529; edited by Mike, 20200530
 	public function confirmPatientInformationDesk()
 	{
 		$data['nameParam'] = $_POST['nameParam'];
@@ -192,6 +192,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
 		$this->load->model('Browse_Model');
+		
+		//added by Mike, 20200530
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 	
 		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
 
@@ -910,11 +913,51 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewReportPatientQueue', $data);
 	}
+
+	//added by Mike, 20200529
+	public function addPatientNameInformationDesk()
+	{
+		$data['patientLastNameParam'] = $_POST['patientLastNameParam'];
+		$data['patientFirstNameParam'] = $_POST['patientFirstNameParam'];
+
+		//TO-DO: -update: this
+		//$data['medicalDoctorIdParam'] = $_POST['medicalDoctorIdParam'];
+		$data['medicalDoctorIdParam'] = 1; //SYSON, PEDRO (DEFAULT)
+				
+		if (!isset($data['patientLastNameParam'])) {
+			redirect('report/report/viewReportPatientQueue');
+		}
+
+		if (!isset($data['patientFirstNameParam'])) {
+			redirect('report/report/viewReportPatientQueue');
+		}
+
+		$data['nameParam'] = $data['patientLastNameParam'].", ".$data['patientFirstNameParam'];
+		$data['nameParam'] = strtoupper($data['nameParam']);
+						
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+		$patientId = $this->Browse_Model->addPatientName($data);
+		
+//		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+/*		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+		$this->load->view('searchPatientInformationDesk', $data);	
+*/
+
+		$this->addNewTransactionForPatient($patientId, $data['medicalDoctorIdParam']);
+
+	}
 	
 	//added by Mike, 20200529
 	public function addPatientName()
 	{
-
 		$data['patientLastNameParam'] = $_POST['patientLastNameParam'];
 		$data['patientFirstNameParam'] = $_POST['patientFirstNameParam'];
 				
@@ -938,7 +981,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 		$patientId = $this->Browse_Model->addPatientName($data);
 		
-		$this->load->model('Browse_Model');
+//		$this->load->model('Browse_Model');
 	
 //		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
