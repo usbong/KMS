@@ -537,7 +537,9 @@ class Browse_Model extends CI_Model
 					);
 
 			$this->db->like('notes',"UNPAID");
-			$this->db->where('transaction_date', date('m/d/Y'));
+			//edited by Mike, 20200530
+			//$this->db->where('transaction_date', date('m/d/Y'));
+			$this->db->where('transaction_id', $rowValue['transaction_id']);
 			$this->db->update('transaction', $data);
 		}
 /*
