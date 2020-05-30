@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200524
+  @date updated: 20200530
 
   Input:
   1) Sales reports for the day in the database (DB)
@@ -65,7 +65,8 @@
 			//write as .txt file
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
-					"iQuantityTotalCount" => $iQuantityTotalCount
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530					
 			);
 			$responses[] = $jsonResponse;
 			
@@ -127,7 +128,8 @@
 			//write as .txt file
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
-					"iQuantityTotalCount" => $iQuantityTotalCount
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530					
 			);
 			$responses[] = $jsonResponse;
 			
@@ -194,7 +196,8 @@
 			//write as .txt file
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
-					"iQuantityTotalCount" => $iQuantityTotalCount
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530					
 			);
 			$responses[] = $jsonResponse;
 			
@@ -261,7 +264,8 @@
 			//write as .txt file
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
-					"iQuantityTotalCount" => $iQuantityTotalCount
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530					
 			);
 			$responses[] = $jsonResponse;
 			
@@ -330,7 +334,8 @@
 			//write as .txt file
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
-					"iQuantityTotalCount" => $iQuantityTotalCount
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530					
 			);
 			$responses[] = $jsonResponse;
 			
@@ -398,7 +403,8 @@
 			//write as .txt file
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
-					"iQuantityTotalCount" => $iQuantityTotalCount
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530
 			);
 			$responses[] = $jsonResponse;
 			
@@ -435,7 +441,9 @@
 	$responses = [];
 	
 	//medical doctor; SYSON, PETER
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2"))	
+	//edited by Mike, 20200530
+//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2"))	
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2"))	
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -454,18 +462,41 @@
 			$iFeeTotalCount = 0;				
 			$iQuantityTotalCount = 0;				
 
+			$iNetFeeTotalCount = 0; //added by Mike, 20200530
+
 			foreach ($selectedMedicalDoctorResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
 				if ($value['fee'] !== "0.00") {
+					//edited by Mike, 20200530
+
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
 					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+
+					if (strpos($value['notes'],"PRIVATE")!==false) {
+						$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+						
+						//TO-DO: -update: if +DEXA
+					}
+					else {
+						if (strpos($value['notes'],"DEXA")!==false) {
+							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+						}
+						else if (strpos($value['notes'],"NC")!==false) {
+						}
+						else if (strpos($value['notes'],"NO CHARGE")!==false) {
+						}
+						else {
+							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
+						}
+					}
 				}					
 			}
 
 			//write as .txt file
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
-					"iQuantityTotalCount" => $iQuantityTotalCount
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iNetFeeTotalCount
 			);
 			$responses[] = $jsonResponse;
 			
