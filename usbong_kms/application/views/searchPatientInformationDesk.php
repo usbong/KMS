@@ -469,7 +469,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200529
 ?>				
 	<!-- Form -->
-	<form method="post" action="<?php echo site_url('browse/addPatientName/')?>">
+	<form method="post" action="<?php echo site_url('browse/addPatientNameInformationDesk/')?>">
 		<div>
 			<table width="100%">
 			  <tr>
@@ -498,6 +498,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>	
+<!--		<br /> -->
+<?php
+			//added by Mike, 20200530
+			//TO-DO: -update: this
+/*			
+			$medicalDoctorId = 1; //SYSON, PEDRO
+
+			echo "<div>";
+			echo "<select id='medicalDoctorIdParam'>";			
+				foreach ($medicalDoctorList as $medicalDoctorValue) {
+					  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
+						echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+					  }			  	  
+					  else {
+						echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
+					  }				
+				   }
+			echo "</select>";
+			echo "</div>";
+*/			
+?>
+
 		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
