@@ -223,7 +223,7 @@ class Browse_Model extends CI_Model
 //		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
 //		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
 		$this->db->group_by('t2.inventory_id');
-
+		
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0); //0 = NONE
 
