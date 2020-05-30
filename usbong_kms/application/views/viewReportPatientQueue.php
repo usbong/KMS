@@ -680,7 +680,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>											
-					  </tr>
+				</tr>
 <?php				
 				$iCount = 1;
 				$iMedicalDoctorCount = 1;
@@ -697,7 +697,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						continue;
 					}
 */					
+					//added by Mike, 20200530; edited by Mike, 20200530
+					if ($currentMedicalDoctorId==-1) {
+						$currentMedicalDoctorId = $value['medical_doctor_id'];
+					}
+					else {									
+						if ($currentMedicalDoctorId!==$value['medical_doctor_id']) {
+							$currentMedicalDoctorId = $value['medical_doctor_id'];
+							$iMedicalDoctorCount = 1;													
+?>							
+				<tr class="row">
+						<td class ="column">		
+							<br />
+						</td>
+						<td class ="column">		
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>											
+						<td class ="column">				
+						</td>											
+				</tr>
+		<?php							
+						}
+						else {
+							$iMedicalDoctorCount = $iMedicalDoctorCount + 1;
+						}
+					}
+
 		?>						
+						
 					  <tr class="row">
 						<td class ="columnCount">				
 								<div>
@@ -706,27 +736,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>		
 								</div>								
 						</td>
-
-						<td class ="columnCount">				
-								<div>
-				<?php							
-								//added by Mike, 20200530
-								if ($currentMedicalDoctorId==-1) {
-									$currentMedicalDoctorId = $value['medical_doctor_id'];
-								}
-								else {									
-									if ($currentMedicalDoctorId!==$value['medical_doctor_id']) {
-										$currentMedicalDoctorId = $value['medical_doctor_id'];
-										$iMedicalDoctorCount = 1;
-									}
-									else {
-										$iMedicalDoctorCount = $iMedicalDoctorCount + 1;
-									}
-								}
 				
+						<td class ="columnCount">				
+				<?php
 								echo $iMedicalDoctorCount;
 				?>		
-								</div>								
 						</td>
 	
 						<td class ="column">				
