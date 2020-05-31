@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200530
+  @date updated: 20200531
 
   Input:
   1) Sales reports for the day in the database (DB)
@@ -373,7 +373,7 @@
 	$responses = [];
 	
 	//medical doctor; SYSON, PEDRO
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1"))	
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1"))	
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -392,11 +392,24 @@
 			$iFeeTotalCount = 0;				
 			$iQuantityTotalCount = 0;				
 
+			$iNetFeeTotalCount = 0; //added by Mike, 20200530
+			$iDexaQuantityTotalCount = 0; //added by Mike, 20200531
+			$iPrivateQuantityTotalCount = 0; //added by Mike, 20200531
+			$iNoChargeQuantityTotalCount = 0; //added by Mike, 20200531
+
 			foreach ($selectedMedicalDoctorResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
 				if ($value['fee'] !== "0.00") {
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
 					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+
+
+					if (strpos($value['notes'],"NC")!==false) {
+						$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
+					}
+					else if (strpos($value['notes'],"NO CHARGE")!==false) {
+						$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
+					}
 				}					
 			}
 
@@ -404,7 +417,12 @@
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
 					"iQuantityTotalCount" => $iQuantityTotalCount,
-					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530
+					"iNetFeeTotalCount" => $iFeeTotalCount, //$iNetFeeTotalCount //added by Mike, 20200530; edited by Mike, 20200531
+
+					//added by Mike, 20200531
+					"iDexaQuantityTotalCount" => $iDexaQuantityTotalCount,
+					"iPrivateQuantityTotalCount" => $iPrivateQuantityTotalCount,
+					"iNoChargeQuantityTotalCount" => $iNoChargeQuantityTotalCount
 			);
 			$responses[] = $jsonResponse;
 			
@@ -463,6 +481,9 @@
 			$iQuantityTotalCount = 0;				
 
 			$iNetFeeTotalCount = 0; //added by Mike, 20200530
+			$iDexaQuantityTotalCount = 0; //added by Mike, 20200531
+			$iPrivateQuantityTotalCount = 0; //added by Mike, 20200531
+			$iNoChargeQuantityTotalCount = 0; //added by Mike, 20200531
 
 			foreach ($selectedMedicalDoctorResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
@@ -475,15 +496,23 @@
 					if (strpos($value['notes'],"PRIVATE")!==false) {
 						$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
 						
+						//added by Mike, 20200531
+						$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;
+						
 						//TO-DO: -update: if +DEXA
 					}
 					else {
 						if (strpos($value['notes'],"DEXA")!==false) {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+							
+							//added by Mike, 20200531
+							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 						}
 						else if (strpos($value['notes'],"NC")!==false) {
+							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 						}
 						else if (strpos($value['notes'],"NO CHARGE")!==false) {
+							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 						}
 						else {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
@@ -496,7 +525,12 @@
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
 					"iQuantityTotalCount" => $iQuantityTotalCount,
-					"iNetFeeTotalCount" => $iNetFeeTotalCount
+					"iNetFeeTotalCount" => $iNetFeeTotalCount,
+					
+					//added by Mike, 20200531
+					"iDexaQuantityTotalCount" => $iDexaQuantityTotalCount,
+					"iPrivateQuantityTotalCount" => $iPrivateQuantityTotalCount,
+					"iNoChargeQuantityTotalCount" => $iNoChargeQuantityTotalCount
 			);
 			$responses[] = $jsonResponse;
 			
