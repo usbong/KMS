@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200531
+' @date updated: 20200602
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -420,6 +420,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			if (notes.trim()==="") {
 				notes = "NONE";
 			}
+			
+			//added by Mike, 20200602
+			if (notes.indexOf("NC")!==-1) { //gratis, i.e. NO CHARGE
+				professionalFee = 0;
+			}
 
 			//do the following only if value is a Number, i.e. not NaN
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
@@ -684,7 +689,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</a>
 						</td>
 						<td class ="column">				
-							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="600" min="1" max="99999" 
+							<!-- edited by Mike, 20200602 -->
+							<!-- default value is now 800, instead of 600 -->
+							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="800" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
