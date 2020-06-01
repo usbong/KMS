@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200509
+' @date updated: 20200602
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -581,7 +581,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>Official Receipt Number <span class="asterisk">*</span></span></b>
+				  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
 				</td>
 			  </tr>
 			  <tr>
