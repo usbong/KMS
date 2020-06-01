@@ -448,6 +448,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
 			//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
@@ -671,6 +674,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
@@ -851,9 +857,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 		
-		//added by Mike, 20200531
-		//TO-DO: -add: in the rest of the pages with Patient Purchased Service History
-		//$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
@@ -892,6 +897,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 		
 		//edited by Mike, 20200519
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -934,6 +942,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 		//added by Mike, 202005019
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
@@ -1078,6 +1089,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 		
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -1121,6 +1135,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 		//added by Mike, 202005019
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
@@ -1169,6 +1186,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -1236,6 +1256,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
@@ -1279,10 +1302,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
-		//added by Mike, 20200531
-		//TO-DO: -add: in the rest of the pages with Patient Purchased Service History
-		//$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
-
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -1375,9 +1396,47 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchPatient', $data);		
 	}
 	
+
+	//added by Mike, 20200531
+	//added in the result of the pages with Patient Purchase Service History
+	//TO-DO: -reverify: elapsed time output value
+	public function getElapsedTime($inputResult) {
+		$outputResult = [];
+		$startDateTime = date('Y-m-d H:i:s'); //default = now
+//		echo $startDateTime;
+//		echo "count: ".count($inputResult);
+			
+		foreach ($inputResult as $value) {
+//			if ($value['transaction_date']==date('m/d/Y')) {
+				
+				if (strpos(strtoupper($value['notes']), "IN-QUEUE; PAID")!==false) {
+					$startDateTime = strtotime($value['added_datetime_stamp']);					
+					
+//					echo "startDateTime: ".$startDateTime;
+
+				}
+				else {
+					$endDateTime = strtotime($value['added_datetime_stamp']);
+					
+//					echo "endDateTime: ".$endDateTime;
+
+					$value['elapsedTime'] = $endDateTime - $startDateTime;
+					
+					//echo "elapsedTime: ".date('H:i:s',$value['elapsedTime']);
+					
+					array_push($outputResult, $value);
+				}
+//			}
+		}
+		
+//		echo "output count: ".count($outputResult);
+
+		return $outputResult;		
+	}
+	
 	//added by Mike, 20200531
 	//TO-DO: -add: in the result of the pages with Patient Purchase Service History
-	public function getElapsedTime($inputResult) {
+	public function getElapsedTimePrev($inputResult) {
 		$outputResult = [];
 		$startDateTime = date('Y/m/d H:i:s'); //default = now
 		echo $startDateTime;
