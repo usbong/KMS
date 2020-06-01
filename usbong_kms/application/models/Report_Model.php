@@ -189,6 +189,16 @@ class Report_Model extends CI_Model
 		$this->db->distinct('t1.patient_name');
 				
 		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+
+		//added by Mike, 20200601
+		//TO-DO: -reverify: this
+		$this->db->where('t1.patient_id!=',0);
+
+		$this->db->where('t2.fee!=',0);
+//		$this->db->and_where('t2.notes!=',0);
+
+		$this->db->or_where('t2.fee=',0);
+		$this->db->where('t2.notes',"IN-QUEUE; UNPAID");
 		
 		//added by Mike, 202005029
 		$this->db->where('t1.patient_name!=', 'NONE');
