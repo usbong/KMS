@@ -452,8 +452,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		//added by Mike, 20200601
-		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+		//added by Mike, 20200601; removed by Mike, 20200602
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 			//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -902,8 +902,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		//added by Mike, 20200601
-		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+		//added by Mike, 20200601; removed by Mike, 20200602
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 		
 		//edited by Mike, 20200519
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -1098,8 +1098,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		//added by Mike, 20200601
-		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+		//added by Mike, 20200601; removed by Mike, 20200602
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 		
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -1195,8 +1195,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		//added by Mike, 20200601
-		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+		//added by Mike, 20200601; removed by Mike, 20200602
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
@@ -1263,8 +1263,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
-		//added by Mike, 20200601
-		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+		//added by Mike, 20200601; removed by Mike, 20200602
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
