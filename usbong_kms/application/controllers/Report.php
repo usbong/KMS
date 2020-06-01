@@ -733,6 +733,10 @@ class Report extends CI_Controller { //MY_Controller {
 		foreach ($data["result"] as $value) {
 			if (($value['fee']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
 			}
+			//added by Mike, 20200602
+			//medical_doctor_name = "NEW; NONE YET"
+			else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+			}
 			else {
 				array_push($outputResult, $value);
 			}

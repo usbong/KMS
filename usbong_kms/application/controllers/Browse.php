@@ -1229,7 +1229,6 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 		$this->Browse_Model->deleteTransactionFromPatient($data);
 		
-
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 
 		$this->load->view('viewReportPatientQueue', $data);
