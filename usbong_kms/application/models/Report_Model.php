@@ -195,10 +195,16 @@ class Report_Model extends CI_Model
 		$this->db->where('t1.patient_id!=',0);
 
 		$this->db->where('t2.fee!=',0);
+		//added by Mike, 20200601
+//		$this->db->not_like('t2.notes',"NC");
+		
 //		$this->db->and_where('t2.notes!=',0);
 
 		$this->db->or_where('t2.fee=',0);
 		$this->db->where('t2.notes',"IN-QUEUE; UNPAID");
+
+//		$this->db->or_where('t2.fee=',0);
+//		$this->db->where('t2.notes!=',"NC; PAID");
 		
 		//added by Mike, 202005029
 		$this->db->where('t1.patient_name!=', 'NONE');
@@ -310,12 +316,20 @@ class Report_Model extends CI_Model
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
-		$this->db->distinct('t1.patient_name');
+
+		//edited by Mike, 20200601
+		//$this->db->distinct('t1.patient_name');
+		$this->db->group_by('t1.patient_id');
 		
 //		$this->db->where('t2.report_id=',$row->report_id);
 		
 		//added by Mike, 20200324
 		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+
+		//added by Mike, 20200601
+		//$this->db->where('t2.fee!=',0);
+		//$this->db->and_not_like('t2.notes',"NC");
+		$this->db->where('t2.notes!=',"IN-QUEUE; PAID");
 
 		$this->db->like('t3.medical_doctor_name', $param['medicalDoctorName']);
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
