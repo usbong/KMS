@@ -728,6 +728,17 @@ class Report extends CI_Controller { //MY_Controller {
 //		$data["result"] = $this->Report_Model->getPatientReportUnpaidForTheDay();
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 
+		//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
+		$outputResult = [];
+		foreach ($data["result"] as $value) {
+			if (($value['fee']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+			}
+			else {
+				array_push($outputResult, $value);
+			}
+		}
+		$data["result"]  = $outputResult;
+
 		$this->load->view('viewReportPatientQueue', $data);
 	}
 

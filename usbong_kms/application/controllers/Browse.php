@@ -196,7 +196,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200530
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 	
-		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+		//edited by Mike, 20200601
+		//$data['result'] = $this->Browse_Model->getDetailsListViaName($data);		
+		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);		
 
 		$this->load->view('searchPatientInformationDesk', $data);
 	}
@@ -973,7 +975,11 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 
-		$this->load->view('viewReportPatientQueue', $data);
+		//edited by Mike, 20200601
+		//this is so that we do not add excess transactions
+		//$this->load->view('viewReportPatientQueue', $data);
+		redirect('report/viewReportPatientQueue');
+	
 	}
 
 	//added by Mike, 20200529
