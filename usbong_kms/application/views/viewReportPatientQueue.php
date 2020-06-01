@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20200530
+' @date updated: 20200601
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -153,6 +153,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							width: 26%;
 						}						
+
+						td.columnTableHeaderCount
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 12%;
+						}		
 
 						td.columnTableHeaderFee
 						{
@@ -635,14 +645,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$iCount = 0;
 ?>
 				<tr class="row">
-						<td class ="column">		
+						<td class ="columnTableHeaderCount">		
 								<div class="tableHeader">
 							<?php
 								echo "COUNT";
 							?>
 								</div>
 						</td>
-						<td class ="column">		
+						<td class ="columnTableHeaderCount">		
 								<div class="tableHeader">
 							<?php
 								echo "MD COUNT";
@@ -650,7 +660,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 
-						<td class ="column">				
+						<td class ="columnTableHeader">				
 								<div class="tableHeader">
 				<?php
 								echo "PATIENT NAME";
@@ -658,7 +668,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 						</td>
 <!--
-						<td class ="column">				
+						<td class ="columnTableHeader">				
 								<div class="tableHeader">
 							<?php
 								echo "DATE";
@@ -666,14 +676,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 -->						
-						<td class ="column">				
+						<td class ="columnTableHeader">				
 								<div class="tableHeader">
 							<?php
 									echo "MEDICAL DOCTOR";
 							?>
 								</div>
 						</td>											
-						<td class ="column">				
+						<td class ="columnTableHeader">				
 								<div class="tableHeader">
 							<?php
 									echo "STATUS";
