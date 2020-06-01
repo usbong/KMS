@@ -660,7 +660,13 @@ class Browse_Model extends CI_Model
 	public function addNewTransactionForPatient($param) 
 	{			
 		$this->db->select('transaction_id, patient_id');
-        $this->db->where('notes',"IN-QUEUE; UNPAID");
+		//edited by Mike, 20200602
+//        $this->db->where('notes',"IN-QUEUE; UNPAID");
+		//these are @information desk
+		//we do not anymore add a new transaction for the patient after payment
+		//in addition, we do not add a new transactions for the apatient that already has an unpaid transaction for the day
+        $this->db->like('notes',"PAID"); 
+
 		$this->db->where('transaction_date', date('m/d/Y'));
 		$this->db->where('patient_id', $param['patientId']);
 
