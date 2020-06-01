@@ -629,6 +629,10 @@ class Browse extends CI_Controller { //MY_Controller {
 //							array_push($outputArray, $data['resultItem'][$iCount]);
 //						}
 
+						//added by Mike, 20200601
+						//TO-DO: -re-verify: for medicine items, e.g. alendra, aldren
+						array_push($outputArray, $data['resultItem'][$iCount]);
+
 						//delete the items with zero in-stock value if there exists another set of such item in the inventory
 						foreach ($outputArray as &$outputValue) {							
 							if ($outputValue['item_id'] == $data['resultItem'][$iCount]['item_id']) {
