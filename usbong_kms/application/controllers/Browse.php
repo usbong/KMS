@@ -161,8 +161,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
 		$this->load->model('Browse_Model');
-	
-		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+		
+		//edited by Mike, 20200602
+		//$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
 
 		$this->load->view('searchPatient', $data);
 	}
