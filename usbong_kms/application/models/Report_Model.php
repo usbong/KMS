@@ -182,26 +182,48 @@ class Report_Model extends CI_Model
 	//added by Mike, 20200529
 	public function getPatientQueueReportForTheDay()
 	{
+		//date_default_timezone_set('Asia/Hong_Kong');
+		
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id');
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 		$this->db->distinct('t1.patient_name');
+
+		//$this->db->where('t2.added_datetime_stamp=',date("Y-m-d H:i:s"));
 				
-		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+//		$this->db->where('t2.transaction_date',date("m/d/Y"));
+//		$this->db->where('t2.transaction_date',date("Y-m-d"));
+
+///DATE("m/d/Y", strtotime($value['transaction_date']));
+		
+		//echo date("Y-m-d");
+//		echo date("m/d/Y");
+
+		//added by Mike, 20200601
+//		$this->db->group_by('t2.patient_id');
+
+
+		$this->db->where('t2.transaction_date',date("m/d/Y"));
 
 		//added by Mike, 20200601
 		//TO-DO: -reverify: this
 		$this->db->where('t1.patient_id!=',0);
 
-		$this->db->where('t2.fee!=',0);
+		//removed by Mike, 20200601
+/*		$this->db->where('t2.fee!=',0);
+*/
 		//added by Mike, 20200601
 //		$this->db->not_like('t2.notes',"NC");
 		
 //		$this->db->and_where('t2.notes!=',0);
 
+		//removed by Mike, 20200601
+/*
 		$this->db->or_where('t2.fee=',0);
 		$this->db->where('t2.notes',"IN-QUEUE; UNPAID");
+*/
+
 
 //		$this->db->or_where('t2.fee=',0);
 //		$this->db->where('t2.notes!=',"NC; PAID");
@@ -217,9 +239,9 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200530; edited by Mike, 20200530
 		$this->db->order_by('t2.transaction_id', 'ASC');//DESC');
 
-
+/* 		//removed by Mike, 20200601
 		$this->db->group_by('t1.patient_id');
-
+*/
 		//$this->db->limit(8);//1);
 		
 		$query = $this->db->get('patient');
