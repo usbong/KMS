@@ -75,6 +75,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #ff8000;
 						}						
 
+						span.asterisk
+						{
+							color: #ff0000;
+						}
+
 						input.browse-input
 						{
 							width: 100%;
