@@ -730,19 +730,24 @@ class Report extends CI_Controller { //MY_Controller {
 
 		//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
 		$outputResult = [];
-		foreach ($data["result"] as $value) {
-			if (($value['fee']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+		
+		//edited by Mike, 20200602
+		if ($data["result"]!=False) {
+//		if ((isset($data["result"])) and (count($data["result"])>1)) {
+			foreach ($data["result"] as $value) {
+				if (($value['fee']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				//added by Mike, 20200602
+				//medical_doctor_name = "NEW; NONE YET"
+				else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				else {
+					array_push($outputResult, $value);
+				}
 			}
-			//added by Mike, 20200602
-			//medical_doctor_name = "NEW; NONE YET"
-			else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
-			}
-			else {
-				array_push($outputResult, $value);
-			}
+			$data["result"]  = $outputResult;
 		}
-		$data["result"]  = $outputResult;
-
+		
 		$this->load->view('viewReportPatientQueue', $data);
 	}
 
