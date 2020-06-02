@@ -1412,28 +1412,31 @@ class Browse extends CI_Controller { //MY_Controller {
 		$startDateTime = date('Y-m-d H:i:s'); //default = now
 //		echo $startDateTime;
 //		echo "count: ".count($inputResult);
-			
-		foreach ($inputResult as $value) {
-//			if ($value['transaction_date']==date('m/d/Y')) {
-				
-				if (strpos(strtoupper($value['notes']), "IN-QUEUE; PAID")!==false) {
-					$startDateTime = strtotime($value['added_datetime_stamp']);					
-					
-//					echo "startDateTime: ".$startDateTime;
 
-				}
-				else {
-					$endDateTime = strtotime($value['added_datetime_stamp']);
+		//edited by Mike, 20200602
+		if ($inputResult == True) {			
+			foreach ($inputResult as $value) {
+	//			if ($value['transaction_date']==date('m/d/Y')) {
 					
-//					echo "endDateTime: ".$endDateTime;
+					if (strpos(strtoupper($value['notes']), "IN-QUEUE; PAID")!==false) {
+						$startDateTime = strtotime($value['added_datetime_stamp']);					
+						
+	//					echo "startDateTime: ".$startDateTime;
 
-					$value['elapsedTime'] = $endDateTime - $startDateTime;
-					
-					//echo "elapsedTime: ".date('H:i:s',$value['elapsedTime']);
-					
-					array_push($outputResult, $value);
-				}
-//			}
+					}
+					else {
+						$endDateTime = strtotime($value['added_datetime_stamp']);
+						
+	//					echo "endDateTime: ".$endDateTime;
+
+						$value['elapsedTime'] = $endDateTime - $startDateTime;
+						
+						//echo "elapsedTime: ".date('H:i:s',$value['elapsedTime']);
+						
+						array_push($outputResult, $value);
+					}
+	//			}
+			}
 		}
 		
 //		echo "output count: ".count($outputResult);
