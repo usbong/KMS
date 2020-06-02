@@ -459,8 +459,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
 */			
-			//edited by Mike, 20200411
-			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/1/"+itemId +"/"+transactionId+"');?>";
+			//edited by Mike, 20200602
+			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/2/"+itemId +"/"+transactionId+"');?>";
 
 		}	
 
