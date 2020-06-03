@@ -1194,10 +1194,119 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200406; edited by Mike, 20200501
+	//added by Mike, 20200406; edited by Mike, 20200603
+	//OK in viewItemMedicine for available quantity in stock
+	//TO-DO: -re-verify
+	public function getItemAvailableQuantityInStockBuggy($itemTypeId, $itemId)
+//	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
+	{		
+		echo "dito";
+	
+		$this->db->select('t2.quantity_in_stock, t1.item_name');
+		$this->db->from('item as t1');
+		
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t1.item_type_id', $itemTypeId); //2); //2 = Non-medicine
+
+
+		$query = $this->db->get('item');
+
+//		$row = $query->row();
+		
+		$inventoryRowArray = $query->result_array();	
+		
+/*
+		echo $row->item_name;
+		echo "qty".$row->quantity_in_stock;
+*/		
+		$iQuantity = 0;
+		//added by Mike, 20200411
+//		if (isset($row->quantity_in_stock)) {
+		if (isset($inventoryRowArray[0]['quantity_in_stock'])) {
+//			$iQuantity = $row->quantity_in_stock;
+			$iQuantity = $inventoryRowArray[0]['quantity_in_stock'];
+		}
+		//added by Mike, 20200414
+		else {
+			//edited by Mike, 20200527
+			return -1;//-9999;//-1; //9999;
+		}
+				
+		if ($iQuantity==0) {
+			return 0;
+		}
+		
+		echo "iQuantity: ".$iQuantity;
+		
+		$this->db->select('t1.item_price, t2.fee');
+		$this->db->from('item as t1');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t2.notes', "PAID");
+		$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
+
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return $iQuantity;
+//			return False; //edited by Mike, 20190722
+		}
+		
+		$iInventoryCount = 0;
+		
+		$inventoryRowArray[$iInventoryCount]['quantity_in_stock'] = $iQuantity;
+		
+		foreach ($rowArray as $value) {
+echo ">>";
+echo "now: ".$iQuantity;
+
+echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
+			//edited by Mike, 20200422
+//			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
+			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+
+			echo "result loob: ".$iQuantity;
+			
+			$inventoryRowArray[$iInventoryCount]['quantity_in_stock'] = $iQuantity;
+
+			echo "remaining: ".$inventoryRowArray[$iInventoryCount]['quantity_in_stock'];
+
+			if ($inventoryRowArray[$iInventoryCount]['quantity_in_stock'] < 0) {
+echo ">>>>";
+
+				$iInventoryCount = $iInventoryCount + 1;
+
+				if ($iInventoryCount<=count($inventoryRowArray)) {
+					$iQuantity = $inventoryRowArray[$iInventoryCount]['quantity_in_stock'];
+					
+					echo "add:".$iQuantity;
+
+					$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);					
+				}
+//				if ($inventoryRowArray[$iInventoryCount-1]['quantity_in_stock'] < 0) {
+//					$inventoryRowArray[$iInventoryCount]['quantity_in_stock'] = $inventoryRowArray[$iInventoryCount]['quantity_in_stock'] - $inventoryRowArray[$iInventoryCount-1]['quantity_in_stock'];
+//				}
+			}
+						
+//			echo "<br/>".$iQuantity;
+		}
+
+		return $iQuantity;
+	}
+	
+	//added by Mike, 20200406; edited by Mike, 20200603
 	public function getItemAvailableQuantityInStock($itemTypeId, $itemId)
 //	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
-	{
+	{		
 		$this->db->select('t2.quantity_in_stock, t1.item_name');
 		$this->db->from('item as t1');
 		
@@ -1258,5 +1367,77 @@ class Browse_Model extends CI_Model
 
 		return $iQuantity;
 	}
+
+	//added by Mike, 20200406; edited by Mike, 20200603
+	public function getItemAvailableQuantityInStockPrev($itemTypeId, $itemId)
+//	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
+	{
+		echo "dito";
+		
+		$this->db->select('t2.quantity_in_stock, t1.item_name');
+		$this->db->from('item as t1');
+		
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t1.item_type_id', $itemTypeId); //2); //2 = Non-medicine
+
+
+		$query = $this->db->get('item');
+
+		$row = $query->row();		
+/*
+		echo $row->item_name;
+		echo "qty".$row->quantity_in_stock;
+*/		
+		$iQuantity = 0;
+		//added by Mike, 20200411
+		if (isset($row->quantity_in_stock)) {
+			$iQuantity = $row->quantity_in_stock;
+		}
+		//added by Mike, 20200414
+		else {
+			//edited by Mike, 20200527
+			return -1;//-9999;//-1; //9999;
+		}
+				
+		if ($iQuantity==0) {
+			return 0;
+		}
+		
+		echo $iQuantity;
+		
+		$this->db->select('t1.item_price, t2.fee');
+		$this->db->from('item as t1');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t2.notes', "PAID");
+		$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
+
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return $iQuantity;
+//			return False; //edited by Mike, 20190722
+		}
+		
+		foreach ($rowArray as $value) {	
+			//edited by Mike, 20200422
+//			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
+			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+			
+			echo "<br/>".$iQuantity;
+		}
+
+		return $iQuantity;
+	}
+
 }
 ?>
