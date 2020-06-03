@@ -272,6 +272,47 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20200603
+	public function getMedicineDetailsListViaId($param) 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+
+		$this->db->from('item as t1');
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->group_by('t2.inventory_id');
+		
+		//added by Mike, 20200521
+		$this->db->where('t1.item_id!=', 0); //0 = NONE
+
+		$this->db->where('t1.item_type_id', 1); //1 = Medicine
+
+		$this->db->like('t1.item_id', $param['itemId']);
+		
+		//added by Mike, 20200527
+		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
+		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+//		$this->db->limit(8);//1);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+//		echo report_id: .$rowArray[0]['report_id'];
+		
+/*		return $row->report_description;
+*/
+//		return $rowArray[0]['report_description'];
+		
+		return $rowArray;
+	}	
+
 	//added by Mike, 20200328
 	public function getMedicineDetailsListViaName($param) 
 	{		
@@ -992,6 +1033,52 @@ class Browse_Model extends CI_Model
 
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}		
+
+	//added by Mike, 20200328; edited by Mike, 20200603
+	public function getItemDetailsListBuggy($itemTypeId, $itemId) 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date, t4.medical_doctor_name, t4.medical_doctor_id, t5.patient_name, t5.patient_id');
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+		$this->db->join('medical_doctor as t4', 't2.medical_doctor_id = t4.medical_doctor_id', 'LEFT');
+		$this->db->join('patient as t5', 't2.patient_id = t5.patient_id', 'LEFT');
+
+		$this->db->distinct('t1.item_name');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+//		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200501
+
+
+		$this->db->where('t1.item_id', $itemId);
+
+		//TO-DO: -add: auto-identify item_type
+		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
+
+		//edited by Mike, 20200603
+		//$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+		$this->db->order_by('t3.added_datetime_stamp`', 'DESC');//ASC');
+
+		//added by Mike, 20200401; removed by Mike, 20200603
+//		$this->db->limit(8);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+
+		foreach ($rowArray as $value) {
+			echo $value['quantity_in_stock'];
+		}
 		
 		if ($rowArray == null) {			
 			return False; //edited by Mike, 20190722
