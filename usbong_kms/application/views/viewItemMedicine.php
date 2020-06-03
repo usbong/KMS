@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200530
+' @date updated: 20200603
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -520,6 +520,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//get only name strings from array 
 		if (isset($result)) {			
 			if ($result!=null) {		
+
 /*
 				$resultCount = count($result);
 				if ($resultCount==1) {
@@ -566,8 +567,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //				if (isset($resultItem)) {
 
 					//edited by Mike, 20200527
-//					$value = $resultItem[sizeof($resultItem)-1];
-					$value = $resultItem[0];
+					$value = $resultItem[sizeof($resultItem)-1];
+//					$value = $resultItem[0];
 //					$value = $resultItem;
 
 //				}
