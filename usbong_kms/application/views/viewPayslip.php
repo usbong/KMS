@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200523
+' @date updated: 20200603
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -110,8 +110,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right
-						}						
+						}				
 
+						td.columnTableHeader
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 26%;
+						}							
+
+						td.columnTableHeaderCount
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 12%;
+						}		
+
+						td.columnTableHeaderFee
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 13%;
+						}		
+
+						td.columnTableHeaderClassification
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 12%;
+						}		
+
+						td.columnTableHeaderNotes
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 26%;
+						}		
+						
 						td.notesColumn
 						{
 							border: 1px dotted #ab9c7d;		
@@ -305,7 +355,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="column">				
+						<td class ="columnTableHeaderCount">				
 								<div class="tableHeader">
 							<?php
 								echo "COUNT";
@@ -313,42 +363,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 
-						<td class ="column">				
+						<td class ="columnTableHeader">				
 								<div class="tableHeader">
 				<?php
 								echo "PATIENT NAME";
 				?>		
 								</div>								
 						</td>
-						<td class ="column">				
+						<td class ="columnTableHeaderFee">				
 								<div class="tableHeader">
 							<?php
 								echo "FEE";
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="columnTableHeaderFee">				
 								<div class="tableHeader">
 							<?php
 									echo "MOSC";
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="columnTableHeaderFee">				
 								<div class="tableHeader">
 							<?php
 									echo "NET PF";
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="columnTableHeaderNotes">				
 								<div class="tableHeader">
 							<?php
 									echo "NOTES";
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="columnTableHeaderFee">				
 								<div class="tableHeader">
 							<?php
 									echo "X-RAY FEE";
