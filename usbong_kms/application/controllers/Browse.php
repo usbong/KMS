@@ -459,13 +459,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
 
-		//added by Mike, 20200501; edited by Mike, 20200603
+		//added by Mike, 20200501; edited by Mike, 20200604
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
-		$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
+		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
 		
 		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
 		$data['resultItem'] = $this->getResultItemQuantity($data);
+		$data['itemName'] = $data['resultItem'][0]['item_name'];
 
 		$this->load->view('viewItemMedicine', $data);
 	}
