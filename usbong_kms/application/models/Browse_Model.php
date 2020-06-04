@@ -287,7 +287,8 @@ class Browse_Model extends CI_Model
 
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
 
-		$this->db->like('t1.item_id', $param['itemId']);
+		//edited by Mike, 20200604
+		$this->db->where('t1.item_id', $param['itemId']);
 		
 		//added by Mike, 20200527
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
