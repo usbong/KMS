@@ -1635,9 +1635,11 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 //		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
 
-		//edited by Mike, 20200519
-		$this->Browse_Model->payTransactionItemPurchase();
-		$this->Browse_Model->payTransactionServiceAndItemPurchase();
+		//edited by Mike, 20200605
+		//$this->Browse_Model->payTransactionItemPurchase();
+		//$this->Browse_Model->payTransactionServiceAndItemPurchase();
+		$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
+		$this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
 	
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 
@@ -1682,8 +1684,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$this->load->model('Browse_Model');
 
-		$this->Browse_Model->payTransactionItemPurchase();	
-		$this->Browse_Model->payTransactionServiceAndItemPurchase();
+		//edited by Mike, 20200605
+		//$this->Browse_Model->payTransactionItemPurchase();
+		//$this->Browse_Model->payTransactionServiceAndItemPurchase();
+		$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
+		$this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
 						
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
