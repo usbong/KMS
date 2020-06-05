@@ -888,8 +888,9 @@ class Browse_Model extends CI_Model
 //		$this->db->order_by('t2.transaction_date`', 'DESC');//ASC');
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 
-		//added by Mike, 20200529
+		//added by Mike, 20200529; edited by Mike, 20200606
 		$this->db->group_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+		//$this->db->group_by('t2.transaction_date`', 'DESC');//ASC');
 		
 		$query = $this->db->get('patient');
 
@@ -1251,8 +1252,11 @@ class Browse_Model extends CI_Model
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
 		$this->db->distinct('t1.patient_name');
-
-		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+		
+		//edited by Mike, 20200606
+		//$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_date');
+		$this->db->select_max('t2.added_datetime_stamp');
 
 		//edited by Mike, 20200519
 		//TO-DO: -update: this
