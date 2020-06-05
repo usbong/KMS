@@ -639,9 +639,59 @@ class Browse_Model extends CI_Model
         $this->db->delete('transaction');
 	}	
 
-	//added by Mike, 20200411
+	//added by Mike, 20200411; edited by Mike, 20200605
+	//add new transaction with the total for each item type
 	public function payTransactionItemPurchase() 
 	{			
+		//added by Mike, 20200605
+		//part 1
+		$this->db->select('t1.fee, t2.item_type_id'); //, item_quantity');
+		$this->db->from('transaction as t1');	
+		$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');		
+		$this->db->where('t1.notes', "UNPAID");
+		$this->db->where('t1.transaction_date', date('m/d/Y'));
+		$this->db->group_by('t1.transaction_id');
+		$query = $this->db->get('transaction');
+		$rowArray = $query->result_array();
+
+		$totalFeeMedicine = 0;
+		$totalFeeNonMedicine = 0;
+
+		echo "count: ".count($rowArray);
+
+		foreach ($rowArray as $rowValue) {
+			if ($rowValue['item_type_id']==1) { //medicine
+				$totalFeeMedicine = $totalFeeMedicine + $rowValue['fee'];								
+			}
+			else {
+				$totalFeeNonMedicine = $totalFeeNonMedicine + $rowValue['fee'];
+			}		
+			echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
+			echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
+			echo ">";
+		}
+		echo ">>>";
+		echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
+		echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
+
+		$data = array(
+					'patient_id' => 0,
+					'item_id' => 0,
+					'transaction_date' => date('m/d/Y'),
+					'medical_doctor_id' => 0,
+					'fee' => 0,
+					'fee_quantity' => 0,					
+					'med_fee' => $totalFeeMedicine,
+					'pas_fee' => $totalFeeNonMedicine,
+					'transaction_type_name' => "CASH",
+					'report_id' => 0,
+					'notes' => "PAID"
+				);
+
+		$this->db->insert('transaction', $data);
+		$outputTransactionId = $this->db->insert_id();
+
+		//part 2
 		$data = array(
 					'notes' => "PAID"
 				);
@@ -649,11 +699,72 @@ class Browse_Model extends CI_Model
         $this->db->where('notes',"UNPAID");
 		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
+		
+		return $outputTransactionId;
 	}	
 
-	//added by Mike, 20200519
+	//added by Mike, 20200519; edited by Mike, 20200605
 	//note: reverify: delete transaction whose fee = 0 and notes = "IN-QUEUE; PAID"
-	public function payTransactionServiceAndItemPurchase() 
+	public function payTransactionServiceAndItemPurchase($outputTransactionId)
+	{			
+		//edited by Mike, 20200605
+//		$this->db->select('notes, transaction_id');
+		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
+        $this->db->like('notes',"UNPAID");
+		$this->db->where('transaction_date', date('m/d/Y'));
+
+		$query = $this->db->get('transaction');	
+		
+		$rowArray = $query->result_array();
+
+		foreach ($rowArray as $rowValue) {
+			//part 1
+			$updatedValue = str_replace("UNPAID","PAID",$rowValue['notes']);
+			
+			$data = array(
+						'notes' => $updatedValue //"PAID"
+					);
+
+			$this->db->like('notes',"UNPAID");
+			//edited by Mike, 20200530
+			//$this->db->where('transaction_date', date('m/d/Y'));
+			$this->db->where('transaction_id', $rowValue['transaction_id']);
+			$this->db->update('transaction', $data);
+			
+			//added by Mike, 20200605
+			//part 2
+			$dataOutputTransaction = array(
+						'patient_id' => $rowValue['patient_id'],
+						'item_id' => 0,
+						'medical_doctor_id' => $rowValue['medical_doctor_id'],
+						'fee' => $rowValue['fee'],
+						'fee_quantity' => $rowValue['fee_quantity'],					
+						'x_ray_fee' => $rowValue['x_ray_fee'],
+						'lab_fee' => $rowValue['lab_fee'],
+						'transaction_type_name' => "CASH",
+						'report_id' => 0,
+						'notes' => $updatedValue //"PAID"
+					);
+			
+			//added by Mike, 20200605
+			
+			$this->db->where('transaction_id', $outputTransactionId);
+			$this->db->update('transaction', $dataOutputTransaction);			
+		}
+/*
+		$data = array(
+					'notes' => "PAID"
+				);
+
+        $this->db->like('notes',"UNPAID");
+		$this->db->where('transaction_date', date('m/d/Y'));
+        $this->db->update('transaction', $data);
+*/		
+	}	
+
+	//added by Mike, 20200519; edited by Mike, 20200605
+	//note: reverify: delete transaction whose fee = 0 and notes = "IN-QUEUE; PAID"
+	public function payTransactionServiceAndItemPurchasePrev() 
 	{			
 		$this->db->select('notes, transaction_id');
         $this->db->like('notes',"UNPAID");
@@ -665,6 +776,7 @@ class Browse_Model extends CI_Model
 
 		foreach ($rowArray as $rowValue) {
 			$updatedValue = str_replace("UNPAID","PAID",$rowValue['notes']);
+
 			
 			$data = array(
 						'notes' => $updatedValue //"PAID"
