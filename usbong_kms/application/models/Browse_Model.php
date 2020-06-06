@@ -657,7 +657,7 @@ class Browse_Model extends CI_Model
 		$totalFeeMedicine = 0;
 		$totalFeeNonMedicine = 0;
 
-		echo "count: ".count($rowArray);
+//		echo "count: ".count($rowArray);
 
 		foreach ($rowArray as $rowValue) {
 			if ($rowValue['item_type_id']==1) { //medicine
@@ -666,14 +666,15 @@ class Browse_Model extends CI_Model
 			else {
 				$totalFeeNonMedicine = $totalFeeNonMedicine + $rowValue['fee'];
 			}		
-			echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
+/*			echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
 			echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
 			echo ">";
+*/			
 		}
-		echo ">>>";
+/*		echo ">>>";
 		echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
 		echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
-
+*/
 		$data = array(
 					'patient_id' => 0,
 					'item_id' => 0,
@@ -750,6 +751,16 @@ class Browse_Model extends CI_Model
 			
 			$this->db->where('transaction_id', $outputTransactionId);
 			$this->db->update('transaction', $dataOutputTransaction);			
+			
+			//added by Mike, 20200606
+			//$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, med_fee, pas_fee, medical_doctor_id, patient_id');
+			$this->db->select('med_fee, pas_fee, transaction_id');
+			$this->db->where('transaction_id', $outputTransactionId);
+			$query = $this->db->get('transaction');				
+//			$row = $query->row();			
+			$rowArray = $query->result_array();
+			
+			return $rowArray[0];
 		}
 /*
 		$data = array(
@@ -966,7 +977,7 @@ class Browse_Model extends CI_Model
 
 		$query = $this->db->get('item');
 
-		$row = $query->row();		
+		$row = $query->row();
 		
 		$iQuantity = $row->quantity_in_stock;
 				
@@ -1470,30 +1481,31 @@ class Browse_Model extends CI_Model
 		$inventoryRowArray[$iInventoryCount]['quantity_in_stock'] = $iQuantity;
 		
 		foreach ($rowArray as $value) {
-echo ">>";
+/*echo ">>";
 echo "now: ".$iQuantity;
 
 echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
+*/
 			//edited by Mike, 20200422
 //			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
 			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
 
-			echo "result loob: ".$iQuantity;
-			
+/*			echo "result loob: ".$iQuantity;
+*/			
 			$inventoryRowArray[$iInventoryCount]['quantity_in_stock'] = $iQuantity;
 
-			echo "remaining: ".$inventoryRowArray[$iInventoryCount]['quantity_in_stock'];
-
+/*			echo "remaining: ".$inventoryRowArray[$iInventoryCount]['quantity_in_stock'];
+*/
 			if ($inventoryRowArray[$iInventoryCount]['quantity_in_stock'] < 0) {
-echo ">>>>";
-
+/*echo ">>>>";
+*/
 				$iInventoryCount = $iInventoryCount + 1;
 
 				if ($iInventoryCount<=count($inventoryRowArray)) {
 					$iQuantity = $inventoryRowArray[$iInventoryCount]['quantity_in_stock'];
 					
-					echo "add:".$iQuantity;
-
+/*					echo "add:".$iQuantity;
+*/
 					$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);					
 				}
 //				if ($inventoryRowArray[$iInventoryCount-1]['quantity_in_stock'] < 0) {
