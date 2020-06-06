@@ -1821,6 +1821,10 @@ class Browse extends CI_Controller { //MY_Controller {
 						$startDateTime = strtotime($value['added_datetime_stamp']);					
 						
 	//					echo "startDateTime: ".$startDateTime;
+						
+						//added by Mike, 20200606
+						//TO-DO: -re-verify: this
+						array_push($outputResult, $value);
 
 					}
 					else {
@@ -1839,8 +1843,6 @@ class Browse extends CI_Controller { //MY_Controller {
 			}
 		}
 		
-//		echo "output count: ".count($outputResult);
-
 		return $outputResult;		
 	}
 	
