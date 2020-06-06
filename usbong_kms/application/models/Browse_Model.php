@@ -1259,6 +1259,14 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200517
 	public function getPaidPatientDetailsList($medicalDoctorId, $patientId) 
 	{		
+		//added by Mike, 20200606	
+		$this->db->select_max('added_datetime_stamp');
+		$this->db->where('patient_id', $patientId);
+		$this->db->where('notes!=', 'UNPAID');
+		$this->db->order_by('added_datetime_stamp`', 'DESC');
+		$query = $this->db->get('transaction');
+		$rowOutputMaxArray = $query->result_array();
+	
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -1268,8 +1276,12 @@ class Browse_Model extends CI_Model
 		
 		//edited by Mike, 20200606
 		//$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
-		$this->db->group_by('t2.transaction_date');
-		$this->db->select_max('t2.added_datetime_stamp');
+		$this->db->group_by('t2.transaction_date');		
+		//$this->db->group_by('t2.added_datetime_stamp');
+		//$this->db->select_max('t2.added_datetime_stamp');
+    
+		$this->db->where('t2.added_datetime_stamp',$rowOutputMaxArray[0]['added_datetime_stamp']);
+
 
 		//edited by Mike, 20200519
 		//TO-DO: -update: this
@@ -1308,7 +1320,9 @@ class Browse_Model extends CI_Model
 			}
 		}
 */
-		foreach ($rowArray as $key => $rowValue) {
+
+
+		foreach ($rowArray as $key => $rowValue) {			
 			if (strpos(strtoupper($rowValue['notes']),"UNPAID")!==false) {
 //				if (($key = array_search($rowValue, $rowArray)) !== false) {
 					unset($rowArray[$key]);
