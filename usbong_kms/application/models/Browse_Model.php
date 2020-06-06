@@ -760,8 +760,10 @@ class Browse_Model extends CI_Model
 //			$row = $query->row();			
 			$rowArray = $query->result_array();
 			
-			return $rowArray[0];
 		}
+		
+		return $rowArray[0];
+
 /*
 		$data = array(
 					'notes' => "PAID"
