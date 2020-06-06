@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200517
-' @date updated: 20200529
+' @date updated: 20200606
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -626,11 +626,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</td>
 				  </tr>			  
 			  <?php
-				} 
+				}
+					if (isset($outputTransaction)) {						
+						if ($outputTransaction['pas_fee']!=0) {
+//						if ($outputTransaction->pas_fee!==0) {
+
+?>
+				  <tr>
+				    <td>
+				      <br/>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<b><span>Official Receipt Number (PAS) <span class="asterisk">*</span></span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+					  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberPASParam" required>
+					</td>				  
+				  </tr>
+<?php							
+						}
+					}
 			  ?>
 			</table>
 		</div>	
+<!--
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
+-->
+		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $outputTransaction['transaction_id'] ?> "required>
 		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
