@@ -179,7 +179,7 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200529
+	//added by Mike, 20200529; edited by Mike, 20200606
 	public function getPatientQueueReportForTheDay()
 	{
 		//date_default_timezone_set('Asia/Hong_Kong');
@@ -200,8 +200,12 @@ class Report_Model extends CI_Model
 		//echo date("Y-m-d");
 //		echo date("m/d/Y");
 
-		//added by Mike, 20200601
-//		$this->db->group_by('t2.patient_id');
+		//added by Mike, 20200601; edited by Mike, 20200606
+		//TO-DO: -reverify: this
+		$this->db->group_by('t2.patient_id');
+		//$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
+		$this->db->select_max('t2.added_datetime_stamp');
+
 
 
 		$this->db->where('t2.transaction_date',date("m/d/Y"));
