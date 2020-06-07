@@ -1639,9 +1639,16 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$this->Browse_Model->payTransactionItemPurchase();
 		//$this->Browse_Model->payTransactionServiceAndItemPurchase();
 		$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
-		$this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
-	
+		$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
+		
+		//added by Mike, 20200607
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		//$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+						
+		//$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		$data['medicalDoctorId'] = $data['outputTransaction']['medical_doctor_id']; //$data['result'][0]['medical_doctor_id'];		
+		//--	
 
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
@@ -1710,7 +1717,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 	//added by Mike, 20200508; edited by Mike, 20200509
 //	public function confirmItemMedicinePaidReceipt() //$transactionId, $receiptNumber)
-	public function confirmItemMedicinePaidReceipt($itemTypeId)
+	public function confirmItemMedicinePaidReceiptPrev($itemTypeId)
 	{
 		//edited by Mike, 20200509
 		$data['receiptTypeId'] = $itemTypeId; //1 = MOSC Receipt; 2 = PAS Receipt
@@ -1739,6 +1746,49 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->load->view('searchNonMedicine', $data);
 		}		
 		
+	}
+
+	public function confirmItemMedicinePaidReceipt($medicalDoctorId) //$itemTypeId)
+	{
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		$data['transactionDate'] = date('m/d/Y');
+
+		$data['transactionId'] = $_POST["transactionIdParam"];
+
+		$this->load->model('Browse_Model');
+
+		$data['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
+		$data['receiptNumber'] = $_POST["officialReceiptNumberMOSCParam"];
+
+		$this->Browse_Model->addTransactionPaidReceipt($data);
+
+		if ($medicalDoctorId!=1) { //not SYSON, PEDRO
+			$data['receiptTypeId'] = 3;
+		    $data['receiptNumber'] = $_POST["officialReceiptNumberMedicalDoctorParam"];
+
+			$this->Browse_Model->addTransactionPaidReceipt($data);
+		}
+		
+		//added by Mike, 20200606
+		//PAS
+		$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
+
+		if ($data['receiptNumber']!==0) {
+			$data['receiptTypeId'] = 2;
+
+			$this->Browse_Model->addTransactionPaidReceipt($data);
+		}
+
+		$this->load->view('searchMedicine', $data);
+/*
+		if ($itemTypeId=="1") {
+			$this->load->view('searchMedicine', $data);
+		}
+		else { //example: 2
+			$this->load->view('searchNonMedicine', $data);
+		}		
+*/		
 	}
 
 	//added by Mike, 20200517; edited by Mike, 20200606
