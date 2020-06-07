@@ -496,7 +496,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 */
 
-			window.location.href = "<?php echo site_url('browse/payTransactionServiceAndItemPurchase/"+medicalDoctorId+"/"+patientId+"');?>";			
+			window.location.href = "<?php echo site_url('browse/payTransactionServiceAndItemPurchase/"+medicalDoctorId+"/"+patientId+"');?>";
 		}	
 
 	  </script>
