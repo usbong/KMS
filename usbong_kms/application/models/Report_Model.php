@@ -204,9 +204,10 @@ class Report_Model extends CI_Model
 		//TO-DO: -reverify: this
 		$this->db->group_by('t2.patient_id');
 		//$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
-		$this->db->select_max('t2.added_datetime_stamp');
 
-
+		//edited by Mike, 20200607
+		//$this->db->select_max('t2.added_datetime_stamp');
+		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
 
 		$this->db->where('t2.transaction_date',date("m/d/Y"));
 
@@ -319,19 +320,6 @@ class Report_Model extends CI_Model
 	//added by Mike, 20200322; edited by Mike, 20200408
 	public function getPayslipForTheDayWeb($param) 
 	{	
-/*	
-		$this->db->select('report_id'); //, t2.treatment_diagnosis');
-		$this->db->like('report_filename', $param['medicalDoctorName']);
-		$this->db->like('added_datetime_stamp',date("Y-m-d"));
-		$this->db->order_by('added_datetime_stamp', 'DESC');
-		$query = $this->db->get('report');
-
-		$row = $query->row();
-		
-		if ($row == null) {			
-			return False; //edited by Mike, 20190722
-		}		
-*/		
 		//max(report_id) error
 		//echo "dito".$row->report_id;
 
