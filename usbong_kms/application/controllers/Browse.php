@@ -1292,8 +1292,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 		
-		//added by Mike, 20200601
-		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+		//added by Mike, 20200601; removed by Mike, 20200608
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
