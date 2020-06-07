@@ -289,7 +289,12 @@ class Browse_Model extends CI_Model
 
 		//edited by Mike, 20200604
 		$this->db->where('t1.item_id', $param['itemId']);
-		
+
+		//added by Mike, 20200607
+//		$this->db->order_by('t1.item_name', 'ASC');
+		//$this->db->order_by('t2.added_datetime_stamp', 'ASC'); //we do this for cases with equal expiration dates
+		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
+				
 		//added by Mike, 20200527
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
 		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
@@ -366,6 +371,7 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20200607
 		$this->db->order_by('t1.item_name', 'ASC');
+		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
 		
 		//added by Mike, 20200527
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
