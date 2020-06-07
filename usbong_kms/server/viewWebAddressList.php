@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20200603
+  @date updated: 20200607
 	
   Computer Web Browser Address (Example):
   1) http://localhost/usbong_kms/server/viewWebAddressList.php
@@ -142,8 +142,9 @@ Examples:<br/>
 <b>a) VIEW REPORT FOR PREVIOUS MONTH</b><br/>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReceiptReport">http://mosc-accounting/usbong_kms/index.php/REPORT/viewReceiptReport</a><br/>
 <br/>
+<!-- TO-DO: -add: year -->
 <b>b) SET SPECIFIC MONTH</b><br/>
-http://mosc-accounting/usbong_kms/index.php/REPORT/viewReceiptReportFor/month
+http://mosc-accounting/usbong_kms/index.php/REPORT/viewReceiptReportFor/month<br/>
 <br/>
 where: month = transactions' month<br/>
 <br/>
