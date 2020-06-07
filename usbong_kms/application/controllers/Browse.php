@@ -1747,8 +1747,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		}		
 		
 	}
-
-	public function confirmItemMedicinePaidReceipt($medicalDoctorId) //$itemTypeId)
+	
+	//edited by Mike, 20200607
+//	public function confirmItemMedicinePaidReceipt($medicalDoctorId) //$itemTypeId)
+	public function confirmItemPaidReceipt($medicalDoctorId, $itemTypeId)
 	{
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -1780,15 +1782,14 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->Browse_Model->addTransactionPaidReceipt($data);
 		}
 
-		$this->load->view('searchMedicine', $data);
-/*
+//		$this->load->view('searchMedicine', $data);
+
 		if ($itemTypeId=="1") {
 			$this->load->view('searchMedicine', $data);
 		}
 		else { //example: 2
 			$this->load->view('searchNonMedicine', $data);
 		}		
-*/		
 	}
 
 	//added by Mike, 20200517; edited by Mike, 20200606
