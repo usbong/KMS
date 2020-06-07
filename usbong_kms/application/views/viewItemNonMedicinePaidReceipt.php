@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200602
+' @date updated: 20200607
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -533,7 +533,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	<!-- Form -->
 	<!-- 2 = Non-medicine -->
+<!--  //edited by Mike, 20200607	
 	<form method="post" action="<?php echo site_url('browse/confirmItemMedicinePaidReceipt/2')?>">
+-->
+	<form method="post" action="<?php echo site_url('browse/confirmItemPaidReceipt/'.$medicalDoctorId.'/2')?>">
 <!--
 		<div>
 			<table width="100%">
@@ -582,17 +585,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			  <tr>
 				<td>
-				  <b><span>Official Receipt Number (PAS) <span class="asterisk">*</span></span></b>
+				  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
 				</td>
 			  </tr>
 			  <tr>
 				<td>
-				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberParam" required>
+				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMOSCParam" required>
 				</td>
-			  </tr>
+			  </tr>			  
+			  <?php 
+				//edited by Mike, 20200529
+//			    if (strpos($medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'], "PEDRO")==false) {
+			    if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")==false) {
+			  ?>
+				  <tr>
+				    <td>
+				      <br/>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<b><span>Official Receipt Number <?php echo "(".$medicalDoctorList[$medicalDoctorId]['medical_doctor_name'].")";?><span class="asterisk">*</span></span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+					  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMedicalDoctorParam" required>
+					</td>
+				  </tr>			  
+			  <?php
+				}
+					if (isset($outputTransaction)) {						
+						if ($outputTransaction['pas_fee']!=0) {
+//						if ($outputTransaction->pas_fee!==0) {
+
+?>
+				  <tr>
+				    <td>
+				      <br/>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<b><span>Official Receipt Number (PAS) <span class="asterisk">*</span></span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+					  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberPASParam" required>
+					</td>				  
+				  </tr>
+<?php							
+						}
+					}
+			  ?>
 			</table>
 		</div>	
-		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
+		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $outputTransaction['transaction_id'] ?> "required>
 		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">

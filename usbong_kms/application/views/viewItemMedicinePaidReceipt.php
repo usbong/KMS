@@ -535,7 +535,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--  //edited by Mike, 20200607
 	<form method="post" action="<?php echo site_url('browse/confirmItemMedicinePaidReceipt/1')?>">
 -->
-	<form method="post" action="<?php echo site_url('browse/confirmItemMedicinePaidReceipt/'.$medicalDoctorId)?>">
+	<form method="post" action="<?php echo site_url('browse/confirmItemPaidReceipt/'.$medicalDoctorId.'/1')?>">
 <!--
 		<div>
 			<table width="100%">
