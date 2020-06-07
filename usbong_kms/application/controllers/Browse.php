@@ -464,10 +464,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
 		
-		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
+		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 		$data['itemName'] = $data['resultItem'][0]['item_name'];
-
+/*		
+		foreach ($data['resultItem'] as $value) {
+			echo "dito".$value['resultQuantityInStockNow']."<br/>";
+			echo "dito".$value['quantity_in_stock']."<br/>";
+		}
+*/
 		$this->load->view('viewItemMedicine', $data);
 	}
 
@@ -893,10 +898,23 @@ class Browse extends CI_Controller { //MY_Controller {
 						array_push($outputArray, $value);						
 					}
 */						
-					//removed by Mike, 20200607
+					//TO-DO: -reverify: this
 					//edited by Mike, 20200530
-//					array_push($outputArray, $value);						
-					
+					array_push($outputArray, $value);						
+/*
+					//added by Mike, 20200607
+					foreach ($outputArray as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+//							if ($outputValue['resultQuantityInStockNow'] == 0) {
+							if (($outputValue['resultQuantityInStockNow'] == 0) and ($value['resultQuantityInStockNow'] != 0)){
+								$outputValue = $value;
+								
+								echo "value: ".$value['resultQuantityInStockNow'];
+							}
+						}						
+					}
+					unset($outputValue);
+*/					
 					//TO-DO: -add: auto-verify if there exists another set of the item in the inventory
 					
 /*
@@ -922,24 +940,51 @@ class Browse extends CI_Controller { //MY_Controller {
 						array_push($outputArray, $value);						
 					}
 */
+
 					array_push($outputArray, $value);						
 
 					//delete the items with zero in-stock value if there exists another set of such item in the inventory
 					foreach ($outputArray as &$outputValue) {
 						if ($outputValue['item_id'] == $value['item_id']) {
 							if ($outputValue['resultQuantityInStockNow'] == 0) {
+//							if (($outputValue['resultQuantityInStockNow'] == 0) and ($value['resultQuantityInStockNow'] != 0)){
 								$outputValue = $value;
+								
+//								echo "value: ".$value['resultQuantityInStockNow'];
 							}
 						}						
 					}
 					unset($outputValue);
+
 				}
+/*
+				array_push($outputArray, $value);						
+
+				//delete the items with zero in-stock value if there exists another set of such item in the inventory
+				foreach ($outputArray as &$outputValue) {
+					if ($outputValue['item_id'] == $value['item_id']) {
+						if ($outputValue['resultQuantityInStockNow'] == 0) {
+							$outputValue = $value;
+						}
+					}						
+				}
+				unset($outputValue);
+*/
 			}
 		}
 		
 		$data['resultItem'] = [];
+/*		//edited by Mike, 20200607
 		$data['resultItem'] = $outputArray;
-		
+*/		
+		foreach ($outputArray as $value) {
+			if ($value['resultQuantityInStockNow']==0) {				
+			}
+			else {
+				array_push($data['resultItem'], $value);
+			}
+		}
+
 		return $data['resultItem'];
 	}
 
