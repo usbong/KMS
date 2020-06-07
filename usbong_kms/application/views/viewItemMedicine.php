@@ -567,8 +567,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //				if (isset($resultItem)) {
 
 					//edited by Mike, 20200527
-					$value = $resultItem[sizeof($resultItem)-1];
-//					$value = $resultItem[0];
+					//edited again by Mike, 20200607
+//					$value = $resultItem[sizeof($resultItem)-1];
+					$value = $resultItem[0];
 //					$value = $resultItem;
 
 //				}
