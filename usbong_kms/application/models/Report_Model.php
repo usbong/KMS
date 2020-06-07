@@ -349,8 +349,10 @@ class Report_Model extends CI_Model
 		
 //		$this->db->where('t2.report_id=',$row->report_id);
 		
-		//added by Mike, 20200324
+		//added by Mike, 20200324; edited by Mike, 20200607
+		//TO-DO: -add: instructions for unit member to quickly set date
 		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+		//$this->db->where('t2.transaction_date=',"06/06/2020");
 
 		//added by Mike, 20200601
 		//$this->db->where('t2.fee!=',0);
@@ -808,7 +810,11 @@ class Report_Model extends CI_Model
 		$this->db->where('t1.item_id!=', 0);
 
 //		$this->db->where('t1.item_id', $itemId);
+		//edited by Mike, 20200607
+		//TO-DO: -add: instructions for unit member to quickly set the date
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+		//$this->db->where('t2.transaction_date', "06/06/2020");//ASC');		
+
 		$this->db->like('t2.notes', "PAID");
 
 		//edited by Mike, 20200403
@@ -855,7 +861,10 @@ class Report_Model extends CI_Model
 		$this->db->where('t1.item_id!=', 0);
 
 //		$this->db->where('t1.item_id', $itemId);
+		//edited by Mike, 20200607
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+		//$this->db->where('t2.transaction_date', "06/06/2020");		
+
 		$this->db->like('t2.notes', "PAID");
 
 		//edited by Mike, 20200403
@@ -1118,7 +1127,11 @@ class Report_Model extends CI_Model
 		$this->db->distinct('t1.item_name');
 
 //		$this->db->where('t1.item_id', $itemId);
+		//edited by Mike, 20200607
+		//TO-DO: -add: instructions for unit member to quickly set the date
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+		//$this->db->where('t2.transaction_date', "06/06/2020");//ASC');		
+
 		$this->db->like('t2.notes', "PAID");
 		$this->db->like('t1.item_name', "*");
 	
@@ -1149,8 +1162,11 @@ class Report_Model extends CI_Model
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->distinct('t1.item_name');
 
-//		$this->db->where('t1.item_id', $itemId);
+//		$this->db->where('t1.item_id', $itemId);		
+		//edited by Mike, 20200607
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
+		//$this->db->where('t2.transaction_date', "06/06/2020");		
+	
 		$this->db->like('t2.notes', "PAID");
 		$this->db->like('t1.item_name', "*");
 	

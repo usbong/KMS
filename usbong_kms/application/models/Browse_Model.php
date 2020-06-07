@@ -718,6 +718,9 @@ class Browse_Model extends CI_Model
 		
 		$rowArray = $query->result_array();
 
+		//added by Mike, 20200607
+		$outputTransaction = null;
+
 		foreach ($rowArray as $rowValue) {
 			//part 1
 			$updatedValue = str_replace("UNPAID","PAID",$rowValue['notes']);
@@ -760,9 +763,10 @@ class Browse_Model extends CI_Model
 //			$row = $query->row();			
 			$rowArray = $query->result_array();
 			
+			$outputTransaction = $rowArray[0];
 		}
 		
-		return $rowArray[0];
+		return $outputTransaction; //$rowArray[0];
 
 /*
 		$data = array(
