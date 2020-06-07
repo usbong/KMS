@@ -364,6 +364,9 @@ class Browse_Model extends CI_Model
 
 		$this->db->like('t1.item_name', $param['nameParam']);
 		
+		//added by Mike, 20200607
+		$this->db->order_by('t1.item_name', 'ASC');
+		
 		//added by Mike, 20200527
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
 		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
