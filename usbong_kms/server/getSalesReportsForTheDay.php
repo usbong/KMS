@@ -10,7 +10,7 @@
 
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200531
+  @date updated: 20200607
 
   Input:
   1) Sales reports for the day in the database (DB)
@@ -33,10 +33,14 @@
 	date_default_timezone_set('Asia/Hong_Kong');
 
 	//added by Mike, 20200524
-	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+	//$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 
+	//set date value in m/d/Y format here
+	$dateValue = "06/06/2020"; //date('m/d/Y');
+	
 	//added by Mike, 20200521
-	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
+	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$dateValue."' and t2.notes like 'PAID'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -97,7 +101,7 @@
 	$responses = [];
 	
 	//medicine asterisk, i.e. Glucosamine Sulphate and Calcium with Vitamin D
-	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
+	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$dateValue."' and t2.notes like 'PAID'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -166,7 +170,7 @@
 	$responses = [];
 	
 	//non-medicine
-	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
+	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$dateValue."' and t2.notes like 'PAID'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -234,7 +238,7 @@
 	$responses = [];
 	
 	//x-ray
-	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0'"))
+	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$dateValue."' and x_ray_fee!='0'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -303,8 +307,8 @@
 	$responses = [];
 	
 	//lab
-//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."'"))
-	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0'"))
+//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$dateValue."'"))
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$dateValue."' and lab_fee!='0'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -373,7 +377,7 @@
 	$responses = [];
 	
 	//medical doctor; SYSON, PEDRO
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1"))	
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=1"))	
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -460,8 +464,8 @@
 	
 	//medical doctor; SYSON, PETER
 	//edited by Mike, 20200530
-//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2"))	
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2"))	
+//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=2"))	
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=2"))	
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
