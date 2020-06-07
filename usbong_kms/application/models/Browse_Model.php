@@ -481,6 +481,13 @@ class Browse_Model extends CI_Model
 	{			
         $this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
+		
+		//added by Mike, 20200608
+		//delete all transactions of the patient for the day
+		//this is due to the computer server adding a new transaction that combines all the patient's purchases
+        $this->db->where('patient_id',$param['patientId']);
+        $this->db->where('transaction_date',$param['transactionDate']);
+        $this->db->delete('transaction');		
 	}	
 
 	//added by Mike, 20200331
@@ -1274,13 +1281,16 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200517
 	public function getPaidPatientDetailsList($medicalDoctorId, $patientId) 
 	{		
+/* //removed by Mike, 20200608
 		//added by Mike, 20200606	
 		$this->db->select_max('added_datetime_stamp');
 		$this->db->where('patient_id', $patientId);
 		$this->db->where('notes!=', 'UNPAID');
+		$this->db->where('transaction_date=', date('m/d/Y'));
 		$this->db->order_by('added_datetime_stamp`', 'DESC');
 		$query = $this->db->get('transaction');
 		$rowOutputMaxArray = $query->result_array();
+*/
 	
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
 		$this->db->from('patient as t1');
@@ -1291,11 +1301,20 @@ class Browse_Model extends CI_Model
 		
 		//edited by Mike, 20200606
 		//$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
 		$this->db->group_by('t2.transaction_date');		
+
 		//$this->db->group_by('t2.added_datetime_stamp');
 		//$this->db->select_max('t2.added_datetime_stamp');
-    
+/*    
 		$this->db->where('t2.added_datetime_stamp',$rowOutputMaxArray[0]['added_datetime_stamp']);
+*/
+
+		//edited by Mike, 20200608
+		//$this->db->select_max('t2.added_datetime_stamp');
+		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+
+//		$this->db->where('t2.transaction_date',date("m/d/Y"));
 
 
 		//edited by Mike, 20200519
