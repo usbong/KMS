@@ -36,9 +36,11 @@
 	//$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
 	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 
+	//added by Mike, 20200607
 	//set date value in m/d/Y format here
 	$dateValue = "06/06/2020"; //date('m/d/Y');
-	
+	$sDateToday = "2020-06-06"; //date("Y-m-d");
+
 	//added by Mike, 20200521
 	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$dateValue."' and t2.notes like 'PAID'"))
 	{
@@ -80,7 +82,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200607
+//			$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
