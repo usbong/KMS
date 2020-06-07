@@ -238,7 +238,9 @@
 	$responses = [];
 	
 	//x-ray
-	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$dateValue."' and x_ray_fee!='0'"))
+	//edited by Mike, 20200607
+//	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$dateValue."' and x_ray_fee!='0'"))
+	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$dateValue."' and x_ray_fee!='0' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -308,7 +310,9 @@
 	
 	//lab
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$dateValue."'"))
-	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$dateValue."' and lab_fee!='0'"))
+	//edited by Mike, 20200607
+//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$dateValue."' and lab_fee!='0'"))
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$dateValue."' and lab_fee!='0' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -377,7 +381,9 @@
 	$responses = [];
 	
 	//medical doctor; SYSON, PEDRO
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=1"))	
+	//edited by Mike, 20200607
+	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=1"))	
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=1 group by patient_id"))			
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -465,7 +471,9 @@
 	//medical doctor; SYSON, PETER
 	//edited by Mike, 20200530
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=2"))	
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=2"))	
+	//edited by Mike, 20200607
+	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=2"))	
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$dateValue."' and fee!='0' and medical_doctor_id=2 group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
