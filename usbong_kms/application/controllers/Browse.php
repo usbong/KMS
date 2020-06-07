@@ -893,8 +893,9 @@ class Browse extends CI_Controller { //MY_Controller {
 						array_push($outputArray, $value);						
 					}
 */						
+					//removed by Mike, 20200607
 					//edited by Mike, 20200530
-					array_push($outputArray, $value);						
+//					array_push($outputArray, $value);						
 					
 					//TO-DO: -add: auto-verify if there exists another set of the item in the inventory
 					
@@ -1648,6 +1649,10 @@ class Browse extends CI_Controller { //MY_Controller {
 						
 		//$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 		$data['medicalDoctorId'] = $data['outputTransaction']['medical_doctor_id']; //$data['result'][0]['medical_doctor_id'];		
+		
+		if ($data['medicalDoctorId']=="") {
+			$data['medicalDoctorId'] = 1; //default value, i.e. SYSON, PEDRO
+		}
 		//--	
 
 		//added by Mike, 20200406
