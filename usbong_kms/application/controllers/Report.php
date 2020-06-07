@@ -728,6 +728,9 @@ class Report extends CI_Controller { //MY_Controller {
 //		$data["result"] = $this->Report_Model->getPatientReportUnpaidForTheDay();
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 
+//		echo "count: ".count($data["result"]);
+//		echo $data["result"][0]['transaction_id'];
+		
 		//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
 		$outputResult = [];
 		
