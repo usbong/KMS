@@ -466,8 +466,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		$data['resultItem'] = $this->getResultItemQuantity($data);
-		$data['itemName'] = $data['result'][0]['item_name']; //$data['resultItem'][0]['item_name'];
-
+		$data['itemName'] = $data['resultItem'][0]['item_name'];
 /*		
 		foreach ($data['resultItem'] as $value) {
 			echo "dito".$value['resultQuantityInStockNow']."<br/>";
@@ -1664,8 +1663,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportPatientQueue', $data);
 	}
 	
-	//added by Mike, 20200411; edited by Mike, 20200519
-	public function payTransactionItemPurchase($itemTypeId, $itemId)
+	//added by Mike, 20200411; edited by Mike, 20200608
+	public function payTransactionItemPurchase($itemTypeId, $itemId, $patientId)
 	{
 /*
 		echo itemId: .$itemId;
@@ -1686,7 +1685,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$this->Browse_Model->payTransactionItemPurchase();
 		//$this->Browse_Model->payTransactionServiceAndItemPurchase();
 		$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
-		$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
+		//edited by Mike, 20200608
+		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
+
+		$data['outputTransactionId'] = $outputTransactionId;
+		$data['patientId'] = $patientId;
+		$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
 		
 		//added by Mike, 20200607
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
@@ -1872,17 +1876,16 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->Browse_Model->addTransactionPaidReceipt($data);
 		}
 		
-		//added by Mike, 20200606; edited by Mike, 20200608
+		//added by Mike, 20200606
 		//PAS
-		if (isset($_POST["officialReceiptNumberPASParam"])) {
-			$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
-			if ($data['receiptNumber']!==0) {
-				$data['receiptTypeId'] = 2;
+		$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
 
-				$this->Browse_Model->addTransactionPaidReceipt($data);
-			}
+		if ($data['receiptNumber']!==0) {
+			$data['receiptTypeId'] = 2;
+
+			$this->Browse_Model->addTransactionPaidReceipt($data);
 		}
-		
+
 		$this->load->view('searchPatient', $data);		
 	}
 	
