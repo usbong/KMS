@@ -1871,16 +1871,17 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->Browse_Model->addTransactionPaidReceipt($data);
 		}
 		
-		//added by Mike, 20200606
+		//added by Mike, 20200606; edited by Mike, 20200608
 		//PAS
-		$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
+		if (isset($_POST["officialReceiptNumberPASParam"])) {
+			$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
+			if ($data['receiptNumber']!==0) {
+				$data['receiptTypeId'] = 2;
 
-		if ($data['receiptNumber']!==0) {
-			$data['receiptTypeId'] = 2;
-
-			$this->Browse_Model->addTransactionPaidReceipt($data);
+				$this->Browse_Model->addTransactionPaidReceipt($data);
+			}
 		}
-
+		
 		$this->load->view('searchPatient', $data);		
 	}
 	
