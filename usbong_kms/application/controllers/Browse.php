@@ -1689,13 +1689,23 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200605
 		//$this->Browse_Model->payTransactionItemPurchase();
 		//$this->Browse_Model->payTransactionServiceAndItemPurchase();
-		$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
+		//edited by Mike, 20200608
+		//$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
+
+		$data['outputTransaction'] = $this->Browse_Model->payTransactionItemPurchase();
+		$outputTransactionId = $data['outputTransaction']['transaction_id'];
+
 		//edited by Mike, 20200608
 		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
 
 		$data['outputTransactionId'] = $outputTransactionId;
 		$data['patientId'] = $patientId;
-		$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
+		//edited by Mike, 20200608
+		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
+		$data['outputTransactionServicePurchase'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
+		if (isset($data['outputTransactionServicePurchase'])) {
+			$data['outputTransaction'] = $data['outputTransactionServicePurchase'];
+		}
 		
 		//added by Mike, 20200607
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
@@ -1761,10 +1771,18 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200608
 		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
 		
+		$data['outputTransaction'] = $this->Browse_Model->payTransactionItemPurchase();
+		$outputTransactionId = $data['outputTransaction']['transaction_id'];
+
 		$data['outputTransactionId'] = $outputTransactionId;
 		$data['patientId'] = $patientId;
-		$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
-						
+		//edited by Mike, 20200608
+		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
+		$data['outputTransactionServicePurchase'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
+		if (isset($data['outputTransactionServicePurchase'])) {
+			$data['outputTransaction'] = $data['outputTransactionServicePurchase'];
+		}
+	
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 						
@@ -1827,25 +1845,36 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->model('Browse_Model');
 
 		$data['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
-		$data['receiptNumber'] = $_POST["officialReceiptNumberMOSCParam"];
-
-		$this->Browse_Model->addTransactionPaidReceipt($data);
-
-		if ($medicalDoctorId!=1) { //not SYSON, PEDRO
-			$data['receiptTypeId'] = 3;
-		    $data['receiptNumber'] = $_POST["officialReceiptNumberMedicalDoctorParam"];
+		
+		//edited by Mike, 20200608
+		if (isset($_POST["officialReceiptNumberMOSCParam"])) {
+			$data['receiptNumber'] = $_POST["officialReceiptNumberMOSCParam"];
 
 			$this->Browse_Model->addTransactionPaidReceipt($data);
 		}
+
+		//edited by Mike, 20200608
+		if (isset($_POST["officialReceiptNumberMedicalDoctorParam"])) {		
+			if ($medicalDoctorId!=1) { //not SYSON, PEDRO
+				$data['receiptTypeId'] = 3;
+
+
+				$data['receiptNumber'] = $_POST["officialReceiptNumberMedicalDoctorParam"];
+
+				$this->Browse_Model->addTransactionPaidReceipt($data);
+			}
+		}
 		
-		//added by Mike, 20200606
+		//added by Mike, 20200606; edited by Mike, 20200608
 		//PAS
-		$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
+		if (isset($_POST["officialReceiptNumberPASParam"])) {
+			$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
+			
+			if ($data['receiptNumber']!==0) {
+				$data['receiptTypeId'] = 2;
 
-		if ($data['receiptNumber']!==0) {
-			$data['receiptTypeId'] = 2;
-
-			$this->Browse_Model->addTransactionPaidReceipt($data);
+				$this->Browse_Model->addTransactionPaidReceipt($data);
+			}
 		}
 
 //		$this->load->view('searchMedicine', $data);
@@ -1881,14 +1910,16 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->Browse_Model->addTransactionPaidReceipt($data);
 		}
 		
-		//added by Mike, 20200606
+		//added by Mike, 20200606; edited by Mike, 20200608
 		//PAS
-		$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
+		if (isset($_POST["officialReceiptNumberPASParam"])) {
+			$data['receiptNumber'] = $_POST["officialReceiptNumberPASParam"];
+			
+			if ($data['receiptNumber']!==0) {
+				$data['receiptTypeId'] = 2;
 
-		if ($data['receiptNumber']!==0) {
-			$data['receiptTypeId'] = 2;
-
-			$this->Browse_Model->addTransactionPaidReceipt($data);
+				$this->Browse_Model->addTransactionPaidReceipt($data);
+			}
 		}
 
 		$this->load->view('searchPatient', $data);		
