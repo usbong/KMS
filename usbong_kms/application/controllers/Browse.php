@@ -1747,7 +1747,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
 		//edited by Mike, 20200606
 		//$this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
-		$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
+		
+		//edited by Mike, 20200608
+		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
+		
+		$data['outputTransactionId'] = $outputTransactionId;
+		$data['patientId'] = $patientId;
+		$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
 						
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
