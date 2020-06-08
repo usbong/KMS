@@ -497,11 +497,32 @@ class Browse_Model extends CI_Model
         $this->db->delete('transaction');
 	}	
 
-	//added by Mike, 20200530
+	//added by Mike, 20200530; edited by Mike, 20200608
+	//-reverify: if not include delete of already paid patient transaction
 	public function deleteTransactionFromPatient($param) 
 	{
+		//added by Mike, 20200608
+        $this->db->select('patient_id');
         $this->db->where('transaction_id',$param['transactionId']);
+        $query = $this->db->get('transaction');
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+				
+		
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+
+		//added by Mike, 20200608
+		//delete all transactions of the patient for the day
+		//this is due to the computer server adding a new transaction that combines all the patient's purchases
+        $this->db->where('patient_id',$rowArray[0]['patient_id']);
+        $this->db->where('transaction_date',$param['transactionDate']);
         $this->db->delete('transaction');		
+
 	}
 
 	//added by Mike, 20200401
@@ -722,13 +743,16 @@ class Browse_Model extends CI_Model
 
 	//added by Mike, 20200519; edited by Mike, 20200605
 	//note: reverify: delete transaction whose fee = 0 and notes = "IN-QUEUE; PAID"
-	public function payTransactionServiceAndItemPurchase($outputTransactionId)
+	public function payTransactionServiceAndItemPurchase($param)//$outputTransactionId)
 	{			
 		//edited by Mike, 20200605
 //		$this->db->select('notes, transaction_id');
 		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
         $this->db->like('notes',"UNPAID");
 		$this->db->where('transaction_date', date('m/d/Y'));
+		
+		//added by Mike, 20200608
+		$this->db->where('patient_id', $param['patientId']);
 
 		$query = $this->db->get('transaction');	
 		
@@ -768,7 +792,7 @@ class Browse_Model extends CI_Model
 			
 			//added by Mike, 20200605
 			
-			$this->db->where('transaction_id', $outputTransactionId);
+			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
 			$this->db->update('transaction', $dataOutputTransaction);			
 			
 			//added by Mike, 20200606
@@ -776,7 +800,7 @@ class Browse_Model extends CI_Model
 			//edited by Mike, 20200607
 			//$this->db->select('med_fee, pas_fee, transaction_id');
 			$this->db->select('med_fee, pas_fee, transaction_id, medical_doctor_id');
-			$this->db->where('transaction_id', $outputTransactionId);
+			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
 			$query = $this->db->get('transaction');				
 //			$row = $query->row();			
 			$rowArray = $query->result_array();
