@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200607
+' @date updated: 20200608
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -571,8 +571,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//edited by Mike, 20200527
 					//edited again by Mike, 20200607
 //					$value = $resultItem[sizeof($resultItem)-1];
-					$value = $resultItem[0];
+					//$value = $resultItem[0];
 //					$value = $resultItem;
+
+					//edited by Mike, 20200608
+					//$value = $resultItem[0];
+					$value = $result[0];
+					if (isset($resultItem[0])) {
+						$value = $resultItem[0];
+					}
 
 //				}
 		?>				
@@ -609,8 +616,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $value['quantity_in_stock'];
 								}
 */
-								//added by Mike, 20200501
-								$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
+								//added by Mike, 20200501; edited by Mike, 20200608
+								$resultQuantityInStockNow = -1;
+								if (isset($value['resultQuantityInStockNow'])) {
+									$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
+								}
 								
 								//edited by Mike, 20200411; edited by Mike, 20200504
 								if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
