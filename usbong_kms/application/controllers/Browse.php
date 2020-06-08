@@ -445,7 +445,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$itemTypeId = 1; //1 = Medicine
 	
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
-
+		
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
@@ -466,7 +466,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		$data['resultItem'] = $this->getResultItemQuantity($data);
-		$data['itemName'] = $data['resultItem'][0]['item_name'];
+		
+		//edited by Mike, 20200608
+		//$data['itemName'] = $data['resultItem'][0]['item_name'];
+		$data['itemName'] = $data['result'][0]['item_name'];
+		
+
 /*		
 		foreach ($data['resultItem'] as $value) {
 			echo "dito".$value['resultQuantityInStockNow']."<br/>";
