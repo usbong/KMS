@@ -466,7 +466,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		$data['resultItem'] = $this->getResultItemQuantity($data);
-		$data['itemName'] = $data['resultItem'][0]['item_name'];
+		$data['itemName'] = $data['result'][0]['item_name']; //$data['resultItem'][0]['item_name'];
+
 /*		
 		foreach ($data['resultItem'] as $value) {
 			echo "dito".$value['resultQuantityInStockNow']."<br/>";
