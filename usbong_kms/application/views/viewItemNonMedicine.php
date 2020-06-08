@@ -736,7 +736,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//note: at present, the computer server accepts only 1 patient per cart list
 				$patientId = 0; //none
 				
-				if ($cartValue['patient_id']) {
+				if ($cartValue['patient_id']!=0) {
 					$patientId = $cartValue['patient_id'];
 				}
 		?>				
