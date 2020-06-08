@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200521
+' @date updated: 20200608
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -459,13 +459,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
 		}	
 */
-		function myPopupFunctionPay(itemId) {				
+		//edited by Mike, 20200608
+//		function myPopupFunctionPay(itemId) {				
+		function myPopupFunctionPay(itemId, patientId) {				
 /*
 			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
 */			
-			//edited by Mike, 20200411
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
-			
+			//edited by Mike, 20200608
+			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
 		}	
 
 	  </script>
@@ -729,6 +731,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*	
 				$value = $result[0];
 */				
+
+				//added by Mike, 20200608
+				//note: at present, the computer server accepts only 1 patient per cart list
+				$patientId = 0; //none
+				
+				if ($cartValue['patient_id']) {
+					$patientId = $cartValue['patient_id'];
+				}
 		?>				
 		
 					  <tr class="row">
@@ -881,7 +891,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
-							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id']?>)" class="Button-purchase">PAY</button>
+							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY</button>
 						</td>						
 					  </tr>
 <?php

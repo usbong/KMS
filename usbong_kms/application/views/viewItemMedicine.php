@@ -454,13 +454,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		}	
 
-		//added by Mike, 20200331
-		function myPopupFunctionPay(itemId) {				
+		//added by Mike, 20200331; edited by Mike, 20200608
+		//function myPopupFunctionPay(itemId) {				
+		function myPopupFunctionPay(itemId, patientId) {				
 /*
 			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
 */
-			//edited by Mike, 20200411
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/1/"+itemId+"');?>";
+			//edited by Mike, 20200608
+			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/1/"+itemId+"');?>";
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/1/"+itemId+"/"+patientId+"');?>";
 		}	
 
 	  </script>
@@ -569,15 +571,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//edited by Mike, 20200527
 					//edited again by Mike, 20200607
 //					$value = $resultItem[sizeof($resultItem)-1];
-//					$value = $resultItem[0];
+					$value = $resultItem[0];
 //					$value = $resultItem;
-					//edited again by Mike, 20200608					
-					if (isset($resultItem[0])) {
-						$value = $resultItem[0];
-					}
-					else {
-						$value = $result[0];
-					}
 
 //				}
 		?>				
@@ -614,11 +609,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $value['quantity_in_stock'];
 								}
 */
-								//added by Mike, 20200501; edited by Mike, 20200608
-								$resultQuantityInStockNow = -1;
-								if (isset($value['resultQuantityInStockNow'])) {
-									$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
-								}
+								//added by Mike, 20200501
+								$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
 								
 								//edited by Mike, 20200411; edited by Mike, 20200504
 								if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
@@ -746,10 +738,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 				$iCount = 1;
 				$cartFeeTotal = 0;
-				foreach ($cartListResult as $cartValue) {
+				foreach ($cartListResult as $cartValue) { 
 /*	
 				$value = $result[0];
 */				
+
+				//added by Mike, 20200608
+				//note: at present, the computer server accepts only 1 patient per cart list
+				$patientId = 0; //none
+				
+				if ($cartValue['patient_id']) {
+					$patientId = $cartValue['patient_id'];
+				}
 		?>				
 		
 					  <tr class="row">
@@ -902,7 +902,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
-							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id']?>)" class="Button-purchase">PAY</button>
+							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY</button>
 						</td>						
 					  </tr>
 <?php
