@@ -676,7 +676,7 @@ class Browse_Model extends CI_Model
         $this->db->delete('transaction');
 	}	
 
-	//added by Mike, 20200411; edited by Mike, 20200605
+	//added by Mike, 20200411; edited by Mike, 20200608
 	//add new transaction with the total for each item type
 	public function payTransactionItemPurchase() 
 	{			
@@ -738,11 +738,19 @@ class Browse_Model extends CI_Model
 		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
 		
-		return $outputTransactionId;
+		//edited by Mike, 20200608
+		//return $outputTransactionId;
+		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id');
+		$this->db->where('transaction_id', $outputTransactionId);
+		$query = $this->db->get('transaction');		
+		$rowArray = $query->result_array();
+
+		return $rowArray[0];
 	}	
 
 	//added by Mike, 20200519; edited by Mike, 20200605
 	//note: reverify: delete transaction whose fee = 0 and notes = "IN-QUEUE; PAID"
+	//TO-DO: -delete: "AndItem" in function name
 	public function payTransactionServiceAndItemPurchase($param)//$outputTransactionId)
 	{			
 		//edited by Mike, 20200605
