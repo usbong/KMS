@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200607
+' @date updated: 20200608
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -600,21 +600,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 		<div>
 			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMOSCParam" required>
-				</td>
-			  </tr>			  
-			  <?php 
+			<?php
+				//added by Mike, 20200608
+				//removed by Mike, 20200608
+				//note: this is for medicine items
+//				if ($patientId!=0) {
+				//added by Mike, 20200608
+				//we do not show if purchased items are non-medicine and patient is not SYSON, PEDRO's
+				if ($patientId!=0){
+					if (isset($outputTransaction)) {						
+						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
+			?>
+						  <tr>
+							<td>
+							  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
+							</td>
+						  </tr>
+						  <tr>
+							<td>
+							  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMOSCParam" required>
+							</td>
+						  </tr>			  
+			 <?php 
+						}
+					}
+				}
+			  
 				//edited by Mike, 20200529
 //			    if (strpos($medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'], "PEDRO")==false) {
 			    if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")==false) {
-			  ?>
+					//added by Mike, 20200608
+					if ($medicalDoctorId!=0) {
+			 ?>
 				  <tr>
 				    <td>
 				      <br/>
@@ -631,6 +648,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</td>
 				  </tr>			  
 			  <?php
+					}
 				}
 					if (isset($outputTransaction)) {						
 						if ($outputTransaction['pas_fee']!=0) {

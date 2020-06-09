@@ -585,20 +585,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			<?php
 				//added by Mike, 20200608
-				//TO-DO: -update: this for computer to not show if purchased items are non-medicine and patient is not SYSON, PEDRO's
-				if ($patientId!=0) {
+				//we do not show if purchased items are non-medicine and patient is not SYSON, PEDRO's
+				if ($patientId!=0){
+					if (isset($outputTransaction)) {						
+						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
 			?>
-				  <tr>
-					<td>
-					  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
-					</td>
-				  </tr>
-				  <tr>
-					<td>
-					  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMOSCParam" required>
-					</td>
-				  </tr>			  
+						  <tr>
+							<td>
+							  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
+							</td>
+						  </tr>
+						  <tr>
+							<td>
+							  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMOSCParam" required>
+							</td>
+						  </tr>			  
 			 <?php 
+						}
+					}
 				}
 			  
 				//edited by Mike, 20200529

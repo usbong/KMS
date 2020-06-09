@@ -744,6 +744,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo '<br/>';
 				
 				echo "<table class='search-result'>";
+
+				//added by Mike, 20200608
+				//note: at present, the computer server accepts only 1 patient per cart list
+				$patientId = 0; //none
 				
 				//add: table headers
 				$iCount = 1;
@@ -752,10 +756,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*	
 				$value = $result[0];
 */				
-
-				//added by Mike, 20200608
-				//note: at present, the computer server accepts only 1 patient per cart list
-				$patientId = 0; //none
 				
 				if ($cartValue['patient_id']!=0) {
 					$patientId = $cartValue['patient_id'];
