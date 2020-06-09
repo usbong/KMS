@@ -1,6 +1,20 @@
 # Knowledge Management System (KMS)
 
-## 1) Add-on Software Requirements
+## I. Screenshots
+### 1) Information Desk
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/informationDesk.png" width="80%">
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/informationDeskAddNewPatientMikhail.png" width="80%">
+
+### 2) Cashier/Accounting
+#### <b>a) Search</b>
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierSearchPatient.png" width="80%">
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierSearchNonMedicine.png" width="80%">
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierSearchMedicine.png" width="80%">
+
+#### <b>b) Report</b>
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierPurchasedNonMedicineReport.png" width="80%">
+
+## II. Add-on Software Requirements
 ### XAMPP
 https://www.apachefriends.org/index.html
 
@@ -15,7 +29,7 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
   
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-## 2) Add-on Software Tools
+## III. Add-on Software Tools
 ### Chat
 [LAN Messenger: Instant Messenging Client (Official Website)](http://lanmsngr.sourceforge.net/) <br/>
 Action: [Download](https://sourceforge.net/projects/lanmsngr/)
