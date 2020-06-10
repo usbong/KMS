@@ -1390,7 +1390,7 @@ class Browse_Model extends CI_Model
 */
 
 
-		foreach ($rowArray as $key => $rowValue) {			
+		foreach ($rowArray as $key => $rowValue) {
 			if (strpos(strtoupper($rowValue['notes']),"UNPAID")!==false) {
 //				if (($key = array_search($rowValue, $rowArray)) !== false) {
 					unset($rowArray[$key]);

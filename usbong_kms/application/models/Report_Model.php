@@ -378,8 +378,8 @@ class Report_Model extends CI_Model
 /*		
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
 */		
-		//edited by Mike, 20200426
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id, t4.receipt_number'); //, t2.treatment_diagnosis');
+		//edited by Mike, 20200610
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id, t4.receipt_number, t4.receipt_id'); //, t2.treatment_diagnosis');
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -446,9 +446,16 @@ class Report_Model extends CI_Model
 		//edited by Mike, 20200509
 /*		$this->db->group_by('t2.transaction_id');
 */
-		//edited by Mike, 20200521
+		//edited by Mike, 20200610
+		//note: get the newest transaction that use the receipt number
 		//$this->db->group_by('t4.receipt_id');
-		$this->db->group_by('t4.receipt_number');
+/*		$this->db->group_by('t4.receipt_number');		
+*/
+		$this->db->group_by('t4.receipt_id');		
+
+		
+//		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.transaction_id=t2.transaction_id)',NULL,FALSE);
+		
 
 /*
 		$this->db->group_by('t2.report_id');
@@ -494,7 +501,35 @@ class Report_Model extends CI_Model
 			return False; //edited by Mike, 20190722
 		}
 
-		return $rowArray;
+		//edited by Mike, 20200610
+		//return $rowArray;		
+		
+		//echo "count: ".count($rowArray);
+		
+		$outputArray = [];
+		array_push($outputArray, $rowArray[0]);
+		$bIsFound = False;
+		
+		foreach ($rowArray as $rowValue) {
+			$bIsFound = False;			
+			foreach ($outputArray as &$outputRowValue) {
+				if ($outputRowValue['receipt_number'] == $rowValue['receipt_number']) {
+					$bIsFound = True;
+
+					if ($outputRowValue['receipt_id'] < $rowValue['receipt_id']) {
+						$outputRowValue = $rowValue;
+						unset($outputRowValue);
+						break;
+					}
+				}
+			}			
+			
+			if (!$bIsFound) {				
+				array_push($outputArray, $rowValue);
+			}
+		}
+		
+		return $outputArray;
 	}
 
 	//added by Mike, 20200420; edited by Mike, 20200421
