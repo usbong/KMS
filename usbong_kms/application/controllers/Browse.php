@@ -1890,7 +1890,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		}		
 	}
 
-	//added by Mike, 20200517; edited by Mike, 20200606
+	//added by Mike, 20200517; edited by Mike, 20200610
+	//TO-DO: -add: receipts for each transaction using the transaction count
 	public function confirmPatientPaidReceipt($medicalDoctorId)
 	{
 		date_default_timezone_set('Asia/Hong_Kong');
