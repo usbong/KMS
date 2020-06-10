@@ -1837,7 +1837,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 	//edited by Mike, 20200607
 //	public function confirmItemMedicinePaidReceipt($medicalDoctorId) //$itemTypeId)
-	public function confirmItemPaidReceipt($medicalDoctorId, $itemTypeId)
+	public function confirmItemPaidReceiptPrev($medicalDoctorId, $itemTypeId)
 	{
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -1890,9 +1890,78 @@ class Browse extends CI_Controller { //MY_Controller {
 		}		
 	}
 
+	//edited by Mike, 20200610
+	public function confirmItemPaidReceipt($medicalDoctorId, $itemTypeId)
+	{
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		$data['transactionDate'] = date('m/d/Y');
+
+		$data['transactionId'] = $_POST["transactionIdParam"];
+		$data['transactionQuantity'] = $_POST["transactionQuantityParam"]; //added by Mike, 20200610
+		$data['medicalDoctorId'] = $medicalDoctorId; //added by Mike, 20200610
+		$data['receiptNumberMOSC'] = 0;
+		$data['receiptNumberMedicalDoctor'] = 0;
+		$data['receiptNumberPAS'] = 0;
+
+		if (isset($_POST["officialReceiptNumberMOSCParam"])) {
+			$data['receiptNumberMOSC'] = $_POST["officialReceiptNumberMOSCParam"];			
+		}
+
+		if (isset($_POST["officialReceiptNumberMedicalDoctorParam"])) {
+			$data['receiptNumberMedicalDoctor'] = $_POST["officialReceiptNumberMedicalDoctorParam"];			
+		}
+
+		if (isset($_POST["officialReceiptNumberPASParam"])) {
+			$data['receiptNumberPAS'] = $_POST["officialReceiptNumberPASParam"];			
+		}
+		
+		$this->load->model('Browse_Model');
+		$this->Browse_Model->addTransactionPaidReceipt($data);
+
+		if ($itemTypeId=="1") {
+			$this->load->view('searchMedicine', $data);
+		}
+		else { //example: 2
+			$this->load->view('searchNonMedicine', $data);
+		}		
+	}
+
+
 	//added by Mike, 20200517; edited by Mike, 20200610
-	//TO-DO: -add: receipts for each transaction using the transaction count
+	//add: receipts for each transaction using the transaction count
 	public function confirmPatientPaidReceipt($medicalDoctorId)
+	{
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		$data['transactionDate'] = date('m/d/Y');
+
+		$data['transactionId'] = $_POST["transactionIdParam"];
+		$data['transactionQuantity'] = $_POST["transactionQuantityParam"]; //added by Mike, 20200610
+		$data['medicalDoctorId'] = $medicalDoctorId; //added by Mike, 20200610
+		$data['receiptNumberMOSC'] = 0;
+		$data['receiptNumberMedicalDoctor'] = 0;
+		$data['receiptNumberPAS'] = 0;
+
+		if (isset($_POST["officialReceiptNumberMOSCParam"])) {
+			$data['receiptNumberMOSC'] = $_POST["officialReceiptNumberMOSCParam"];			
+		}
+
+		if (isset($_POST["officialReceiptNumberMedicalDoctorParam"])) {
+			$data['receiptNumberMedicalDoctor'] = $_POST["officialReceiptNumberMedicalDoctorParam"];			
+		}
+
+		if (isset($_POST["officialReceiptNumberPASParam"])) {
+			$data['receiptNumberPAS'] = $_POST["officialReceiptNumberPASParam"];			
+		}
+		
+		$this->load->model('Browse_Model');
+		$this->Browse_Model->addTransactionPaidReceipt($data);
+
+		$this->load->view('searchPatient', $data);		
+	}
+	
+	public function confirmPatientPaidReceiptPrev($medicalDoctorId)
 	{
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -1929,32 +1998,6 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchPatient', $data);		
 	}
 	
-	public function confirmPatientPaidReceiptPrev($medicalDoctorId)
-	{
-		$data['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
-
-		if ($medicalDoctorId!=1) { //not SYSON, PEDRO
-			$data['receiptTypeId'] = 3;
-		}
-
-		//edited by Mike, 20200518
-//		$data['receiptNumber'] = $_POST["officialReceiptNumberParam"];
-		$data['receiptNumber'] = $_POST["officialReceiptNumberMOSCParam"];
-		$data['transactionId'] = $_POST["transactionIdParam"];
-
-		date_default_timezone_set('Asia/Hong_Kong');
-		$dateTimeStamp = date('Y/m/d H:i:s');
-		
-		$data['transactionDate'] = date('m/d/Y');
-		
-		$this->load->model('Browse_Model');
-
-		$this->Browse_Model->addTransactionPaidReceipt($data);
-
-		$this->load->view('searchPatient', $data);		
-	}
-	
-
 	//added by Mike, 20200531
 	//added in the result of the pages with Patient Purchase Service History
 	//TO-DO: -reverify: elapsed time output value
