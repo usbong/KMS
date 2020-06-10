@@ -575,8 +575,96 @@ class Browse_Model extends CI_Model
 	}	
 
 	//added by Mike, 20200508; edited by Mike, 20200610
-	//TO-DO: -add: to receipt each transaction 
+	//add: to receipt each transaction 
 	public function addTransactionPaidReceipt($param) 
+	{				
+		//echo "transactionQuantity: ".$param['transactionQuantity'];
+
+		$iCount = 0;		
+		while ($iCount <= $param['transactionQuantity']) {			
+/*		
+			echo "iCount: ".$iCount;
+			echo "iTransactionId: ".$param['transactionId']."<br/>";
+*/		
+			$this->db->select('t1.patient_id, t3.item_type_id');
+			$this->db->from('transaction as t1');
+			$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');
+			$this->db->join('item_type as t3', 't2.item_type_id = t3.item_type_id', 'LEFT');
+			$this->db->where('t1.transaction_id',$param['transactionId']);
+			$query = $this->db->get('transaction');
+			$rowArray = $query->result_array();
+			
+			//identify if patient transaction
+			if ($rowArray[0]['patient_id']!=0) {															
+				if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
+					$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
+
+					$data = array(
+						'receipt_type_id' => $param['receiptTypeId'],
+						'transaction_id' => $param['transactionId'],
+						'receipt_number' => $param['receiptNumberMOSC']
+					);				
+
+					$this->db->insert('receipt', $data);
+				}
+				else { //not SYSON, PEDRO //if ($data['medicalDoctorId']!=1) { //not SYSON, PEDRO
+					$param['receiptTypeId'] = 3;
+
+					$data = array(
+						'receipt_type_id' => $param['receiptTypeId'],
+						'transaction_id' => $param['transactionId'],
+						'receipt_number' => $param['receiptNumberMedicalDoctor']
+					);				
+
+					$this->db->insert('receipt', $data);
+				}								
+			}
+			//identify item type
+			else {
+				if ($rowArray[0]['item_type_id']==1) { //MEDICINE															
+					$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
+
+					$data = array(
+						'receipt_type_id' => $param['receiptTypeId'],
+						'transaction_id' => $param['transactionId'],
+						'receipt_number' => $param['receiptNumberMOSC']
+					);				
+
+					$this->db->insert('receipt', $data);
+				}
+				else { //NON-MEDICINE
+					$param['receiptNumber'] = $param['receiptNumberPAS'];
+					
+					if ($param['receiptNumber']!=0) {
+						$param['receiptTypeId'] = 2;
+
+						$data = array(
+							'receipt_type_id' => $param['receiptTypeId'],
+							'transaction_id' => $param['transactionId'],
+							'receipt_number' => $param['receiptNumberPAS']
+						);				
+
+						$this->db->insert('receipt', $data);
+					}
+				}
+			}
+
+			$iCount = $iCount + 1;			
+			$param['transactionId'] = $param['transactionId'] - 1;
+		}
+/*	
+		$data = array(
+					'receipt_type_id' => $param['receiptTypeId'],
+					'transaction_id' => $param['transactionId'],
+					'receipt_number' => $param['receiptNumber']
+				);
+
+		$this->db->insert('receipt', $data);
+//		return $this->db->insert_id();
+*/
+	}	
+
+	public function addTransactionPaidReceiptPrev($param) 
 	{				
 		$data = array(
 					'receipt_type_id' => $param['receiptTypeId'],
@@ -814,7 +902,7 @@ class Browse_Model extends CI_Model
 			//$this->db->select('med_fee, pas_fee, transaction_id');
 			//edited by Mike, 20200609
 			//$this->db->select('med_fee, pas_fee, transaction_id, medical_doctor_id');
-			$this->db->select('med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id');
+			$this->db->select('med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
 			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
 			$query = $this->db->get('transaction');				
 //			$row = $query->row();			

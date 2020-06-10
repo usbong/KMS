@@ -407,7 +407,7 @@ class Report_Model extends CI_Model
 		//TO-DO: -update: this
 		//added by Mike, 20200423
 //		$this->db->like('t3.medical_doctor_name',$param["medicalDoctorName"]); 
-		
+				
 		if (strtoupper($param["receiptTypeName"])=="MOSC") {
 			//MOSC
 			$this->db->where('t4.receipt_type_id=',1);
