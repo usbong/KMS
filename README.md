@@ -12,7 +12,7 @@
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierSearchMedicine.png" width="80%">
 
 #### <b>b) Report</b>
-<img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierPurchasedNonMedicineReport.png" width="80%">
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierPurchasedNonMedicineReportWithVAT.png" width="80%">
 
 ## II. Add-on Software Requirements
 ### XAMPP
