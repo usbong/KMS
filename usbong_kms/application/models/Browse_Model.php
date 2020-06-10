@@ -574,9 +574,10 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200508
+	//added by Mike, 20200508; edited by Mike, 20200610
+	//TO-DO: -add: to receipt each transaction 
 	public function addTransactionPaidReceipt($param) 
-	{		
+	{				
 		$data = array(
 					'receipt_type_id' => $param['receiptTypeId'],
 					'transaction_id' => $param['transactionId'],
@@ -585,6 +586,7 @@ class Browse_Model extends CI_Model
 
 		$this->db->insert('receipt', $data);
 		return $this->db->insert_id();
+
 	}	
 
 	//added by Mike, 20200517
@@ -694,7 +696,9 @@ class Browse_Model extends CI_Model
 		$totalFeeMedicine = 0;
 		$totalFeeNonMedicine = 0;
 
-//		echo "count: ".count($rowArray);
+		//added by Mike, 20200610
+		//echo "count: ".count($rowArray);
+		$transactionQuantity = count($rowArray)+1; //start at 1
 
 		foreach ($rowArray as $rowValue) {
 			if ($rowValue['item_type_id']==1) { //medicine
@@ -712,13 +716,14 @@ class Browse_Model extends CI_Model
 		echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
 		echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
 */
+		
 		$data = array(
 					'patient_id' => 0,
 					'item_id' => 0,
 					'transaction_date' => date('m/d/Y'),
 					'medical_doctor_id' => 0,
 					'fee' => 0,
-					'fee_quantity' => 0,					
+					'transaction_quantity' => $transactionQuantity, //edited by Mike, 20200610 //0,					
 					'med_fee' => $totalFeeMedicine,
 					'pas_fee' => $totalFeeNonMedicine,
 					'transaction_type_name' => "CASH",
@@ -731,16 +736,16 @@ class Browse_Model extends CI_Model
 
 		//part 2
 		$data = array(
-					'notes' => "PAID"
+					'notes' => "PAID",
 				);
 
         $this->db->where('notes',"UNPAID");
 		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
 		
-		//edited by Mike, 20200608
+		//edited by Mike, 20200610
 		//return $outputTransactionId;
-		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id');
+		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
 		$this->db->where('transaction_id', $outputTransactionId);
 		$query = $this->db->get('transaction');		
 		$rowArray = $query->result_array();
