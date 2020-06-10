@@ -13,6 +13,7 @@
 
 #### <b>b) Report</b>
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierPurchasedNonMedicineReportWithVAT.png" width="80%">
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierPurchasedNonMedicineReportWithVATOfficialReceipt.png" width="80%">
 
 ## II. Add-on Software Requirements
 ### XAMPP
