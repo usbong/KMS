@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200505
+' @date updated: 20200610
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -497,7 +497,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnFee">				
 								<div id="amountPaidId<?php echo $iCount?>">
 							<?php
-								$fAmountPaid = $value['pas_fee'];
+								//edited by Mike, 20200610
+								//$fAmountPaid = $value['pas_fee'];
+								$fAmountPaid = $value['fee'];
+
 //								echo $fAmountPaid;
 								echo number_format($fAmountPaid, 2, '.', '');
 

@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200608
+' @date updated: 20200610
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -677,6 +677,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</table>
 		</div>	
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $outputTransaction['transaction_id'] ?> "required>
+
+		<!-- added by Mike, 20200610 -->
+		<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
+
 		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">

@@ -657,6 +657,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
 -->
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $outputTransaction['transaction_id'] ?> "required>
+		
+		<!-- added by Mike, 20200610 -->
+		<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
+
 		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
