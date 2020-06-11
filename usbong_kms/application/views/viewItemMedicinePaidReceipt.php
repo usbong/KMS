@@ -602,12 +602,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table width="100%">
 			<?php
 				//added by Mike, 20200608
-				//removed by Mike, 20200608
 				//note: this is for medicine items
+				//removed by Mike, 20200611
 //				if ($patientId!=0) {
 				//added by Mike, 20200608
 				//we do not show if purchased items are non-medicine and patient is not SYSON, PEDRO's
-				if ($patientId!=0){
+//				if ($patientId!=0){
 					if (isset($outputTransaction)) {						
 						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
 			?>
@@ -624,7 +624,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 <?php 
 						}
 					}
-				}
+//				}
 			  
 				//edited by Mike, 20200529
 //			    if (strpos($medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'], "PEDRO")==false) {
