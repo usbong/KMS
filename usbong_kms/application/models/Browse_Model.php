@@ -481,13 +481,15 @@ class Browse_Model extends CI_Model
 	{			
         $this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
-		
+
+/*		//removed by Mike, 20200611		
 		//added by Mike, 20200608
 		//delete all transactions of the patient for the day
 		//this is due to the computer server adding a new transaction that combines all the patient's purchases
         $this->db->where('patient_id',$param['patientId']);
         $this->db->where('transaction_date',$param['transactionDate']);
         $this->db->delete('transaction');		
+*/		
 	}	
 
 	//added by Mike, 20200331
@@ -1443,19 +1445,26 @@ class Browse_Model extends CI_Model
 		
 		//edited by Mike, 20200606
 		//$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
-
+		
+		//removed by Mike, 20200611
+/*
 		$this->db->group_by('t2.transaction_date');		
-
+*/
 		//$this->db->group_by('t2.added_datetime_stamp');
 		//$this->db->select_max('t2.added_datetime_stamp');
 /*    
 		$this->db->where('t2.added_datetime_stamp',$rowOutputMaxArray[0]['added_datetime_stamp']);
 */
+		
+		//added by Mike, 20200611
+		$this->db->where('t2.transaction_quantity!=',0);
 
+		//removed by Mike, 20200611
+/*
 		//edited by Mike, 20200608
 		//$this->db->select_max('t2.added_datetime_stamp');
 		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
-
+*/
 //		$this->db->where('t2.transaction_date',date("m/d/Y"));
 
 
