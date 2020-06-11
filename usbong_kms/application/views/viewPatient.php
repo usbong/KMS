@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200609
+' @date updated: 20200611
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -409,6 +409,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
 			}
 */
+			//added by Mike, 20200611
+			if (professionalFee.trim()==="") {
+				professionalFee = 0;
+			}
+			//added by Mike, 20200611
+			if (xRayFee.trim()==="") {
+				xRayFee = 0;
+			}
+			//added by Mike, 20200611
+			if (labFee.trim()==="") {
+				labFee = 0;
+			}
 
 			//added by Mike, 20200518; edited by Mike, 20200523
 			//the following instruction is not yet supported by all computer web browsers
