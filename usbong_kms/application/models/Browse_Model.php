@@ -580,8 +580,10 @@ class Browse_Model extends CI_Model
 	{				
 		//echo "transactionQuantity: ".$param['transactionQuantity'];
 
-		$iCount = 0;		
-		while ($iCount <= $param['transactionQuantity']) {			
+		$iCount = 0;
+		//edited by Mike, 20200611
+//		while ($iCount <= $param['transactionQuantity']) {			
+		while ($iCount < $param['transactionQuantity']) {			
 /*		
 			echo "iCount: ".$iCount;
 			echo "iTransactionId: ".$param['transactionId']."<br/>";
@@ -596,7 +598,12 @@ class Browse_Model extends CI_Model
 			
 			//identify if patient transaction
 			if ($rowArray[0]['patient_id']!=0) {															
-				if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
+//			if ((isset($rowArray[0]['patient_id'])) and ($rowArray[0]['patient_id']!=0)) {
+				//edited by Mike, 20200611
+//				if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
+				//we automatically set the transaction with all the fees to be MOSC Receipt
+				//TO-DO: -update: this to verify if there is x_ray_fee and lab_fee
+				if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
 					$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
 
 					$data = array(
@@ -811,12 +818,12 @@ class Browse_Model extends CI_Model
 					'transaction_date' => date('m/d/Y'),
 					'medical_doctor_id' => 0,
 					'fee' => 0,
-					'transaction_quantity' => $transactionQuantity, //edited by Mike, 20200610 //0,					
 					'med_fee' => $totalFeeMedicine,
 					'pas_fee' => $totalFeeNonMedicine,
 					'transaction_type_name' => "CASH",
 					'report_id' => 0,
-					'notes' => "PAID"
+					'notes' => "PAID",
+					'transaction_quantity' => $transactionQuantity //edited by Mike, 20200610
 				);
 
 		$this->db->insert('transaction', $data);
@@ -841,7 +848,7 @@ class Browse_Model extends CI_Model
 		return $rowArray[0];
 	}	
 
-	//added by Mike, 20200519; edited by Mike, 20200605
+	//added by Mike, 20200519; edited by Mike, 20200611
 	//note: reverify: delete transaction whose fee = 0 and notes = "IN-QUEUE; PAID"
 	//TO-DO: -delete: "AndItem" in function name
 	public function payTransactionServiceAndItemPurchase($param)//$outputTransactionId)
@@ -858,6 +865,11 @@ class Browse_Model extends CI_Model
 		$query = $this->db->get('transaction');	
 		
 		$rowArray = $query->result_array();
+
+		//added by Mike, 20200611
+		//echo "count: ".count($rowArray);
+		//$transactionQuantity = count($rowArray)+1; //start at 1
+		$transactionQuantity = $param['outputTransaction']['transaction_quantity'] + count($rowArray); //start at 1
 
 		//added by Mike, 20200607
 		$outputTransaction = null;
@@ -888,7 +900,8 @@ class Browse_Model extends CI_Model
 						'lab_fee' => $rowValue['lab_fee'],
 						'transaction_type_name' => "CASH",
 						'report_id' => 0,
-						'notes' => $updatedValue //"PAID"
+						'notes' => $updatedValue, //"PAID"
+						'transaction_quantity' => $transactionQuantity, //edited by Mike, 20200611
 					);
 			
 			//added by Mike, 20200605
