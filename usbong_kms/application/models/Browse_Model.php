@@ -657,7 +657,9 @@ class Browse_Model extends CI_Model
 			}
 
 			$iCount = $iCount + 1;			
-			$param['transactionId'] = $param['transactionId'] - 1;
+			//edited by Mike, 20200611
+			//$param['transactionId'] = $param['transactionId'] - 1;
+			$param['transactionId'] = (int)$param['transactionId'] - 1;
 		}
 /*	
 		$data = array(
