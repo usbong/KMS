@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200611
+' @date updated: 20200612
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -274,7 +274,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <style type="text/css">
     </style>
   </head>
-	  <script>
+	  <script>		
+		//added by Mike, 20200612
+		function onLoad() {
+			document.body.onkeydown = function(e){
+				//alert(e.keyCode);
+				//note keycode not = Character key
+				if (e.keyCode==17) { //Ctrl key
+					var medicalDoctorIdInput = document.getElementById("payMedicalDoctorIdParam").value;
+					var patientIdInput = document.getElementById("payPatientIdParam").value;
+
+					if (medicalDoctorIdInput !== null && medicalDoctorIdInput !== '') { //verify only one
+						myPopupFunctionPay(medicalDoctorIdInput, patientIdInput);
+					}
+				}
+			};		
+		}
+		
 		function copyText(iCount){
 //			alert("hello"+iCount);
 	 
@@ -512,7 +528,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}	
 
 	  </script>
-  <body>
+  <!-- edited by Mike, 20200612 -->
+  <body onload="onLoad();">
 	<table class="imageTable">
 	  <tr>
 		<td class="imageColumn">				
@@ -993,6 +1010,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
+							<!-- added by Mike, 20200612 -->
+							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $value['medical_doctor_id']?>">
+							<input type="hidden" id="payPatientIdParam" value="<?php echo $value['patient_id']?>">
+
 							<button onclick="myPopupFunctionPay(<?php echo $value['medical_doctor_id'].",".$value['patient_id']?>)" class="Button-purchase">PAY</button>
 						</td>						
 					  </tr>
