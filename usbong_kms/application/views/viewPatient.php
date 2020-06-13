@@ -1011,8 +1011,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td>
 							<!-- added by Mike, 20200612 -->
-							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $value['medical_doctor_id']?>">
-							<input type="hidden" id="payPatientIdParam" value="<?php echo $value['patient_id']?>">
+							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $value['medical_doctor_id'];?>">
+							<input type="hidden" id="payPatientIdParam" value="<?php echo $value['patient_id'];?>">
 
 							<button onclick="myPopupFunctionPay(<?php echo $value['medical_doctor_id'].",".$value['patient_id']?>)" class="Button-purchase">PAY</button>
 						</td>						
