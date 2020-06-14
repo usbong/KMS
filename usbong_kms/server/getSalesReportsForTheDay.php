@@ -656,7 +656,8 @@
 					//note: \\nonMedicine due to \n is new line
 					//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
 					//$file = $fileBasePath."SYSON,PETER".$sDateToday.".txt";
-					$file = $fileBasePath.strtoupper($listValue['medical_doctor_name']).$sDateToday.".txt";
+					//edited by Mike, 20200614
+					$file = $fileBasePath.strtoupper(str_replace(" ","",$listValue['medical_doctor_name'])).$sDateToday.".txt";
 
 					file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
 				}
