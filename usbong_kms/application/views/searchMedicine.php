@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200527
+' @date updated: 20200614
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -377,10 +377,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if ($value['quantity_in_stock']<0) {
 									echo 9999;
 								}
+								//added by Mike, 20200614
+								else if ($value['quantity_in_stock']=="") {
+									echo 9999;
+								}
 								else {
 									//edited by Mike, 20200417
 //									echo $value['quantity_in_stock'];
-									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];	
+									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];										
 							}
 							?>
 								</div>
@@ -390,8 +394,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//echo $value['expiration_date'];
 								if ($value['expiration_date']==0) {
-
 									if ($value['quantity_in_stock']==-1) {
+										echo "UNKNOWN";
+									}
+									//added by Mike, 20200614
+									else if ($value['quantity_in_stock']=="") {
 										echo "UNKNOWN";
 									}
 									else {
