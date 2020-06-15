@@ -955,6 +955,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<br/>";
 
 			echo '<h3>Item Purchased History</h3>';
+			
+			//added by Mike, 20200615
+			$value = $result[0];
 
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
