@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200614
+' @date updated: 20200615
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -639,8 +639,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
 								}
 								
-								//edited by Mike, 20200411; edited by Mike, 20200504
-								if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
+								//added by Mike, 20200615
+								if ($value['quantity_in_stock']=="") {
+									echo "0/0";
+								}
+								//edited by Mike, 20200411; edited by Mike, 20200615
+								else if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
 									echo 9999;
 								}
 								else {
