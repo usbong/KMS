@@ -387,7 +387,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20200417
 //									echo $value['quantity_in_stock'];
 									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];										
-							}
+								}
 							?>
 								</div>
 						</td>

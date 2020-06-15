@@ -641,7 +641,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								
 								//added by Mike, 20200615
 								if ($value['quantity_in_stock']=="") {
-									echo "0/0";
+									echo "0 / 0";
 								}
 								//edited by Mike, 20200411; edited by Mike, 20200615
 								else if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
