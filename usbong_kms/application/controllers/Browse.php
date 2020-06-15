@@ -649,7 +649,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->model('Browse_Model');
 
 		$itemTypeId = 1; //1 = Medicine
-	
+		$data['itemTypeId'] = $itemTypeId; //added by Mike, 20200615
+
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 		
 		//added by Mike, 20200406
@@ -993,7 +994,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	//TO-DO: -update: this by eliminating excess instructions
 	public function getResultItemQuantity($data) {				
 		//added by Mike, 20200417
-		$itemTypeId = 1; //1 = Medicine
+		//edited by Mike, 20200615
+//		$itemTypeId = 1; //1 = Medicine
+		$itemTypeId = $data['itemTypeId']; //1 = Medicine; 2= Non-medicine
 		$iCount = 0;
 		$itemId = -1;
 
@@ -1535,7 +1538,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->model('Browse_Model');
 
 		//$itemTypeId = 1; //1 = Medicine
+		//edited by Mike, 20200615
 		$itemTypeId = 2; //2 = Non-medicine
+		$data['itemTypeId'] = $itemTypeId;
 	
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 		
@@ -1548,7 +1553,7 @@ class Browse extends CI_Controller { //MY_Controller {
 			//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
-			
+						
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
 
