@@ -1,20 +1,14 @@
 <?php
 /*
   Copyright 2020 Usbong Social Systems, Inc.
-
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
-
   http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200614
-
+  @date updated: 20200615
   Input:
   1) Sales reports for the day in the database (DB)
-
   Output:
   1) Automatically connect to the DB and get the sales reports for the day from the DB
   --> Afterwards, write the reports as .txt text in the computer server's set location
@@ -669,7 +663,10 @@
 			else
 			{
 					echo "Error: " . $mysqli->error;
-			}			
+			}
+			
+			//added by Mike, 20200615
+			echo "<br/>";
 		}
 	}
 	// show an error if there is an issue with the database query
