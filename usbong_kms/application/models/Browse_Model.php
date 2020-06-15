@@ -235,8 +235,86 @@ class Browse_Model extends CI_Model
 		return $outputArray;
 	}	
 
-	//edited by Mike, 20200411
+	//edited by Mike, 20200411; edited by Mike, 20200615
 	public function getNonMedicineDetailsListViaName($param) 
+	{		
+		//we use this at MOSC
+/*		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name');
+*/
+/*
+		$this->db->select('t1.item_name, t1.item_price');
+		$this->db->from('item as t1');
+//		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+//		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+//		$this->db->distinct('t1.patient_name');
+		$this->db->group_by('t1.item_name');
+		$this->db->where('t1.item_type_id', 1); //1 = Medicine
+		$this->db->like('t1.item_name', $param['nameParam']);
+//		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+		$this->db->limit(8);//1);
+		
+		$query = $this->db->get('item');
+*/
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+
+		$this->db->from('item as t1');
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+//		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+//		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+//		$this->db->distinct('t1.patient_name');
+
+		//TO-DO: -re-verify: if we can remove
+//		$this->db->group_by('t1.item_name');
+		
+		//edited by Mike, 20200501
+		//re-edited by Mike, 20200527
+		//TO-DO: -re-verify due to new inventory stock
+		//re-verify: simply update quantity_in_stock for new item stock that have the same expiration date 
+		//note: -re-verify: if this solves the issue with inventory items that use the same added_timestamp, i.e. 2020-04-06 08:40:44
+//		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
+//		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
+		$this->db->group_by('t2.inventory_id');
+		
+		//added by Mike, 20200521
+		$this->db->where('t1.item_id!=', 0); //0 = NONE
+
+		$this->db->where('t1.item_type_id', 2); //2 = Non-medicine
+
+		$this->db->like('t1.item_name', $param['nameParam']);
+		
+		//added by Mike, 20200607
+		$this->db->order_by('t1.item_name', 'ASC');
+		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
+		
+		//added by Mike, 20200527
+		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
+		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+		$this->db->limit(8);//1);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+//		echo report_id: .$rowArray[0]['report_id'];
+		
+/*		return $row->report_description;
+*/
+//		return $rowArray[0]['report_description'];
+		
+		return $rowArray;
+	}	
+
+	//edited by Mike, 20200615
+	public function getNonMedicineDetailsListViaNamePrev($param) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
 /*
@@ -1664,15 +1742,12 @@ class Browse_Model extends CI_Model
 	public function getItemAvailableQuantityInStockBuggy($itemTypeId, $itemId)
 //	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
 	{		
-		echo "dito";
-	
 		$this->db->select('t2.quantity_in_stock, t1.item_name');
 		$this->db->from('item as t1');
 		
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t1.item_type_id', $itemTypeId); //2); //2 = Non-medicine
-
 
 		$query = $this->db->get('item');
 
@@ -1771,7 +1846,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	//added by Mike, 20200406; edited by Mike, 20200603
 	public function getItemAvailableQuantityInStock($itemTypeId, $itemId)
 //	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
-	{		
+	{			
 		$this->db->select('t2.quantity_in_stock, t1.item_name');
 		$this->db->from('item as t1');
 		
@@ -1779,10 +1854,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t1.item_type_id', $itemTypeId); //2); //2 = Non-medicine
 
-
 		$query = $this->db->get('item');
 
-		$row = $query->row();		
+		$row = $query->row();
 /*
 		echo $row->item_name;
 		echo "qty".$row->quantity_in_stock;
@@ -1836,9 +1910,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	//added by Mike, 20200406; edited by Mike, 20200603
 	public function getItemAvailableQuantityInStockPrev($itemTypeId, $itemId)
 //	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
-	{
-		echo "dito";
-		
+	{		
 		$this->db->select('t2.quantity_in_stock, t1.item_name');
 		$this->db->from('item as t1');
 		
