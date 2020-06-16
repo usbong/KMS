@@ -1816,7 +1816,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 	}
 
-	//added by Mike, 20200517
+	//added by Mike, 20200517; edited by Mike, 20200616
 	public function deleteTransactionServicePurchase($medicalDoctorId, $patientId, $transactionId)
 	{
 		$data['medicalDoctorId'] = $medicalDoctorId;
@@ -1867,6 +1867,7 @@ class Browse extends CI_Controller { //MY_Controller {
 /*
 		echo itemId: .$itemId;
 */		
+		$data['itemTypeId'] = $itemTypeId; //added by Mike, 20200616
 		$data['itemId'] = $itemId;
 		$data['transactionId'] = $transactionId;
 				
@@ -1936,6 +1937,9 @@ class Browse extends CI_Controller { //MY_Controller {
 */		
 		$data['itemId'] = $itemId;
 //		$data['transactionId'] = $transactionId;
+		
+		//added by Mike, 20200616
+		$data['itemTypeId'] = $itemTypeId;
 				
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
