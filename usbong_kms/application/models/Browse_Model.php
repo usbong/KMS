@@ -627,6 +627,7 @@ class Browse_Model extends CI_Model
 			$iCount = 0;
 			while ($iCount < $transactionQuantity) {			
 				$this->db->where('transaction_id',$iTransactionId);
+				$this->db->where('patient_id!=',0);
 				$this->db->delete('transaction');
 							
 				$iCount = $iCount + 1;
@@ -996,7 +997,9 @@ class Browse_Model extends CI_Model
 		
 		//edited by Mike, 20200610
 		//return $outputTransactionId;
-		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
+		//edited by Mike, 20200616
+//		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
+		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
 		$this->db->where('transaction_id', $outputTransactionId);
 		$query = $this->db->get('transaction');		
 		$rowArray = $query->result_array();
