@@ -602,11 +602,37 @@ class Browse_Model extends CI_Model
 	}	
 */
 
-	//added by Mike, 20200517
+	//added by Mike, 20200517; edited by Mike, 20200616
 	public function deleteTransactionServicePurchase($param) 
 	{			
+/*		//edited by Mike, 20200616
         $this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
+*/
+
+		$iTransactionId = $param['transactionId'];
+
+		$this->db->select('transaction_quantity');
+		$this->db->where('transaction_id',$iTransactionId);
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+
+		$transactionQuantity = $row->transaction_quantity;
+
+		if ($transactionQuantity==0) {
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('transaction');
+		}
+		else {			
+			$iCount = 0;
+			while ($iCount < $transactionQuantity) {			
+				$this->db->where('transaction_id',$iTransactionId);
+				$this->db->delete('transaction');
+							
+				$iCount = $iCount + 1;
+				$iTransactionId = $iTransactionId - 1;
+			}
+		}
 
 /*		//removed by Mike, 20200611		
 		//added by Mike, 20200608
@@ -1732,6 +1758,7 @@ class Browse_Model extends CI_Model
 		if ($rowArray == null) {			
 			return False; //edited by Mike, 20190722
 		}
+
 		
 		return $rowArray;
 	}		
