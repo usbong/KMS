@@ -1891,6 +1891,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		echo $row->item_name;
 		echo "qty".$row->quantity_in_stock;
 */		
+
 		$iQuantity = 0;
 		//added by Mike, 20200411
 		if (isset($row->quantity_in_stock)) {
@@ -1906,7 +1907,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 			return 0;
 		}
 		
-		$this->db->select('t1.item_price, t2.fee');
+		//edited by Mike, 20200617
+		//$this->db->select('t1.item_price, t2.fee');
+		$this->db->select('t1.item_price, t2.fee, t2.fee_quantity');
 		$this->db->from('item as t1');
 
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
@@ -1931,9 +1934,13 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		foreach ($rowArray as $value) {	
 			//edited by Mike, 20200422
 //			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
-			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
-		}
 
+			//edited by Mike, 20200617
+//			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+
+			$iQuantity = $iQuantity - $value['fee_quantity'];
+		}
+		
 		return $iQuantity;
 	}
 
