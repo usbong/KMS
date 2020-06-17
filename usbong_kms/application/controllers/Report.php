@@ -282,7 +282,9 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["monthNum"] = date("m", $previousMonth);
 		$data["currentMonthNum"] = date("m", $currentMonth);
 		
-		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
+		//edited by Mike, 20200617
+//		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
+		$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);
 
 		$this->load->view('viewReceiptReportPAS', $data);
 	}
@@ -309,8 +311,10 @@ class Report extends CI_Controller { //MY_Controller {
 		if (strlen($data["currentMonthNum"])==1) {
 			$data["currentMonthNum"]= "0".$data["currentMonthNum"];
 		}		
-				
-		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
+		
+		//edited by Mike, 20200617
+		//$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);//, $member_id);
+		$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);//, $member_id);
 
 		$this->load->view('viewReceiptReportPAS', $data);
 	}
