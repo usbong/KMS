@@ -990,7 +990,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewItemMedicine', $data);
 	}
 
-	//added by Mike, 20200603
+	//added by Mike, 20200603; edited by Mike, 20200617
 	//TO-DO: -update: this by eliminating excess instructions
 	public function getResultItemQuantity($data) {				
 		//added by Mike, 20200417
