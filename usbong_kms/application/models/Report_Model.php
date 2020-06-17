@@ -421,6 +421,11 @@ class Report_Model extends CI_Model
 
 				$itemTransactionRowArray = $query->result_array();
 				
+				//added by Mike, 20200617
+				if ($itemTransactionRowArray == null) {			
+					return False;
+				}
+		
 				if ($itemTransactionRowArray[0]['item_id']!=0) {
 					$rowValue['item_id'] = $itemTransactionRowArray[0]['item_id'];					
 					$rowValue['receipt_number'] = $itemTransactionRowArray[0]['receipt_number'];					
