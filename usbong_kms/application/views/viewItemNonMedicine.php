@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200615
+' @date updated: 20200618
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -607,7 +607,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
+						
 						<td class ="column">				
+								<!-- added by Mike, 20200618 -->							
+								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 
+									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
+										echo 9999;
+									} 
+									else {
+										//added by Mike, 20200618
+										//echo $value['resultQuantityInStockNow'];
+										
+										if (isset($value['resultQuantityInStockNow'])) {
+											echo $value['resultQuantityInStockNow'];
+										}
+										else {
+											echo 0;
+										}										
+									}
+								?>">						
+
 								<div id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];

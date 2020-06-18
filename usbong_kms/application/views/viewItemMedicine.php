@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200615
+' @date updated: 20200618
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -618,7 +618,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										echo 9999;
 									} 
 									else {
-										echo $value['resultQuantityInStockNow'];
+										//added by Mike, 20200618
+										//echo $value['resultQuantityInStockNow'];
+										
+										if (isset($value['resultQuantityInStockNow'])) {
+											echo $value['resultQuantityInStockNow'];
+										}
+										else {
+											echo 0;
+										}										
 									}
 								?>">
 
