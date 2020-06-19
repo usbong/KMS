@@ -37,3 +37,7 @@ Action: [Download](https://sourceforge.net/projects/lanmsngr/)
 
 #### Note
 1) LAN = Local Area Network
+
+## IV. System Integration @Partner Clinic and Peripheral Units
+To eliminate excess steps and inefficient time usage, the Marikina Orthopedic Specialty Clinic (MOSC) requested Usbong's services to automate routine, monotonous tasks and share with unit members know-how on computers.<br/><br/>
+http://www.usbong.ph/excelplusplus
