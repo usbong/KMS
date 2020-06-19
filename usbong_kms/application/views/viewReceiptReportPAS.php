@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200617
+' @date updated: 20200619
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -476,6 +476,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
 								$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
 */
+
+								//removed temporarily by Mike, 20200619
+/*
 								if (strpos(strtoupper($value['notes']),"SC")!==false) {
 									echo "SC";											
 								}
@@ -484,13 +487,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 								else {
 									echo "WI";										
-/*
-									$fLess20PercentDiscount = 0;
-//									$fFee = $value['fee'];
-//									$fXRayFee = $value['x_ray_fee'];
-*/									
 								}								
-								
+*/								
+								echo "WI";										
 							?>
 								</div>
 						</td>
@@ -511,13 +510,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnFee">				
 								<div id="vatSalesId<?php echo $iCount?>">
 							<?php
+								//edited by Mike, 20200619
+								//removed temporarily by Mike, 20200619
+/*
 								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
 								}
 								else { //WI								
+*/								
 								   $fVatAmount = number_format($fAmountPaid/1.12*0.12, 2, '.', '');
 								   $fVatSales = $fAmountPaid - $fVatAmount;	//edited by Mike, 20200426
+/*
 								}								
-
+*/
 							    echo number_format($fVatSales, 2, '.', '');									
 								
 								$fTotalVatSales += $fVatSales;
