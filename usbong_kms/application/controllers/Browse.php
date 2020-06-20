@@ -1617,11 +1617,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['xRayFee'] = $xRayFee;
 		$data['labFee'] = $labFee;
 		$data['classification'] = $classification;
-		//edited by Mike, 20200526
-//		$data['notes'] = $notes;
-		//$data['notes'] = $notes."; "."UNPAID";
-		$notes = str_replace("u003B", ";", $notes); //semicolon
-		$notes = str_replace("u002C", ",", $notes); //comma
+
+		//edited by Mike, 20200620
+		//note: "U" is capital letter
+		$notes = str_replace("U003B", ";", $notes); //semicolon
+		$notes = str_replace("U002C", ",", $notes); //comma
 		$notes = urldecode($notes); //%20 = space, etc		
 		$data['notes'] = $notes."; "."UNPAID";
 		
