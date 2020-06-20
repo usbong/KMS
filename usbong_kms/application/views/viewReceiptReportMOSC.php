@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200505
+' @date updated: 20200620
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -502,7 +502,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
 								$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
 
-								if (strpos(strtoupper($value['notes']),"SC")!==false) {
+								//edited by Mike, 20200620
+								if (strpos(strtoupper($value['notes']),"DISCOUNTED")!==false) {
+									echo "WI; DISCOUNTED";
+								}
+								else if (strpos(strtoupper($value['notes']),"SC")!==false) {
 									echo "SC";											
 								}
 								else if (strpos(strtoupper($value['notes']),"PWD")!==false) {
@@ -539,7 +543,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								//added by Mike, 20200426
 //								if ($fLess20PercentDiscount!=0) {
-								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
+								//edited by Mike, 20200620
+								if (strpos(strtoupper($value['notes']),"DISCOUNTED")!==false) {
+									//do not anymore add less 20 percent
+								}
+								else if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
 									$fAmountNoLess20PercentDiscount += $fFee / (1 - 0.20);
 	//								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
 									$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
