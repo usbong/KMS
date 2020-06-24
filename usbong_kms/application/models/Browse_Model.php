@@ -937,6 +937,27 @@ class Browse_Model extends CI_Model
 		$iTransactionId = $param['transactionId'];
 		$transactionQuantity = 0;
 
+		//added by Mike, 20200625
+		//identify the first transactionId in the cart list if item was purchased with other items/services
+		do {
+			$iTransactionId = $iTransactionId - 1;
+			
+			$this->db->select('transaction_quantity');
+			$this->db->where('transaction_id',$iTransactionId);
+			$query = $this->db->get('transaction');
+			$row = $query->row();
+
+			//edited by Mike, 20200625
+			if (isset($row->transaction_quantity)) {
+				$transactionQuantity = $row->transaction_quantity;
+			}
+			else {
+				break;
+			}
+
+		}
+		while ($transactionQuantity==0);
+
 		do {
 			$this->db->where('transaction_id',$iTransactionId);
 			$this->db->delete('transaction');
@@ -948,7 +969,49 @@ class Browse_Model extends CI_Model
 			$query = $this->db->get('transaction');
 			$row = $query->row();
 
-			$transactionQuantity = $row->transaction_quantity;
+			//edited by Mike, 20200625
+			if (isset($row->transaction_quantity)) {
+				$transactionQuantity = $row->transaction_quantity;
+			}
+			else {
+				break;
+			}
+		}
+		while ($transactionQuantity==0);	
+
+		//delete the transaction whose transactionQuantity != 0
+		$this->db->where('transaction_id',$iTransactionId);
+		$this->db->delete('transaction');
+	}	
+
+	//added by Mike, 20200625
+	public function deleteTransactionItemPurchasePrev($param) 
+	{			
+/*		//removed by Mike, 20200624	
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+*/
+		$iTransactionId = $param['transactionId'];
+		$transactionQuantity = 0;
+
+		do {
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('transaction');
+						
+			$iTransactionId = $iTransactionId + 1;
+			
+			$this->db->select('transaction_quantity');
+			$this->db->where('transaction_id',$iTransactionId);
+			$query = $this->db->get('transaction');
+			$row = $query->row();
+
+			//edited by Mike, 20200625
+			if (isset($row->transaction_quantity)) {
+				$transactionQuantity = $row->transaction_quantity;
+			}
+			else {
+				break;
+			}
 		}
 		while ($transactionQuantity==0);	
 
@@ -1945,7 +2008,10 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 
 		$this->db->where('t1.item_id', $itemId);
-		$this->db->where('t2.notes', "PAID");
+		//edited by Mike, 20200625
+		//note: we include transactions in the cart list, albeit unpaid
+		//$this->db->where('t2.notes', "PAID");
+		$this->db->like('t2.notes', "PAID");
 		$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
 
 		$query = $this->db->get('item');
