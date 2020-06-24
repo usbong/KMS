@@ -603,6 +603,7 @@ class Browse_Model extends CI_Model
 */
 
 	//added by Mike, 20200517; edited by Mike, 20200616
+	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
 	public function deleteTransactionServicePurchase($param) 
 	{			
 /*		//edited by Mike, 20200616
@@ -645,13 +646,14 @@ class Browse_Model extends CI_Model
 */		
 	}	
 
+/*  //removed by Mike, 20200624
 	//added by Mike, 20200331
 	public function deleteTransactionMedicinePurchase($param) 
 	{			
         $this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
 	}	
-
+*/
 	//added by Mike, 20200530; edited by Mike, 20200608
 	//-reverify: if not include delete of already paid patient transaction
 	public function deleteTransactionFromPatient($param) 
@@ -922,12 +924,37 @@ class Browse_Model extends CI_Model
 		$this->db->insert('transaction', $data);
 		return $this->db->insert_id();
 	}	
-
-	//added by Mike, 20200331; edited by Mike, 20200411
+	
+	//added by Mike, 20200331; edited by Mike, 20200624
+	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
+	//TO-DO: -reverify: this
 	public function deleteTransactionItemPurchase($param) 
 	{			
+/*		//removed by Mike, 20200624	
         $this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
+*/
+		$iTransactionId = $param['transactionId'];
+		$transactionQuantity = 0;
+
+		do {
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('transaction');
+						
+			$iTransactionId = $iTransactionId + 1;
+			
+			$this->db->select('transaction_quantity');
+			$this->db->where('transaction_id',$iTransactionId);
+			$query = $this->db->get('transaction');
+			$row = $query->row();
+
+			$transactionQuantity = $row->transaction_quantity;
+		}
+		while ($transactionQuantity==0);	
+
+		//delete the transaction whose transactionQuantity != 0
+		$this->db->where('transaction_id',$iTransactionId);
+		$this->db->delete('transaction');
 	}	
 
 	//added by Mike, 20200411; edited by Mike, 20200608
