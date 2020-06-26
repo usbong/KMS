@@ -602,9 +602,73 @@ class Browse_Model extends CI_Model
 	}	
 */
 
-	//added by Mike, 20200517; edited by Mike, 20200616
+	//added by Mike, 20200517; edited by Mike, 20200626
 	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
 	public function deleteTransactionServicePurchase($param) 
+	{			
+/*		//edited by Mike, 20200616
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+*/
+
+		$iTransactionId = $param['transactionId'];
+
+		$this->db->select('transaction_quantity');
+		$this->db->where('transaction_id',$iTransactionId);
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+
+		$transactionQuantity = $row->transaction_quantity;
+
+		if ($transactionQuantity==0) {
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('transaction');
+		}
+		else {			
+			$iCount = 0;
+			while ($iCount < $transactionQuantity) {			
+				$this->db->where('transaction_id',$iTransactionId);
+
+				//removed by Mike, 20200626
+//				$this->db->where('patient_id!=',0);
+
+				$this->db->delete('transaction');
+							
+				//edited by Mike, 20200626
+				//$iCount = $iCount + 1;				
+				//this is due to the transactionId can skip in the count
+				$this->db->select('transaction_id');
+				$this->db->where('transaction_id',$iTransactionId);
+				$query = $this->db->get('transaction');
+				$row = $query->row();
+
+				if (isset($row)) {
+					if (count($row)!=0) {
+						$iCount = $iCount + 1;
+					}			
+				}
+				else {
+					break;
+				}
+				
+				$iTransactionId = $iTransactionId - 1;
+				
+			}
+		}
+
+/*		//removed by Mike, 20200611		
+		//added by Mike, 20200608
+		//delete all transactions of the patient for the day
+		//this is due to the computer server adding a new transaction that combines all the patient's purchases
+        $this->db->where('patient_id',$param['patientId']);
+        $this->db->where('transaction_date',$param['transactionDate']);
+        $this->db->delete('transaction');		
+*/		
+	}	
+
+	//added by Mike, 20200517; edited by Mike, 20200616
+	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
+	public function deleteTransactionServicePurchasePrev($param) 
 	{			
 /*		//edited by Mike, 20200616
         $this->db->where('transaction_id',$param['transactionId']);
@@ -752,67 +816,70 @@ class Browse_Model extends CI_Model
 			$this->db->where('t1.transaction_id',$param['transactionId']);
 			$query = $this->db->get('transaction');
 			$rowArray = $query->result_array();
-			
-			//identify if patient transaction
-			if ($rowArray[0]['patient_id']!=0) {															
-//			if ((isset($rowArray[0]['patient_id'])) and ($rowArray[0]['patient_id']!=0)) {
-				//edited by Mike, 20200611
-//				if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
-				//we automatically set the transaction with all the fees to be MOSC Receipt
-				//TO-DO: -update: this to verify if there is x_ray_fee and lab_fee
-				if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
-					$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
-
-					$data = array(
-						'receipt_type_id' => $param['receiptTypeId'],
-						'transaction_id' => $param['transactionId'],
-						'receipt_number' => $param['receiptNumberMOSC']
-					);				
-
-					$this->db->insert('receipt', $data);
-				}
-				else { //not SYSON, PEDRO //if ($data['medicalDoctorId']!=1) { //not SYSON, PEDRO
-					$param['receiptTypeId'] = 3;
-
-					$data = array(
-						'receipt_type_id' => $param['receiptTypeId'],
-						'transaction_id' => $param['transactionId'],
-						'receipt_number' => $param['receiptNumberMedicalDoctor']
-					);				
-
-					$this->db->insert('receipt', $data);
-				}								
-			}
-			//identify item type
-			else {
-				if ($rowArray[0]['item_type_id']==1) { //MEDICINE															
-					$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
-
-					$data = array(
-						'receipt_type_id' => $param['receiptTypeId'],
-						'transaction_id' => $param['transactionId'],
-						'receipt_number' => $param['receiptNumberMOSC']
-					);				
-
-					$this->db->insert('receipt', $data);
-				}
-				else { //NON-MEDICINE
-					$param['receiptNumber'] = $param['receiptNumberPAS'];
-					
-					if ($param['receiptNumber']!=0) {
-						$param['receiptTypeId'] = 2;
+						
+			//edited by Mike, 20200626
+			if (count($rowArray)!=0) {
+				//identify if patient transaction
+				if ($rowArray[0]['patient_id']!=0) {															
+	//			if ((isset($rowArray[0]['patient_id'])) and ($rowArray[0]['patient_id']!=0)) {
+					//edited by Mike, 20200611
+	//				if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
+					//we automatically set the transaction with all the fees to be MOSC Receipt
+					//TO-DO: -update: this to verify if there is x_ray_fee and lab_fee
+					if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
+						$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
 
 						$data = array(
 							'receipt_type_id' => $param['receiptTypeId'],
 							'transaction_id' => $param['transactionId'],
-							'receipt_number' => $param['receiptNumberPAS']
+							'receipt_number' => $param['receiptNumberMOSC']
 						);				
 
 						$this->db->insert('receipt', $data);
 					}
+					else { //not SYSON, PEDRO //if ($data['medicalDoctorId']!=1) { //not SYSON, PEDRO
+						$param['receiptTypeId'] = 3;
+
+						$data = array(
+							'receipt_type_id' => $param['receiptTypeId'],
+							'transaction_id' => $param['transactionId'],
+							'receipt_number' => $param['receiptNumberMedicalDoctor']
+						);				
+
+						$this->db->insert('receipt', $data);
+					}								
+				}
+				//identify item type
+				else {
+					if ($rowArray[0]['item_type_id']==1) { //MEDICINE															
+						$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
+
+						$data = array(
+							'receipt_type_id' => $param['receiptTypeId'],
+							'transaction_id' => $param['transactionId'],
+							'receipt_number' => $param['receiptNumberMOSC']
+						);				
+
+						$this->db->insert('receipt', $data);
+					}
+					else { //NON-MEDICINE
+						$param['receiptNumber'] = $param['receiptNumberPAS'];
+						
+						if ($param['receiptNumber']!=0) {
+							$param['receiptTypeId'] = 2;
+
+							$data = array(
+								'receipt_type_id' => $param['receiptTypeId'],
+								'transaction_id' => $param['transactionId'],
+								'receipt_number' => $param['receiptNumberPAS']
+							);				
+
+							$this->db->insert('receipt', $data);
+						}
+					}
 				}
 			}
-
+	
 			$iCount = $iCount + 1;			
 			//edited by Mike, 20200611
 			//$param['transactionId'] = $param['transactionId'] - 1;
@@ -928,7 +995,7 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200331; edited by Mike, 20200624
 	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
 	//TO-DO: -reverify: this
-	public function deleteTransactionItemPurchase($param) 
+	public function deleteTransactionItemPurchaseAllInCart($param) 
 	{			
 /*		//removed by Mike, 20200624	
         $this->db->where('transaction_id',$param['transactionId']);
@@ -937,8 +1004,16 @@ class Browse_Model extends CI_Model
 		$iTransactionId = $param['transactionId'];
 		$transactionQuantity = 0;
 
+		//identify earliest transactionId
+		$this->db->select_min('transaction_id');
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+		
+		$iTransactionIdMin = $row->transaction_id;
+
 		//added by Mike, 20200625
 		//identify the first transactionId in the cart list if item was purchased with other items/services
+		//part 1
 		do {
 			$iTransactionId = $iTransactionId - 1;
 			
@@ -951,12 +1026,70 @@ class Browse_Model extends CI_Model
 			if (isset($row->transaction_quantity)) {
 				$transactionQuantity = $row->transaction_quantity;
 			}
-			else {
-				break;
+			//edited by Mike, 20200626
+			else { 
+				//break;
+
+				if ($iTransactionId < $iTransactionIdMin) {
+					break;
+				}
+				else {
+					continue;
+				}					
 			}
 
 		}
-		while ($transactionQuantity==0);
+		//edited by Mike, 20200626
+//		while ($transactionQuantity==0);
+		while (($transactionQuantity==0)or ($iTransactionId<=0));
+
+		//added by Mike, 20200626
+		//part 2
+		//get the transactionId of the transaction whose transactionQuantity is 0
+		//we do this due to transactionId's may skip, i.e. not counted by simply adding 1
+		//identify the first transactionId in the cart list if item was purchased with other items/services		
+		$transactionQuantity=0;
+
+		//identify newest transactionId
+		$this->db->select_max('transaction_id');
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+		
+		$iTransactionIdMax = $row->transaction_id;
+		
+		echo "max".$iTransactionIdMax;
+
+		do {
+			$iTransactionId = $iTransactionId + 1;
+			
+			echo "id".$iTransactionId;
+
+			$this->db->select('transaction_quantity');
+			$this->db->where('transaction_id',$iTransactionId);
+			$query = $this->db->get('transaction');
+			$row = $query->row();
+
+			//edited by Mike, 20200625
+			if (isset($row->transaction_quantity)) {
+				$transactionQuantity = $row->transaction_quantity;
+			}
+			//edited by Mike, 20200626
+			else { 			
+				//break;
+				$transactionQuantity = -1;
+				
+				if ($iTransactionId > $iTransactionIdMax) {
+					break;
+				}
+				else {
+					continue;
+				}
+			}
+		}
+		//edited by Mike, 20200626
+		while (($transactionQuantity!=0) and ($iTransactionId<$iTransactionIdMax));
+
+		echo "qty: ".$transactionQuantity.": hallo".$iTransactionId;
 
 		do {
 			$this->db->where('transaction_id',$iTransactionId);
@@ -973,11 +1106,24 @@ class Browse_Model extends CI_Model
 			if (isset($row->transaction_quantity)) {
 				$transactionQuantity = $row->transaction_quantity;
 			}
+			//edited by Mike, 20200626
 			else {
-				break;
+				//break;
+				$transactionQuantity = -1;
+				
+				if ($iTransactionId > $iTransactionIdMax) {
+					break;
+				}
+				else {
+					continue;
+				}
 			}
+
 		}
-		while ($transactionQuantity==0);	
+		//edited by Mike, 20200626
+//		while ($transactionQuantity==0);
+//		while (($transactionQuantity==0)||($iTransactionId<=0));
+		while (($transactionQuantity!=0) and ($iTransactionId<$iTransactionIdMax));
 
 		//delete the transaction whose transactionQuantity != 0
 		$this->db->where('transaction_id',$iTransactionId);
@@ -1018,6 +1164,12 @@ class Browse_Model extends CI_Model
 		//delete the transaction whose transactionQuantity != 0
 		$this->db->where('transaction_id',$iTransactionId);
 		$this->db->delete('transaction');
+	}	
+
+	public function deleteTransactionItemPurchase($param) 
+	{			
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
 	}	
 
 	//added by Mike, 20200411; edited by Mike, 20200608
