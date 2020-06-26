@@ -470,6 +470,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		}	
 
+		//added by Mike, 20200626
+		//re-verify: this
+		//we do not use this now
+		function myPopupFunctionDeleteAllInCart(itemId,transactionId) {				
+/*
+			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+*/			
+			//edited by Mike, 20200411
+			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchaseAllInCart/1/"+itemId +"/"+transactionId+"');?>";
+
+		}	
+
 		//added by Mike, 20200331; edited by Mike, 20200608
 		//function myPopupFunctionPay(itemId) {				
 		function myPopupFunctionPay(itemId, patientId) {				

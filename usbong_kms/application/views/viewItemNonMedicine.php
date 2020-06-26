@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200618
+' @date updated: 20200626
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -468,6 +468,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		function myPopupFunctionDelete(itemId,transactionId) {				
 			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/2/"+itemId +"/"+transactionId+"');?>";
 		}	
+
+		//added by Mike, 20200626
+		//re-verify: this
+		//we do not use this now
+		function myPopupFunctionDeleteAllInCart(itemId,transactionId) {				
+			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchaseAllInCart/2/"+itemId +"/"+transactionId+"');?>";
+		}	
+
 
 		//added by Mike, 20200331; edited by Mike, 20200411
 /*
