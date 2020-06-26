@@ -1908,6 +1908,54 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->load->view('viewItemNonMedicine', $data);
 		}
 	}
+
+	//added by Mike, 20200626
+	public function deleteTransactionItemPurchaseAllInCart($itemTypeId, $itemId, $transactionId)
+	{
+/*
+		echo itemId: .$itemId;
+*/		
+		$data['itemTypeId'] = $itemTypeId; //added by Mike, 20200616
+		$data['itemId'] = $itemId;
+		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		$this->Browse_Model->deleteTransactionItemPurchaseAllInCart($data);
+		
+		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId,$itemId);
+
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+
+		//added by Mike, 20200601; removed by Mike, 20200602
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
+		//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+
+		//added by Mike, 20200501; edited by Mike, 20200603
+		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
+		$data['resultItem'] = $this->getResultItemQuantity($data);
+
+		if ($itemTypeId==1) {
+			$this->load->view('viewItemMedicine', $data);
+		}
+		else {
+			$this->load->view('viewItemNonMedicine', $data);
+		}
+	}
 	
 	//added by Mike, 20200530	
 	public function deleteTransactionFromPatient($transactionId)
