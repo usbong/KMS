@@ -1425,6 +1425,50 @@ class BrowsePTRehab_Model extends CI_Model
 			return False;
 		}
 	}	
+
+	//added by Mike, 20200628
+	public function addNewTransactionForPatientPTRehab($param) 
+	{			
+		$this->db->select('transaction_id, patient_id');
+		//edited by Mike, 20200602
+//        $this->db->where('notes',"IN-QUEUE; UNPAID");
+		//these are @information desk
+		//we do not anymore add a new transaction for the patient after payment
+		//in addition, we do not add a new transactions for the apatient that already has an unpaid transaction for the day
+        $this->db->like('notes',"PAID"); 
+        
+		//added by Mike, 20200628
+		$this->db->where('transaction_type_name',"PT REHAB"); 
+
+		$this->db->where('transaction_date', date('m/d/Y'));
+		$this->db->where('patient_id', $param['patientId']);
+
+		$query = $this->db->get('transaction');	
+		
+		$rowArray = $query->result_array();
+
+//		foreach ($rowArray as $rowValue) {
+//		}
+		
+		//TO-DO: -reverify: this				
+		if (count($rowArray)==0) {
+			$data = array(						
+						'patient_id' => $param['patientId'],
+						'item_id' => 0,
+						'transaction_date' => date('m/d/Y'),
+						'report_id' => 0,
+						'medical_doctor_id' => $param['medicalDoctorId'],						
+						'notes' => "IN-QUEUE; UNPAID",
+						'treatment_type_name' => "PT REHAB"
+					);
+
+			$this->db->insert('transaction', $data);
+			return $this->db->insert_id();
+		}
+		else {
+			return False;
+		}
+	}	
 	
 	public function getMedicalDoctorList() {
 		$this->db->select('medical_doctor_id, medical_doctor_name');
