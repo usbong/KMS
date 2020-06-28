@@ -418,7 +418,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">			
-							<a href='<?php echo site_url('browse/addNewTransactionForPatient/'.$value['patient_id'].'/'.$value['medical_doctor_id'])?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
+							<a href='<?php echo site_url('browsePTRehab/addNewTransactionForPatientPTRehab/'.$value['patient_id'].'/'.$value['medical_doctor_id'])?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];

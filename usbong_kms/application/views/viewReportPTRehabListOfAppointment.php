@@ -612,7 +612,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<br/>
-	<div><b>PATIENT QUEUE TODAY</b></div>
+	<div><b>PT REHAB APPOINTMENT LIST TODAY</b></div>
 	<br/>
 
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
