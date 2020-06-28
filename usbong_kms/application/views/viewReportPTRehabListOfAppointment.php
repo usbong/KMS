@@ -577,7 +577,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>
 	<br/>
 	<!-- Form -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmPatientInformationDesk')?>">	
+	<form id="browse-form" method="post" action="<?php echo site_url('browsePTRehab/confirmPatientInformationDeskSVGH')?>">	
 		<?php
 			$itemCounter = 1;
 		?>
