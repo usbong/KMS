@@ -789,7 +789,7 @@ class ReportPTRehab extends CI_Controller { //MY_Controller {
 					else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
 					}
 					else {
-						array_push($outputResult, $value);
+						array_push($outputResult, $value);						
 					}
 				}
 			}

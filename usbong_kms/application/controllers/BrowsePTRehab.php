@@ -180,6 +180,17 @@ class BrowsePTRehab extends CI_Controller { //MY_Controller {
 		$this->load->view('searchPatientInformationDesk', $data);
 	}
 
+	//added by Mike, 20200628
+	public function searchPatientInformationDeskSVGH()
+	{		
+		$data['param'] = $this->input->get('param');
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->view('searchPatientInformationDeskSVGH', $data);
+	}
+
 	//added by Mike, 20200529; edited by Mike, 20200628
 	public function confirmPatientInformationDeskSVGH()
 	{
@@ -1675,6 +1686,33 @@ class BrowsePTRehab extends CI_Controller { //MY_Controller {
 		//$this->load->view('viewReportPatientQueue', $data);
 		redirect('report/viewReportPatientQueue');
 	
+	}
+
+	//added by Mike, 20200628
+	public function addNewTransactionForPatientPTRehab($patientId, $medicalDoctorId)
+	{		
+		$data['patientId'] = $patientId;
+		$data['medicalDoctorId'] = $medicalDoctorId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('BrowsePTRehab_Model');
+		$this->load->model('ReportPTRehab_Model');
+
+		$this->BrowsePTRehab_Model->addNewTransactionForPatientPTRehab($data);
+
+//		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		//removed by Mike, 20200628
+		$data["result"] = $this->ReportPTRehab_Model->getPatientPTRehabListOfAppointmentReportForTheDay();
+
+		//edited by Mike, 20200601
+		//this is so that we do not add excess transactions
+		//$this->load->view('viewReportPatientQueue', $data);
+//		redirect('report/viewReportPatientQueue');
+		redirect('reportPTRehab/viewReportPTRehabListOfAppointment');	
 	}
 
 	//added by Mike, 20200529
