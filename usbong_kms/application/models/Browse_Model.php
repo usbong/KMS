@@ -602,8 +602,9 @@ class Browse_Model extends CI_Model
 	}	
 */
 
-	//added by Mike, 20200517; edited by Mike, 20200626
-	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
+	//added by Mike, 20200517; edited by Mike, 20200629
+	//updated instructions to not execute the following action:
+	//if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
 	public function deleteTransactionServicePurchase($param) 
 	{			
 /*		//edited by Mike, 20200616
@@ -626,16 +627,30 @@ class Browse_Model extends CI_Model
 		}
 		else {			
 			$iCount = 0;
-			while ($iCount < $transactionQuantity) {			
+			
+			while ($iCount < $transactionQuantity) {
+//				echo "count: ".$iCount." : ";
+//				echo "transactionId: ".$iTransactionId."<br/>";
+				
 				$this->db->where('transaction_id',$iTransactionId);
 
 				//removed by Mike, 20200626
 //				$this->db->where('patient_id!=',0);
+				
+				//added by Mike, 20200629
+				$this->db->where('item_id',0);
 
 				$this->db->delete('transaction');
-							
+
+				//added by Mike, 20200629					
+				$iTransactionId = $iTransactionId - 1;
+				
+				if ($iTransactionId<0) {
+					break;
+				}
+					
 				//edited by Mike, 20200626
-				//$iCount = $iCount + 1;				
+				//$iCount = $iCount + 1;
 				//this is due to the transactionId can skip in the count
 				$this->db->select('transaction_id');
 				$this->db->where('transaction_id',$iTransactionId);
@@ -645,16 +660,34 @@ class Browse_Model extends CI_Model
 				if (isset($row)) {
 					if (count($row)!=0) {
 						$iCount = $iCount + 1;
-					}			
+					}
 				}
 				else {
-					break;
+					//edited by Mike, 20200629
+					//break;
+					if ($iCount < $transactionQuantity) {
+					}
+					else {
+						break;
+					}
 				}
-				
-				$iTransactionId = $iTransactionId - 1;
+
+				//removed by Mike, 20200629
+				//$iTransactionId = $iTransactionId - 1;
 				
 			}
 		}
+		//TO-DO: -reverify: if necessary to add a transaction for all the remaining items in cart
+/*
+		//added by Mike, 20200629
+		$data = array(
+					'transaction_quantity' => "2"
+				);
+
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->update('transaction', $data);
+*/
+
 
 /*		//removed by Mike, 20200611		
 		//added by Mike, 20200608
@@ -1168,8 +1201,123 @@ class Browse_Model extends CI_Model
 
 	public function deleteTransactionItemPurchase($param) 
 	{			
-        $this->db->where('transaction_id',$param['transactionId']);
+      $this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
+	}	
+
+	//edited by Mike, 20200629
+	public function deleteTransactionItemPurchaseReverify($param) 
+	{			
+/*      $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+*/
+
+		//TO-DO: -identify: transaction with all items and services in the cart
+		//note: the transaction quantity is not 0
+		$iTransactionId = $param['transactionId'];
+
+		$this->db->select('transaction_quantity, med_fee, pas_fee');
+		$this->db->where('transaction_id',$iTransactionId);
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+
+		$transactionQuantity = $row->transaction_quantity;
+
+		//added by Mike, 20200629
+		$updatedTransactionQuantity = $transactionQuantity;
+		$updatedMedFee = $row->med_fee;
+		$updatedNonMedFee = $row->pas_fee;			
+
+		if ($transactionQuantity==0) {
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('transaction');
+		}
+		else {			
+			$iCount = 0;
+					
+			while ($iCount < $transactionQuantity) {
+//				echo "count: ".$iCount." : ";
+//				echo "transactionId: ".$iTransactionId."<br/>";
+
+				//20200629
+				//identify if transaction is classified as medicine or non-medicine
+				$this->db->select('t1.item_id, t2.item_type_id');
+				$this->db->from('transaction as t1');	
+				$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');		
+				$this->db->where('t1.transaction_id', $iTransactionId);
+				$query = $this->db->get('transaction');
+				$row = $query->row();
+				
+				if ($row->item_id!=0) {
+					$updatedTransactionQuantity = $updatedTransactionQuantity - 1;
+					
+					if ($row->item_type_id==1) {
+						$updatedMedFee = 0;
+					}
+					else if ($row->item_type_id==2) {
+						$updatedNonMedFee = 0;
+					}			
+				}
+								
+				
+				$this->db->where('transaction_id',$iTransactionId);
+
+				//edited by Mike, 20200629
+				$this->db->where('patient_id',0);
+				
+				//added by Mike, 20200629
+//				$this->db->where('item_id',0);
+
+				$this->db->delete('transaction');
+
+				//added by Mike, 20200629					
+				$iTransactionId = $iTransactionId - 1;
+				
+				if ($iTransactionId<0) {
+					break;
+				}
+					
+				//edited by Mike, 20200626
+				//$iCount = $iCount + 1;
+				//this is due to the transactionId can skip in the count
+				$this->db->select('transaction_id');
+				$this->db->where('transaction_id',$iTransactionId);
+				$query = $this->db->get('transaction');
+				$row = $query->row();
+
+				if (isset($row)) {
+					if (count($row)!=0) {
+						$iCount = $iCount + 1;
+					}
+				}
+				else {
+					//edited by Mike, 20200629
+					//break;
+					if ($iCount < $transactionQuantity) {
+					}
+					else {
+						break;
+					}
+				}
+
+				//removed by Mike, 20200629
+				//$iTransactionId = $iTransactionId - 1;
+				
+			}
+		}
+
+		//added by Mike, 20200629
+		//update: transaction with all the items in the cart
+		$data = array(
+					'transaction_quantity' => $updatedTransactionQuantity,
+					'med_fee' => $updatedMedFee,
+					'pas_fee' => $updatedNonMedFee
+				);
+
+		echo "transactionId: ".$param['transactionId'];
+		
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->update('transaction', $data);		
 	}	
 
 	//added by Mike, 20200411; edited by Mike, 20200608
