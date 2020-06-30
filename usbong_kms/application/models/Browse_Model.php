@@ -1198,11 +1198,187 @@ class Browse_Model extends CI_Model
 		$this->db->where('transaction_id',$iTransactionId);
 		$this->db->delete('transaction');
 	}	
-
+/*	//removed by Mike, 20200630
 	public function deleteTransactionItemPurchase($param) 
 	{			
-      $this->db->where('transaction_id',$param['transactionId']);
+		$this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
+	}	
+*/
+	//edited by Mike, 20200630
+	//TO-DO: -reverify: transaction if same item purchased multiple times
+	//-add: delete transaction cart if all fees = 0
+	public function deleteTransactionItemPurchase($param) 
+	{			
+/*      $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+*/
+
+		$iTransactionId = $param['transactionId'];
+
+		$this->db->select('transaction_date, notes');
+		$this->db->where('transaction_id',$iTransactionId);
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+		
+		if ($row->notes=="UNPAID") {
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('transaction');			
+		}
+		else {
+			//TO-DO: -identify: transaction with all items and services in the cart
+			//note: the transaction quantity is not 0
+//			$iTransactionId = $param['transactionId'];
+
+			$transactionDate = $row->transaction_date;
+
+			$this->db->select_max('transaction_id');
+			$this->db->where('transaction_date',$transactionDate);
+			$query = $this->db->get('transaction');
+			$rowTransaction = $query->row();
+			
+			$iTransactionIdMax = $rowTransaction->transaction_id;
+			echo "iTransactionIdMax: ".$iTransactionIdMax;		
+
+			do {
+				$this->db->select('transaction_id, transaction_quantity, med_fee, pas_fee');
+				$this->db->where('transaction_id',$iTransactionId);
+				$query = $this->db->get('transaction');
+				$row = $query->row();
+
+				//$transactionQuantity = $row->transaction_quantity;
+
+				if (isset($row)) {
+					$iTransactionId = $row->transaction_id;				
+					$transactionQuantity = $row->transaction_quantity;
+				}
+				else {
+					//break;
+					if ($iTransactionId < $iTransactionIdMax) {
+					}
+					else {
+						break;
+					}
+				}
+				
+				$iTransactionId = $iTransactionId + 1;
+			}
+			while ($transactionQuantity==0);
+
+/*			echo "iTransactionId: ".$iTransactionId;
+*/
+			$iTransactionId = $iTransactionId - 1;
+
+	/*		
+			$this->db->select('transaction_quantity, med_fee, pas_fee');
+			$this->db->where('transaction_id',$iTransactionId);
+			$query = $this->db->get('transaction');
+			$row = $query->row();
+
+			$transactionQuantity = $row->transaction_quantity;
+	*/
+	
+			//added by Mike, 20200629
+			$updatedTransactionQuantity = $transactionQuantity;
+			$updatedMedFee = $row->med_fee;
+			$updatedNonMedFee = $row->pas_fee;
+
+			$iTransactionId = $param['transactionId'];
+
+			if ($transactionQuantity==0) {
+				$this->db->where('transaction_id',$iTransactionId);
+				$this->db->delete('transaction');
+			}
+			else {			
+				$iCount = 0;
+						
+				while ($iCount < $transactionQuantity) {
+/*					echo "count: ".$iCount." : ";
+					echo "transactionId: ".$iTransactionId."<br/>";
+*/
+					//20200629
+					//identify if transaction is classified as medicine or non-medicine
+					$this->db->select('t1.item_id, t2.item_type_id');
+					$this->db->from('transaction as t1');	
+					$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');		
+					$this->db->where('t1.transaction_id', $iTransactionId);
+					$query = $this->db->get('transaction');
+					$row = $query->row();
+
+					//edited by Mike, 20200630
+					if (isset($row)) {					
+						if ($row->item_id!=0) {
+							$updatedTransactionQuantity = $updatedTransactionQuantity - 1;
+							
+							if ($row->item_type_id==1) {
+								$updatedMedFee = 0;
+							}
+							else if ($row->item_type_id==2) {
+								$updatedNonMedFee = 0;
+							}			
+						}
+					}
+														
+					$this->db->where('transaction_id',$iTransactionId);
+
+					//edited by Mike, 20200629
+					$this->db->where('patient_id',0);
+					
+					//added by Mike, 20200629
+	//				$this->db->where('item_id',0);
+
+					$this->db->delete('transaction');
+
+					//added by Mike, 20200629					
+					$iTransactionId = $iTransactionId - 1;
+					
+					if ($iTransactionId<0) {
+						break;
+					}
+
+					//edited by Mike, 20200626
+					//$iCount = $iCount + 1;
+					//this is due to the transactionId can skip in the count
+					$this->db->select('transaction_id');
+					$this->db->where('transaction_id',$iTransactionId);
+					$query = $this->db->get('transaction');
+					$row = $query->row();
+
+					if (isset($row)) {
+						if (count($row)!=0) {
+							$iCount = $iCount + 1;
+						}
+					}
+					else {
+						//edited by Mike, 20200629
+						//break;
+						if ($iCount < $transactionQuantity) {
+						}
+						else {
+							break;
+						}
+					}
+
+					//removed by Mike, 20200629
+					//$iTransactionId = $iTransactionId - 1;
+					
+				}
+			}
+
+			//added by Mike, 20200629
+			//update: transaction with all the items in the cart
+			$data = array(
+						'transaction_quantity' => $updatedTransactionQuantity,
+						'med_fee' => $updatedMedFee,
+						'pas_fee' => $updatedNonMedFee
+					);
+
+			echo "transactionId: ".$param['transactionId'];
+			
+			$this->db->where('transaction_id',$iTransactionIdMax);
+			$this->db->update('transaction', $data);		
+		
+		}
 	}	
 
 	//edited by Mike, 20200629
