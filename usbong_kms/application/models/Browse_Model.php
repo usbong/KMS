@@ -1238,7 +1238,7 @@ class Browse_Model extends CI_Model
 			$rowTransaction = $query->row();
 			
 			$iTransactionIdMax = $rowTransaction->transaction_id;
-			echo "iTransactionIdMax: ".$iTransactionIdMax;		
+			echo "iTransactionIdMax: ".$iTransactionIdMax;
 
 			do {
 				$this->db->select('transaction_id, transaction_quantity, med_fee, pas_fee');
@@ -1267,8 +1267,10 @@ class Browse_Model extends CI_Model
 
 /*			echo "iTransactionId: ".$iTransactionId;
 */
-			$iTransactionId = $iTransactionId - 1;
-
+			//edited by Mike, 20200630
+//			$iTransactionId = $iTransactionId - 1;
+			$iTransactionIdCart = $iTransactionId - 1;
+			
 	/*		
 			$this->db->select('transaction_quantity, med_fee, pas_fee');
 			$this->db->where('transaction_id',$iTransactionId);
@@ -1374,10 +1376,15 @@ class Browse_Model extends CI_Model
 					);
 
 			echo "transactionId: ".$param['transactionId'];
+			echo "iTransactionIdCart: ".$iTransactionIdCart;
 			
-			$this->db->where('transaction_id',$iTransactionIdMax);
+			//edited by Mike, 20200630
+//			$this->db->where('transaction_id',$iTransactionIdMax);
+			$this->db->where('transaction_id',$iTransactionIdCart);
 			$this->db->update('transaction', $data);		
-		
+
+			//added by Mike, 20200630
+			//TO-DO: -delete transaction if all fee values are zero
 		}
 	}	
 
