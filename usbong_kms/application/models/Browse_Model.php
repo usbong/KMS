@@ -1238,7 +1238,8 @@ class Browse_Model extends CI_Model
 			$rowTransaction = $query->row();
 			
 			$iTransactionIdMax = $rowTransaction->transaction_id;
-			echo "iTransactionIdMax: ".$iTransactionIdMax;
+			//removed by Mike, 20200701
+//			echo "iTransactionIdMax: ".$iTransactionIdMax;
 
 			do {
 				$this->db->select('transaction_id, transaction_quantity, med_fee, pas_fee');
@@ -1375,8 +1376,9 @@ class Browse_Model extends CI_Model
 						'pas_fee' => $updatedNonMedFee
 					);
 
-			echo "transactionId: ".$param['transactionId'];
-			echo "iTransactionIdCart: ".$iTransactionIdCart;
+			//removed by Mike, 20200701
+			//echo "transactionId: ".$param['transactionId'];
+			//echo "iTransactionIdCart: ".$iTransactionIdCart;
 			
 			//edited by Mike, 20200630
 //			$this->db->where('transaction_id',$iTransactionIdMax);
