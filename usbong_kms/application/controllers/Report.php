@@ -204,6 +204,12 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportImage', $data);
 	}
 
+	//added by Mike, 20200701
+	public function storeReportImageOnly()
+	{				
+		$this->load->view('storeReportImageOnly');
+	}
+
 	//added by Mike, 20200420; edited by Mike, 20200505
 	public function viewReceiptReport()
 	{				
