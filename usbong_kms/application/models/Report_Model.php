@@ -408,7 +408,7 @@ class Report_Model extends CI_Model
 			$iCurrentTransactionCount = 1;
 
 			while ($iCurrentTransactionCount < $iMaxTransactionCount) {			
-				//echo $rowValue['transaction_id']."<br/>";
+				echo $rowValue['transaction_id']."<br/>";
 
 				$this->db->select('t1.receipt_number, t1.receipt_id, t2.item_id');
 				$this->db->from('receipt as t1');
