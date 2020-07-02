@@ -322,12 +322,15 @@ class Report extends CI_Controller { //MY_Controller {
 			$data["currentMonthNum"]= "0".$data["currentMonthNum"];
 		}		
 		
-		//edited by Mike, 20200617
-		if ($data["monthNum"]<="05") {
+		//edited by Mike, 20200702
+//		if ($data["monthNum"]<="05") {
+		if ($data["monthNum"]<="06") {
 			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 		}
 		else {
+			//edited by Mike, 20200702
 			$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);
+//			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 		}
 
 		$this->load->view('viewReceiptReportPAS', $data);
