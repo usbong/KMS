@@ -658,7 +658,10 @@ class Browse_Model extends CI_Model
 				$row = $query->row();
 
 				if (isset($row)) {
-					if (count($row)!=0) {
+					//edited by Mike, 20200703
+//					if (count($row)!=0) {
+//					if (mysqli_num_rows($row)!=0) {
+					if (count((array)$row)!=0) {
 						$iCount = $iCount + 1;
 					}
 				}
