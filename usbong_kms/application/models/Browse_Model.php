@@ -989,8 +989,58 @@ class Browse_Model extends CI_Model
 		return $this->db->insert_id();
 	}	
 
-	//added by Mike, 20200330; edited by Mike, 20200414
+	//added by Mike, 20200330; edited by Mike, 20200703
 	public function addTransactionItemPurchase($param) 
+	{		
+		$this->db->select('item_price, item_type_id');
+		$this->db->where('item_id', $param['itemId']);
+		$query = $this->db->get('item');
+		$row = $query->row();
+/*	
+		$data = array(
+					'patient_id' => -1,
+					'item_id' => $param['itemId'],
+					'transaction_date' => $param['transactionDate'],
+					'medical_doctor_id' => -1,
+					'fee' => $param['quantity'] * $row->item_price,
+					'transaction_type_name' => CASH,
+					'report_id' => -1,
+					'notes' => UNPAID
+				);
+*/			
+		$medFee = 0;
+		$nonMedFee = 0;
+		
+		//added by Mike, 20200703
+		if ($row->item_type_id==1) { //medicine
+			$medFee = $param['quantity'] * $param['fee'];
+		}
+		else { //non-medicine
+			$nonMedFee = $param['quantity'] * $param['fee'];
+		}
+		
+		$data = array(
+					'patient_id' => 0,
+					'item_id' => $param['itemId'],
+					'transaction_date' => $param['transactionDate'],
+					'medical_doctor_id' => 0,
+//					'fee' => $param['quantity'] * $row->item_price,
+					'fee' => $param['quantity'] * $param['fee'], //edited by Mike, 20200414
+					'fee_quantity' => $param['quantity'], //edited by Mike, 20200415					
+					'transaction_type_name' => "CASH",
+					'report_id' => 0,
+					'notes' => "UNPAID",
+					//added by Mike, 20200703
+					'med_fee' => $medFee,
+					'pas_fee' => $nonMedFee				
+				);
+
+		$this->db->insert('transaction', $data);
+		return $this->db->insert_id();
+	}	
+
+	//added by Mike, 20200330; edited by Mike, 20200703
+	public function addTransactionItemPurchasePrev($param) 
 	{		
 		$this->db->select('item_price');
 		$this->db->where('item_id', $param['itemId']);
