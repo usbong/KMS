@@ -415,8 +415,59 @@ class Report extends CI_Controller { //MY_Controller {
 		}
 	}
 
-	//added by Mike, 20200518
+	//added by Mike, 20200518; edited by Mike, 20200704
 	public function viewPayslipWebFor($medicalDoctorName)
+	{		
+		//added by Mike, 20200704
+		if (strpos(strtoupper($medicalDoctorName), "PETER")!==false) {			
+			//verify day of the week
+			if ((strpos(strtoupper(date("l")),"SATURDAY"))!==false) {
+//				$this->viewPayslipWebFor("GRACIA");
+				echo "<script>
+						window.open('".site_url()."/report/viewPayslipWebFor/Gracia');
+					  </script>";			
+			}
+			else if ((strpos(strtoupper(date("l")),"MONDAY"))!==false) {
+				echo "<script>
+						window.open('".site_url()."/report/viewPayslipWebFor/Chastity');
+					  </script>";			
+			}
+			else if (((strpos(strtoupper(date("l")),"TUESDAY"))!==false) or ((strpos(strtoupper(date("l")),"THURSDAY"))!==false)){
+				echo "<script>
+						window.open('".site_url()."/report/viewPayslipWebFor/Rodil');
+					  </script>";			
+			}
+			else if (((strpos(strtoupper(date("l")),"WEDNESDAY"))!==false) or ((strpos(strtoupper(date("l")),"FRIDAY"))!==false)){
+				echo "<script>
+						window.open('".site_url()."/report/viewPayslipWebFor/Honesto');
+					  </script>";			
+			}
+		}
+
+/*	
+		$this->load->model('Browse_Model');
+		$data["medicalDoctorName"] = $this->Report_Model->getMedicalDoctorIdViaName	 //medical doctor keyword in report filename
+*/
+				
+		$this->load->model('Report_Model');
+
+//		$data["medicalDoctorName"] = "PETER"; //medical doctor keyword in report filename
+		$data["medicalDoctorName"] = $medicalDoctorName; //medical doctor keyword in report filename
+
+		$data["result"] = $this->Report_Model->getPayslipForTheDayWeb($data);
+
+//		$this->load->view('viewPayslip', $data);
+
+		if (strtoupper($data["medicalDoctorName"])=="PEDRO") {
+			$this->load->view('viewPayslipMOSC', $data);
+		}
+		else {
+			$this->load->view('viewPayslip', $data);
+		}
+	}
+
+	//added by Mike, 20200518
+	public function viewPayslipWebForPrev($medicalDoctorName)
 	{		
 /*	
 		$this->load->model('Browse_Model');
