@@ -1274,7 +1274,9 @@ class Browse_Model extends CI_Model
 		$query = $this->db->get('transaction');
 		$row = $query->row();
 		
-		if ($row->notes=="UNPAID") {
+		//edited by Mike, 20200704
+		//if ($row->notes=="UNPAID") {
+		if ((isset($row)) and ($row->notes=="UNPAID")) {
 			$this->db->where('transaction_id',$iTransactionId);
 			$this->db->delete('transaction');			
 		}
