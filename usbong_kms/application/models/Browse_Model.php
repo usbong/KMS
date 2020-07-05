@@ -1258,7 +1258,7 @@ class Browse_Model extends CI_Model
         $this->db->delete('transaction');
 	}	
 */
-	//edited by Mike, 20200630
+	//edited by Mike, 20200705
 	//TO-DO: -reverify: transaction if same item purchased multiple times
 	//-add: delete transaction cart if all fees = 0
 	public function deleteTransactionItemPurchase($param) 
@@ -1403,7 +1403,9 @@ class Browse_Model extends CI_Model
 					$row = $query->row();
 
 					if (isset($row)) {
-						if (count($row)!=0) {
+						//edited by Mike, 20200705
+//						if (count($row)!=0) {
+						if (count((array)$row)!=0) {
 							$iCount = $iCount + 1;
 						}
 					}
