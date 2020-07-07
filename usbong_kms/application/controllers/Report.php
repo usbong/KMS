@@ -869,4 +869,42 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewAllReportImages', $data);
 	}
+	
+	//added by Mike, 20200707
+	public function viewAllSummaryReportsForTheDayUnified()
+	{	
+		echo "<script>
+//				window.open('viewReportMedicineUnified','_blank');
+				window.open('".base_url()."/server/getSalesReportsForTheDay.php');	
+				window.open('viewpayslipwebfor/Peter','_blank');
+				window.open('viewpayslipwebfor/Pedro','_blank');
+				window.open('viewReportNonMedicineUnified','_blank');
+				window.open('viewReportMedicineAsteriskUnified','_blank');
+
+			</script>";	
+
+		//note: the web address remains ".../viewAllSummaryReportsForTheDay"
+		$this->viewReportMedicineUnified();
+		
+//		redirect(base_url()."/server/getSalesReportsForTheDay.php");			  
+	}
+
+
+	//added by Mike, 20200707
+	public function viewAllSummaryReportsForTheDay()
+	{	
+		echo "<script>
+//				window.open('viewReportMedicine','_blank');
+				window.open('".base_url()."/server/getSalesReportsForTheDay.php');	
+				window.open('viewpayslipwebfor/Peter','_blank');
+				window.open('viewpayslipwebfor/Pedro','_blank');
+				window.open('viewReportNonMedicine','_blank');
+				window.open('viewReportMedicineAsterisk','_blank');
+			</script>";	
+
+		//note: the web address remains ".../viewAllSummaryReportsForTheDay"
+		$this->viewReportMedicine();
+		
+//		redirect(base_url()."/server/getSalesReportsForTheDay.php");			  
+	}
 }
