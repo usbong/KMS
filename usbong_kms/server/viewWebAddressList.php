@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20200607
+  @date updated: 20200707
 	
   Computer Web Browser Address (Example):
   1) http://localhost/usbong_kms/server/viewWebAddressList.php
@@ -117,14 +117,24 @@
 	ini_set('auto_detect_line_endings', true);
 ?>
 <h2>Computer Web Address List (MOSC)</h2>
-<h2>SEARCH</h2>
+<h2>I. SEARCH</h2>
 <h3>1) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/BROWSE/searchPatient">Search Patient</a></h3>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/BROWSE/searchPatient">http://mosc-accounting/usbong_kms/index.php/BROWSE/searchPatient</a></h3>
 <h3>2) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/browse/searchMedicine">Search Medicine</a></h3>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/BROWSE/searchMedicine">http://mosc-accounting/usbong_kms/index.php/BROWSE/searchMedicine</a><br/>
 <h3>3) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/BROWSE/searchNonMedicine">Search Non-Medicine</a></h3>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/BROWSE/searchNonMedicine">http://mosc-accounting/usbong_kms/index.php/BROWSE/searchNonMedicine</a><br/>
-<h2>PAYSLIPS</h2>
+
+<h2>II. INFORMATION DESK</h2>
+<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportPatientQueue">http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportPatientQueue</a><br/>
+
+<h2>III. SUMMARY REPORTS FOR THE DAY</h2>
+<h3>1) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
+<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified</a>
+<h3>2) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
+<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay</a>
+
+<h2>IV. PAYSLIPS</h2>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewpayslipwebfor/Pedro">Payslip SYSON, PEDRO (MOSC)</a><br/>
 <br/>
 http://mosc-accounting/usbong_kms/index.php/REPORT/viewpayslipwebfor/name<br/>
@@ -135,9 +145,27 @@ Examples:<br/>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewpayslipwebfor/Pedro">http://mosc-accounting/usbong_kms/index.php/REPORT/viewpayslipwebfor/Pedro</a><br/>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewpayslipwebfor/Peter">http://mosc-accounting/usbong_kms/index.php/REPORT/viewpayslipwebfor/Peter</a><br/>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewpayslipwebfor/Chastity">http://mosc-accounting/usbong_kms/index.php/REPORT/viewpayslipwebfor/Chastity</a><br/>
-<h2>INFORMATION DESK</h2>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportPatientQueue">http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportPatientQueue</a><br/>
-<h2>OFFICIAL RECEIPTS:</h2>
+
+<h2>V. REPORTS</h2>
+<b>1) MEDICINE</b><br/>
+a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicine">
+http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicine</a><br/>
+b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineUnified">
+http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineUnified</a><br/>
+<br/>
+<b>2) MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)</b><br/>
+a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineAsterisk">
+http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineAsterisk</a><br/>
+b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineAsteriskUnified">
+http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineAsteriskUnified</a><br/>
+<br/>
+<b>3) NON-MEDICINE</b><br/>
+a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportNonMedicine">
+http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportNonMedicine</a><br/>
+b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportNonMedicineUnified">
+http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportNonMedicineUnified</a><br/>
+
+<h2>VI. OFFICIAL RECEIPTS:</h2>
 <b>1) MOSC</b><br/>
 <b>a) VIEW REPORT FOR PREVIOUS MONTH</b><br/>
 <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReceiptReport">http://mosc-accounting/usbong_kms/index.php/REPORT/viewReceiptReport</a><br/>
@@ -169,24 +197,7 @@ Example:<br/>
 http://mosc-accounting/usbong_kms/index.php/REPORT/viewReceiptReportPASFor/06</a><br/>
 <br/>
 where "06" = "June 2020"<br/>
-<h2>REPORTS</h2>
-<b>1) MEDICINE</b><br/>
-a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicine">
-http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicine</a><br/>
-b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineUnified">
-http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineUnified</a><br/>
-<br/>
-<b>2) MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)</b><br/>
-a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineAsterisk">
-http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineAsterisk</a><br/>
-b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineAsteriskUnified">
-http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportMedicineAsteriskUnified</a><br/>
-<br/>
-<b>3) NON-MEDICINE</b><br/>
-a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportNonMedicine">
-http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportNonMedicine</a><br/>
-b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportNonMedicineUnified">
-http://mosc-accounting/usbong_kms/index.php/REPORT/viewReportNonMedicineUnified</a><br/>
+
 <br/>
 	<br />
 	<div>***NOTHING FOLLOWS***</div>
