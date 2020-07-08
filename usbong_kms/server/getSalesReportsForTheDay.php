@@ -716,6 +716,100 @@
 	}																
 
 	
+	//added by Mike, 20200708
+	echo "<br/>";
+
+	//Value-Added Tax VAT for Non-medicine items
+	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
+		if ($selectedNonMedicineResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedNonMedicineResultArray->num_rows == 1) {
+				echo "VAT for Non-medicine transaction for the day.<br /><br />";
+			}
+			else {
+				echo "VAT for Non-medicine transactions for the day.<br /><br />";
+			}
+
+
+//						$row = $selectedResult->fetch_array();
+			//count total
+			$iFeeTotalCount = 0;				
+			$iQuantityTotalCount = 0;
+
+			foreach ($selectedNonMedicineResultArray as $value) {
+				//added by Mike, 20200708
+				//identify non-medicine item transaction if with VAT
+				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
+				{
+					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
+						$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
+						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+						
+/*						//removed by Mike, 20200708
+						$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
+						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+*/
+					}
+					//removed by Mike, 20200708
+/*					else {
+						$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+					}
+*/					
+				}
+				// show an error if there is an issue with the database query
+				else
+				{
+						echo "Error: " . $mysqli->error;
+				}																
+				
+/*
+//				if (strpos($value['item_name'], "*") === false) {
+					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+					$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+//				}					
+*/
+			}
+
+			//write as .txt file
+			$jsonResponse = array(
+					"iFeeTotalCount" => $iFeeTotalCount,
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530					
+			);
+			$responses[] = $jsonResponse;
+			
+			$outputReportVATForNonMedicine = json_encode($responses);
+							
+			echo $outputReportVATForNonMedicine;
+							
+//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
+			
+			$sDateToday = date("Y-m-d");
+
+			//update the file location accordingly
+			//edited by Mike, 20200524
+			//note: \\nonMedicine due to \n is new line
+			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
+			$file = $fileBasePath."VATForNonMedicine".$sDateToday.".txt";
+
+			file_put_contents($file, $outputReportVATForNonMedicine, LOCK_EX);				
+		}
+		else {
+			echo "There are no VAT for Non-medicine item transactions for the day.";
+		}
+	}		
+	// show an error if there is an issue with the database query
+	else
+	{
+			echo "Error: " . $mysqli->error;
+	}																
+
+	
 	
 	//close database connection
 	$mysqli->close();
