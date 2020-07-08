@@ -269,7 +269,7 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReceiptReportMOSC', $data);
 	}
 
-	//added by Mike, 20200429; edited by Mike, 20200505
+	//added by Mike, 20200429; edited by Mike, 20200708
 	public function viewReceiptReportPAS()
 	{				
 		$this->load->model('Report_Model');
@@ -288,8 +288,9 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["monthNum"] = date("m", $previousMonth);
 		$data["currentMonthNum"] = date("m", $currentMonth);
 		
-		//edited by Mike, 20200617
-		if ($data["monthNum"]<="05") {
+		//edited by Mike, 20200708
+//		if ($data["monthNum"]<="05") {
+		if ($data["monthNum"]<="06") {
 			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 		}
 		else {
