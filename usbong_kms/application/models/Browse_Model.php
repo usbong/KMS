@@ -293,7 +293,9 @@ class Browse_Model extends CI_Model
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
 		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
 
-		$this->db->limit(8);//1);
+		//edited by Mike, 20200709
+//		$this->db->limit(8);//1);
+		$this->db->limit(14);
 		
 		$query = $this->db->get('item');
 
