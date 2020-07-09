@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200704
+' @date updated: 20200709
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -186,6 +186,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border-radius: 3px;	    	    
 							text-align: right;
 							width: 70%;
+
+							float: left;
+						}
+
+						.Schedule-date { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 10px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							text-align: right;
+							width: 86%;
 
 							float: left;
 						}
@@ -582,6 +595,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<?php 
+		//TO-DO: -update: this to Physical Therapist name, etc
+		echo "<b>PHYSICAL THERAPIST: </b>";		
+
+/*
 		//edited by Mike, 20200518
 		if ($result[0]["medical_doctor_name"]==""){
 //			echo "<br/>There are no transactions for the day.";
@@ -590,9 +607,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$result[0]["medical_doctor_name"] = 1; //SYSON, PEDRO
 		}
 
-/*			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
-*/
+////			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
+
 			echo "<b>MEDICAL DOCTOR: </b>";		
+*/
+
 ?>			
 
 <!-- +updated: this -->
@@ -604,6 +623,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</select>						
 -->
 <?php			
+
+			//TO-DO: -update: this to Physical Therapist name, etc
 
 			if (isset($medicalDoctorId)) {
 			}
@@ -671,32 +692,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "PATIENT NAME";
 				?>		
 						</td>
-						<td class ="columnTableHeaderFee">				
+						<td class ="columnTableHeader">				
 							<?php
-								echo "PF";
+								echo "SCHEDULE<br/>DATE";
+							?>
+						</td>
+						<!-- TO-DO: -add: sched time -->
+						<td class ="columnTableHeaderNotes">				
+							<?php
+								echo "DIAGNOSIS";
 							?>
 						</td>
 						<td class ="columnTableHeaderFee">				
 							<?php
-								echo "X-RAY";
+								echo "TEMPE<br/>RATURE";
 							?>
 						</td>
-						<td class ="columnTableHeaderFee">				
+						<td class ="columnTableHeader">				
 							<?php
-								echo "LAB";
+								echo "BLOOD<br/>PRESSURE";
 							?>
 						</td>
-						<td class ="columnTableHeaderClassification">				
-							<?php
-								echo "CLASSIFI-<br/>CATION";
-							?>
-						</td>
-
+<!--
 						<td class ="columnTableHeaderNotes">				
 							<?php
 								echo "ADDITIONAL<br/>NOTES";
 							?>
 						</td>
+-->						
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -719,9 +742,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class ="column">				
+						<td class ="column">
+							<input type="date" class="Schedule-date no-spin" placeholder="halimbawa: 2019-09-19" name="reportParam<?php echo $itemCounter;?>" required>	
 							<!-- edited by Mike, 20200602 -->
 							<!-- default value is now 800, instead of 600 -->
+<!-- 
 							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="800" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
@@ -737,26 +762,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											return false;										
 										}
 									}" required>						
+-->									
 						</td>
 						<td class ="column">				
-							<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="99999" 
-						onKeyPress="var key = event.keyCode || event.charCode;		
-									const keyBackspace = 8;
-									const keyDelete = 46;
-									const keyLeftArrow = 37;
-									const keyRightArrow = 39;
-						
-									if (this.value.length == 5) {			
-										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-											return true;
-										}
-										else {
-											return false;										
-										}
-									}" required>
+							<input type="text" id="diagnosisParam" class="Notes-textbox no-spin" value="NONE" required>
 						</td>
 						<td class ="column">
-							<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="99999" 
+							<input type="tel" id="temperatureParam" class="Fee-textbox no-spin" value="36.10" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -773,15 +785,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>
 						</td>
 						<td class="column">
+<!--
 							<select id="classificationParam" class="Classification-select">
 							  <option value="0">WI</option>
 							  <option value="1">SC</option>
 							  <option value="2">PWD</option>
 							</select>						
+-->
+<!-- TO-DO: -update: this -->
+						<input type="tel" id="bloodPressureParam" class="Fee-textbox no-spin" value="120/80" min="1" max="99999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 5) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>						
 						</td>
+<!--						
 						<td class="column">
 							<input type="text" id="notesParam" class="Notes-textbox no-spin" value="NONE" required>
 						</td>						
+-->						
 					    <td>		
 							<button onclick="myPopupFunction(<?php echo $value['patient_id'];?>)" class="Button-purchase">ADD</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
