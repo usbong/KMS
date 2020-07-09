@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200709
+' @date updated: 20200710
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -32,8 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-family: Arial;
 							font-size: 11pt;
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							/* 720px makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							width: 800px
                         }
 						
 						div.checkBox
@@ -190,6 +190,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 						}
 
+						.Temperature-textbox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 10px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							text-align: right;
+							width: 70%;
+
+							float: left;
+						}
+
+						.BloodPressure-textbox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 10px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							text-align: right;
+							width: 70%;
+
+							float: left;
+						}
+
 						.Schedule-date { 
 							background-color: #fCfCfC;
 							color: #68502b;
@@ -222,6 +248,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 16px;
 							border: 1px solid #68502b;
 							width: 82%;
+							border-radius: 3px;	    	    
+
+							float: left;
+						}
+
+						.ScheduleTime-select { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 12px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							width: 100%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -694,10 +732,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="columnTableHeader">				
 							<?php
-								echo "SCHEDULE<br/>DATE";
+								echo "SCHEDULE DATE";
 							?>
 						</td>
-						<!-- TO-DO: -add: sched time -->
+						<!-- +added: by Mike, 20200710 -->
+						<td class ="columnTableHeader">				
+							<?php
+								echo "TIME";
+							?>
+						</td>
 						<td class ="columnTableHeaderNotes">				
 							<?php
 								echo "DIAGNOSIS";
@@ -764,11 +807,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>						
 -->									
 						</td>
+						<td class="column">
+							<select id="scheduleTimeParam" class="ScheduleTime-select">
+							  <option value="0">08:00 AM</option>
+							  <option value="1">09:00 AM</option>
+							  <option value="2">10:00 AM</option>
+							  <option value="3">11:00 AM</option>
+							  <option value="4">12:00 PM</option>
+							  <option value="5">01:00 PM</option>
+							  <option value="6">02:00 PM</option>
+							  <option value="7">03:00 PM</option>
+							</select>						
+						</td>
 						<td class ="column">				
 							<input type="text" id="diagnosisParam" class="Notes-textbox no-spin" value="NONE" required>
 						</td>
 						<td class ="column">
-							<input type="tel" id="temperatureParam" class="Fee-textbox no-spin" value="36.10" min="1" max="99999" 
+							<input type="tel" id="temperatureParam" class="Temperature-textbox no-spin" value="36.10" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -793,7 +848,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</select>						
 -->
 <!-- TO-DO: -update: this -->
-						<input type="tel" id="bloodPressureParam" class="Fee-textbox no-spin" value="120/80" min="1" max="99999" 
+						<input type="tel" id="bloodPressureParam" class="BloodPressure-textbox no-spin" value="120/80" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
