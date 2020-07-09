@@ -1338,8 +1338,19 @@ class Browse_Model extends CI_Model
 	
 			//added by Mike, 20200629
 			$updatedTransactionQuantity = $transactionQuantity;
-			$updatedMedFee = $row->med_fee;
+			//edited by Mike, 20200709
+/*			$updatedMedFee = $row->med_fee;
 			$updatedNonMedFee = $row->pas_fee;
+*/
+			$updatedMedFee = 0;
+			$updatedNonMedFee = 0;
+			
+			if (isset($row->med_fee)) {
+				$updatedMedFee = $row->med_fee;
+			}
+			if (isset($row->pas_fee)) {
+				$updatedNonMedFee = $row->pas_fee;
+			}
 
 			$iTransactionId = $param['transactionId'];
 
