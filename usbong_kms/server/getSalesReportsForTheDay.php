@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200708
+  @date updated: 20200709
   Input:
   1) Sales reports for the day in the database (DB)
   Output:
@@ -27,7 +27,8 @@
 	date_default_timezone_set('Asia/Hong_Kong');
 
 	//added by Mike, 20200524
-	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+//	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 
 
 	//added by Mike, 20200524
@@ -723,6 +724,10 @@
 	//added by Mike, 20200708
 	echo "<br/>";
 
+	//added by Mike, 20200709	
+	$responses = [];
+
+
 	//Value-Added Tax VAT for Non-medicine items
 	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
 	{
@@ -737,7 +742,6 @@
 			else {
 				echo "VAT for Non-medicine transactions for the day.<br /><br />";
 			}
-
 
 //						$row = $selectedResult->fetch_array();
 			//count total
