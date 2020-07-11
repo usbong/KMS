@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200709
+  @date updated: 20200711
   Input:
   1) Sales reports for the day in the database (DB)
   Output:
@@ -37,7 +37,9 @@
 	//medical doctor; SYSON, PEDRO
 	//edited by Mike, 20200706
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1 and transaction_quantity='0'"))	
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
+	//edited by Mike, 20200711
+//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -63,7 +65,9 @@
 
 			foreach ($selectedMedicalDoctorResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
-				if ($value['fee'] !== "0.00") {
+				//removed by Mike, 20200711
+/*				if ($value['fee'] !== "0.00") {
+*/	
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
 					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
 
@@ -74,7 +78,8 @@
 					else if (strpos($value['notes'],"NO CHARGE")!==false) {
 						$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 					}
-				}					
+/*				}					
+*/
 			}
 
 			//write as .txt file
