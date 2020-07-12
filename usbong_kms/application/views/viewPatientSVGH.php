@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200710
+' @date updated: 20200713
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -598,7 +598,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>
 	<br/>
 	<!-- Form -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmPatient')?>">
+	<!-- edited by Mike, 20200713 -->
+	<form id="browse-form" method="post" action="<?php echo site_url('browseSVGH/confirmPatientSVGH')?>">
 		<?php
 			$itemCounter = 1;
 		?>
@@ -775,7 +776,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+							<!-- edited by Mike, 20200713 -->
+							<a href='<?php echo site_url('browseSVGH/viewPatientSVGH/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
 								<div class="patientName">
 				<?php
 								//TO-DO: -update: this
@@ -896,9 +898,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 			}			
 
-			//TO-DO: -add: paid receipt page
-			//TO-DO: -update: this
-
+			//removed by Mike, 20200713
+/*
 			//added by Mike, 20200401
 			echo '<h3>Cart List</h3>';
 
@@ -935,9 +936,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$patientFee = 0;
 				
 				foreach ($cartListResult as $cartValue) {
-/*	
-				$value = $result[0];
-*/				
+
+////				$value = $result[0];
 		?>				
 		
 					  <tr class="row">
@@ -1001,11 +1001,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									
 									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
 								}
-/*
-								//edited by Mike, 20200419
-								//echo $cartValue['fee']/$iQuantity;	
-								echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-*/
+
+//								//edited by Mike, 20200419
+//								//echo $cartValue['fee']/$iQuantity;	
+////								echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
 
 							?>
 								</div>
@@ -1020,14 +1019,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
 								//edited by Mike, 20200415
 								//echo floor(($cartValue['fee']/$cartValue['fee']*100)/100);							
-/*								
-								if ($cartValue['fee_quantity']==0) {
-									echo 1;
-								}
-								else {
-									echo $cartValue['fee_quantity'];
-								}
-*/								
+								
+////								if ($cartValue['fee_quantity']==0) {
+////									echo 1;
+////								}
+////								else {
+////									echo $cartValue['fee_quantity'];
+////								}
+								
 								echo $iQuantity;
 							?>
 								</div>
@@ -1109,8 +1108,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php
 				echo "</table>";				
 			}
-/*			
-			echo "<br/>";
+
+////			echo "<br/>";
 */
 			echo '<h3>Patient Purchased Service History</h3>';
 
