@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200711
+  @date updated: 20200712
   Input:
   1) Sales reports for the day in the database (DB)
   Output:
@@ -27,8 +27,8 @@
 	date_default_timezone_set('Asia/Hong_Kong');
 
 	//added by Mike, 20200524
-//	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+//	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 
 
 	//added by Mike, 20200524
@@ -39,7 +39,12 @@
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1 and transaction_quantity='0'"))	
 	//edited by Mike, 20200711
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
+/*	
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
+*/
+	//edited by Mike, 20200712
+	//TO-DO: -reverify this
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' group by patient_id"))				
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -434,7 +439,13 @@
 		foreach ($selectedMedicalDoctorList as $listValue) {
 			//edited by Mike, 20200706
 //			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id='".$listValue['medical_doctor_id']."' and transaction_quantity='0'"))
+
+			//edited by Mike, 20200712
+/*
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id='".$listValue['medical_doctor_id']."' and transaction_quantity='0' group by patient_id"))
+*/
+			//TO-DO: -reverify this
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' group by patient_id"))				
 			{
 				echo "--<br />";
 
@@ -458,7 +469,10 @@
 
 					foreach ($selectedMedicalDoctorResultArray as $value) {
 		//				if (strpos($value['item_name'], "*") === false) {
+						//removed by Mike, 20200712
+/*	
 						if ($value['fee'] !== "0.00") {
+*/					
 							//edited by Mike, 20200530
 
 							$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
@@ -489,7 +503,9 @@
 									$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 								}
 							}
+/*
 						}					
+*/						
 					}
 
 					//write as .txt file
@@ -556,7 +572,12 @@
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2"))	
 	//edited by Mike, 20200706
 	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2 and transaction_quantity='0'"))	
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2 and transaction_quantity='0' group by patient_id"))	
+
+	//edited by Mike, 20200712
+/*	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2 and transaction_quantity='0' group by patient_id"))	
+*/
+	//TO-DO: -reverify this
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' group by patient_id"))	
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -582,7 +603,10 @@
 
 			foreach ($selectedMedicalDoctorResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
+				//removed by Mike, 20200712
+/*	
 				if ($value['fee'] !== "0.00") {
+*/					
 					//edited by Mike, 20200530
 
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
@@ -613,7 +637,8 @@
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 						}
 					}
-				}					
+/*				}	
+*/				
 			}
 
 			//write as .txt file
