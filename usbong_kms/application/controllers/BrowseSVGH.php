@@ -1700,6 +1700,56 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		$this->load->view('viewPatientPaidReceipt', $data);
 */		
 	}
+
+	//added by Mike, 20200713
+	public function addTransactionServicePurchaseSVGH($therapistId, $patientId, $scheduleDate, $scheduleTime, $diagnosis, $temperature, $bloodPressure)
+	{		
+		//TO-DO: -add: medicalDoctorId
+		
+		$data['therapistId'] = $therapistId;
+		$data['patientId'] = $patientId;
+		$data['scheduleDate'] = $scheduleDate;
+		$data['scheduleTime'] = $scheduleTime;
+		$data['diagnosis'] = $diagnosis;
+		$data['temperature'] = $temperature;
+		$data['bloodPressure'] = $bloodPressure;
+
+		//edited by Mike, 20200620
+		//note: "U" is capital letter
+		$diagnosis = str_replace("U003B", ";", $diagnosis); //semicolon
+		$diagnosis = str_replace("U002C", ",", $diagnosis); //comma
+		$diagnosis = urldecode($diagnosis); //%20 = space, etc		
+		$data['diagnosis'] = $diagnosis;
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('BrowseSVGH_Model');
+
+		$this->BrowseSVGH_Model->addTransactionServicePurchaseSVGH($data);
+
+		//TO-DO: -update: this to use therapist
+		$data['medicalDoctorList'] = $this->BrowseSVGH_Model->getMedicalDoctorList();
+
+		$data['result'] = $this->BrowseSVGH_Model->getDetailsListViaId($patientId);
+
+		//TO-DO: -update: this to use therapist
+		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsList($therapistId, $patientId);
+
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
+		//removed by Mike, 20200713
+//		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+		
+		//edited by Mike, 20200519
+		$this->load->view('viewPatientSVGH', $data);
+/*		
+		$this->load->view('viewPatientPaidReceipt', $data);
+*/		
+	}
 	
 	public function addNewTransactionForPatient($patientId, $medicalDoctorId)
 	{		
