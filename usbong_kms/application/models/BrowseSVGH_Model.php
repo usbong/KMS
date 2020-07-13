@@ -956,6 +956,46 @@ class BrowseSVGH_Model extends CI_Model
 		return $this->db->insert_id();
 	}	
 
+	//added by Mike, 20200517
+	public function addTransactionServicePurchaseSVGH($param) 
+	{		
+		//echo "temperature: ".$param['temperature'];
+		//echo "bloodPressure: ".$param['bloodPressure'];
+	
+		$data = array(
+					'therapist_id' => $param['therapistId'],
+					'treatment_type_id' => 2,
+					'treatment_datetime_stamp' => $param['scheduleDate']." ".$param['scheduleTime'] ,
+					'treatment_diagnosis' => $param['diagnosis'],
+					'treatment_temperature' => $param['temperature'],
+					'treatment_bp' => $param['bloodPressure'] //note: we use dot instead of slash so we can add it in the web address
+				);
+		$this->db->insert('treatment', $data);
+
+		$treatmentId = $this->db->insert_id();
+	
+		//TO-DO: -update: this	
+		$data = array(
+					'patient_id' => $param['patientId'],
+					'item_id' => 0,
+					'transaction_date' => $param['transactionDate'],
+					//TO-DO: -update: this
+					'medical_doctor_id' => 1, //$param['medicalDoctorId'],
+					'fee' => 0, //$param['professionalFee'],
+					'fee_quantity' => 0,
+					'x_ray_fee' => 0, //$param['xRayFee'],
+					'lab_fee' => 0, //$param['labFee'],
+					'transaction_type_name' => "CASH",
+					'report_id' => 0,
+					//use treatment_id to identify paid transactions
+					'notes' => "Therapy", //$sNotesValue
+					'treatment_id' => $treatmentId
+				);
+		$this->db->insert('transaction', $data);
+
+		return $this->db->insert_id();
+	}	
+
 	//added by Mike, 20200330; edited by Mike, 20200414
 	public function addTransactionItemPurchase($param) 
 	{		
