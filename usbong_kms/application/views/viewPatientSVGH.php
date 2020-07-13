@@ -511,6 +511,84 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 		}	
 
+
+		//added by Mike, 20200713
+		function myPopupFunctionAdd(patientId) {	
+			//edited by Mike, 20200522
+			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
+			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
+/*			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;			
+			var professionalFee = document.getElementById("professionalFeeParam").value;
+			var xRayFee = document.getElementById("xRayFeeParam").value;
+			var labFee = document.getElementById("labFeeParam").value;
+			var classification = document.getElementById("classificationParam").value;
+			var notes = document.getElementById("notesParam").value;
+*/
+			var therapistId = document.getElementById("therapistIdParam").selectedIndex;			
+			var scheduleDate = document.getElementById("scheduleDateParam").value;
+			var scheduleTime = document.getElementById("scheduleTimeParam").value;
+			var diagnosis = document.getElementById("diagnosisParam").value;
+			var temperature = document.getElementById("temperatureParam").value;
+			var bloodPressure = document.getElementById("bloodPressureParam").value;
+			
+			//added by Mike, 20200525
+//			alert(notes);
+			diagnosis = diagnosis.replace(";", "u003B"); //semicolon
+			diagnosis = diagnosis.replace(",", "u002C"); //comma
+	
+			//added by Mike, 20200526
+			diagnosis = diagnosis.toUpperCase();
+
+//			alert("scheduleDate: " + scheduleDate);	
+//			alert("scheduleTime: " + scheduleTime);	
+			
+			if (scheduleTime==="0") {
+				scheduleTime = "08:00:00"
+			}
+			else if (scheduleTime==="1") {
+				scheduleTime = "09:00:00"
+			}
+			else if (scheduleTime==="2") {
+				scheduleTime = "10:00:00"
+			}
+			else if (scheduleTime==="3") {
+				scheduleTime = "11:00:00"
+			}
+			else if (scheduleTime==="4") {
+				scheduleTime = "12:00:00"
+			}
+			else if (scheduleTime==="5") {
+				scheduleTime = "13:00:00"
+			}
+			else if (scheduleTime==="6") {
+				scheduleTime = "14:00:00"
+			}
+			else if (scheduleTime==="7") {
+				scheduleTime = "15:00:00"
+			}
+
+//			alert("temperature: " + temperature);
+//			alert("bloodPressure: " + bloodPressure);
+			
+			bloodPressure = bloodPressure.replace("/",".");
+
+//			alert("after: " + notes);
+			//added by Mike, 20200523
+//			alert(medicalDoctorId);
+
+			if (scheduleDate.trim()==="") {
+				alert("Pakisulat ang petsa: mm/dd/yyyy");
+				return
+			}
+
+			if ((diagnosis.trim()==="") || (diagnosis.trim()==="NONE")) {
+				diagnosis = "NOT YET WRITTEN";
+			}
+			
+			window.location.href = "<?php echo site_url('browseSVGH/addTransactionServicePurchaseSVGH/"+therapistId+"/"+patientId+"/"+scheduleDate+"/"+scheduleTime+"/"+diagnosis+"/"+temperature+"/"+bloodPressure+"');?>";
+		}	
+
+
 		//added by Mike, 20200331; edited by Mike, 20200411
 /*
 		function myPopupFunctionDelete(itemId,transactionId) {				
@@ -671,7 +749,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$medicalDoctorId = $result[0]["medical_doctor_id"];
 			}
 
-			echo "<select id='medicalDoctorIdParam'>";			
+			//edited by Mike, 20200713
+//			echo "<select id='medicalDoctorIdParam'>";			
+			echo "<select id='therapistIdParam'>";			
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
 				  //edited by Mike, 20200523
 				  //TO-DO: -update: this
@@ -788,7 +868,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</a>
 						</td>
 						<td class ="column">
+							<!-- edited by Mike, 20200713 -->
+<!--
 							<input type="date" class="Schedule-date no-spin" placeholder="halimbawa: 2019-09-19" name="reportParam<?php echo $itemCounter;?>" required>	
+-->
+							<input type="date" class="Schedule-date no-spin" id="scheduleDateParam" required>	
+
 							<!-- edited by Mike, 20200602 -->
 							<!-- default value is now 800, instead of 600 -->
 <!-- 
@@ -872,7 +957,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>						
 -->						
 					    <td>		
-							<button onclick="myPopupFunction(<?php echo $value['patient_id'];?>)" class="Button-purchase">ADD</button>									
+							<button onclick="myPopupFunctionAdd(<?php echo $value['patient_id'];?>)" class="Button-purchase">ADD</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
