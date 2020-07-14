@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200625
+' @date updated: 20200713
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -626,13 +626,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">	
 								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->							
 								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 
-									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
+									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {										
 										echo 9999;
 									} 
 									else {
 										//added by Mike, 20200618
 										//echo $value['resultQuantityInStockNow'];
-										
+																				
 										if (isset($value['resultQuantityInStockNow'])) {
 											echo $value['resultQuantityInStockNow'];
 										}
@@ -663,8 +663,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if ($value['quantity_in_stock']=="") {
 									echo "0 / 0";
 								}
-								//edited by Mike, 20200411; edited by Mike, 20200615
+								//edited by Mike, 20200411; edited by Mike, 20200713
+/*
 								else if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
+									//echo 9999;
+									echo "0 / ".$value['quantity_in_stock'];
+								}
+*/								
+								else if ($resultQuantityInStockNow<0) {
+									echo "0 / ".$value['quantity_in_stock'];
+								}
+								else if ($value['quantity_in_stock']==-1) {
 									echo 9999;
 								}
 								else {
