@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200712
+  @date updated: 20200713
   Input:
   1) Sales reports for the day in the database (DB)
   Output:
@@ -27,8 +27,8 @@
 	date_default_timezone_set('Asia/Hong_Kong');
 
 	//added by Mike, 20200524
-	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-//	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+//	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 
 
 	//added by Mike, 20200524
@@ -444,6 +444,9 @@
 /*
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id='".$listValue['medical_doctor_id']."' and transaction_quantity='0' group by patient_id"))
 */
+			//added by Mike, 20200713
+			$responses = [];
+
 			//TO-DO: -reverify this
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' group by patient_id"))				
 			{
