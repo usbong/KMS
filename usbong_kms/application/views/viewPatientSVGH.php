@@ -112,6 +112,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left
 						}						
 
+						td.columnCentered
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center
+						}						
+
 						td.columnFee
 						{
 							border: 1px dotted #ab9c7d;		
@@ -1274,7 +1280,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			?>				
 			
 						  <tr class="row">
-							<td class ="column">				
+							<td class ="columnCentered">				
 								<div class="transactionDate">
 					<?php
 									//edited by Mike, 20200507
@@ -1296,9 +1302,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>								
 								</a>							
 							</td>							
-							<td class ="column">				
+							<td class ="columnCentered">				
 								<?php
-									echo $value['treatment_datetime_stamp'];
+									//edited by Mike, 20200715
+									//echo $value['treatment_datetime_stamp'];
+									echo str_replace(" ","T", $value['treatment_datetime_stamp']);
 								?>
 							</td>
 							<td class ="column">				
@@ -1306,14 +1314,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $value['treatment_diagnosis'];
 								?>
 							</td>
-							<td class ="column">				
+							<td class ="columnCentered">				
 								<?php
 									echo $value['treatment_temperature'];
 								?>
 							</td>
-							<td class ="column">				
+							<td class ="columnCentered">				
 								<?php
-									echo $value['treatment_bp'];
+									//edited by Mike, 20200715
+									//echo $value['treatment_bp'];
+									echo str_replace(".","/", $value['treatment_bp']);
+
 								?>
 							</td>
 							<td>								
