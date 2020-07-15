@@ -1534,7 +1534,7 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 */	
 	//---------------------------------------
 	
-	//added by Mike, 20200517; edited by Mike, 20200704
+	//added by Mike, 20200517; edited by Mike, 20200715
 	public function viewPatientSVGH($patientId)//PTRehab($patientId)
 	{
 //		$data['nameParam'] = $_POST[nameParam];
@@ -1542,21 +1542,29 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
-		$this->load->model('Browse_Model');
+		//$this->load->model('Browse_Model');
+		$this->load->model('BrowseSVGH_Model');
 
 		//edited by Mike, 20200407
-		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
-		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
-				
-		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
-		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+		$data['medicalDoctorList'] = $this->BrowseSVGH_Model->getMedicalDoctorList();
+		$data['result'] = $this->BrowseSVGH_Model->getDetailsListViaId($patientId);
+	
+		//TO-DO: -update: this
+//		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		$therapistId = $data['result'][0]['medical_doctor_id'];
+
+		//edited by Mike, 20200715
+//		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+//		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsList($therapistId, $patientId);
+		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsListWithTreatment($therapistId, $patientId);
 		
 		//added by Mike, 20200601; removed by Mike, 20200608
 //		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
+/*	//removed by Mike, 20200715
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
-
+*/
 		//TO-DO: -update: this
 /*
 		$itemTypeId = 2;
@@ -1735,8 +1743,9 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 
 		$data['result'] = $this->BrowseSVGH_Model->getDetailsListViaId($patientId);
 
-		//TO-DO: -update: this to use therapist
-		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsList($therapistId, $patientId);
+		//edited by Mike, 20200715
+//		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsList($therapistId, $patientId);
+		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsListWithTreatment($therapistId, $patientId);
 
 		//added by Mike, 20200601
 		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
@@ -1961,7 +1970,12 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
-		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+		
+		//edited by Mike, 20200715
+//		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+		//edited by Mike, 20200715
+//		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsList($therapistId, $patientId);
+		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsListWithTreatment($therapistId, $patientId);
 
 		//added by Mike, 20200601
 		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
