@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200626
+' @date updated: 20200715
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -610,7 +610,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
-								echo $value['item_name'];
+								//edited by Mike, 20200715
+								//echo $value['item_name'];
+								echo strtoupper($value['item_name']);
 				?>		
 								</div>								
 							</a>
@@ -849,7 +851,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo str_replace("�","Ñ",$cartValue['patient_name']);
 								}
 								else {
-									echo $cartValue['item_name'];
+									//edited by Mike, 20200715
+									//echo $cartValue['item_name'];
+									echo strtoupper($cartValue['item_name']);
 								}
 				?>		
 								</div>								
@@ -1039,8 +1043,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 								<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 									<div class="itemName">
-					<?php
-									echo $value['item_name'];
+					<?php	
+									//edited by Mike, 20200715
+									//echo $value['item_name'];
+									echo strtoupper($value['item_name']);
+
 					?>		
 									</div>								
 								</a>
