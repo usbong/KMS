@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200713
+' @date updated: 20200715
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1228,7 +1228,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo '<br/>';
 					
 					echo "<table class='search-result'>";
-					
+
+				//add: table headers
+?>				
+					  <tr class="row">
+						<td class ="columnTableHeader">				
+				<?php
+							echo "ADDED DATETIME";
+				?>		
+						</td>
+
+						<td class ="columnTableHeader">				
+				<?php
+							echo "PATIENT NAME";
+				?>		
+						</td>
+						<td class ="columnTableHeader">				
+							<?php
+								echo "SCHEDULE<br/>DATE & TIME";
+							?>
+						</td>
+						<td class ="columnTableHeaderNotes">				
+							<?php
+								echo "DIAGNOSIS";
+							?>
+						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "TEMPE<br/>RATURE";
+							?>
+						</td>
+						<td class ="columnTableHeader">				
+							<?php
+								echo "BLOOD<br/>PRESSURE";
+							?>
+						</td>
+					  </tr>
+<?php					
 					//add: table headers
 					$iCount = 1;
 					foreach ($resultPaid as $value) {
@@ -1260,45 +1296,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>								
 								</a>							
 							</td>							
-							<td class ="columnFee">				
+							<td class ="column">				
 								<?php
-									echo $value['fee'];
+									echo $value['treatment_datetime_stamp'];
 								?>
 							</td>
-							<td class ="columnFee">				
+							<td class ="column">				
 								<?php
-									echo $value['x_ray_fee'];
+									echo $value['treatment_diagnosis'];
 								?>
 							</td>
-							<td class ="columnFee">				
+							<td class ="column">				
 								<?php
-									echo $value['lab_fee'];
+									echo $value['treatment_temperature'];
 								?>
 							</td>
-							<td class ="columnNotes">				
+							<td class ="column">				
 								<?php
-									//edited by Mike, 20200518
-									//echo $value['notes'];
-									
-									if ($value['notes']=="") {
-										echo "NONE";
-									}
-									else {
-										echo $value['notes'];
-									}
-								?>
-							</td>
-							<!-- added by Mike, 20200518 -->
-							<td class ="columnFee">				
-								<?php
-									$totalFee = $value['fee'] + $value['x_ray_fee'] + $value['lab_fee'];
-									//echo $totalFee;
-
-									echo number_format($totalFee, 2, '.', '');
+									echo $value['treatment_bp'];
 								?>
 							</td>
 							<td>								
-								<?php //edited by Mike, 20200416 
+								<?php 
+									//TO-DO: -update: this
+									//edited by Mike, 20200416 
 									if ($value['transaction_date']==date('m/d/Y')) {
 								?>
 								<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
