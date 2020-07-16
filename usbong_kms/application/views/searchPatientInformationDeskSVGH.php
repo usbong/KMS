@@ -129,9 +129,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right
-						}						
+						}	
 
-						<!-- added by Mike, 20200530 -->
+						td.columnCentered
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center
+						}												
+
 						td.columnTableHeader
 						{
 							font-weight: bold;
@@ -139,7 +144,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-						}												
+							width: 26%;
+						}						
+
 						
 						td.imageColumn
 						{
@@ -374,26 +381,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>
 				<tr class="row">
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="columnTableHeader">				
 				<?php
-								echo "PATIENT NAME";
+							echo "PATIENT NAME";
 				?>		
-								</div>								
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
-							<?php
-								echo "DATE";
-							?>
-								</div>
+						<td class ="columnTableHeader">				
+						<?php
+							echo "SCHEDULE<br/>DATE & TIME";
+						?>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
-							<?php
-									echo "MEDICAL DOCTOR";
-							?>
-								</div>
+						<td class ="columnTableHeader">				
+						<?php
+								echo "DIAGNOSIS";
+						?>
 						</td>											
 					  </tr>
 <?php				
@@ -433,51 +434,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>					
 						</td>
-						<td class ="column">				
-								<div id="transactionDateId<?php echo $iCount?>">
+						<td class ="columnCentered">				
+								<div id="treatmentDateTimeStampId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200527
-/*
-//								echo $value['transaction_date'];
-								echo DATE("Y-m-d", strtotime($value['transaction_date']));
-*/
-								if ($value['transaction_date']==0) {
-									echo DATE("Y-m-d");
+								if ($value['treatment_datetime_stamp']=="") {
+									echo "NONE YET";
 								}
 								else {
-									echo DATE("Y-m-d", strtotime($value['transaction_date']));
-								}
-
+									echo $value['treatment_datetime_stamp'];
+								}								
 							?>
 								</div>
 						</td>						
-						<td class ="column">				
-								<div class="medicalDoctorName" id="medicalDoctorId<?php echo $iCount?>">
+						<td class ="columnNotes">				
 							<?php
-								//edited by Mike, 20200527
-/*							
-								echo $value['medical_doctor_name'];
-*/
-
-//								echo $value['medical_doctor_id'];
-//								echo $value['medical_doctor_name'];
-
-								//edited by Mike, 20200530
-//								if ($value['medical_doctor_name']=="") {
-
-								if ($value['medical_doctor_id']==0) { //ANY
-									echo "NEW; NONE YET";
+								if ($value['treatment_diagnosis']=="") {
+									echo "NOT YET WRITTEN";
 								}
 								else {
-									
-									echo $value['medical_doctor_name'];
-
-								}								
-
-//								echo $value['medical_doctor_name'];
-
+									echo $value['treatment_diagnosis'];
+								}
 							?>
-								</div>
 						</td>						
 					  </tr>
 		<?php				
