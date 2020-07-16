@@ -766,12 +766,51 @@ class ReportSVGH extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportPatientQueue', $data);
 	}
 
-	//added by Mike, 20200628
-	public function viewReportPTRehabListOfAppointment()
+	//added by Mike, 20200716
+	public function viewReportPatientAppointmentList()
+	{
+/*		//edited by Mike, 20200716
+		$this->load->model('Report_Model');
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+*/
+		$this->load->model('ReportSVGH_Model');
+		$data["result"] = $this->ReportSVGH_Model->getPatientQueueReportForTheDaySVGH();
+
+//		echo "count: ".count($data["result"]);
+//		echo $data["result"][0]['transaction_id'];
+		
+		//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
+		$outputResult = [];
+		
+		//edited by Mike, 20200602
+		if ($data["result"]!=False) {
+//		if ((isset($data["result"])) and (count($data["result"])>1)) {
+			foreach ($data["result"] as $value) {
+				if (($value['fee']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				//added by Mike, 20200602
+				//medical_doctor_name = "NEW; NONE YET"
+				else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				else {
+					array_push($outputResult, $value);
+				}
+			}
+			$data["result"]  = $outputResult;
+		}
+		
+//		$this->load->view('viewReportPatientQueue', $data);
+		$this->load->view('viewReportPatientAppointmentList', $data);
+	}
+
+	//added by Mike, 20200628; edited by Mike, 20200716
+	public function viewReportPTRehabListOfAppointmentPrev()
 	{
 		$this->load->model('ReportSVGH_Model');
 
+		//edited by Mike, 20200716
 		$data["result"] = $this->ReportSVGH_Model->getPatientPTRehabListOfAppointmentReportForTheDay();
+		//$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 
 //		echo "count: ".count($data["result"]);
 //		echo $data["result"][0]['transaction_id'];
