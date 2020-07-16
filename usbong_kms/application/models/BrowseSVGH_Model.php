@@ -158,6 +158,7 @@ class BrowseSVGH_Model extends CI_Model
 		return $outputArray;
 	}	
 
+
 	public function getNewestPatientDetailsListViaName($param) 
 	{		
 		//we use this at MOSC

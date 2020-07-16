@@ -179,7 +179,100 @@ class ReportSVGH_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200529; edited by Mike, 20200606
+	//added by Mike, 20200529; edited by Mike, 20200716
+	public function getPatientQueueReportForTheDaySVGH()
+	{
+
+		//we use this at MOSC
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id, t4.treatment_datetime_stamp, t4.treatment_diagnosis, t4.treatment_temperature, t4.treatment_bp, t4.therapist_id');
+
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('treatment as t4', 't2.treatment_id = t4.treatment_id', 'LEFT');
+
+		//date_default_timezone_set('Asia/Hong_Kong');
+/*		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+	
+*/
+		$this->db->distinct('t1.patient_name');
+
+		//$this->db->where('t2.added_datetime_stamp=',date("Y-m-d H:i:s"));
+				
+//		$this->db->where('t2.transaction_date',date("m/d/Y"));
+//		$this->db->where('t2.transaction_date',date("Y-m-d"));
+
+///DATE("m/d/Y", strtotime($value['transaction_date']));
+		
+		//echo date("Y-m-d");
+//		echo date("m/d/Y");
+
+		//added by Mike, 20200601; edited by Mike, 20200606
+		//TO-DO: -reverify: this
+		$this->db->group_by('t2.patient_id');
+		//$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
+
+		//edited by Mike, 20200607
+		//$this->db->select_max('t2.added_datetime_stamp');
+		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+
+		$this->db->where('t2.transaction_date',date("m/d/Y"));
+
+		//added by Mike, 20200601
+		//TO-DO: -reverify: this
+		$this->db->where('t1.patient_id!=',0);
+
+		//removed by Mike, 20200601
+/*		$this->db->where('t2.fee!=',0);
+*/
+		//added by Mike, 20200601
+//		$this->db->not_like('t2.notes',"NC");
+		
+//		$this->db->and_where('t2.notes!=',0);
+
+		//removed by Mike, 20200601
+/*
+		$this->db->or_where('t2.fee=',0);
+		$this->db->where('t2.notes',"IN-QUEUE; UNPAID");
+*/
+
+
+//		$this->db->or_where('t2.fee=',0);
+//		$this->db->where('t2.notes!=',"NC; PAID");
+		
+		//added by Mike, 202005029
+		$this->db->where('t1.patient_name!=', 'NONE');
+
+
+//		$this->db->like('t2.notes', "NEW; NONE YET");
+//		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
+		$this->db->order_by('t3.medical_doctor_id', 'ASC');//ASC');
+		
+		//added by Mike, 20200530; edited by Mike, 20200530
+		$this->db->order_by('t2.transaction_id', 'ASC');//DESC');
+
+/* 		//removed by Mike, 20200601
+		$this->db->group_by('t1.patient_id');
+*/
+		//$this->db->limit(8);//1);
+		
+		$query = $this->db->get('patient');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}
+
+	//added by Mike, 20200529; edited by Mike, 20200716
 	public function getPatientQueueReportForTheDay()
 	{
 		//date_default_timezone_set('Asia/Hong_Kong');
