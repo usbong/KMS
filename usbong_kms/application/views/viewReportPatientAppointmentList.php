@@ -747,8 +747,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$scheduleTimeListCount = $scheduleTimeListCount+1;						
 						$currentDateTime = date("Y-m-d")." ".$scheduleTimeList[$scheduleTimeListCount];//"08:00:00";
 						$isCurrentDateTimeSame = false;
-?>							
-		<?php					
+
 					//TO-DO: -update: this
 //						do {
 						while ($currentDateTime!==$value['treatment_datetime_stamp']){
@@ -776,7 +775,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="columnCentered">		
 					<?php
-							echo explode(" ",$currentDateTime)[1];						
+							//echo explode(" ",$currentDateTime)[1];						
+
+							$iTime = str_replace(":00", "", explode(" ",$currentDateTime)[1]);
+
+							if ($iTime==12) {
+								echo $iTime.":00 PM";
+							}									
+							else if ($iTime>12) {
+								$iTime = $iTime - 12;
+								echo "0".$iTime.":00 PM";
+							}									
+							else {
+								echo $iTime.":00 AM";
+							}
 					?>
 						</td>
 						<td class ="column">				
@@ -833,9 +845,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if ($isCurrentDateTimeSame) {
 								}
 								else {
-									//echo $value['treatment_datetime_stamp'];
-									
-									echo explode(" ",$value['treatment_datetime_stamp'])[1];						
+									//echo $value['treatment_datetime_stamp'];									
+									//echo explode(" ",$value['treatment_datetime_stamp'])[1];						
+
+									$iTime = str_replace(":00", "", explode(" ",$value['treatment_datetime_stamp'])[1]);
+
+									if ($iTime==12) {
+										echo $iTime.":00 PM";
+									}									
+									else if ($iTime>12) {
+										$iTime = $iTime - 12;
+										echo "0".$iTime.":00 PM";
+									}									
+									else {
+										echo $iTime.":00 AM";
+									}
+
 								}
 								
 /*								
@@ -891,14 +916,75 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$iCount++;		
 //					echo "<br/>";
 				}				
-				
+
+				//added by Mike, 20200717
+				$scheduleTimeListCount = $scheduleTimeListCount + 1;							
+
+				while ($scheduleTimeListCount < $scheduleTimeListCountMax){
+					$currentDateTime = date("Y-m-d")." ".$scheduleTimeList[$scheduleTimeListCount];
+		?>	
+					<tr class="row">
+							<td class ="column">		
+								<br />
+							</td>
+							<td class ="column">		
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>											
+							<td class ="column">				
+							</td>											
+							<td class ="column">				
+							</td>											
+					</tr>
+
+					<tr class="row">
+							<td class ="column">		
+								<br />
+							</td>
+							<td class ="columnCentered">		
+						<?php
+								//echo explode(" ",$currentDateTime)[1];						
+								
+								$iTime = str_replace(":00", "", explode(" ",$currentDateTime)[1]);
+	
+								if ($iTime==12) {
+									echo $iTime.":00 PM";
+								}									
+								else if ($iTime>12) {
+									$iTime = $iTime - 12;
+									echo "0".$iTime.":00 PM";
+								}									
+								else {
+									echo $iTime.":00 AM";
+								}
+						?>
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>											
+							<td class ="column">				
+							</td>											
+							<td class ="column">				
+							</td>											
+					</tr>								
+<?php							
+					$scheduleTimeListCount = $scheduleTimeListCount + 1;							
+
+					if ($scheduleTimeListCount<$scheduleTimeListCountMax) {
+						$currentDateTime = date("Y-m-d")." ".$scheduleTimeList[$scheduleTimeListCount];
+					}
+					else {
+						break;
+					}							
+				}				
 				echo "</table>";				
 				echo "<br/>";				
 				echo '<div>***NOTHING FOLLOWS***';	
-//			}
 		}
-		
-		?>
+?>
 
 	<!-- added by Mike, 20200530 -->
 	<table class="addPatientTable">
