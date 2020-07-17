@@ -608,22 +608,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			//added by Mike, 20200523
 //			alert(medicalDoctorId);
-/*
-			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
-			//therefore, we need to add a +1 to correctly identify the medical doctor
-			if ((medicalDoctorId==0)) {
-				medicalDoctorId+=1; //to be SYSON, PEDRO
-			}
-			else (medicalDoctorId==2)) {
-				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
-			}
-*/
 
-/*
-			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
-*/			
 			//edited by Mike, 20200411
 			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
+
+		}	
+
+		//added by Mike, 20200529; edited by Mike, 20200704
+		function myPopupFunctionDeletePatientTransaction(patientId,transactionId) {				
+			//TO-DO: -update: this
+			//window.location.href = "<?php echo site_url('browse/deleteTransactionFromPatient/"+transactionId+"');?>";
+			
+			//edited by Mike, 20200717
+//			window.location.href = "<?php echo site_url('browseSVGH/deleteTransactionFromPatient/"+transactionId+"');?>";
+			window.location.href = "<?php echo site_url('browseSVGH/deleteTransactionFromPatientSVGH/"+patientId+"/"+transactionId+"');?>";
 
 		}	
 
@@ -1339,8 +1337,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//TO-DO: -update: this
 									//edited by Mike, 20200416 
 									if ($value['transaction_date']==date('m/d/Y')) {
-								?>
+								?>								
+<!--							//edited by Mike, 20200717								
 								<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+-->
+								<button onclick="myPopupFunctionDeletePatientTransaction(<?php echo $value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
 									
 	<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 	-->

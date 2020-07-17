@@ -498,11 +498,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
 		}	
 */
-		//added by Mike, 20200529; edited by Mike, 20200704
+
+		//added by Mike, 20200529; edited by Mike, 20200717
 		function myPopupFunctionDeletePatientTransaction(transactionId) {				
 			//TO-DO: -update: this
 			//window.location.href = "<?php echo site_url('browse/deleteTransactionFromPatient/"+transactionId+"');?>";
-			window.location.href = "<?php echo site_url('browseSVGH/deleteTransactionFromPatient/"+transactionId+"');?>";
+			
+			//edited by Mike, 20200717
+//			window.location.href = "<?php echo site_url('browseSVGH/deleteTransactionFromPatient/"+transactionId+"');?>";
+			window.location.href = "<?php echo site_url('reportSVGH/deleteTransactionFromPatientSVGH/"+transactionId+"');?>";
 
 		}	
 
