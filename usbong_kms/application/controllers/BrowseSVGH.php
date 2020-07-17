@@ -1851,6 +1851,48 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		$this->addNewTransactionForPatient($patientId, $data['medicalDoctorIdParam']);
 
 	}
+
+	//added by Mike, 20200529
+	public function addPatientNameInformationDeskSVGH()
+	{
+		$data['patientLastNameParam'] = $_POST['patientLastNameParam'];
+		$data['patientFirstNameParam'] = $_POST['patientFirstNameParam'];
+
+		//TO-DO: -update: this
+		//$data['medicalDoctorIdParam'] = $_POST['medicalDoctorIdParam'];
+		$data['medicalDoctorIdParam'] = 1; //SYSON, PEDRO (DEFAULT)
+				
+		if (!isset($data['patientLastNameParam'])) {
+			redirect('reportSVGH/viewReportPatientAppointmentList');
+		}
+
+		if (!isset($data['patientFirstNameParam'])) {
+			redirect('reportSVGH/viewReportPatientAppointmentList');
+		}
+
+		$data['nameParam'] = $data['patientLastNameParam'].", ".$data['patientFirstNameParam'];
+		$data['nameParam'] = strtoupper($data['nameParam']);
+						
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('BrowseSVGH_Model');
+	
+		$patientId = $this->BrowseSVGH_Model->addPatientName($data);
+		
+//		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+/*		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+		$this->load->view('searchPatientInformationDesk', $data);	
+*/
+
+		//edited by Mike, 20200717
+//		$this->addNewTransactionForPatient($patientId, $data['medicalDoctorIdParam']);
+		$this->viewPatientSVGH($patientId);
+	}
 	
 	//added by Mike, 20200529
 	public function addPatientName()
