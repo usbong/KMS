@@ -842,7 +842,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<tr>
 		<td>
 		<!-- Form -->
-		<form method="post" action="<?php echo site_url('browse/addPatientNameInformationDesk/')?>">
+		<form method="post" action="<?php echo site_url('browseSVGH/addPatientNameInformationDeskSVGH/')?>">
 			<div>
 				<table width="100%">
 				  <tr>
