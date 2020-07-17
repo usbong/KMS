@@ -766,6 +766,23 @@ class ReportSVGH extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportPatientQueue', $data);
 	}
 
+	//added by Mike, 20200717
+	public function deleteTransactionFromPatientSVGH($transactionId)
+	{
+		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('BrowseSVGH_Model');
+	
+		$this->BrowseSVGH_Model->deleteTransactionFromPatient($data);
+
+		$this->viewReportPatientAppointmentList();
+	}
+
 	//added by Mike, 20200716
 	public function viewReportPatientAppointmentList()
 	{
