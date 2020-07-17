@@ -969,6 +969,17 @@ class BrowseSVGH_Model extends CI_Model
 		//echo "temperature: ".$param['temperature'];
 		//echo "bloodPressure: ".$param['bloodPressure'];
 	
+		//added by Mike, 20200717
+		if ($param['scheduleTime']=="01:00:00") {
+			$param['scheduleTime'] = "13:00:00";
+		}
+		else if ($param['scheduleTime']=="02:00:00") {
+			$param['scheduleTime'] = "14:00:00";
+		}
+		else if ($param['scheduleTime']=="03:00:00") {
+			$param['scheduleTime'] = "15:00:00";
+		}
+	
 		$data = array(
 					'therapist_id' => $param['therapistId'],
 					'treatment_type_id' => 2,

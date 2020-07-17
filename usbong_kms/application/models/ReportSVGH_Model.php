@@ -179,7 +179,7 @@ class ReportSVGH_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200529; edited by Mike, 20200716
+	//added by Mike, 20200529; edited by Mike, 20200717
 	public function getPatientQueueReportForTheDaySVGH()
 	{
 
@@ -250,7 +250,11 @@ class ReportSVGH_Model extends CI_Model
 
 //		$this->db->like('t2.notes', "NEW; NONE YET");
 //		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
-		$this->db->order_by('t3.medical_doctor_id', 'ASC');//ASC');
+		//edited by Mike, 20200717
+/*		$this->db->order_by('t3.medical_doctor_id', 'ASC');//ASC');
+*/
+		$this->db->order_by('t4.treatment_datetime_stamp', 'ASC');//ASC');
+
 		
 		//added by Mike, 20200530; edited by Mike, 20200530
 		$this->db->order_by('t2.transaction_id', 'ASC');//DESC');
