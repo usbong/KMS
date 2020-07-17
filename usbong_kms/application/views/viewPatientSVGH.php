@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200715
+' @date updated: 20200717
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -675,7 +675,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
+<!--			//edited by Mike, 20200717		
 				Search Patient<br/>@SVGH
+-->
+				Search Patient Names<br/>@
+				<a href='<?php echo site_url('reportSVGH/viewReportPatientAppointmentList/')?>'>
+					Information Desk (SVGH)
+				</a>
+
 			</h2>		
 		</td>
 	  </tr>
