@@ -630,7 +630,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<br/>
-	<div><b>PT REHAB APPOINTMENT LIST TODAY</b></div>
+	<div><b>PHYSICAL THERAPY & REHABILITATION<br/>
+	APPOINTMENT LIST TODAY</b></div>
 	<br/>
 
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
@@ -670,7 +671,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 			  <tr class="row">
-				<td class ="columnTableHeader">				
+				<td class ="columnTableHeaderCount">				
 		<?php
 					echo "COUNT";
 		?>		
@@ -706,8 +707,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//TO-DO: -update: this
 
 				$iCount = 1;
-				$iMedicalDoctorCount = 1;
+/*				$iMedicalDoctorCount = 1;
 				$currentMedicalDoctorId = -1; //added by Mike, 20200530
+*/
+				$scheduleTimeListCount = 0; //start at zero (0)
+				$scheduleTimeList = array("08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00");
+				$scheduleTimeListCountMax = Count($scheduleTimeList);
+				
+				$currentDateTime = date("Y-m-d")." ".$scheduleTimeList[$scheduleTimeListCount];//"08:00:00";
+				$isCurrentDateTimeSame = false;
 				
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
@@ -719,16 +727,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					if (($value['fee'] == 0) and ($value['x_ray_fee'] == 0)) {
 						continue;
 					}
-*/					
-					//added by Mike, 20200530; edited by Mike, 20200530
-					if ($currentMedicalDoctorId==-1) {
-						$currentMedicalDoctorId = $value['medical_doctor_id'];
+*/	
+
+					//added by Mike, 20200717 					
+					if (strpos($value['treatment_datetime_stamp'], date("Y-m-d"))===false) {						
+						//include only transactions for the day
+						continue;
 					}
-					else {									
-						if ($currentMedicalDoctorId!==$value['medical_doctor_id']) {
-							$currentMedicalDoctorId = $value['medical_doctor_id'];
-							$iMedicalDoctorCount = 1;													
+					
+//					if (strpos($currentDateTime, $value['treatment_datetime_stamp'])!==false){
+					if ($currentDateTime==$value['treatment_datetime_stamp']){
+						$currentDateTime = $value['treatment_datetime_stamp'];
+						
+						if ($iCount>1) {
+							$isCurrentDateTimeSame = true;
+						}
+					}
+					else {															
+						$scheduleTimeListCount = $scheduleTimeListCount+1;						
+						$currentDateTime = date("Y-m-d")." ".$scheduleTimeList[$scheduleTimeListCount];//"08:00:00";
+						$isCurrentDateTimeSame = false;
 ?>							
+		<?php					
+					//TO-DO: -update: this
+//						do {
+						while ($currentDateTime!==$value['treatment_datetime_stamp']){
+		?>	
 				<tr class="row">
 						<td class ="column">		
 							<br />
@@ -741,14 +765,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>											
 						<td class ="column">				
 						</td>											
+						<td class ="column">				
+						</td>											
 				</tr>
-		<?php							
-						}
-						else {
-							$iMedicalDoctorCount = $iMedicalDoctorCount + 1;
-						}
-					}
 
+
+				<tr class="row">
+						<td class ="column">		
+							<br />
+						</td>
+						<td class ="columnCentered">		
+					<?php
+							echo explode(" ",$currentDateTime)[1];						
+					?>
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>											
+						<td class ="column">				
+						</td>											
+						<td class ="column">				
+						</td>											
+				</tr>								
+<?php							
+							if ($scheduleTimeListCount<$scheduleTimeListCountMax) {
+								$scheduleTimeListCount = $scheduleTimeListCount + 1;							
+								$currentDateTime = date("Y-m-d")." ".$scheduleTimeList[$scheduleTimeListCount];
+							}
+							else {
+								break;
+							}							
+						}
+//						while ($currentDateTime!==$value['treatment_datetime_stamp']);
+?>
+				<tr class="row">
+						<td class ="column">		
+							<br />
+						</td>
+						<td class ="column">		
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>											
+						<td class ="column">				
+						</td>											
+						<td class ="column">				
+						</td>											
+				</tr>
+
+<?php
+					}
 		?>						
 						
 					  <tr class="row">
@@ -762,11 +830,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnCentered">				
 								<div id="treatmentDateTimeStampId<?php echo $iCount?>">
 							<?php
-								//edited by Mike, 20200518								
-//								echo $value['transaction_date'];
-//								echo DATE("Y-m-d", strtotime($value['transaction_date']));
-
-								echo $value['treatment_datetime_stamp'];
+								if ($isCurrentDateTimeSame) {
+								}
+								else {
+									//echo $value['treatment_datetime_stamp'];
+									
+									echo explode(" ",$value['treatment_datetime_stamp'])[1];						
+								}
 								
 /*								
 								if ($value['transaction_date']==0) {
