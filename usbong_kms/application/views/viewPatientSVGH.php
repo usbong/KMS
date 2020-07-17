@@ -689,8 +689,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>
 	<br/>
 	<!-- Form -->
-	<!-- edited by Mike, 20200713 -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browseSVGH/confirmPatientSVGH')?>">
+	<!-- edited by Mike, 20200717 -->
+	<form id="browse-form" method="post" action="<?php echo site_url('browseSVGH/confirmPatientInformationDeskSVGH')?>">
 		<?php
 			$itemCounter = 1;
 		?>
@@ -840,7 +840,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "DIAGNOSIS";
 							?>
 						</td>
-						<td class ="columnTableHeaderFee">				
+						<td class ="columnTableHeader">				
 							<?php
 								echo "TEMPE<br/>RATURE";
 							?>
@@ -923,14 +923,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<input type="text" id="diagnosisParam" class="Notes-textbox no-spin" value="NONE" required>
 						</td>
 						<td class ="column">
-							<input type="tel" id="temperatureParam" class="Temperature-textbox no-spin" value="36.10" min="1" max="99999" 
+							<input type="tel" id="temperatureParam" class="Temperature-textbox no-spin" value="36.10" min="1" max="9999999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
 									const keyLeftArrow = 37;
 									const keyRightArrow = 39;
 						
-									if (this.value.length == 5) {			
+									if (this.value.length == 7) {
 										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
 											return true;
 										}
@@ -948,14 +948,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</select>						
 -->
 <!-- TO-DO: -update: this -->
-						<input type="tel" id="bloodPressureParam" class="BloodPressure-textbox no-spin" value="120/80" min="1" max="99999" 
+						<input type="tel" id="bloodPressureParam" class="BloodPressure-textbox no-spin" value="120/80" min="1" max="9999999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
 									const keyLeftArrow = 37;
 									const keyRightArrow = 39;
 						
-									if (this.value.length == 5) {			
+									if (this.value.length == 7) { //5
 										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
 											return true;
 										}

@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200716
+' @date updated: 20200717
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -147,6 +147,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 26%;
 						}						
 
+						td.columnNotes
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: left
+						}						
 						
 						td.imageColumn
 						{
@@ -321,7 +326,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
+<!--			//edited by Mike, 20200717		
 				Search Patient Names<br/>@Information Desk (SVGH)
+-->
+				Search Patient Names<br/>@
+				<a href='<?php echo site_url('reportSVGH/viewReportPatientAppointmentList/')?>'>
+					Information Desk (SVGH)
+				</a>
 			</h2>		
 		</td>
 	  </tr>
