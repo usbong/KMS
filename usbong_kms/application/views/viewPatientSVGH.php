@@ -756,16 +756,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			//TO-DO: -update: this to Physical Therapist name, etc
 
-			if (isset($medicalDoctorId)) {
+			if (isset($therapistId)) {
 			}
 			else {
-				$medicalDoctorId = $result[0]["medical_doctor_id"];
+				$therapistId = $result[0]["therapist_id"];
 			}
 
 			//edited by Mike, 20200713
 //			echo "<select id='medicalDoctorIdParam'>";			
 			echo "<select id='therapistIdParam'>";			
-				foreach ($medicalDoctorList as $medicalDoctorValue) {
+				foreach ($therapistList as $therapistValue) {
 				  //edited by Mike, 20200523
 				  //TO-DO: -update: this
 /*				  
@@ -774,8 +774,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  else {
 */					  
 	//				  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {					  
-					  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
-						echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+					  if (isset($therapistId) and ($therapistValue["therapist_id"]==$therapistId)) {
+						echo "<option value='".$therapistValue["therapist_id"]."' selected='selected'>".$therapistValue["therapist_name"]."</option>";
 					  }			  	  
 	/*
 					  else if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
@@ -783,7 +783,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  }				  
 	*/				  
 					  else {
-						echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
+						echo "<option value='".$therapistValue['therapist_id']."'>".$therapistValue["therapist_name"]."</option>";			  
 					  }				
 				   }
 /*
