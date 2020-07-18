@@ -1579,15 +1579,38 @@ class BrowseSVGH_Model extends CI_Model
 		return $rowArray;
 	}
 
+	//added by Mike, 20200718
+	public function getTherapistList() {
+		$this->db->select('therapist_id, therapist_name');
+		
+		//removed by Mike, 20200523
+//		$this->db->where('medical_doctor_id !=', 0); //ANY
+//		$this->db->where('medical_doctor_id !=', 3); //SUMMARY
+
+		$query = $this->db->get('therapist');	
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+	
+//		echo $rowArray[0]["medical_doctor_id"]." : ".$rowArray[0]["medical_doctor_name"];
+
+		return $rowArray;
+	}
+
 	//TO-DO: -reverify: this
 	//consider eliminating excess steps
+	//edited by Mike, 20200718
 	public function getDetailsListViaId($nameId) 
 	{		
 		//edited by Mike, 20200541
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name, t4.therapist_id, t4.therapist_name');
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('therapist as t4', 't2.therapist_id = t4.therapist_id', 'LEFT');
 
 //		$this->db->distinct('t1.patient_name');
 //		$this->db->like('t1.patient_name', $param['nameParam']);
