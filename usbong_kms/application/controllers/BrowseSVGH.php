@@ -1545,13 +1545,13 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		//$this->load->model('Browse_Model');
 		$this->load->model('BrowseSVGH_Model');
 
-		//edited by Mike, 20200407
-		$data['medicalDoctorList'] = $this->BrowseSVGH_Model->getMedicalDoctorList();
+		//edited by Mike, 20200718
+//		$data['medicalDoctorList'] = $this->BrowseSVGH_Model->getMedicalDoctorList();
+		$data['therapistList'] = $this->BrowseSVGH_Model->getTherapistList();
 		$data['result'] = $this->BrowseSVGH_Model->getDetailsListViaId($patientId);
 	
-		//TO-DO: -update: this
 //		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
-		$therapistId = $data['result'][0]['medical_doctor_id'];
+		$therapistId = $data['result'][0]['therapist_id'];
 
 		//edited by Mike, 20200715
 //		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
