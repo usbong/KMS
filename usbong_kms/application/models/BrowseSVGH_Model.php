@@ -753,6 +753,37 @@ class BrowseSVGH_Model extends CI_Model
 
 	}
 
+	//added by Mike, 20200718
+	//delete treatment transaction
+	public function deleteTransactionFromPatientSVGH($param) 
+	{
+		//added by Mike, 20200608
+        $this->db->select('patient_id, treatment_id');
+        $this->db->where('transaction_id',$param['transactionId']);
+        $query = $this->db->get('transaction');
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+				
+		//added by Mike, 20200718
+        $this->db->where('treatment_id',$rowArray[0]['treatment_id']);
+        $this->db->delete('treatment');
+
+		
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+
+		//added by Mike, 20200608
+		//delete all transactions of the patient for the day
+		//this is due to the computer server adding a new transaction that combines all the patient's purchases
+        $this->db->where('patient_id',$rowArray[0]['patient_id']);
+        $this->db->where('transaction_date',$param['transactionDate']);
+        $this->db->delete('transaction');		
+	}
+
 	//added by Mike, 20200401
 	public function payTransactionMedicinePurchase() 
 	{			
