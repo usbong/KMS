@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200717
+' @date updated: 20200718
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -601,6 +601,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
 		}	
 */
+
+/*  //removed by Mike, 20200718
 		function myPopupFunctionDelete(medicalDoctorId,patientId,transactionId) {				
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
@@ -613,7 +615,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
 
 		}	
-
+*/
 		//added by Mike, 20200529; edited by Mike, 20200704
 		function myPopupFunctionDeletePatientTransaction(patientId,transactionId) {				
 			//TO-DO: -update: this
