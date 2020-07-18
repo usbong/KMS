@@ -2170,7 +2170,7 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		
 		$this->load->model('BrowseSVGH_Model');
 	
-		$this->BrowseSVGH_Model->deleteTransactionFromPatient($data);
+		$this->BrowseSVGH_Model->deleteTransactionFromPatientSVGH($data);
 
 		$this->viewPatientSVGH($patientId);
 	}
