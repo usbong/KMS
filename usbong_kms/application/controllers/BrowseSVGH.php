@@ -1551,13 +1551,16 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		$data['result'] = $this->BrowseSVGH_Model->getDetailsListViaId($patientId);
 	
 //		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
-		$therapistId = $data['result'][0]['therapist_id'];
+		//edited by Mike, 20200719
+//		$therapistId = $data['result'][0]['therapist_id'];
+		$data['therapistId'] = $data['result'][0]['therapist_id'];
 
 		//edited by Mike, 20200715
 //		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 //		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsList($therapistId, $patientId);
-		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsListWithTreatment($therapistId, $patientId);
-		
+//		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsListWithTreatment($therapistId, $patientId);
+		$data['resultPaid'] = $this->BrowseSVGH_Model->getPaidPatientDetailsListWithTreatment($data['therapistId'], $patientId);	
+	
 		//added by Mike, 20200601; removed by Mike, 20200608
 //		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
