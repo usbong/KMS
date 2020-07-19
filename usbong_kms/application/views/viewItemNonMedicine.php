@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200715
+' @date updated: 20200719
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -713,14 +713,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">		
 							<!-- edited by Mike, 20200611 -->
 							<!-- increased number of digits for the fee -->
-							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="99999" 
+							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="99999999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
 									const keyLeftArrow = 37;
 									const keyRightArrow = 39;
 						
-									if (this.value.length == 4) {			
+									if (this.value.length == 7) {			
 										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
 											return true;
 										}
