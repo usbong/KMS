@@ -1606,11 +1606,12 @@ class BrowseSVGH_Model extends CI_Model
 	public function getDetailsListViaId($nameId) 
 	{		
 		//edited by Mike, 20200541
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name, t4.therapist_id, t4.therapist_name');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name, t5.therapist_id, t5.therapist_name');
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
-		$this->db->join('therapist as t4', 't2.therapist_id = t4.therapist_id', 'LEFT');
+		$this->db->join('treatment as t4', 't2.treatment_id = t4.treatment_id', 'LEFT');
+		$this->db->join('therapist as t5', 't4.therapist_id = t5.therapist_id', 'LEFT');
 
 //		$this->db->distinct('t1.patient_name');
 //		$this->db->like('t1.patient_name', $param['nameParam']);
@@ -1975,14 +1976,15 @@ class BrowseSVGH_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200517
+	//added by Mike, 20200517; edited by Mike, 20200719
 	public function getPaidPatientDetailsListWithTreatment($healthProviderId, $patientId) 
 	{			
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name, t4.treatment_datetime_stamp, t4.treatment_diagnosis, t4.treatment_temperature, t4.treatment_bp'); //TO-DO: -add: therapist name using therapist's identification
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name, t4.treatment_datetime_stamp, t4.treatment_diagnosis, t4.treatment_temperature, t4.treatment_bp, t5.therapist_id, t5.therapist_name');
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 		$this->db->join('treatment as t4', 't2.treatment_id = t4.treatment_id', 'LEFT');
+		$this->db->join('therapist as t5', 't4.therapist_id = t5.therapist_id', 'LEFT');
 
 		$this->db->distinct('t1.patient_name');
 
