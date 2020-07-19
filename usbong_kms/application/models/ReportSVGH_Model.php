@@ -179,17 +179,18 @@ class ReportSVGH_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200529; edited by Mike, 20200717
+	//added by Mike, 20200529; edited by Mike, 20200719
 	public function getPatientQueueReportForTheDaySVGH()
 	{
 
 		//we use this at MOSC
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id, t4.treatment_datetime_stamp, t4.treatment_diagnosis, t4.treatment_temperature, t4.treatment_bp, t4.therapist_id');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id, t4.treatment_datetime_stamp, t4.treatment_diagnosis, t4.treatment_temperature, t4.treatment_bp, t4.therapist_id, t5.therapist_name');
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 		$this->db->join('treatment as t4', 't2.treatment_id = t4.treatment_id', 'LEFT');
+		$this->db->join('therapist as t5', 't4.therapist_id = t5.therapist_id', 'LEFT');
 
 		//date_default_timezone_set('Asia/Hong_Kong');
 /*		
