@@ -791,11 +791,14 @@ class ReportSVGH extends CI_Controller { //MY_Controller {
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 */
 		$this->load->model('ReportSVGH_Model');
-		$data["result"] = $this->ReportSVGH_Model->getPatientQueueReportForTheDaySVGH();
+		//edited by Mike, 20200719
+//		$data["result"] = $this->ReportSVGH_Model->getPatientQueueReportForTheDaySVGH();
+		$data["result"] = $this->ReportSVGH_Model->getPatientAppointmentListForTheDaySVGH();
 
 //		echo "count: ".count($data["result"]);
 //		echo $data["result"][0]['transaction_id'];
-		
+
+/*		//removed by Mike, 20200719
 		//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
 		$outputResult = [];
 		
@@ -815,6 +818,7 @@ class ReportSVGH extends CI_Controller { //MY_Controller {
 			}
 			$data["result"]  = $outputResult;
 		}
+*/
 		
 //		$this->load->view('viewReportPatientQueue', $data);
 		$this->load->view('viewReportPatientAppointmentList', $data);

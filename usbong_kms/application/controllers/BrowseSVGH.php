@@ -1729,6 +1729,9 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		//note: "U" is capital letter
 		$diagnosis = str_replace("U003B", ";", $diagnosis); //semicolon
 		$diagnosis = str_replace("U002C", ",", $diagnosis); //comma
+		//added by Mike, 20200719
+		$diagnosis = str_replace("U2215", "/", $diagnosis); //slash
+		
 		$diagnosis = urldecode($diagnosis); //%20 = space, etc		
 		$data['diagnosis'] = $diagnosis;
 		
@@ -1741,8 +1744,9 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 
 		$this->BrowseSVGH_Model->addTransactionServicePurchaseSVGH($data);
 
-		//TO-DO: -update: this to use therapist
-		$data['medicalDoctorList'] = $this->BrowseSVGH_Model->getMedicalDoctorList();
+		//edited by Mike, 20200719
+		//$data['medicalDoctorList'] = $this->BrowseSVGH_Model->getMedicalDoctorList();
+		$data['therapistList'] = $this->BrowseSVGH_Model->getTherapistList();
 
 		$data['result'] = $this->BrowseSVGH_Model->getDetailsListViaId($patientId);
 
