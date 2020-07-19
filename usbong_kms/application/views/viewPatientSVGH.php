@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200718
+' @date updated: 20200719
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -761,7 +761,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			else {
 				$therapistId = $result[0]["therapist_id"];
 			}
-
+			
 			//edited by Mike, 20200713
 //			echo "<select id='medicalDoctorIdParam'>";			
 			echo "<select id='therapistIdParam'>";			
@@ -1263,6 +1263,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="columnTableHeaderNotes">				
 							<?php
+								echo "THERAPIST<br/>NAME";
+							?>
+						</td>
+						<td class ="columnTableHeaderNotes">				
+							<?php
 								echo "DIAGNOSIS";
 							?>
 						</td>
@@ -1298,7 +1303,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</td>
 							<td class ="column">				
-								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+								<a href='<?php echo site_url('browseSVGH/viewPatientSVGH/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
 									<div class="patientName">
 					<?php
 									//TO-DO: -update: this
@@ -1313,7 +1318,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php
 									//edited by Mike, 20200715
 									//echo $value['treatment_datetime_stamp'];
-									echo str_replace(" ","T", $value['treatment_datetime_stamp']);
+									//edited by Mike, 20200719
+									//echo str_replace(" ","T", $value['treatment_datetime_stamp']);
+//									echo str_replace(" ","<br/>", $value['treatment_datetime_stamp']);
+
+									$iDate = str_replace(" ", "", explode(" ",$value['treatment_datetime_stamp'])[0]);
+									echo $iDate."<br/>";
+									
+									$iTime = str_replace(":00", "", explode(" ",$value['treatment_datetime_stamp'])[1]);
+
+									if ($iTime==12) {
+										echo $iTime.":00 PM";
+									}									
+									else if ($iTime>12) {
+										$iTime = $iTime - 12;
+										echo "0".$iTime.":00 PM";
+									}									
+									else {
+										echo $iTime.":00 AM";
+									}
+
+
+								?>
+							</td>
+							<td class ="column">				
+								<?php
+									echo $value['therapist_name'];
 								?>
 							</td>
 							<td class ="column">				
