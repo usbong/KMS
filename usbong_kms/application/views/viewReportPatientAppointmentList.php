@@ -91,16 +91,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}	
 
 						img.Image-companyLogo {
-							max-width: 60%;
+							max-width: 50%;
 							height: auto;
 							float: left;
 							text-align: center;
 							padding-left: 20px;
 							padding-top: 10px;
+							padding-right: 20px;
 						}
 
 						img.Image-moscLogo {
-							max-width: 20%;
+							max-width: 18%;
+							height: auto;
+							float: left;
+							text-align: center;
+						}
+
+						img.Image-svghLogo {
+							max-width: 18%;
 							height: auto;
 							float: left;
 							text-align: center;
@@ -597,8 +605,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<table class="imageTable">
 	  <tr>
 		<td class="imageColumn">				
-			<img class="Image-moscLogo" src="<?php echo base_url('assets/images/moscLogo.jpg');?>">		
-			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
+			<img class="Image-moscLogo" src="<?php echo base_url('assets/images/moscLogo.jpg');?>">
+			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">
+			<img class="Image-svghLogo" src="<?php echo base_url('assets/images/svghLogo.jpg');?>">	
 		</td>
 		<td class="pageNameColumn">
 			<h2>
