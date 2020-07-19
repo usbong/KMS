@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200620
+' @date updated: 20200719
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -417,7 +417,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>						
 						<td class ="tableHeaderColumnPartTwo">				
 							<?php
-								echo "PWD•SC<br/>LESS 20%";
+							   //edited by Mike, 20200719
+							   if ($result[0]['transaction_date'] >= "06/01/2020") {
+							     echo "PWD•SC<br/>LESS 20%+";
+							   }
+							   else {
+								 echo "PWD•SC<br/>LESS 20%";
+							   }
 							?>
 						</td>
 					  </tr>
@@ -550,7 +556,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
 									$fAmountNoLess20PercentDiscount += $fFee / (1 - 0.20);
 	//								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
+									//edited by Mike, 20200719
 									$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
+									//$fLess20PercentDiscount += ($fFee / (1 - 0.20))*0.20;
 								}
 							?>
 								</div>
@@ -643,6 +651,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
 								   //removed by Mike, 20200426
 								   //$fLess20PercentDiscount = number_format($fAmountPaid*0.20, 2, '.', '');
+								   
+								   //added by Mike, 20200719
+								   if ($value['transaction_date'] >= "06/01/2020") {
+									   $fLess20PercentDiscount = 0;
+									   if ($fFee == 600) {
+										   	$fLess20PercentDiscount += 200; //we give more than 20% discount
+									   }
+									   else {
+										   $fLess20PercentDiscount += $fFee*0.20;
+									   }
+
+									   //we do fee computation in the next column	
+									   $fAmountNoLess20PercentDiscountXRayOnly = $value['x_ray_fee'] / (1 - 0.20);
+									   $fLess20PercentDiscount += $fAmountNoLess20PercentDiscountXRayOnly*0.20;
+								   }								   
 								}
 								else { //WI								
 								}								
