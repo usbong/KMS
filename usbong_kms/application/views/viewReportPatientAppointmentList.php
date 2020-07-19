@@ -172,8 +172,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 12%;
+							width: 8%;
 						}		
+
+						td.columnTableHeaderSchedule
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 16%;
+						}						
+
+						td.columnTableHeaderName
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 32%;
+						}						
 
 						td.columnTableHeaderFee
 						{
@@ -676,12 +696,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo "COUNT";
 		?>		
 				</td>
-				<td class ="columnTableHeader">				
+				<td class ="columnTableHeaderSchedule">				
 					<?php
 						echo "SCHEDULE<br/>DATE & TIME";
 					?>
 				</td>
-				<td class ="columnTableHeader">				
+				<td class ="columnTableHeaderName">				
 		<?php
 					echo "PATIENT NAME";
 		?>		
@@ -691,12 +711,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						echo "DIAGNOSIS";
 					?>
 				</td>
-				<td class ="columnTableHeaderNotes">				
+				<td class ="columnTableHeaderName">				
 					<?php
 						echo "THERAPIST<br/>NAME";
 					?>
 				</td>
-				<td class ="columnTableHeaderFee">				
+				<td class ="columnTableHeader">				
 					<?php
 						echo "TEMPE<br/>RATURE";
 					?>

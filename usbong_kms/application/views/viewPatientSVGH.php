@@ -518,7 +518,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}	
 
 
-		//added by Mike, 20200713
+		//added by Mike, 20200713; edited by Mike, 20200719
 		function myPopupFunctionAdd(patientId) {	
 			//edited by Mike, 20200522
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
@@ -541,6 +541,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //			alert(notes);
 			diagnosis = diagnosis.replace(";", "u003B"); //semicolon
 			diagnosis = diagnosis.replace(",", "u002C"); //comma
+			//added by Mike, 20200719
+			diagnosis = diagnosis.replace("/", "u2215"); //slash
 	
 			//added by Mike, 20200526
 			diagnosis = diagnosis.toUpperCase();
