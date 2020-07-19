@@ -180,7 +180,7 @@ class ReportSVGH_Model extends CI_Model
 	}	
 
 	//added by Mike, 20200529; edited by Mike, 20200719
-	public function getPatientQueueReportForTheDaySVGH()
+	public function getPatientAppointmentListForTheDaySVGH()
 	{
 
 		//we use this at MOSC
@@ -193,15 +193,10 @@ class ReportSVGH_Model extends CI_Model
 		$this->db->join('therapist as t5', 't4.therapist_id = t5.therapist_id', 'LEFT');
 
 		//date_default_timezone_set('Asia/Hong_Kong');
-/*		
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id');
-		$this->db->from('patient as t1');
-		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
-	
-*/
-		$this->db->distinct('t1.patient_name');
 
+		//removed by Mike, 20200719
+/*		$this->db->distinct('t1.patient_name');
+*/
 		//$this->db->where('t2.added_datetime_stamp=',date("Y-m-d H:i:s"));
 				
 //		$this->db->where('t2.transaction_date',date("m/d/Y"));
@@ -213,13 +208,20 @@ class ReportSVGH_Model extends CI_Model
 //		echo date("m/d/Y");
 
 		//added by Mike, 20200601; edited by Mike, 20200606
-		//TO-DO: -reverify: this
-		$this->db->group_by('t2.patient_id');
+		//removed by Mike, 20200719
+		//$this->db->group_by('t2.patient_id');
+		$this->db->group_by('t4.treatment_id');
+
+
 		//$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
 
+		//removed by Mike, 20200719
+/*
 		//edited by Mike, 20200607
 		//$this->db->select_max('t2.added_datetime_stamp');
 		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+*/
+
 
 		$this->db->where('t2.transaction_date',date("m/d/Y"));
 
