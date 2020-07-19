@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200628
-' @date updated: 20200717
+' @date updated: 20200719
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -32,8 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-family: Arial;
 							font-size: 11pt;
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							/* 670px makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							width: 900px
                         }
 						
 						div.checkBox
@@ -691,6 +691,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						echo "DIAGNOSIS";
 					?>
 				</td>
+				<td class ="columnTableHeaderNotes">				
+					<?php
+						echo "THERAPIST<br/>NAME";
+					?>
+				</td>
 				<td class ="columnTableHeaderFee">				
 					<?php
 						echo "TEMPE<br/>RATURE";
@@ -766,6 +771,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>											
 						<td class ="column">				
 						</td>											
+						<td class ="column">				
+						</td>											
 				</tr>
 
 
@@ -799,6 +806,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>											
 						<td class ="column">				
 						</td>											
+						<td class ="column">				
+						</td>											
 				</tr>								
 <?php							
 							if ($scheduleTimeListCount<$scheduleTimeListCountMax) {
@@ -819,6 +828,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="column">				
 						</td>
+						<td class ="column">				
+						</td>											
 						<td class ="column">				
 						</td>											
 						<td class ="column">				
@@ -897,6 +908,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>						
 						<td class ="columnCentered">				
 							<?php
+								echo $value['therapist_name'];								
+							?>
+						</td>						
+						<td class ="columnCentered">				
+							<?php
 								echo $value['treatment_temperature'];
 							?>
 						</td>						
@@ -937,6 +953,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</td>											
 							<td class ="column">				
 							</td>											
+							<td class ="column">				
+							</td>											
 					</tr>
 
 					<tr class="row">
@@ -963,6 +981,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</td>
 							<td class ="column">				
 							</td>
+							<td class ="column">				
+							</td>											
 							<td class ="column">				
 							</td>											
 							<td class ="column">				
