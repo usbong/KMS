@@ -35,8 +35,13 @@ Unless required by applicable law or agreed to in writing, software distributed 
 [LAN Messenger: Instant Messenging Client (Official Website)](http://lanmsngr.sourceforge.net/) <br/>
 Action: [Download](https://sourceforge.net/projects/lanmsngr/)
 
-#### Note
-1) LAN = Local Area Network
+#### Notes
+1) LAN = Local Area Network<br/>
+2) For Linux Operating Systems (OS), e.g. LUBUNTU, we recommend using the software tool: "wine"<br/>
+2.1) Installation Steps:<br/>
+2.1.1) sudo apt-get install wine<br/>
+2.1.2) wine lmc-1.2.35-win32.exe<br/>
+--> You may verify using another version of the executable file.
 
 ## IV. System Integration @Partner Clinic and Peripheral Units
 To eliminate excess steps and inefficient time usage, the Marikina Orthopedic Specialty Clinic (MOSC) requested Usbong's services to automate routine, monotonous tasks and share with unit members know-how on computers.<br/><br/>
