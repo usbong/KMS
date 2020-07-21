@@ -587,8 +587,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200608
 				//we do not show if purchased items are non-medicine and patient is not SYSON, PEDRO's
 				if ($patientId!=0){
-					if (isset($outputTransaction)) {						
+					if (isset($outputTransaction)) {	
+/*					//edited by Mike, 20200721
 						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
+*/
+						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0) or (($outputTransaction['fee']!=0) and ($outputTransaction['medical_doctor_id']==1))) {							
 			?>
 						  <tr>
 							<td>
