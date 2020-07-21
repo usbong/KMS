@@ -659,8 +659,14 @@ class Report_Model extends CI_Model
 		//$this->db->group_by('t4.receipt_id');
 /*		$this->db->group_by('t4.receipt_number');		
 */
-		$this->db->group_by('t4.receipt_id');		
 
+		//edited by Mike, 20200721
+		if ($param["monthNum"]<="06") {		
+		  $this->db->group_by('t4.receipt_id');		
+		}
+		else { //get the earliest transaction that use the receipt number			
+			$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
+		}
 		
 //		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.transaction_id=t2.transaction_id)',NULL,FALSE);
 		

@@ -850,7 +850,9 @@ class Browse_Model extends CI_Model
 			echo "iCount: ".$iCount;
 			echo "iTransactionId: ".$param['transactionId']."<br/>";
 */		
-			$this->db->select('t1.patient_id, t3.item_type_id');
+			//edited by Mike, 20200721
+//			$this->db->select('t1.patient_id, t3.item_type_id');
+			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee');
 			$this->db->from('transaction as t1');
 			$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');
 			$this->db->join('item_type as t3', 't2.item_type_id = t3.item_type_id', 'LEFT');
@@ -893,6 +895,41 @@ class Browse_Model extends CI_Model
 						//$this->db->insert('receipt', $data);
 						array_push($outputArray, $data);
 					}								
+					
+					//added by Mike, 20200721
+					if ($rowArray[0]['med_fee']!=0) { 
+					//removed by Mike, 20200721
+/*					
+					//MEDICINE															
+						$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
+
+						$data = array(
+							'receipt_type_id' => $param['receiptTypeId'],
+							'transaction_id' => $param['transactionId'],
+							'receipt_number' => $param['receiptNumberMOSC']
+						);				
+
+						array_push($outputArray, $data);						
+*/						
+					}
+					else if ($rowArray[0]['pas_fee']!=0) { 
+					//NON-MEDICINE
+						$param['receiptNumber'] = $param['receiptNumberPAS'];
+						
+						if ($param['receiptNumber']!=0) {
+							$param['receiptTypeId'] = 2;
+
+							$data = array(
+								'receipt_type_id' => $param['receiptTypeId'],
+								'transaction_id' => $param['transactionId'],
+								'receipt_number' => $param['receiptNumberPAS']
+							);				
+
+							//edited by Mike, 20200710
+							//$this->db->insert('receipt', $data);
+							array_push($outputArray, $data);
+						}
+					}					
 				}
 				//identify item type
 				else {
@@ -1839,7 +1876,10 @@ class Browse_Model extends CI_Model
 			//$this->db->select('med_fee, pas_fee, transaction_id');
 			//edited by Mike, 20200609
 			//$this->db->select('med_fee, pas_fee, transaction_id, medical_doctor_id');
-			$this->db->select('med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
+
+			//edited by Mike, 20200721
+//			$this->db->select('med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
+			$this->db->select('fee, med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
 			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
 			$query = $this->db->get('transaction');				
 //			$row = $query->row();			
