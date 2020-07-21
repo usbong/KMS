@@ -39,8 +39,8 @@ Action: [Download](https://sourceforge.net/projects/lanmsngr/)
 1) LAN = Local Area Network<br/>
 2) For Linux Operating Systems (OS), e.g. LUBUNTU, we recommend using the software tool: "wine"<br/>
 2.1) Installation Steps:<br/>
-2.1.1) sudo apt-get install wine<br/>
-2.1.2) wine lmc-1.2.35-win32.exe<br/>
+2.1.1) <b>sudo apt-get install wine</b><br/>
+2.1.2) <b>wine lmc-1.2.35-win32.exe</b><br/>
 --> You may verify using another version of the executable file.
 
 ## IV. System Integration @Partner Clinic and Peripheral Units
