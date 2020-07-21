@@ -372,7 +372,7 @@ class Report_Model extends CI_Model
 	}
 
 
-	//added by Mike, 20200425; edited by Mike, 20200617
+	//added by Mike, 20200425; edited by Mike, 20200721
 	//TO-DO: -reverify: this
 	public function getReceiptReportForTheMonthPAS($param) 
 	{
@@ -398,7 +398,112 @@ class Report_Model extends CI_Model
 			return False;
 		}
 		
-//		echo "count: ".count($rowArray)."<br/>";
+		echo "count: ".count($rowArray)."<br/>";
+/*
+		//removed by Mike, 20200721
+		//TO-DO: -reverify this
+		foreach ($rowArray as &$rowValue) {
+			//identify the receipt number for the PAS item purchase
+			$iCurrentTransactionId = $rowValue['transaction_id'];
+
+			$iMaxTransactionCount = $rowValue['transaction_quantity'];
+			$iCurrentTransactionCount = 1;
+
+				echo "max: ".$iMaxTransactionCount."<br/>";
+
+
+			while ($iCurrentTransactionCount < $iMaxTransactionCount) {			
+				echo "current: ".$iCurrentTransactionCount."<br/>";
+				echo $iCurrentTransactionId."<br/>";
+
+				$this->db->select('t1.receipt_number, t1.receipt_id, t2.item_id');
+				$this->db->from('receipt as t1');
+				$this->db->join('transaction as t2', 't1.transaction_id = t2.transaction_id', 'LEFT');
+
+				$this->db->where('t2.transaction_id',$iCurrentTransactionId);
+				//$this->db->where('t2.item_id!=',0);
+
+				$query = $this->db->get('receipt');
+
+				$itemTransactionRowArray = $query->result_array();
+				
+				//added by Mike, 20200617
+				if ($itemTransactionRowArray == null) {			
+					//edited by Mike, 20200721
+					//return False;
+					$iCurrentTransactionCount = $iCurrentTransactionCount + 1;
+					continue;
+				}
+		
+				if ($itemTransactionRowArray[0]['item_id']!=0) {
+					$rowValue['item_id'] = $itemTransactionRowArray[0]['item_id'];
+					$rowValue['receipt_number'] = $itemTransactionRowArray[0]['receipt_number'];
+				}
+
+				$iCurrentTransactionId = $iCurrentTransactionId - 1;
+				$iCurrentTransactionCount = $iCurrentTransactionCount + 1;				
+			}
+			unset($rowValue);			
+		}
+		
+		return $rowArray;
+*/
+		
+		$outputArray = [];
+
+		array_push($outputArray, $rowArray[0]);
+		$bIsFound = False;
+		
+		foreach ($rowArray as $rowValue) {
+			$bIsFound = False;			
+			foreach ($outputArray as &$outputRowValue) {
+				if ($outputRowValue['receipt_number'] == $rowValue['receipt_number']) {
+					$bIsFound = True;
+
+					if ($outputRowValue['receipt_id'] < $rowValue['receipt_id']) {
+						$outputRowValue = $rowValue;
+						unset($outputRowValue);
+						break;
+					}
+				}
+			}			
+			
+			if (!$bIsFound) {				
+				array_push($outputArray, $rowValue);
+			}
+		}
+				
+		return $outputArray;
+
+	}
+
+	//added by Mike, 20200425; edited by Mike, 20200721
+	//TO-DO: -reverify: this
+	public function getReceiptReportForTheMonthPASPrev($param) 
+	{
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_quantity, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id'); //, t4.receipt_number, t4.receipt_id'); //, t2.treatment_diagnosis');
+
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+//		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
+
+		$this->db->where('t2.transaction_quantity!=',0);
+
+		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+
+		$this->db->group_by('t2.transaction_id');		
+
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+		
+		echo "count: ".count($rowArray)."<br/>";
 
 		foreach ($rowArray as &$rowValue) {
 			//identify the receipt number for the PAS item purchase
@@ -406,6 +511,10 @@ class Report_Model extends CI_Model
 
 			$iMaxTransactionCount = $rowValue['transaction_quantity'];
 			$iCurrentTransactionCount = 1;
+
+				echo "current: ".$iCurrentTransactionCount."<br/>";
+				echo "max: ".$iMaxTransactionCount."<br/>";
+
 
 			while ($iCurrentTransactionCount < $iMaxTransactionCount) {			
 				echo $rowValue['transaction_id']."<br/>";
@@ -423,7 +532,9 @@ class Report_Model extends CI_Model
 				
 				//added by Mike, 20200617
 				if ($itemTransactionRowArray == null) {			
-					return False;
+					//edited by Mike, 20200721
+					//return False;
+					continue;
 				}
 		
 				if ($itemTransactionRowArray[0]['item_id']!=0) {
@@ -467,6 +578,7 @@ class Report_Model extends CI_Model
 		return $outputArray;
 */
 	}
+
 
 	//added by Mike, 20200425
 	public function getReceiptReportForTheMonth($param) 
