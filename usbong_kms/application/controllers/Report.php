@@ -329,9 +329,9 @@ class Report extends CI_Controller { //MY_Controller {
 			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 		}
 		else {
-			//edited by Mike, 20200702
-			$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);
-//			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
+			//edited by Mike, 20200721
+//			$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);
+			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 		}
 
 		$this->load->view('viewReceiptReportPAS', $data);
