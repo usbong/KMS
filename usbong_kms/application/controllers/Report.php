@@ -210,6 +210,36 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('storeReportImageOnly');
 	}
 
+	//added by Mike, 20200722
+	public function viewReceiptReportForTheDay()
+	{				
+		$this->load->model('Report_Model');
+
+		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
+
+		$data["receiptTypeName"] = "MOSC"; //Clinic
+
+		//added by Mike, 20200505
+		//TO-DO: -update: for January
+		$previousMonth = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+//		$previousPreviousMonth = mktime(0, 0, 0, date("m")-2, date("d"), date("Y"));
+		$currentMonth = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+
+//		echo date("m", $previousMonth); 
+
+		$data["monthNum"] = date("m", $previousMonth);
+		$data["currentMonthNum"] = date("m", $currentMonth);
+
+////		echo "monthNum: ".$data["monthNum"];
+////		echo "currentMonthNum: ".$data["currentMonthNum"];
+		
+		$data["result"] = $this->Report_Model->getReceiptReportForTheDay($data);
+		
+		$data["reportType"] = "reportToday";
+
+		$this->load->view('viewReceiptReportMOSC', $data);
+	}
+
 	//added by Mike, 20200420; edited by Mike, 20200505
 	public function viewReceiptReport()
 	{				
