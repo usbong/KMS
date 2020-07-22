@@ -4,7 +4,11 @@ class Report_Model extends CI_Model
 	public function insertReport($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
 
 		//added by Mike, 20190722; edited by Mike, 20191025
 //		$row = $this->doesReportTypeExistViaReportTypeName($param);
@@ -41,7 +45,12 @@ class Report_Model extends CI_Model
 	public function insertReportsFromAllLocations($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
+
 
 		//added by Mike, 20190722; edited by Mike, 20191025
 //		$row = $this->doesReportTypeExistViaReportTypeName($param);
@@ -77,7 +86,10 @@ class Report_Model extends CI_Model
 	public function insertReportImage($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
 
 /*
 		//added by Mike, 20190722; edited by Mike, 20191025
@@ -105,7 +117,10 @@ class Report_Model extends CI_Model
 	public function insertReportFromEachLocation($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
 
 		//added by Mike, 20190722; edited by Mike, 20191025
 		$reportTypeId = $this->getReportTypeIdViaReportTypeName($param);

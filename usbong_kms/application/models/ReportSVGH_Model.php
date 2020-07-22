@@ -4,7 +4,11 @@ class ReportSVGH_Model extends CI_Model
 	public function insertReport($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
 
 		//added by Mike, 20190722; edited by Mike, 20191025
 //		$row = $this->doesReportTypeExistViaReportTypeName($param);
@@ -41,7 +45,10 @@ class ReportSVGH_Model extends CI_Model
 	public function insertReportsFromAllLocations($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
 
 		//added by Mike, 20190722; edited by Mike, 20191025
 //		$row = $this->doesReportTypeExistViaReportTypeName($param);
@@ -77,7 +84,10 @@ class ReportSVGH_Model extends CI_Model
 	public function insertReportImage($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
 
 /*
 		//added by Mike, 20190722; edited by Mike, 20191025
@@ -105,7 +115,10 @@ class ReportSVGH_Model extends CI_Model
 	public function insertReportFromEachLocation($param)
 	{			
 		date_default_timezone_set('Asia/Hong_Kong');
-		$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
 
 		//added by Mike, 20190722; edited by Mike, 20191025
 		$reportTypeId = $this->getReportTypeIdViaReportTypeName($param);
@@ -221,7 +234,6 @@ class ReportSVGH_Model extends CI_Model
 		//$this->db->select_max('t2.added_datetime_stamp');
 		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
 */
-
 
 		$this->db->where('t2.transaction_date',date("m/d/Y"));
 
@@ -754,7 +766,11 @@ class ReportSVGH_Model extends CI_Model
 		
 		//echo "count: ".count($rowArray);
 		
-		$outputArray = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+
 		array_push($outputArray, $rowArray[0]);
 		$bIsFound = False;
 		
@@ -1171,7 +1187,11 @@ class ReportSVGH_Model extends CI_Model
 		$dItemTotalFee = 0;
 		
 		//unify transactions whose item_id are equal
-		$outputArray = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+
 		$currentValue = "";
 		
 		if ($rowArray!=False) { //if value exists in array
@@ -1296,7 +1316,11 @@ class ReportSVGH_Model extends CI_Model
 		$dItemTotalFee = 0;
 		
 		//unify transactions whose item_id are equal
-		$outputArray = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+
 		$currentValue = "";
 		
 		if ($rowArray!=False) { //if value exists in array
@@ -1462,7 +1486,11 @@ class ReportSVGH_Model extends CI_Model
 		$dItemTotalFee = 0;
 		
 		//unify transactions whose item_id are equal
-		$outputArray = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+
 		$currentValue = "";
 		
 		if ($rowArray!=False) { //if value exists in array

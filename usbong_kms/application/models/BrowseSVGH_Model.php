@@ -1992,6 +1992,9 @@ class BrowseSVGH_Model extends CI_Model
 /*		$this->db->where('t2.transaction_quantity!=',0);
 */
 		$this->db->where('t1.patient_id', $patientId);
+		
+		//added by Mike, 20200722
+		$this->db->where('t2.treatment_id!=', 0);
 
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 
