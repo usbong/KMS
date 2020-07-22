@@ -323,6 +323,7 @@ class Report extends CI_Controller { //MY_Controller {
 		if ($data["monthNum"]<="06") {
 			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 		}
+		//TO-DO: -reverify
 		else {
 			$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);
 		}
@@ -363,6 +364,36 @@ class Report extends CI_Controller { //MY_Controller {
 //			$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);
 			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 		}
+
+		$this->load->view('viewReceiptReportPAS', $data);
+	}
+
+	//added by Mike, 20200722
+	public function viewReceiptReportPASForTheDay()
+	{				
+		$this->load->model('Report_Model');
+
+		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
+
+		$data["receiptTypeName"] = "PAS"; //Clinic
+
+		//added by Mike, 20200505
+		//TO-DO: -update: for January
+		$previousMonth = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+//		$previousPreviousMonth = mktime(0, 0, 0, date("m")-2, date("d"), date("Y"));
+		$currentMonth = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+
+//		echo date("m", $previousMonth); 
+
+		$data["monthNum"] = date("m", $previousMonth);
+		$data["currentMonthNum"] = date("m", $currentMonth);
+
+////		echo "monthNum: ".$data["monthNum"];
+////		echo "currentMonthNum: ".$data["currentMonthNum"];
+		
+		$data["result"] = $this->Report_Model->getReceiptReportForTheDay($data);
+		
+		$data["reportType"] = "reportToday";
 
 		$this->load->view('viewReceiptReportPAS', $data);
 	}
