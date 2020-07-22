@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200628
-' @date updated: 20200719
+' @date updated: 20200722
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -762,9 +762,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						continue;
 					}
 */	
-
+					
 					//added by Mike, 20200717 					
 					if (strpos($value['treatment_datetime_stamp'], date("Y-m-d"))===false) {						
+					echo "dito";
 						//include only transactions for the day
 						continue;
 					}
@@ -813,7 +814,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<?php
 							//echo explode(" ",$currentDateTime)[1];						
 
-							$iTime = str_replace(":00", "", explode(" ",$currentDateTime)[1]);
+							//edited by Mike, 20200722
+							//note: this is due to the following removed function is not available in PHP 5.3
+							//$iTime = str_replace(":00", "", explode(" ",$currentDateTime)[1]);
+							$outputTimeArray = explode(" ",$currentDateTime);
+							$iTime = str_replace(":00", "", $outputTimeArray[1]);
 
 							if ($iTime==12) {
 								echo $iTime.":00 PM";
@@ -888,7 +893,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//echo $value['treatment_datetime_stamp'];									
 									//echo explode(" ",$value['treatment_datetime_stamp'])[1];						
 
-									$iTime = str_replace(":00", "", explode(" ",$value['treatment_datetime_stamp'])[1]);
+									//edited by Mike, 20200722
+									//note: this is due to the following removed function is not available in PHP 5.3
+									//$iTime = str_replace(":00", "", explode(" ",$value['treatment_datetime_stamp'])[1]);
+									$outputTimeArray = explode(" ",$value['treatment_datetime_stamp']);
+									$iTime = str_replace(":00", "", $outputTimeArray[1]);
 
 									if ($iTime==12) {
 										echo $iTime.":00 PM";
@@ -994,7 +1003,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<?php
 								//echo explode(" ",$currentDateTime)[1];						
 								
-								$iTime = str_replace(":00", "", explode(" ",$currentDateTime)[1]);
+								//edited by Mike, 20200722
+								//note: this is due to the following removed function is not available in PHP 5.3
+								//$iTime = str_replace(":00", "", explode(" ",$currentDateTime)[1]);
+								$outputTimeArray = explode(" ",$currentDateTime);
+								$iTime = str_replace(":00", "", $outputTimeArray[1]);
 	
 								if ($iTime==12) {
 									echo $iTime.":00 PM";

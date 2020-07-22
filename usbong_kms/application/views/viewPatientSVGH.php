@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200719
+' @date updated: 20200722
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1332,11 +1332,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20200719
 									//echo str_replace(" ","T", $value['treatment_datetime_stamp']);
 //									echo str_replace(" ","<br/>", $value['treatment_datetime_stamp']);
-
-									$iDate = str_replace(" ", "", explode(" ",$value['treatment_datetime_stamp'])[0]);
+									//edited by Mike, 20200722
+									//note: this is due to the following removed function is not available in PHP 5.3
+									//$iDate = str_replace(" ", "", explode(" ",$value['treatment_datetime_stamp'])[0]);
+									$outputDateArray = explode(" ",$value['treatment_datetime_stamp']);
+									$iDate = str_replace(":00", "", $outputDateArray[0]);
+																		
 									echo $iDate."<br/>";
 									
-									$iTime = str_replace(":00", "", explode(" ",$value['treatment_datetime_stamp'])[1]);
+									//edited by Mike, 20200722
+									//note: this is due to the following removed function is not available in PHP 5.3
+									//$iTime = str_replace(":00", "", explode(" ",$value['treatment_datetime_stamp'])[1]);
+									$outputTimeArray = explode(" ",$value['treatment_datetime_stamp']);
+									$iTime = str_replace(":00", "", $outputTimeArray[1]);
+
 
 									if ($iTime==12) {
 										echo $iTime.":00 PM";
