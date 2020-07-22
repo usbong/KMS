@@ -285,7 +285,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php 
 				  if (isset($reportType)) {
 					  if ($reportType = "reportToday") {						  
-						echo "Report for the Day";
+						echo "Receipts for the Day";
 					  }
 				  }
 				  else {
