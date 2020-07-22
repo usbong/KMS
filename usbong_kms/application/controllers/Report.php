@@ -240,7 +240,7 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReceiptReportMOSC', $data);
 	}
 
-	//added by Mike, 20200420; edited by Mike, 20200505
+	//added by Mike, 20200420; edited by Mike, 20200722
 	public function viewReceiptReport()
 	{				
 		$this->load->model('Report_Model');
@@ -275,11 +275,14 @@ class Report extends CI_Controller { //MY_Controller {
 		$data["medicalDoctorName"] = "PEDRO"; //medical doctor keyword in report filename
 
 		$data["receiptTypeName"] = "MOSC"; //Clinic
-				
-		//TO-DO: -update: year if monthNum is 01
-		
+						
 		$data["monthNum"] = $monthNum;
 		$data["currentMonthNum"] = $data["monthNum"]+1;
+
+		//added by Mike, 20200722
+		if ($data["currentMonthNum"]>=13) {
+			$data["currentMonthNum"] = 1;
+		}
 
 		if (strlen($data["monthNum"])==1) {
 			$data["monthNum"] = "0".$data["monthNum"];
@@ -325,7 +328,9 @@ class Report extends CI_Controller { //MY_Controller {
 		}
 		//TO-DO: -reverify
 		else {
-			$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);
+			//edited by Mike, 20200722
+//			$data["result"] = $this->Report_Model->getReceiptReportForTheMonthPAS($data);
+			$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 		}
 
 		$this->load->view('viewReceiptReportPAS', $data);
@@ -341,11 +346,14 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["receiptTypeName"] = "PAS"; //Clinic
 
-		//TO-DO: -update: year if monthNum is 01
-
 		$data["monthNum"] = $monthNum;
 		$data["currentMonthNum"] = $data["monthNum"]+1;
 
+		//added by Mike, 20200722
+		if ($data["currentMonthNum"]>=13) {
+			$data["currentMonthNum"] = 1;
+		}
+		
 		if (strlen($data["monthNum"])==1) {
 			$data["monthNum"] = "0".$data["monthNum"];
 		}
