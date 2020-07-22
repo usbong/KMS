@@ -847,6 +847,82 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}
 
+	//added by Mike, 20200722
+	public function getReceiptReportForTheDay($param) 
+	{
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id, t4.receipt_number, t4.receipt_id'); //, t2.treatment_diagnosis');
+
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
+
+		if (strtoupper($param["receiptTypeName"])=="MOSC") {
+			//MOSC
+			$this->db->where('t4.receipt_type_id=',1);
+		}
+		else if (strtoupper($param["receiptTypeName"])=="PAS") {
+			//PAS
+			$this->db->where('t4.receipt_type_id=',2);
+		}		
+		else {
+			$this->db->where('t4.receipt_type_id=',3);
+		}
+
+		$this->db->where('t4.receipt_number!=',0);					
+
+		//TO-DO: -update: for January
+		if ($param["monthNum"]<="06") {		
+		  $this->db->group_by('t4.receipt_id');		
+		}
+		else { //get the earliest transaction that use the receipt number			
+			$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
+		}
+
+/*		//edited by Mike, 20200722
+		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+*/
+		$this->db->where('t2.transaction_date=',date("m/d/Y")); //date today
+
+		$this->db->order_by('t4.receipt_number', 'ASC');//ASC');
+		
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		//echo "count: ".count($rowArray);
+		
+		$outputArray = [];
+		array_push($outputArray, $rowArray[0]);
+		$bIsFound = False;
+		
+		foreach ($rowArray as $rowValue) {
+			$bIsFound = False;			
+			foreach ($outputArray as &$outputRowValue) {
+				if ($outputRowValue['receipt_number'] == $rowValue['receipt_number']) {
+					$bIsFound = True;
+
+					if ($outputRowValue['receipt_id'] < $rowValue['receipt_id']) {
+						$outputRowValue = $rowValue;
+						unset($outputRowValue);
+						break;
+					}
+				}
+			}			
+			
+			if (!$bIsFound) {				
+				array_push($outputArray, $rowValue);
+			}
+		}
+		
+		return $outputArray;
+	}
+
 	//added by Mike, 20200421; added by Mike, 20200422
 	public function getReportForTheMonth($param) 
 	{
