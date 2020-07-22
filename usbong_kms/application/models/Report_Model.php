@@ -887,7 +887,9 @@ class Report_Model extends CI_Model
 		$this->db->where('t4.receipt_number!=',0);					
 
 		//TO-DO: -update: for January
-		if ($param["monthNum"]<="06") {		
+		//edited by Mike, 20200722
+		//if ($param["monthNum"]<="06") {
+		if ($param["currentMonthNum"]<="06") {		
 		  $this->db->group_by('t4.receipt_id');		
 		}
 		else { //get the earliest transaction that use the receipt number			
