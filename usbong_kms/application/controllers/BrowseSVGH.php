@@ -387,7 +387,10 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		//TO-DO: add: in non-medicine items
 		//added by Mike, 20200522
 		$itemId = -1;
-		$outputArray = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
 
 		if ($data['result'] == True) {
 			foreach ($data['result'] as $value) {				
@@ -461,7 +464,12 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 			}
 		}
 		
-		$data['result'] = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['result'] = [];
+		$data['result'] = array();
+		
+		
 		$data['result'] = $outputArray;
 		
 		$this->load->view('searchNonMedicine', $data);
@@ -603,7 +611,10 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		//TO-DO: add: in non-medicine items
 		//added by Mike, 20200522
 		$itemId = -1;
-		$outputArray = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
 
 		if ($data['result'] == True) {
 			foreach ($data['result'] as $value) {				
@@ -677,7 +688,11 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 			}
 		}
 		
-		$data['result'] = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['result'] = [];
+		$data['result'] = array();
+				
 		$data['result'] = $outputArray;
 		
 		$this->load->view('searchMedicine', $data);
@@ -854,7 +869,10 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		//TO-DO: add: in non-medicine items
 		//added by Mike, 20200522
 		$itemId = -1;
-		$outputArray = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
 
 		if ($data['resultItem'] == True) {
 			foreach ($data['resultItem'] as $value) {				
@@ -928,7 +946,11 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 			}
 		}
 		
-		$data['resultItem'] = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['resultItem'] = [];
+		$data['resultItem'] = array();
+		
 		$data['resultItem'] = $outputArray;
 
 		$this->load->view('viewItemMedicine', $data);
@@ -1126,7 +1148,10 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		//TO-DO: add: in non-medicine items
 		//added by Mike, 20200522
 		$itemId = -1;
-		$outputArray = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
 
 		if ($data['resultItem'] == True) {
 			foreach ($data['resultItem'] as $value) {				
@@ -1232,7 +1257,11 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 			}
 		}
 		
-		$data['resultItem'] = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['resultItem'] = [];
+		$data['resultItem'] = array();
+		
 /*		//edited by Mike, 20200607
 		$data['resultItem'] = $outputArray;
 */		
@@ -1258,7 +1287,10 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 		$itemId = -1;
 		$remainingPaidItem = 0; //added by Mike, 20200501
 		
-		$outputArray = []; //added by Mike, 20200527
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
 		
 		if ($data['resultItem'] == True) {
 						
@@ -2519,7 +2551,11 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 	//added in the result of the pages with Patient Purchase Service History
 	//TO-DO: -reverify: elapsed time output value
 	public function getElapsedTime($inputResult) {
-		$outputResult = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputResult = [];
+		$outputResult = array();
+		
 		$startDateTime = date('Y-m-d H:i:s'); //default = now
 //		echo $startDateTime;
 //		echo "count: ".count($inputResult);
@@ -2561,7 +2597,11 @@ class BrowseSVGH extends CI_Controller { //MY_Controller {
 	//added by Mike, 20200531
 	//TO-DO: -add: in the result of the pages with Patient Purchase Service History
 	public function getElapsedTimePrev($inputResult) {
-		$outputResult = [];
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputResult = [];
+		$outputResult = array();
+		
 		$startDateTime = date('Y/m/d H:i:s'); //default = now
 		echo $startDateTime;
 //		echo "count: ".count($inputResult);
