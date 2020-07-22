@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200719
+' @date updated: 20200722
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -281,8 +281,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				MARIKINA ORTHOPEDIC<br/>
 				SPECIALTY CLINIC<br/>		
 				<!-- TO-DO: -add: auto-update: year -->
-				DATE: 2020-<?php echo $monthNum;?>
-<!--				DATE: <?php echo strtoupper(date("Y-m"));?> -->
+				<!-- edited by Mike, 20200722 -->
+				<?php 
+				  if (isset($reportType)) {
+					  if ($reportType = "reportToday") {						  
+						echo "Report for the Day";
+					  }
+				  }
+				  else {
+				?>
+					DATE: 2020-<?php echo $monthNum;?>
+	<!--				DATE: <?php echo strtoupper(date("Y-m"));?> -->
+				<?php
+				  }
+				?>
 			</h3>		
 		</td>
 	  </tr>
