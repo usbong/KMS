@@ -55,7 +55,12 @@ class Report extends CI_Controller { //MY_Controller {
 
 				//added by Mike, 20191119
 				date_default_timezone_set('Asia/Hong_Kong');
-				$data['addedDateTimeStamp'] = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+				
+				//edited by Mike, 20200722
+				//note: this is due to the following removed function is not available in PHP 5.3				
+				//$data['addedDateTimeStamp'] = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+				$data['addedDateTimeStamp'] = date('Y-m-d H:i:s');
+
 
 		//		while ($count <= 10) {
 				while ($count <= 5) {
@@ -874,7 +879,10 @@ class Report extends CI_Controller { //MY_Controller {
 //		echo $data["result"][0]['transaction_id'];
 		
 		//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
-		$outputResult = [];
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputResult = [];
+		$outputResult = array();
 		
 		//edited by Mike, 20200602
 		if ($data["result"]!=False) {
