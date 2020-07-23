@@ -464,8 +464,11 @@ class Report_Model extends CI_Model
 		return $rowArray;
 */
 		
-		$outputArray = [];
-
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+	
 		array_push($outputArray, $rowArray[0]);
 		$bIsFound = False;
 		
@@ -735,7 +738,11 @@ class Report_Model extends CI_Model
 		
 		//echo "count: ".count($rowArray);
 		
-		$outputArray = [];
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
 		array_push($outputArray, $rowArray[0]);
 		$bIsFound = False;
 		
@@ -914,7 +921,11 @@ class Report_Model extends CI_Model
 		
 		//echo "count: ".count($rowArray);
 		
-		$outputArray = [];
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
 		array_push($outputArray, $rowArray[0]);
 		$bIsFound = False;
 		
@@ -1230,7 +1241,11 @@ class Report_Model extends CI_Model
 		$dItemTotalFee = 0;
 		
 		//unify transactions whose item_id are equal
-		$outputArray = [];
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
 		$currentValue = "";
 		
 		if ($rowArray!=False) { //if value exists in array
@@ -1355,7 +1370,11 @@ class Report_Model extends CI_Model
 		$dItemTotalFee = 0;
 		
 		//unify transactions whose item_id are equal
-		$outputArray = [];
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
 		$currentValue = "";
 		
 		if ($rowArray!=False) { //if value exists in array
@@ -1521,7 +1540,11 @@ class Report_Model extends CI_Model
 		$dItemTotalFee = 0;
 		
 		//unify transactions whose item_id are equal
-		$outputArray = [];
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
 		$currentValue = "";
 		
 		if ($rowArray!=False) { //if value exists in array

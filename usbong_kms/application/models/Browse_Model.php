@@ -837,8 +837,10 @@ class Browse_Model extends CI_Model
 	//add: to receipt each transaction 
 	public function addTransactionPaidReceipt($param) 
 	{
-		//added by Mike, 20200710
-		$outputArray = [];
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
 		
 		//echo "transactionQuantity: ".$param['transactionQuantity'];
 
