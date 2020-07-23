@@ -948,7 +948,7 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewAllReportImages', $data);
 	}
 	
-	//added by Mike, 20200707
+	//added by Mike, 20200707; edited by Mike, 20200723
 	public function viewAllSummaryReportsForTheDayUnified()
 	{	
 		echo "<script>
@@ -958,7 +958,8 @@ class Report extends CI_Controller { //MY_Controller {
 				window.open('viewpayslipwebfor/Pedro','_blank');
 				window.open('viewReportNonMedicineUnified','_blank');
 				window.open('viewReportMedicineAsteriskUnified','_blank');
-
+				window.open('viewReceiptReportForTheDay','_blank');
+				window.open('viewReceiptReportPASForTheDay','_blank');
 			</script>";	
 
 		//note: the web address remains ".../viewAllSummaryReportsForTheDay"
@@ -968,7 +969,7 @@ class Report extends CI_Controller { //MY_Controller {
 	}
 
 
-	//added by Mike, 20200707
+	//added by Mike, 20200707; edited by Mike, 20200723
 	public function viewAllSummaryReportsForTheDay()
 	{	
 		echo "<script>
@@ -978,6 +979,8 @@ class Report extends CI_Controller { //MY_Controller {
 				window.open('viewpayslipwebfor/Pedro','_blank');
 				window.open('viewReportNonMedicine','_blank');
 				window.open('viewReportMedicineAsterisk','_blank');
+				window.open('viewReceiptReportForTheDay','_blank');
+				window.open('viewReceiptReportPASForTheDay','_blank');
 			</script>";	
 
 		//note: the web address remains ".../viewAllSummaryReportsForTheDay"
