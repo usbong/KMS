@@ -597,9 +597,100 @@ class Report_Model extends CI_Model
 */
 	}
 
-
-	//added by Mike, 20200425
+	//added by Mike, 20200425; edited by Mike, 20200723
 	public function getReceiptReportForTheMonth($param) 
+	{
+/*		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
+*/		
+		//edited by Mike, 20200610
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name, t3.medical_doctor_id, t4.receipt_number, t4.receipt_id'); //, t2.treatment_diagnosis');
+
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
+				
+		if (strtoupper($param["receiptTypeName"])=="MOSC") {
+			//MOSC
+			$this->db->where('t4.receipt_type_id=',1);
+		}
+		else if (strtoupper($param["receiptTypeName"])=="PAS") {
+			//PAS
+			//added by Mike, 20200423
+			$this->db->where('t4.receipt_type_id=',2);
+		}		
+		else {
+			$this->db->where('t4.receipt_type_id=',3);
+		}
+
+		$this->db->where('t4.receipt_number!=',0);					
+
+		//edited by Mike, 20200721
+		if ($param["monthNum"]<="06") {		
+		  $this->db->group_by('t4.receipt_id');		
+		}
+		else { //get the earliest transaction that use the receipt number			
+			//edited by Mike, 20200723
+			$this->db->group_by('t4.receipt_id');		
+
+			//removed by Mike, 20200723
+			//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
+			//removed by Mike, 20200723			
+			//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
+		}
+		
+		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+
+		//edited by Mike, 20200426
+		$this->db->order_by('t4.receipt_number', 'ASC');//ASC');
+		
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+
+		//edited by Mike, 20200610
+		//return $rowArray;		
+		
+		//echo "count: ".count($rowArray);
+		
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
+		array_push($outputArray, $rowArray[0]);
+		$bIsFound = False;
+		
+		foreach ($rowArray as $rowValue) {
+			$bIsFound = False;			
+			foreach ($outputArray as &$outputRowValue) {
+				if ($outputRowValue['receipt_number'] == $rowValue['receipt_number']) {
+					$bIsFound = True;
+
+					if ($outputRowValue['receipt_id'] < $rowValue['receipt_id']) {
+						$outputRowValue = $rowValue;
+						unset($outputRowValue);
+						break;
+					}
+				}
+			}			
+			
+			if (!$bIsFound) {				
+				array_push($outputArray, $rowValue);
+			}
+		}
+		
+		return $outputArray;
+	}
+
+	//added by Mike, 20200425; edited by Mike, 20200723
+	public function getReceiptReportForTheMonthPrevMemoryProblem($param) 
 	{
 /*		
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.med_fee, t2.pas_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
@@ -683,7 +774,9 @@ class Report_Model extends CI_Model
 		  $this->db->group_by('t4.receipt_id');		
 		}
 		else { //get the earliest transaction that use the receipt number			
-			$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
+			//edited by Mike, 20200723
+			//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
+			$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
 		}
 		
 //		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.transaction_id=t2.transaction_id)',NULL,FALSE);
@@ -899,8 +992,13 @@ class Report_Model extends CI_Model
 		if ($param["currentMonthNum"]<="06") {		
 		  $this->db->group_by('t4.receipt_id');		
 		}
-		else { //get the earliest transaction that use the receipt number			
-			$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
+		else { //get the earliest transaction that use the receipt number						
+			//edited by Mike, 20200723
+			$this->db->group_by('t4.receipt_id');		
+
+			//edited by Mike, 20200723; removed by Mike, 20200723
+			//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
+//			$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
 		}
 
 /*		//edited by Mike, 20200722
