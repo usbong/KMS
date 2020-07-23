@@ -34,9 +34,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-family: Arial;
 							font-size: 11pt;
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							/* 1128 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape */							
-							width: 1128px; /*1024px;*/ /*802px;*/ /* 670px */
+							/* 900 makes the width of the output page fit in a 90% zoom scale */ 
+							width: 900px; /*1128*/ /*1024px;*/ /*802px;*/ /* 670px */
                         }
 						
 						div.checkBox
