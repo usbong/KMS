@@ -633,6 +633,7 @@ class Report_Model extends CI_Model
 		else { //get the earliest transaction that use the receipt number			
 			//edited by Mike, 20200723
 			$this->db->group_by('t4.receipt_id');		
+//			$this->db->where('t4.receipt_id = (SELECT MAX(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
 
 			//removed by Mike, 20200723
 			//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
@@ -672,8 +673,10 @@ class Report_Model extends CI_Model
 			foreach ($outputArray as &$outputRowValue) {
 				if ($outputRowValue['receipt_number'] == $rowValue['receipt_number']) {
 					$bIsFound = True;
-
-					if ($outputRowValue['receipt_id'] < $rowValue['receipt_id']) {
+					
+					//edited by Mike, 20200723
+//					if ($outputRowValue['receipt_id'] < $rowValue['receipt_id']) {
+					if ($outputRowValue['transaction_id'] < $rowValue['transaction_id']) {
 						$outputRowValue = $rowValue;
 						unset($outputRowValue);
 						break;
@@ -1033,7 +1036,9 @@ class Report_Model extends CI_Model
 				if ($outputRowValue['receipt_number'] == $rowValue['receipt_number']) {
 					$bIsFound = True;
 
-					if ($outputRowValue['receipt_id'] < $rowValue['receipt_id']) {
+					//edited by Mike, 20200723
+//					if ($outputRowValue['receipt_id'] < $rowValue['receipt_id']) {
+					if ($outputRowValue['transaction_id'] < $rowValue['transaction_id']) {
 						$outputRowValue = $rowValue;
 						unset($outputRowValue);
 						break;
