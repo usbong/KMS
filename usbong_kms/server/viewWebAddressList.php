@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20200707
+  @date updated: 20200723
 	
   Computer Web Browser Address (Example):
   1) http://localhost/usbong_kms/server/viewWebAddressList.php
@@ -111,8 +111,11 @@
   <body>
 <?php
 	date_default_timezone_set('Asia/Hong_Kong');
-
-	$dateToday = (new DateTime())->format('Y-m-d');
+	
+	//edited by Mike, 20200723
+	//note: this is due to the following removed function is not available in PHP 5.3				
+	//$dateToday = (new DateTime())->format('Y-m-d');
+	$dateToday = date('Y-m-d');
 
 	ini_set('auto_detect_line_endings', true);
 ?>
