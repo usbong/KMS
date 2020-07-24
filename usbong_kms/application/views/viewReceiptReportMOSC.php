@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200722
+' @date updated: 20200724
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -545,9 +545,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnFee">				
 								<div id="feeId<?php echo $iCount?>">
 							<?php
-								//added by Mike, 20200420; edited by Mike, 20200426
+								//added by Mike, 20200420; edited by Mike, 20200724
 //								$fFee = $value['fee'];
-								if ((strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) or ($value['medical_doctor_id']==0)) {
+//								if ((strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) or ($value['medical_doctor_id']==0)) {
+								if ((strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) or (strpos(strtoupper($value['medical_doctor_name']),"HONESTO")) or ($value['medical_doctor_id']==0)) {
 									$fFee = $value['fee'];
 								}
 								else {
