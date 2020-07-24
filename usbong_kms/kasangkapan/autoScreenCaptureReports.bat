@@ -1,0 +1,7 @@
+phantomjs saveWebPageAsImageFile.js viewReportMedicineUnified
+phantomjs saveWebPageAsImageFile.js viewReportMedicineAsteriskUnified
+phantomjs saveWebPageAsImageFile.js viewReportNonMedicineUnified
+phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Pedro"
+phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Peter"
+phantomjs saveWebPageAsImageFile.js viewReceiptReportForTheDay
+phantomjs saveWebPageAsImageFile.js viewReceiptReportPASForTheDay
