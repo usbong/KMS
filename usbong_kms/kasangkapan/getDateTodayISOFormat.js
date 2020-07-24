@@ -12,7 +12,7 @@
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
-' 2) downloaded phantomjs zip file's examples: netsniff.js; last accessed: 20200724
+' 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
 '
 */
 

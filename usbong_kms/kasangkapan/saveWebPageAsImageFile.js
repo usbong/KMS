@@ -8,23 +8,59 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200724
-' @date updated: 20200724
+' @date updated: 20200725
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
+' 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
 '
 */
 
 var system = require('system');
 var filename = system.args[1];
+//added by Mike, 20200725
+var dateToday = new Date(); 
 
 console.log("Filename: " + filename);
 
 var page = require('webpage').create();
-page.open('http://mosc-accounting/usbong_kms/index.php/REPORT/'+filename, function(status) {
+page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(status) {
   console.log("Status: " + status);
+  
   if(status === "success") {
-    page.render('output/'+filename+'.png');
+	//edited by Mike, 20200725
+    //page.render('output/'+filename+'.png');
+	page.render('output/'+dateToday.toISOString()+'/'+filename+'.png');
   }
   phantom.exit();
 });
+
+//added by Mike, 20200725
+//edited by Mike, 20200725
+//if (!Date.prototype.toISOString) {
+if (Date.prototype.toISOString) {
+    Date.prototype.toISOString = function () {
+        function pad(n) { return n < 10 ? '0' + n : n; }
+        function ms(n) { return n < 10 ? '00'+ n : n < 100 ? '0' + n : n }
+		//edited by Mike, 20200725
+/*		
+        return this.getFullYear() + '-' +
+            pad(this.getMonth() + 1) + '-' +
+            pad(this.getDate()) + 'T' +
+            pad(this.getHours()) + ':' +
+            pad(this.getMinutes()) + ':' +
+            pad(this.getSeconds()) + '.' +
+            ms(this.getMilliseconds()) + 'Z';
+*/
+/*
+        return this.getFullYear() +
+            pad(this.getMonth() + 1) +
+            pad(this.getDate()) + 'T' +
+            pad(this.getHours()) +
+            pad(this.getMinutes());			
+*/			
+        return this.getFullYear() +
+            pad(this.getMonth() + 1) +
+            pad(this.getDate());			
+    }
+}
