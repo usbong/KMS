@@ -28,6 +28,13 @@ page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(sta
   console.log("Status: " + status);
   
   if(status === "success") {
+	//added by Mike, 20200725
+	//Reference: https://phantomjs.org/tips-and-tricks.html;
+	//last accessed: 20200725
+	page.evaluate(function() {
+	  document.body.bgColor = 'white';
+	});
+	
 	//edited by Mike, 20200725
     //page.render('output/'+filename+'.png');
 	page.render('output/'+dateToday.toISOString()+'/'+filename+'1.png');
