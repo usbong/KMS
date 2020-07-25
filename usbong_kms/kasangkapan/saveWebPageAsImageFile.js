@@ -30,7 +30,27 @@ page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(sta
   if(status === "success") {
 	//edited by Mike, 20200725
     //page.render('output/'+filename+'.png');
-	page.render('output/'+dateToday.toISOString()+'/'+filename+'.png');
+	page.render('output/'+dateToday.toISOString()+'/'+filename+'1.png');
+/*	
+    console.log("windowScreenHeight: " + window.screen.height);
+    console.log("scrollHeightMax: " + document.body.scrollHeight);
+*/
+    var windowScreenHeight = window.screen.height;
+    var documentBodyHeight = document.body.scrollHeight;
+    var currentDocumentBodyHeight = documentBodyHeight;
+	var iCount = 2;
+
+    while (currentDocumentBodyHeight > windowScreenHeight) {
+	  page.evaluate(function(currentDocumentBodyHeight) {
+			window.document.body.scrollTop = currentDocumentBodyHeight;	    
+	  });
+
+	  page.render('output/'+dateToday.toISOString()+'/'+filename+iCount+'.png');
+	
+	  currentDocumentBodyHeight = currentDocumentBodyHeight - windowScreenHeight;
+	  iCount = iCount + 1;
+    }
+	
   }
   phantom.exit();
 });
