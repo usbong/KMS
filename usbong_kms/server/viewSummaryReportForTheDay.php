@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200523
+  @date updated: 20200725
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -124,7 +124,10 @@
 	//TO-DO: -update: file location
 //	$filename="C:/Usbong/Patients".$dateToday.".txt";	
 //	$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\summaryReport".$dateToday.".txt";
-	$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\summaryReport".$dateToday.".csv";
+
+	//edited by Mike, 20200725
+	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\summaryReport".$dateToday.".csv";
+	$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay2020-07-25Final.csv";
 
 	echo "<br/>";
 	echo "<table>";
@@ -146,16 +149,31 @@
 		//answer by: thenetimp, 20120204T0730
 		//edited by: thenetimp, 20170823T1704
 
-		$row = 1;
+		$iRowCount = -1; //we later add 1 to make start value zero (0)
 		//if (($handle = fopen("test.csv", "r")) !== FALSE) {
 		if (($handle = fopen($filename, "r")) !== FALSE) {
 		  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 			$num = count($data) -1; //we add -1 for the computer to not include the excess cell due to the ending \n
 		//    echo "<p> $num fields in line $row: <br /></p>\n";
-			$row++;
-			for ($c=0; $c < $num; $c++) {
+			$iRowCount++;
+			for ($iColumnCount=0; $iColumnCount <= $num; $iColumnCount++) {
 		//        echo $data[$c] . "<br />\n";
-				echo "<td class='column'>".utf8_encode($data[$c])."</td>";
+				//edited by Mike, 20200725
+				//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+				
+				//TO-DO: -update: the rest of the table cells
+				if (($iRowCount==1)) {// and ($iColumnCount==0)) {
+					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount!=9)) {
+						//background color green
+						echo "<td class='column' bgcolor='#00FF00' font-weight='bold'><b>".utf8_encode($data[$iColumnCount])."</b></td>";
+					}
+					else {
+						echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+					}
+				}
+				else {
+					echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+				}
 			}
 			echo '</tr><tr class="row">';
 		  }
