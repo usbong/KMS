@@ -48,6 +48,8 @@
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
 							width: 860px;/* 802px;*//* 670px */
+							
+							/* use zoom 67% scale*/
                         }
 						
 						div.copyright
@@ -91,6 +93,28 @@
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
+
+						td.columnBorderBottom
+						{
+							border: 1px dotted #ab9c7d;		
+							border-bottom: 4px double black;
+							text-align: center;
+						}						
+
+						td.columnBorderBottomDotted
+						{
+							border: 1px dotted #ab9c7d;		
+							border-bottom: 2px dotted black;
+							text-align: center;
+						}						
+
+						td.columnBorderTopBottom
+						{
+							border: 1px dotted #ab9c7d;		
+							border-top: 2px solid black;
+							border-bottom: 4px double black;
+							text-align: center;
+						}						
 						
 						td.imageColumn
 						{
@@ -103,7 +127,7 @@
 							width: 50%;
 							display: inline-block;
 							text-align: right;
-						}						
+						}												
     /**/
     </style>
     <title>
@@ -141,7 +165,10 @@
 	//added by Mike, 20200523
 	if (!file_exists($filename)) {
 		//add the day of the week
-		$dateToday = (new DateTime())->format('Y-m-d, l');
+		//edited by Mike, 20200726
+		//$dateToday = (new DateTime())->format('Y-m-d, l');
+		$dateToday = Date('Y-m-d, l');
+
 		echo "There are no transactions for the day, ".$dateToday.".";
 	}
 	else {
@@ -182,7 +209,27 @@
 					//edited by Mike, 20200726
 //					$cellValue = utf8_encode($data[$iColumnCount]);
 					if (is_numeric($cellValue)) {
-						echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+						//edited by Mike, 20200726
+						//echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+						if (($iRowCount==2) and ($iColumnCount==3)) { //ACTUAL TOTAL
+							echo "<td class='columnBorderBottom' style='text-align:right'>".$cellValue."</td>";
+						}
+						else if (($iRowCount==2) and ($iColumnCount<3)) { //ACTUAL TOTAL number value row
+							echo "<td class='columnBorderBottomDotted' style='text-align:right'>".$cellValue."</td>";
+						}						
+						else if (($iColumnCount+1<count($data)) and ((utf8_encode($data[$iColumnCount+1]))=="TOTAL")) {
+								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+						}						
+						//CASH REGISTER TOTAL
+						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="TOTAL")) {
+								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+						}
+						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="GRAND TOTAL")) {
+								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+						}
+						else {							 
+							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+						}
 					}
 					else {
 						//echo "<td class='column'><b>".$cellValue."</b></td>";
