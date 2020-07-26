@@ -5,6 +5,7 @@ phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Pedro"
 phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Peter"
 phantomjs saveWebPageAsImageFile.js viewReceiptReportForTheDay
 phantomjs saveWebPageAsImageFile.js viewReceiptReportPASForTheDay
+phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s
 
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
 

@@ -8,7 +8,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200724
-' @date updated: 20200725
+' @date updated: 20200726
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -17,14 +17,27 @@
 */
 
 var system = require('system');
-var filename = system.args[1];
+var fileName = system.args[1];
+
+//added by Mike, 20200726
+var isFromServerFolder = system.args[2];
+var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
+var fileExtension = '';
+
 //added by Mike, 20200725
 var dateToday = new Date(); 
 
-console.log("Filename: " + filename);
+if (isFromServerFolder=="-s") {
+	webAddress = 'http://localhost/usbong_kms/server/';
+	fileExtension = '.php';
+}
+
+console.log("Filename: " + fileName);
 
 var page = require('webpage').create();
-page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(status) {
+//edited by Mike, 20200726
+//page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(status) {
+page.open(webAddress+fileName+fileExtension, function(status) {
   console.log("Status: " + status);
   
   if(status === "success") {
@@ -36,8 +49,8 @@ page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(sta
 	});
 	
 	//edited by Mike, 20200725
-    //page.render('output/'+filename+'.png');
-	page.render('output/'+dateToday.toISOString()+'/'+filename+'1.png');
+    //page.render('output/'+fileName+'.png');
+	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
 /*	
     console.log("windowScreenHeight: " + window.screen.height);
     console.log("scrollHeightMax: " + document.body.scrollHeight);
@@ -52,7 +65,7 @@ page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(sta
 			window.document.body.scrollTop = currentDocumentBodyHeight;	    
 	  });
 
-	  page.render('output/'+dateToday.toISOString()+'/'+filename+iCount+'.png');
+	  page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
 	
 	  currentDocumentBodyHeight = currentDocumentBodyHeight - windowScreenHeight;
 	  iCount = iCount + 1;
