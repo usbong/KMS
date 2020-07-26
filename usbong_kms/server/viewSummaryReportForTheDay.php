@@ -50,6 +50,9 @@
 							width: 860px;/* 802px;*//* 670px */
 							
 							/* use zoom 67% scale*/
+							zoom: 67%; /* at present, command not support in Mozilla Firefox */				
+							transform: scale(0.67);
+							transform-origin: 0 0;							
                         }
 						
 						div.copyright
