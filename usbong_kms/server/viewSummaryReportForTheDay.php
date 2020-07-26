@@ -145,8 +145,10 @@
   <body>
 <?php
 	date_default_timezone_set('Asia/Hong_Kong');
-
-	$dateToday = (new DateTime())->format('Y-m-d');
+	
+	//edited by Mike, 20200726
+	//$dateToday = (new DateTime())->format('Y-m-d');
+	$dateToday = Date('Y-m-d');
 
 	//TO-DO: -update: file location
 //	$filename="C:/Usbong/Patients".$dateToday.".txt";	
@@ -154,7 +156,9 @@
 
 	//edited by Mike, 20200725
 	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\summaryReport".$dateToday.".csv";
-	$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay2020-07-25Final.csv";
+	//edited by Mike, 202000726
+	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay2020-07-25Final.csv";
+	$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay".$dateToday."Final.csv";
 
 	echo "<br/>";
 	echo "<table>";
