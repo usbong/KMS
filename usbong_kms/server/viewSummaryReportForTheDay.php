@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200725
+  @date updated: 20200726
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -47,7 +47,7 @@
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
-							width: 802px; /* 670px */
+							width: 860px;/* 802px;*//* 670px */
                         }
 						
 						div.copyright
@@ -161,18 +161,45 @@
 				//edited by Mike, 20200725
 				//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
 				
-				//TO-DO: -update: the rest of the table cells
+				//added by Mike, 20200726
+				$cellValue = utf8_encode($data[$iColumnCount]);
+	
 				if (($iRowCount==1)) {// and ($iColumnCount==0)) {
 					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount!=9)) {
 						//background color green
-						echo "<td class='column' bgcolor='#00FF00' font-weight='bold'><b>".utf8_encode($data[$iColumnCount])."</b></td>";
+						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
 					}
 					else {
-						echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+						echo "<td class='column'>".$cellValue."</td>";
 					}
 				}
+				//"CASH REGISTER RECEIPT" cells; text
+				else if (($iRowCount>=2) and ($iRowCount<=18) and ($iColumnCount>=4) and ($iColumnCount<=5)) {
+					echo "<td class='column' style='text-align:left'><b>".$cellValue."</b></td>";
+				}
 				else {
-					echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+					//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+					//edited by Mike, 20200726
+//					$cellValue = utf8_encode($data[$iColumnCount]);
+					if (is_numeric($cellValue)) {
+						echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+					}
+					else {
+						//echo "<td class='column'><b>".$cellValue."</b></td>";
+
+						//added by Mike, 20200726
+						if ($cellValue=="PREV TOTAL") {
+							//background color green
+							echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
+						}
+						else if ($cellValue=="GRAND TOTAL") {
+							//background color yellow
+							echo "<td class='column' bgcolor='#FFFF00'><b>".$cellValue."</b></td>";
+						}
+						else {
+							echo "<td class='column'><b>".$cellValue."</b></td>";
+						}						
+					}															
 				}
 			}
 			echo '</tr><tr class="row">';
