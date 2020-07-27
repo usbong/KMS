@@ -1261,6 +1261,9 @@ class Report_Model extends CI_Model
 
 		$this->db->like('t2.notes', "PAID");
 
+		//added by Mike, 20200727
+		$this->db->not_like('t2.notes', "UNPAID");
+
 		//edited by Mike, 20200403
 		if ($rowArray!=False) { //if value exists in array
 			foreach ($rowArray as $value) {			
@@ -1310,6 +1313,9 @@ class Report_Model extends CI_Model
 		//$this->db->where('t2.transaction_date', "06/06/2020");		
 
 		$this->db->like('t2.notes', "PAID");
+
+		//added by Mike, 20200727
+		$this->db->not_like('t2.notes', "UNPAID");
 
 		//edited by Mike, 20200403
 		if ($rowArray!=False) { //if value exists in array
