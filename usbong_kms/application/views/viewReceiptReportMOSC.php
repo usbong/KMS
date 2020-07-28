@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200724
+' @date updated: 20200728
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -524,6 +524,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//edited by Mike, 20200620
 								if (strpos(strtoupper($value['notes']),"DISCOUNTED")!==false) {
 									echo "WI; DISCOUNTED";
+									
+									//added by Mike, 20200728
+									$fLess20PercentDiscount = 0;
 								}
 								else if (strpos(strtoupper($value['notes']),"SC")!==false) {
 									echo "SC";											
@@ -662,28 +665,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnFee">				
 								<div id="less20PercentDiscountId<?php echo $iCount?>">
 							<?php
-								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
-								   //removed by Mike, 20200426
-								   //$fLess20PercentDiscount = number_format($fAmountPaid*0.20, 2, '.', '');
-								   
-								   //added by Mike, 20200719
-								   if ($value['transaction_date'] >= "06/01/2020") {
-									   $fLess20PercentDiscount = 0;
-									   if ($fFee == 600) {
-										   	$fLess20PercentDiscount += 200; //we give more than 20% discount
-									   }
-									   else {
-										   $fLess20PercentDiscount += $fFee*0.20;
-									   }
+								//edited by Mike, 20200728
+							    //added by Mike, 20200719; edited by Mike, 20200728
+							    if ($value['transaction_date'] >= "06/01/2020") {
+									$fLess20PercentDiscount = 0;
 
-									   //we do fee computation in the next column	
-									   $fAmountNoLess20PercentDiscountXRayOnly = $value['x_ray_fee'] / (1 - 0.20);
-									   $fLess20PercentDiscount += $fAmountNoLess20PercentDiscountXRayOnly*0.20;
-								   }								   
+	//								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
+									if ((strpos(strtoupper($value['notes']),"DISCOUNTED")===false) and (strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
+									   //removed by Mike, 20200426
+									   //$fLess20PercentDiscount = number_format($fAmountPaid*0.20, 2, '.', '');
+																	   
+									   //added by Mike, 20200719; edited by Mike, 20200728
+	/*								   if ($value['transaction_date'] >= "06/01/2020") {
+										   $fLess20PercentDiscount = 0;
+	*/									   
+										   if ($fFee == 600) {
+												$fLess20PercentDiscount += 200; //we give more than 20% discount
+										   }
+										   else {
+											   $fLess20PercentDiscount += $fFee*0.20;
+										   }
+
+										   //we do fee computation in the next column	
+										   $fAmountNoLess20PercentDiscountXRayOnly = $value['x_ray_fee'] / (1 - 0.20);
+										   $fLess20PercentDiscount += $fAmountNoLess20PercentDiscountXRayOnly*0.20;
+	//								   }
+									}
+									else { //WI								
+									}								
 								}
-								else { //WI								
-								}								
-
+	
 							    echo number_format($fLess20PercentDiscount, 2, '.', '');							
 								
 								$fTotalLess20PercentDiscount += $fLess20PercentDiscount;
