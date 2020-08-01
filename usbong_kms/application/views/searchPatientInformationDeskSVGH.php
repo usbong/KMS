@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200717
+' @date updated: 20200801
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -32,8 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             font-family: Arial;
 							font-size: 11pt;
 								
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px								
+							/* 670px makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							width: 900px;
                         }
 						
 						div.checkBox
@@ -91,20 +91,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}	
 
 						img.Image-companyLogo {
-							max-width: 60%;
+							max-width: 50%;
 							height: auto;
 							float: left;
 							text-align: center;
 							padding-left: 20px;
 							padding-top: 10px;
+							padding-right: 20px;
 						}
 
 						img.Image-moscLogo {
-							max-width: 20%;
+							max-width: 18%;
 							height: auto;
 							float: left;
 							text-align: center;
-						}						
+						}
+
+						img.Image-svghLogo {
+							max-width: 18%;
+							height: auto;
+							float: left;
+							text-align: center;
+						}
 
 						table.addPatientTable
 						{
@@ -323,6 +331,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<td class="imageColumn">				
 			<img class="Image-moscLogo" src="<?php echo base_url('assets/images/moscLogo.jpg');?>">		
 			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
+			<img class="Image-svghLogo" src="<?php echo base_url('assets/images/svghLogo.jpg');?>">	
 		</td>
 		<td class="pageNameColumn">
 			<h2>
