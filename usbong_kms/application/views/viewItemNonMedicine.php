@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200719
+' @date updated: 20200803
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -671,9 +671,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //									echo "0 / 0";
 									echo 9999;
 								}
+/*								//edited by Mike, 20200803
 								//edited by Mike, 20200411; edited by Mike, 20200615
 								else if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
 									echo 9999;
+								}
+*/								
+								//added by Mike, 20200803
+								//note: put this here before "else if ($resultQuantityInStockNow<0) {"
+								else if ($value['quantity_in_stock']==-1) {
+									echo 9999;
+								}
+								else if ($resultQuantityInStockNow<0) {
+									//edited by Mike, 20200723
+									//echo "0 / ".$value['quantity_in_stock'];
+
+/*									//removed by Mike, 20200803									
+									if (strpos($value['item_name'], "*")!==false) {
+										//TO-DO: -update: this to use actual count
+										echo 9999;
+									}
+									else {
+*/										
+										//edited by Mike, 20200803
+										//echo "0 / ".$value['quantity_in_stock'];
+										echo "0";
+/*
+									}
+*/									
 								}
 								else {
 //									echo $resultQuantityInStockNow;

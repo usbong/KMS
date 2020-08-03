@@ -673,6 +673,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "0 / ".$value['quantity_in_stock'];
 								}
 */								
+								//added by Mike, 20200803
+								//note: put this here before "else if ($resultQuantityInStockNow<0) {"
+								else if ($value['quantity_in_stock']==-1) {
+									echo 9999;
+								}
 								else if ($resultQuantityInStockNow<0) {
 									//edited by Mike, 20200723
 									//echo "0 / ".$value['quantity_in_stock'];
@@ -686,9 +691,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//echo "0 / ".$value['quantity_in_stock'];
 										echo "0";
 									}
-								}
-								else if ($value['quantity_in_stock']==-1) {
-									echo 9999;
 								}
 								else {
 //									echo $resultQuantityInStockNow;
