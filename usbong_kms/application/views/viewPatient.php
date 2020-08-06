@@ -404,8 +404,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var classification = document.getElementById("classificationParam").value;
 			var notes = document.getElementById("notesParam").value;
 
+
 			//added by Mike, 20200806
-			//TO-DO: -verify: if a patient id already exists in the cart list
+			//verified: if a patient id already exists in the cart list
 			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
 	
 			if (hasPatientInCartList) {
@@ -723,7 +724,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php
 								//TO-DO: -update: this
 								//echo $value['patient_name'];
-								echo str_replace("�","Ñ",$value['patient_name']);
+								echo str_replace("ï¿½","Ã‘",$value['patient_name']);
 				?>		
 								</div>								
 							</a>
@@ -821,8 +822,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//TO-DO: -add: paid receipt page
 			//TO-DO: -update: this
 
+
 			//added by Mike, 20200401
 			echo '<h3>Cart List</h3>';
+
+			//added by Mike, 20200806
+			$hasPatientInCartListParamValue = False;
 
 			$cartListResultCount = 0;
 			
@@ -891,15 +896,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									//TO-DO: -update: this
 									//echo $cartValue['patient_name'];
-									echo str_replace("�","Ñ",$cartValue['patient_name']);
-
-									echo "<input type='hidden' id='hasPatientInCartListParam' value='True'>";
+									echo str_replace("ï¿½","Ã‘",$cartValue['patient_name']);
+									
+									$hasPatientInCartListParamValue = True;
 								}
 								else {
 									echo $cartValue['item_name'];
-
-									echo "<input type='hidden' id='hasPatientInCartListParam' value='False'>";
 								}
+								
+
 				?>		
 								</div>								
 							</a>
@@ -1032,10 +1037,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 							<button onclick="myPopupFunctionPay(<?php echo $value['medical_doctor_id'].",".$value['patient_id']?>)" class="Button-purchase">PAY</button>
 						</td>						
-					  </tr>
+					  </tr>					
 <?php
 				echo "</table>";				
 			}
+?>
+			<!-- added by Mike, 20200806 -->
+			<input type="hidden" id="hasPatientInCartListParam" value="<?php echo $hasPatientInCartListParamValue;?>">
+
+<?php
 /*			
 			echo "<br/>";
 */
@@ -1141,7 +1151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<?php
 									//TO-DO: -update: this
 									//echo $value['patient_name'];
-									echo str_replace("�","Ñ",$value['patient_name']);
+									echo str_replace("ï¿½","Ã‘",$value['patient_name']);
 	
 					?>		
 									</div>								
@@ -1211,7 +1221,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>Â© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
