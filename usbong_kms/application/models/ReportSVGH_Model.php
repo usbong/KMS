@@ -262,6 +262,9 @@ class ReportSVGH_Model extends CI_Model
 		//added by Mike, 202005029
 		$this->db->where('t1.patient_name!=', 'NONE');
 
+		//added by Mike, 20200806
+		$this->db->where('t4.treatment_id!=', 0);
+
 
 //		$this->db->like('t2.notes', "NEW; NONE YET");
 //		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
