@@ -1073,6 +1073,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo "<table class='search-result'>";
 					
 					//add: table headers
+					//added by Mike, 20200806
+?>				
+					  <tr class="row">
+						<td class ="columnTableHeader">				
+				<?php
+							echo "ADDED DATETIME";
+				?>		
+						</td>
+
+						<td class ="columnTableHeader">				
+				<?php
+							echo "PATIENT NAME";
+				?>		
+						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "PF";
+							?>
+						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "X-RAY";
+							?>
+						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "LAB";
+							?>
+						</td>
+						<td class ="columnTableHeaderNotes">				
+							<?php
+								echo "CLASSIFICATION<br/>& NOTES";
+							?>
+						</td>
+
+						<td class ="columnTableHeaderNotes">				
+							<?php
+								echo "TOTAL";
+							?>
+						</td>
+					  </tr>
+			<?php
+
+
 					$iCount = 1;
 					foreach ($resultPaid as $value) {
 	/*	
