@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200627
+' @date updated: 20200806
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -391,7 +391,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  }
 */
 
-		//added by Mike, 20200329; edited by Mike, 20200517
+		//added by Mike, 20200329; edited by Mike, 20200806
 //		function myPopupFunction() {				
 		function myPopupFunction(patientId) {	
 			//edited by Mike, 20200522
@@ -403,7 +403,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var labFee = document.getElementById("labFeeParam").value;
 			var classification = document.getElementById("classificationParam").value;
 			var notes = document.getElementById("notesParam").value;
-			
+
+			//added by Mike, 20200806
+			//TO-DO: -verify: if a patient id already exists in the cart list
+			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
+	
+			if (hasPatientInCartList) {
+				alert("Isang (1) pasyente lamang ang maaaring idagdag sa bawat Cart List.");
+				return;
+			}
+	
 			//added by Mike, 20200525
 //			alert(notes);
 			notes = notes.replace(";", "u003B"); //semicolon
@@ -875,16 +884,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								}								
 								?>'>
-								<div class="itemName">
+								<!-- edited by Mike, 20200806 -->
+								<div class="cartItemName">
 				<?php
-								//edited by Mike, 20200519
+								//edited by Mike, 20200806
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									//TO-DO: -update: this
 									//echo $cartValue['patient_name'];
 									echo str_replace("�","Ñ",$cartValue['patient_name']);
+
+									echo "<input type='hidden' id='hasPatientInCartListParam' value='True'>";
 								}
 								else {
 									echo $cartValue['item_name'];
+
+									echo "<input type='hidden' id='hasPatientInCartListParam' value='False'>";
 								}
 				?>		
 								</div>								
