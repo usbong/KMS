@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200628
-' @date updated: 20200722
+' @date updated: 20200806
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -763,9 +763,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 */	
 					
-					//added by Mike, 20200717 					
+					//added by Mike, 20200717; edited by Mike, 20200806
 					if (strpos($value['treatment_datetime_stamp'], date("Y-m-d"))===false) {						
-					echo "dito";
 						//include only transactions for the day
 						continue;
 					}
