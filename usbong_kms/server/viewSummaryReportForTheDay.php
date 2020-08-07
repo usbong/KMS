@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200726
+  @date updated: 20200807
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -199,7 +199,9 @@
 				$cellValue = utf8_encode($data[$iColumnCount]);
 	
 				if (($iRowCount==1)) {// and ($iColumnCount==0)) {
-					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount!=9)) {
+					//edited by Mike, 20200807
+//					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount!=9)) {
+					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount<9)) {
 						//background color green
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
 					}
