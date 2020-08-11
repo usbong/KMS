@@ -572,8 +572,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		//note: this is due to the following removed function is not available in PHP 5.3
 		//$outputArray = [];
 		$outputArray = array();
+		
+		//TO-DO: -reverify: this
+		//TO-DO: -add: in non-med
+		//added by Mike, 20200811
+		$iSameItemCount = 0;
+		$bHasNoneZeroQuantity = false;
 
-		if ($data['result'] == True) {
+		if ($data['result'] == true) {
 			foreach ($data['result'] as $value) {				
 			
 //				echo $value['item_name'];
@@ -602,45 +608,70 @@ class Browse extends CI_Controller { //MY_Controller {
 						array_push($outputArray, $value);						
 					}
 */						
-					//edited by Mike, 20200530
-					array_push($outputArray, $value);						
-					
-					//TO-DO: -add: auto-verify if there exists another set of the item in the inventory
-					
-/*
-					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
-//					if ($value['quantity_in_stock'] == 0) {
+					//edited by Mike, 20200530; removed by Mike, 20200811
+					//array_push($outputArray, $value);
+					//Note: We show only one (1) transaction of the same item whose in-stock count is 0.
+					//This is to make the output list shorter.
+					//The list is ordered by expiration date.
+					if (!$bHasNoneZeroQuantity) {
+						if ($iSameItemCount == ($iSameItemTotalCount - 1)) { //if last item in the list of same items
+							array_push($outputArray, $value);
+						}
 					}
-					else {						
-						array_push($outputArray, $value);						
+					else {
+						array_push($outputArray, $value);
 					}
-*/
+
+					$iSameItemCount = $iSameItemCount + 1;
+
 				}
 				//added by Mike, 20200522
 				else {
-					//edited by Mike, 20200530
+					//identify if there are more than 1 transaction of the same item in the list
+					$iSameItemTotalCount = 0;
+					$bHasNoneZeroQuantity = false;
+					foreach ($data['result'] as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							$iSameItemTotalCount = $iSameItemTotalCount + 1;
+							
+							if ($outputValue['resultQuantityInStockNow']!=0) {
+								$bHasNoneZeroQuantity = true;								
+							}							
+						}
+					}
 					
-/*
-					//edited by Mike, 20200525
-//					if ($value['resultQuantityInStockNow'] == 0) {
-					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
-//					if ($value['quantity_in_stock'] == 0) {
-					}
-					else {						
-						array_push($outputArray, $value);						
-					}
-*/
-					array_push($outputArray, $value);						
+//					echo $iSameItemCount;
+					
+					if ($iSameItemTotalCount>1) {							
+						if ($value['resultQuantityInStockNow']!=0) {
+							array_push($outputArray, $value);						
+						}									
 
+					}
+					else {
+						//array_push($outputArray, $value);						
+
+						if ($iSameItemTotalCount==1) {
+							if ($value['resultQuantityInStockNow']!=0) {
+								array_push($outputArray, $value);
+							}
+						}
+					}
+
+					$iSameItemCount = 1;
+
+/*					
+					//TO-DO: -reverify: this if still necessary
 					//delete the items with zero in-stock value if there exists another set of such item in the inventory
 					foreach ($outputArray as &$outputValue) {
 						if ($outputValue['item_id'] == $value['item_id']) {
 							if ($outputValue['resultQuantityInStockNow'] == 0) {
-								$outputValue = $value;
+								$outputValue = $value;								
 							}
 						}						
 					}
 					unset($outputValue);
+*/					
 				}
 			}
 		}
