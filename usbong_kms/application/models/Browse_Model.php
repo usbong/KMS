@@ -507,7 +507,7 @@ class Browse_Model extends CI_Model
 
 		//edited by Mike, 20200811
 		//$this->db->limit(8);//1);
-		$this->db->limit(10);//1);
+//		$this->db->limit(10);//1); //removed by Mike, 20200811
 		
 		$query = $this->db->get('item');
 
