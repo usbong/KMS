@@ -301,7 +301,14 @@
 						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
 						
 						//added by Mike, 20200812
+						//Reference: https://www.php.net/number_format;
+						//last accessed: 20200812
+						//Note: Rounding Rules
 						//input: 60.00000000000006
+						//output: 60.00
+						//input: 60.005
+						//output: 60.01
+						//input: 60.004
 						//output: 60.00
 						$iFeeTotalCount = number_format($iFeeTotalCount, 2, '.', '');
 					}
@@ -796,8 +803,15 @@
 						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
 
 						//added by Mike, 20200812
+						//Reference: https://www.php.net/number_format;
+						//last accessed: 20200812
+						//Rounding Rules
 						//input: 60.00000000000006
-						//output: 60.00					
+						//output: 60.00
+						//input: 60.005
+						//output: 60.01
+						//input: 60.004
+						//output: 60.00
 						$iFeeTotalCount = number_format($iFeeTotalCount, 2, '.', '');
 						
 /*						//removed by Mike, 20200708
