@@ -310,7 +310,7 @@
 						//output: 60.01
 						//input: 60.004
 						//output: 60.00
-						$iFeeTotalCount = number_format($iFeeTotalCount, 2, '.', '');
+						$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
 					}
 					else {
 						$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
@@ -812,7 +812,7 @@
 						//output: 60.01
 						//input: 60.004
 						//output: 60.00
-						$iFeeTotalCount = number_format($iFeeTotalCount, 2, '.', '');
+						$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
 						
 /*						//removed by Mike, 20200708
 						$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
