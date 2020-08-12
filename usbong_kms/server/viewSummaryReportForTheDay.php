@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200807
+  @date updated: 20200812
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -31,7 +31,9 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8">
+ 	<!-- edited by Mike, 20200811 -->
+   <!-- <meta charset="utf-8"> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- Reference: Apache Friends Dashboard index.html -->
     <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
@@ -196,7 +198,16 @@
 				//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
 				
 				//added by Mike, 20200726
+				//$cellValue = $data[$iColumnCount];	
 				$cellValue = utf8_encode($data[$iColumnCount]);
+				
+				//$cellValue = utf8_encode($cellValue);
+				//$cellValue = mysql_real_escape_string($data[$iColumnCount]);
+				
+				//added by Mike, 20200811
+				//$cellValue = str_replace("�","'",$cellValue); //$data[$iColumnCount]); //$cellValue);
+	
+				//$cellValue = htmlspecialchars($cellValue, ENT_QUOTES); // Converts double and single quotes
 	
 				if (($iRowCount==1)) {// and ($iColumnCount==0)) {
 					//edited by Mike, 20200807
@@ -218,6 +229,26 @@
 					//edited by Mike, 20200726
 //					$cellValue = utf8_encode($data[$iColumnCount]);
 					if (is_numeric($cellValue)) {
+						//added by Mike, 20200812						
+						if ($iColumnCount==7) { //COUNT
+							//integer value
+						}
+						else {
+							//add two digits after the decimal point
+							//Reference: https://www.php.net/number_format;
+							//last accessed: 20200812
+							//input: 60
+							//output: 60.00
+							//Note: Rounding Rules
+							//input: 60.00000000000006
+							//output: 60.00
+							//input: 60.005
+							//output: 60.01
+							//input: 60.004
+							//output: 60.00
+							$cellValue = number_format($cellValue, 2, '.', '');
+						}																					
+
 						//edited by Mike, 20200726
 						//echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 						if (($iRowCount==2) and ($iColumnCount==3)) { //ACTUAL TOTAL
