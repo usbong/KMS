@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200713
+  @date updated: 20200812
   Input:
   1) Sales reports for the day in the database (DB)
   Output:
@@ -299,6 +299,11 @@
 					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
 						$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
 						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+						
+						//added by Mike, 20200812
+						//input: 60.00000000000006
+						//output: 60.00
+						$iFeeTotalCount = number_format($iFeeTotalCount, 2, '.', '');
 					}
 					else {
 						$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
@@ -789,6 +794,11 @@
 					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
 						$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
 						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+
+						//added by Mike, 20200812
+						//input: 60.00000000000006
+						//output: 60.00					
+						$iFeeTotalCount = number_format($iFeeTotalCount, 2, '.', '');
 						
 /*						//removed by Mike, 20200708
 						$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
