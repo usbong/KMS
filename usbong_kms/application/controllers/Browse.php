@@ -519,7 +519,6 @@ class Browse extends CI_Controller { //MY_Controller {
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 										
-//					echo $remainingItemNow;	
 					
 					if ($remainingItemNow < 0) {
 						
@@ -652,8 +651,14 @@ class Browse extends CI_Controller { //MY_Controller {
 						//array_push($outputArray, $value);						
 
 						if ($iSameItemTotalCount==1) {
-							if ($value['resultQuantityInStockNow']!=0) {
-								array_push($outputArray, $value);
+							//edited by Mike, 20200812
+							if (strpos($value['item_name'],"*")!==false) {
+									array_push($outputArray, $value);
+							}	
+							else {
+								if ($value['resultQuantityInStockNow']!=0) {
+									array_push($outputArray, $value);
+								}
 							}
 						}
 					}
