@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200812
+  @date updated: 20200813
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -233,6 +233,10 @@
 						if ($iColumnCount==7) { //COUNT
 							//integer value
 						}
+						//added by Mike, 20200813						
+						else if ((strpos(utf8_encode($data[$iColumnCount+1]),"#")!==false)) {
+							//integer value
+						}						
 						else {
 							//add two digits after the decimal point
 							//Reference: https://www.php.net/number_format;
