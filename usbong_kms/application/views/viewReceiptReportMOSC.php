@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200728
+' @date updated: 20200813
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -520,7 +520,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//we do fee computation in the next column	
 								$fAmountNoLess20PercentDiscount += $value['x_ray_fee'] / (1 - 0.20);
 								$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
-
+								//edited by Mike, 20200813
+/*
 								//edited by Mike, 20200620
 								if (strpos(strtoupper($value['notes']),"DISCOUNTED")!==false) {
 									echo "WI; DISCOUNTED";
@@ -537,11 +538,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else {
 									echo "WI";										
 
-									$fLess20PercentDiscount = 0;
-/*									$fFee = $value['fee'];
-									$fXRayFee = $value['x_ray_fee'];
-*/									
+									$fLess20PercentDiscount = 0;									
 								}								
+*/
+								//TO-DO: -update: PAS official receipt report
+								$outputClassification = "";
+								if (strpos(strtoupper($value['notes']),"DISCOUNTED")!==false) {
+									$outputClassification = "WI; DISCOUNTED";
+									
+									//added by Mike, 20200728
+									$fLess20PercentDiscount = 0;
+								}
+								else if (strpos(strtoupper($value['notes']),"SC")!==false) {
+									$outputClassification = "SC";											
+								}
+								else if (strpos(strtoupper($value['notes']),"PWD")!==false) {
+									$outputClassification = "PWD"; 								
+								}
+								else {
+									$outputClassification = "WI";										
+
+									$fLess20PercentDiscount = 0;									
+								}							
+
+								if (strpos(strtoupper($value['notes']),"OR RECEIVED")!==false) {
+									$outputClassification = $outputClassification."; OR RECEIVED ".explode("OR RECEIVED ", $value['notes'])[1];
+								}
+								
+								echo $outputClassification;
+								
 							?>
 								</div>
 						</td>
