@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20200818
+  @date updated: 20200819
 
   Input:
   1) MySQL Database with X-Ray Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -158,10 +158,17 @@
 	echo "<tr>";
 	echo "<td>";
 */					
-	//TO-DO: -add: Senior Citizen Discount column
-	//TO-DO: -add: column borders
-	//TO-DO: -add: table headers
-	
+	//TO-DO: -add: notes column
+
+	//table headers
+?>	
+	<tr>
+	<td class='tableHeaderColumn'><b>BODY LOCATION</b></td>
+	<td class='tableHeaderColumn'><b>TYPE</b></td>
+	<td class='tableHeaderColumn'><b>PRICE</b></td>
+	<td class='tableHeaderColumn'><b>SC/PWD<br/>PRICE</b></td>
+	<tr>
+<?php	
 	if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id")) 
 	{
 		if ($selectedXRayPriceListResultArray->num_rows > 0) {
@@ -169,10 +176,26 @@
 				echo "<tr>";
 				
 				foreach ($valueArray as $value) {
-					echo "<td>";
-						echo $value;
-					echo "</td>";
-				}
+					echo "<td class='column'>";
+						//edited by Mike, 20200819
+						//echo strtoupper($value);
+						//Body Location: LUMBO-SACRAL TO LOWER THORACIC
+						if (strpos($value,"to")!==false) {
+							$value = str_replace("to","<br/>to",$value);
+							echo strtoupper($value);
+						}
+						else {
+							echo strtoupper($value);
+						}
+							
+					echo "</td>";					
+				}				
+				
+				//note: the last $value is x_ray_price
+				echo "<td class='column'>";
+					$scPwdPrice = $value - $value*0.20;
+					echo $scPwdPrice;
+				echo "</td>";					
 				
 				echo "</tr>";
 			}
