@@ -235,7 +235,7 @@ class Browse_Model extends CI_Model
 		return $outputArray;
 	}	
 
-	//edited by Mike, 20200411; edited by Mike, 20200615
+	//edited by Mike, 20200411; edited by Mike, 20200819
 	public function getNonMedicineDetailsListViaName($param) 
 	{		
 		//we use this at MOSC
@@ -295,7 +295,8 @@ class Browse_Model extends CI_Model
 
 		//edited by Mike, 20200709
 //		$this->db->limit(8);//1);
-		$this->db->limit(14);
+		//removed by Mike, 20200819
+//		$this->db->limit(14);
 		
 		$query = $this->db->get('item');
 
