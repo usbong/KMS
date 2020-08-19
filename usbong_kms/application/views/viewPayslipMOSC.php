@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200527
+' @date updated: 20200819
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -276,10 +276,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$iFee = 0;
 		$iXRayFee = 0;
 		$iLabFee = 0;
+		
+		//added by Mike, 20200819
+		$iMinorsetFee = 0;
 	
 		$iTotalFee = 0;
 		$iTotalXRayFee = 0;
 		$iTotalLabFee = 0;
+
+		//added by Mike, 20200819
+		$iTotalMinorsetFee = 0;
 	
 		//get only name strings from array 
 		if (isset($result)) {			
@@ -329,6 +335,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "LAB";
 							?>
 						</td>
+						<!-- added by Mike, 20200819 -->
+						<td class ="tableHeaderColumn">				
+							<?php
+									echo "MINOR<br/>SET";
+							?>
+						</td>
 						<td class ="tableHeaderColumn">				
 							<?php
 									echo "NOTES";
@@ -375,6 +387,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//output: whole numbers							
 //								echo floor(($value['fee']*100)/100);
 								$iFee = floor(($value['fee']*100)/100);
+								
+								//added by Mike, 20200819
+								$iMinorsetFee = 0;
+								if (strpos($value['notes'],"MINORSET")!==false){
+									$iMinorsetFee = 500;
+									$iTotalMinorsetFee = $iTotalMinorsetFee + 500;
+									
+									$iFee = $iFee - 500;
+								}								
+								
 								echo $iFee;
 								
 								$iTotalFee += $iFee; //$value['fee'];
@@ -404,6 +426,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo $iLabFee;
 								
 								$iTotalLabFee += $iLabFee; //$value['lab_fee'];
+							?>
+								</div>
+						</td>
+						<!-- added by Mike, 20200819 -->
+						<td class ="column">				
+								<div id="minorsetFeeId<?php echo $iCount?>">
+							<?php
+								//output: whole numbers
+								echo $iMinorsetFee;								
 							?>
 								</div>
 						</td>
@@ -470,6 +501,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 						echo "<b>".$iTotalLabFee."</b>";
+					?>
+						</div>
+				</td>
+				<!-- added by Mike, 20200819 -->
+				<td class ="column">				
+						<div>
+					<?php
+						echo "<b>".$iTotalMinorsetFee."</b>";
 					?>
 						</div>
 				</td>
