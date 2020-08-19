@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20200819
+  @date updated: 20200820
 
   Input:
   1) MySQL Database with X-Ray Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -174,10 +174,18 @@
 		if ($selectedXRayPriceListResultArray->num_rows > 0) {
 			foreach ($selectedXRayPriceListResultArray as $valueArray) {
 				echo "<tr>";
+
+				//added by Mike, 20200820
+				$bodyLocationValue = "";
 				
 				foreach ($valueArray as $value) {
 					echo "<td class='column'>";
-						//edited by Mike, 20200819
+
+						//added by Mike, 20200820
+						if ($bodyLocationValue=="") {
+							$bodyLocationValue = $value;
+						}
+						
 						//echo strtoupper($value);
 						//Body Location: LUMBO-SACRAL TO LOWER THORACIC
 						if (strpos($value,"to")!==false) {
@@ -194,6 +202,12 @@
 				//note: the last $value is x_ray_price
 				echo "<td class='column'>";
 					$scPwdPrice = $value - $value*0.20;
+					
+					//added by Mike, 20200820
+					if (strpos(strtoupper($bodyLocationValue),"PEDIA")!==false) {
+						$scPwdPrice = "N/A";
+					}
+
 					echo $scPwdPrice;
 				echo "</td>";					
 				
