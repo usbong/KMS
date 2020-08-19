@@ -6,9 +6,11 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200812
+  @date updated: 20200819
+  
   Input:
   1) Sales reports for the day in the database (DB)
+
   Output:
   1) Automatically connect to the DB and get the sales reports for the day from the DB
   --> Afterwards, write the reports as .txt text in the computer server's set location
@@ -33,6 +35,9 @@
 
 	//added by Mike, 20200524
 	$responses = [];
+
+	//added by Mike, 20200819
+	$iMinorsetQuantityTotalCount = 0;
 	
 	//medical doctor; SYSON, PEDRO
 	//edited by Mike, 20200706
@@ -82,6 +87,14 @@
 					}
 					else if (strpos($value['notes'],"NO CHARGE")!==false) {
 						$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
+					}
+					
+					//added by Mike, 20200819
+					if (strpos($value['notes'],"MINORSET")!==false) {
+						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;
+						
+						$iFeeTotalCount = $iFeeTotalCount - 500;
+						$iQuantityTotalCount = $iQuantityTotalCount - 1;
 					}
 /*				}					
 */
@@ -873,6 +886,51 @@
 	{
 			echo "Error: " . $mysqli->error;
 	}																
+
+
+	//added by Mike, 20200819
+	//Minorset
+	echo "<br />";
+
+	$responses = [];
+
+	//added by Mike, 20200524
+	echo "--<br />";
+
+	if ($iMinorsetQuantityTotalCount == 0) {
+		echo "There are no Minorset transaction for the day.<br /><br />";
+	}
+	else if ($iMinorsetQuantityTotalCount == 1) {
+		echo "Minorset transaction for the day.<br /><br />";
+	}
+	else {
+		echo "Minorset transactions for the day.<br /><br />";
+	}
+	
+	$iMinorsetFeeTotalCount = $iMinorsetQuantityTotalCount*500;
+	//write as .txt file
+	$jsonResponse = array(
+			"iFeeTotalCount" => $iMinorsetFeeTotalCount,
+			"iQuantityTotalCount" => $iMinorsetQuantityTotalCount,
+			"iNetFeeTotalCount" => $iMinorsetFeeTotalCount
+	);
+	$responses[] = $jsonResponse;
+	
+	$outputReportMinorset = json_encode($responses);
+	
+	echo $outputReportMinorset;
+
+	$sDateToday = date("Y-m-d");
+
+	//update the file location accordingly
+	//edited by Mike, 20200524
+	//note: \\nonMedicine due to \n is new line
+	//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
+	$file = $fileBasePath."Minorset".$sDateToday.".txt";
+
+	file_put_contents($file, $outputReportMinorset, LOCK_EX);				
+					
+	//echo $outputReportMinorset;
 	
 	//close database connection
 	$mysqli->close();
