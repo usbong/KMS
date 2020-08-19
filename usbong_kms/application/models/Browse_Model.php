@@ -1449,7 +1449,18 @@ class Browse_Model extends CI_Model
 			//note: the transaction quantity is not 0
 //			$iTransactionId = $param['transactionId'];
 
-			$transactionDate = $row->transaction_date;
+			//edited by Mike, 20200819
+			//$transactionDate = $row->transaction_date;
+			if (!isset($row)) {
+				//computer has already deleted the item
+				//case: unit member deletes an already deleted item
+				//but is shown on the browser due to the computer 
+				//does not automatically refresh the page
+				return;
+			}
+			else {
+				$transactionDate = $row->transaction_date;
+			}
 
 			$this->db->select_max('transaction_id');
 			$this->db->where('transaction_date',$transactionDate);
