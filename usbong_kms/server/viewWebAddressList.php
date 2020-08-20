@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20200812
+  @date updated: 20200820
 	
   Computer Web Browser Address (Example):
   1) http://localhost/usbong_kms/server/viewWebAddressList.php
@@ -30,6 +30,43 @@
     <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<?php
+		//added by Mike, 20200820; edited by Mike, 20200821
+		$ipAddress = $_SERVER['REMOTE_ADDR'];
+		$machineAddress = "";
+
+		//note: output is blank if Windows Machine
+		//We use this set of instructions with Linux Machines
+		//Reference: https://stackoverflow.com/questions/1420381/how-can-i-get-the-mac-and-the-ip-address-of-a-connected-client-in-php;
+		//last accessed: 20200820
+		//answer by: Paul Dixon, 20090914T0848
+		#run the external command, break output into lines
+		$arp=`arp -a $ipAddress`;
+		$lines=explode("\n", $arp);
+
+		#look for the output line describing our IP address
+		foreach($lines as $line)
+		{
+		   $cols=preg_split('/\s+/', trim($line));
+		   if ($cols[0]==$ipAddress)
+		   {
+			   $machineAddress=$cols[1];
+//			   echo $macAddress;
+		   }
+		}
+
+		session_start();
+
+		$_SESSION["client_ip_address"] = $ipAddress;
+		$_SESSION["client_machine_address"] = $machineAddress;
+
+		//echo $_SESSION["client_ip_address"];
+		//echo $_SESSION["client_machine_address"];
+		
+		//TO-DO: -use: stored session values
+		//TO-DO: -reverify: this		
+	?>
 	
     <style type="text/css">
 	/**/
