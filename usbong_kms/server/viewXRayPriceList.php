@@ -1,19 +1,13 @@
 <!--
   Copyright 2020 Usbong Social Systems, Inc.
-
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
-
   http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-
   @author: Michael Syson
   @date created: 20200818
   @date updated: 20200820
-
   Input:
   1) MySQL Database with X-Ray Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
-
   Output:
   1) X-Ray Price List that is viewable on a Computer Web Browser  
   
@@ -79,6 +73,11 @@
 <!--							border: 1px solid #ab9c7d;		
 -->
 						}						
+
+						tr.rowEvenNumber {
+							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
+							border: 1pt solid #00ff00;		
+						}
 
 						td.tableHeaderColumn
 						{
@@ -172,11 +171,24 @@
 	if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id")) 
 	{
 		if ($selectedXRayPriceListResultArray->num_rows > 0) {
-			foreach ($selectedXRayPriceListResultArray as $valueArray) {
-				echo "<tr>";
+			//added by Mike, 20200820
+			$iRowCount = 0;
 
+			foreach ($selectedXRayPriceListResultArray as $valueArray) {
 				//added by Mike, 20200820
 				$bodyLocationValue = "";
+				$iCount = 0;
+				$isAlreadyDiscounted = false;
+								
+				//edited by Mike, 20200820
+				//echo "<tr>";
+			    if ($iRowCount % 2 == 0) { //even number
+				  echo '<tr class="rowEvenNumber">';
+			    }
+			    else {
+				  echo '<tr class="row">';
+			    }				   				
+				$iRowCount = $iRowCount + 1;
 				
 				foreach ($valueArray as $value) {
 					echo "<td class='column'>";
@@ -184,6 +196,16 @@
 						//added by Mike, 20200820
 						if ($bodyLocationValue=="") {
 							$bodyLocationValue = $value;
+						}
+
+						//added by Mike, 20200820
+						if ($iCount==1) { //TYPE COLUMN
+							if (strpos(strtoupper($value),"AP, R/L BENDING")!==false) {
+								$isAlreadyDiscounted = true;
+							}
+							else if (strpos(strtoupper($value),"SCOLIOSIS SERIES")!==false) {
+								$isAlreadyDiscounted = true;
+							}
 						}
 						
 						//echo strtoupper($value);
@@ -197,6 +219,9 @@
 						}
 							
 					echo "</td>";					
+					
+					//added by Mike, 20200820
+					$iCount = $iCount + 1;
 				}				
 				
 				//note: the last $value is x_ray_price
@@ -206,6 +231,13 @@
 					//added by Mike, 20200820
 					if (strpos(strtoupper($bodyLocationValue),"PEDIA")!==false) {
 						$scPwdPrice = "N/A";
+					}
+
+					//added by Mike, 20200820
+					if (strpos(strtoupper($bodyLocationValue),"THORACO-LUMBAR")!==false) {
+						if ($isAlreadyDiscounted) {
+							$scPwdPrice = "ALREADY<BR/>DISCOUNTED";
+						}
 					}
 
 					echo $scPwdPrice;
