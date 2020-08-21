@@ -988,4 +988,54 @@ class Report extends CI_Controller { //MY_Controller {
 		
 //		redirect(base_url()."/server/getSalesReportsForTheDay.php");			  
 	}
+	
+	//added by Mike, 20200821
+	public function viewWebAddressList()
+	{
+
+		//session_start();
+		$this->load->library('session');
+
+		//added by Mike, 20200820; edited by Mike, 20200821
+		$ipAddress = $_SERVER['REMOTE_ADDR'];
+		$machineAddress = "";
+
+		//note: output is blank if Windows Machine
+		//We use this set of instructions with Linux Machines
+		//Reference: https://stackoverflow.com/questions/1420381/how-can-i-get-the-mac-and-the-ip-address-of-a-connected-client-in-php;
+		//last accessed: 20200820
+		//answer by: Paul Dixon, 20090914T0848
+		#run the external command, break output into lines
+		$arp=`arp -a $ipAddress`;
+		$lines=explode("\n", $arp);
+
+		#look for the output line describing our IP address
+		foreach($lines as $line)
+		{
+		   $cols=preg_split('/\s+/', trim($line));
+		   if ($cols[0]==$ipAddress)
+		   {
+			   $machineAddress=$cols[1];
+//			   echo $macAddress;
+		   }
+		}
+
+/*		$_SESSION["client_ip_address"] = $ipAddress;
+		$_SESSION["client_machine_address"] = $machineAddress;
+*/
+		$newdata = array(
+			'client_ip_address'  => $ipAddress,
+			'client_machine_address'     => $machineAddress
+		);
+			
+		$this->session->set_userdata($newdata);			
+
+//		echo $_SESSION["client_ip_address"];
+//		echo $_SESSION["client_machine_address"];
+		
+		//TO-DO: -use: stored session values
+		//TO-DO: -reverify: this		
+	
+		$this->load->view('viewWebAddressList');
+	}	
 }
