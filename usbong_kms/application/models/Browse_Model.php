@@ -1780,10 +1780,24 @@ class Browse_Model extends CI_Model
         $this->db->update('transaction', $data);		
 	}	
 
-	//added by Mike, 20200411; edited by Mike, 20200608
+	//added by Mike, 20200411; edited by Mike, 20200821
 	//add new transaction with the total for each item type
 	public function payTransactionItemPurchase() 
 	{			
+		//added by Mike, 20200821
+		$this->load->library("session");
+		
+//		$ipAddress = $_SESSION["client_ip_address"];
+//		$machineAddress = $_SESSION["client_machine_address"];
+
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+//		if (($ipAddress=="") and ($machineAddress=="")) {
+		if (!isset($ipAddress) and !isset($machineAddress)) {
+			redirect('report/viewWebAddressList');
+		}
+		
 		//added by Mike, 20200605
 		//part 1
 		$this->db->select('t1.fee, t2.item_type_id'); //, item_quantity');
@@ -1791,6 +1805,10 @@ class Browse_Model extends CI_Model
 		$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');		
 		$this->db->where('t1.notes', "UNPAID");
 		$this->db->where('t1.transaction_date', date('m/d/Y'));
+		//added by Mike, 20200821
+		$this->db->where('t1.ip_address_id', $ipAddress);
+		$this->db->where('t1.machine_address_id', $machineAddress);
+				
 		$this->db->group_by('t1.transaction_id');
 		$query = $this->db->get('transaction');
 		$rowArray = $query->result_array();
@@ -1830,7 +1848,10 @@ class Browse_Model extends CI_Model
 					'transaction_type_name' => "CASH",
 					'report_id' => 0,
 					'notes' => "PAID",
-					'transaction_quantity' => $transactionQuantity //edited by Mike, 20200610
+					'transaction_quantity' => $transactionQuantity, //edited by Mike, 20200610
+					//added by Mike, 20200821
+					'ip_address_id' => $ipAddress,
+					'machine_address_id' => $machineAddress
 				);
 
 		$this->db->insert('transaction', $data);
@@ -1843,6 +1864,10 @@ class Browse_Model extends CI_Model
 
         $this->db->where('notes',"UNPAID");
 		$this->db->where('transaction_date', date('m/d/Y'));
+		//added by Mike, 20200821
+		$this->db->where('ip_address_id', $ipAddress);
+		$this->db->where('machine_address_id', $machineAddress);
+
         $this->db->update('transaction', $data);
 		
 		//edited by Mike, 20200610
@@ -1851,6 +1876,10 @@ class Browse_Model extends CI_Model
 //		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
 		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
 		$this->db->where('transaction_id', $outputTransactionId);
+		//added by Mike, 20200821
+		$this->db->where('ip_address_id', $ipAddress);
+		$this->db->where('machine_address_id', $machineAddress);
+
 		$query = $this->db->get('transaction');		
 		$rowArray = $query->result_array();
 
@@ -1862,6 +1891,20 @@ class Browse_Model extends CI_Model
 	//TO-DO: -delete: "AndItem" in function name
 	public function payTransactionServiceAndItemPurchase($param)//$outputTransactionId)
 	{			
+		//added by Mike, 20200821
+		$this->load->library("session");
+		
+//		$ipAddress = $_SESSION["client_ip_address"];
+//		$machineAddress = $_SESSION["client_machine_address"];
+
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+//		if (($ipAddress=="") and ($machineAddress=="")) {
+		if (!isset($ipAddress) and !isset($machineAddress)) {
+			redirect('report/viewWebAddressList');
+		}
+
 		//edited by Mike, 20200605
 //		$this->db->select('notes, transaction_id');
 		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
@@ -1870,6 +1913,10 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20200608
 		$this->db->where('patient_id', $param['patientId']);
+
+		//added by Mike, 20200821
+		$this->db->where('ip_address_id', $ipAddress);
+		$this->db->where('machine_address_id', $machineAddress);
 
 		$query = $this->db->get('transaction');	
 		
@@ -1895,6 +1942,11 @@ class Browse_Model extends CI_Model
 			//edited by Mike, 20200530
 			//$this->db->where('transaction_date', date('m/d/Y'));
 			$this->db->where('transaction_id', $rowValue['transaction_id']);
+
+			//added by Mike, 20200821
+			$this->db->where('ip_address_id', $ipAddress);
+			$this->db->where('machine_address_id', $machineAddress);
+
 			$this->db->update('transaction', $data);
 			
 			//added by Mike, 20200605
@@ -1911,11 +1963,19 @@ class Browse_Model extends CI_Model
 						'report_id' => 0,
 						'notes' => $updatedValue, //"PAID"
 						'transaction_quantity' => $transactionQuantity, //edited by Mike, 20200611
+						//added by Mike, 20200821
+						'ip_address_id' => $ipAddress,
+						'machine_address_id' => $machineAddress
 					);
 			
 			//added by Mike, 20200605
 			
 			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
+
+			//added by Mike, 20200821
+			$this->db->where('ip_address_id', $ipAddress);
+			$this->db->where('machine_address_id', $machineAddress);
+
 			$this->db->update('transaction', $dataOutputTransaction);			
 			
 			//added by Mike, 20200606
@@ -1929,6 +1989,11 @@ class Browse_Model extends CI_Model
 //			$this->db->select('med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
 			$this->db->select('fee, med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
 			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
+
+			//added by Mike, 20200821
+			$this->db->where('ip_address_id', $ipAddress);
+			$this->db->where('machine_address_id', $machineAddress);
+
 			$query = $this->db->get('transaction');				
 //			$row = $query->row();			
 			$rowArray = $query->result_array();
