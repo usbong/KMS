@@ -1915,9 +1915,10 @@ class Browse_Model extends CI_Model
 		$this->db->where('patient_id', $param['patientId']);
 
 		//added by Mike, 20200821
-		$this->db->where('ip_address_id', $ipAddress);
+		//removed by Mike, 20200821
+/*		$this->db->where('ip_address_id', $ipAddress);
 		$this->db->where('machine_address_id', $machineAddress);
-
+*/
 		$query = $this->db->get('transaction');	
 		
 		$rowArray = $query->result_array();
