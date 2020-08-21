@@ -35,7 +35,12 @@
 		//added by Mike, 20200820; edited by Mike, 20200821
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
 		$machineAddress = "";
-		
+
+/*		//TO-DO: -use: this
+		$operatingSystemAndBrowserAddress = $_SERVER['HTTP_USER_AGENT'];
+		echo $operatingSystemAndBrowserAddress;
+*/
+
 		//added by Mike, 20200821
 		if (strpos($ipAddress, "::")!==false) {
 			$ipAddress = "SERVER ADDRESS";
@@ -47,13 +52,14 @@
 			$machineAddress = explode(" ", $rawMachineAddressInput)[0];
 		}
 		else {
+			//TO-DO: -reverify: this set of instructions due receives server machine address, not client machine address
 			//note: output is blank if Windows Machine
 			//We use this set of instructions with Linux Machines
 			//Reference: https://stackoverflow.com/questions/1420381/how-can-i-get-the-mac-and-the-ip-address-of-a-connected-client-in-php;
 			//last accessed: 20200820
 			//answer by: Paul Dixon, 20090914T0848
 			#run the external command, break output into lines
-			$arp=`arp -a $ipAddress`;
+			$arp=`arp -n $ipAddress`; //`arp -a $ipAddress`;
 			$lines=explode("\n", $arp);
 
 			#look for the output line describing our IP address
