@@ -35,35 +35,53 @@
 		//added by Mike, 20200820; edited by Mike, 20200821
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
 		$machineAddress = "";
+		
+		//added by Mike, 20200821
+		if (strpos($ipAddress, "::")!==false) {
+			$ipAddress = "SERVER ADDRESS";
+		}
 
-		//note: output is blank if Windows Machine
-		//We use this set of instructions with Linux Machines
-		//Reference: https://stackoverflow.com/questions/1420381/how-can-i-get-the-mac-and-the-ip-address-of-a-connected-client-in-php;
-		//last accessed: 20200820
-		//answer by: Paul Dixon, 20090914T0848
-		#run the external command, break output into lines
-		$arp=`arp -a $ipAddress`;
-		$lines=explode("\n", $arp);
+		//added by Mike, 20200821
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { //Windows machine
+			$rawMachineAddressInput =  exec('getmac');
+			$machineAddress = explode(" ", $rawMachineAddressInput)[0];
+		}
+		else {
+			//note: output is blank if Windows Machine
+			//We use this set of instructions with Linux Machines
+			//Reference: https://stackoverflow.com/questions/1420381/how-can-i-get-the-mac-and-the-ip-address-of-a-connected-client-in-php;
+			//last accessed: 20200820
+			//answer by: Paul Dixon, 20090914T0848
+			#run the external command, break output into lines
+			$arp=`arp -a $ipAddress`;
+			$lines=explode("\n", $arp);
 
-		#look for the output line describing our IP address
-		foreach($lines as $line)
-		{
-		   $cols=preg_split('/\s+/', trim($line));
-		   if ($cols[0]==$ipAddress)
-		   {
-			   $machineAddress=$cols[1];
-//			   echo $macAddress;
-		   }
+			#look for the output line describing our IP address
+			foreach($lines as $line)
+			{
+			   $cols=preg_split('/\s+/', trim($line));
+			   if ($cols[0]==$ipAddress)
+			   {
+				   $machineAddress=$cols[1];
+	//			   echo $macAddress;
+			   }
+			}
 		}
 
 /*		$_SESSION["client_ip_address"] = $ipAddress;
 		$_SESSION["client_machine_address"] = $machineAddress;
 */
+
+		//edited by Mike, 20200821
+/*
 		$ipAddress = $this->session->userdata('client_ip_address');
 		$machineAddress = $this->session->userdata('client_machine_address');
+*/
+		$this->session->set_userdata('client_ip_address', $ipAddress);
+		$this->session->set_userdata('client_machine_address', $machineAddress);
 
-		//TO-DO: -set: value for blank machine address due to Windows Machine
 
+		//TO-DO: -set: value for blank machine address due to Windows Machine		
 //		echo $_SESSION["client_ip_address"];
 //		echo $_SESSION["client_machine_address"];
 
