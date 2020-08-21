@@ -62,8 +62,14 @@
 		$ipAddress = $this->session->userdata('client_ip_address');
 		$machineAddress = $this->session->userdata('client_machine_address');
 
+		//TO-DO: -set: value for blank machine address due to Windows Machine
+
 //		echo $_SESSION["client_ip_address"];
 //		echo $_SESSION["client_machine_address"];
+
+		echo "<b><font color='#FF4500'>YOUR INTERNET PROTOCOL ADDRESS: </font></b>".$ipAddress;
+		echo "<br/>";		
+		echo "<b><font color='#FF4500'>YOUR MACHINE ADDRESS: </font></b>".$machineAddress;
 		
 		//TO-DO: -use: stored session values
 		//TO-DO: -reverify: this		
