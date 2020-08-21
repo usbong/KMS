@@ -1110,9 +1110,19 @@ class Browse_Model extends CI_Model
 
 	}	
 
-	//added by Mike, 20200517
+	//added by Mike, 20200517; edited by Mike, 20200821
 	public function addTransactionServicePurchase($param) 
 	{	
+		//added by Mike, 20200821
+		$ipAddress = $_SESSION["client_ip_address"];
+		$machineAddress = $_SESSION["client_machine_address"];
+		
+		if (($ipAddress=="") and ($machineAddress=="")) {
+			//$this->session->set_flashdata('data', $data);
+			//redirect('account/login');
+			window.open('".base_url()."/server/viewWebAddressList.php');		
+		}
+
 		$sNotesValue = "";
 
 		//we do not include 0, i.e. WI
@@ -1149,7 +1159,10 @@ class Browse_Model extends CI_Model
 					'lab_fee' => $param['labFee'],
 					'transaction_type_name' => "CASH",
 					'report_id' => 0,
-					'notes' => $sNotesValue
+					'notes' => $sNotesValue,
+					//added by Mike, 20200821
+					'ip_address_id' => $ipAddress,
+					'machine_address_id' => $machineAddres
 				);
 
 		$this->db->insert('transaction', $data);
@@ -1159,6 +1172,10 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200330; edited by Mike, 20200703
 	public function addTransactionItemPurchase($param) 
 	{		
+		//added by Mike, 20200821
+		$ipAddress = $_SESSION["client_ip_address"];
+		$machineAddress = $_SESSION["client_machine_address"];
+
 		$this->db->select('item_price, item_type_id');
 		$this->db->where('item_id', $param['itemId']);
 		$query = $this->db->get('item');
@@ -1199,7 +1216,10 @@ class Browse_Model extends CI_Model
 					'notes' => "UNPAID",
 					//added by Mike, 20200703
 					'med_fee' => $medFee,
-					'pas_fee' => $nonMedFee				
+					'pas_fee' => $nonMedFee,
+					//added by Mike, 20200821
+					'ip_address_id' => $ipAddress,
+					'machine_address_id' => $machineAddres
 				);
 
 		$this->db->insert('transaction', $data);
@@ -2555,9 +2575,36 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-	//added by Mike, 20200519
+	//added by Mike, 20200519; edited by Mike, 20200821
 	public function getServiceAndItemDetailsListViaNotesUnpaid() 
 	{		
+		//added by Mike, 20200821
+/*		
+		if(!isset($_SESSION)) 
+		{ 		
+			session_start();
+		}
+*/		
+/*	//TO-DO: -update: this
+		$this->load->library("session");
+		
+//		$ipAddress = $_SESSION["client_ip_address"];
+//		$machineAddress = $_SESSION["client_machine_address"];
+$ipAddress = $this->session->userdata("client_ip_address");
+$machineAddress = $this->session->userdata("client_machine_address");
+
+//		$_SESSION["client_ip_address"] = $ipAddress;
+//		$_SESSION["client_machine_address"] = $machineAddress;
+		
+		echo "ipAddress: ".$ipAddress."<br/>";
+		echo "machineAddress: ".$machineAddress."<br/>";
+				
+//		if (($ipAddress=="") and ($machineAddress=="")) {
+		if (!isset($ipAddress) and !isset($machineAddress)) {
+//			session_destroy;			
+			redirect(base_url()."/server/viewWebAddressList.php");			  
+		}
+*/	
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t3.patient_name, t3.patient_id');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -2571,7 +2618,11 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 202005029
 		$this->db->not_like('t2.notes', "IN-QUEUE");
-		
+	
+		//added by Mike, 20200821		
+		$this->db->where('t2.ip_address_id', $ipAddress);		
+		$this->db->where('t2.machine_id', $machineAddress);
+	
 		//edited by Mike, 20200401
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');		
 		$query = $this->db->get('item');
