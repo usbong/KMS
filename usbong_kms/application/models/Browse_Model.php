@@ -136,7 +136,6 @@ class Browse_Model extends CI_Model
 			}
 /*
 			if ($bIsSamePatientId) {
-
 			else {
 				
 				if (in_array($row,$outputArray)) {
@@ -590,7 +589,6 @@ class Browse_Model extends CI_Model
 		$this->db->where('item_id', $param['itemId']);
 		$query = $this->db->get('item');
 		$row = $query->row();
-
 		$data = array(
 					'patient_id' => 0,
 					'item_id' => $param['itemId'],
@@ -601,7 +599,6 @@ class Browse_Model extends CI_Model
 					'report_id' => 0,
 					'notes' => "UNPAID"
 				);
-
 		$this->db->insert('transaction', $data);
 		return $this->db->insert_id();
 	}	
@@ -691,7 +688,6 @@ class Browse_Model extends CI_Model
 		$data = array(
 					'transaction_quantity' => "2"
 				);
-
         $this->db->where('transaction_id',$param['transactionId']);
         $this->db->update('transaction', $data);
 */
@@ -907,13 +903,11 @@ class Browse_Model extends CI_Model
 /*					
 					//MEDICINE															
 						$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
-
 						$data = array(
 							'receipt_type_id' => $param['receiptTypeId'],
 							'transaction_id' => $param['transactionId'],
 							'receipt_number' => $param['receiptNumberMOSC']
 						);				
-
 						array_push($outputArray, $data);						
 */						
 					}
@@ -982,7 +976,6 @@ class Browse_Model extends CI_Model
 					'transaction_id' => $param['transactionId'],
 					'receipt_number' => $param['receiptNumber']
 				);
-
 		$this->db->insert('receipt', $data);
 //		return $this->db->insert_id();
 */
@@ -1090,7 +1083,6 @@ class Browse_Model extends CI_Model
 					'transaction_id' => $param['transactionId'],
 					'receipt_number' => $param['receiptNumber']
 				);
-
 		$this->db->insert('receipt', $data);
 //		return $this->db->insert_id();
 */
@@ -1113,6 +1105,7 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200517; edited by Mike, 20200821
 	public function addTransactionServicePurchase($param) 
 	{	
+/*
 		//added by Mike, 20200821
 		$ipAddress = $_SESSION["client_ip_address"];
 		$machineAddress = $_SESSION["client_machine_address"];
@@ -1122,7 +1115,7 @@ class Browse_Model extends CI_Model
 			//redirect('account/login');
 			window.open('".base_url()."/server/viewWebAddressList.php');		
 		}
-
+*/
 		$sNotesValue = "";
 
 		//we do not include 0, i.e. WI
@@ -1159,10 +1152,10 @@ class Browse_Model extends CI_Model
 					'lab_fee' => $param['labFee'],
 					'transaction_type_name' => "CASH",
 					'report_id' => 0,
-					'notes' => $sNotesValue,
+					'notes' => $sNotesValue/*,
 					//added by Mike, 20200821
 					'ip_address_id' => $ipAddress,
-					'machine_address_id' => $machineAddres
+					'machine_address_id' => $machineAddres*/
 				);
 
 		$this->db->insert('transaction', $data);
@@ -1172,10 +1165,11 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200330; edited by Mike, 20200703
 	public function addTransactionItemPurchase($param) 
 	{		
+/*	
 		//added by Mike, 20200821
 		$ipAddress = $_SESSION["client_ip_address"];
 		$machineAddress = $_SESSION["client_machine_address"];
-
+*/
 		$this->db->select('item_price, item_type_id');
 		$this->db->where('item_id', $param['itemId']);
 		$query = $this->db->get('item');
@@ -1216,10 +1210,10 @@ class Browse_Model extends CI_Model
 					'notes' => "UNPAID",
 					//added by Mike, 20200703
 					'med_fee' => $medFee,
-					'pas_fee' => $nonMedFee,
+					'pas_fee' => $nonMedFee/*,
 					//added by Mike, 20200821
 					'ip_address_id' => $ipAddress,
-					'machine_address_id' => $machineAddres
+					'machine_address_id' => $machineAddres*/
 				);
 
 		$this->db->insert('transaction', $data);
@@ -1527,7 +1521,6 @@ class Browse_Model extends CI_Model
 			$this->db->where('transaction_id',$iTransactionId);
 			$query = $this->db->get('transaction');
 			$row = $query->row();
-
 			$transactionQuantity = $row->transaction_quantity;
 	*/
 	
@@ -1930,7 +1923,6 @@ class Browse_Model extends CI_Model
 		$data = array(
 					'notes' => "PAID"
 				);
-
         $this->db->like('notes',"UNPAID");
 		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
@@ -1967,7 +1959,6 @@ class Browse_Model extends CI_Model
 		$data = array(
 					'notes' => "PAID"
 				);
-
         $this->db->like('notes',"UNPAID");
 		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
@@ -2284,9 +2275,7 @@ class Browse_Model extends CI_Model
 		$this->db->select('medical_doctor_name', 'medical_doctor_id');
 //		$this->db->distinct('medical_doctor_name');
 		$this->db->like('medical_doctor_name', $param['nameParam']);
-
 		$row = $query->row();		
-
 		return $row;
 	}	
 */
@@ -2592,7 +2581,6 @@ class Browse_Model extends CI_Model
 //		$machineAddress = $_SESSION["client_machine_address"];
 $ipAddress = $this->session->userdata("client_ip_address");
 $machineAddress = $this->session->userdata("client_machine_address");
-
 //		$_SESSION["client_ip_address"] = $ipAddress;
 //		$_SESSION["client_machine_address"] = $machineAddress;
 		
@@ -2620,9 +2608,9 @@ $machineAddress = $this->session->userdata("client_machine_address");
 		$this->db->not_like('t2.notes', "IN-QUEUE");
 	
 		//added by Mike, 20200821		
-		$this->db->where('t2.ip_address_id', $ipAddress);		
+/*		$this->db->where('t2.ip_address_id', $ipAddress);		
 		$this->db->where('t2.machine_id', $machineAddress);
-	
+*/	
 		//edited by Mike, 20200401
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');		
 		$query = $this->db->get('item');
@@ -2709,7 +2697,6 @@ $machineAddress = $this->session->userdata("client_machine_address");
 		foreach ($rowArray as $value) {
 /*echo ">>";
 echo "now: ".$iQuantity;
-
 echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 */
 			//edited by Mike, 20200422
