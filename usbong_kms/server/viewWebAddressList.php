@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20200820
+  @date updated: 20200821
 	
   Computer Web Browser Address (Example):
   1) http://localhost/usbong_kms/server/viewWebAddressList.php
@@ -32,6 +32,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<?php
+		session_start();
+
 		//added by Mike, 20200820; edited by Mike, 20200821
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
 		$machineAddress = "";
@@ -56,13 +58,11 @@
 		   }
 		}
 
-		session_start();
-
 		$_SESSION["client_ip_address"] = $ipAddress;
 		$_SESSION["client_machine_address"] = $machineAddress;
 
-		//echo $_SESSION["client_ip_address"];
-		//echo $_SESSION["client_machine_address"];
+		echo $_SESSION["client_ip_address"];
+		echo $_SESSION["client_machine_address"];
 		
 		//TO-DO: -use: stored session values
 		//TO-DO: -reverify: this		
@@ -158,94 +158,94 @@
 ?>
 <h2>Computer Web Address List (MOSC)</h2>
 <h2>I. SEARCH</h2>
-<h3>1) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/browse/searchPatient">Search Patient</a></h3>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/browse/searchPatient">http://mosc-accounting/usbong_kms/index.php/browse/searchPatient</a></h3>
-<h3>2) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/browse/searchMedicine">Search Medicine</a></h3>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/browse/searchMedicine">http://mosc-accounting/usbong_kms/index.php/browse/searchMedicine</a><br/>
-<h3>3) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/browse/searchNonMedicine">Search Non-Medicine</a></h3>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/browse/searchNonMedicine">http://mosc-accounting/usbong_kms/index.php/browse/searchNonMedicine</a><br/>
+<h3>1) <a target="_blank" href="http://localhost/usbong_kms/index.php/browse/searchPatient">Search Patient</a></h3>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/browse/searchPatient">http://localhost/usbong_kms/index.php/browse/searchPatient</a></h3>
+<h3>2) <a target="_blank" href="http://localhost/usbong_kms/index.php/browse/searchMedicine">Search Medicine</a></h3>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/browse/searchMedicine">http://localhost/usbong_kms/index.php/browse/searchMedicine</a><br/>
+<h3>3) <a target="_blank" href="http://localhost/usbong_kms/index.php/browse/searchNonMedicine">Search Non-Medicine</a></h3>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/browse/searchNonMedicine">http://localhost/usbong_kms/index.php/browse/searchNonMedicine</a><br/>
 
 <h2>II. INFORMATION DESK</h2>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReportPatientQueue">http://mosc-accounting/usbong_kms/index.php/report/viewReportPatientQueue</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReportPatientQueue">http://localhost/usbong_kms/index.php/report/viewReportPatientQueue</a><br/>
 
 <h2>III. SUMMARY REPORTS FOR THE DAY</h2>
-<h3>1) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified</a>
-<h3>2) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">http://mosc-accounting/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay</a>
+<h3>1) <a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">http://localhost/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified</a>
+<h3>2) <a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">http://localhost/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay</a>
 
 <h2>IV. PAYSLIPS</h2>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">Payslip SYSON, PEDRO (MOSC)</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">Payslip SYSON, PEDRO (MOSC)</a><br/>
 <br/>
-http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/name<br/>
+http://localhost/usbong_kms/index.php/report/viewpayslipwebfor/name<br/>
 <br/>
 where: name = keyword of medical doctor name<br/>
 <br/>
 Examples:<br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/Pedro</a><br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/Peter">http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/Peter</a><br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/Chastity</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">http://localhost/usbong_kms/index.php/report/viewpayslipwebfor/Pedro</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewpayslipwebfor/Peter">http://localhost/usbong_kms/index.php/report/viewpayslipwebfor/Peter</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">http://localhost/usbong_kms/index.php/report/viewpayslipwebfor/Chastity</a><br/>
 
 <h2>V. REPORTS</h2>
 <b>1) MEDICINE</b><br/>
-a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReportMedicine">
-http://mosc-accounting/usbong_kms/index.php/report/viewReportMedicine</a><br/>
-b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReportMedicineUnified">
-http://mosc-accounting/usbong_kms/index.php/report/viewReportMedicineUnified</a><br/>
+a) <a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReportMedicine">
+http://localhost/usbong_kms/index.php/report/viewReportMedicine</a><br/>
+b) <a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReportMedicineUnified">
+http://localhost/usbong_kms/index.php/report/viewReportMedicineUnified</a><br/>
 <br/>
 <b>2) MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)</b><br/>
-a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReportMedicineAsterisk">
-http://mosc-accounting/usbong_kms/index.php/report/viewReportMedicineAsterisk</a><br/>
-b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified">
-http://mosc-accounting/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified</a><br/>
+a) <a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReportMedicineAsterisk">
+http://localhost/usbong_kms/index.php/report/viewReportMedicineAsterisk</a><br/>
+b) <a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified">
+http://localhost/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified</a><br/>
 <br/>
 <b>3) NON-MEDICINE</b><br/>
-a) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReportNonMedicine">
-http://mosc-accounting/usbong_kms/index.php/report/viewReportNonMedicine</a><br/>
-b) <a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReportNonMedicineUnified">
-http://mosc-accounting/usbong_kms/index.php/report/viewReportNonMedicineUnified</a><br/>
+a) <a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReportNonMedicine">
+http://localhost/usbong_kms/index.php/report/viewReportNonMedicine</a><br/>
+b) <a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReportNonMedicineUnified">
+http://localhost/usbong_kms/index.php/report/viewReportNonMedicineUnified</a><br/>
 
 <h2>VI. OFFICIAL RECEIPTS:</h2>
 <b>1) MOSC</b><br/>
 <!-- added by Mike, 20200812 -->
 <b>a) VIEW REPORT FOR THE DAY</b><br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportForTheDay">
-http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportForDay<br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReceiptReportForTheDay">
+http://localhost/usbong_kms/index.php/report/viewReceiptReportForDay<br/>
 </a>
 <br/>
 <b>b) VIEW REPORT FOR PREVIOUS MONTH</b><br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReport">http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReport</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReceiptReport">http://localhost/usbong_kms/index.php/report/viewReceiptReport</a><br/>
 <br/>
 <!-- TO-DO: -add: year -->
 <b>c) SET SPECIFIC MONTH</b><br/>
-http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportFor/month<br/>
+http://localhost/usbong_kms/index.php/report/viewReceiptReportFor/month<br/>
 <br/>
 where: month = transactions' month<br/>
 <br/>
 Example:<br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportFor/06">
-http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportFor/06</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReceiptReportFor/06">
+http://localhost/usbong_kms/index.php/report/viewReceiptReportFor/06</a><br/>
 <br/>
 where "06" = "June 2020"<br/>
 <b>2) PAS</b><br/>
 <!-- added by Mike, 20200812 -->
 <b>a) VIEW REPORT FOR THE DAY</b><br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportPASForTheDay">
-http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportPASForDay<br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReceiptReportPASForTheDay">
+http://localhost/usbong_kms/index.php/report/viewReceiptReportPASForDay<br/>
 </a>
 <br/>
 <b>b) VIEW REPORT FOR PREVIOUS MONTH</b><br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportPAS">
-http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportPAS</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReceiptReportPAS">
+http://localhost/usbong_kms/index.php/report/viewReceiptReportPAS</a><br/>
 <br/>
 <b>c) SET SPECIFIC MONTH</b><br/>
-http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportPASFor/month<br/>
+http://localhost/usbong_kms/index.php/report/viewReceiptReportPASFor/month<br/>
 <br/>
 where: month = transactions' month<br/>
 <br/>
 Example:<br/>
-<a target="_blank" href="http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportPASFor/06">
-http://mosc-accounting/usbong_kms/index.php/report/viewReceiptReportPASFor/06</a><br/>
+<a target="_blank" href="http://localhost/usbong_kms/index.php/report/viewReceiptReportPASFor/06">
+http://localhost/usbong_kms/index.php/report/viewReceiptReportPASFor/06</a><br/>
 <br/>
 where "06" = "June 2020"<br/>
 
