@@ -218,27 +218,7 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	//edited by Mike, 20200615
 	public function confirmNonMedicine()
-	{
-		//edited by Mike, 20200615
-/*		
-		//edited by Mike, 20200407
-		$data['nameParam'] = $_POST['nameParam'];
-		
-		//added by Mike, 20200328
-		if (!isset($data['nameParam'])) {
-			redirect('browse/searchNonMedicine');
-		}
-		
-		date_default_timezone_set('Asia/Hong_Kong');
-		$dateTimeStamp = date('Y/m/d H:i:s');
-
-		$this->load->model('Browse_Model');
-	
-		$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaName($data);
-
-		$this->load->view('searchNonMedicine', $data);
-*/			
-		
+	{		
 		$data['nameParam'] = $_POST['nameParam'];
 		
 		//added by Mike, 20200328
@@ -348,6 +328,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$outputArray = [];
 		$outputArray = array();
 
+		//TO-DO: -reverify: this
+		//added by Mike, 20200821
+		$iSameItemCount = 0;
+		$bHasNoneZeroQuantity = false;
+
 		if ($data['result'] == True) {
 			foreach ($data['result'] as $value) {				
 			
@@ -377,34 +362,68 @@ class Browse extends CI_Controller { //MY_Controller {
 						array_push($outputArray, $value);						
 					}
 */						
-					//edited by Mike, 20200530
-					array_push($outputArray, $value);						
-					
-					//TO-DO: -add: auto-verify if there exists another set of the item in the inventory
-					
-/*
-					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
-//					if ($value['quantity_in_stock'] == 0) {
+					//edited by Mike, 20200530; removed by Mike, 20200821
+					array_push($outputArray, $value);
+					//Note: We show only one (1) transaction of the same item whose in-stock count is 0.
+					//This is to make the output list shorter.
+					//The list is ordered by expiration date.
+/*					//TO-DO: -add: this with correct non-medicine inventory count
+					if (!$bHasNoneZeroQuantity) {
+						if ($iSameItemCount == ($iSameItemTotalCount - 1)) { //if last item in the list of same items
+							array_push($outputArray, $value);
+						}
 					}
-					else {						
-						array_push($outputArray, $value);						
+					else {
+						array_push($outputArray, $value);
 					}
-*/
+
+					$iSameItemCount = $iSameItemCount + 1;
+*/					
 				}
-				//added by Mike, 20200522
+				//added by Mike, 20200522; edited by Mike, 20200821
 				else {
-					//edited by Mike, 20200530
+/*					//TO-DO: -add: this with correct non-medicine inventory count
 					
-/*
-					//edited by Mike, 20200525
-//					if ($value['resultQuantityInStockNow'] == 0) {
-					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
-//					if ($value['quantity_in_stock'] == 0) {
+					//identify if there are more than 1 transaction of the same item in the list
+					$iSameItemTotalCount = 0;
+					$bHasNoneZeroQuantity = false;
+					foreach ($data['result'] as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							$iSameItemTotalCount = $iSameItemTotalCount + 1;
+							
+							if ($outputValue['resultQuantityInStockNow']!=0) {
+								$bHasNoneZeroQuantity = true;								
+							}							
+						}
 					}
-					else {						
-						array_push($outputArray, $value);						
+					
+//					echo $iSameItemCount;
+					
+					if ($iSameItemTotalCount>1) {							
+						if ($value['resultQuantityInStockNow']!=0) {
+							array_push($outputArray, $value);						
+						}									
+
 					}
+					else {
+						//array_push($outputArray, $value);						
+
+						if ($iSameItemTotalCount==1) {
+							//edited by Mike, 20200812
+							if (strpos($value['item_name'],"*")!==false) {
+									array_push($outputArray, $value);
+							}	
+							else {
+								if ($value['resultQuantityInStockNow']!=0) {
+									array_push($outputArray, $value);
+								}
+							}
+						}
+					}
+
+					$iSameItemCount = 1;
 */
+
 					array_push($outputArray, $value);						
 
 					//delete the items with zero in-stock value if there exists another set of such item in the inventory
@@ -416,6 +435,18 @@ class Browse extends CI_Controller { //MY_Controller {
 						}						
 					}
 					unset($outputValue);
+/*					
+					//TO-DO: -reverify: this if still necessary
+					//delete the items with zero in-stock value if there exists another set of such item in the inventory
+					foreach ($outputArray as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							if ($outputValue['resultQuantityInStockNow'] == 0) {
+								$outputValue = $value;								
+							}
+						}						
+					}
+					unset($outputValue);
+*/					
 				}
 			}
 		}
