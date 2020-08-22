@@ -1944,10 +1944,11 @@ class Browse_Model extends CI_Model
 			//$this->db->where('transaction_date', date('m/d/Y'));
 			$this->db->where('transaction_id', $rowValue['transaction_id']);
 
+/*			//removed by Mike, 20200822
 			//added by Mike, 20200821
 			$this->db->where('ip_address_id', $ipAddress);
 			$this->db->where('machine_address_id', $machineAddress);
-
+*/
 			$this->db->update('transaction', $data);
 			
 			//added by Mike, 20200605
