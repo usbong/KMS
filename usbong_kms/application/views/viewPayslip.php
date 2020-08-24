@@ -394,8 +394,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<!-- added by Mike, 20200819 -->
-						<td class ="tableHeaderColumnFee">				
+						<!-- added by Mike, 20200819; edited by Mike, 20200824 -->
+						<td class ="columnTableHeaderFee">				
 								<div class="tableHeader">
 							<?php
 									echo "MINOR<br/>SET";

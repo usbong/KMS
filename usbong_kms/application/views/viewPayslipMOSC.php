@@ -394,7 +394,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$iMinorsetFee = 500;
 									$iTotalMinorsetFee = $iTotalMinorsetFee + 500;
 									
-									$iFee = $iFee - 500;
+									//edited by Mike, 20200824
+//									$iFee = $iFee - 500;
+									$iFee = $iFee;
 								}								
 								
 								echo $iFee;
