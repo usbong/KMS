@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200819
+' @date updated: 20200824
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -454,12 +454,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			if (notes.indexOf("DEXA")!==-1) {
 				professionalFee = parseInt(professionalFee) + 500;
 			}
-			
+
+/*	//removed by Mike, 20200824			
 			//added by Mike, 20200819
 			if (notes.indexOf("MINORSET")!==-1) {
 				professionalFee = parseInt(professionalFee) + 500;
 			}
-
+*/
 			if (notes.trim()==="") {
 				notes = "NONE";
 			}

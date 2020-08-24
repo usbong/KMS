@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200603
+' @date updated: 20200824
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -332,6 +332,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$iTotalMOSC = 0;
 		$iTotalNetPF = 0;
 		$iTotalXRayFee = 0;
+
+		//added by Mike, 20200824
+		$iTotalMinorsetFee = 0;
 	
 		//get only name strings from array 
 		if (isset($result)) {			
@@ -391,6 +394,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<!-- added by Mike, 20200819 -->
+						<td class ="tableHeaderColumnFee">				
+								<div class="tableHeader">
+							<?php
+									echo "MINOR<br/>SET";
+							?>
+								</div>
+						</td>						
 						<td class ="columnTableHeaderNotes">				
 								<div class="tableHeader">
 							<?php
@@ -448,6 +459,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//output: whole numbers							
 //								echo floor(($value['fee']*100)/100);
 								$iFee = floor(($value['fee']*100)/100);
+								
+								//added by Mike, 20200819
+								$iMinorsetFee = 0;
+								if (strpos($value['notes'],"MINORSET")!==false){
+									$iMinorsetFee = 500;
+									$iTotalMinorsetFee = $iTotalMinorsetFee + 500;
+									
+									//edited by Mike, 20200824
+//									$iFee = $iFee - 500;
+									$iFee = $iFee;
+								}						
+								
 								echo $iFee;
 								
 								$iTotalFee += $iFee; //$value['fee'];
@@ -474,6 +497,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
 										$iMOSC = ($value['fee']-500)*.30;
 									}
+/*									//removed by Mike, 20200824									
+									//added by Mike, 20200824
+									else if (strpos(strtoupper($value['notes']), "MINORSET")!==false) {
+										$iMOSC = ($value['fee']-500)*.30;
+									}									
+*/									
 									else {
 										$iMOSC = $value['fee']*.30;
 									}
@@ -513,6 +542,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
 										$iNetPF = ($value['fee']-500)*.70+500;
 									}
+/*									//removed by Mike, 20200824									
+									//added by Mike, 20200824
+									else if (strpos(strtoupper($value['notes']), "MINORSET")!==false) {
+										$iNetPF = ($value['fee']-500)*.70+500;
+									}
+*/									
 									else {
 										$iNetPF = $value['fee']*.70;
 
@@ -527,6 +562,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<!-- added by Mike, 20200824 -->
+						<td class ="column">				
+								<div id="minorsetFeeId<?php echo $iCount?>">
+							<?php
+								//output: whole numbers
+								echo $iMinorsetFee;								
+							?>
+								</div>
+						</td>						
 						<td class ="notesColumn">				
 							<div id="notesId<?php echo $iCount?>">
 						<?php
@@ -608,6 +652,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>
 						</div>
 				</td>
+				<!-- added by Mike, 20200824 -->
+				<td class ="column">				
+						<div>
+					<?php
+						echo "<b>".$iTotalMinorsetFee."</b>";
+					?>
+						</div>
+				</td>				
 				<td class ="column">				
 						<div>
 					<?php
