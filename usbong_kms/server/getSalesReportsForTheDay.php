@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200819
+  @date updated: 20200825
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -89,6 +89,7 @@
 						$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 					}
 					
+/*					//edited by Mike, 20200825
 					//added by Mike, 20200819
 					if (strpos($value['notes'],"MINORSET")!==false) {
 						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;
@@ -96,6 +97,12 @@
 						$iFeeTotalCount = $iFeeTotalCount - 500;
 						$iQuantityTotalCount = $iQuantityTotalCount - 1;
 					}
+*/
+					if (strpos($value['notes'],"MINORSET")!==false) {
+						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+					}
+
+					
 /*				}					
 */
 			}
@@ -512,16 +519,17 @@
 								//added by Mike, 20200531
 								$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;
 								
-								//TO-DO: -update: if +DEXA
+								//TO-DO: -reverify: if +DEXA
 							}
-							else {
-								if (strpos($value['notes'],"DEXA")!==false) {
+							else {	
+								//removed by Mike, 20200825
+/*								if (strpos($value['notes'],"DEXA")!==false) {
 									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 									
 									//added by Mike, 20200531
 									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 								}
-								else if (strpos($value['notes'],"NC")!==false) {
+								else*/if (strpos($value['notes'],"NC")!==false) {
 									$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 								}
 								else if (strpos($value['notes'],"NO CHARGE")!==false) {
@@ -531,6 +539,19 @@
 									$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 								}
 							}
+
+							//TO-DO: -reverify: this
+							if (strpos($value['notes'],"DEXA")!==false) {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+								
+								//added by Mike, 20200531
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+							}
+							
+							if (strpos($value['notes'],"MINORSET")!==false) {
+								$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+							}
+							
 /*
 						}					
 */						
@@ -897,39 +918,41 @@
 	//added by Mike, 20200524
 	echo "--<br />";
 
+	//edited by Mike, 20200825
 	if ($iMinorsetQuantityTotalCount == 0) {
-		echo "There are no Minorset transaction for the day.<br /><br />";
-	}
-	else if ($iMinorsetQuantityTotalCount == 1) {
-		echo "Minorset transaction for the day.<br /><br />";
+		echo "There are no Minorset transactions for the day.<br /><br />";
 	}
 	else {
-		echo "Minorset transactions for the day.<br /><br />";
+		if ($iMinorsetQuantityTotalCount == 1) {
+			echo "Minorset transaction for the day.<br /><br />";
+		}
+		else {
+			echo "Minorset transactions for the day.<br /><br />";
+		}
+		
+		$iMinorsetFeeTotalCount = $iMinorsetQuantityTotalCount*500;
+		//write as .txt file
+		$jsonResponse = array(
+				"iFeeTotalCount" => $iMinorsetFeeTotalCount,
+				"iQuantityTotalCount" => $iMinorsetQuantityTotalCount,
+				"iNetFeeTotalCount" => $iMinorsetFeeTotalCount
+		);
+		$responses[] = $jsonResponse;
+		
+		$outputReportMinorset = json_encode($responses);
+		
+		echo $outputReportMinorset;
+
+		$sDateToday = date("Y-m-d");
+
+		//update the file location accordingly
+		//edited by Mike, 20200524
+		//note: \\nonMedicine due to \n is new line
+		//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
+		$file = $fileBasePath."Minorset".$sDateToday.".txt";
+
+		file_put_contents($file, $outputReportMinorset, LOCK_EX);				
 	}
-	
-	$iMinorsetFeeTotalCount = $iMinorsetQuantityTotalCount*500;
-	//write as .txt file
-	$jsonResponse = array(
-			"iFeeTotalCount" => $iMinorsetFeeTotalCount,
-			"iQuantityTotalCount" => $iMinorsetQuantityTotalCount,
-			"iNetFeeTotalCount" => $iMinorsetFeeTotalCount
-	);
-	$responses[] = $jsonResponse;
-	
-	$outputReportMinorset = json_encode($responses);
-	
-	echo $outputReportMinorset;
-
-	$sDateToday = date("Y-m-d");
-
-	//update the file location accordingly
-	//edited by Mike, 20200524
-	//note: \\nonMedicine due to \n is new line
-	//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
-	$file = $fileBasePath."Minorset".$sDateToday.".txt";
-
-	file_put_contents($file, $outputReportMinorset, LOCK_EX);				
-					
 	//echo $outputReportMinorset;
 	
 	//close database connection
