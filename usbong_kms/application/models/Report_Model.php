@@ -362,6 +362,10 @@ class Report_Model extends CI_Model
 		//$this->db->and_not_like('t2.notes',"NC");
 		$this->db->where('t2.notes!=',"IN-QUEUE; PAID");
 
+		//added by Mike, 20200828
+		$this->db->where('t2.ip_address_id!=',"");
+		$this->db->where('t2.machine_address_id!=',"");
+
 		$this->db->like('t3.medical_doctor_name', $param['medicalDoctorName']);
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
 		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
