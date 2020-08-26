@@ -387,7 +387,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//output: whole numbers							
 //								echo floor(($value['fee']*100)/100);
 								$iFee = floor(($value['fee']*100)/100);
-								
+																
 								//added by Mike, 20200819
 								$iMinorsetFee = 0;
 								if (strpos($value['notes'],"MINORSET")!==false){
@@ -398,7 +398,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //									$iFee = $iFee - 500;
 									$iFee = $iFee;
 								}								
-								
+
 								echo $iFee;
 								
 								$iTotalFee += $iFee; //$value['fee'];
