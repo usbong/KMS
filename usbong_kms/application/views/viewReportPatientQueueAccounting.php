@@ -495,7 +495,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200529
 		function myPopupFunctionDeletePatientTransaction(transactionId) {				
 			//TO-DO: -update: this
-			window.location.href = "<?php echo site_url('browse/deleteTransactionFromPatient/"+transactionId+"');?>";
+			window.location.href = "<?php echo site_url('browse/deleteTransactionFromPatientAccounting/"+transactionId+"');?>";
 		}	
 
 
@@ -570,14 +570,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Search Patient Names<br/>@Information Desk
+				Search Patient Names<br/>@Accounting Unit
 			</h2>		
 		</td>
 	  </tr>
 	</table>
 	<br/>
 	<!-- Form -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmPatientInformationDesk')?>">	
+	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmPatient')?>">	
 		<?php
 			$itemCounter = 1;
 		?>
@@ -759,11 +759,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 	
 						<td class ="column">				
-<!--	//removed by Mike, 20200530
 							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
--->
+<!--	//removed by Mike, 20200826
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
-
+-->
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];
@@ -861,7 +860,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<tr>
 		<td>
 		<!-- Form -->
-		<form method="post" action="<?php echo site_url('browse/addPatientNameInformationDesk/')?>">
+		<form method="post" action="<?php echo site_url('browse/addPatientNameAccounting/')?>">
 			<div>
 				<table width="100%">
 				  <tr>

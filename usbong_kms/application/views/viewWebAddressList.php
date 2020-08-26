@@ -9,13 +9,17 @@
 
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20200821
+  @date updated: 20200826
 	
   Computer Web Browser Address (Example):
-  1) http://localhost/usbong_kms/server/viewWebAddressList.php
+  1) http://localhost/usbong_kms/index.php/report/viewWebAddressList
   
   Note:
-  1) Update the file location
+  1) Previously, we used this PHP page without the CodeIgniter framework
+  http://localhost/usbong_kms/server/viewWebAddressList.php
+
+  2) Update the file location
+  
 -->
 <?php
 //defined('BASEPATH') OR exit('No direct script access allowed');
@@ -92,9 +96,12 @@
 //		echo $_SESSION["client_machine_address"];
 
 		echo "<b><font color='#FF4500'>YOUR INTERNET PROTOCOL ADDRESS: </font></b>".$ipAddress;
+		//removed by Mike, 20200826
+		//TO-DO: -update: this
+/*		
 		echo "<br/>";		
 		echo "<b><font color='#FF4500'>YOUR MACHINE ADDRESS: </font></b>".$machineAddress;
-		
+*/		
 		//TO-DO: -use: stored session values
 		//TO-DO: -reverify: this		
 	?>
@@ -196,8 +203,8 @@
 <h3>3) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine">Search Non-Medicine</a></h3>
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine">http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine</a><br/>
 
-<h2>II. INFORMATION DESK</h2>
-<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueue">http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueue</a><br/>
+<h2>II. INFORMATION DESK + ACCOUNTING UNIT</h2>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueue">http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueueAccounting</a><br/>
 
 <h2>III. SUMMARY REPORTS FOR THE DAY</h2>
 <h3>1) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
