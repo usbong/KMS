@@ -385,7 +385,7 @@ class Browse extends CI_Controller { //MY_Controller {
 /*					//TO-DO: -add: this with correct non-medicine inventory count
 					
 					//identify if there are more than 1 transaction of the same item in the list
-					$iSameItemTotalCount = 0;
+					$iSameItemTotalCount = -1; //0; //edited by Mike, 20200826
 					$bHasNoneZeroQuantity = false;
 					foreach ($data['result'] as &$outputValue) {
 						if ($outputValue['item_id'] == $value['item_id']) {
@@ -419,6 +419,11 @@ class Browse extends CI_Controller { //MY_Controller {
 								}
 							}
 						}
+						//added by Mike, 20200826
+						//if $iSameItemTotalCount==0
+						else {
+							array_push($outputArray, $value);
+						}						
 					}
 
 					$iSameItemCount = 1;
@@ -658,14 +663,14 @@ class Browse extends CI_Controller { //MY_Controller {
 				//added by Mike, 20200522
 				else {
 					//identify if there are more than 1 transaction of the same item in the list
-					$iSameItemTotalCount = 0;
+					$iSameItemTotalCount = -1; //0; //edited by Mike, 20200826
 					$bHasNoneZeroQuantity = false;
 					foreach ($data['result'] as &$outputValue) {
 						if ($outputValue['item_id'] == $value['item_id']) {
 							$iSameItemTotalCount = $iSameItemTotalCount + 1;
 							
 							if ($outputValue['resultQuantityInStockNow']!=0) {
-								$bHasNoneZeroQuantity = true;								
+								$bHasNoneZeroQuantity = true;		
 							}							
 						}
 					}
@@ -676,7 +681,6 @@ class Browse extends CI_Controller { //MY_Controller {
 						if ($value['resultQuantityInStockNow']!=0) {
 							array_push($outputArray, $value);						
 						}									
-
 					}
 					else {
 						//array_push($outputArray, $value);						
@@ -691,6 +695,11 @@ class Browse extends CI_Controller { //MY_Controller {
 									array_push($outputArray, $value);
 								}
 							}
+						}
+						//added by Mike, 20200826
+						//if $iSameItemTotalCount==0
+						else {
+							array_push($outputArray, $value);
 						}
 					}
 
