@@ -1918,9 +1918,9 @@ class Browse_Model extends CI_Model
 		//removed by Mike, 20200821
 /*		$this->db->where('ip_address_id', $ipAddress);
 		$this->db->where('machine_address_id', $machineAddress);
-*/
+*/		
 		$query = $this->db->get('transaction');	
-		
+	
 		$rowArray = $query->result_array();
 
 		//added by Mike, 20200611
@@ -2685,7 +2685,8 @@ class Browse_Model extends CI_Model
 			redirect('report/viewWebAddressList');			
 		}
 	
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t3.patient_name, t3.patient_id');
+		//edited by Mike, 20200826
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t3.patient_name, t3.patient_id');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->join('patient as t3', 't2.patient_id = t3.patient_id', 'LEFT');
@@ -2715,7 +2716,63 @@ class Browse_Model extends CI_Model
 		}
 
 		
-		return $rowArray;
+		//removed by Mike, 20200826
+		//return $rowArray;
+				
+		//added by Mike, 20200826
+		//------------------------------
+		//verify if the MINORSET non-med item exists in the list
+		$hasMinorSetInCartList=false;
+		foreach ($rowArray as $row) {
+			if (strtoupper($row['item_name'])=="MINORSET") {
+				$hasMinorSetInCartList = true;
+			}
+		}
+		
+		//verify if the keyword MINORSET exists in the Notes of the patient transaction
+		if ($hasMinorSetInCartList) {
+			foreach ($rowArray as &$row) {
+				if ($row['patient_id']>0) {
+					if (strpos(strtoupper($row['notes']),"MINORSET")!==false) {
+					}
+					else {
+						$row['notes'] = $row['notes']."; MINORSET";
+					}					
+					$data = array(
+						'notes' => $row['notes']
+					);
+
+					$this->db->where('patient_id',$row['patient_id']);
+					$this->db->where('transaction_date', date('m/d/Y'));				
+					$this->db->update('transaction', $data);
+				}
+			}
+			unset($row);
+		}
+		else {
+			foreach ($rowArray as &$row) {
+				if ($row['patient_id']>0) {
+					if (strpos(strtoupper($row['notes']),"MINORSET")!==false) {
+						$row['notes'] = str_replace("; MINORSET", "", $row['notes']);
+						$row['notes'] = str_replace("MINORSET; ", "", $row['notes']);
+					}
+					else {
+					}
+										
+					$data = array(
+						'notes' => $row['notes']
+					);
+
+					$this->db->where('patient_id',$row['patient_id']);
+					$this->db->where('transaction_date', date('m/d/Y'));				
+					$this->db->update('transaction', $data);
+				}
+			}
+			unset($row);
+		}
+		//------------------------------
+	
+		return $rowArray;			
 	}		
 
 	//added by Mike, 20200406; edited by Mike, 20200603
