@@ -1788,6 +1788,30 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 	}
 
+	//added by Mike, 20200826
+	public function addNewTransactionForPatientAccounting($patientId, $medicalDoctorId)
+	{		
+		$data['patientId'] = $patientId;
+		$data['medicalDoctorId'] = $medicalDoctorId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+		$this->load->model('Report_Model');
+
+		$this->Browse_Model->addNewTransactionForPatient($data);
+
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+
+		//edited by Mike, 20200601
+		//this is so that we do not add excess transactions
+		//$this->load->view('viewReportPatientQueue', $data);
+		redirect('report/viewReportPatientQueueAccounting');
+	
+	}
 	//added by Mike, 20200529
 	public function addPatientNameInformationDesk()
 	{
@@ -1799,11 +1823,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorIdParam'] = 1; //SYSON, PEDRO (DEFAULT)
 				
 		if (!isset($data['patientLastNameParam'])) {
-			redirect('report/report/viewReportPatientQueue');
+			redirect('report/viewReportPatientQueue'); //edited by Mike, 20200826
 		}
 
 		if (!isset($data['patientFirstNameParam'])) {
-			redirect('report/report/viewReportPatientQueue');
+			redirect('report/viewReportPatientQueue'); //edited by Mike, 20200826
 		}
 
 		$data['nameParam'] = $data['patientLastNameParam'].", ".$data['patientFirstNameParam'];
@@ -1826,6 +1850,47 @@ class Browse extends CI_Controller { //MY_Controller {
 */
 
 		$this->addNewTransactionForPatient($patientId, $data['medicalDoctorIdParam']);
+
+	}
+
+	//added by Mike, 20200826
+	public function addPatientNameAccounting()
+	{
+		$data['patientLastNameParam'] = $_POST['patientLastNameParam'];
+		$data['patientFirstNameParam'] = $_POST['patientFirstNameParam'];
+
+		//TO-DO: -update: this
+		//$data['medicalDoctorIdParam'] = $_POST['medicalDoctorIdParam'];
+		$data['medicalDoctorIdParam'] = 1; //SYSON, PEDRO (DEFAULT)
+				
+		if (!isset($data['patientLastNameParam'])) {
+			redirect('report/viewReportPatientQueueAccounting');
+		}
+
+		if (!isset($data['patientFirstNameParam'])) {
+			redirect('report/viewReportPatientQueueAccounting');
+		}
+
+		$data['nameParam'] = $data['patientLastNameParam'].", ".$data['patientFirstNameParam'];
+		$data['nameParam'] = strtoupper($data['nameParam']);
+						
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+		$patientId = $this->Browse_Model->addPatientName($data);
+		
+//		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+/*		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+		$this->load->view('searchPatientInformationDesk', $data);	
+*/
+
+		$this->addNewTransactionForPatientAccounting($patientId, $data['medicalDoctorIdParam']);
 
 	}
 	
@@ -2086,6 +2151,26 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 
 		$this->load->view('viewReportPatientQueue', $data);
+	}
+
+	//added by Mike, 20200826
+	public function deleteTransactionFromPatientAccounting($transactionId)
+	{
+		$data['transactionId'] = $transactionId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+		$this->load->model('Report_Model');
+	
+		$this->Browse_Model->deleteTransactionFromPatient($data);
+		
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+
+		$this->load->view('viewReportPatientQueueAccounting', $data);
 	}
 	
 	//added by Mike, 20200411; edited by Mike, 20200608

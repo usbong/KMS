@@ -904,6 +904,43 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportPatientQueue', $data);
 	}
 
+	//added by Mike, 20200826
+	public function viewReportPatientQueueAccounting()
+	{
+		$this->load->model('Report_Model');
+
+//		$data["result"] = $this->Report_Model->getPatientReportUnpaidForTheDay();
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+
+//		echo "count: ".count($data["result"]);
+//		echo $data["result"][0]['transaction_id'];
+		
+		//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputResult = [];
+		$outputResult = array();
+		
+		//edited by Mike, 20200602
+		if ($data["result"]!=False) {
+//		if ((isset($data["result"])) and (count($data["result"])>1)) {
+			foreach ($data["result"] as $value) {
+				if (($value['fee']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				//added by Mike, 20200602
+				//medical_doctor_name = "NEW; NONE YET"
+				else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				else {
+					array_push($outputResult, $value);
+				}
+			}
+			$data["result"]  = $outputResult;
+		}
+		
+		$this->load->view('viewReportPatientQueueAccounting', $data);
+	}
+
 	//added by Mike, 20191110
 	public function viewListOfAllReportsFromAllLocations()
 	{
