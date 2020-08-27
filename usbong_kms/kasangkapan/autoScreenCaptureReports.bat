@@ -20,4 +20,6 @@ phantomjs saveWebPageAsImageFile.js viewReceiptReportForTheDay
 phantomjs saveWebPageAsImageFile.js viewReceiptReportPASForTheDay
 phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s
 
+phantomjs saveWebPageAsImageFile.js viewReportPatientQueueAccounting
+
 explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
