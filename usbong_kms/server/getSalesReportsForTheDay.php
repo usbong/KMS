@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200825
+  @date updated: 20200826
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -47,9 +47,9 @@
 /*	
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
 */
-	//edited by Mike, 20200712
+	//edited by Mike, 20200826
 	//TO-DO: -reverify this
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' group by patient_id"))				
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -156,7 +156,8 @@
 	//edited by Mike, 20200706
 //	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0' and transaction_quantity='0'"))
 	//NOTE: the "group by" command gets the earliest transaction entered, not the newest
-	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0' and transaction_quantity='0' group by patient_id"))
+	//edited by Mike, 20200827
+	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -395,7 +396,8 @@
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."'"))
 	//edited by Mike, 20200706
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0'"))
-	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0' group by patient_id"))
+	//edited by Mike, 20200827
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -480,7 +482,8 @@
 			$responses = [];
 
 			//TO-DO: -reverify this
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' group by patient_id"))				
+			//edited by Mike, 20200826
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 			{
 				echo "--<br />";
 
@@ -626,7 +629,7 @@
 /*	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2 and transaction_quantity='0' group by patient_id"))	
 */
 	//TO-DO: -reverify this
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' group by patient_id"))	
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -670,13 +673,14 @@
 						//TO-DO: -update: if +DEXA
 					}
 					else {
-						if (strpos($value['notes'],"DEXA")!==false) {
+//removed by Mike, 20200826
+/*								if (strpos($value['notes'],"DEXA")!==false) {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
 							//added by Mike, 20200531
 							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 						}
-						else if (strpos($value['notes'],"NC")!==false) {
+						else*/if (strpos($value['notes'],"NC")!==false) {
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 						}
 						else if (strpos($value['notes'],"NO CHARGE")!==false) {
@@ -684,8 +688,21 @@
 						}
 						else {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
-						}
+						}												
 					}
+					
+					//added by Mike, 20200827
+					//TO-DO: -reverify: this
+					if (strpos($value['notes'],"DEXA")!==false) {
+						$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+						
+						//added by Mike, 20200531
+						$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+					}
+					
+					if (strpos($value['notes'],"MINORSET")!==false) {
+						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+					}					
 /*				}	
 */				
 			}
