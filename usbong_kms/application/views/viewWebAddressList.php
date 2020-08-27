@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20200826
+  @date updated: 20200827
 	
   Computer Web Browser Address (Example):
   1) http://localhost/usbong_kms/index.php/report/viewWebAddressList
@@ -204,7 +204,7 @@
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine">http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine</a><br/>
 
 <h2>II. INFORMATION DESK + ACCOUNTING UNIT</h2>
-<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueue">http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueueAccounting</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueueAccounting">http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueueAccounting</a><br/>
 
 <h2>III. SUMMARY REPORTS FOR THE DAY</h2>
 <h3>1) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
