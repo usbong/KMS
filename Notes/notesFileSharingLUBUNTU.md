@@ -1,0 +1,30 @@
+# NOTES: File Sharing (LUBUNTU)
+# 1) Computer Server (with the shared folder)
+## 1.1) Install
+### 1.1.1) sudo apt-get install samba
+### 1.1.2) sudo apt-get install gvfs-bin
+### 1.1.3) sudo apt-get install gvfs-backends
+
+## 1.2) Verify
+### 1.2.1) Open File Manager, e.g. PCManFM-Qt
+### 1.2.2) Enter as the address: smb://localhost
+### 1.2.3) Verify that "print$" folder is included in the output list
+
+## 1.3) Set
+### 1.3.1) sudo smbpasswd -a myUsername
+<br/>
+New SMB password:<br/>
+Retype new SMB password:<br/>
+<br/>
+Added user myUsername.
+
+### 1.3.2) sudo smbpasswd -e myUsername
+Enabled user myUsername.
+
+# 2) Client Computer
+## 2.1) sudo apt-get install libreoffice-gnome
+
+# 3) References: 
+## 3.1) https://ubuntuforums.org/showthread.php?t=1623346; last accessed: 20200828
+## 3.2) https://help.ubuntu.com/community/Samba/SambaServerGuide; last accessed: 20200828
+## 3.3) https://ask.libreoffice.org/en/question/9549/unable-to-open-files-from-windows-share/?sort=votes#sort-top; last accessed: 20200828
