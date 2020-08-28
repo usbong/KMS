@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200703
+' @date updated: 20200828
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -404,7 +404,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										echo "UNKNOWN";
 									}
 									else {
+										//edited by Mike, 20200828
+										//echo "NONE";
+										echo '<span class="alertSpan">';										
 										echo "NONE";
+										echo '</span>';
 									}
 								}
 								else {
