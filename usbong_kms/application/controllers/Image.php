@@ -297,4 +297,17 @@ class Image extends CI_Controller { //MY_Controller {
 		$this->load->view('viewAllReportImages', $data);
 	}
 */
+
+	//added by Mike, 20200828
+	public function viewReportImageOnly()
+	{
+/*
+		$this->load->model('Report_Model');
+
+		$data["result"] = $this->Report_Model->getAllReportImages();
+
+		$this->load->view('viewAllReportImages', $data);
+*/
+		$this->load->view('viewReportImageOnly');
+	}
 }
