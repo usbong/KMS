@@ -4,3 +4,6 @@ Operating System: Windows 7 Ultimate
 This is to successfully execute the batch file, e.g. autoScreenCaptureReportsSLHCC.bat.
 ## 2) Download the phantomjs.exe executable application file here:
 https://phantomjs.org/download.html
+
+## Recommended Reading
+https://phantomjs.org/; last accessed: 20200830
