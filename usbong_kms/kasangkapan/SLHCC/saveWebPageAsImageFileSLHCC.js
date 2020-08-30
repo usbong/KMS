@@ -22,7 +22,10 @@ var fileName = system.args[1];
 //added by Mike, 20200726
 var isFromServerFolder = system.args[2];
 //var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
-var webAddress = 'file:///D:/Usbong/SLHCC/202007/'; //default
+//edited by Mike, 20200830
+//var webAddress = 'file:///D:/Usbong/SLHCC/202007/'; //default
+var webAddress = 'file:///D:/2020/add-on software/generateMonthlySummaryReport/add-on software/output/';
+
 var fileExtension = '.html'; //'';//edited by Mike, 20200802
 
 //added by Mike, 20200725
