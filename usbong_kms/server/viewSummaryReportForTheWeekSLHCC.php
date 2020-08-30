@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200809
+  @date updated: 20200830
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit (SLHCC)
@@ -151,25 +151,32 @@
 	$dateToday = Date('Y-m-d');
 
 	//TO-DO: -update: file location
-//	$filename="C:/Usbong/Patients".$dateToday.".txt";	
-//	$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\summaryReport".$dateToday.".txt";
 
-	//edited by Mike, 20200725
-	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\summaryReport".$dateToday.".csv";
-	//edited by Mike, 202000726
-	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay2020-07-25Final.csv";
+	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20200803~20200808.csv";
+	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20200824~20200829.csv";
+
+	//added by Mike, 20200830
+	//TO-DO: -reverify: with lower versions of PHP, i.e. not 5.+
+	//note: generate the report every Sunday
+	//auto-identify the start and end dates
+	$dateToday = Date('Y-m-d');	
+
+	$startDate = new DateTime($dateToday);
+	$startDate->modify("-6 day");
+
+	$sStartDate = str_replace("-","",$startDate->format("Y-m-d"));
+
+	$endDate = new DateTime($dateToday);
+	$endDate->modify("-1 day");
+
+	$sEndDate = str_replace("-","",$endDate->format("Y-m-d"));
+		
+	$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook".$sStartDate."~".$sEndDate.".csv";
 	
-	//edited by Mike, 20200809
-	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay".$dateToday."Final.csv";
-	//TO-DO: -update: this
-	$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20200803~20200808.csv";
-
 
 	echo "<br/>";
 	echo "<table>";
-				
-	//TO-DO: -add: auto-identify and update date format to use YYYY-MM-DD
-	
+					
 	echo '<tr class="row">';
 
 	ini_set('auto_detect_line_endings', true);
