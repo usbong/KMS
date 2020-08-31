@@ -1455,7 +1455,8 @@ class Browse_Model extends CI_Model
         $this->db->delete('transaction');
 	}	
 */
-	//edited by Mike, 20200705
+	//edited by Mike, 20200831
+	//TO-DO: -reverify: this
 	//TO-DO: -reverify: transaction if same item purchased multiple times
 	//-add: delete transaction cart if all fees = 0
 	public function deleteTransactionItemPurchase($param) 
@@ -1551,7 +1552,7 @@ class Browse_Model extends CI_Model
 */
 			$updatedMedFee = 0;
 			$updatedNonMedFee = 0;
-			
+
 			if (isset($row->med_fee)) {
 				$updatedMedFee = $row->med_fee;
 			}
@@ -1574,7 +1575,7 @@ class Browse_Model extends CI_Model
 */
 					//20200629
 					//identify if transaction is classified as medicine or non-medicine
-					$this->db->select('t1.item_id, t2.item_type_id');
+					$this->db->select('t1.item_id, t2.item_type_id, t1.med_fee, t1.pas_fee');
 					$this->db->from('transaction as t1');	
 					$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');		
 					$this->db->where('t1.transaction_id', $iTransactionId);
@@ -1582,15 +1583,21 @@ class Browse_Model extends CI_Model
 					$row = $query->row();
 
 					//edited by Mike, 20200630
-					if (isset($row)) {					
-						if ($row->item_id!=0) {
+					if (isset($row)) {		
+						//edited by Mike, 20200831
+						//if ($row->item_id!=0) {
+						if (($row->item_id!=0) and ($row->item_id==$param['itemId'])){
 							$updatedTransactionQuantity = $updatedTransactionQuantity - 1;
 							
 							if ($row->item_type_id==1) {
-								$updatedMedFee = 0;
+								//edited by Mike, 20200831
+								//$updatedMedFee = 0;
+								$updatedMedFee = $updatedMedFee - $row->med_fee;		
 							}
 							else if ($row->item_type_id==2) {
-								$updatedNonMedFee = 0;
+								//edited by Mike, 20200831
+								//$updatedNonMedFee = 0;
+								$updatedNonMedFee = $updatedNonMedFee - $row->pas_fee;	
 							}			
 						}
 					}
@@ -1602,7 +1609,10 @@ class Browse_Model extends CI_Model
 					
 					//added by Mike, 20200629
 	//				$this->db->where('item_id',0);
-
+					
+					//added by Mike, 20200831
+					$this->db->where('item_id',$param['itemId']);
+										
 					$this->db->delete('transaction');
 
 					//added by Mike, 20200629					
