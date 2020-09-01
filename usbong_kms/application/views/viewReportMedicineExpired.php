@@ -361,8 +361,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20200427
 //									echo $value['quantity_in_stock'];
 //									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];	
-
-									echo $value['quantity_in_stock'];
+									
+									//edited by Mike, 20200901
+									echo $value['resultQuantityInStockNow'];
 							}
 							?>
 								</div>
@@ -409,11 +410,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class =column>				
 								<div id=itemPriceId<?php echo $iCount?>>
 							<?php
-								$totalLoss = $value['quantity_in_stock']*$value['item_price'];
-								echo "(".number_format($totalLoss, 2, '.', '').")";								
-								
-								//added by Mike, 20200901
-								$grandTotalLoss = $grandTotalLoss + $totalLoss;
+								//edited by Mike, 20200901
+								//severity high
+								//TO-DO: -update: this
+								if ($value['expiration_date'] <= date("Y-m-d")) {
+									$totalLoss = $value['quantity_in_stock']*$value['item_price'];
+									echo "(".number_format($totalLoss, 2, '.', '').")";								
+									
+									//added by Mike, 20200901
+									$grandTotalLoss = $grandTotalLoss + $totalLoss;
+								}								
 							?>
 								</div>
 						</td>
