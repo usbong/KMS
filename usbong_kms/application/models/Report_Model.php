@@ -1722,6 +1722,13 @@ class Report_Model extends CI_Model
 		$this->db->group_by('t2.expiration_date');
 
 		$this->db->where('t1.item_name!=', "NONE");
+		
+		//added by Mike, 20200901
+		//TO-DO: -update: system to not use "UPDATED" keyword
+		$this->db->not_like('t1.item_name', "*");
+
+		//added by Mike, 20200901
+		$this->db->where('t2.expiration_date!=', "NONE");
 
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
 		
@@ -1730,7 +1737,11 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200502
 		//items that are expired only
 		$this->db->where('t2.quantity_in_stock!=', 0); //1 = Medicine
-		$this->db->where('t2.expiration_date<=', date("Y-m-d")); //1 = Medicine
+
+		//edited by Mike, 20200901
+		//$this->db->where('t2.expiration_date<=', date("Y-m-d")); //1 = Medicine
+		$this->db->where('t2.expiration_date<=', date("Y-m-d", strtotime(date("Y-m-d")."+2 Months")));
+		//1 = Medicine
 
 /*
 		$this->db->and_where('t1.item_type_id', 1); //1 = Medicine
