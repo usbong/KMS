@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200502
+' @date updated: 20200901
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -92,6 +92,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
+
+						span.alertHighSeveritySpan {
+							color: red;
+							font-weight: bold;
+						}						
+
+						span.alertMediumSeveritySpan {
+							color: orange;
+							font-weight: bold;
+						}						
 						
 						table.search-result
 						{
@@ -259,7 +269,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<td class="pageNameColumn">
 			<h2>
 				Medicine Inventory Report<br/>
-				Expired Items Only<br/>
+				Expired & Nearly Expired Items<br/>
+				(2 Months Before Date)<br/>
 			</h2>		
 		</td>
 	  </tr>
@@ -271,6 +282,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
+		$grandTotalLoss = 0;
 	
 		//get only name strings from array 
 		if (isset($result)) {			
@@ -315,6 +327,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "PRICE"; //ITEM PRICE;
 							?>
 						</td>
+						<td class ="columnTableHeader">				
+							<?php
+								echo "TOTAL (LOSS)";
+							?>
+						</td>						
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -364,9 +381,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								}
 								else {
+									//edited by Mike, 20200901
+									//echo $value['expiration_date'];
+									
+									if ($value['expiration_date'] <= date("Y-m-d")) {
+										echo '<span class="alertHighSeveritySpan">';
+									}
+									//nearly expired, i.e. 2 months before expiration date
+									else {
+										echo '<span class="alertMediumSeveritySpan">';
+									}
+									
 									echo $value['expiration_date'];
+									echo '</span>';																					
 								}
-							?>
+								?>
 								</div>
 						</td>
 						<td class =column>				
@@ -376,12 +405,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<!-- added by Mike, 20200901 -->
+						<td class =column>				
+								<div id=itemPriceId<?php echo $iCount?>>
+							<?php
+								$totalLoss = $value['quantity_in_stock']*$value['item_price'];
+								echo "(".number_format($totalLoss, 2, '.', '').")";								
+								
+								//added by Mike, 20200901
+								$grandTotalLoss = $grandTotalLoss + $totalLoss;
+							?>
+								</div>
+						</td>
+
 					  </tr>
 		<?php				
 					$iCount++;		
 //					echo "<br/>";
 				}				
 
+				//added by Mike, 20200901
+				//Grand Total Row
+?>
+					<tr class="row">
+						<td class="column">				
+				<?php
+							echo "<b>GRAND TOTAL (LOSS)</b>";
+				?>
+						</td>
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>
+						<td class ="column">		
+				<?php
+							echo "<b>(".number_format($grandTotalLoss, 2, '.', '').")</b>";
+				?>						
+						</td>						
+					  </tr>				
+<?php
 				echo "</table>";				
 				echo "<br/>";				
 				echo '<div>***NOTHING FOLLOWS***';	
