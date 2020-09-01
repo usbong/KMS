@@ -773,7 +773,8 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->model('Report_Model');
 		$this->load->model('Browse_Model');
 	
-		$data['rawResult'] = $this->Report_Model->getMedicineExpired();//$data);
+//		$data['rawResult'] = $this->Report_Model->getMedicineExpired();//$data);
+		$data['result'] = $this->Report_Model->getMedicineExpired();//$data);
 
 //		$data['result'] = $this->Report_Model->getMedicineOutOfStock();//$data);
 
@@ -782,11 +783,91 @@ class Report extends CI_Controller { //MY_Controller {
 		$iCount = 0;
 		$itemId = -1;
 
+		$remainingItemNow = 0;
+
 		$iCountOutputResult = 0;
-		
+				
+/*
 		if ($data['rawResult'] == True) {
 			foreach ($data['rawResult'] as $value) {
+*/				
+		if ($data['result'] == True) {
+			foreach ($data['result'] as $value) {
+				//edited by Mike, 20200901
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+					
+//				echo "itemId: " . $itemId;
+/*				
+				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
+*/				
 
+				//added by Mike, 20200417
+				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
+				//edited by Mike, 20200422
+//				if ($iCount==0) {
+				if (!$bIsSameItemId) {	
+
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
+					
+					//edited by Mike, 20200527
+//					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+															
+					if ($remainingItemNow < 0) {
+						
+						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;						
+						
+//						$remainingPaidItem = $remainingPaidItem - $data['result'][$iCount]['resultQuantityInStockNow'];
+					}
+					else {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
+					}
+					
+//					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+				}
+				else {
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+
+					if ($remainingItemNow < 0) { //already negative
+						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
+							$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+							
+							$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
+						}
+						else {
+							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;					
+
+							//TO-DO: -reverify: again for cases with multiple additional stock items
+							//added by Mike, 20200522
+							$remainingItemNow = 0;
+						}
+					}
+					else {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+					}
+				}
+/*				
+				if (strpos(strtoupper($value['item_name']),"HYALONE")) {
+					echo "dito".$remainingItemNow;
+				}
+*/
+
+//				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId, $value['expiration_date']); //"0";
+
+				//['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+				
+				$iCount = $iCount + 1;
+
+/*
 				$itemId = $data['rawResult'][$iCount]['item_id'];
 				$resultQuantityInStockNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
 
@@ -803,13 +884,146 @@ class Report extends CI_Controller { //MY_Controller {
 
 				//added by Mike, 20200427
 				if (($data['rawResult'][$iCount]['expiration_date'] <= date("Y-m-d")) and ($data['rawResult'][$iCount]['expiration_date'] != 0)) {
-					$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+					//edited by Mike, 20200901
+					//$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount];
+					echo $resultQuantityInStockNow;
+					//$data['result'][$iCountOutputResult] = $data['rawResult'][$iCount]-$resultQuantityInStockNow;
 				}
 							
 				$iCountOutputResult = $iCountOutputResult + 1;				
 				$iCount = $iCount + 1;
+*/			
 			}
 		}
+		
+		//----------------------------------------
+		//added by Mike, 20200901			
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
+		if ($data['result'] == true) {
+			foreach ($data['result'] as $value) {				
+				if ($value['resultQuantityInStockNow'] != 0) {
+					array_push($outputArray, $value);
+				}
+			}
+		}
+			
+/*		
+//TO-DO: add: in non-medicine items
+		//added by Mike, 20200522
+		$itemId = -1;
+		
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
+		//TO-DO: -reverify: this
+		//TO-DO: -add: in non-med
+		//added by Mike, 20200811
+		$iSameItemCount = 0;
+		$bHasNoneZeroQuantity = false;
+
+		if ($data['result'] == true) {
+			foreach ($data['result'] as $value) {				
+			
+//				echo $value['item_name'];
+			
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+				
+				if ($bIsSameItemId) {
+					//edited by Mike, 20200527
+					//note: include in results medicine items that are zero in quantity in stock
+					//TO-DO: -re-verify: this
+//					if ($value['resultQuantityInStockNow'] == 0) {
+				
+					//edited by Mike, 20200530; removed by Mike, 20200811
+					//array_push($outputArray, $value);
+					//Note: We show only one (1) transaction of the same item whose in-stock count is 0.
+					//This is to make the output list shorter.
+					//The list is ordered by expiration date.
+					if (!$bHasNoneZeroQuantity) {
+						if ($iSameItemCount == ($iSameItemTotalCount - 1)) { //if last item in the list of same items
+							array_push($outputArray, $value);
+						}
+					}
+					else {
+						array_push($outputArray, $value);
+					}
+
+					$iSameItemCount = $iSameItemCount + 1;
+
+				}
+				//added by Mike, 20200522
+				else {
+					//identify if there are more than 1 transaction of the same item in the list
+					$iSameItemTotalCount = -1; //0; //edited by Mike, 20200826
+					$bHasNoneZeroQuantity = false;
+					foreach ($data['result'] as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							$iSameItemTotalCount = $iSameItemTotalCount + 1;
+							
+							if ($outputValue['resultQuantityInStockNow']!=0) {
+								$bHasNoneZeroQuantity = true;		
+							}							
+						}
+					}
+					
+//					echo $iSameItemCount;
+					
+					if ($iSameItemTotalCount>1) {							
+						if ($value['resultQuantityInStockNow']!=0) {
+							array_push($outputArray, $value);						
+						}									
+					}
+					else {
+						//array_push($outputArray, $value);						
+
+						if ($iSameItemTotalCount==1) {
+							//edited by Mike, 20200812
+							if (strpos($value['item_name'],"*")!==false) {
+									array_push($outputArray, $value);
+							}	
+							else {
+								if ($value['resultQuantityInStockNow']!=0) {
+									array_push($outputArray, $value);
+								}
+							}
+						}
+						//added by Mike, 20200826
+						//if $iSameItemTotalCount==0
+						else {
+							array_push($outputArray, $value);
+						}
+					}
+
+					$iSameItemCount = 1;			
+				}
+			}
+		}
+		
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['result'] = [];
+		$data['result'] = array();
+		
+		$data['result'] = $outputArray;		
+*/
+
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['result'] = [];
+		$data['result'] = array();
+		
+		$data['result'] = $outputArray;		
 
 		$this->load->view('viewReportMedicineExpired', $data);
 	}
