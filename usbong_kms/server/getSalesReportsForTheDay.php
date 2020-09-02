@@ -33,9 +33,10 @@
 	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 
 	//added by Mike, 20200902
-	//$sDateToday = date("Y-m-d");
-	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
-	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
+	$sDateToday = date("Y-m-d");
+	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d").""));
+//	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
+//	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
 	
 	//added by Mike, 20200524
 	$responses = [];
