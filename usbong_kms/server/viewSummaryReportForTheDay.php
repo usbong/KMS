@@ -1,19 +1,13 @@
 <!--
   Copyright 2020 Usbong Social Systems, Inc.
-
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
-
   http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-
   @author: Michael Syson
   @date created: 20200522
   @date updated: 20200813
-
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
-
   Output:
   1) Summary Worksheet that is viewable on a Computer Web Browser  
   
@@ -151,6 +145,7 @@
 	//edited by Mike, 20200726
 	//$dateToday = (new DateTime())->format('Y-m-d');
 	$dateToday = Date('Y-m-d');
+	//$dateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
 
 	//TO-DO: -update: file location
 //	$filename="C:/Usbong/Patients".$dateToday.".txt";	
@@ -160,7 +155,8 @@
 	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\summaryReport".$dateToday.".csv";
 	//edited by Mike, 202000726
 	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay2020-07-25Final.csv";
-	$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay".$dateToday."Final.csv";
+	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay".$dateToday."Final.csv";
+	$filename="G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\moscReportForTheDay".$dateToday."Final.csv";
 
 	echo "<br/>";
 	echo "<table>";
