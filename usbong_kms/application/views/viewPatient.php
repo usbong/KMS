@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200824
+' @date updated: 20200904
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1227,7 +1227,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>Â© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
