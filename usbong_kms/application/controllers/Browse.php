@@ -2303,6 +2303,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200601
 		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
+		//added by Mike, 20200905
+		//TO-DO: -add: get transaction with combined payments
+		//to identify if computer needs to show MOSC OR textbox field
+		//use med_fee, x_ray_fee, lab_fee
+
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
