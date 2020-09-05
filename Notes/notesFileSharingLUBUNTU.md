@@ -1,4 +1,7 @@
 # NOTES: File Sharing (LUBUNTU)
+## Output: file accessibly using Windows, Linux, Unix-like Machines
+Verified: with Windows 7 Ultimate and LUBUNTU 20.04 LTS
+
 # 1) Computer Server (with the shared folder)
 ## 1.1) Install
 ### 1.1.1) sudo apt-get install samba
@@ -20,6 +23,22 @@ Added user myUsername.
 
 ### 1.3.2) sudo smbpasswd -e myUsername
 Enabled user myUsername.
+
+### 1.3.3) sudo chmod o+x /home/unit_member/UsbongSharedFolder
+
+### 1.3.4) sudo vi /etc/samba/smb.conf
+#### Add the following set of instructions:
+<b>
+[share]<br/>
+comment = LUBUNTU File Server Share<br/>
+path = /home/unit_member/UsbongSharedFolder<br/>
+guest ok = yes<br/>
+read only = no<br/>
+create mask = 0755<br/>
+</b>
+
+#### Reminder:
+1.3.4.1) Execute the following command: <b>sudo samba restart</b>
 
 # 2) Client Computer
 ## 2.1) sudo apt-get install libreoffice-gnome
