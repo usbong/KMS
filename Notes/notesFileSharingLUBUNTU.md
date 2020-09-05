@@ -38,7 +38,7 @@ create mask = 0755<br/>
 </b>
 
 #### 1.3.4.1) Reminder:
-1.3.4.1.1) Make a copy using the following command before updating /etc/samba/smb.conf: <b>sudo cp smb.conf smb.conf20200905</b>
+1.3.4.1.1) Make a copy using the following command before updating /etc/samba/smb.conf: <b>sudo cp smb.conf smb.conf20200905</b><br/>
 1.3.4.1.2) Execute the following command after updating /etc/samba/smb.conf: <b>sudo samba restart</b>
 
 # 2) Client Computer: LUBUNTU
