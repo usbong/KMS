@@ -1,8 +1,8 @@
 # NOTES: File Sharing (LUBUNTU)
-## Output: file accessibly using Windows, Linux, and Unix-like Machines
+## Output: Shared File accessibly using Windows, Linux, and Unix-like Machines
 Verified: with Windows 7 Ultimate and LUBUNTU 20.04 LTS
 
-# 1) Computer Server (with the shared folder)
+# 1) Computer Server (with the shared folder): LUBUNTU
 ## 1.1) Install
 ### 1.1.1) sudo apt-get install samba
 ### 1.1.2) sudo apt-get install gvfs-bin
@@ -41,10 +41,11 @@ create mask = 0755<br/>
 1.3.4.1.1) Make a copy using the following command before updating /etc/samba/smb.conf: <b>sudo cp smb.conf smb.conf20200905</b>
 1.3.4.1.2) Execute the following command after updating /etc/samba/smb.conf: <b>sudo samba restart</b>
 
-# 2) Client Computer
+# 2) Client Computer: LUBUNTU
 ## 2.1) sudo apt-get install libreoffice-gnome
 
 # 3) References: 
 ## 3.1) https://ubuntuforums.org/showthread.php?t=1623346; last accessed: 20200828
 ## 3.2) https://help.ubuntu.com/community/Samba/SambaServerGuide; last accessed: 20200828
 ## 3.3) https://ask.libreoffice.org/en/question/9549/unable-to-open-files-from-windows-share/?sort=votes#sort-top; last accessed: 20200828
+## 3.4) https://askubuntu.com/questions/229870/why-cant-i-get-to-a-shared-folder-from-windows; last accessed: 20200905
