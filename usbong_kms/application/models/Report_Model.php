@@ -332,7 +332,7 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}
 
-	//added by Mike, 20200322; edited by Mike, 20200408
+	//added by Mike, 20200322; edited by Mike, 20200906
 	public function getPayslipForTheDayWeb($param) 
 	{	
 		//max(report_id) error
@@ -340,11 +340,19 @@ class Report_Model extends CI_Model
 
 //select max(`report_id`) from `report`
 //select max(`report_id`) from `report` where `report_filename` like '%PETER%' 
-
+		//edited by Mike, 20200906
+/*
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
+*/
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name,  t4.receipt_type_id, t4.receipt_number');
+
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		
+		//added by Mike, 20200906
+		$this->db->join('receipt as t4', 't2.transaction_id = t4.transaction_id', 'LEFT');
+
 
 		//edited by Mike, 20200601
 		//$this->db->distinct('t1.patient_name');
