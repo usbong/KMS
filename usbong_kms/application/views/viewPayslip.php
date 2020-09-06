@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200824
+' @date updated: 20200906
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -512,6 +512,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//output: whole numbers
 								echo floor(($iMOSC*100)/100);
 
+								//added by Mike, 20200906
+								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+									if (isset($value['receipt_number'])) {
+										$dAddDueToMOSCOR = $value['fee']*.12;
+										
+										$iMOSC = $iMOSC + $dAddDueToMOSCOR;
+										
+										echo " + ".$dAddDueToMOSCOR;
+									}									
+								}
+
 								$iTotalMOSC += $iMOSC;
 							?>
 								</div>
@@ -558,6 +570,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//output: whole numbers
 								echo floor(($iNetPF*100)/100);
 
+								//added by Mike, 20200906
+								//deduct: 12% to Net Fee if Dr. Honesto and has MOSC OR
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+									if (isset($value['receipt_number'])) {
+										$dDeductDueToMOSCOR = $value['fee']*.12;
+										
+										$iNetPF = $iNetPF - $dDeductDueToMOSCOR; //$value['fee']*.12;
+	
+										echo " - ".$dDeductDueToMOSCOR;
+									}									
+								}
+
 								$iTotalNetPF += $iNetPF;
 							?>
 								</div>
@@ -589,6 +613,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else {
 									echo strtoupper($value['notes']);
 								}
+
+
+								//added by Mike, 20200906
+								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+									if (isset($value['receipt_number'])) {
+										echo "; MOSC OR";
+									}									
+								}
+
 						?>
 							</div>						
 						</td>
