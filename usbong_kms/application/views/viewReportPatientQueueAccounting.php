@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20200826
+' @date updated: 20200907
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -105,6 +105,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
+
+						span.alertHighSeveritySpan {
+							color: red;
+							font-weight: bold;
+						}						
 						
 						table.search-result
 						{
@@ -813,7 +818,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div>
 							<?php
-								echo $value['notes'];
+								//edited by Mike, 20200907
+//								echo $value['notes'];
+								if (strpos($value['notes'],"UNPAID")!==false) {
+									echo "<span class='alertHighSeveritySpan'>";
+									echo $value['notes'];
+									echo "</span>";
+								}
+								else {
+									echo $value['notes'];
+								}
 /*							
 								if (strpos($value['notes'],"PAID")!==false) {
 									echo "PAID";
