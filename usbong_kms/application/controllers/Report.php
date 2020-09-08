@@ -531,6 +531,19 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["result"] = $this->Report_Model->getPayslipForTheDayWeb($data);
 
+		//added by Mike, 20200908
+		//TO-DO: -reverify: this with cart list that includes med and non-med items
+		if (strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) {
+			if (is_array($data["result"])) {
+				foreach ($data["result"] as &$value) {
+					//note: we do +1 to get the transactionId for the MOSC OR from the receipt table
+					$transactionId = $value['transaction_id'] +1;
+					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($transactionId);
+				}
+				unset($value);
+			}
+		}
+
 //		$this->load->view('viewPayslip', $data);
 
 		if (strtoupper($data["medicalDoctorName"])=="PEDRO") {
