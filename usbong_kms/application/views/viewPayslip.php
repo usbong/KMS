@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200906
+' @date updated: 20200909
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -519,8 +519,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										$dAddDueToMOSCOR = $value['fee']*.12;
 										
 										$iMOSC = $iMOSC + $dAddDueToMOSCOR;
-										
-										echo " + ".$dAddDueToMOSCOR;
+
+										//edited by Mike, 20200909										
+										//echo " + ".$dAddDueToMOSCOR;
+										if ($dAddDueToMOSCOR!=0) {
+											echo " + ".$dAddDueToMOSCOR;
+										}
 									}									
 								}
 
@@ -578,7 +582,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										
 										$iNetPF = $iNetPF - $dDeductDueToMOSCOR; //$value['fee']*.12;
 	
-										echo " - ".$dDeductDueToMOSCOR;
+										//edited by Mike, 20200909										
+										//echo " - ".$dDeductDueToMOSCOR;
+										if ($dAddDueToMOSCOR!=0) {
+											echo " - ".$dDeductDueToMOSCOR;
+										}										
 									}									
 								}
 
@@ -619,7 +627,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 									if (isset($value['receipt_number'])) {
-										echo "; MOSC OR";
+										//edited by Mike, 20200909										
+										//echo "; MOSC OR";
+										if ($dAddDueToMOSCOR!=0) {
+											echo "; MOSC OR";
+										}								
 									}									
 								}
 
