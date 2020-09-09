@@ -347,7 +347,7 @@ class Report_Model extends CI_Model
 			return False;
 		}
 		
-//		echo $rowArray[0]['receipt_number'];
+//		echo $rowArray[0]['receipt_number']."<br/>";
 		
 		return $rowArray[0]['receipt_number'];
 	}
