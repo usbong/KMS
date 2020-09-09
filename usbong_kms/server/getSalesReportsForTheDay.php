@@ -34,8 +34,10 @@
 
 	//added by Mike, 20200902
 	//$sDateToday = date("Y-m-d");
-	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
-	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
+//	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
+//	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
+	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")));
+	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")));
 	
 	//added by Mike, 20200524
 	$responses = [];
@@ -55,7 +57,7 @@
 	//TO-DO: -reverify this
 	//edited by Mike, 20200902
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
