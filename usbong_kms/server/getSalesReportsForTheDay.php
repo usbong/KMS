@@ -7,8 +7,10 @@
   @author: Michael Syson
   @date created: 20200521
   @date updated: 20200909
+  
   Input:
   1) Sales reports for the day in the database (DB)
+
   Output:
   1) Automatically connect to the DB and get the sales reports for the day from the DB
   --> Afterwards, write the reports as .txt text in the computer server's set location
@@ -27,12 +29,19 @@
 	date_default_timezone_set('Asia/Hong_Kong');
 
 	//added by Mike, 20200524
-	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-//	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+//	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 
-
+	//added by Mike, 20200902
+	//$sDateToday = date("Y-m-d");
+	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
+	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
+	
 	//added by Mike, 20200524
 	$responses = [];
+
+	//added by Mike, 20200819
+	$iMinorsetQuantityTotalCount = 0;
 	
 	//medical doctor; SYSON, PEDRO
 	//edited by Mike, 20200706
@@ -42,9 +51,11 @@
 /*	
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
 */
-	//edited by Mike, 20200712
+	//edited by Mike, 20200826
 	//TO-DO: -reverify this
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' group by patient_id"))				
+	//edited by Mike, 20200902
+//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -83,6 +94,21 @@
 					else if (strpos($value['notes'],"NO CHARGE")!==false) {
 						$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 					}
+					
+/*					//edited by Mike, 20200825
+					//added by Mike, 20200819
+					if (strpos($value['notes'],"MINORSET")!==false) {
+						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;
+						
+						$iFeeTotalCount = $iFeeTotalCount - 500;
+						$iQuantityTotalCount = $iQuantityTotalCount - 1;
+					}
+*/
+					if (strpos($value['notes'],"MINORSET")!==false) {
+						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+					}
+
+					
 /*				}					
 */
 			}
@@ -106,7 +132,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
@@ -136,7 +163,9 @@
 	//edited by Mike, 20200706
 //	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0' and transaction_quantity='0'"))
 	//NOTE: the "group by" command gets the earliest transaction entered, not the newest
-	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0' and transaction_quantity='0' group by patient_id"))
+	//edited by Mike, 20200902
+//	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and x_ray_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -177,7 +206,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
@@ -206,10 +236,13 @@
 
 	//added by Mike, 20200521; edited by Mike, 20200706
 //	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
+	//edited by Mike, 20200902
+//	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+
 /*	//edited by Mike, 20200909	
-	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-*/		
-	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0' and t1.item_name!='MINORSET'"))
+	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+*/
+	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0' and t1.item_name!='MINORSET'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -249,7 +282,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
@@ -274,7 +308,9 @@
 //	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
 	//edited by Mike, 20200708
 //if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	//edited by Mike, 20200902
+//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -348,7 +384,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
@@ -378,7 +415,9 @@
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."'"))
 	//edited by Mike, 20200706
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0'"))
-	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0' group by patient_id"))
+	//edited by Mike, 20200902
+//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -419,7 +458,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
@@ -463,7 +503,9 @@
 			$responses = [];
 
 			//TO-DO: -reverify this
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' group by patient_id"))				
+			//edited by Mike, 20200902
+//			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 			{
 				echo "--<br />";
 
@@ -502,16 +544,17 @@
 								//added by Mike, 20200531
 								$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;
 								
-								//TO-DO: -update: if +DEXA
+								//TO-DO: -reverify: if +DEXA
 							}
-							else {
-								if (strpos($value['notes'],"DEXA")!==false) {
+							else {	
+								//removed by Mike, 20200825
+/*								if (strpos($value['notes'],"DEXA")!==false) {
 									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 									
 									//added by Mike, 20200531
 									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 								}
-								else if (strpos($value['notes'],"NC")!==false) {
+								else*/if (strpos($value['notes'],"NC")!==false) {
 									$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 								}
 								else if (strpos($value['notes'],"NO CHARGE")!==false) {
@@ -521,6 +564,19 @@
 									$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 								}
 							}
+
+							//TO-DO: -reverify: this
+							if (strpos($value['notes'],"DEXA")!==false) {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+								
+								//added by Mike, 20200531
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+							}
+							
+							if (strpos($value['notes'],"MINORSET")!==false) {
+								$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+							}
+							
 /*
 						}					
 */						
@@ -545,7 +601,8 @@
 									
 		//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 					
-					$sDateToday = date("Y-m-d");
+					//removed by Mike, 20200902
+					//$sDateToday = date("Y-m-d");
 
 					//update the file location accordingly
 					//edited by Mike, 20200524
@@ -595,7 +652,9 @@
 /*	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2 and transaction_quantity='0' group by patient_id"))	
 */
 	//TO-DO: -reverify this
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' group by patient_id"))	
+	//edited by Mike, 20200902
+//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -631,14 +690,26 @@
 					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
 
 					if (strpos($value['notes'],"PRIVATE")!==false) {
-						$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+						//removed by Mike, 20200829
+						//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
 						
 						//added by Mike, 20200531
 						$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;
 						
-						//TO-DO: -update: if +DEXA
+						//TO-DO: -reverify: if +DEXA
+						//added by Mike, 20200829
+						if (strpos($value['notes'],"DEXA")!==false) {
+							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+							
+							//added by Mike, 20200531
+							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+						}
+						else {
+							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+						}
 					}
 					else {
+						//edited by Mike, 20200829
 						if (strpos($value['notes'],"DEXA")!==false) {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
@@ -653,8 +724,12 @@
 						}
 						else {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
-						}
+						}												
 					}
+										
+					if (strpos($value['notes'],"MINORSET")!==false) {
+						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+					}					
 /*				}	
 */				
 			}
@@ -678,7 +753,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
@@ -707,7 +783,9 @@
 	//medicine asterisk, i.e. Glucosamine Sulphate and Calcium with Vitamin D
 	//edited by Mike, 20200706
 //	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
-	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	//edited by Mike, 20200902
+//	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -749,7 +827,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
@@ -777,7 +856,9 @@
 
 
 	//Value-Added Tax VAT for Non-medicine items
-	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	//edited by Mike, 20200902
+//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -857,7 +938,8 @@
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
-			$sDateToday = date("Y-m-d");
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
 
 			//update the file location accordingly
 			//edited by Mike, 20200524
@@ -876,6 +958,54 @@
 	{
 			echo "Error: " . $mysqli->error;
 	}																
+
+
+	//added by Mike, 20200819
+	//Minorset
+	echo "<br />";
+
+	$responses = [];
+
+	//added by Mike, 20200524
+	echo "--<br />";
+
+	//edited by Mike, 20200825
+	if ($iMinorsetQuantityTotalCount == 0) {
+		echo "There are no Minorset transactions for the day.<br /><br />";
+	}
+	else {
+		if ($iMinorsetQuantityTotalCount == 1) {
+			echo "Minorset transaction for the day.<br /><br />";
+		}
+		else {
+			echo "Minorset transactions for the day.<br /><br />";
+		}
+		
+		$iMinorsetFeeTotalCount = $iMinorsetQuantityTotalCount*500;
+		//write as .txt file
+		$jsonResponse = array(
+				"iFeeTotalCount" => $iMinorsetFeeTotalCount,
+				"iQuantityTotalCount" => $iMinorsetQuantityTotalCount,
+				"iNetFeeTotalCount" => $iMinorsetFeeTotalCount
+		);
+		$responses[] = $jsonResponse;
+		
+		$outputReportMinorset = json_encode($responses);
+		
+		echo $outputReportMinorset;
+
+		//removed by Mike, 20200902
+		//$sDateToday = date("Y-m-d");
+
+		//update the file location accordingly
+		//edited by Mike, 20200524
+		//note: \\nonMedicine due to \n is new line
+		//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
+		$file = $fileBasePath."Minorset".$sDateToday.".txt";
+
+		file_put_contents($file, $outputReportMinorset, LOCK_EX);				
+	}
+	//echo $outputReportMinorset;
 	
 	//close database connection
 	$mysqli->close();
