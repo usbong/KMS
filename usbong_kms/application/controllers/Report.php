@@ -537,7 +537,8 @@ class Report extends CI_Controller { //MY_Controller {
 			if (is_array($data["result"])) {
 				foreach ($data["result"] as &$value) {
 					//note: we do +1 to get the transactionId for the MOSC OR from the receipt table
-					$transactionId = $value['transaction_id'] +1;
+					$transactionId = $value['transaction_id']+1;
+//					echo $transactionId."<br/>";
 					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($transactionId);
 				}
 				unset($value);
