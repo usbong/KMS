@@ -533,13 +533,57 @@ class Report extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200908
 		//TO-DO: -reverify: this with cart list that includes med and non-med items
+		
+		//added by Mike, 20200910
+		//identify newest transactionId
+		$this->db->select_max('transaction_id');
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+		
+		$iTransactionIdMax = $row->transaction_id;
+		
+		echo "max".$iTransactionIdMax;
+
 		if (strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) {
 			if (is_array($data["result"])) {
 				foreach ($data["result"] as &$value) {
+					//edited by Mike, 20200910
 					//note: we do +1 to get the transactionId for the MOSC OR from the receipt table
-					$transactionId = $value['transaction_id']+1;
-//					echo $transactionId."<br/>";
-					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($transactionId);
+/*					$transactionId = $value['transaction_id']+1;
+					echo $transactionId."<br/>";
+*/
+					$iTransactionId = $value['transaction_id']+1;
+
+					//identify transaction with the combined fees
+//					while ($transactionId==0) {
+					do {
+//						echo $iTransactionId."<br/>";
+
+						$this->db->select('transaction_quantity');
+						$this->db->where('transaction_id',$iTransactionId);
+						$query = $this->db->get('transaction');
+						$row = $query->row();
+
+						$iTransactionId = $iTransactionId + 1;
+						
+						//this is due to the transaction count can skip
+						$transactionQuantity = -1;
+						
+						if (isset($row)) {
+							$iTransactionQuantity = $row->transaction_quantity;
+						}
+						
+						if ($iTransactionId>=$iTransactionIdMax) {
+							break;
+						}
+					}
+					while ($iTransactionQuantity <= 0);
+
+						echo $iTransactionId."<br/>";
+
+					$iTransactionId = $iTransactionId -1;
+
+					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($iTransactionId);
 				}
 				unset($value);
 			}
