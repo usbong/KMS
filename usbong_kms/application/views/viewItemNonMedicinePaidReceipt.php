@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200610
+' @date updated: 20200910
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -591,7 +591,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*					//edited by Mike, 20200721
 						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
 */
-						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0) or (($outputTransaction['fee']!=0) and ($outputTransaction['medical_doctor_id']==1))) {							
+						//edited by Mike, 20200910
+/*						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0) or (($outputTransaction['fee']!=0) and ($outputTransaction['medical_doctor_id']==1))) {							
+*/
+						//Dr. Honesto
+						if ((strpos(strtoupper($medicalDoctorList[$medicalDoctorId]['medical_doctor_name']), "HONESTO")!==false) or (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0) or (($outputTransaction['fee']!=0) and ($outputTransaction['medical_doctor_id']==1)))) {
 			?>
 						  <tr>
 							<td>
