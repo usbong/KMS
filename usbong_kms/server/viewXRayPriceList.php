@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20200823
+  @date updated: 20200910
   Input:
   1) MySQL Database with X-Ray Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
   Output:
@@ -166,6 +166,7 @@
 	//table headers
 ?>	
 	<tr>
+	<td class='tableHeaderColumn'><b>COUNT</b></td>
 	<td class='tableHeaderColumn'><b>BODY LOCATION</b></td>
 	<td class='tableHeaderColumn'><b>TYPE</b></td>
 	<td class='tableHeaderColumn'><b>PRICE</b></td>
@@ -194,6 +195,11 @@
 				  echo '<tr class="row">';
 			    }				   				
 				$iRowCount = $iRowCount + 1;
+				
+				
+				echo "<td class='column'>";
+					echo $iRowCount;
+				echo "</td>";
 				
 				foreach ($valueArray as $value) {
 					echo "<td class='column'>";
