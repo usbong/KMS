@@ -568,7 +568,7 @@
 									//TO-DO: -reverify: this
 									//edited by Mike, 20200910
 									//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
-									$myNetFeeValue = $iNetFeeTotalCount + $value['fee']*0.70;
+									$myNetFeeValue = $value['fee']*0.70;
 									
 									if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
 //										echo $value['notes'];
