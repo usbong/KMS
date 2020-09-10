@@ -542,7 +542,7 @@ class Report extends CI_Controller { //MY_Controller {
 		
 		$iTransactionIdMax = $row->transaction_id;
 		
-		echo "max".$iTransactionIdMax;
+//		echo "max".$iTransactionIdMax;
 
 		if (strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) {
 			if (is_array($data["result"])) {
@@ -579,7 +579,7 @@ class Report extends CI_Controller { //MY_Controller {
 					}
 					while ($iTransactionQuantity <= 0);
 
-						echo $iTransactionId."<br/>";
+//						echo $iTransactionId."<br/>";
 
 					$iTransactionId = $iTransactionId -1;
 
