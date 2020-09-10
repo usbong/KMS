@@ -515,7 +515,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//added by Mike, 20200906
 								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
-									if (isset($value['receipt_number'])) {
+									//edited by Mike, 20200910
+									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {							
 										$dAddDueToMOSCOR = $value['fee']*.12;
 										
 										$iMOSC = $iMOSC + $dAddDueToMOSCOR;
@@ -577,7 +578,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//added by Mike, 20200906
 								//deduct: 12% to Net Fee if Dr. Honesto and has MOSC OR
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
-									if (isset($value['receipt_number'])) {
+									//edited by Mike, 20200910
+									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {							
 										$dDeductDueToMOSCOR = $value['fee']*.12;
 										
 										$iNetPF = $iNetPF - $dDeductDueToMOSCOR; //$value['fee']*.12;
@@ -626,7 +628,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//added by Mike, 20200906
 								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
-									if (isset($value['receipt_number'])) {
+									//edited by Mike, 20200910
+									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
 										//edited by Mike, 20200909										
 										//echo "; MOSC OR";
 										if ($dAddDueToMOSCOR!=0) {
