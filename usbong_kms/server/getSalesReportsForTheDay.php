@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200909
+  @date updated: 20200910
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -507,7 +507,9 @@
 			//TO-DO: -reverify this
 			//edited by Mike, 20200902
 //			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+			//edited by Mike, 20200910
+//			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 			{
 				echo "--<br />";
 
@@ -563,7 +565,37 @@
 									$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 								}
 								else {
-									$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
+									//TO-DO: -reverify: this
+									//edited by Mike, 20200910
+									//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
+									$myNetFeeValue = $iNetFeeTotalCount + $value['fee']*0.70;
+									
+									if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+//										echo $value['notes'];
+//										echo $value['transaction_id'];
+										//TO-DO: -update: this
+										$transactionId = $value['transaction_id'] + 1;
+										echo $transactionId;
+											
+										if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
+											$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
+											if($receiptArrayRowValue) {
+												if ($receiptArrayRowValue['receipt_number']!=0) {
+													$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+												}
+											}
+
+											// free result set
+											mysqli_free_result($receiptArray);											
+										}
+										// show an error if there is an issue with the database query
+										else
+										{
+											echo "Error: " . $mysqli->error;
+										}
+									}									
+
+									$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
 								}
 							}
 
