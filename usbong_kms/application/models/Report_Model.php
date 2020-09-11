@@ -1339,7 +1339,7 @@ class Report_Model extends CI_Model
 		$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
 
 		$this->db->distinct('t1.item_name');
-
+		
 		$this->db->where('t1.item_type_id', $itemTypeId);
 
 		//added by Mike, 20200521
@@ -1362,6 +1362,10 @@ class Report_Model extends CI_Model
 				$this->db->where('t1.item_id !=', $value['item_id']);		
 			}
 		}
+
+		//added by Mike, 20200912				
+		//		$this->db->where('t3.receipt_id !=', $value['receipt_id']);		
+		//$this->db->group_by('t3.receipt_id');
 		
 		//added by Mike, 20200506
 //		$this->db->group_by('t1.item_name');
@@ -1386,8 +1390,13 @@ class Report_Model extends CI_Model
 		$iCurrentItemId = -1;
 		$iItemQuantity = 0;
 		$dItemTotalFee = 0;
+
+		//added by Mike, 20200912
+		$iCurrentItemReceiptNumber = 0;		
 		
-		//unify transactions whose item_id are equal
+		//unify transactions whose item_id's are equal
+		//TO-DO: -add: this
+		//and receipt number's are of equal status, i.e. >0, or zero (0)
 		//edited by Mike, 20200723
 		//note: this is due to the following removed function is not available in PHP 5.3
 		//$outputArray = [];
@@ -1401,7 +1410,11 @@ class Report_Model extends CI_Model
 //				echo "iCurrentItemId: ".$iCurrentItemId." : ".$value['item_name']." : ".$value['fee_quantity']."<br/>";
 //				echo "iCurrentItemId: ".$iCurrentItemId."<br/>";
 
-				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id'])) {					
+				//edited by Mike, 20200912
+				//TO-DO: -update: this
+				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id'])) {
+//				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id']) && $iCurrentItemReceiptNumber) {
+
 //					echo "push<br/>";
 
 					array_push($outputArray, $currentValue);
