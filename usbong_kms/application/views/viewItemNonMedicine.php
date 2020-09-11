@@ -124,6 +124,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left
 						}						
 
+						td.columnVat
+						{
+							font-weight: bold;
+							background-color: #0088ff; <!--#93d151; lime green-->
+							border: 2px dotted #ab9c7d;		
+							text-align: center
+						}
+
 						td.columnTableHeader
 						{
 							font-weight: bold;
@@ -788,9 +796,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						<!-- added by Mike, 20200911 -->
-						<!-- </td> -->		
-							<label>+12% VAT</label><br/>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="vatCheckBoxParam">
+						</td>		
+						<td class="columnVat">		
+							<label>+12%<br/>VAT</label>
+							<input type="checkbox" id="vatCheckBoxParam">
 						</td>
 						
 					  </tr>
