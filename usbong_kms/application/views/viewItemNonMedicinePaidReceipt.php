@@ -743,7 +743,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 									<div id="itemPriceId<?php echo $iCount?>">
 								<?php
-									echo $value['item_price'];
+									//edited by Mike, 20200912
+//									echo $value['item_price'];
+
+									//added by Mike, 20200415
+									if ($value['fee_quantity']==0) {
+	//									$iQuantity =  1;
+										$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+									}
+									else {
+										$iQuantity =  $value['fee_quantity'];
+									}
+									
+//									echo $value['fee'];
+									//edited by Mike, 20200501
+									//echo $value['fee']/$iQuantity;
+									echo number_format((float)$value['fee']/$iQuantity, 2, '.', '');
 								?>
 									</div>
 							</td>

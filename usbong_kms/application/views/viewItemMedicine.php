@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200803
+' @date updated: 20209812
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -136,7 +136,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-						}						
+						}		
+
+						td.columnTableHeaderFee
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 13%;
+						}		
+
 						
 						td.imageColumn
 						{
@@ -150,6 +161,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 							text-align: right;
 						}						
+
+						.Fee-textbox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 10px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							width: 72%;
+
+							float: left;
+						}
 
 						.Quantity-textbox { 
 							background-color: #fCfCfC;
@@ -587,6 +610,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "PRICE"; //"ITEM PRICE";
 							?>
 						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
+							?>
+						</td>						
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -734,8 +762,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>						
 						<td class ="column">		
-								<!-- added by Mike, 20200414 -->
+								<!-- edited by Mike, 20200912 
 								<input type="hidden" id="feeParam" value="<?php echo $value['item_price']?>">
+								</input>
+-->								
+								<input type="hidden" value="<?php echo $value['item_price']?>">
 								</input>
 					
 								<div id="itemPriceId<?php echo $iCount?>">
@@ -743,6 +774,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo $value['item_price'];
 							?>
 								</div>
+						</td>
+						<!-- added by Mike, 20200912 -->
+						<td class ="column">		
+							<!-- edited by Mike, 20200611 -->
+							<!-- increased number of digits for the fee -->
+							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="99999999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 7) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>						
 						</td>
 						<td>
 							x
@@ -1060,7 +1111,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 									<div id="itemPriceId<?php echo $iCount?>">
 								<?php
-									echo $value['item_price'];
+									//edited by Mike, 20200912
+//									echo $value['item_price'];
+
+									//added by Mike, 20200415
+									if ($value['fee_quantity']==0) {
+	//									$iQuantity =  1;
+										$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+									}
+									else {
+										$iQuantity =  $value['fee_quantity'];
+									}
+									
+//									echo $value['fee'];
+									//edited by Mike, 20200501
+									//echo $value['fee']/$iQuantity;
+									echo number_format((float)$value['fee']/$iQuantity, 2, '.', '');
+
 								?>
 									</div>
 							</td>

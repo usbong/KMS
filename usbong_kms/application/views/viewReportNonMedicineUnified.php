@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200507
-' @date updated: 20200826
+' @date updated: 20200912
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -457,7 +457,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="tableHeaderColumn">				
 							<?php
-								echo "ITEM PRICE";
+								echo "ITEM AVE PRICE";
 							?>
 						</td>
 						<td class ="column">				

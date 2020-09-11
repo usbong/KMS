@@ -489,8 +489,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="itemPriceId<?php echo $iCount?>">
 							<?php
+								//edited by Mike, 20200912
 								//note: the price is pre-set.
-								echo $value['item_price'];
+								//echo $value['item_price'];
+								
+								//edited by Mike, 20200414
+//								echo $value['item_price'];
+//								echo $value['fee'];
+
+								//note: 12% is already included
+								$fFee = 0;
+								if ($value['receipt_id']==0) {
+									$fFee = $value['fee'];
+								}
+/*								else {
+									$fFee = $value['fee']/ (1 + 0.12);
+								}								
+*/
+
+								if ($value['fee_quantity']==0) {
+									$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								}
+								else {
+									$iQuantity =  $value['fee_quantity'];
+								}
+
+								echo number_format($fFee/$iQuantity, 2, '.', '');
 							?>
 								</div>
 						</td>
