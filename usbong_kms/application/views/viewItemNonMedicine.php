@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200803
+' @date updated: 20200911
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -199,6 +199,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase:hover {
 							background-color: #d4be00;
 						}
+						
+						input[type="checkbox"] {
+							transform: scale(1.5);
+						}						
 
         /*------------------*/
         /* Modal            */
@@ -345,12 +349,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  }
 */
 
-		//added by Mike, 20200329; edited by Mike, 20200414
+		//added by Mike, 20200329; edited by Mike, 20200911
 //		function myPopupFunction() {				
 		function myPopupFunction(itemId) {				
 			var quantity = document.getElementById("quantityParam").value;
 			var fee = document.getElementById("feeParam").value;
-
+			
+			//added by Mike, 20200911
+			var vatCheckedBox = document.getElementById("vatCheckBoxParam");
+			
+			if (vatCheckedBox.checked) {
+				numericalFee = eval(fee)
+				fee = numericalFee + numericalFee*.12
+			}
 /*
 			var product_id = document.getElementById("product_idParam").value;
 			var customer_id = document.getElementById("customer_idParam").value;
@@ -776,7 +787,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase">BUY</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
-						</td>						
+						<!-- added by Mike, 20200911 -->
+						<!-- </td> -->		
+							<label>+12% VAT</label><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="vatCheckBoxParam">
+						</td>
+						
 					  </tr>
 		<?php				
 					$iCount++;		
