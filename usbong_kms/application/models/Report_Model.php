@@ -1392,7 +1392,10 @@ class Report_Model extends CI_Model
 		$iCurrentItemId = -1;
 		$iItemQuantity = 0;
 		$dItemTotalFee = 0;
-
+		
+		//added by Mike, 20200913
+		$dItemTotalVATAmount = 0;
+		
 		//added by Mike, 20200912
 		$iCurrentItemReceiptNumber = -1;
 		
@@ -1447,10 +1450,26 @@ class Report_Model extends CI_Model
 				//total
 				$dItemTotalFee = $dItemTotalFee + $value['fee'];
 
+				//added by Mike, 20200913
+				if ($itemTypeId==2) { //non-med item				
+					if ($value['receipt_id']==0) {
+						$dAddedVATAmount = 0;
+					}
+					else {
+						$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
+
+						$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
+					}
+				}
+				
+//				$dItemTotalVATAmount = $dItemTotalVATAmount + $value['fee'];
 //				echo "iItemQuantity: " .$iItemQuantity."; ";
 				
 				$value['fee_quantity'] = $iItemQuantity;
 				$value['fee'] = $dItemTotalFee;				
+
+				//added by Mike, 20200913
+				$value['vat_amount_paid'] = $dItemTotalVATAmount;
 
 				$iCurrentItemId=$value['item_id'];
 				
