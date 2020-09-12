@@ -588,6 +588,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//edited by Mike, 20200430
 //								echo $value['fee'];
+									
+								echo $value['receipt_number'];
+									
 								if ($value['receipt_id']==0) {
 									$dAddedVATAmount = 0;
 								}
