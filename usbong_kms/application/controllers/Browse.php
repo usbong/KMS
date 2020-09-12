@@ -220,6 +220,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function confirmNonMedicine()
 	{		
 		$data['nameParam'] = $_POST['nameParam'];
+
+		//added by Mike, 20200912
+		$data['nameParam'] = trim($data['nameParam']);
 		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
@@ -502,6 +505,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function confirmMedicine()
 	{
 		$data['nameParam'] = $_POST['nameParam'];
+		
+		//added by Mike, 20200912
+		$data['nameParam'] = trim($data['nameParam']);
 		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
