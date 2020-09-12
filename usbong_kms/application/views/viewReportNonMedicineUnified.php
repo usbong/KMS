@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200507
-' @date updated: 20200912
+' @date updated: 20200913
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -539,6 +539,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//echo $value['fee']/$iQuantity;
 								//edited by Mike, 20200430
 //								echo number_format($value['fee']/$iQuantity, 2, '.', '');					
+								//added by Mike, 20200913
+								$dAddedVATAmount = $value['vat_amount_paid'];
+								$fFee = $fFee - $dAddedVATAmount;
+
 								echo number_format($fFee/$iQuantity, 2, '.', '');					
 																
 							?>
@@ -577,6 +581,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//edited by Mike, 20200430
 //								echo $value['fee'];
+								
 								echo number_format($fFee, 2, '.', '');					
 								
 								$fTotalFee = $fTotalFee + $fFee; //$value['fee'];
@@ -588,19 +593,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//edited by Mike, 20200430
 //								echo $value['fee'];
-									
-								echo $value['receipt_number'];
-									
+								//removed by Mike, 20200913
+								//echo $value['receipt_number'];
+
+								//edited by Mike, 20200913
+/*									
 								if ($value['receipt_id']==0) {
 									$dAddedVATAmount = 0;
 								}
 								else {
 									$dAddedVATAmount = $fFee * 0.12;
 								}
+								
+*/
+								//removed by Mike, 20200913
+//								$dAddedVATAmount = $value['vat_amount_paid'];
 
 								echo number_format($dAddedVATAmount, 2, '.', '');					
-								
+
 								$fTotalAddedVATAmount = $fTotalAddedVATAmount + $dAddedVATAmount;
+
 							?>
 								</div>
 						</td>
