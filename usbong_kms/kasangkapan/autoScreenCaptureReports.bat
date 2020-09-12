@@ -3,7 +3,8 @@ set myDateDay=%date:~0,3%
 
 phantomjs saveWebPageAsImageFile.js viewReportMedicineUnified
 phantomjs saveWebPageAsImageFile.js viewReportMedicineAsteriskUnified
-phantomjs saveWebPageAsImageFile.js viewReportNonMedicineUnified
+REM phantomjs saveWebPageAsImageFile.js viewReportNonMedicineUnified
+phantomjs saveWebPageAsImageFile.js viewReportNonMedicine
 phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Pedro"
 phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Peter"
 
