@@ -1332,8 +1332,10 @@ class Report_Model extends CI_Model
 	public function getPurchasedItemTransactionsForTheDayUnified($itemTypeId) 
 	{	
 		$rowArray = $this->getMedicineTransactionsForTheDayAsterisk();
-
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
+		
+		//edited by Mike, 20200912
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id, t3.receipt_number');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
@@ -1392,11 +1394,11 @@ class Report_Model extends CI_Model
 		$dItemTotalFee = 0;
 
 		//added by Mike, 20200912
-		$iCurrentItemReceiptNumber = 0;		
+		$iCurrentItemReceiptNumber = -1;
 		
 		//unify transactions whose item_id's are equal
 		//TO-DO: -add: this
-		//and receipt number's are of equal status, i.e. >0, or zero (0)
+		//and receipt number's are of equal status, i.e. >0, or zero (0) for non-med items
 		//edited by Mike, 20200723
 		//note: this is due to the following removed function is not available in PHP 5.3
 		//$outputArray = [];
@@ -1414,15 +1416,22 @@ class Report_Model extends CI_Model
 				//TO-DO: -update: this
 				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id'])) {
 //				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id']) && $iCurrentItemReceiptNumber) {
-
 //					echo "push<br/>";
-
 					array_push($outputArray, $currentValue);
 					
 					$iItemQuantity = 0;
 					$dItemTotalFee = 0;
 					
 					$iCurrentItemId=$value['item_id'];
+				}
+				//added by Mike, 20200912
+				//note: identify non-med item
+				else {
+/*
+					if ($iCurrentItemReceiptNumber!=-1) { //with VAT
+						echo "dito".$iCurrentItemReceiptNumber;
+					}
+*/					
 				}
 
 				//quantity
@@ -1444,6 +1453,10 @@ class Report_Model extends CI_Model
 				$value['fee'] = $dItemTotalFee;				
 
 				$iCurrentItemId=$value['item_id'];
+				
+				//added by Mike, 20200912
+				$iCurrentItemReceiptNumber=$value['receipt_number'];
+				
 				$currentValue = $value;
 		
 //				echo "value: ".$value['item_id']."<br/>";
