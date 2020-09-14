@@ -3,15 +3,15 @@
 # Send Short Messaging Service (SMS) message from Linux Personal Computer (PC)
 # author: SYSON, MICHAEL B.
 # date created: 20200914
-# last updated: 20200914
+# last updated: 20200914https://stackoverflow.com/questions/7789826/adb-shell-input-events
 #
 # Notes:
 # 1) Download Android Software Development Kit (SDK) Platform Tools to execute Android Debug Bridge (ADB) Shell commands
 # https://developer.android.com/studio/releases/platform-tools;
 # last accessed: 20200914T1036
 # 2) Verify connected devices/emulators using ADB Command: ./adb shell
-# 2) Verify ADB commands using: ./adb
-# 3) Accept Rivest–Shamir–Adleman (RSA) pairing of mobile telephone device with PC
+# 3) Verify ADB commands using: ./adb
+# 4) Accept Rivest–Shamir–Adleman (RSA) pairing of mobile telephone device with PC
 #  --> This is after connecting the device with the PC via the Universal Serial Bus (USB) ports and cable
 #
 # References:
