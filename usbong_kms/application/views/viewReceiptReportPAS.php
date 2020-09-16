@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200722
+' @date updated: 20200916
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -491,7 +491,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 								//removed temporarily by Mike, 20200619
-/*
+								//edited by Mike, 20200916
+
 								if (strpos(strtoupper($value['notes']),"SC")!==false) {
 									echo "SC";											
 								}
@@ -501,8 +502,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else {
 									echo "WI";										
 								}								
+/*								
+								echo "WI";									
 */								
-								echo "WI";										
 							?>
 								</div>
 						</td>
