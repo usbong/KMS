@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20200910
+  @date updated: 20200916
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -314,7 +314,9 @@
 //if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
 	//edited by Mike, 20200902
 //	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	//edited by Mike, 20200916
+//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
+	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -334,15 +336,28 @@
 			$iFeeTotalCount = 0;				
 			$iQuantityTotalCount = 0;
 
-			foreach ($selectedNonMedicineResultArray as $value) {
+			foreach ($selectedNonMedicineResultArray as $value) {				
 				//added by Mike, 20200708
 				//identify non-medicine item transaction if with VAT
 				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
 				{
 					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
+/*						//edited by Mike, 20200916						
 						$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
 						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
-						
+*/						
+
+						//TO-DO: -ADD: SC/PWD IN ITEM NOTES
+						//echo $value['notes'];
+						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+							$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+						}
+						else {
+							$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
+						}
+
+						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+
 						//added by Mike, 20200812
 						//Reference: https://www.php.net/number_format;
 						//last accessed: 20200812
