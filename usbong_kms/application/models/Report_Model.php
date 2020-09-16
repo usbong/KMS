@@ -1470,7 +1470,7 @@ class Report_Model extends CI_Model
 					}								
 					else {
 						//edited by Mike, 20200916
-						//TO-DO: -ADD: SC/PWD IN ITEM NOTES
+						//+added: SC/PWD IN ITEM NOTES
 						//echo $value['notes'];
 						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 							$dAddedVATAmount = 0;
