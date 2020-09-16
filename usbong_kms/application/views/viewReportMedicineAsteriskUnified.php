@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200507
-' @date updated: 20200507
+' @date updated: 20200916
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -104,6 +104,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 100%;
 <!--							border: 1px solid #ab9c7d;		
 -->
+						}						
+
+						td.tableHeaderColumn
+						{
+							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;		
+							text-align: center;
+							font-weight: bold;
 						}						
 
 						td.column
@@ -434,21 +442,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="column">				
+						<td class ="tableHeaderColumn">				
 								<div class="tableHeader">
 							<?php
 								echo "COUNT";
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="tableHeaderColumn">				
 								<div class="tableHeader">
 				<?php
 								echo "ITEM NAME";
 				?>		
 								</div>								
 						</td>
-						<td class ="column">				
+						<td class ="tableHeaderColumn">				
 								<div class="tableHeader">
 							<?php
 								echo "ITEM PRICE";
@@ -457,7 +465,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="column">				
 						</td>
-						<td class ="column">				
+						<td class ="tableHeaderColumn">				
 								<div class="tableHeader">
 							<?php
 								echo "QTY";
@@ -466,7 +474,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="column">				
 						</td>
-						<td class ="column">				
+						<td class ="tableHeaderColumn">				
 								<div class="tableHeader">
 							<?php
 								echo "TOTAL";
