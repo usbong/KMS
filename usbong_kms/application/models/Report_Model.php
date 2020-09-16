@@ -1335,7 +1335,9 @@ class Report_Model extends CI_Model
 		
 		//edited by Mike, 20200912
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id, t3.receipt_number');
+		//edited by Mike, 20200916
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id, t3.receipt_number');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
@@ -1451,7 +1453,9 @@ class Report_Model extends CI_Model
 				$dItemTotalFee = $dItemTotalFee + $value['fee'];
 
 				//added by Mike, 20200913
-				if ($itemTypeId==2) { //non-med item				
+				if ($itemTypeId==2) { //non-med item								
+					//edited by Mike, 20200916
+/*				
 					if ($value['receipt_id']==0) {
 						$dAddedVATAmount = 0;
 					}
@@ -1460,6 +1464,23 @@ class Report_Model extends CI_Model
 
 						$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
 					}
+*/					
+					if ($value['receipt_id']==0) {
+						$dAddedVATAmount = 0;
+					}								
+					else {
+						//edited by Mike, 20200916
+						//TO-DO: -ADD: SC/PWD IN ITEM NOTES
+						//echo $value['notes'];
+						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+							$dAddedVATAmount = 0;
+						}
+						else {
+							$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
+
+							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
+						}
+					}		
 				}
 				
 //				$dItemTotalVATAmount = $dItemTotalVATAmount + $value['fee'];
