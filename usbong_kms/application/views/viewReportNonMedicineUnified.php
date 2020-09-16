@@ -521,9 +521,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$fFee = 0;
 								if ($value['receipt_id']==0) {
 									$fFee = $value['fee'];
-								}
+								}								
 								else {
-									$fFee = $value['fee']/ (1 + 0.12);
+									//edited by Mike, 20200916
+									//$fFee = $value['fee']/ (1 + 0.12);
+									//TO-DO: -ADD: SC/PWD IN ITEM NOTES
+									//echo $value['notes'];
+									if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+										$fFee = $value['fee'];
+									}
+									else {
+										$fFee = $value['fee']/ (1 + 0.12);
+									}
 								}								
 
 								//added by Mike, 20200415
