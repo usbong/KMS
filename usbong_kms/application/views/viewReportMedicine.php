@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200421
+' @date updated: 20200917
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -498,10 +498,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo $value['fee'];
 
 								//note: 12% is already included
+								//edited by Mike, 20200917
 								$fFee = 0;
+/*								//removed by Mike, 20200917
 								if ($value['receipt_id']==0) {
+*/	
 									$fFee = $value['fee'];
+/*
 								}
+*/								//note: 12% already included						
 /*								else {
 									$fFee = $value['fee']/ (1 + 0.12);
 								}								

@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200507
-' @date updated: 20200916
+' @date updated: 20200917
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -533,7 +533,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="feeId<?php echo $iCount?>">
 							<?php
-								echo $value['fee'];
+								//edited by Mike, 20200917
+								//echo $value['fee'];
+								echo "<b>".number_format((float)$value['fee'], 2, '.', '')."</b>";					
 								
 								$dTotalFee = $dTotalFee + $value['fee'];
 							?>
