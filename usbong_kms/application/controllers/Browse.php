@@ -2288,7 +2288,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200608
 		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($outputTransactionId);
 		
-		$data['outputTransaction'] = $this->Browse_Model->payTransactionItemPurchase();
+		//edited by Mike, 20200917
+		//$data['outputTransaction'] = $this->Browse_Model->payTransactionItemPurchase();
+		$data['outputTransaction'] = $this->Browse_Model->payTransactionItemPurchase($patientId);
+
 		$outputTransactionId = $data['outputTransaction']['transaction_id'];
 
 		$data['outputTransactionId'] = $outputTransactionId;
