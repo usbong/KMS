@@ -2746,8 +2746,12 @@ class Browse_Model extends CI_Model
 
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
 		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+		
+		//edited by Mike, 20200923
+//		$this->db->where('t2.notes', 'PAID'); //TO-DO: -update: to not include UNPAID if we use like(...)
+		$this->db->like('t2.notes', 'PAID'); //TO-DO: -update: to not include UNPAID if we use like(...)
+		$this->db->not_like('t2.notes', "UNPAID");
 
-		$this->db->where('t2.notes', 'PAID'); //TO-DO: -update: to not include UNPAID if we use like(...)
 		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 

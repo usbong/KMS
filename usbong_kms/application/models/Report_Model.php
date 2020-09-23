@@ -1370,6 +1370,9 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200912				
 		//		$this->db->where('t3.receipt_id !=', $value['receipt_id']);		
 		//$this->db->group_by('t3.receipt_id');
+
+		//added by Mike, 20200923
+		$this->db->where('t1.item_name !=', "MINORSET");		
 		
 		//added by Mike, 20200506
 //		$this->db->group_by('t1.item_name');
@@ -1397,7 +1400,7 @@ class Report_Model extends CI_Model
 		
 		//added by Mike, 20200913
 		$dItemTotalVATAmount = 0;
-		
+				
 		//added by Mike, 20200912
 		$iCurrentItemReceiptNumber = -1;
 		
@@ -1413,6 +1416,9 @@ class Report_Model extends CI_Model
 		
 		if ($rowArray!=False) { //if value exists in array
 			foreach ($rowArray as $value) {
+
+				//added by Mike, 20200923
+				$dItemTotalVATAmount = 0;
 			
 //				echo "iCurrentItemId: ".$iCurrentItemId." : ".$value['item_name']." : ".$value['fee_quantity']."<br/>";
 //				echo "iCurrentItemId: ".$iCurrentItemId."<br/>";
@@ -1469,6 +1475,9 @@ class Report_Model extends CI_Model
 						$dAddedVATAmount = 0;
 					}								
 					else {
+												
+//						echo ">>".$value['item_name'];
+						
 						//edited by Mike, 20200916
 						//+added: SC/PWD IN ITEM NOTES
 						//echo $value['notes'];
@@ -1489,7 +1498,7 @@ class Report_Model extends CI_Model
 				$value['fee_quantity'] = $iItemQuantity;
 				$value['fee'] = $dItemTotalFee;				
 
-				//added by Mike, 20200913
+				//added by Mike, 20200913				
 				$value['vat_amount_paid'] = $dItemTotalVATAmount;
 
 				$iCurrentItemId=$value['item_id'];
