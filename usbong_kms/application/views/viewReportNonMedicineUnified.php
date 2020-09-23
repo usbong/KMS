@@ -550,7 +550,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo number_format($value['fee']/$iQuantity, 2, '.', '');					
 								//added by Mike, 20200913
 								$dAddedVATAmount = $value['vat_amount_paid'];
-								$fFee = $fFee - $dAddedVATAmount;
+								//removed by Mike, 20200923
+								//$fFee = $fFee - $dAddedVATAmount;
 
 								echo number_format($fFee/$iQuantity, 2, '.', '');					
 																
