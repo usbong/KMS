@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200826
+' @date updated: 20200926
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -516,14 +516,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//edited by Mike, 20200414
 //								echo $value['item_price'];
 //								echo $value['fee'];
-
+								
 								//added by Mike, 20200430
 								$fFee = 0;
+								//added by Mike, 20200926
+								$dAddedVATAmount = $value['vat_amount_paid'];
+
 								if ($value['receipt_id']==0) {
 									$fFee = $value['fee'];
-								}
+								}								
 								else {
-									$fFee = $value['fee']/ (1 + 0.12);
+									//edited by Mike, 20200916
+									//$fFee = $value['fee']/ (1 + 0.12);
+									//TO-DO: -ADD: SC/PWD IN ITEM NOTES
+									//echo $value['notes'];
+									if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+										$fFee = $value['fee'];
+									}
+									else {
+										//edited by Mike, 20200926
+//										$fFee = $value['fee']/ (1 + 0.12);
+										$fFee = $value['fee']-$dAddedVATAmount;
+									}
 								}								
 
 								//added by Mike, 20200415
