@@ -1271,12 +1271,14 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 */
-	//added by Mike, 20200412; edited by Mike, 20200430
+	//added by Mike, 20200412; edited by Mike, 20200926
 	public function getPurchasedItemTransactionsForTheDay($itemTypeId) 
 	{	
 		$rowArray = $this->getMedicineTransactionsForTheDayAsterisk();
 
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
+		//edited by Mike, 20200926
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number');
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
@@ -1325,7 +1327,130 @@ class Report_Model extends CI_Model
 			return False; //edited by Mike, 20190722
 		}
 		
-		return $rowArray;
+		//added by Mike, 20200926
+		$iCurrentItemId = -1;
+		$iItemQuantity = 0;
+		$dItemTotalFee = 0;
+		
+		//added by Mike, 20200913
+		$dItemTotalVATAmount = 0;
+				
+		//added by Mike, 20200912
+		$iCurrentItemReceiptNumber = -1;
+		
+		//unify transactions whose item_id's are equal
+		//TO-DO: -add: this
+		//and receipt number's are of equal status, i.e. >0, or zero (0) for non-med items
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
+		$currentValue = "";
+		
+		if ($rowArray!=False) { //if value exists in array
+			foreach ($rowArray as $value) {
+
+				//added by Mike, 20200923
+				$dItemTotalVATAmount = 0;
+			
+//				echo "iCurrentItemId: ".$iCurrentItemId." : ".$value['item_name']." : ".$value['fee_quantity']."<br/>";
+//				echo "iCurrentItemId: ".$iCurrentItemId."<br/>";
+
+				//edited by Mike, 20200912
+				//TO-DO: -update: this
+				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id'])) {
+//				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id']) && $iCurrentItemReceiptNumber) {
+//					echo "push<br/>";
+					array_push($outputArray, $currentValue);
+					
+					$iItemQuantity = 0;
+					$dItemTotalFee = 0;
+					
+					$iCurrentItemId=$value['item_id'];
+				}
+				//added by Mike, 20200912
+				//note: identify non-med item
+				else {
+/*
+					if ($iCurrentItemReceiptNumber!=-1) { //with VAT
+						echo "dito".$iCurrentItemReceiptNumber;
+					}
+*/					
+				}
+
+				//quantity
+				if ($value['fee_quantity']==0) {
+					$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+				}
+				else {
+					$iQuantity =  $value['fee_quantity'];
+				}
+
+				$iItemQuantity = $iItemQuantity + $iQuantity;
+				
+				//total
+				$dItemTotalFee = $dItemTotalFee + $value['fee'];
+
+				//added by Mike, 20200913
+				if ($itemTypeId==2) { //non-med item								
+					//edited by Mike, 20200916
+/*				
+					if ($value['receipt_id']==0) {
+						$dAddedVATAmount = 0;
+					}
+					else {
+						$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
+
+						$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
+					}
+*/					
+					if ($value['receipt_id']==0) {
+						$dAddedVATAmount = 0;
+					}								
+					else {
+												
+//						echo ">>".$value['item_name'];
+						
+						//edited by Mike, 20200916
+						//+added: SC/PWD IN ITEM NOTES
+						//echo $value['notes'];
+						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+							$dAddedVATAmount = 0;
+						}
+						else {
+							$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
+
+							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
+						}
+					}		
+				}
+				
+//				$dItemTotalVATAmount = $dItemTotalVATAmount + $value['fee'];
+//				echo "iItemQuantity: " .$iItemQuantity."; ";
+				
+				$value['fee_quantity'] = $iItemQuantity;
+				$value['fee'] = $dItemTotalFee;				
+
+				//added by Mike, 20200913				
+				$value['vat_amount_paid'] = $dItemTotalVATAmount;
+
+				$iCurrentItemId=$value['item_id'];
+				
+				//added by Mike, 20200912
+				$iCurrentItemReceiptNumber=$value['receipt_number'];
+				
+				$currentValue = $value;
+		
+//				echo "value: ".$value['item_id']."<br/>";
+			}
+
+			array_push($outputArray, $currentValue);
+		}
+		
+		//edited by Mike, 20200506
+//		return $rowArray;
+		return $outputArray;
 	}	
 
 	//added by Mike, 20200506
