@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200830
+  @date updated: 20200927
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit (SLHCC)
@@ -256,10 +256,56 @@
 						}
 						else {							 
 */						
+/*						//removed by Mike, 20200927
 							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+*/							
 /*
 						}
 */						
+						//added by Mike, 20200927
+						$cellValue = number_format($cellValue, 2, '.', '');					
+
+						//PT TREATMENT (Payslip): Value
+						if (($iRowCount==5) and ($iColumnCount==1)) {
+								//orange
+								echo "<td class='column' bgcolor='#FF9900' style='text-align:right'><b>".$cellValue."</b></td>";
+						}
+						//PT TREATMENT (Actual): Value
+						else if (($iRowCount==6) and ($iColumnCount==1)) {
+								//yellow
+								echo "<td class='column' bgcolor='#FFFF00' style='text-align:right'><b>".$cellValue."</b></td>";
+						}
+						//HMO (Forecasted): Value
+						else if (($iRowCount==10) and ($iColumnCount==1)) {
+								//orange
+								echo "<td class='column' bgcolor='#FF9900' style='text-align:right'><b>".$cellValue."</b></td>";
+						}
+						//CASH & HMO (Forecasted): Value
+						else if (($iRowCount==13) and ($iColumnCount==1)) {
+								//orange
+								echo "<td class='column' bgcolor='#FF9900' style='text-align:right'><b>".$cellValue."</b></td>";
+						}						
+						//UNCOLLECTED CASH: TOTAL
+						else if (($iRowCount==15) and ($iColumnCount==1)) {
+							if ($cellValue!=0) {
+								echo "<td class='column' bgcolor='#FF1100' style='text-align:right'><b>".$cellValue."</b></td>";
+							}
+							else {
+								echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+							}
+						}
+						//UNCOLLECTED CASH: Grand Total (including prev weeks)
+						else if (($iRowCount==16) and ($iColumnCount==1)) {
+							if ($cellValue!=0) {
+								echo "<td class='column' bgcolor='#FF1100' style='text-align:right'><b>".$cellValue."</b></td>";
+							}
+							else {
+								echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+							}
+						}						
+						else {
+							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+						}
 					}
 					else {
 						//echo "<td class='column'><b>".$cellValue."</b></td>";
