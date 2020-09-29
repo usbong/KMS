@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200909
+' @date updated: 20200928
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -306,7 +306,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  </tr>
 	</table>
 	<br/>
-	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
+	<!-- edited by Mike, 20200929 -->
+	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l")); //"2020-09-28, MONDAY"?>
 	</div>
 	<?php 
 		if ($result[0]["medical_doctor_name"]==""){
