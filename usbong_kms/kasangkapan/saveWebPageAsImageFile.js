@@ -8,7 +8,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200724
-' @date updated: 20200726
+' @date updated: 20201001
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -25,6 +25,7 @@ var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
 var fileExtension = '';
 
 //added by Mike, 20200725
+//var dateToday = "20200727";//new Date(); 
 var dateToday = new Date(); 
 
 if (isFromServerFolder=="-s") {
@@ -51,6 +52,8 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	//edited by Mike, 20200725
     //page.render('output/'+fileName+'.png');
 	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+//	page.render('output/20200727/'+fileName+'1.png');
+
 /*	
     console.log("windowScreenHeight: " + window.screen.height);
     console.log("scrollHeightMax: " + document.body.scrollHeight);
@@ -66,6 +69,7 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	  });
 
 	  page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+//	  page.render('output/20200727/'+fileName+iCount+'.png');
 	
 	  currentDocumentBodyHeight = currentDocumentBodyHeight - windowScreenHeight;
 	  iCount = iCount + 1;
@@ -81,7 +85,7 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 if (Date.prototype.toISOString) {
     Date.prototype.toISOString = function () {
         function pad(n) { return n < 10 ? '0' + n : n; }
-        function ms(n) { return n < 10 ? '00'+ n : n < 100 ? '0' + n : n }
+//        function ms(n) { return n < 10 ? '00'+ n : n < 100 ? '0' + n : n }
 		//edited by Mike, 20200725
 /*		
         return this.getFullYear() + '-' +
@@ -99,8 +103,17 @@ if (Date.prototype.toISOString) {
             pad(this.getHours()) +
             pad(this.getMinutes());			
 */			
-        return this.getFullYear() +
+
+	   //edited by Mike, 20201001
+	   //due to getMonth error when October, i.e. 9+1 
+		
+/*        return this.getFullYear() +
             pad(this.getMonth() + 1) +
             pad(this.getDate());			
+*/
+       return this.getFullYear()+""+
+			pad(this.getMonth()+1)+""+
+            pad(this.getDate());
+
     }
 }
