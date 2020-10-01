@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200911
+' @date updated: 20201001
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -31,9 +31,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 11pt;
-
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							
+							/* edited by Mike, 20201001 */
+							/* TO-DO: -add: auto-identify if Tablet PC */							
+							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							width: 1000px
                         }
 						
 						div.checkBox
