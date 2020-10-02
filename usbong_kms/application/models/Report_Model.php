@@ -386,7 +386,7 @@ class Report_Model extends CI_Model
 		//TO-DO: -add: instructions for unit member to quickly set date
 
 		$this->db->where('t2.transaction_date=',date("m/d/Y"));	
-//		$this->db->where('t2.transaction_date=',"09/01/2020");
+//		$this->db->where('t2.transaction_date=',"09/28/2020");
 
 		//added by Mike, 20200601
 		//$this->db->where('t2.fee!=',0);
@@ -1435,6 +1435,7 @@ class Report_Model extends CI_Model
 				//added by Mike, 20200913				
 				$value['vat_amount_paid'] = $dItemTotalVATAmount;
 
+
 				$iCurrentItemId=$value['item_id'];
 				
 				//added by Mike, 20200912
@@ -1608,11 +1609,17 @@ class Report_Model extends CI_Model
 						//echo $value['notes'];
 						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 							$dAddedVATAmount = 0;
+
+//						echo ">>>>".$dAddedVATAmount;
+
 						}
 						else {
 							$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
 
 							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
+
+						echo ">>>>".$dAddedVATAmount;
+							
 						}
 					}		
 				}
