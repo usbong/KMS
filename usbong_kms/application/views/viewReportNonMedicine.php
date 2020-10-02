@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200926
+' @date updated: 20201002
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -534,6 +534,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										$fFee = $value['fee'];
 									}
 									else {
+										
+										
 										//edited by Mike, 20200926
 //										$fFee = $value['fee']/ (1 + 0.12);
 										$fFee = $value['fee']-$dAddedVATAmount;
@@ -602,13 +604,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//edited by Mike, 20200430
 //								echo $value['fee'];
+/*								//removed by Mike, 20201002
 								if ($value['receipt_id']==0) {
 									$dAddedVATAmount = 0;
 								}
 								else {
 									$dAddedVATAmount = $fFee * 0.12;
 								}
-
+*/
 								echo number_format($dAddedVATAmount, 2, '.', '');					
 								
 								$fTotalAddedVATAmount = $fTotalAddedVATAmount + $dAddedVATAmount;
