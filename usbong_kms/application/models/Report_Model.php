@@ -1619,8 +1619,9 @@ class Report_Model extends CI_Model
 							$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
 
 							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
-
-						echo ">>>>".$dAddedVATAmount;
+						
+						//removed by Mike, 2021003
+//						echo ">>>>".$dAddedVATAmount;
 							
 						}
 					}		
