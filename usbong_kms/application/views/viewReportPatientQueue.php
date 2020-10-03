@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="utf-8">
 	<!-- added by Mike, 20201003 -->
 	<!-- note: 1 = 1 second -->
-	<meta http-equiv="refresh" content="0.000000002">
+	<meta http-equiv="refresh" content="30.0">
 
     <!-- Reference: Apache Friends Dashboard index.html -->
     <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
