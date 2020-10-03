@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20200907
+' @date updated: 20201003
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -19,6 +19,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8">
+	<!-- added by Mike, 20201003 -->
+	<!-- note: 1 = 1 second -->
+	<meta http-equiv="refresh" content="0.000000002">
 
     <!-- Reference: Apache Friends Dashboard index.html -->
     <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
@@ -108,6 +111,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						span.alertHighSeveritySpan {
 							color: red;
+							font-weight: bold;
+						}						
+						
+						span.alertGoldSpan {
+							color: #ffbb00;
 							font-weight: bold;
 						}						
 						
@@ -315,6 +323,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </style>
   </head>
 	  <script>
+		//added by Mike, 20201003
+		//Reference: https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock;
+		//last accessed: 20201003
+		//edited by Mike, 20201003
+/*		function startTime() {
+		  var today = new Date();
+		  var h = today.getHours();
+		  var m = today.getMinutes();
+		  var s = today.getSeconds();
+		  m = checkTime(m);
+		  s = checkTime(s);
+		  document.getElementById('txt').innerHTML =
+		  h + ":" + m + ":" + s;
+		  var t = setTimeout(startTime, 500);
+		}
+*/
+		function startTime() {
+		  var sHoldTextPatientName = document.getElementById("patientNameId"+iCount).innerText;
+
+		  var today = new Date();
+		  var h = today.getHours();
+		  var m = today.getMinutes();
+		  var s = today.getSeconds();
+		  m = checkTime(m);
+		  s = checkTime(s);
+		  document.getElementById('txt').innerHTML =
+		  h + ":" + m + ":" + s;
+
+		  var t = setTimeout(startTime, 500);
+		}
+
+		function checkTime(i) {
+		  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+		  return i;
+		}	  
+	  
 		//added by Mike, 20200530
 		function copyTextMOSC(iCount){
 //			alert("hello"+iCount);
@@ -700,6 +744,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>											
+						<!-- added by Mike, 20201003 -->
+						<td class ="columnTableHeader">				
+								<div class="tableHeader">
+							<?php
+									echo "ELAPSED TIME";
+							?>
+								</div>
+						</td>											
 				</tr>
 <?php				
 				$iCount = 1;
@@ -736,6 +788,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="column">				
 						</td>											
+						<td class ="column">				
+						</td>								
+						<!-- added by Mike, 20201003 -->
 						<td class ="column">				
 						</td>											
 				</tr>
@@ -830,6 +885,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else {
 									echo $value['notes'];
 								}
+
+/*							
+								if (strpos($value['notes'],"PAID")!==false) {
+									echo "PAID";
+								}
+								else if (strpos($value['notes'],"NEW")!==false) {
+									echo "PAID";
+								}
+								else
+									echo "NEW; NONE YET";
+								}
+								else {
+									echo $value['medical_doctor_name'];
+								}								
+*/								
+							?>
+								</div>
+						</td>	
+						<!-- added by Mike, 20201003 -->
+						<td class ="column">				
+								<div>
+							<?php
+								//Reference: https://www.php.net/manual/en/class.dateinterval.php;
+								//last accessed: 20201003
+								$d1=new DateTime($value['added_datetime_stamp']);
+								$d2=new DateTime(date("Y-m-d h:i:s"));
+								$diff=$d2->diff($d1);
+								
+								if (strpos($value['notes'],"UNPAID")!==false) {
+									echo "<span class='alertHighSeveritySpan'>";
+										//TO-DO: -update: to use javascript
+										echo $diff->format("%H:%I:%S");
+									echo "</span>";
+								}
+								else {
+									echo "<span class='alertGoldSpan'>";
+										//TO-DO: -update: this							
+										echo "DONE!";
+									echo "</span>";									
+								}
+
 
 /*							
 								if (strpos($value['notes'],"PAID")!==false) {
