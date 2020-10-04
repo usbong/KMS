@@ -8,7 +8,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200724
-' @date updated: 20200802
+' @date updated: 20201004
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -22,21 +22,20 @@ var fileName = system.args[1];
 //added by Mike, 20200726
 var isFromServerFolder = system.args[2];
 //var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
-//edited by Mike, 20200830
 //var webAddress = 'file:///D:/Usbong/SLHCC/202007/'; //default
-var webAddress = 'file:///D:/2020/add-on software/generateMonthlySummaryReport/add-on software/output/';
-
+var webAddress = 'file:///D:/Usbong/SLHCC/202008/'; //default
 var fileExtension = '.html'; //'';//edited by Mike, 20200802
 
 //added by Mike, 20200725
 var dateToday = new Date(); 
 
-/* //removed by Mike, 202000802
+//note: weekly report
+//at present, executed at HQ
+//added by Mike, 202000802
 if (isFromServerFolder=="-s") {
 	webAddress = 'http://localhost/usbong_kms/server/';
 	fileExtension = '.php';
 }
-*/
 
 console.log("Filename: " + fileName);
 
@@ -57,7 +56,9 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	//edited by Mike, 20200725
     //page.render('output/'+fileName+'.png');
 //	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
-	page.render('output/SLHCC/'+dateToday.toISOString()+'/'+fileName+'1.png');
+	//edited by Mike, 20201004
+//	page.render('output/SLHCC/'+dateToday.toISOString()+'/'+fileName+'1.png');
+	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
 
 /*	
     console.log("windowScreenHeight: " + window.screen.height);
@@ -100,15 +101,17 @@ if (Date.prototype.toISOString) {
             pad(this.getSeconds()) + '.' +
             ms(this.getMilliseconds()) + 'Z';
 */
-/*
-        return this.getFullYear() +
-            pad(this.getMonth() + 1) +
-            pad(this.getDate()) + 'T' +
-            pad(this.getHours()) +
-            pad(this.getMinutes());			
-*/			
-        return this.getFullYear() +
+
+	   //edited by Mike, 20201001
+	   //due to getMonth error when October, i.e. 9+1 
+		
+/*        return this.getFullYear() +
             pad(this.getMonth() + 1) +
             pad(this.getDate());			
+*/
+       return this.getFullYear()+""+
+			pad(this.getMonth()+1)+""+
+            pad(this.getDate());
+
     }
 }
