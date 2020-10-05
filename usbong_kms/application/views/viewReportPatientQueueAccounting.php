@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20200907
+' @date updated: 20201005
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -108,6 +108,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						span.alertHighSeveritySpan {
 							color: red;
+							font-weight: bold;
+						}						
+						
+						span.alertGoldSpan {
+							color: #ff9900;
 							font-weight: bold;
 						}						
 						
@@ -699,7 +704,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "STATUS";
 							?>
 								</div>
-						</td>											
+						</td>						
+						<!-- added by Mike, 20201005 -->
+						<td class ="columnTableHeader">				
+								<div class="tableHeader">
+							<?php
+									echo "ELAPSED TIME (HH:MM)";
+							?>
+								</div>
+						</td>																	
 				</tr>
 <?php				
 				$iCount = 1;
@@ -734,6 +747,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="column">				
 						</td>
+						<td class ="column">				
+						</td>											
 						<td class ="column">				
 						</td>											
 						<td class ="column">				
@@ -844,7 +859,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */								
 							?>
 								</div>
-						</td>						
+						</td>			
+						<!-- added by Mike, 20201003 -->
+						<td class ="column">				
+								<div >
+							<?php
+								//Reference: https://www.php.net/manual/en/class.dateinterval.php;
+								//last accessed: 20201003
+								$d1=new DateTime($value['added_datetime_stamp']);
+								$d2=new DateTime(date("Y-m-d h:i:s"));
+								$diff=$d2->diff($d1);
+								
+								if (strpos($value['notes'],"UNPAID")!==false) {
+									echo "<span class='alertHighSeveritySpan'>";
+										//TO-DO: -update: to use javascript
+										//edited by Mike, 20201005
+//										echo $diff->format("%H:%I:%S");
+										echo $diff->format("%H:%I");
+									echo "</span>";
+								}
+								else {
+									echo "<span class='alertGoldSpan'>";
+										//TO-DO: -update: this							
+										echo "DONE!";
+									echo "</span>";									
+								}
+
+
+/*							
+								if (strpos($value['notes'],"PAID")!==false) {
+									echo "PAID";
+								}
+								else if (strpos($value['notes'],"NEW")!==false) {
+									echo "PAID";
+								}
+								else
+									echo "NEW; NONE YET";
+								}
+								else {
+									echo $value['medical_doctor_name'];
+								}								
+*/								
+							?>
+								</div>
+						</td>								
 						<td>
 							<button onclick="myPopupFunctionDeletePatientTransaction(<?php echo $value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
 						</td>

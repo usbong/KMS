@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20201003
+' @date updated: 20201005
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -115,7 +115,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}						
 						
 						span.alertGoldSpan {
-							color: #ffbb00;
+							color: #ff9900;
 							font-weight: bold;
 						}						
 						
@@ -748,7 +748,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnTableHeader">				
 								<div class="tableHeader">
 							<?php
-									echo "ELAPSED TIME";
+									echo "ELAPSED TIME (HH:MM)";
 							?>
 								</div>
 						</td>											
@@ -916,7 +916,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if (strpos($value['notes'],"UNPAID")!==false) {
 									echo "<span class='alertHighSeveritySpan'>";
 										//TO-DO: -update: to use javascript
-										echo $diff->format("%H:%I:%S");
+										//edited by Mike, 20201005
+//										echo $diff->format("%H:%I:%S");
+										echo $diff->format("%H:%I");
 									echo "</span>";
 								}
 								else {
