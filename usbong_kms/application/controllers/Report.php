@@ -542,6 +542,9 @@ class Report extends CI_Controller { //MY_Controller {
 		
 		$iTransactionIdMax = $row->transaction_id;
 		
+		//added by Mike, 20201007
+		$iTransactionQuantity = 0;
+		
 //		echo "max".$iTransactionIdMax;
 
 		if (strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) {
