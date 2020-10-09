@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20201002
+' @date updated: 20201009
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -490,9 +490,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$fLess20PercentDiscount = $fAmountNoLess20PercentDiscount*0.20;
 */
 
-								//removed temporarily by Mike, 20200619
-								//edited by Mike, 20200916
-
+								//edited by Mike, 20201009
+/*
 								if (strpos(strtoupper($value['notes']),"SC")!==false) {
 									echo "SC";											
 								}
@@ -501,7 +500,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 								else {
 									echo "WI";										
-								}								
+								}		
+*/								
+								$outputClassification = "";
+								if (strpos(strtoupper($value['notes']),"DISCOUNTED")!==false) {
+									$outputClassification = "WI; DISCOUNTED";
+									
+									//added by Mike, 20200728
+									$fLess20PercentDiscount = 0;
+								}
+								else if (strpos(strtoupper($value['notes']),"SC")!==false) {
+									$outputClassification = "SC";											
+								}
+								else if (strpos(strtoupper($value['notes']),"PWD")!==false) {
+									$outputClassification = "PWD"; 								
+								}
+								else {
+									$outputClassification = "WI";										
+
+									$fLess20PercentDiscount = 0;									
+								}							
+
+								if (strpos(strtoupper($value['notes']),"OR RECEIVED")!==false) {
+									$outputClassification = $outputClassification."; OR RECEIVED ".explode("OR RECEIVED ", $value['notes'])[1];
+								}
+								
+								echo $outputClassification;					
 /*								
 								echo "WI";									
 */								
