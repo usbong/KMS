@@ -11,12 +11,19 @@
 # Save Database Storage Command in Linux PC
 # @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
 # @author: SYSON, MICHAEL B.
-# @date created: 20200925
-# @last modified: 20200925
+# @date created: 20201001
+# @last modified: 20201009
 
 #update source location
 #source: from Windows machine, e.g. Windows 7, Service Pack 1
-source="/run/user/1000/gvfs/smb-share:server=mosc-accounting,share=information%20desk/unified.bat"
+#Example:
+#source="/run/user/1000/gvfs/smb-share:server=mosc-accounting,share=information%20desk/unified.bat"
+
+#edited by Mike, 20201009
+#source="/run/user/1000/gvfs/smb-share:server=mosc-accounting,share=information%20desk/*"
+#note: using "mount" command to enable access to source folder in "mnt" directory reduces elapsed time from 4mins to 22seconds
+#example: sudo mount -t cifs "$source" "$destination" -o user=unit_member
+source="/mnt/myMOSC-AccountingFolder/*"
 
 echo "source: ".$source
 
