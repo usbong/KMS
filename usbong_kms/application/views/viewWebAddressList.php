@@ -12,11 +12,11 @@
   @date updated: 20200827
 	
   Computer Web Browser Address (Example):
-  1) http://localhost/usbong_kms/index.php/report/viewWebAddressList
+  1) http://192.168.11.10/usbong_kms/index.php/report/viewWebAddressList
   
   Note:
   1) Previously, we used this PHP page without the CodeIgniter framework
-  http://localhost/usbong_kms/server/viewWebAddressList.php
+  http://192.168.11.10/usbong_kms/server/viewWebAddressList.php
 
   2) Update the file location
   
@@ -48,8 +48,13 @@
 		//added by Mike, 20200821
 		if (strpos($ipAddress, "::")!==false) {
 			$ipAddress = "SERVER ADDRESS";
+			//added by Mike, 20201010
+			//TO-DO: -reverify: this
+			$machineAddress = "SERVER MACHINE ADDRESS";
 		}
 
+		//added by Mike, 20201010
+		//TO-DO: -reverify: this
 		//added by Mike, 20200821
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { //Windows machine
 			$rawMachineAddressInput =  exec('getmac');
