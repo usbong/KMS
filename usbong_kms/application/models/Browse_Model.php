@@ -2812,6 +2812,8 @@ class Browse_Model extends CI_Model
 //		$ipAddress = $_SESSION["client_ip_address"];
 //		$machineAddress = $_SESSION["client_machine_address"];
 
+		//added by Mike, 20201010
+		//TO-DO: -reverify: if can be removed
 		$ipAddress = $this->session->userdata("client_ip_address");
 		$machineAddress = $this->session->userdata("client_machine_address");
 
