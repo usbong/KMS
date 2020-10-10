@@ -160,6 +160,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
+		//added by Mike, 20201010
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+
 		$this->load->model('Browse_Model');
 		
 		//edited by Mike, 20200602
@@ -231,6 +235,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		//added by Mike, 20201010
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
 
 		$this->load->model('Browse_Model');
 	
@@ -508,6 +516,20 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		//added by Mike, 20200912
 		$data['nameParam'] = trim($data['nameParam']);
+
+		//added by Mike, 20201010
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchMedicine');
+		}
+
+		//added by Mike, 20201010
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+		//added by Mike, 20201010
+/*		echo "ipAddress: ".$ipAddress."<br/>";
+		echo "machineAddress: ".$machineAddress."<br/>";
+*/
 		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
