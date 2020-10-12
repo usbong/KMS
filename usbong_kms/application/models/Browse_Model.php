@@ -882,7 +882,7 @@ class Browse_Model extends CI_Model
 						//edited by Mike, 20200710
 						//$this->db->insert('receipt', $data);
 						array_push($outputArray, $data);
-						
+
 						//TO-DO: -reverify: this
 						//added by Mike, 20201012
 						if ($rowArray[0]['pas_fee']!=0) { 
@@ -902,9 +902,7 @@ class Browse_Model extends CI_Model
 								//$this->db->insert('receipt', $data);
 								array_push($outputArray, $data);
 							}
-						}
-					}
-					
+						}					
 					}
 					else { //not SYSON, PEDRO //if ($data['medicalDoctorId']!=1) { //not SYSON, PEDRO
 						$param['receiptTypeId'] = 3;
