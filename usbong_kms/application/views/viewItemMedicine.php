@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201001
+' @date updated: 20201013
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -205,6 +205,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 
 						.Button-purchase:hover {
+							background-color: #d4be00;
+						}
+
+						/*added by Mike, 20201013*/
+						.Button-purchase:focus {
 							background-color: #d4be00;
 						}
 
