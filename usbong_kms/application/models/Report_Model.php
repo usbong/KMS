@@ -1018,7 +1018,10 @@ class Report_Model extends CI_Model
 		}
 		else if (strtoupper($param["receiptTypeName"])=="PAS") {
 			//PAS
+			//edited by Mike, 20201012
+			//TO-DO: -reverify: this
 			$this->db->where('t4.receipt_type_id=',2);
+			//$this->db->where('t4.receipt_type_id=',1);
 		}		
 		else {
 			$this->db->where('t4.receipt_type_id=',3);
@@ -1620,7 +1623,7 @@ class Report_Model extends CI_Model
 
 							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
 						
-						//removed by Mike, 2021003
+						//removed by Mike, 20201003
 //						echo ">>>>".$dAddedVATAmount;
 							
 						}
