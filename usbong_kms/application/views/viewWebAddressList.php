@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20201010
+  @date updated: 20201013
 	
   Computer Web Browser Address (Example):
   1) http://192.168.11.10/usbong_kms/index.php/report/viewWebAddressList
@@ -87,6 +87,8 @@
 		$ipAddress = $this->session->userdata('client_ip_address');
 		$machineAddress = $this->session->userdata('client_machine_address');
 */
+//		echo "MACHINE ADDRESS: ".$machineAddress;
+
 		$this->session->set_userdata('client_ip_address', $ipAddress);
 		$this->session->set_userdata('client_machine_address', $machineAddress);
 
