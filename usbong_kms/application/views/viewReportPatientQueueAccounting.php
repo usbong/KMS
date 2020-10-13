@@ -679,6 +679,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<!-- added by Mike, 20201013 -->
+						<td class ="columnTableHeaderCount">		
+								<div class="tableHeader">
+							<?php
+								echo "WAIT COUNT";
+							?>
+								</div>
+						</td>
 
 						<td class ="columnTableHeader">				
 								<div class="tableHeader">
@@ -723,6 +731,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$iCount = 1;
 				$iMedicalDoctorCount = 1;
 				$currentMedicalDoctorId = -1; //added by Mike, 20200530
+						
+				//added by Mike, 20201013
+				$iWaitCount = 1;
 				
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
@@ -742,7 +753,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					else {									
 						if ($currentMedicalDoctorId!==$value['medical_doctor_id']) {
 							$currentMedicalDoctorId = $value['medical_doctor_id'];
-							$iMedicalDoctorCount = 1;													
+							$iMedicalDoctorCount = 1;	
+							
+							$iWaitCount = 1; //added by Mike, 20201013
+							
+							
 ?>							
 				<tr class="row">
 						<td class ="column">		
@@ -752,6 +767,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="column">				
 						</td>
+						<td class ="column">				
+						</td>											
 						<td class ="column">				
 						</td>											
 						<td class ="column">				
@@ -780,6 +797,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnCount">				
 				<?php
 								echo $iMedicalDoctorCount;
+				?>		
+						</td>
+	
+						<!-- added by Mike, 20201013 -->
+						<td class ="columnCount">				
+				<?php
+								if (strpos($value['notes'],"UNPAID")!==false) {
+									echo $iWaitCount;
+								}
 				?>		
 						</td>
 	
@@ -844,6 +870,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "<span class='alertHighSeveritySpan'>";
 									echo $value['notes'];
 									echo "</span>";
+
+									//added by Mike, 20201013
+									$iWaitCount=$iWaitCount+1;
 								}
 								else {
 									echo $value['notes'];
