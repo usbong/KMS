@@ -2848,7 +2848,10 @@ class Browse_Model extends CI_Model
 //		if (!isset($ipAddress) and !isset($machineAddress)) {
 		//added by Mike, 20200821
 		//note: $machineAddress not yet set for Windows Machine
-		if (!isset($ipAddress)) {
+		//edited by Mike, 20201013
+		//TO-DO: -reverify: this
+//		if (!isset($ipAddress)) {
+		if (!isset($ipAddress) and !isset($machineAddress)) {
 //			session_destroy;			
 			//redirect(base_url()."/server/viewWebAddressList.php");		
 			redirect('report/viewWebAddressList');			
