@@ -531,11 +531,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		echo "machineAddress: ".$machineAddress."<br/>";
 */
 		
+/*		//removed by Mike, 20201013
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
 			redirect('browse/searchMedicine');
 		}
-		
+*/		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
