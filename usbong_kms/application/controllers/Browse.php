@@ -1849,7 +1849,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//TO-DO: -update: this
 		//$data['medicalDoctorIdParam'] = $_POST['medicalDoctorIdParam'];
-		$data['medicalDoctorIdParam'] = 1; //SYSON, PEDRO (DEFAULT)
+		//edited by Mike, 20201013
+		//$data['medicalDoctorIdParam'] = 1; //SYSON, PEDRO (DEFAULT)
+		$data['medicalDoctorIdParam'] = 0; //ANY (DEFAULT)
 				
 		if (!isset($data['patientLastNameParam'])) {
 			redirect('report/viewReportPatientQueue'); //edited by Mike, 20200826
@@ -1890,7 +1892,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//TO-DO: -update: this
 		//$data['medicalDoctorIdParam'] = $_POST['medicalDoctorIdParam'];
-		$data['medicalDoctorIdParam'] = 1; //SYSON, PEDRO (DEFAULT)
+		//added by Mike, 20201013
+		//$data['medicalDoctorIdParam'] = 1; //SYSON, PEDRO (DEFAULT)
+		$data['medicalDoctorIdParam'] = 0; //ANY (DEFAULT)
 				
 		if (!isset($data['patientLastNameParam'])) {
 			redirect('report/viewReportPatientQueueAccounting');
