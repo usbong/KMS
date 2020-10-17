@@ -8,7 +8,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200724
-' @date updated: 20201001
+' @date updated: 20201017
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -24,6 +24,10 @@ var isFromServerFolder = system.args[2];
 var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
 var fileExtension = '';
 
+//added by Mike, 20201017
+var isNoonReport = system.args[3];
+var noonFolderName = 'noonReport/';
+
 //added by Mike, 20200725
 //var dateToday = "20200727";//new Date(); 
 var dateToday = new Date(); 
@@ -31,6 +35,13 @@ var dateToday = new Date();
 if (isFromServerFolder=="-s") {
 	webAddress = 'http://localhost/usbong_kms/server/';
 	fileExtension = '.php';
+}
+
+//added by Mike, 20201017
+if (isNoonReport=="-noon") {
+}
+else {
+	noonFolderName='';
 }
 
 console.log("Filename: " + fileName);
@@ -51,8 +62,16 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	
 	//edited by Mike, 20200725
     //page.render('output/'+fileName+'.png');
-	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+	//edited by Mike, 20201017
+//	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
 //	page.render('output/20200727/'+fileName+'1.png');
+
+	if (noonFolderName=="") {
+		page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+	}
+	else {
+		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport1.png');
+	}
 
 /*	
     console.log("windowScreenHeight: " + window.screen.height);
@@ -67,8 +86,19 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	  page.evaluate(function(currentDocumentBodyHeight) {
 			window.document.body.scrollTop = currentDocumentBodyHeight;	    
 	  });
+	  
+	  //edited by Mike, 20201017
+	  //page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+	  //page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+iCount+'.png');
 
-	  page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+	  if (noonFolderName=="") {
+		page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+	  }
+	  else {
+		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport'+iCount+'.png');
+	  }
+
+
 //	  page.render('output/20200727/'+fileName+iCount+'.png');
 	
 	  currentDocumentBodyHeight = currentDocumentBodyHeight - windowScreenHeight;
