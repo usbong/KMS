@@ -8,7 +8,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200724
-' @date updated: 20201017
+' @date updated: 20201018
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -70,7 +70,9 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 		page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
 	}
 	else {
-		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport1.png');
+		//edited by Mike, 20201018
+//		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport1.png');
+		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report1.png');
 	}
 
 /*	
@@ -95,7 +97,10 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 		page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
 	  }
 	  else {
-		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport'+iCount+'.png');
+		  //edited by Mike, 20201018
+//		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport'+iCount+'.png');
+		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report'+iCount+'.png');
+
 	  }
 
 

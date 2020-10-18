@@ -8,14 +8,16 @@ REM Unless required by applicable law or agreed to in writing, software distribu
 REM
 REM @author: Michael Syson
 REM @date created: 20201016
-REM @date updated: 20201017
+REM @date updated: 20201018
 REM
 REM Reference:
 REM 1) https://phantomjs.org/; last accessed: 20200724
 REM 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
 REM
 
-phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s -noon
+REM edited by Mike, 20201018
+REM phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s -noon
+phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheNoonDay -s -noon
 phantomjs saveWebPageAsImageFile.js viewReportPatientQueueAccounting -n -noon
 
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
