@@ -15,6 +15,9 @@ REM 1) https://phantomjs.org/; last accessed: 20200724
 REM 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
 REM
 
+REM added by Mike, 20201018
+phantomjs saveWebPageAsImageFile.js getSalesReportsForTheDay -s -noon
+
 REM edited by Mike, 20201018
 REM phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s -noon
 phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheNoonDay -s -noon
