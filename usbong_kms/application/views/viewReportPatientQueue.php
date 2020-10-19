@@ -785,15 +785,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						continue;
 					}
 */					
+					//added by Mike, 20201019
+					//TO-DO: -add: set medical doctor
+					//in .../browse/confirmPatientInformationDesk					
+					if ($value['medical_doctor_id']==0) {
+						$value['medical_doctor_id']=1; //set to DR. PEDRO as default
+					}
+
 					//added by Mike, 20200530; edited by Mike, 20200530
 					if ($currentMedicalDoctorId==-1) {
 						$currentMedicalDoctorId = $value['medical_doctor_id'];
 					}
 					else {									
-						if ($currentMedicalDoctorId!==$value['medical_doctor_id']) {
+						//edited by Mike, 20201019
+						//includes if not equal type, e.g. string and int
+						//Reference: https://www.php.net/manual/en/language.operators.comparison.php;
+						//last accessed: 20201019
+//						if ($currentMedicalDoctorId!==$value['medical_doctor_id']) {
+						if ($currentMedicalDoctorId!=$value['medical_doctor_id']) {		
 							$currentMedicalDoctorId = $value['medical_doctor_id'];
-							$iMedicalDoctorCount = 1;													
-
+							$iMedicalDoctorCount = 1;
+							
 							$iWaitCount = 1; //added by Mike, 20201013
 ?>							
 				<tr class="row">
@@ -824,6 +836,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 					}
 
+//					echo $currentMedicalDoctorId;//$value['medical_doctor_id']
 		?>						
 						
 					  <tr class="row">
@@ -890,8 +903,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//edited by Mike, 20200530
 //								echo $value['medical_doctor_name'];
 //								if ($value['medical_doctor_name']=="") {
-
-								if ($value['medical_doctor_id']==0) { //ANY
+								
+								//edited by Mike, 20201019
+								//we set the id to default, i.e. DR. PEDRO
+//								if ($value['medical_doctor_id']==0) { //ANY
+								if ($value['medical_doctor_name']=="ANY") { //ANY
 									echo "NEW; NONE YET";
 								}
 								else {
