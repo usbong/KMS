@@ -186,42 +186,25 @@
 //	$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
 //	$file = $fileBasePath."SYSON,PETER".$sDateToday.".txt";
 
-	$decodedJSONFileSysonPedro = null;
-	$decodedJSONFileSysonPeter = null;
-	$decodedJSONFileRejusoChastity = null;
-	$decodedJSONFileEspinosaJhonsel = null;
-	$decodedJSONFileDelaPazRodil = null;
-	$decodedJSONFileLasamHonesto = null;
-	$decodedJSONFileBalceGracia = null;
-
-	$decodedJSONFileXRay = null;
-	$decodedJSONFileMedicine = null;
-	$decodedJSONFileNonMedicine = null;
-	$decodedJSONFileLab = null;
-	$decodedJSONFileSSS = null;
-	$decodedJSONFileMinor = null;
-	$decodedJSONFilePhotocopy = null;
-	$decodedJSONFileGlucosamine = null;
-	$decodedJSONFileVAT = null;
-
-	$decodedJSONFileArrayIndexSysonPedro = 0;
-	$decodedJSONFileArrayIndexXRay = 1;
-	$decodedJSONFileArrayIndexMedicine = 2;
-	$decodedJSONFileArrayIndexNonMedicine = 3;
-	$decodedJSONFileArrayIndexLab = 4;
-	$decodedJSONFileArrayIndexSSS = 5;
-	$decodedJSONFileArrayIndexMinor = 6;
-	$decodedJSONFileArrayIndexRejusoChastity = 7;
-	$decodedJSONFileArrayIndexEspinosaJhonsel = 8;
-	$decodedJSONFileArrayIndexDelaPazRodil = 9;
-	$decodedJSONFileArrayIndexLasamHonesto = 10;
-	$decodedJSONFileArrayIndexBalceGracia = 11;
-	$decodedJSONFileArrayIndexPhotocopy = 12;
-	$decodedJSONFileArrayIndexSysonPeter = 13;
-	$decodedJSONFileArrayIndexGlucosamine = 14;
-	$decodedJSONFileArrayIndexVAT = 15;
-	
 	$decodedJSONFileArray = array();
+	$decodedJSONFileArrayMaxIndex = 16;
+	$decodedJSONFileArray[0][0] = "SYSON,PEDRO";
+	$decodedJSONFileArray[1][0] = "xRay";
+	$decodedJSONFileArray[2][0] = "medicine";
+	$decodedJSONFileArray[3][0] = "nonMedicine";
+	$decodedJSONFileArray[4][0] = "lab";
+	$decodedJSONFileArray[5][0] = "sss";
+	$decodedJSONFileArray[6][0] = "minor";
+	$decodedJSONFileArray[7][0] = "REJUSO,CHASTITYAMOR";
+	$decodedJSONFileArray[8][0] = "ESPINOSA,JHONSEL";
+	$decodedJSONFileArray[9][0] = "DELAPAZ,RODIL";
+	$decodedJSONFileArray[10][0] = "LASAM,HONESTO";
+	$decodedJSONFileArray[11][0] = "BALCE,GRACIACIELO";
+	$decodedJSONFileArray[12][0] = "photocopy";
+	$decodedJSONFileArray[13][0] = "SYSON,PETER";
+	$decodedJSONFileArray[14][0] = "medicineAsterisk";
+	$decodedJSONFileArray[15][0] = "VATForNonMedicine";
+	
 	
 //	$decodedJSONFileArray[0]
 	
@@ -243,7 +226,27 @@
 	}
 */
 	//TO-DO: -update: this
-	
+	$iCount=0;
+	while ($iCount<$decodedJSONFileArrayMaxIndex) {
+		//$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
+		$file = $fileBasePath.$decodedJSONFileArray[$iCount][0].$sDateToday.".txt";
+
+		if (file_exists($file)) {
+			$inputJSONFile = file_get_contents($file);
+//			echo $inputJSONFile;
+			
+			//note: output is an array container with 1 value, i.e. JSON string 
+			$decodedJSONFile = json_decode($inputJSONFile);		
+//			echo $decodedJSONFile[0]->iFeeTotalCount;
+
+			$decodedJSONFileArray[$iCount][1] = $decodedJSONFile[0];
+//			echo $decodedJSONFileArray[$iCount][1]->iFeeTotalCount;
+		}
+		
+		$iCount++;
+	}
+
+/*
 	$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
 	if (file_exists($file)) {
 		$inputJSONFile = file_get_contents($file);
@@ -256,49 +259,9 @@
 		$decodedJSONFileArray[0] = $decodedJSONFileSysonPedro[0];
 		echo $decodedJSONFileArray[0]->iFeeTotalCount;
 	}
-
-	$file = $fileBasePath."SYSON,PETER".$sDateToday.".txt";
-	if (file_exists($file)) {
-		$inputJSONFile = file_get_contents($file);
-//		echo $inputJSONFile;
-		
-		//note: output is an array container with 1 value, i.e. JSON string 
-		$decodedJSONFileSysonPeter = json_decode($inputJSONFile);		
-//		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
-	}
-
-	$file = $fileBasePath."medicine".$sDateToday.".txt";
-	if (file_exists($file)) {
-		$inputJSONFile = file_get_contents($file);
-//		echo $inputJSONFile;
-		
-		//note: output is an array container with 1 value, i.e. JSON string 
-		$decodedJSONFileMedicine = json_decode($inputJSONFile);		
-//		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
-	}
-
-	$file = $fileBasePath."medicineAsterisk".$sDateToday.".txt";
-	if (file_exists($file)) {
-		$inputJSONFile = file_get_contents($file);
-//		echo $inputJSONFile;
-		
-		//note: output is an array container with 1 value, i.e. JSON string 
-		$decodedJSONFileGlucosamine = json_decode($inputJSONFile);		
-//		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
-	}
-
-	$file = $fileBasePath."nonMedicine".$sDateToday.".txt";
-	if (file_exists($file)) {
-		$inputJSONFile = file_get_contents($file);
-//		echo $inputJSONFile;
-		
-		//note: output is an array container with 1 value, i.e. JSON string 
-		$decodedJSONFileNonMedicine = json_decode($inputJSONFile);		
-//		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
-	}
+*/
 
 	//TO-DO: -add: the rest
-	//TO-DO: -update: to use array container and index
 	//TO-DO: -add: count in left portion
 
 //------------------------------------------------
@@ -353,6 +316,32 @@
 				//$cellValue = htmlspecialchars($cellValue, ENT_QUOTES); // Converts double and single quotes
 
 				//added by Mike, 20201018
+				$iCount=0;
+				while ($iCount<$decodedJSONFileArrayMaxIndex) {
+					//$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
+					$file = $fileBasePath.$decodedJSONFileArray[$iCount][0].$sDateToday.".txt";
+
+					if (file_exists($file)) {
+						$inputJSONFile = file_get_contents($file);
+
+						//PF Column
+						if (($iRowCount==(2+$iCount)) and ($iColumnCount==6)) {
+							$cellValue = $decodedJSONFileArray[$iCount][1]->iFeeTotalCount;
+						}
+						//Count Column
+						else if (($iRowCount==(2+$iCount)) and ($iColumnCount==7)) {
+							$cellValue = $decodedJSONFileArray[$iCount][1]->iQuantityTotalCount;
+						}
+						//MSOC NET PF Column
+						else if (($iRowCount==(2+$iCount)) and ($iColumnCount==8)) {
+							$cellValue = $decodedJSONFileArray[$iCount][1]->iNetFeeTotalCount;
+						}
+					}
+					
+					$iCount++;
+				}
+				
+/*				
 				if (isset($decodedJSONFileSysonPedro)) {
 					//PF Column
 					if (($iRowCount==2) and ($iColumnCount==6)) {
@@ -532,7 +521,7 @@
 						$cellValue = $decodedJSONFileVAT[0]->iNetFeeTotalCount;
 					}
 				}
-				
+*/				
 				//TO-DO: -add: the rest
 				//TO-DO: -update: to use array container and index
 
