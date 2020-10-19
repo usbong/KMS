@@ -226,6 +226,10 @@
 	}
 */
 	//TO-DO: -update: this
+	$iDexaQuantityTotalCount=0;
+	$iPrivateQuantityTotalCount=0;
+	$iNoChargeQuantityTotalCount=0;
+	
 	$iCount=0;
 	while ($iCount<$decodedJSONFileArrayMaxIndex) {
 		//$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
@@ -241,6 +245,19 @@
 
 			$decodedJSONFileArray[$iCount][1] = $decodedJSONFile[0];
 //			echo $decodedJSONFileArray[$iCount][1]->iFeeTotalCount;
+
+			//added by Mike, 20201019
+			if (isset($decodedJSONFileArray[$iCount][1]->iDexaQuantityTotalCount)) {
+				$iDexaQuantityTotalCount=$iDexaQuantityTotalCount+$decodedJSONFileArray[$iCount][1]->iDexaQuantityTotalCount;
+			}
+
+			if (isset($decodedJSONFileArray[$iCount][1]->iPrivateQuantityTotalCount)) {
+				$iPrivateQuantityTotalCount=$iPrivateQuantityTotalCount+$decodedJSONFileArray[$iCount][1]->iPrivateQuantityTotalCount;
+			}
+
+			if (isset($decodedJSONFileArray[$iCount][1]->iNoChargeQuantityTotalCount)) {
+				$iNoChargeQuantityTotalCount=$iNoChargeQuantityTotalCount+$decodedJSONFileArray[$iCount][1]->iNoChargeQuantityTotalCount;
+			}			
 		}
 		
 		$iCount++;
@@ -339,6 +356,35 @@
 					}
 					
 					$iCount++;
+				}
+
+				if (isset($decodedJSONFileArray[1][0])) { //X-RAY
+					//PF Column
+					if (($iRowCount==12) and ($iColumnCount==0)) {
+						$cellValue = $decodedJSONFileArray[1][1]->iQuantityTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileArray[4][0])) { //LAB
+					//PF Column
+					if (($iRowCount==14) and ($iColumnCount==0)) {
+						$cellValue = $decodedJSONFileArray[1][1]->iQuantityTotalCount;
+					}
+				}
+
+				//NC/NO CHARGE/GRATIS COUNT
+				if (($iRowCount==14) and ($iColumnCount==2)) {
+					$cellValue = $iNoChargeQuantityTotalCount;
+				}
+
+				//DEXA COUNT
+				if (($iRowCount==15) and ($iColumnCount==0)) {
+					$cellValue = $iDexaQuantityTotalCount;
+				}
+
+				//PRIVATE COUNT
+				if (($iRowCount==16) and ($iColumnCount==0)) {
+					$cellValue = $iPrivateQuantityTotalCount;
 				}
 				
 /*				
