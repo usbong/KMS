@@ -170,8 +170,8 @@
 	
 	//added by Mike, 20200524
 	//update file location
-	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-//	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";	
+//	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";	
 
 /*	//removed by Mike, 20201018; due to pop-up notification to accept first before page is auto-opened
 	//added: instruction in autoScreenCaptureSummaryReportForTheNoonDay.bat
@@ -203,6 +203,27 @@
 	$decodedJSONFilePhotocopy = null;
 	$decodedJSONFileGlucosamine = null;
 	$decodedJSONFileVAT = null;
+
+	$decodedJSONFileArrayIndexSysonPedro = 0;
+	$decodedJSONFileArrayIndexXRay = 1;
+	$decodedJSONFileArrayIndexMedicine = 2;
+	$decodedJSONFileArrayIndexNonMedicine = 3;
+	$decodedJSONFileArrayIndexLab = 4;
+	$decodedJSONFileArrayIndexSSS = 5;
+	$decodedJSONFileArrayIndexMinor = 6;
+	$decodedJSONFileArrayIndexRejusoChastity = 7;
+	$decodedJSONFileArrayIndexEspinosaJhonsel = 8;
+	$decodedJSONFileArrayIndexDelaPazRodil = 9;
+	$decodedJSONFileArrayIndexLasamHonesto = 10;
+	$decodedJSONFileArrayIndexBalceGracia = 11;
+	$decodedJSONFileArrayIndexPhotocopy = 12;
+	$decodedJSONFileArrayIndexSysonPeter = 13;
+	$decodedJSONFileArrayIndexGlucosamine = 14;
+	$decodedJSONFileArrayIndexVAT = 15;
+	
+	$decodedJSONFileArray = array();
+	
+//	$decodedJSONFileArray[0]
 	
 //edited by Mike, 20201018
 //file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
@@ -221,15 +242,19 @@
 		}
 	}
 */
-
+	//TO-DO: -update: this
+	
 	$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
 	if (file_exists($file)) {
 		$inputJSONFile = file_get_contents($file);
-//		echo $inputJSONFile;
+		echo $inputJSONFile;
 		
 		//note: output is an array container with 1 value, i.e. JSON string 
 		$decodedJSONFileSysonPedro = json_decode($inputJSONFile);		
-//		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
+		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
+
+		$decodedJSONFileArray[0] = $decodedJSONFileSysonPedro[0];
+		echo $decodedJSONFileArray[0]->iFeeTotalCount;
 	}
 
 	$file = $fileBasePath."SYSON,PETER".$sDateToday.".txt";
