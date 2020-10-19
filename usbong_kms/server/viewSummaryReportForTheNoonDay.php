@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20201018
+  @date updated: 20201019
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
   Output:
@@ -225,7 +225,7 @@
 	$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
 	if (file_exists($file)) {
 		$inputJSONFile = file_get_contents($file);
-		echo $inputJSONFile;
+//		echo $inputJSONFile;
 		
 		//note: output is an array container with 1 value, i.e. JSON string 
 		$decodedJSONFileSysonPedro = json_decode($inputJSONFile);		
@@ -235,12 +235,46 @@
 	$file = $fileBasePath."SYSON,PETER".$sDateToday.".txt";
 	if (file_exists($file)) {
 		$inputJSONFile = file_get_contents($file);
-		echo $inputJSONFile;
+//		echo $inputJSONFile;
 		
 		//note: output is an array container with 1 value, i.e. JSON string 
 		$decodedJSONFileSysonPeter = json_decode($inputJSONFile);		
 //		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
 	}
+
+	$file = $fileBasePath."medicine".$sDateToday.".txt";
+	if (file_exists($file)) {
+		$inputJSONFile = file_get_contents($file);
+//		echo $inputJSONFile;
+		
+		//note: output is an array container with 1 value, i.e. JSON string 
+		$decodedJSONFileMedicine = json_decode($inputJSONFile);		
+//		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
+	}
+
+	$file = $fileBasePath."medicineAsterisk".$sDateToday.".txt";
+	if (file_exists($file)) {
+		$inputJSONFile = file_get_contents($file);
+//		echo $inputJSONFile;
+		
+		//note: output is an array container with 1 value, i.e. JSON string 
+		$decodedJSONFileGlucosamine = json_decode($inputJSONFile);		
+//		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
+	}
+
+	$file = $fileBasePath."nonMedicine".$sDateToday.".txt";
+	if (file_exists($file)) {
+		$inputJSONFile = file_get_contents($file);
+//		echo $inputJSONFile;
+		
+		//note: output is an array container with 1 value, i.e. JSON string 
+		$decodedJSONFileNonMedicine = json_decode($inputJSONFile);		
+//		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
+	}
+
+	//TO-DO: -add: the rest
+	//TO-DO: -update: to use array container and index
+	//TO-DO: -add: count in left portion
 
 //------------------------------------------------
 	
@@ -323,8 +357,159 @@
 						$cellValue = $decodedJSONFileSysonPeter[0]->iNetFeeTotalCount;
 					}
 				}
+
+				if (isset($decodedJSONFileRejusoChastity)) {
+					//PF Column
+					if (($iRowCount==9) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileRejusoChastity[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==9) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileRejusoChastity[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==9) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileRejusoChastity[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileXRay)) {
+					//PF Column
+					if (($iRowCount==3) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileXRay[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==3) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileXRay[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==3) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileXRay[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileMedicine)) {
+					//PF Column
+					if (($iRowCount==4) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileMedicine[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==4) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileMedicine[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==4) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileMedicine[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileNonMedicine)) {
+					//PF Column
+					if (($iRowCount==5) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileNonMedicine[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==5) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileNonMedicine[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==5) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileNonMedicine[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileLab)) {
+					//PF Column
+					if (($iRowCount==6) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileLab[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==6) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileLab[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==6) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileLab[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileSSS)) {
+					//PF Column
+					if (($iRowCount==7) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileSSS[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==7) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileSSS[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==7) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileSSS[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileMinor)) {
+					//PF Column
+					if (($iRowCount==7) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileMinor[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==7) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileMinor[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==7) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileMinor[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFilePhotocopy)) {
+					//PF Column
+					if (($iRowCount==8) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFilePhotocopy[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==8) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFilePhotocopy[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==8) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFilePhotocopy[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileGlucosamine)) {
+					//PF Column
+					if (($iRowCount==9) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileGlucosamine[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==9) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileGlucosamine[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==9) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileGlucosamine[0]->iNetFeeTotalCount;
+					}
+				}
+
+				if (isset($decodedJSONFileVAT)) {
+					//PF Column
+					if (($iRowCount==10) and ($iColumnCount==6)) {
+						$cellValue = $decodedJSONFileVAT[0]->iFeeTotalCount;
+					}
+					//Count Column
+					else if (($iRowCount==10) and ($iColumnCount==7)) {
+						$cellValue = $decodedJSONFileVAT[0]->iQuantityTotalCount;
+					}
+					//MSOC NET PF Column
+					else if (($iRowCount==10) and ($iColumnCount==8)) {
+						$cellValue = $decodedJSONFileVAT[0]->iNetFeeTotalCount;
+					}
+				}
 				
 				//TO-DO: -add: the rest
+				//TO-DO: -update: to use array container and index
 
 	
 				if (($iRowCount==1)) {// and ($iColumnCount==0)) {
