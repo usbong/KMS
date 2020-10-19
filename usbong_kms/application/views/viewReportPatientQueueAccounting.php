@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20201013
+' @date updated: 20201019
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -900,9 +900,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//Reference: https://www.php.net/manual/en/class.dateinterval.php;
 								//last accessed: 20201003
-								$d1=new DateTime($value['added_datetime_stamp']);
-								$d2=new DateTime(date("Y-m-d h:i:s"));
+								$d1=new DateTime($value['added_datetime_stamp']);	
+
+								//edited by Mike, 20201019
+								//"H" is military hour, e.g. 19 : 07PM
+								//$d2=new DateTime(date("Y-m-d h:i:s"));
+								$d2=new DateTime(date("Y-m-d H:i:s"));
+
 								$diff=$d2->diff($d1);
+								
+//								echo $d2->format("h:i")."<br/>";
+//								echo $d1->format("h:i")."<br/>";
 								
 								if (strpos($value['notes'],"UNPAID")!==false) {
 									echo "<span class='alertHighSeveritySpan'>";
