@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20201019
+  @date updated: 20201021
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
   Output:
@@ -205,6 +205,8 @@
 	$decodedJSONFileArray[14][0] = "medicineAsterisk";
 	$decodedJSONFileArray[15][0] = "VATForNonMedicine";
 	
+	//added by Mike, 20201021
+	$pfTotal = 0;
 	
 //	$decodedJSONFileArray[0]
 	
@@ -344,6 +346,9 @@
 						//PF Column
 						if (($iRowCount==(2+$iCount)) and ($iColumnCount==6)) {
 							$cellValue = $decodedJSONFileArray[$iCount][1]->iFeeTotalCount;
+							
+							//added by Mike, 20201021
+							$pfTotal=$pfTotal+$cellValue;
 						}
 						//Count Column
 						else if (($iRowCount==(2+$iCount)) and ($iColumnCount==7)) {
@@ -629,7 +634,9 @@
 						}						
 						//CASH REGISTER TOTAL
 						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="TOTAL")) {
-								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+								//edited by Mike, 20201021
+								//echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$pfTotal."</td>";
 						}
 						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="GRAND TOTAL")) {
 								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
