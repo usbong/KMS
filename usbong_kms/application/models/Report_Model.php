@@ -256,10 +256,13 @@ class Report_Model extends CI_Model
 
 //		$this->db->like('t2.notes', "NEW; NONE YET");
 //		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
-		$this->db->order_by('t3.medical_doctor_id', 'ASC');//ASC');
+
+		//removed by Mike, 20201021
+//		$this->db->order_by('t3.medical_doctor_id', 'ASC');//ASC');
 		
 		//added by Mike, 20200530; edited by Mike, 20200530
 		$this->db->order_by('t2.transaction_id', 'ASC');//DESC');
+
 
 /* 		//removed by Mike, 20200601
 		$this->db->group_by('t1.patient_id');
