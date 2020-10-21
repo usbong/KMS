@@ -257,7 +257,12 @@ class Report_Model extends CI_Model
 //		$this->db->like('t2.notes', "NEW; NONE YET");
 //		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
 
+
 		//removed by Mike, 20201021
+		//added by Mike, 20201022
+		//Note: This is so that the medical_doctor_id whose value is 0, i.e. "ANY",
+		//is not always before the list of patients classified to be 
+		//medical_doctor_id 1, i.e. DR. PEDRO
 //		$this->db->order_by('t3.medical_doctor_id', 'ASC');//ASC');
 		
 		//added by Mike, 20200530; edited by Mike, 20200530
