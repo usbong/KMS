@@ -1170,9 +1170,21 @@ class Report extends CI_Controller { //MY_Controller {
 				else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
 				}
 				else {
+					//added by Mike, 20201022
+					if ($value['medical_doctor_id']==0) {
+						$value['medical_doctor_id']=1;
+					}					
+					
 					array_push($outputResult, $value);
 				}
 			}
+
+			//added by Mike, 20201022
+			//TO-DO: -reverify: these
+			$transactionIdColumn = array_column($outputResult, 'transaction_id');
+			$medicalDoctorIdColumn = array_column($outputResult, 'medical_doctor_id');
+			array_multisort($medicalDoctorIdColumn, SORT_ASC, $transactionIdColumn, SORT_ASC, $outputResult);
+
 			$data["result"]  = $outputResult;
 		}
 		
@@ -1207,9 +1219,21 @@ class Report extends CI_Controller { //MY_Controller {
 				else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
 				}
 				else {
+					//added by Mike, 20201022
+					if ($value['medical_doctor_id']==0) {
+						$value['medical_doctor_id']=1;
+					}
+					
 					array_push($outputResult, $value);
 				}
 			}
+			
+			//added by Mike, 20201022
+			//TO-DO: -reverify: these
+			$transactionIdColumn = array_column($outputResult, 'transaction_id');
+			$medicalDoctorIdColumn = array_column($outputResult, 'medical_doctor_id');
+			array_multisort($medicalDoctorIdColumn, SORT_ASC, $transactionIdColumn, SORT_ASC, $outputResult);
+			
 			$data["result"]  = $outputResult;
 		}
 		
