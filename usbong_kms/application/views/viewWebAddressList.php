@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20201013
+  @date updated: 20201022
 	
   Computer Web Browser Address (Example):
   1) http://192.168.11.10/usbong_kms/index.php/report/viewWebAddressList
@@ -43,9 +43,13 @@
 		//added by Mike, 20200821
 		if (strpos($ipAddress, "::")!==false) {
 			$ipAddress = "SERVER ADDRESS";
+			
 			//added by Mike, 20201010
 			//TO-DO: -reverify: this
 			$machineAddress = "SERVER MACHINE ADDRESS";
+
+			//added by Mike, 20201022
+			echo "<font color='#FF0000'><b>Please set as default in the Computer Server Browser,<br/>the Computer Server Internet Protocol (IP) Address<br/>that is not \"localhost\".<br/><br/></b></font>";
 		}
 
 		//added by Mike, 20201010
