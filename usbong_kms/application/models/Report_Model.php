@@ -267,6 +267,7 @@ class Report_Model extends CI_Model
 		
 		//added by Mike, 20200530; edited by Mike, 20200530
 		$this->db->order_by('t2.transaction_id', 'ASC');//DESC');
+//		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//');
 
 
 /* 		//removed by Mike, 20200601
