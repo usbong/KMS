@@ -32,7 +32,9 @@ import java.text.DecimalFormat;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import java.util.Map.Entry; //added by Mike, 20190417
 import utils.IncidenceNumberComparator; //added by Mike, 20190418
-import utils.UsbongUtils; //added by Mike, 20190622
+
+//removed by Mike, 20201023
+//import utils.UsbongUtils; //added by Mike, 20190622
 
 //TO-DO:-update: this
 
@@ -68,10 +70,18 @@ import utils.UsbongUtils; //added by Mike, 20190622
 ' where: * means any set of characters
 '
 ' 5) To compile on Windows' Command Prompt the add-on software with the Apache Commons Text .jar file, i.e. org.apache.commons.text, use the following command:
-'   javac -cp .;org.apache.commons.text.jar generateMonthlySummaryReportWithDiagnosedCasesOfAllInputFiles.java
+'   javac -cp .;org.apache.commons.text.jar generateMOSCSummaryReportDailyCount.java
+'
+'	Note: 
+' To compile on Linux Terminal:
+'   javac -cp .:org.apache.commons.text.jar generateMOSCSummaryReportDailyCount.java
 '
 ' 6) To execute on Windows' Command Prompt the add-on software with the Apache Commons Text .jar file, i.e. org.apache.commons.text, use the following command:
-'   java -cp .;org.apache.commons.text.jar generateMonthlySummaryReportWithDiagnosedCasesOfAllInputFiles *.txt
+'   java -cp .;org.apache.commons.text.jar generateMOSCSummaryReportDailyCount *.txt
+'
+'	Note: 
+' To execute on Linux Terminal:
+'   java -cp .:org.apache.commons.text.jar generateMOSCSummaryReportDailyCount.java *.txt
 '
 ' 7) The Apache Commons Text binaries with the .jar file can be downloaded here:
 '   http://commons.apache.org/proper/commons-text/download_text.cgi; last accessed: 20190123
@@ -84,9 +94,18 @@ public class generateMOSCSummaryReportDailyCount {
 	private static boolean isInDebugMode = true; //edited by Mike, 20190131
 	private static boolean isNetPFComputed = false; //added by Mike, 20190131
 
+
+	//added by Mike, 20201023
+	private static String[] medicalDoctorsList;
+
+
 	private static String inputFilename = "input201801"; //without extension; default input file
 	//added by Mike, 20190413; edited by Mike, 20190604
 	private static String diagnosedCasesListInputFilename = "KnownDiagnosedCasesList"; //without extension; default input file 
+
+	//added by Mike, 20201023
+	private static String inputOutputTemplateFilenameMOSCSummaryReportDailyCount = "assets\\templates\\generateMOSCSummaryReportDailyCountOutputTemplate";//without extension; default input file 
+	//Note that I have to use double backslash, i.e. "\\", to use "\" in the filename
 
 	//added by Mike, 20190414
 	private static String inputOutputTemplateFilenameTreatment = "assets\\templates\\generateMonthlySummaryReportOutputTemplateTreatment";//without extension; default input file 
@@ -190,6 +209,10 @@ public class generateMOSCSummaryReportDailyCount {
 	private static HashMap<Integer, Integer[]> treatmentMonthlyStatisticsContainer; //added by Mike, 20190503
 	private static HashMap<Integer, Integer[]> consultationMonthlyStatisticsContainer; //added by Mike, 20190504
 	private static HashMap<Integer, Integer[]> procedureMonthlyStatisticsContainer; //added by Mike, 20190504
+
+	//added by Mike, 20201023
+	private static HashMap<Integer, Integer[]> moscSummaryReportDailyCountContainer;
+
 
 	private static ArrayList<Integer> yearsContainerArrayList; //added by Mike, 20190503
 	
@@ -322,42 +345,25 @@ public class generateMOSCSummaryReportDailyCount {
 	private static double procedureCount;
 	private static double medicalCertificateCount;	
 	
-	//added by Mike, 20190622
-	private static UsbongUtils myUsbongUtils;
+	//added by Mike, 20190622; removed by Mike, 20201023
+//private static UsbongUtils myUsbongUtils;
 			
 	public static void main ( String[] args ) throws Exception
 	{			
 		makeFilePath("output"); //"output" is the folder where I've instructed the add-on software/application to store the output file			
-		PrintWriter treatmentWriter = new PrintWriter("output/MonthlySummaryReportOutputTreatment.html", "UTF-8");			
-		PrintWriter consultationWriter = new PrintWriter("output/MonthlySummaryReportOutputConsultation.html", "UTF-8");	
-		
-		//added by Mike, 20190426
-		PrintWriter treatmentUnclassifiedDiagnosedCasesWriter = new PrintWriter("output/MonthlySummaryReportOfUnclassifiedDiagnosedCasesOutput.html", "UTF-8");	
-		
-		//added by Mike, 20190503
-		PrintWriter treatmentCountMonthlyStatisticsWriter = new PrintWriter("output/MonthlyStatisticsTreatment.html", "UTF-8");	
-		//added by Mike, 20190503
-		PrintWriter consultationCountMonthlyStatisticsWriter = new PrintWriter("output/MonthlyStatisticsConsultation.html", "UTF-8");	
-		//added by Mike, 20190503
-		PrintWriter procedureCountMonthlyStatisticsWriter = new PrintWriter("output/MonthlyStatisticsProcedure.html", "UTF-8");	
 
-/*		//removed by Mike, 20190803		
-		//added by Mike, 20190622
-		PrintWriter treatmentCountListTempWriter = new PrintWriter("assets/transactions/treatmentCountListTemp.txt", "UTF-8");	
-		PrintWriter consultationCountListTempWriter = new PrintWriter("assets/transactions/consultationCountListTemp.txt", "UTF-8");	
-		PrintWriter procedureCountListTempWriter = new PrintWriter("assets/transactions/procedureCountListTemp.txt", "UTF-8");	
-*/
-		
-/*		
-		PrintWriter treatmentCountListWriter = new PrintWriter("assets/transactions/treatmentCountList.txt", "UTF-8");	
-		PrintWriter consultationCountListWriter = new PrintWriter("assets/transactions/consultationCountList.txt", "UTF-8");	
-		PrintWriter procedureCountListWriter = new PrintWriter("assets/transactions/procedureCountList.txt", "UTF-8");	
-*/		
-/*		
-		//added by Mike, 20190413
-		PrintWriter diagnosedCasesWriter = new PrintWriter("output/MonthlySummaryReportOfDiagnosedCasesOutput.txt", "UTF-8");			
-		PrintWriter diagnosedCasesClassifiedWriter = new PrintWriter("output/MonthlySummaryReportOfDiagnosedCasesClassifiedOutput.txt", "UTF-8");			
-*/
+		//added by Mike, 20201023
+	  medicalDoctorsList = new String[7];
+		medicalDoctorsList[0] = "SYSON,PEDRO";
+		medicalDoctorsList[1] = "SYSON,PETER";
+		medicalDoctorsList[2] = "REJUSO,CHASTITYAMOR";
+		medicalDoctorsList[3] = "DELAPAZ,RODIL";
+		medicalDoctorsList[4] = "LASAM,HONESTO";
+		medicalDoctorsList[5] = "BALCE,GRACIACIELO";
+		medicalDoctorsList[6] = "ESPINOSA,JHONSEL";
+
+		//added by Mike, 20201023
+		PrintWriter moscSummaryReportDailyCountWriter = new PrintWriter("output/MOSCSummaryReportDailyCountOutput.html", "UTF-8");	
 		
 		dateContainer = new HashMap<Integer, double[]>();
 		hmoContainer = new HashMap<String, double[]>();
@@ -375,19 +381,24 @@ public class generateMOSCSummaryReportDailyCount {
 		consultationMonthlyStatisticsContainer = new HashMap<Integer, Integer[]>(); //added by Mike, 20190504
 		procedureMonthlyStatisticsContainer = new HashMap<Integer, Integer[]>(); //added by Mike, 20190504
 		
+		//added by Mike, 20201023
+		moscSummaryReportDailyCountContainer = new HashMap<Integer, Integer[]>();	
+		
 		//added by Mike, 20181116
 		startDate = null; //properly set the month and year in the output file of each input file
 		dateValuesArray = new String[args.length]; //added by Mike, 20180412
 		dateValuesArrayInt = new int[args.length]; //added by Mike, 20180412
 		//dateValuesArrayInt = new ArrayList<int>(); //edited by Mike, 20181221
 
+/*	//removed by Mike, 20201023
 		//added by Mike, 20190412
 		//PART/COMPONENT/MODULE/PHASE 1			
 		processKnownDiagnosedCasesInputFile(args);
-
+*/
 		//PART/COMPONENT/MODULE/PHASE 2
 		processInputFiles(args, true);
 
+/*	//removed by Mike, 20201023
 		//PART/COMPONENT/MODULE/PHASE 3		
 		setClassificationContainerPerMedicalDoctor(classificationContainerPerMedicalDoctor);
 		processInputFiles(args, false);
@@ -402,6 +413,9 @@ public class generateMOSCSummaryReportDailyCount {
 		processMonthlyStatisticsData(TREATMENT_FILE_TYPE);
 		processMonthlyStatisticsData(CONSULTATION_FILE_TYPE);
 		processMonthlyStatisticsData(PROCEDURE_FILE_TYPE);
+*/
+
+		processMonthlyStatisticsData(CONSULTATION_FILE_TYPE);
 
 	
 /*		
@@ -418,14 +432,7 @@ public class generateMOSCSummaryReportDailyCount {
 
 		//added by Mike, 20190415; edited by Mike, 20190426
 		processAutoCalculate();
-/*		if (!processAutoCalculate()) { //if there are no input files
-			treatmentWriter.close();
-			consultationWriter.close();		
-			treatmentUnclassifiedDiagnosedCasesWriter.close();
-			
-			return;
-		}
-*/
+
 		/*
 		 * --------------------------------------------------------------------
 		 * OUTPUT
@@ -436,6 +443,8 @@ public class generateMOSCSummaryReportDailyCount {
 		//edited by Mike, 20190131
 		/*writer.print("Monthly Summary Report\n");
 		*/
+		
+/*	//removed by Mike, 20201023		
 		//edited by Mike, 20190427
 		if (!isConsultationInputFileEmpty) {
 			processWriteOutputFileConsultation(consultationWriter);
@@ -443,7 +452,9 @@ public class generateMOSCSummaryReportDailyCount {
 		else {
 			System.out.println("\nThere is no Tab-delimited .txt input file in the \"input\\consultation\" folder.\n");
 		}
-		
+*/
+
+/*	//removed by Mike, 20201023				
 		if (!isTreatmentInputFileEmpty) {
 			processWriteOutputFileTreatment(treatmentWriter);
 			//added by Mike, 20190426
@@ -454,86 +465,27 @@ public class generateMOSCSummaryReportDailyCount {
 			processWriteOutputFileMonthlyStatistics(consultationCountMonthlyStatisticsWriter, CONSULTATION_FILE_TYPE);		
 			processWriteOutputFileMonthlyStatistics(procedureCountMonthlyStatisticsWriter, PROCEDURE_FILE_TYPE);		
 
-			
 			//added by Mike, 20190803
 			//note that I moved these instructions here, so that if there is an error in the processing that the computer executes before these, the lists will not be blank
 			PrintWriter treatmentCountListTempWriter = new PrintWriter("assets/transactions/treatmentCountListTemp.txt", "UTF-8");	
 			PrintWriter consultationCountListTempWriter = new PrintWriter("assets/transactions/consultationCountListTemp.txt", "UTF-8");	
 			PrintWriter procedureCountListTempWriter = new PrintWriter("assets/transactions/procedureCountListTemp.txt", "UTF-8");	
-			
+
+
 			//added by Mike, 20190622
 			processWriteOutputFileAssetsTransactionsCountList(treatmentCountListTempWriter, TREATMENT_FILE_TYPE);
 			processWriteOutputFileAssetsTransactionsCountList(consultationCountListTempWriter, CONSULTATION_FILE_TYPE);		
 			processWriteOutputFileAssetsTransactionsCountList(procedureCountListTempWriter, PROCEDURE_FILE_TYPE);	
-
-/*						
-			//added by Mike, 20190622
-			myUsbongUtils = new UsbongUtils();		
-			myUsbongUtils.copyContentsOfSourceFileToDestinationFile("assets\\transactions\\treatmentCountListTemp.txt", "assets\\transactions\\treatmentCountList.txt");
-
-			myUsbongUtils.copyContentsOfSourceFileToDestinationFile("assets\\transactions\\consultationCountListTemp.txt", "assets\\transactions\\consultationCountList.txt");
-
-			myUsbongUtils.copyContentsOfSourceFileToDestinationFile("assets\\transactions\\procedureCountListTemp.txt", "assets\\transactions\\procedureCountList.txt");			
-*/			
 		}
 		else {
 			System.out.println("\nThere is no Tab-delimited .txt input file in the \"input\\treatment\" folder.\n");
-		}
-						
-		/*writer.close();
-		*/
-		//--------------------------------------------------------------------------------------
-		// OUTPUT FOR DIAGNOSED CASES
-		//--------------------------------------------------------------------------------------
-/*		
-		//edited by Mike, 20190223
-		SortedSet<String> sortedDiagnosedCasesKeyset = new TreeSet<String>(diagnosedCasesContainer.keySet());
-		SortedSet<String> sortedDiagnosedCasesClassifiedKeyset = new TreeSet<String>(classifiedDiagnosedCasesContainer.keySet());
-	
-		int total = 0;
-		
-		diagnosedCasesWriter.print("Monthly Summary Report of Diagnosed Cases\n");
+		}		
+*/
 
-		for (String key : sortedDiagnosedCasesKeyset) {	
-			int diagnosedCaseCount = diagnosedCasesContainer.get(key);
-			total+=diagnosedCaseCount;
-			
-			diagnosedCasesWriter.println(
-							key + "\t" + 
-							diagnosedCaseCount+"\n"							
-						); 				   							
-		}
-		
-		diagnosedCasesWriter.println(
-							"TOTAL:\t" + 
-							total+"\n"							
-						); 				   							
+			PrintWriter moscConsultationCountListTempWriter = new PrintWriter("assets/transactions/moscConsultationCountListTemp.txt", "UTF-8");	
 
-		//added by Mike, 20190223
-		diagnosedCasesClassifiedWriter.print("Monthly Summary Report of Classified Diagnosed Cases\n");
-				
-		total = 0;
-		
-		for (String key : sortedDiagnosedCasesClassifiedKeyset) {	
-			int diagnosedCaseCount = classifiedDiagnosedCasesContainer.get(key);
-			total+=diagnosedCaseCount;
-			
-			diagnosedCasesClassifiedWriter.println(
-							key + "\t" + 
-							diagnosedCaseCount+"\n"							
-						); 				   							
-		}
-		
-		diagnosedCasesClassifiedWriter.println(
-							"TOTAL:\t" + 
-							total+"\n"							
-						); 				   		
-						
-						
-		
-		diagnosedCasesWriter.close();
-		diagnosedCasesClassifiedWriter.close();
-*/		
+			processWriteOutputFileAssetsTransactionsCountList(moscConsultationCountListTempWriter, CONSULTATION_FILE_TYPE);	
+							
 	}
 	
 	private static String convertDateToMonthYearInWords(int date) {
@@ -2016,6 +1968,178 @@ public class generateMOSCSummaryReportDailyCount {
 	}
 
 	private static void processInputFiles(String[] args, boolean isPhaseOne) throws Exception {
+		//edited by Mike, 20181030
+		for (int i=0; i<args.length; i++) {						
+			//added by Mike, 20181030
+			inputFilename = args[i].replaceAll(".txt","");			
+			File f = new File(inputFilename+".txt");
+
+			System.out.println("inputFilename: " + inputFilename);
+			
+			//added by Mike, 20190207
+			if (inputFilename.contains("*")) {
+				continue;
+			}
+			
+			//added by Mike, 20190413
+			if (inputFilename.toLowerCase().contains("assets")) {
+				continue;
+			}					
+			
+			if (inputFilename.toLowerCase().contains("consultation")) {
+				isConsultation=true;
+			}
+			else {
+				isConsultation=false;
+			}
+						
+			Scanner sc = new Scanner(new FileInputStream(f));				
+		
+			String s;		
+			
+			//edited by Mike, 20190415
+			//Note that there is no table header in the input file.
+/*			s=sc.nextLine(); //skip the first row, which is the input file's table headers
+*/	
+			if (isInDebugMode) {
+				rowCount=0;
+			}
+						
+			//count/compute the number-based values of inputColumns 
+			while (sc.hasNextLine()) {
+				s=sc.nextLine();
+				
+				//if the row is blank
+				if (s.trim().equals("")) {
+					continue;
+				}
+				
+				String[] inputColumns = s.split("\t");					
+				
+				//added by Mike, 20180412
+				if (dateValuesArray[i]==null) {
+					dateValuesArray[i] = getMonthYear(inputColumns[INPUT_DATE_COLUMN]);
+				}
+				
+				//edited by Mike, 20190207
+				if (dateValuesArrayInt[i]==0) {
+					dateValuesArrayInt[i] = getYearMonthAsInt(inputColumns[INPUT_DATE_COLUMN]);					
+/*					
+					dateValuesArrayInt[i] = Integer.parseInt(args[i].substring(args[i].indexOf("_")+1,args[i].indexOf(".txt")));
+*/					
+				}
+				
+									
+				//added by Mike, 20190426; edited by Mike, 20190427
+				if (dateValuesArray[i].trim().isEmpty()) {
+					return;
+				}
+				else {
+					//edited by Mike, 20190901
+//					System.out.println("dateValuesArray[i].trim(): " + dateValuesArray[i].trim());
+//					System.out.println("dateValue: " + dateValue);
+
+					if ((dateValue==null) || !dateValue.equals(dateValuesArray[i].trim())) {
+						dateValue = dateValuesArray[i].trim();
+						dateValueInt = i; //added by Mike, 20190427
+					}
+					
+//					dateValue = dateValuesArray[i].trim();
+//					dateValueInt = i; //added by Mike, 20190427
+				}
+
+//				System.out.println(">>>>>>> i: "+ i + "; >>>dateValuesArray["+i+"]: "+dateValuesArray[i]);
+				
+				//added by Mike, 20190426
+				if (inputFilename.toLowerCase().contains("consultation")) {
+					isConsultationInputFileEmpty=false;
+				}
+				else if (inputFilename.toLowerCase().contains("treatment")) {
+//					System.out.println(">>>dateValuesArray[i]: "+dateValuesArray[i]);
+					isTreatmentInputFileEmpty=false;
+				}
+
+				
+/*
+				int dateValueInt = Integer.parseInt(args[i].substring(args[i].indexOf("_")+1,args[i].indexOf(".txt")));
+				if (!dateValuesArrayInt.contains(dateValueInt)){
+					dateValuesArrayInt.add(dateValueInt);
+				}				
+*/				
+/*				//edited by Mike, 20181121
+				if (startDate==null) {
+					startDate = getMonthYear(inputColumns[INPUT_DATE_COLUMN]);
+					endDate = startDate;
+				}
+				else {
+					//edited by Mike, 20181121
+					//add this condition in case the input file does not have a date for each transaction; however, ideally, for input files 2018 onwards, each transaction should have a date
+					if (!inputColumns[INPUT_DATE_COLUMN].trim().equals("")) {
+						endDate = getMonthYear(inputColumns[INPUT_DATE_COLUMN]);
+					}
+				}
+*/
+				if (isInDebugMode) {
+					rowCount++;
+					System.out.println("rowCount: "+rowCount);
+				}
+/*				
+				//added by Mike, 20181121
+				//skip transactions that have "RehabSupplies" as its "CLASS" value
+				//In Excel logbook/workbook 2018 onwards, such transactions are not included in the Consultation and PT Treatment Excel logbooks/workbooks.
+				if (inputColumns[INPUT_CLASS_COLUMN].contains("RehabSupplies")) {
+					continue;
+				}
+*/
+				if (isPhaseOne) {					
+//					System.out.println("isConsultation: " + isConsultation);
+					//added by Mike, 20181216
+	//				processMonthlyCount(dateContainer, inputColumns, i, false);
+	
+					//edited by Mike, 20190901
+//					processMonthlyCount(dateContainer, inputColumns, i, isConsultation); //isConsultation = false
+					processMonthlyCount(dateContainer, inputColumns, dateValueInt, isConsultation);
+					
+					
+					
+					//added by Mike, 20181217
+					processHMOCount(hmoContainer, inputColumns, isConsultation); //edited by Mike, 20181219
+					
+					//added by Mike, 20181217
+					processNonHMOCount(nonHmoContainer, inputColumns, isConsultation); //edited by Mike, 20181219
+/*					
+					//added by Mike, 20181218
+					processReferringDoctorTransactionCount(referringDoctorContainer, inputColumns, isConsultation); //edited by Mike, 20181219
+*/			
+					//added by Mike, 20181220
+	//				processMedicalDoctorTransactionPerClassificationCount(classificationContainerPerMedicalDoctor, inputColumns, isConsultation);
+	
+					//edited by Mike, 20190426
+					if (isConsultation) {
+						//added by Mike, 20190202
+						processMedicalDoctorTransactionCount(medicalDoctorContainer, inputColumns, isConsultation);						
+					}
+					else {
+						processMedicalDoctorTransactionCount(referringDoctorContainer, inputColumns, isConsultation);						
+
+						//added by Mike, 20190413
+						processDiagnosedCasesCount(diagnosedCasesContainer, inputColumns, isConsultation); 
+					}
+				}
+				else {
+					//added by Mike, 20181220
+					processMedicalDoctorTransactionPerClassificationCount(classificationContainerPerMedicalDoctor, inputColumns, isConsultation);					
+				}
+			}		
+/*			//added by Mike, 20181205
+			columnValuesArray[OUTPUT_DATE_ID_COLUMN] = i; 			
+*/			
+		}		
+
+	}
+
+
+	private static void processInputFilesPrev(String[] args, boolean isPhaseOne) throws Exception {
 		//edited by Mike, 20181030
 		for (int i=0; i<args.length; i++) {						
 			//added by Mike, 20181030
