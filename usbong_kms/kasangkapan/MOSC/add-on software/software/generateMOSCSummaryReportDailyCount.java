@@ -18,6 +18,12 @@
  * @last updated: 20201023 
  *
  */
+//added by Mike, 20201023
+import java.util.Date; 
+import java.text.DateFormat; 
+import java.text.SimpleDateFormat;
+ 
+//TO-DO: -update: this 
 import java.util.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -94,10 +100,9 @@ public class generateMOSCSummaryReportDailyCount {
 	private static boolean isInDebugMode = true; //edited by Mike, 20190131
 	private static boolean isNetPFComputed = false; //added by Mike, 20190131
 
-
 	//added by Mike, 20201023
 	private static String[] medicalDoctorsList;
-
+	private static int medicalDoctorsListMaxCount;
 
 	private static String inputFilename = "input201801"; //without extension; default input file
 	//added by Mike, 20190413; edited by Mike, 20190604
@@ -191,7 +196,8 @@ public class generateMOSCSummaryReportDailyCount {
 	private static final int INPUT_CONSULTATION_CLASS_COLUMN = 9;
 	private static final int INPUT_CONSULTATION_NET_PF_COLUMN = 11;
 	private static final int INPUT_CONSULTATION_NEW_OLD_COLUMN = 17;
-*/	
+*/
+
 	//edited by Mike, 20190423
 //	private static final int INPUT_CONSULTATION_OFFSET = 1;
 
@@ -367,6 +373,8 @@ public class generateMOSCSummaryReportDailyCount {
 		medicalDoctorsList[5] = "BALCE,GRACIACIELO";
 		medicalDoctorsList[6] = "ESPINOSA,JHONSEL";
 
+	  medicalDoctorsListMaxCount = medicalDoctorsList.length;
+
 		//added by Mike, 20201023
 		PrintWriter moscSummaryReportDailyCountWriter = new PrintWriter("output/MOSCSummaryReportDailyCountOutput.html", "UTF-8");	
 		
@@ -400,6 +408,21 @@ public class generateMOSCSummaryReportDailyCount {
 		//PART/COMPONENT/MODULE/PHASE 1			
 		processKnownDiagnosedCasesInputFile(args);
 */
+
+	  //added by Mike, 20201023
+ 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date myDate = new Date();
+    System.out.println(dateFormat.format(myDate));
+
+//		myDate = addDay(myDate, -1);
+//    System.out.println(dateFormat.format(myDate));
+
+		
+		for(int i=0; i<medicalDoctorsListMaxCount; i++) {
+	  		System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
+	  }
+
+
 		//PART/COMPONENT/MODULE/PHASE 2
 		processInputFiles(args, true);
 
@@ -492,6 +515,19 @@ public class generateMOSCSummaryReportDailyCount {
 			processWriteOutputFileAssetsTransactionsCountList(moscConsultationCountListTempWriter, CONSULTATION_FILE_TYPE);	
 							
 	}
+	
+	//added by Mike, 20201023
+	//Reference: https://stackoverflow.com/questions/428918/how-can-i-increment-a-date-by-one-day-in-java;
+	//last accessed: 20201023
+	//answer by: Lisa, 2020120308T0626
+	//edited by: Community♦, 2020120613T1749
+	private static Date addDay(Date date, int days)
+  {
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(date);
+      cal.add(Calendar.DATE, days); //minus number would decrement the days
+      return cal.getTime();
+  }
 	
 	private static String convertDateToMonthYearInWords(int date) {
 		StringBuffer sb = new StringBuffer(""+date);	
