@@ -409,6 +409,7 @@ public class generateMOSCSummaryReportDailyCount {
 		processKnownDiagnosedCasesInputFile(args);
 */
 
+/*	//removed by Mike, 20201023
 	  //added by Mike, 20201023
  		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date myDate = new Date();
@@ -421,7 +422,7 @@ public class generateMOSCSummaryReportDailyCount {
 		for(int i=0; i<medicalDoctorsListMaxCount; i++) {
 	  		System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
 	  }
-
+*/
 
 		//PART/COMPONENT/MODULE/PHASE 2
 		processInputFiles(args, true);
@@ -2015,174 +2016,31 @@ public class generateMOSCSummaryReportDailyCount {
 	}
 
 	private static void processInputFiles(String[] args, boolean isPhaseOne) throws Exception {
-		//edited by Mike, 20181030
-		for (int i=0; i<args.length; i++) {						
-			//added by Mike, 20181030
-			inputFilename = args[i].replaceAll(".txt","");			
-			File f = new File(inputFilename+".txt");
+	  //added by Mike, 20201023
+ 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date myDate = new Date();
+    System.out.println(dateFormat.format(myDate));
 
-			System.out.println("inputFilename: " + inputFilename);
-			
-			//added by Mike, 20190207
-			if (inputFilename.contains("*")) {
-				continue;
-			}
-			
-			//added by Mike, 20190413
-			if (inputFilename.toLowerCase().contains("assets")) {
-				continue;
-			}					
-			
-			if (inputFilename.toLowerCase().contains("consultation")) {
-				isConsultation=true;
-			}
-			else {
-				isConsultation=false;
-			}
-						
-			Scanner sc = new Scanner(new FileInputStream(f));				
+//		myDate = addDay(myDate, -1);
+//    System.out.println(dateFormat.format(myDate));
 		
-			String s;		
-			
-			//edited by Mike, 20190415
-			//Note that there is no table header in the input file.
-/*			s=sc.nextLine(); //skip the first row, which is the input file's table headers
-*/	
-			if (isInDebugMode) {
-				rowCount=0;
-			}
-						
-			//count/compute the number-based values of inputColumns 
-			while (sc.hasNextLine()) {
-				s=sc.nextLine();
-				
-				//if the row is blank
-				if (s.trim().equals("")) {
-					continue;
-				}
-				
-				String[] inputColumns = s.split("\t");					
-				
-				//added by Mike, 20180412
-				if (dateValuesArray[i]==null) {
-					dateValuesArray[i] = getMonthYear(inputColumns[INPUT_DATE_COLUMN]);
-				}
-				
-				//edited by Mike, 20190207
-				if (dateValuesArrayInt[i]==0) {
-					dateValuesArrayInt[i] = getYearMonthAsInt(inputColumns[INPUT_DATE_COLUMN]);					
-/*					
-					dateValuesArrayInt[i] = Integer.parseInt(args[i].substring(args[i].indexOf("_")+1,args[i].indexOf(".txt")));
-*/					
-				}
-				
-									
-				//added by Mike, 20190426; edited by Mike, 20190427
-				if (dateValuesArray[i].trim().isEmpty()) {
-					return;
-				}
-				else {
-					//edited by Mike, 20190901
-//					System.out.println("dateValuesArray[i].trim(): " + dateValuesArray[i].trim());
-//					System.out.println("dateValue: " + dateValue);
+		for(int i=0; i<medicalDoctorsListMaxCount; i++) {
+				inputFilename = args[0].replaceAll(".txt","");
 
-					if ((dateValue==null) || !dateValue.equals(dateValuesArray[i].trim())) {
-						dateValue = dateValuesArray[i].trim();
-						dateValueInt = i; //added by Mike, 20190427
-					}
-					
-//					dateValue = dateValuesArray[i].trim();
-//					dateValueInt = i; //added by Mike, 20190427
-				}
-
-//				System.out.println(">>>>>>> i: "+ i + "; >>>dateValuesArray["+i+"]: "+dateValuesArray[i]);
+	  		System.out.println(">>"+inputFilename);
 				
-				//added by Mike, 20190426
-				if (inputFilename.toLowerCase().contains("consultation")) {
-					isConsultationInputFileEmpty=false;
-				}
-				else if (inputFilename.toLowerCase().contains("treatment")) {
-//					System.out.println(">>>dateValuesArray[i]: "+dateValuesArray[i]);
-					isTreatmentInputFileEmpty=false;
-				}
-
+	  		System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
+				inputFilename=inputFilename+medicalDoctorsList[i]+dateFormat.format(myDate);
+				File f = new File(inputFilename+".txt");
 				
-/*
-				int dateValueInt = Integer.parseInt(args[i].substring(args[i].indexOf("_")+1,args[i].indexOf(".txt")));
-				if (!dateValuesArrayInt.contains(dateValueInt)){
-					dateValuesArrayInt.add(dateValueInt);
-				}				
-*/				
-/*				//edited by Mike, 20181121
-				if (startDate==null) {
-					startDate = getMonthYear(inputColumns[INPUT_DATE_COLUMN]);
-					endDate = startDate;
+				if(f.exists() && !f.isDirectory()) { 
+					Scanner sc = new Scanner(new FileInputStream(f));				
+		
+					String s;		
+					s=sc.nextLine();		
+					System.out.println(s);
 				}
-				else {
-					//edited by Mike, 20181121
-					//add this condition in case the input file does not have a date for each transaction; however, ideally, for input files 2018 onwards, each transaction should have a date
-					if (!inputColumns[INPUT_DATE_COLUMN].trim().equals("")) {
-						endDate = getMonthYear(inputColumns[INPUT_DATE_COLUMN]);
-					}
-				}
-*/
-				if (isInDebugMode) {
-					rowCount++;
-					System.out.println("rowCount: "+rowCount);
-				}
-/*				
-				//added by Mike, 20181121
-				//skip transactions that have "RehabSupplies" as its "CLASS" value
-				//In Excel logbook/workbook 2018 onwards, such transactions are not included in the Consultation and PT Treatment Excel logbooks/workbooks.
-				if (inputColumns[INPUT_CLASS_COLUMN].contains("RehabSupplies")) {
-					continue;
-				}
-*/
-				if (isPhaseOne) {					
-//					System.out.println("isConsultation: " + isConsultation);
-					//added by Mike, 20181216
-	//				processMonthlyCount(dateContainer, inputColumns, i, false);
-	
-					//edited by Mike, 20190901
-//					processMonthlyCount(dateContainer, inputColumns, i, isConsultation); //isConsultation = false
-					processMonthlyCount(dateContainer, inputColumns, dateValueInt, isConsultation);
-					
-					
-					
-					//added by Mike, 20181217
-					processHMOCount(hmoContainer, inputColumns, isConsultation); //edited by Mike, 20181219
-					
-					//added by Mike, 20181217
-					processNonHMOCount(nonHmoContainer, inputColumns, isConsultation); //edited by Mike, 20181219
-/*					
-					//added by Mike, 20181218
-					processReferringDoctorTransactionCount(referringDoctorContainer, inputColumns, isConsultation); //edited by Mike, 20181219
-*/			
-					//added by Mike, 20181220
-	//				processMedicalDoctorTransactionPerClassificationCount(classificationContainerPerMedicalDoctor, inputColumns, isConsultation);
-	
-					//edited by Mike, 20190426
-					if (isConsultation) {
-						//added by Mike, 20190202
-						processMedicalDoctorTransactionCount(medicalDoctorContainer, inputColumns, isConsultation);						
-					}
-					else {
-						processMedicalDoctorTransactionCount(referringDoctorContainer, inputColumns, isConsultation);						
-
-						//added by Mike, 20190413
-						processDiagnosedCasesCount(diagnosedCasesContainer, inputColumns, isConsultation); 
-					}
-				}
-				else {
-					//added by Mike, 20181220
-					processMedicalDoctorTransactionPerClassificationCount(classificationContainerPerMedicalDoctor, inputColumns, isConsultation);					
-				}
-			}		
-/*			//added by Mike, 20181205
-			columnValuesArray[OUTPUT_DATE_ID_COLUMN] = i; 			
-*/			
-		}		
-
+	  }
 	}
 
 
