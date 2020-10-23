@@ -124,7 +124,12 @@ public class generateMOSCSummaryReportDailyCount {
 	//without extension; default input file 
 	private static String inputOutputTemplateFilenameMonthlyStatistics = "assets\\templates\\generateMonthlySummaryReportOutputTemplateMonthlyStatistics";
 	private static String inputDataFilenameTreatmentMonthlyStatistics = "assets\\transactions\\treatmentCountList";
+
+/*	//edited by Mike, 20201023
 	private static String inputDataFilenameConsultationMonthlyStatistics = "assets\\transactions\\consultationCountList";
+*/
+	private static String inputDataFilenameConsultationMonthlyStatistics = "assets/transactions/consultationCountList";
+	
 	private static String inputDataFilenameProcedureMonthlyStatistics = "assets\\transactions\\procedureCountList";
 	
 	//added by Mike, 20190504
@@ -623,8 +628,14 @@ public class generateMOSCSummaryReportDailyCount {
     	}    			
 	}
 	
-	//added by Mike, 20190415
+	//added by Mike, 20201023
 	private static boolean processAutoCalculate() {		
+		//TO-DO: -update: this
+		return true;
+	}
+	
+	//added by Mike, 20190415; edited by Mike, 20201023
+	private static boolean processAutoCalculatePrev() {		
 //		System.out.println("dateValuesArrayInt.length: "+dateValuesArrayInt.length);		
 //		System.out.println("dateValuesArrayInt.length/2: "+dateValuesArrayInt.length/2);
 		
