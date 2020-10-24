@@ -15,9 +15,13 @@
  * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
  * @author: SYSON, MICHAEL B.
  * @date created: 20201023
- * @last updated: 20201023 
+ * @last updated: 20201024
  *
  */
+//added by Mike, 20201024
+import org.json.JSONObject;
+import org.json.JSONArray; 
+ 
 //added by Mike, 20201023
 import java.util.Date; 
 import java.text.DateFormat; 
@@ -76,18 +80,18 @@ import utils.IncidenceNumberComparator; //added by Mike, 20190418
 ' where: * means any set of characters
 '
 ' 5) To compile on Windows' Command Prompt the add-on software with the Apache Commons Text .jar file, i.e. org.apache.commons.text, use the following command:
-'   javac -cp .;org.apache.commons.text.jar generateMOSCSummaryReportDailyCount.java
+'   javac -cp .;org.json.jar;org.apache.commons.text.jar generateMOSCSummaryReportDailyCount.java
 '
 '	Note: 
 ' To compile on Linux Terminal:
-'   javac -cp .:org.apache.commons.text.jar generateMOSCSummaryReportDailyCount.java
+'   javac -cp .:org.json.jar:org.apache.commons.text.jar generateMOSCSummaryReportDailyCount.java
 '
 ' 6) To execute on Windows' Command Prompt the add-on software with the Apache Commons Text .jar file, i.e. org.apache.commons.text, use the following command:
-'   java -cp .;org.apache.commons.text.jar generateMOSCSummaryReportDailyCount *.txt
+'   java -cp .;org.json.jar;org.apache.commons.text.jar generateMOSCSummaryReportDailyCount ./input/cashier/
 '
 '	Note: 
 ' To execute on Linux Terminal:
-'   java -cp .:org.apache.commons.text.jar generateMOSCSummaryReportDailyCount.java *.txt
+'   java -cp .:org.json.jar:org.apache.commons.text.jar generateMOSCSummaryReportDailyCount ./input/cashier/
 '
 ' 7) The Apache Commons Text binaries with the .jar file can be downloaded here:
 '   http://commons.apache.org/proper/commons-text/download_text.cgi; last accessed: 20190123
@@ -2027,18 +2031,33 @@ public class generateMOSCSummaryReportDailyCount {
 		for(int i=0; i<medicalDoctorsListMaxCount; i++) {
 				inputFilename = args[0].replaceAll(".txt","");
 
-	  		System.out.println(">>"+inputFilename);
-				
-	  		System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
-				inputFilename=inputFilename+medicalDoctorsList[i]+dateFormat.format(myDate);
-				File f = new File(inputFilename+".txt");
-				
-				if(f.exists() && !f.isDirectory()) { 
+	  		//System.out.println(">>"+inputFilename);				
+	  		//System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
+
+				//edited by Mike, 20201024
+				inputFilename=inputFilename+medicalDoctorsList[i]+dateFormat.format(myDate)+".txt";	  
+
+	  		//System.out.println(">>>>"+inputFilename);
+
+				File f = new File(inputFilename);
+								
+				if(f.exists() && !f.isDirectory()) { 	
 					Scanner sc = new Scanner(new FileInputStream(f));				
 		
 					String s;		
-					s=sc.nextLine();		
+					s=sc.nextLine();
 					System.out.println(s);
+					
+					//added by Mike, 20201024
+					JSONArray nestedJsonArray = new JSONArray(s);
+					//JSONObject myJsonObject = new JSONObject(s);
+					JSONObject jo_inside = nestedJsonArray.getJSONObject(0);
+					
+					//TO-DO: -add: write in output .csv file
+					
+					System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));		
+					System.out.println("iNoChargeQuantityTotalCount: "+jo_inside.getInt("iNoChargeQuantityTotalCount"));		
+	
 				}
 	  }
 	}
