@@ -131,13 +131,24 @@ public class generateMOSCSummaryReportDailyCount {
 	//added by Mike, 20190503; edited by Mike, 20190504
 	//Note that I have to use double backslash, i.e. "\\", to use "\" in the filename
 	//without extension; default input file 
-	private static String inputOutputTemplateFilenameMonthlyStatistics = "assets\\templates\\generateMonthlySummaryReportOutputTemplateMonthlyStatistics";
+	//edited by Mike, 20201024
+	//Windows Machine
+//	private static String inputOutputTemplateFilenameMonthlyStatistics = "assets\\templates\\generateMonthlySummaryReportOutputTemplateMonthlyStatistics";
+	
+	//added by Mike, 20201024	
+	//Linux Machine
+	private static String inputOutputTemplateFilenameMonthlyStatistics = "./assets/templates/generateMonthlySummaryReportOutputTemplateMonthlyStatistics";
+
+
 	private static String inputDataFilenameTreatmentMonthlyStatistics = "assets\\transactions\\treatmentCountList";
 
-/*	//edited by Mike, 20201023
-	private static String inputDataFilenameConsultationMonthlyStatistics = "assets\\transactions\\consultationCountList";
-*/
-	private static String inputDataFilenameConsultationMonthlyStatistics = "assets/transactions/consultationCountList";
+	//removed by Mike, 20201024
+	//Windows Machine
+	//private static String inputDataFilenameConsultationMonthlyStatistics = "assets\\transactions\\consultationCountList";
+	
+	//added by Mike, 20201024	
+	//Linux Machine
+	private static String inputDataFilenameConsultationMonthlyStatistics = "./assets/transactions/consultationCountList";
 	
 	private static String inputDataFilenameProcedureMonthlyStatistics = "assets\\transactions\\procedureCountList";
 	
@@ -379,8 +390,11 @@ public class generateMOSCSummaryReportDailyCount {
 
 	  medicalDoctorsListMaxCount = medicalDoctorsList.length;
 
-		//added by Mike, 20201023
-		PrintWriter moscSummaryReportDailyCountWriter = new PrintWriter("output/MOSCSummaryReportDailyCountOutput.html", "UTF-8");	
+		//added by Mike, 20201023; edited by Mike, 20201026
+//		PrintWriter moscSummaryReportDailyCountWriter = new PrintWriter("output/MOSCSummaryReportDailyCountOutput.html", "UTF-8");	
+
+		PrintWriter consultationCountMonthlyStatisticsWriter = new PrintWriter("output/MOSCSummaryReportDailyCountOutput.html", "UTF-8");	
+				
 		
 		dateContainer = new HashMap<Integer, double[]>();
 		hmoContainer = new HashMap<String, double[]>();
@@ -477,6 +491,16 @@ public class generateMOSCSummaryReportDailyCount {
 		/*writer.print("Monthly Summary Report\n");
 		*/
 		
+			//added by Mike, 20201024
+			processWriteOutputFileMonthlyStatistics(consultationCountMonthlyStatisticsWriter, CONSULTATION_FILE_TYPE);		
+
+			//added by Mike, 20190803
+			//note that I moved these instructions here, so that if there is an error in the processing that the computer executes before these, the lists will not be blank
+			PrintWriter consultationCountListTempWriter = new PrintWriter("assets/transactions/consultationCountListTemp.txt", "UTF-8");	
+
+			processWriteOutputFileAssetsTransactionsCountList(consultationCountListTempWriter, CONSULTATION_FILE_TYPE);
+			
+					
 /*	//removed by Mike, 20201023		
 		//edited by Mike, 20190427
 		if (!isConsultationInputFileEmpty) {
@@ -2025,9 +2049,25 @@ public class generateMOSCSummaryReportDailyCount {
     Date myDate = new Date();
     System.out.println(dateFormat.format(myDate));
 
+ 		DateFormat myDateValuesArrayDateFormat = new SimpleDateFormat("MM/dd/YY");
+
+
 //		myDate = addDay(myDate, -1);
 //    System.out.println(dateFormat.format(myDate));
 		
+		int iMonthYearCount=0;
+		String sInputMonthYear = getMonthYear(myDateValuesArrayDateFormat.format(myDate));
+
+		if (dateValuesArray[iMonthYearCount]==null) {
+			dateValuesArray[iMonthYearCount] = sInputMonthYear;
+		}
+		  
+		if (dateValuesArray[iMonthYearCount]==sInputMonthYear) {				
+		}
+		else {
+			dateValuesArray[iMonthYearCount] = sInputMonthYear;
+		}
+						
 		for(int i=0; i<medicalDoctorsListMaxCount; i++) {
 				inputFilename = args[0].replaceAll(".txt","");
 
