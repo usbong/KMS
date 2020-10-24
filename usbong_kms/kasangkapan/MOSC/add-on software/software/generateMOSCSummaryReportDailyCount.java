@@ -137,7 +137,7 @@ public class generateMOSCSummaryReportDailyCount {
 	
 	//added by Mike, 20201024	
 	//Linux Machine
-	private static String inputOutputTemplateFilenameMonthlyStatistics = "./assets/templates/generateMonthlySummaryReportOutputTemplateMonthlyStatistics";
+	private static String inputOutputTemplateFilenameMonthlyStatistics = "./assets/templates/generateMonthlySummaryReportOutputTemplateMonthlyStatisticsMOSC"; //edited by Mike, 20201024
 
 
 	private static String inputDataFilenameTreatmentMonthlyStatistics = "assets\\transactions\\treatmentCountList";
@@ -539,7 +539,9 @@ public class generateMOSCSummaryReportDailyCount {
 		}		
 */
 
-			PrintWriter moscConsultationCountListTempWriter = new PrintWriter("assets/transactions/moscConsultationCountListTemp.txt", "UTF-8");	
+			//edited by Mike, 20201026
+			//TO-DO: -add: "MOSC" keyword in temporary file
+			PrintWriter moscConsultationCountListTempWriter = new PrintWriter("assets/transactions/consultationCountListTemp.txt", "UTF-8");	
 
 			processWriteOutputFileAssetsTransactionsCountList(moscConsultationCountListTempWriter, CONSULTATION_FILE_TYPE);	
 							
