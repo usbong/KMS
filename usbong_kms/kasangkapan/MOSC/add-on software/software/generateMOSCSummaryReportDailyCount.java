@@ -417,8 +417,14 @@ public class generateMOSCSummaryReportDailyCount {
 		
 		//added by Mike, 20181116
 		startDate = null; //properly set the month and year in the output file of each input file
-		dateValuesArray = new String[args.length]; //added by Mike, 20180412
-		dateValuesArrayInt = new int[args.length]; //added by Mike, 20180412
+		//edited by Mike, 20201025
+//		dateValuesArray = new String[args.length]; //added by Mike, 20180412
+		dateValuesArray = new String[12];
+
+		//edited by Mike, 20201025
+//		dateValuesArrayInt = new int[args.length]; //added by Mike, 20180412
+		dateValuesArrayInt = new int[12];
+		
 		//dateValuesArrayInt = new ArrayList<int>(); //edited by Mike, 20181221
 
 /*	//removed by Mike, 20201023
@@ -825,6 +831,119 @@ public class generateMOSCSummaryReportDailyCount {
 
 		return true; //added by Mike, 20190426
 	}
+	
+	//added by Mike, 20201025
+	//TO-DO: -update: this
+	private static void processMonthlyCountMOSC(HashMap<Integer, double[]> dateContainer, String[] inputColumns, int i, boolean isConsultation) {
+		//				if (!referringDoctorContainer.containsKey(inputColumns[INPUT_REFERRING_DOCTOR_COLUMN])) {
+				if (!dateContainer.containsKey(dateValuesArrayInt[i])) {
+					//TO-DO: -update: this
+					columnValuesArray = new double[OUTPUT_TOTAL_COLUMNS];
+
+					//note: 0:iQuantityTotalCount
+//					columnValuesArray[0]
+
+					dateContainer.put(dateValuesArrayInt[i], columnValuesArray);
+				}
+				else {
+					//edited by Mike, 20181218
+					if (!isConsultation) {											
+					
+//										System.out.println("treatment: inputColumns[INPUT_CLASS_COLUMN]: " + inputColumns[INPUT_CLASS_COLUMN]);
+
+						//edited by Mike, 20181206
+						if ((inputColumns[INPUT_CLASS_COLUMN].contains("HMO")) ||
+							(inputColumns[INPUT_CLASS_COLUMN].contains("SLR"))) {		
+
+//							System.out.println("i in dateValuesArrayInt[i]" + i);
+							
+							dateContainer.get(dateValuesArrayInt[i])[OUTPUT_HMO_COUNT_COLUMN]++;					
+/*							dateContainer.get(dateValuesArrayInt[i])[OUTPUT_HMO_TOTAL_NET_TREATMENT_FEE_COLUMN] 
+								+= Double.parseDouble(inputColumns[INPUT_NET_PF_COLUMN]);
+								
+							if (inputColumns[INPUT_NOTES_COLUMN].contains("paid:")) {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_HMO_PAID_NET_TREATMENT_FEE_COLUMN] += Double.parseDouble(inputColumns[INPUT_NET_PF_COLUMN]);
+							}
+							else {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_HMO_UNPAID_NET_TREATMENT_FEE_COLUMN] += Double.parseDouble(inputColumns[INPUT_NET_PF_COLUMN]);							
+							}
+*/							
+						}
+						else {
+							dateContainer.get(dateValuesArrayInt[i])[OUTPUT_NON_HMO_COUNT_COLUMN]++;					
+/*							dateContainer.get(dateValuesArrayInt[i])[OUTPUT_NON_HMO_TOTAL_NET_TREATMENT_FEE_COLUMN] 
+								+= Double.parseDouble(inputColumns[INPUT_NET_PF_COLUMN]);
+								
+							if (inputColumns[INPUT_NOTES_COLUMN].contains("paid:")) {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_NON_HMO_PAID_NET_TREATMENT_FEE_COLUMN] += Double.parseDouble(inputColumns[INPUT_NET_PF_COLUMN]);
+							}
+							else {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_NON_HMO_UNPAID_NET_TREATMENT_FEE_COLUMN] += Double.parseDouble(inputColumns[INPUT_NET_PF_COLUMN]);							
+							}
+*/							
+						}
+					}
+					else {
+						if ((inputColumns[INPUT_CONSULTATION_CLASS_COLUMN].contains("HMO")) ||
+							(inputColumns[INPUT_CONSULTATION_CLASS_COLUMN].contains("SLR"))) {
+/*							dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_HMO_COUNT_COLUMN]++;					
+*/							
+							//edited by Mike, 20190107
+							if (inputColumns[INPUT_CONSULTATION_MEDICAL_CERTIFICATE_COLUMN].toLowerCase().trim().contains("mc")) {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_HMO_MEDICAL_CERTIFICATE_COUNT_COLUMN]++;
+							}
+							else if (inputColumns[INPUT_CONSULTATION_PROCEDURE_COLUMN].toLowerCase().trim().contains("p")) {
+								//edited by Mike, 20190108
+								if (inputColumns[INPUT_CONSULTATION_PROCEDURE_COLUMN].toLowerCase().trim().contains("/")) {
+									dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_HMO_PROCEDURE_COUNT_COLUMN]++;
+									dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_HMO_COUNT_COLUMN]++;
+								}
+								else {
+									dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_HMO_PROCEDURE_COUNT_COLUMN]++;
+								}
+							}	
+							else {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_HMO_COUNT_COLUMN]++;								
+							}
+/*
+							//added by Mike, 20190105
+							if (inputColumns[INPUT_CONSULTATION_PROCEDURE_COLUMN].toLowerCase().contains("p")) {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_HMO_PROCEDURE_COUNT_COLUMN]++;
+							}
+*/							
+						}
+						else {							
+/*							dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_NON_HMO_COUNT_COLUMN]++;					
+*/
+							//edited by Mike, 20190107
+							if (inputColumns[INPUT_CONSULTATION_MEDICAL_CERTIFICATE_COLUMN].toLowerCase().trim().contains("mc")) {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_NON_HMO_MEDICAL_CERTIFICATE_COUNT_COLUMN]++;
+							}
+							else if (inputColumns[INPUT_CONSULTATION_PROCEDURE_COLUMN].toLowerCase().trim().contains("p")) {
+								//edited by Mike, 20190108
+								if (inputColumns[INPUT_CONSULTATION_PROCEDURE_COLUMN].toLowerCase().trim().contains("/")) {
+									dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_NON_HMO_PROCEDURE_COUNT_COLUMN]++;
+									dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_NON_HMO_COUNT_COLUMN]++;
+								}
+								else {
+									dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_NON_HMO_PROCEDURE_COUNT_COLUMN]++;
+								}
+							}	
+							else {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_NON_HMO_COUNT_COLUMN]++;								
+							}
+/*
+							//added by Mike, 20190105
+							if (inputColumns[INPUT_CONSULTATION_PROCEDURE_COLUMN].toLowerCase().contains("p")) {
+								dateContainer.get(dateValuesArrayInt[i])[OUTPUT_CONSULTATION_NON_HMO_PROCEDURE_COUNT_COLUMN]++;
+							}
+*/							
+						}
+					}
+				}					
+	}
+
+
 	
 	private static void processMonthlyCount(HashMap<Integer, double[]> dateContainer, String[] inputColumns, int i, boolean isConsultation) {
 		//				if (!referringDoctorContainer.containsKey(inputColumns[INPUT_REFERRING_DOCTOR_COLUMN])) {
@@ -2046,6 +2165,13 @@ public class generateMOSCSummaryReportDailyCount {
 	}
 
 	private static void processInputFiles(String[] args, boolean isPhaseOne) throws Exception {
+		//added by Mike, 20201025		
+		int iQuantityTotalCountOfTheYear=0;
+		int iNoChargeQuantityTotalCountOfTheYear=0;
+		int iQuantityTotalCountOfTheMonth=0;
+		int iNoChargeQuantityTotalCountOfTheMonth=0;
+
+
 		//added by Mike, 20201025
  		DateFormat dateYearFormat = new SimpleDateFormat("yyyy");
 		Date dateNow = new Date();
@@ -2067,18 +2193,141 @@ public class generateMOSCSummaryReportDailyCount {
 		
 //		System.out.println(sMyDateNow);
 
+		int iMonthYearCount=0;
+
 		//note: date now included in count
 		do {
-		  System.out.println(dateFormat.format(myDate));
+	//		System.out.println(dateFormat.format(myDate));
 
-		  myDate = addDay(myDate, 1);
-		  sMyDate = dateFormat.format(myDate);
-		  
-//		  System.out.println(dateFormat.format(myDate));
+			myDate = addDay(myDate, 1);
+			sMyDate = dateFormat.format(myDate);
+			  
+	//		System.out.println(dateFormat.format(myDate));
+		
+			//TO-DO: -update: this
+		
+			//edited by Mike, 20201025
+			DateFormat myDateValuesArrayDateFormat = new SimpleDateFormat("MMM/dd/YY");
+			//added by Mike, 20201025
+			DateFormat myDateValuesArrayDateMonth = new SimpleDateFormat("MM");
+			DateFormat myDateValuesArrayIntYearMonth = new SimpleDateFormat("YYYYMM");
+			DateFormat myDateValuesArrayIntMonth = new SimpleDateFormat("M");
+			
+			String sInputMonthYear = getMonthYear(myDateValuesArrayDateFormat.format(myDate));
+
+		System.out.println(">>"+sInputMonthYear);
+
+//			if (dateValuesArrayInt[iMonthYearCount]==0) {
+
+				
+				iMonthYearCount = Integer.parseInt(myDateValuesArrayIntMonth.format(myDate))-1;
+
+		System.out.println(">>iMonthYearCount: "+iMonthYearCount);
+
+				//input: Jan-19
+				//output: 201901
+				//note: getYearMonthAsInt(...)
+//				dateValuesArrayInt[iMonthYearCount] = getYearMonthAsInt(sInputMonthYear);
+				dateValuesArrayInt[iMonthYearCount] = Integer.parseInt(myDateValuesArrayIntYearMonth.format(myDate));
+//			}
+
+			if (dateValuesArray[iMonthYearCount]==null) {
+				dateValuesArray[iMonthYearCount] = sInputMonthYear;
+			}
+			  
+			if (dateValuesArray[iMonthYearCount]==sInputMonthYear) {				
+			}
+			else {
+				dateValuesArray[iMonthYearCount] = sInputMonthYear;
+			}
+
+							
+			for(int i=0; i<medicalDoctorsListMaxCount; i++) {
+					inputFilename = args[0].replaceAll(".txt","");
+
+				//System.out.println(">>"+inputFilename);				
+				//System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
+
+					//edited by Mike, 20201024
+					inputFilename=inputFilename+medicalDoctorsList[i]+dateFormat.format(myDate)+".txt";	  
+
+				//System.out.println(">>>>"+inputFilename);
+
+					File f = new File(inputFilename);
+									
+					if(f.exists() && !f.isDirectory()) { 	
+						Scanner sc = new Scanner(new FileInputStream(f));				
+			
+						String s;		
+						s=sc.nextLine();
+						System.out.println(s);
+						
+						//added by Mike, 20201024
+						JSONArray nestedJsonArray = new JSONArray(s);
+						//JSONObject myJsonObject = new JSONObject(s);
+						JSONObject jo_inside = nestedJsonArray.getJSONObject(0);
+						
+						//added by Mike, 20201025
+						//TO-DO: -add: iQuantityTotalCountOfTheYear
+						//TO-DO: -add: iNoChargeQuantityTotalCountOfTheYear
+						
+						//TO-DO: -add: write in output .csv file
+												
+						System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));		
+						System.out.println("iNoChargeQuantityTotalCount: "+jo_inside.getInt("iNoChargeQuantityTotalCount"));		
+	
+						//note: processMonthlyCountMOSC(...)
+						if (!dateContainer.containsKey(dateValuesArrayInt[i])) {
+							//TO-DO: -update: this
+							columnValuesArray = new double[OUTPUT_TOTAL_COLUMNS];
+
+							//note: 0:iQuantityTotalCount
+							columnValuesArray[0] = jo_inside.getInt("iQuantityTotalCount");
+
+							dateContainer.put(dateValuesArrayInt[i], columnValuesArray);
+			
+						}
+						else {
+							//note: 0:iQuantityTotalCount
+							dateContainer.get(dateValuesArrayInt[i])[0]+=jo_inside.getInt("iQuantityTotalCount");;
+						}
+					}
+			}
 		}
 		while (!sMyDate.equals(sMyDateNowPlusOne));
-//		while (!sMyDate.equals("2020-01-10"));
+//		while (!sMyDate.equals("2020-01-10"));		  
 
+		int iDateValuesArrayIntCountMax = dateValuesArrayInt.length;
+		
+		for (int iDateValuesArrayIntCount=0;iDateValuesArrayIntCount<iDateValuesArrayIntCountMax; iDateValuesArrayIntCount++) {			
+			
+			//note: default value is 0, not null
+			if (dateValuesArrayInt[iDateValuesArrayIntCount]==0) {
+				break;
+			}
+
+			if (dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])==null) {
+				break;
+			}
+			
+			
+			//TO-DO: -write: in output html file
+			//from Double type to Integer type
+			System.out.println(">>iQuantityTotalCount: "+(int)dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
+		}
+	}
+
+	//added by Mike, 20201025
+	private static void processInputFilesOK(String[] args, boolean isPhaseOne) throws Exception {
+	  //added by Mike, 20201023
+ 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date myDate = new Date();
+		System.out.println(dateFormat.format(myDate));
+
+		//TO-DO: -add: all days of all months of the year
+
+//		myDate = addDay(myDate, -1);
+//    System.out.println(dateFormat.format(myDate));
 		
 		//edited by Mike, 20201025
  		DateFormat myDateValuesArrayDateFormat = new SimpleDateFormat("MMM/dd/YY");
@@ -2099,7 +2348,8 @@ public class generateMOSCSummaryReportDailyCount {
 		else {
 			dateValuesArray[iMonthYearCount] = sInputMonthYear;
 		}
-						
+
+		
 		for(int i=0; i<medicalDoctorsListMaxCount; i++) {
 				inputFilename = args[0].replaceAll(".txt","");
 
@@ -2135,76 +2385,7 @@ public class generateMOSCSummaryReportDailyCount {
 					System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));		
 					System.out.println("iNoChargeQuantityTotalCount: "+jo_inside.getInt("iNoChargeQuantityTotalCount"));		
 	
-				}
-	  }
-	}
-
-	//added by Mike, 20201025
-	private static void processInputFilesOK(String[] args, boolean isPhaseOne) throws Exception {
-	  //added by Mike, 20201023
- 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date myDate = new Date();
-		System.out.println(dateFormat.format(myDate));
-
-		//TO-DO: -add: all days of all months of the year
-
-//		myDate = addDay(myDate, -1);
-//    System.out.println(dateFormat.format(myDate));
-		
-		//edited by Mike, 20201025
- 		DateFormat myDateValuesArrayDateFormat = new SimpleDateFormat("MMM/dd/YY");
-		//added by Mike, 20201025
- 		DateFormat myDateValuesArrayDateMonth = new SimpleDateFormat("MM");
-		
-		int iMonthYearCount=0;
-		String sInputMonthYear = getMonthYear(myDateValuesArrayDateFormat.format(myDate));
-
-    System.out.println(">>"+sInputMonthYear);
-
-		if (dateValuesArray[iMonthYearCount]==null) {
-			dateValuesArray[iMonthYearCount] = sInputMonthYear;
-		}
-		  
-		if (dateValuesArray[iMonthYearCount]==sInputMonthYear) {				
-		}
-		else {
-			dateValuesArray[iMonthYearCount] = sInputMonthYear;
-		}
-						
-		for(int i=0; i<medicalDoctorsListMaxCount; i++) {
-				inputFilename = args[0].replaceAll(".txt","");
-
-	  		//System.out.println(">>"+inputFilename);				
-	  		//System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
-
-				//edited by Mike, 20201024
-				inputFilename=inputFilename+medicalDoctorsList[i]+dateFormat.format(myDate)+".txt";	  
-
-	  		//System.out.println(">>>>"+inputFilename);
-
-				File f = new File(inputFilename);
-								
-				if(f.exists() && !f.isDirectory()) { 	
-					Scanner sc = new Scanner(new FileInputStream(f));				
-		
-					String s;		
-					s=sc.nextLine();
-					System.out.println(s);
 					
-					//added by Mike, 20201024
-					JSONArray nestedJsonArray = new JSONArray(s);
-					//JSONObject myJsonObject = new JSONObject(s);
-					JSONObject jo_inside = nestedJsonArray.getJSONObject(0);
-					
-					//added by Mike, 20201025
-					//TO-DO: -add: iQuantityTotalCountOfTheYear
-					//TO-DO: -add: iNoChargeQuantityTotalCountOfTheYear
-					
-					//TO-DO: -add: write in output .csv file
-					
-					
-					System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));		
-					System.out.println("iNoChargeQuantityTotalCount: "+jo_inside.getInt("iNoChargeQuantityTotalCount"));		
 	
 				}
 	  }
