@@ -18,6 +18,9 @@
  * @last updated: 20201025
  *
  */
+ 
+//TO-DO: -delete: excess instructions 
+ 
 //added by Mike, 20201024
 import org.json.JSONObject;
 import org.json.JSONArray; 
@@ -691,6 +694,29 @@ public class generateMOSCSummaryReportDailyCount {
 //		System.out.println("Integer.parseInt(year.concat(month)): "+Integer.parseInt(year.concat(month)));
 		return Integer.parseInt(year.concat(month));
 	}
+
+	//input: Jan-19
+	//output: 2019
+	private static int getYearOnlyAsInt(String date) {
+		StringBuffer sb = new StringBuffer(""+date);	
+		/* //removed by Mike, 20201025
+		String month = sb.substring(0,sb.indexOf("-")).toLowerCase(); //index "-" is not included
+		month = ""+convertMonthToNumber(month);
+*/
+
+//		String year = sb.substring(sb.indexOf("-")).substring(sb.indexOf("-")+1);
+		String year = sb.substring(sb.indexOf("-")+1);
+		
+		//if the year is only 2 digits, e.g. "19", instead of of "2019"
+		if (year.length() < 4) {
+			year = "20" + year;
+		}
+		
+
+//		System.out.println("Integer.parseInt(year.concat(month)): "+Integer.parseInt(year.concat(month)));
+//		return Integer.parseInt(year.concat(month));
+		return Integer.parseInt(year);
+	}
 	
 	//added by Mike, 20181030
 	private static void makeFilePath(String filePath) {
@@ -704,27 +730,33 @@ public class generateMOSCSummaryReportDailyCount {
 	//added by Mike, 20201023
 	private static boolean processAutoCalculate() {		
 		int iDateValuesArrayIntCountMax = dateValuesArrayInt.length;
-	
-		for (int iDateValuesArrayIntCount=0;iDateValuesArrayIntCount<iDateValuesArrayIntCountMax; iDateValuesArrayIntCount++) {			
+		int iYearKey;
 		
-			//note: default value is 0, not null
+		for (int iDateValuesArrayIntCount=0;iDateValuesArrayIntCount<iDateValuesArrayIntCountMax; iDateValuesArrayIntCount++) {			
+					
+			//note: default value in Java is 0, not null
 			if (dateValuesArrayInt[iDateValuesArrayIntCount]==0) {
+				//month has not yet passed
 				continue;
 			}
 
+//System.out.println(getYearOnlyAsInt(dateValuesArray[iDateValuesArrayIntCount]));
+			
+			iYearKey = getYearOnlyAsInt(dateValuesArray[iDateValuesArrayIntCount]);
+
 			if (dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])==null) {
+				//set default value to 0
+				consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=0;
+
 				continue;
 			}
-						
-			//TO-DO: -write: in output html file
+					
 			//from Double type to Integer type
-			System.out.println(">>iQuantityTotalCount: "+(int)dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
+//			System.out.println(">>iQuantityTotalCount: "+(int)dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
 
 //			int yearKey = yearsContainerArrayList.get(i);
 
-/*			System.out.println(">>>> sMyDateYear: "+sMyDateYear);
-*/
-			System.out.println(">>>> iDateValuesArrayIntCount: "+iDateValuesArrayIntCount);
+//			System.out.println(">>>> iDateValuesArrayIntCount: "+iDateValuesArrayIntCount);
 
 			//TO-DO: -update: this
 			//int i = dateValueInt; //added by Mike, 20190427
@@ -739,17 +771,18 @@ public class generateMOSCSummaryReportDailyCount {
 //			totalConsultationCount = (int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];
 
 			//totalConsultationCount += consultationCount;
+/*	//removed by Mike, 20201025
 			System.out.println("iDateValuesArrayIntCount: " +iDateValuesArrayIntCount);
-
 			System.out.println("totalConsultationCount: " +totalConsultationCount);
+*/
 //			consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex]=totalConsultationCount;	
 			
-			//consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=totalConsultationCount;	
-
+//			consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=totalConsultationCount;	
 			
 			//TO-DO: -update: 2020
-consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];
-
+consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];
+			
+//			totalConsultationCount=0;
 			
 
 		}
@@ -2264,16 +2297,16 @@ consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=(int)
 			DateFormat myDateValuesArrayIntMonth = new SimpleDateFormat("M");
 			
 			String sInputMonthYear = getMonthYear(myDateValuesArrayDateFormat.format(myDate));
-
+/*	//removed by Mike, 20201025
 		System.out.println(">>"+sInputMonthYear);
-
+*/
 //			if (dateValuesArrayInt[iMonthYearCount]==0) {
 
 				
 				iMonthYearCount = Integer.parseInt(myDateValuesArrayIntMonth.format(myDate))-1;
-
+/*	//removed by Mike, 20201025
 		System.out.println(">>iMonthYearCount: "+iMonthYearCount);
-
+*/
 				//input: Jan-19
 				//output: 201901
 				//note: getYearMonthAsInt(...)
@@ -2900,10 +2933,7 @@ consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=(int)
 			String monthString = convertMonthNumberToThreeLetterWord(monthRowIndex);
 				
 			for(int i=0; i<yearsContainerArrayList.size(); i++) {
-				int yearKey = yearsContainerArrayList.get(i);						
-																								
-																								System.out.println("yearKey: " + yearKey);
-																								
+				int yearKey = yearsContainerArrayList.get(i);										
 //				String inputMonthString = dateValuesArray[0].split("-")[0].toUpperCase(); //MAR
 				s = s.concat(monthString+"\t"); 			
 
@@ -2914,10 +2944,7 @@ consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=(int)
 						transactionCount = treatmentMonthlyStatisticsContainer.get(yearKey)[monthRowIndex];
 						break;
 					case CONSULTATION_FILE_TYPE:
-						transactionCount = consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex];	
-						
-						System.out.println("transactionCount: " + transactionCount);
-						
+						transactionCount = consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex];
 						break;
 					default:// PROCEDURE_FILE_TYPE:
 						transactionCount = procedureMonthlyStatisticsContainer.get(yearKey)[monthRowIndex];	
@@ -4015,10 +4042,7 @@ consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=(int)
 							treatmentMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = Integer.parseInt(inputMonthRowYearColumns[i+1]);
 							break;
 						case CONSULTATION_FILE_TYPE:
-							consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = Integer.parseInt(inputMonthRowYearColumns[i+1]);
-							
-							System.out.println("dito");
-							
+							consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = Integer.parseInt(inputMonthRowYearColumns[i+1]);				
 							break;
 						default:// PROCEDURE_FILE_TYPE:
 							procedureMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = Integer.parseInt(inputMonthRowYearColumns[i+1]);
