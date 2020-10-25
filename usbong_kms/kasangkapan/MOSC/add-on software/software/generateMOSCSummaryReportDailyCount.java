@@ -15,7 +15,7 @@
  * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
  * @author: SYSON, MICHAEL B.
  * @date created: 20201023
- * @last updated: 20201024
+ * @last updated: 20201025
  *
  */
 //added by Mike, 20201024
@@ -133,22 +133,22 @@ public class generateMOSCSummaryReportDailyCount {
 	//without extension; default input file 
 	//edited by Mike, 20201024
 	//Windows Machine
-//	private static String inputOutputTemplateFilenameMonthlyStatistics = "assets\\templates\\generateMonthlySummaryReportOutputTemplateMonthlyStatistics";
+	private static String inputOutputTemplateFilenameMonthlyStatistics = "assets\\templates\\generateMonthlySummaryReportOutputTemplateMonthlyStatisticsMOSC";
 	
 	//added by Mike, 20201024	
 	//Linux Machine
-	private static String inputOutputTemplateFilenameMonthlyStatistics = "./assets/templates/generateMonthlySummaryReportOutputTemplateMonthlyStatisticsMOSC"; //edited by Mike, 20201024
+//	private static String inputOutputTemplateFilenameMonthlyStatistics = "./assets/templates/generateMonthlySummaryReportOutputTemplateMonthlyStatisticsMOSC"; //edited by Mike, 20201024
 
 
 	private static String inputDataFilenameTreatmentMonthlyStatistics = "assets\\transactions\\treatmentCountList";
 
 	//removed by Mike, 20201024
 	//Windows Machine
-	//private static String inputDataFilenameConsultationMonthlyStatistics = "assets\\transactions\\consultationCountList";
+	private static String inputDataFilenameConsultationMonthlyStatistics = "assets\\transactions\\consultationCountList";
 	
 	//added by Mike, 20201024	
 	//Linux Machine
-	private static String inputDataFilenameConsultationMonthlyStatistics = "./assets/transactions/consultationCountList";
+//	private static String inputDataFilenameConsultationMonthlyStatistics = "./assets/transactions/consultationCountList";
 	
 	private static String inputDataFilenameProcedureMonthlyStatistics = "assets\\transactions\\procedureCountList";
 	
@@ -2048,11 +2048,12 @@ public class generateMOSCSummaryReportDailyCount {
 	private static void processInputFiles(String[] args, boolean isPhaseOne) throws Exception {
 	  //added by Mike, 20201023
  		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date myDate = new Date();
-    System.out.println(dateFormat.format(myDate));
+		Date myDate = new Date();
+		System.out.println(dateFormat.format(myDate));
 
  		DateFormat myDateValuesArrayDateFormat = new SimpleDateFormat("MM/dd/YY");
 
+		//TO-DO: -add: all days of all months of the year
 
 //		myDate = addDay(myDate, -1);
 //    System.out.println(dateFormat.format(myDate));
@@ -2095,7 +2096,12 @@ public class generateMOSCSummaryReportDailyCount {
 					//JSONObject myJsonObject = new JSONObject(s);
 					JSONObject jo_inside = nestedJsonArray.getJSONObject(0);
 					
+					//added by Mike, 20201025
+					//TO-DO: -add: iQuantityTotalCountOfTheYear
+					//TO-DO: -add: iNoChargeQuantityTotalCountOfTheYear
+					
 					//TO-DO: -add: write in output .csv file
+					
 					
 					System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));		
 					System.out.println("iNoChargeQuantityTotalCount: "+jo_inside.getInt("iNoChargeQuantityTotalCount"));		
