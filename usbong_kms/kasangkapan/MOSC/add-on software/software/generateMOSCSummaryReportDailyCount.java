@@ -2046,20 +2046,49 @@ public class generateMOSCSummaryReportDailyCount {
 	}
 
 	private static void processInputFiles(String[] args, boolean isPhaseOne) throws Exception {
-	  //added by Mike, 20201023
- 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date myDate = new Date();
-		System.out.println(dateFormat.format(myDate));
+		//added by Mike, 20201025
+ 		DateFormat dateYearFormat = new SimpleDateFormat("yyyy");
+		Date dateNow = new Date();
+		String sMyDateYear = dateYearFormat.format(dateNow);
 
- 		DateFormat myDateValuesArrayDateFormat = new SimpleDateFormat("MM/dd/YY");
+		//added by Mike, 20201023
+ 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		//edited by Mike, 20201025
+//		Date myDate = new Date();
+		Date myDate = dateFormat.parse(sMyDateYear+"-01-01");//dateFormat.parse("2020-01-01");
+
+//		System.out.println(dateFormat.format(myDate));
 
 		//TO-DO: -add: all days of all months of the year
+		String sMyDateNow = dateFormat.format(dateNow);
+		String sMyDate = "";
 
-//		myDate = addDay(myDate, -1);
-//    System.out.println(dateFormat.format(myDate));
+		String sMyDateNowPlusOne = dateFormat.format(addDay(dateNow, 1));
+		
+//		System.out.println(sMyDateNow);
+
+		//note: date now included in count
+		do {
+		  System.out.println(dateFormat.format(myDate));
+
+		  myDate = addDay(myDate, 1);
+		  sMyDate = dateFormat.format(myDate);
+		  
+//		  System.out.println(dateFormat.format(myDate));
+		}
+		while (!sMyDate.equals(sMyDateNowPlusOne));
+//		while (!sMyDate.equals("2020-01-10"));
+
+		
+		//edited by Mike, 20201025
+ 		DateFormat myDateValuesArrayDateFormat = new SimpleDateFormat("MMM/dd/YY");
+		//added by Mike, 20201025
+ 		DateFormat myDateValuesArrayDateMonth = new SimpleDateFormat("MM");
 		
 		int iMonthYearCount=0;
 		String sInputMonthYear = getMonthYear(myDateValuesArrayDateFormat.format(myDate));
+
+    System.out.println(">>"+sInputMonthYear);
 
 		if (dateValuesArray[iMonthYearCount]==null) {
 			dateValuesArray[iMonthYearCount] = sInputMonthYear;
@@ -2110,6 +2139,76 @@ public class generateMOSCSummaryReportDailyCount {
 	  }
 	}
 
+	//added by Mike, 20201025
+	private static void processInputFilesOK(String[] args, boolean isPhaseOne) throws Exception {
+	  //added by Mike, 20201023
+ 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date myDate = new Date();
+		System.out.println(dateFormat.format(myDate));
+
+		//TO-DO: -add: all days of all months of the year
+
+//		myDate = addDay(myDate, -1);
+//    System.out.println(dateFormat.format(myDate));
+		
+		//edited by Mike, 20201025
+ 		DateFormat myDateValuesArrayDateFormat = new SimpleDateFormat("MMM/dd/YY");
+		//added by Mike, 20201025
+ 		DateFormat myDateValuesArrayDateMonth = new SimpleDateFormat("MM");
+		
+		int iMonthYearCount=0;
+		String sInputMonthYear = getMonthYear(myDateValuesArrayDateFormat.format(myDate));
+
+    System.out.println(">>"+sInputMonthYear);
+
+		if (dateValuesArray[iMonthYearCount]==null) {
+			dateValuesArray[iMonthYearCount] = sInputMonthYear;
+		}
+		  
+		if (dateValuesArray[iMonthYearCount]==sInputMonthYear) {				
+		}
+		else {
+			dateValuesArray[iMonthYearCount] = sInputMonthYear;
+		}
+						
+		for(int i=0; i<medicalDoctorsListMaxCount; i++) {
+				inputFilename = args[0].replaceAll(".txt","");
+
+	  		//System.out.println(">>"+inputFilename);				
+	  		//System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
+
+				//edited by Mike, 20201024
+				inputFilename=inputFilename+medicalDoctorsList[i]+dateFormat.format(myDate)+".txt";	  
+
+	  		//System.out.println(">>>>"+inputFilename);
+
+				File f = new File(inputFilename);
+								
+				if(f.exists() && !f.isDirectory()) { 	
+					Scanner sc = new Scanner(new FileInputStream(f));				
+		
+					String s;		
+					s=sc.nextLine();
+					System.out.println(s);
+					
+					//added by Mike, 20201024
+					JSONArray nestedJsonArray = new JSONArray(s);
+					//JSONObject myJsonObject = new JSONObject(s);
+					JSONObject jo_inside = nestedJsonArray.getJSONObject(0);
+					
+					//added by Mike, 20201025
+					//TO-DO: -add: iQuantityTotalCountOfTheYear
+					//TO-DO: -add: iNoChargeQuantityTotalCountOfTheYear
+					
+					//TO-DO: -add: write in output .csv file
+					
+					
+					System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));		
+					System.out.println("iNoChargeQuantityTotalCount: "+jo_inside.getInt("iNoChargeQuantityTotalCount"));		
+	
+				}
+	  }
+	}
 
 	private static void processInputFilesPrev(String[] args, boolean isPhaseOne) throws Exception {
 		//edited by Mike, 20181030
