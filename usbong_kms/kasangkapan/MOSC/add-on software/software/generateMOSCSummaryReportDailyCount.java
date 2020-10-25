@@ -703,7 +703,58 @@ public class generateMOSCSummaryReportDailyCount {
 	
 	//added by Mike, 20201023
 	private static boolean processAutoCalculate() {		
-		//TO-DO: -update: this
+		int iDateValuesArrayIntCountMax = dateValuesArrayInt.length;
+	
+		for (int iDateValuesArrayIntCount=0;iDateValuesArrayIntCount<iDateValuesArrayIntCountMax; iDateValuesArrayIntCount++) {			
+		
+			//note: default value is 0, not null
+			if (dateValuesArrayInt[iDateValuesArrayIntCount]==0) {
+				continue;
+			}
+
+			if (dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])==null) {
+				continue;
+			}
+						
+			//TO-DO: -write: in output html file
+			//from Double type to Integer type
+			System.out.println(">>iQuantityTotalCount: "+(int)dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
+
+//			int yearKey = yearsContainerArrayList.get(i);
+
+/*			System.out.println(">>>> sMyDateYear: "+sMyDateYear);
+*/
+			System.out.println(">>>> iDateValuesArrayIntCount: "+iDateValuesArrayIntCount);
+
+			//TO-DO: -update: this
+			//int i = dateValueInt; //added by Mike, 20190427
+	
+/*			//added by Mike, 20190207; edited by Mike, 20190427
+			if (dateValuesArrayInt[i]==0) { //if there is no .txt input file
+				return false;
+			}
+*/					
+			
+			//note: 0:iQuantityTotalCount
+//			totalConsultationCount = (int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];
+
+			//totalConsultationCount += consultationCount;
+			System.out.println("iDateValuesArrayIntCount: " +iDateValuesArrayIntCount);
+
+			System.out.println("totalConsultationCount: " +totalConsultationCount);
+//			consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex]=totalConsultationCount;	
+			
+			//consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=totalConsultationCount;	
+
+			
+			//TO-DO: -update: 2020
+consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];
+
+			
+
+		}
+
+
 		return true;
 	}
 	
@@ -2171,7 +2222,6 @@ public class generateMOSCSummaryReportDailyCount {
 		int iQuantityTotalCountOfTheMonth=0;
 		int iNoChargeQuantityTotalCountOfTheMonth=0;
 
-
 		//added by Mike, 20201025
  		DateFormat dateYearFormat = new SimpleDateFormat("yyyy");
 		Date dateNow = new Date();
@@ -2277,19 +2327,19 @@ public class generateMOSCSummaryReportDailyCount {
 						System.out.println("iNoChargeQuantityTotalCount: "+jo_inside.getInt("iNoChargeQuantityTotalCount"));		
 	
 						//note: processMonthlyCountMOSC(...)
-						if (!dateContainer.containsKey(dateValuesArrayInt[i])) {
+						if (!dateContainer.containsKey(dateValuesArrayInt[iMonthYearCount])) {
 							//TO-DO: -update: this
 							columnValuesArray = new double[OUTPUT_TOTAL_COLUMNS];
 
 							//note: 0:iQuantityTotalCount
 							columnValuesArray[0] = jo_inside.getInt("iQuantityTotalCount");
 
-							dateContainer.put(dateValuesArrayInt[i], columnValuesArray);
+							dateContainer.put(dateValuesArrayInt[iMonthYearCount], columnValuesArray);
 			
 						}
 						else {
 							//note: 0:iQuantityTotalCount
-							dateContainer.get(dateValuesArrayInt[i])[0]+=jo_inside.getInt("iQuantityTotalCount");;
+							dateContainer.get(dateValuesArrayInt[iMonthYearCount])[0]+=jo_inside.getInt("iQuantityTotalCount");;
 						}
 					}
 			}
@@ -2297,6 +2347,7 @@ public class generateMOSCSummaryReportDailyCount {
 		while (!sMyDate.equals(sMyDateNowPlusOne));
 //		while (!sMyDate.equals("2020-01-10"));		  
 
+/*
 		int iDateValuesArrayIntCountMax = dateValuesArrayInt.length;
 		
 		for (int iDateValuesArrayIntCount=0;iDateValuesArrayIntCount<iDateValuesArrayIntCountMax; iDateValuesArrayIntCount++) {			
@@ -2314,7 +2365,14 @@ public class generateMOSCSummaryReportDailyCount {
 			//TO-DO: -write: in output html file
 			//from Double type to Integer type
 			System.out.println(">>iQuantityTotalCount: "+(int)dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
+
+//			int yearKey = yearsContainerArrayList.get(i);
+
+			System.out.println(">>>> sMyDateYear: "+sMyDateYear);
+			System.out.println(">>>> iDateValuesArrayIntCount: "+iDateValuesArrayIntCount);
+
 		}
+*/		
 	}
 
 	//added by Mike, 20201025
@@ -2844,6 +2902,8 @@ public class generateMOSCSummaryReportDailyCount {
 			for(int i=0; i<yearsContainerArrayList.size(); i++) {
 				int yearKey = yearsContainerArrayList.get(i);						
 																								
+																								System.out.println("yearKey: " + yearKey);
+																								
 //				String inputMonthString = dateValuesArray[0].split("-")[0].toUpperCase(); //MAR
 				s = s.concat(monthString+"\t"); 			
 
@@ -2855,6 +2915,9 @@ public class generateMOSCSummaryReportDailyCount {
 						break;
 					case CONSULTATION_FILE_TYPE:
 						transactionCount = consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex];	
+						
+						System.out.println("transactionCount: " + transactionCount);
+						
 						break;
 					default:// PROCEDURE_FILE_TYPE:
 						transactionCount = procedureMonthlyStatisticsContainer.get(yearKey)[monthRowIndex];	
@@ -3953,6 +4016,9 @@ public class generateMOSCSummaryReportDailyCount {
 							break;
 						case CONSULTATION_FILE_TYPE:
 							consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = Integer.parseInt(inputMonthRowYearColumns[i+1]);
+							
+							System.out.println("dito");
+							
 							break;
 						default:// PROCEDURE_FILE_TYPE:
 							procedureMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = Integer.parseInt(inputMonthRowYearColumns[i+1]);
