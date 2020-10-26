@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201013
+' @date updated: 20201026
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -213,6 +213,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						/*added by Mike, 20201013*/
 						.Button-purchase:focus {
 							background-color: #d4be00;
+						}
+
+
+						.Button-addVAT {
+/*							padding: 8px 42px 8px 42px;
+*/
+							padding: 12px;
+							background-color: #ffe400;
+							font-weight: bold;
+							background-color: #00aaff; <!--#93d151; lime green-->
+							border: 2px dotted #ab9c7d;		
+							text-align: center
+							border-radius: 4px;
+
+							float: left;
+							margin-left: 4px;
+						}
+
+						.Button-addVAT:hover {
+							background-color: #0088ff; <!--#93d151; lime green-->
+						}
+						
+						/*added by Mike, 20201013*/
+						.Button-addVAT:focus {
+							background-color: #0088ff; <!--#93d151; lime green-->
 						}
 						
 						input[type="checkbox"] {
@@ -518,6 +543,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//edited by Mike, 20200608
 			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
 			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
+		}	
+
+		//added by Mike, 20201026
+//		function myPopupFunctionPay(itemId) {				
+		function myPopupFunctionAddVAT(itemId, patientId) {				
+/*
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
+*/			
+			//edited by Mike, 20200608
+			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
+			window.location.href = "<?php echo site_url('browse/addVATBeforePayTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
 		}	
 
 	  </script>
@@ -1035,6 +1071,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY</button>
 						</td>						
+						<!-- added by Mike, 20201026 -->
+						<td>
+							<!-- TO-DO: -update: this -->
+							<!-- note: multiple button presses cause multiple +12% VAT -->
+							<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/> VAT</button>
+						</td>						
+
 					  </tr>
 <?php
 				echo "</table>";				
