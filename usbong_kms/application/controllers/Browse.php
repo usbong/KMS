@@ -2205,7 +2205,41 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewReportPatientQueueAccounting', $data);
 	}
+
+	//added by Mike, 20201026
+	public function addVATBeforePayTransactionItemPurchase($itemTypeId, $itemId, $patientId)
+	{
+/*
+		echo itemId: .$itemId;
+*/		
+		$data['itemId'] = $itemId;
+//		$data['transactionId'] = $transactionId;
+		
+		//added by Mike, 20200616
+		$data['itemTypeId'] = $itemTypeId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
 	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		//edited by Mike, 20200605
+		//$this->Browse_Model->payTransactionItemPurchase();
+		//$this->Browse_Model->payTransactionServiceAndItemPurchase();
+		//edited by Mike, 20200608
+		//$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
+
+		//note: non-medicine item only
+			
+		$data['outputTransaction'] = $this->Browse_Model->addVATBeforePayTransactionItemPurchase($patientId);
+
+		$this->viewItemNonMedicine($itemId);
+	}		
+		
 	//added by Mike, 20200411; edited by Mike, 20200608
 	public function payTransactionItemPurchase($itemTypeId, $itemId, $patientId)
 	{
