@@ -2852,6 +2852,12 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 						//overwrite previous value
 /*						if (transactionCount < 0) { //the value is still blank/empty, e.g. -1
 */
+						//added by Mike, 20201026
+						//execute computer automation for May 2020 onwards
+						if ((monthRowIndex<5) && (inputYear==2020)) {
+						}
+						else {
+
 //							System.out.println("dateValuesArray: "+dateValuesArray[0]);
 												
 							//TO-DO: -update this to store the auto-calculated transaction count value
@@ -2900,6 +2906,8 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 							else {
 								s = s.concat("\t\t\t\t<b><span>"+transactionCount+"</span></b>\n");
 							}
+						//added by Mike, 20201026
+					  }
 
 						//removed by Mike, 20200213
 						//overwrite previous value							
@@ -3968,6 +3976,7 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 
 	}
 	
+	//TO-DO: -update: this to use existing values
 	//added by Mike, 20190503; edited by Mike, 20190504
 	//store the existing values from the assets file into Random Access Memory (RAM)
 	private static void processMonthlyStatisticsData(int fileType) throws Exception {
