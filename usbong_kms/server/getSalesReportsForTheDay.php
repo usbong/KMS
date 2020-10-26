@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201019
+  @date updated: 20201026
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -448,7 +448,10 @@
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0'"))
 	//edited by Mike, 20200902
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	//edited by Mike, 20201026
+	//note: in certain cases, pressing delete button deletes transaction with LAB fee and transaction quantity zero
+//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -572,13 +575,52 @@
 							$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
 
 							if (strpos($value['notes'],"PRIVATE")!==false) {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+								//edited by Mike, 20201026
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+								
+								$myNetFeeValue=$value['fee'];
 								
 								//added by Mike, 20200531
 								$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;
 								
 								//TO-DO: -reverify: if +DEXA
 							}
+							//added by Mike, 20201026
+							else {
+								//TO-DO: -reverify: this
+								//edited by Mike, 20200910
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
+								$myNetFeeValue = $value['fee']*0.70;
+							}								
+
+							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+//										echo $value['notes'];
+//										echo $value['transaction_id'];
+								//TO-DO: -update: this
+								$transactionId = $value['transaction_id'] + 1;
+								//removed by Mike, 20201003
+								//echo $transactionId;
+									
+								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
+									$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
+									if($receiptArrayRowValue) {
+										if ($receiptArrayRowValue['receipt_number']!=0) {
+											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+										}
+									}
+
+									// free result set
+									mysqli_free_result($receiptArray);											
+								}
+								// show an error if there is an issue with the database query
+								else
+								{
+									echo "Error: " . $mysqli->error;
+								}
+							}									
+
+							$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
+							
 
 //removed by Mike, 20201019							
 //							else {	
@@ -595,6 +637,7 @@
 								else if (strpos($value['notes'],"NO CHARGE")!==false) {
 									$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 								}
+/* //removed by Mike, 20201026
 								else {
 									//TO-DO: -reverify: this
 									//edited by Mike, 20200910
@@ -629,6 +672,7 @@
 
 									$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
 								}
+*/								
 //removed by Mike, 20201019
 //							}
 
