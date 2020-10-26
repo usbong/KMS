@@ -382,14 +382,27 @@ public class generateMOSCSummaryReportDailyCount {
 		makeFilePath("output"); //"output" is the folder where I've instructed the add-on software/application to store the output file			
 
 		//added by Mike, 20201023
-	  medicalDoctorsList = new String[7];
-		medicalDoctorsList[0] = "SYSON,PEDRO";
+	  medicalDoctorsList = new String[7]; //String[1]; 
+		medicalDoctorsList[0] = "SYSON,PEDRO";		
 		medicalDoctorsList[1] = "SYSON,PETER";
 		medicalDoctorsList[2] = "REJUSO,CHASTITYAMOR";
 		medicalDoctorsList[3] = "DELAPAZ,RODIL";
 		medicalDoctorsList[4] = "LASAM,HONESTO";
 		medicalDoctorsList[5] = "BALCE,GRACIACIELO";
 		medicalDoctorsList[6] = "ESPINOSA,JHONSEL";
+
+/*
+//	  medicalDoctorsList = new String[7]; //String[1]; 
+	  medicalDoctorsList = new String[1]; 
+
+//		medicalDoctorsList[0] = "SYSON,PEDRO";		
+//		medicalDoctorsList[0] = "SYSON,PETER";
+//		medicalDoctorsList[0] = "REJUSO,CHASTITYAMOR";	
+//		medicalDoctorsList[0] = "DELAPAZ,RODIL";
+//		medicalDoctorsList[0] = "LASAM,HONESTO";
+		medicalDoctorsList[0] = "BALCE,GRACIACIELO";
+//		medicalDoctorsList[0] = "ESPINOSA,JHONSEL";
+*/
 
 	  medicalDoctorsListMaxCount = medicalDoctorsList.length;
 
@@ -2329,7 +2342,7 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 					inputFilename = args[0].replaceAll(".txt","");
 
 				//System.out.println(">>"+inputFilename);				
-				//System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
+				System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
 
 					//edited by Mike, 20201024
 					inputFilename=inputFilename+medicalDoctorsList[i]+dateFormat.format(myDate)+".txt";	  
@@ -2343,7 +2356,9 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 			
 						String s;		
 						s=sc.nextLine();
-						System.out.println(s);
+					  
+					  //removed by Mike, 20201026
+//						System.out.println(s);
 						
 						//added by Mike, 20201024
 						JSONArray nestedJsonArray = new JSONArray(s);
@@ -2368,11 +2383,16 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 							columnValuesArray[0] = jo_inside.getInt("iQuantityTotalCount");
 
 							dateContainer.put(dateValuesArrayInt[iMonthYearCount], columnValuesArray);
-			
+						  
+						  //added by Mike, 20201026
+							System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));					
 						}
 						else {
 							//note: 0:iQuantityTotalCount
-							dateContainer.get(dateValuesArrayInt[iMonthYearCount])[0]+=jo_inside.getInt("iQuantityTotalCount");;
+							dateContainer.get(dateValuesArrayInt[iMonthYearCount])[0]+=jo_inside.getInt("iQuantityTotalCount");
+
+						System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));		
+							
 						}
 					}
 			}
