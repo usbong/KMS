@@ -1811,6 +1811,177 @@ class Browse_Model extends CI_Model
         $this->db->update('transaction', $data);		
 	}	
 
+	//added by Mike, 20201026
+	//add new transaction with the total for each item type
+	public function addVATBeforePayTransactionItemPurchase($patientId) 
+	{			
+		//added by Mike, 20200821
+		$this->load->library("session");
+		
+//		$ipAddress = $_SESSION["client_ip_address"];
+//		$machineAddress = $_SESSION["client_machine_address"];
+
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+//		if (($ipAddress=="") and ($machineAddress=="")) {
+		if (!isset($ipAddress) and !isset($machineAddress)) {
+			redirect('report/viewWebAddressList');
+		}
+		
+		//added by Mike, 20200916
+		//identify patient classification, e.g. SC, PWD
+		$this->db->select('notes');
+		$this->db->where('patient_id', $patientId);
+		$this->db->where('transaction_date', date('m/d/Y'));
+		$query = $this->db->get('transaction');		
+		$patientTransactionRowArray = $query->result_array();
+
+		$classification = "";
+
+		if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
+			$classification = "SC; ";
+		}
+		else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
+			$classification = "PWD; ";
+		}
+
+/*		
+		echo "patientTransactionRowArray[0]['notes']: ".$patientTransactionRowArray[0]['notes'];
+		echo "classification: ".$classification;
+*/		
+		//added by Mike, 20200605
+		//part 1
+		//edited by Mike, 20201026
+//		$this->db->select('t1.fee, t2.item_type_id'); //, item_quantity');
+		$this->db->select('t1.transaction_id, t1.fee, t2.item_type_id'); //, item_quantity');
+		$this->db->from('transaction as t1');
+		$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->where('t1.notes', "UNPAID");
+		$this->db->where('t1.transaction_date', date('m/d/Y'));
+		//added by Mike, 20200821
+		$this->db->where('t1.ip_address_id', $ipAddress);
+		$this->db->where('t1.machine_address_id', $machineAddress);
+				
+		$this->db->group_by('t1.transaction_id');
+		$query = $this->db->get('transaction');
+		$rowArray = $query->result_array();
+
+		$totalFeeMedicine = 0;
+		$totalFeeNonMedicine = 0;
+
+		//added by Mike, 20200610
+		//echo "count: ".count($rowArray);
+		$transactionQuantity = count($rowArray)+1; //start at 1
+		
+		
+		//edited by Mike, 20201026
+//		foreach ($rowArray as $rowValue) {
+		foreach ($rowArray as &$rowValue) {
+
+			//note: add VAT for non-medicine item only
+			
+			if ($rowValue['item_type_id']==1) { //medicine
+				//removed by Mike, 20201026
+				//$totalFeeMedicine = $totalFeeMedicine + $rowValue['fee'];								
+			}
+			else {
+				//non-medicine item
+				//add 12% VAT
+				$rowValue['fee'] = $rowValue['fee'] + $rowValue['fee']*0.12;
+				
+				echo "transaction_id:".$rowValue['transaction_id'];
+				
+				//removed by Mike, 20201026
+				//$totalFeeNonMedicine = $totalFeeNonMedicine + $rowValue['fee'];
+
+				//added by Mike, 20201026
+				$data = array(
+							'fee' => $rowValue['fee'],
+							'pas_fee' => $rowValue['fee'],
+						);
+/*
+				$this->db->where('notes',"UNPAID");
+				$this->db->where('transaction_date', date('m/d/Y'));
+				//added by Mike, 20200821
+				$this->db->where('ip_address_id', $ipAddress);
+				$this->db->where('machine_address_id', $machineAddress);
+*/
+				$this->db->where('transaction_id', $rowValue['transaction_id']);
+
+				$this->db->update('transaction', $data);
+
+
+			}		
+/*			echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
+			echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
+			echo ">";
+*/			
+		}
+		//added by Mike, 20201026
+		unset($rowValue);
+		
+/*		echo ">>>";
+		echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
+		echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
+*/
+		
+/* //removed by Mike, 20201026		
+		$data = array(
+					'patient_id' => 0,
+					'item_id' => 0,
+					'transaction_date' => date('m/d/Y'),
+					'medical_doctor_id' => 0,
+					'fee' => 0,
+					'med_fee' => $totalFeeMedicine,
+					'pas_fee' => $totalFeeNonMedicine,
+					'transaction_type_name' => "CASH",
+					'report_id' => 0,
+					//edited by Mike, 20200916
+//					'notes' => "PAID",
+					'notes' => $classification."PAID",
+					'transaction_quantity' => $transactionQuantity, //edited by Mike, 20200610
+					//added by Mike, 20200821
+					'ip_address_id' => $ipAddress,
+					'machine_address_id' => $machineAddress
+				);
+
+		$this->db->insert('transaction', $data);
+		$outputTransactionId = $this->db->insert_id();
+
+		//part 2
+		$data = array(
+					//edited by Mike, 20200916
+//					'notes' => "PAID",
+					'notes' => $classification."PAID",
+				);
+
+        $this->db->where('notes',"UNPAID");
+		$this->db->where('transaction_date', date('m/d/Y'));
+		//added by Mike, 20200821
+		$this->db->where('ip_address_id', $ipAddress);
+		$this->db->where('machine_address_id', $machineAddress);
+
+        $this->db->update('transaction', $data);
+		
+		//edited by Mike, 20200610
+		//return $outputTransactionId;
+		//edited by Mike, 20200616
+//		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
+		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
+		$this->db->where('transaction_id', $outputTransactionId);
+		//added by Mike, 20200821
+		$this->db->where('ip_address_id', $ipAddress);
+		$this->db->where('machine_address_id', $machineAddress);
+
+		$query = $this->db->get('transaction');		
+		$rowArray = $query->result_array();
+*/
+
+		return $rowArray[0];
+	}	
+
+
 	//added by Mike, 20200411; edited by Mike, 20200916
 	//add new transaction with the total for each item type
 	public function payTransactionItemPurchase($patientId) 
