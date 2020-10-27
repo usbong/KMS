@@ -1850,7 +1850,8 @@ class Browse_Model extends CI_Model
 		if (($classification=="SC; ") or ($classification=="PWD; ")) {			
 			echo "<font color='#FF0000'><b>PAALALA: NO VAT FOR PATIENTS CLASSIFIED AS SC and PWD. </b></font><br/>";
 
-			return "NoVAT";
+//			return null;
+			return "noVAT";			
 		}
 
 /*		
@@ -2028,7 +2029,8 @@ class Browse_Model extends CI_Model
 		if (($classification=="SC; ") or ($classification=="PWD; ")) {			
 			echo "<font color='#FF0000'><b>PAALALA: NO VAT FOR PATIENTS CLASSIFIED AS SC and PWD. </b></font><br/>";
 
-			return null;
+//			return null;
+			return "noVAT";
 		}
 
 /*		
@@ -2071,9 +2073,9 @@ class Browse_Model extends CI_Model
 				//$totalFeeMedicine = $totalFeeMedicine + $rowValue['fee'];								
 			}
 			else {
-				//TO-DO: -add: identify if SC/PWD classification
 				//non-medicine item
 				//less 12% VAT
+				//note: algebra; variables = containers whose value inside may vary
 				$rowValue['fee'] = $rowValue['fee'] / (1 + 0.12);
 				
 				//removed by Mike, 20201027
