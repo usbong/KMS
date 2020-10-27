@@ -1668,9 +1668,20 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 
 	//added by Mike, 20200411; edited by Mike, 20200615
-	public function viewItemNonMedicine($itemId)
+	//edited by Mike, 20201027
+//	public function viewItemNonMedicine($itemId)
+	public function viewItemNonMedicine($param)
 	{		
 //		$data['nameParam'] = $_POST[nameParam];
+
+		//added by Mike, 20201027
+		if (isset($param['itemId'])) {
+			$itemId=$param['itemId'];
+			$data['addedVAT']=$param['addedVAT']; //TRUE
+		}
+		else {
+			$itemId=$param;			
+		}
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -2206,9 +2217,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportPatientQueueAccounting', $data);
 	}
 
-	//added by Mike, 20201026
+	//added by Mike, 20201026; edited by Mike, 20201027
 	public function addVATBeforePayTransactionItemPurchase($itemTypeId, $itemId, $patientId)
 	{
+		//added by Mike, 20201027
+		$data['addedVAT'] = True;
+				
 /*
 		echo itemId: .$itemId;
 */		
@@ -2236,8 +2250,52 @@ class Browse extends CI_Controller { //MY_Controller {
 		//note: non-medicine item only
 			
 		$data['outputTransaction'] = $this->Browse_Model->addVATBeforePayTransactionItemPurchase($patientId);
+		
+		//edited by Mike, 20201027
+//		$this->viewItemNonMedicine($itemId);
+		$this->viewItemNonMedicine($data);
+	}		
 
-		$this->viewItemNonMedicine($itemId);
+	//added by Mike, 20201026; edited by Mike, 20201027
+	public function lessVATBeforePayTransactionItemPurchase($itemTypeId, $itemId, $patientId)
+	{
+		//added by Mike, 20201027
+		$data['addedVAT'] = False;
+				
+/*
+		echo itemId: .$itemId;
+*/		
+		$data['itemId'] = $itemId;
+//		$data['transactionId'] = $transactionId;
+		
+		//added by Mike, 20200616
+		$data['itemTypeId'] = $itemTypeId;
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+		//edited by Mike, 20200605
+		//$this->Browse_Model->payTransactionItemPurchase();
+		//$this->Browse_Model->payTransactionServiceAndItemPurchase();
+		//edited by Mike, 20200608
+		//$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
+
+		//note: non-medicine item only
+		//edited by Mike, 20201027
+/*			
+		$data['outputTransaction'] = $this->Browse_Model->addVATBeforePayTransactionItemPurchase($patientId);
+*/		
+		$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
+
+		//edited by Mike, 20201027
+//		$this->viewItemNonMedicine($itemId);
+		$this->viewItemNonMedicine($data);
 	}		
 		
 	//added by Mike, 20200411; edited by Mike, 20200608
