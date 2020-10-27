@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201026
+' @date updated: 20201027
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -235,9 +235,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #0088ff; <!--#93d151; lime green-->
 						}
 						
-						/*added by Mike, 20201013*/
 						.Button-addVAT:focus {
 							background-color: #0088ff; <!--#93d151; lime green-->
+						}
+
+						.Button-lessVAT {
+/*							padding: 8px 42px 8px 42px;
+*/
+							padding: 12px;
+							background-color: #ffe400;
+							font-weight: bold;
+							background-color: #ff1100; <!--#93d151; lime green-->
+							border: 2px dotted #ab9c7d;		
+							text-align: center
+							border-radius: 4px;
+
+							float: left;
+							margin-left: 4px;
+						}
+
+						.Button-lessVAT:hover {
+							background-color: #ff5500; <!--#93d151; lime green-->
+						}
+						
+						.Button-lessVAT:focus {
+							background-color: #ff5500; <!--#93d151; lime green-->
 						}
 						
 						input[type="checkbox"] {
@@ -554,6 +576,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//edited by Mike, 20200608
 			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
 			window.location.href = "<?php echo site_url('browse/addVATBeforePayTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
+		}	
+
+		//added by Mike, 20201027
+//		function myPopupFunctionPay(itemId) {				
+		function myPopupFunctionLessVAT(itemId, patientId) {				
+/*
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
+*/			
+			//edited by Mike, 20200608
+			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
+			window.location.href = "<?php echo site_url('browse/lessVATBeforePayTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
 		}	
 
 	  </script>
@@ -1073,9 +1106,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>						
 						<!-- added by Mike, 20201026 -->
 						<td>
-							<!-- TO-DO: -update: this -->
-							<!-- note: multiple button presses cause multiple +12% VAT -->
-							<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/> VAT</button>
+						<?php 
+							  if (isset($addedVAT) and ($addedVAT)) {
+						?>
+								<!-- TO-DO: -update: this -->
+								<!-- note: multiple button presses cause multiple +12% VAT -->
+								<button onclick="myPopupFunctionLessVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-lessVAT">LESS<br/>VAT</button>
+						<?php							
+							  }
+							  else {
+								  //TO-DO: NO VAT branch not executed; goes to LESS VAT
+								  if (isset($outputTransaction) and ($outputTransaction=="NoVAT")) {
+						?>							
+									<!-- TO-DO: -update: this -->
+									<!-- note: multiple button presses cause multiple +12% VAT -->
+									<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">NO<br/>VAT</button>							
+						<?php
+								  }
+								  else {
+						?>
+									<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/>VAT</button>						
+						<?php
+								  }
+							  }
+						?>
 						</td>						
 
 					  </tr>
