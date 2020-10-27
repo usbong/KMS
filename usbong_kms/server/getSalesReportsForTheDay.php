@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201026
+  @date updated: 20201027
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -57,7 +57,9 @@
 	//TO-DO: -reverify this
 	//edited by Mike, 20200902
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	//edited by Mike, 20201027
+//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -80,6 +82,9 @@
 			$iDexaQuantityTotalCount = 0; //added by Mike, 20200531
 			$iPrivateQuantityTotalCount = 0; //added by Mike, 20200531
 			$iNoChargeQuantityTotalCount = 0; //added by Mike, 20200531
+			
+			//added by Mike, 20201027
+			$iMedOnlyQuantityTotalCount = 0;				
 
 			foreach ($selectedMedicalDoctorResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
@@ -87,8 +92,20 @@
 /*				if ($value['fee'] !== "0.00") {
 */	
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
-					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
 
+					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+					
+					//added by Mike, 20201027
+					if (strpos($value['notes'],"MED ONLY")!==false) {
+						$iMedOnlyQuantityTotalCount = $iMedOnlyQuantityTotalCount + 1;
+					}
+					//f not NC and NET FEE=0, X-RAY=0, LAB=0, MINOR SET=0					
+					else if ((!strpos($value['notes'],"NC")!==false) and ($value['fee']==0) and ($value['x_ray_fee']==0) and ($value['lab_fee']==0)){
+						$iMedOnlyQuantityTotalCount = $iMedOnlyQuantityTotalCount + 1;
+					}
+					
+					
+					
 					//edited by Mike, 20201019
 					if (strpos($value['notes'],"PRIVATE")!==false) {
 						//removed by Mike, 20201019
@@ -132,7 +149,10 @@
 					//added by Mike, 20200531
 					"iDexaQuantityTotalCount" => $iDexaQuantityTotalCount,
 					"iPrivateQuantityTotalCount" => $iPrivateQuantityTotalCount,
-					"iNoChargeQuantityTotalCount" => $iNoChargeQuantityTotalCount
+					"iNoChargeQuantityTotalCount" => $iNoChargeQuantityTotalCount,
+					
+					//added by Mike, 20201027
+					"iMedOnlyQuantityTotalCount" => $iMedOnlyQuantityTotalCount					
 			);
 			$responses[] = $jsonResponse;
 			
