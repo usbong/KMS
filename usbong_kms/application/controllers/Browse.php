@@ -1683,6 +1683,14 @@ class Browse extends CI_Controller { //MY_Controller {
 			$itemId=$param;			
 		}
 		
+		//edited by Mike, 20201027
+		$data['noVAT'] = false;
+//		if (isset($param['noVAT'])) {
+		if (isset($param['outputTransaction']) and ($param['outputTransaction']=="noVAT")) {
+//			$data['noVAT']=$param['noVAT'];	
+			$data['noVAT']=$param['outputTransaction'];				
+		}
+		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
@@ -2247,10 +2255,19 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200608
 		//$outputTransactionId = $this->Browse_Model->payTransactionItemPurchase();
 
-		//note: non-medicine item only
-			
+		//note: non-medicine item only			
 		$data['outputTransaction'] = $this->Browse_Model->addVATBeforePayTransactionItemPurchase($patientId);
 		
+		if ($data['outputTransaction']==null) {
+			$data['addedVAT']=False;
+		}
+		
+/*		//removed by Mike, 20201027
+		$data['noVAT']=False;
+		if ($data['outputTransaction']=="noVAT") {
+			$data['noVAT']=True;
+		}
+*/		
 		//edited by Mike, 20201027
 //		$this->viewItemNonMedicine($itemId);
 		$this->viewItemNonMedicine($data);
@@ -2292,6 +2309,17 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['outputTransaction'] = $this->Browse_Model->addVATBeforePayTransactionItemPurchase($patientId);
 */		
 		$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
+
+		if ($data['outputTransaction']==null) {
+			$data['addedVAT']=False;
+		}
+
+/*		//removed by Mike, 20201027
+		$data['noVAT']=False;
+		if ($data['outputTransaction']=="noVAT") {
+			$data['noVAT']=True;
+		}
+*/
 
 		//edited by Mike, 20201027
 //		$this->viewItemNonMedicine($itemId);
