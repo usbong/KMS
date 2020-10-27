@@ -1107,7 +1107,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<!-- added by Mike, 20201026 -->
 						<td>
 						<?php 
-							  if (isset($addedVAT) and ($addedVAT)) {
+							  if ((isset($noVAT)) and ($noVAT)) {
+						?>
+									<button class="Button-addVAT">NO<br/>VAT</button>
+						<?php
+							  }
+							  else if (isset($addedVAT) and ($addedVAT)) {
 						?>
 								<!-- TO-DO: -update: this -->
 								<!-- note: multiple button presses cause multiple +12% VAT -->
@@ -1115,19 +1120,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<?php							
 							  }
 							  else {
-								  //TO-DO: NO VAT branch not executed; goes to LESS VAT
-								  if (isset($outputTransaction) and ($outputTransaction=="NoVAT")) {
-						?>							
-									<!-- TO-DO: -update: this -->
-									<!-- note: multiple button presses cause multiple +12% VAT -->
-									<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">NO<br/>VAT</button>							
-						<?php
-								  }
-								  else {
 						?>
 									<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/>VAT</button>						
 						<?php
-								  }
 							  }
 						?>
 						</td>						
