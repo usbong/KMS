@@ -15,7 +15,7 @@
  * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
  * @author: SYSON, MICHAEL B.
  * @date created: 20201023
- * @last updated: 20201026
+ * @last updated: 20201027
  *
  */
  
@@ -102,6 +102,8 @@ import utils.IncidenceNumberComparator; //added by Mike, 20190418
 ' 8) The documentation for the LevenshteinDistance can be viewed here:
 '   https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/similarity/LevenshteinDistance.html; last accessed: 20190123
 */ 
+
+//TO-DO: -delete: excess instructions
 
 public class generateMOSCSummaryReportDailyCount {	
 	private static boolean isInDebugMode = true; //edited by Mike, 20190131
@@ -309,7 +311,9 @@ public class generateMOSCSummaryReportDailyCount {
 	
 	//added by Mike, 20190415
 	private static int totalTreatmentCount = 0;
-	private static int totalConsultationCount = 0;
+	//edited by Mike, 20201027
+	//This is so that the computer does not write a zero (0) value for the month 1, i.e. January
+	private static int totalConsultationCount = -1; //0;
 	private static int totalProcedureCount = 0;		
 	private static int totalMedicalCertificateCount = 0;
 	
@@ -520,7 +524,15 @@ public class generateMOSCSummaryReportDailyCount {
 			//note that I moved these instructions here, so that if there is an error in the processing that the computer executes before these, the lists will not be blank
 			PrintWriter consultationCountListTempWriter = new PrintWriter("assets/transactions/consultationCountListTemp.txt", "UTF-8");	
 
-			processWriteOutputFileAssetsTransactionsCountList(consultationCountListTempWriter, CONSULTATION_FILE_TYPE);
+			//added by Mike, 20201027
+			//TO-DO: -add: "MOSC" keyword in temporary file
+			PrintWriter moscConsultationCountListTempWriter = new PrintWriter("assets/transactions/consultationCountListTemp.txt", "UTF-8");	
+
+
+			//edited by Mike, 20201027
+//			processWriteOutputFileAssetsTransactionsCountList(consultationCountListTempWriter, CONSULTATION_FILE_TYPE);
+			
+			processWriteOutputFileAssetsTransactionsCountList(moscConsultationCountListTempWriter, CONSULTATION_FILE_TYPE);
 			
 					
 /*	//removed by Mike, 20201023		
@@ -562,11 +574,12 @@ public class generateMOSCSummaryReportDailyCount {
 */
 
 			//edited by Mike, 20201026
+/*		//removed by Mike, 20201027
 			//TO-DO: -add: "MOSC" keyword in temporary file
 			PrintWriter moscConsultationCountListTempWriter = new PrintWriter("assets/transactions/consultationCountListTemp.txt", "UTF-8");	
 
 			processWriteOutputFileAssetsTransactionsCountList(moscConsultationCountListTempWriter, CONSULTATION_FILE_TYPE);	
-							
+*/							
 	}
 	
 	//added by Mike, 20201023
@@ -757,12 +770,18 @@ public class generateMOSCSummaryReportDailyCount {
 			
 			iYearKey = getYearOnlyAsInt(dateValuesArray[iDateValuesArrayIntCount]);
 
+/*	//removed by Mike, 20201027
 			if (dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])==null) {
 				//set default value to 0
 				consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=0;
 
+System.out.println(">>>>>>>>>>>>DITO: iYearKey: "+iYearKey+"; "+iDateValuesArrayIntCount);
+
+//consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex])
+
 				continue;
 			}
+*/
 					
 			//from Double type to Integer type
 //			System.out.println(">>iQuantityTotalCount: "+(int)dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
@@ -792,9 +811,37 @@ public class generateMOSCSummaryReportDailyCount {
 			
 //			consultationMonthlyStatisticsContainer.get(2020)[iDateValuesArrayIntCount]=totalConsultationCount;	
 			
-			//TO-DO: -update: 2020
-consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];
+			//added by Mike, 20201027
+			//TO-DO: -update: this
 			
+			//TO-DO: -update: 2020
+			
+/*			//removed by Mike, 20201027
+consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];
+*/
+
+/*
+			consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount];
+*/							
+			
+			  //added by Mike, 20201027
+			  int iMonthYearCount = iDateValuesArrayIntCount; //Integer.parseInt(myDateValuesArrayIntMonth.format(myDate))-1;
+
+/*		//removed by Mike, 20201027
+				//note: 0:iQuantityTotalCount
+				dateContainer.get(dateValuesArrayInt[iMonthYearCount])[0]=(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];
+*/
+
+				if (dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])!=null) {
+					System.out.println("hallo>>>>>>>> "+(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
+					
+					//overwrite value inside container
+					//overwrite only those values whose date is the year 2020-05 onwards
+					if ((iYearKey>=2020) && (iDateValuesArrayIntCount>=5)) {
+						consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0];	
+					}					
+				}
+				
 //			totalConsultationCount=0;
 			
 
@@ -848,7 +895,7 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 			double count = medicalDoctorContainer.get(key)[OUTPUT_HMO_COUNT_COLUMN] + medicalDoctorContainer.get(key)[OUTPUT_NON_HMO_COUNT_COLUMN];
 
 			//edited by Mike, 20190426
-/*			double newPatientReferralTransactionCount = medicalDoctorContainer.get(key)[OUTPUT_HMO_NEW_PATIENT_COUNT_COLUMN] + medicalDoctorContainer.get(key)[OUTPUT_NON_HMO_NEW_PATIENT_COUNT_COLUMN];
+/*			double newPatientReferralTransactionCount = medicalDoctorContainer.get(key)[OUTPUT_HMO_NEW_PATIENT_COUNT_COLUMN] + medicalDoctorContainer.get(key)[OUTPUT_NON_HMO_NEW_PATIENT_COUNT_COLUMN];onsultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex]
 */
 /*
 			double newPatientReferralTransactionCount = medicalDoctorContainer.get(key)[OUTPUT_CONSULTATION_HMO_NEW_PATIENT_COUNT_COLUMN] + medicalDoctorContainer.get(key)[OUTPUT_CONSULTATION_NON_HMO_NEW_PATIENT_COUNT_COLUMN];
@@ -2393,6 +2440,10 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 
 						System.out.println("iQuantityTotalCount: "+jo_inside.getInt("iQuantityTotalCount"));		
 							
+							//note:
+/*							consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]
+							dateContainer.get(dateValuesArrayInt[iMonthYearCount])[0]
+*/							
 						}
 					}
 			}
@@ -2854,10 +2905,12 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 */
 						//added by Mike, 20201026
 						//execute computer automation for May 2020 onwards
+/*	//removed by Mike, 20201027
 						if ((monthRowIndex<5) && (inputYear==2020)) {
+//						if ((monthRowIndex<3) && (inputYear==2020)) {
 						}
 						else {
-
+*/
 //							System.out.println("dateValuesArray: "+dateValuesArray[0]);
 												
 							//TO-DO: -update this to store the auto-calculated transaction count value
@@ -2906,9 +2959,10 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 							else {
 								s = s.concat("\t\t\t\t<b><span>"+transactionCount+"</span></b>\n");
 							}
+/*		//removed by Mike, 20201027							
 						//added by Mike, 20201026
 					  }
-
+*/
 						//removed by Mike, 20200213
 						//overwrite previous value							
 /*
@@ -4072,6 +4126,10 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 							break;
 						case CONSULTATION_FILE_TYPE:
 							consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = Integer.parseInt(inputMonthRowYearColumns[i+1]);				
+							
+						
+System.out.println(">>>>yearKey: "+yearKey+"; monthRowIndex: "+monthRowIndex);						System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex]);
+							
 							break;
 						default:// PROCEDURE_FILE_TYPE:
 							procedureMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = Integer.parseInt(inputMonthRowYearColumns[i+1]);
