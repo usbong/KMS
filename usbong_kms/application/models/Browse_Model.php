@@ -1846,6 +1846,13 @@ class Browse_Model extends CI_Model
 			$classification = "PWD; ";
 		}
 
+		//added by Mike, 20201027
+		if (($classification=="SC; ") or ($classification=="PWD; ")) {			
+			echo "<font color='#FF0000'><b>PAALALA: NO VAT FOR PATIENTS CLASSIFIED AS SC and PWD. </b></font><br/>";
+
+			return "NoVAT";
+		}
+
 /*		
 		echo "patientTransactionRowArray[0]['notes']: ".$patientTransactionRowArray[0]['notes'];
 		echo "classification: ".$classification;
@@ -1890,7 +1897,8 @@ class Browse_Model extends CI_Model
 				//add 12% VAT
 				$rowValue['fee'] = $rowValue['fee'] + $rowValue['fee']*0.12;
 				
-				echo "transaction_id:".$rowValue['transaction_id'];
+				//removed by Mike, 20201027
+//				echo "transaction_id:".$rowValue['transaction_id'];
 				
 				//removed by Mike, 20201026
 				//$totalFeeNonMedicine = $totalFeeNonMedicine + $rowValue['fee'];
@@ -1981,10 +1989,9 @@ class Browse_Model extends CI_Model
 		return $rowArray[0];
 	}	
 
-
-	//added by Mike, 20200411; edited by Mike, 20200916
+	//added by Mike, 20201027
 	//add new transaction with the total for each item type
-	public function payTransactionItemPurchase($patientId) 
+	public function lessVATBeforePayTransactionItemPurchase($patientId) 
 	{			
 		//added by Mike, 20200821
 		$this->load->library("session");
@@ -2015,6 +2022,132 @@ class Browse_Model extends CI_Model
 		}
 		else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
 			$classification = "PWD; ";
+		}
+
+		//added by Mike, 20201027
+		if (($classification=="SC; ") or ($classification=="PWD; ")) {			
+			echo "<font color='#FF0000'><b>PAALALA: NO VAT FOR PATIENTS CLASSIFIED AS SC and PWD. </b></font><br/>";
+
+			return null;
+		}
+
+/*		
+		echo "patientTransactionRowArray[0]['notes']: ".$patientTransactionRowArray[0]['notes'];
+		echo "classification: ".$classification;
+*/		
+		//added by Mike, 20200605
+		//part 1
+		//edited by Mike, 20201026
+//		$this->db->select('t1.fee, t2.item_type_id'); //, item_quantity');
+		$this->db->select('t1.transaction_id, t1.fee, t2.item_type_id'); //, item_quantity');
+		$this->db->from('transaction as t1');
+		$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');
+		$this->db->where('t1.notes', "UNPAID");
+		$this->db->where('t1.transaction_date', date('m/d/Y'));
+		//added by Mike, 20200821
+		$this->db->where('t1.ip_address_id', $ipAddress);
+		$this->db->where('t1.machine_address_id', $machineAddress);
+				
+		$this->db->group_by('t1.transaction_id');
+		$query = $this->db->get('transaction');
+		$rowArray = $query->result_array();
+
+		$totalFeeMedicine = 0;
+		$totalFeeNonMedicine = 0;
+
+		//added by Mike, 20200610
+		//echo "count: ".count($rowArray);
+		$transactionQuantity = count($rowArray)+1; //start at 1
+		
+		
+		//edited by Mike, 20201026
+//		foreach ($rowArray as $rowValue) {
+		foreach ($rowArray as &$rowValue) {
+
+			//note: add VAT for non-medicine item only
+			
+			if ($rowValue['item_type_id']==1) { //medicine
+				//removed by Mike, 20201026
+				//$totalFeeMedicine = $totalFeeMedicine + $rowValue['fee'];								
+			}
+			else {
+				//TO-DO: -add: identify if SC/PWD classification
+				//non-medicine item
+				//less 12% VAT
+				$rowValue['fee'] = $rowValue['fee'] / (1 + 0.12);
+				
+				//removed by Mike, 20201027
+//				echo "transaction_id:".$rowValue['transaction_id'];
+				
+				//removed by Mike, 20201026
+				//$totalFeeNonMedicine = $totalFeeNonMedicine + $rowValue['fee'];
+
+				//added by Mike, 20201026
+				$data = array(
+							'fee' => $rowValue['fee'],
+							'pas_fee' => $rowValue['fee'],
+						);
+/*
+				$this->db->where('notes',"UNPAID");
+				$this->db->where('transaction_date', date('m/d/Y'));
+				//added by Mike, 20200821
+				$this->db->where('ip_address_id', $ipAddress);
+				$this->db->where('machine_address_id', $machineAddress);
+*/
+				$this->db->where('transaction_id', $rowValue['transaction_id']);
+
+				$this->db->update('transaction', $data);
+
+
+			}		
+/*			echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
+			echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
+			echo ">";
+*/			
+		}
+		//added by Mike, 20201026
+		unset($rowValue);
+		
+		return $rowArray[0];
+	}	
+
+
+	//added by Mike, 20200411; edited by Mike, 20200916
+	//add new transaction with the total for each item type
+	public function payTransactionItemPurchase($patientId) 
+	{			
+		//added by Mike, 20200821
+		$this->load->library("session");
+		
+//		$ipAddress = $_SESSION["client_ip_address"];
+//		$machineAddress = $_SESSION["client_machine_address"];
+
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+//		if (($ipAddress=="") and ($machineAddress=="")) {
+		if (!isset($ipAddress) and !isset($machineAddress)) {
+			redirect('report/viewWebAddressList');
+		}
+		
+		//added by Mike, 20200916
+		//identify patient classification, e.g. SC, PWD
+		$this->db->select('notes');
+		$this->db->where('patient_id', $patientId);
+		$this->db->where('transaction_date', date('m/d/Y'));
+		$query = $this->db->get('transaction');		
+		$patientTransactionRowArray = $query->result_array();
+
+		$classification = "";
+		
+		//added by Mike, 20201027
+		if (isset($patientTransactionRowArray[0])) {
+			if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
+				$classification = "SC; ";
+			}
+			else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
+				$classification = "PWD; ";
+			}
 		}
 
 /*		
