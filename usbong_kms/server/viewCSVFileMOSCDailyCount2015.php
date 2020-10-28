@@ -76,7 +76,7 @@
 						}						
 
 						tr.rowEvenNumber {
-							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
+							background-color: #00DD88; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
 							border: 1pt solid #00ff00;		
 						}
 
@@ -92,6 +92,14 @@
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+						}						
+
+						td.columnGold
+						{
+							background-color: #ffff00; <!--#93d151; lime green-->
+							border: 1px dotted #ab9c7d;		
+							text-align: right;
+							font-weight: bold;
 						}						
 
 						td.columnBorderBottom
@@ -131,7 +139,7 @@
     /**/
     </style>
     <title>
-      STA. LUCIA HEALTH CARE CENTER (SLHCC)
+      MARIKINA ORTHOPEDIC SPECIALTY CLINIC (MOSC)
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -155,6 +163,7 @@
 	$filename="C:\\xampp\\htdocs\\usbong_kms\\kasangkapan\\phantomjs-2.1.1-windows\\bin\\output\\2015\\201505~201507.csv";
 
     echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC"."</b><br/>";
+    echo "<b>DAILY COUNT 2015"."</b><br/>";
 
 	echo "<table>";
 /*
@@ -217,6 +226,7 @@ echo "<br/>";
 				$cellValue = utf8_encode($data[$iColumnCount]);
 				
 				if (is_numeric($cellValue)) {
+/*					//removed by Mike, 20201028
 					if ((strpos($cellValue,"#")!==false)) {
 						//integer value
 					}						
@@ -235,10 +245,28 @@ echo "<br/>";
 						//output: 60.00
 						$cellValue = number_format($cellValue, 2, '.', ',');
 					}
-					echo "<td class='column' style='text-align:right'><b>".$cellValue."</b></td>";
+*/					
+					//edited by Mike, 20201028
+					//echo "<td class='column' style='text-align:right'><b>".$cellValue."</b></td>";
+					//GRAND TOTAL
+					//1 row before MONTH YEAR
+					if (($iColumnCount==7) and ($iRowCount%12==11)) {
+						echo "<td class='columnGold'>".$cellValue."</td>";
+					}
+					else {
+						echo "<td class='column' style='text-align:right'><b>".$cellValue."</b></td>";
+					}
 				}
 				else {
-					if ($iColumnCount==0) {
+					//MONTH YEAR
+					if (($iColumnCount==0) and ($iRowCount%12==0)){
+						echo "<td class='tableHeaderColumn' style='text-align:left'><b>".$cellValue."</b></td>";
+					}
+					//TOTAL
+					else if (($iColumnCount==7) and ($iRowCount%12==0)){
+						echo "<td class='column' style='text-align:left'><b>".$cellValue."</b></td>";
+					}
+					else if ($iColumnCount==0) {
 						echo "<td class='column' style='text-align:left'>".$cellValue."</td>";
 					}
 					else {
@@ -246,7 +274,13 @@ echo "<br/>";
 					}
 				}
 			}
-			echo '</tr><tr class="row">';
+			//added by Mike, 20201028
+			if ($iRowCount%2==0) { //even number row
+				echo '</tr><tr class="rowEvenNumber">';
+			}
+			else {
+				echo '</tr><tr class="row">';
+			}
 		  }
 		  echo '</tr>';
 		  

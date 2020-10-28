@@ -5,15 +5,14 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20201028
-
+  @date updated: 20201020
   Input:
   1) MySQL Database with X-Ray Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
   Output:
   1) X-Ray Price List that is viewable on a Computer Web Browser  
   
   Computer Web Browser Address (Example):
-  1) http://localhost/usbong_kms/server/viewCSVFile.php   
+  1) http://localhost/usbong_kms/server/viewXRayPriceList.php   
 -->
 <?php
 //defined('BASEPATH') OR exit('No direct script access allowed');
@@ -152,8 +151,10 @@
 
 	$mysqli->set_charset("utf8");
 	
-	$filename="C:\\xampp\\htdocs\\usbong_kms\\kasangkapan\\phantomjs-2.1.1-windows\\bin\\output\\2015\\201505~201507.csv";
+	$filename="C:\\Users\\Unit Member\\Documents\\Received Files\\UnpaidHMOTotalList2020.csv";
 
+
+    echo "<b>STA. LUCIA HEALTH CARE CENTER: ORTHO & PT UNIT"."</b><br/>";
     echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC"."</b><br/>";
 
 	echo "<table>";
