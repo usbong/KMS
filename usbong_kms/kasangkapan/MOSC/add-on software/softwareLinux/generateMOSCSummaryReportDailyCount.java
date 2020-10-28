@@ -15,7 +15,7 @@
  * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
  * @author: SYSON, MICHAEL B.
  * @date created: 20201023
- * @last updated: 20201027
+ * @last updated: 20201028
  *
  */
  
@@ -2892,7 +2892,16 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 												
 						s = s.concat("\t\t\t<!-- Column 2 -->\n");
 						//TO-DO: -update: this to resolve the issue in the Consultation output HTML file, where setting the width to 4% does not equal with the length of 3 digit characters
-						s = s.concat("\t\t\t<td width='4%'>\n"); //edited by Mike, 20190523
+			
+						//edited by Mike, 20201028
+//						s = s.concat("\t\t\t<td width='4%'>\n"); //edited by Mike, 20190523
+
+						if (transactionCount!=-1) {
+							s = s.concat("\t\t\t<td class='countValue' width='4%'>\n");
+						}
+						else {
+							s = s.concat("\t\t\t<td width='4%'>\n");
+						}
 
 						//edited by Mike, 20190522
 						String inputMonthString = dateValuesArray[0].split("-")[0].toUpperCase(); //MAR
@@ -2934,6 +2943,9 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 										treatmentMonthlyStatisticsContainer.get(yearKey)[monthRowIndex] = transactionCount;										
 										break;
 									case CONSULTATION_FILE_TYPE:
+									//added by Mike, 20201028
+									//note: this branch not reached 
+									
 										s = s.concat("\t\t\t\t<b><span>"+totalConsultationCount+"</span></b>\n");
 
 										//added by Mike, 20190621
@@ -2957,7 +2969,13 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 							}
 							//added by Mike, 20200213
 							else {
-								s = s.concat("\t\t\t\t<b><span>"+transactionCount+"</span></b>\n");
+								//edited by Mike, 20201028
+//								String sTransactionCount = NumberFormat.getNumberInstance(Locale.US).format(transactionCount);
+								String sTransactionCount =String.format("%,d", transactionCount); 
+								
+//								s = s.concat("\t\t\t\t<b><span>"+transactionCount+"</span></b>\n");
+								s = s.concat("\t\t\t\t<b><span>"+sTransactionCount+"</span></b>\n");
+
 							}
 /*		//removed by Mike, 20201027							
 						//added by Mike, 20201026
