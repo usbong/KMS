@@ -8,7 +8,7 @@ REM Unless required by applicable law or agreed to in writing, software distribu
 REM
 REM @author: Michael Syson
 REM @date created: 20201016
-REM @date updated: 20201018
+REM @date updated: 20201028
 REM
 REM Reference:
 REM 1) https://phantomjs.org/; last accessed: 20200724
@@ -17,6 +17,9 @@ REM
 
 REM added by Mike, 20201018
 phantomjs saveWebPageAsImageFile.js getSalesReportsForTheDay -s -noon
+
+REM added by Mike, 20201028
+phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s -noon
 
 REM edited by Mike, 20201018
 REM phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s -noon
