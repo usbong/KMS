@@ -403,12 +403,18 @@ class Report_Model extends CI_Model
 		//$this->db->where('t2.fee!=',0);
 		//$this->db->and_not_like('t2.notes',"NC");
 		$this->db->where('t2.notes!=',"IN-QUEUE; PAID");
-
+		
 		//added by Mike, 20200828
 		$this->db->where('t2.ip_address_id!=',"");
 		$this->db->where('t2.machine_address_id!=',"");
 
 		$this->db->like('t3.medical_doctor_name', $param['medicalDoctorName']);
+
+		//added by Mike, 20201031
+		//includes NON-MED
+		//no need to add % when using CodeIgniter 3's not_like(...) command
+		$this->db->not_like('t2.notes',"MED ONLY");
+
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
 		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
 
