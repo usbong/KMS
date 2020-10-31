@@ -253,6 +253,10 @@ class Report_Model extends CI_Model
 		//added by Mike, 202005029
 		$this->db->where('t1.patient_name!=', 'NONE');
 
+		//added by Mike, 20201031
+		//includes NON-MED
+		//no need to add % when using CodeIgniter 3's not_like(...) command
+		$this->db->not_like('t2.notes',"MED ONLY");
 
 //		$this->db->like('t2.notes', "NEW; NONE YET");
 //		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
