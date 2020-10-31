@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201027
+  @date updated: 20201031
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -561,7 +561,11 @@
 //			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 			//edited by Mike, 20200910
 //			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+			//edited by Mike, 20201031
+/*
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+*/
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
 			{
 				echo "--<br />";
 
@@ -785,7 +789,11 @@
 	//TO-DO: -reverify this
 	//edited by Mike, 20200902
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	//edited by Mike, 20201031
+/*
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+*/
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
