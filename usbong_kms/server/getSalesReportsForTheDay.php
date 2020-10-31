@@ -59,7 +59,12 @@
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	//edited by Mike, 20201027
 //	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	//edited by Mike, 20201031
+/*
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+*/
+	//TO-DO: -add: med and non-med only counts in other Medical Doctors report
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and transaction_quantity!='0' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -84,7 +89,9 @@
 			$iNoChargeQuantityTotalCount = 0; //added by Mike, 20200531
 			
 			//added by Mike, 20201027
-			$iMedOnlyQuantityTotalCount = 0;				
+			$iMedOnlyQuantityTotalCount = 0;	
+			//added by Mike, 20201031
+			$iNonMedOnlyQuantityTotalCount = 0;	
 
 			foreach ($selectedMedicalDoctorResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
@@ -95,16 +102,27 @@
 
 					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
 					
-					//added by Mike, 20201027
-					if (strpos($value['notes'],"MED ONLY")!==false) {
-						$iMedOnlyQuantityTotalCount = $iMedOnlyQuantityTotalCount + 1;
+					//added by Mike, 20201027; edited by Mike, 20201031
+					//note: order/sequence is important
+					//if not NC and NET FEE=0, X-RAY=0, LAB=0, MINOR SET=0					
+					if ((!strpos($value['notes'],"NC")!==false) and ($value['fee']==0) and ($value['x_ray_fee']==0) and ($value['lab_fee']==0)) {
+						//med_fee not 0
+						if ($value['med_fee']!=0) { //edited by Mike, 20201031
+							$iMedOnlyQuantityTotalCount = $iMedOnlyQuantityTotalCount + 1;
+						}
+						//pas_fee not 0
+						if ($value['pas_fee']!=0) { //edited by Mike, 20201031
+							$iNonMedOnlyQuantityTotalCount = $iNonMedOnlyQuantityTotalCount + 1;
+						}
 					}
-					//f not NC and NET FEE=0, X-RAY=0, LAB=0, MINOR SET=0					
-					else if ((!strpos($value['notes'],"NC")!==false) and ($value['fee']==0) and ($value['x_ray_fee']==0) and ($value['lab_fee']==0)){
-						$iMedOnlyQuantityTotalCount = $iMedOnlyQuantityTotalCount + 1;
+					else {
+						if (strpos($value['notes'],"NON-MED ONLY")!==false) {
+							$iNonMedOnlyQuantityTotalCount = $iNonMedOnlyQuantityTotalCount + 1;
+						}
+						else if (strpos($value['notes'],"MED ONLY")!==false) {
+							$iMedOnlyQuantityTotalCount = $iMedOnlyQuantityTotalCount + 1;
+						}
 					}
-					
-					
 					
 					//edited by Mike, 20201019
 					if (strpos($value['notes'],"PRIVATE")!==false) {
@@ -152,7 +170,9 @@
 					"iNoChargeQuantityTotalCount" => $iNoChargeQuantityTotalCount,
 					
 					//added by Mike, 20201027
-					"iMedOnlyQuantityTotalCount" => $iMedOnlyQuantityTotalCount					
+					"iMedOnlyQuantityTotalCount" => $iMedOnlyQuantityTotalCount,
+					//added by Mike, 20201031
+					"iNonMedOnlyQuantityTotalCount" => $iNonMedOnlyQuantityTotalCount		
 			);
 			$responses[] = $jsonResponse;
 			
