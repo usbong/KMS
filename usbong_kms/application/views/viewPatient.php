@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201013
+' @date updated: 20201103
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -426,6 +426,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 			//added by Mike, 20200526
 			notes = notes.toUpperCase();
+
+			//added by Mike, 20201103
+			//0 = ANY; SUMMARY = 3
+			if ((medicalDoctorId==0) || (medicalDoctorId==3)) {
+				alert("Pumili ng Medical Doctor na hindi \"ANY\" o \"SUMMARY\".");
+				return;
+			}
 	
 //			alert("after: " + notes);
 			//added by Mike, 20200523
