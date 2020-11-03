@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201013
+' @date updated: 20201103
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -515,6 +515,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200331; edited by Mike, 20200608
 		//function myPopupFunctionPay(itemId) {				
 		function myPopupFunctionPay(itemId, patientId) {				
+			//added by Mike, 20201103
+			//verified: if a patient id already exists in the cart list
+			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
+
+			if (!hasPatientInCartList) {
+				alert("Kailangang may isang (1) pasyente sa bawat Cart List.");
+				return;
+			}
+
+
 /*
 			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
 */
@@ -849,6 +859,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			//added by Mike, 20200401
 			echo '<h3>Cart List</h3>';
+
+			//added by Mike, 20201103
+			$hasPatientInCartListParamValue = False;
+
 			$cartListResultCount = 0;
 			
 			if ((isset($cartListResult)) and ($cartListResult!=False)) {
@@ -902,6 +916,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a href='<?php 
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									echo site_url('browse/viewPatient/'.$cartValue['patient_id']);
+									
+									//added by Mike, 20201103
+									$hasPatientInCartListParamValue = True;
 								}
 								else {
 									if ($cartValue['item_type_id']==1) { //1 = MEDICINE
@@ -1050,7 +1067,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php
 				echo "</table>";				
 			}
-			
+?>
+			<!-- added by Mike, 20201103 -->
+			<input type="hidden" id="hasPatientInCartListParam" value="<?php echo $hasPatientInCartListParamValue;?>">
+<?php			
 			echo "<br/>";
 
 			echo '<h3>Item Purchased History</h3>';

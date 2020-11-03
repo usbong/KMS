@@ -536,6 +536,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 		function myPopupFunctionPay(medicalDoctorId,patientId) {				
 			//alert("hallo");
+
+			//added by Mike, 20201103
+			//verified: if a patient id already exists in the cart list
+			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
+	
+			if (!hasPatientInCartList) {
+				alert("Kailangang may isang (1) pasyente sa bawat Cart List.");
+				return;
+			}
 			
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
