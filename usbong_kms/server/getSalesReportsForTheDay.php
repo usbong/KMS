@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201031
+  @date updated: 20201103
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -14,6 +14,17 @@
   Output:
   1) Automatically connect to the DB and get the sales reports for the day from the DB
   --> Afterwards, write the reports as .txt text in the computer server's set location
+  
+  Note:
+  1) Command: getSalesReportForTheDay.php
+    --> output includes: MED and NON-MED ONLY in total
+    --> Example:
+    --> [{"iFeeTotalCount":1200,"iQuantityTotalCount":4,"iNetFeeTotalCount":1200,"iDexaQuantityTotalCount":0,"iPrivateQuantityTotalCount":0,"iNoChargeQuantityTotalCount":0,"iMedOnlyQuantityTotalCount":1,"iNonMedOnlyQuantityTotalCount":0}]
+    --> iQuantityTotalCount = 4
+	--> Additional Note:
+	--> 1.1) Command: http://mosc-accounting/usbong_kms/index.php/report/viewpayslipwebfor/Pedro
+	--> output does not include: MED and NON-MED ONLY in total
+    --> iQuantityTotalCount = 3
 */
 	// connect to the database
 	include('usbong-kms-connect.php');
