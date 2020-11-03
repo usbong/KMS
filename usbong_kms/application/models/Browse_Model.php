@@ -315,6 +315,48 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20201104
+	public function getSnackDetailsListViaName($param) 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+
+		$this->db->from('item as t1');
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->group_by('t2.inventory_id');
+		
+		//added by Mike, 20200521
+		$this->db->where('t1.item_id!=', 0); //0 = NONE
+
+		$this->db->where('t1.item_type_id', 3); //3 = snack//2 = Non-medicine
+
+		$this->db->like('t1.item_name', $param['nameParam']);
+		
+		//added by Mike, 20200607
+		$this->db->order_by('t1.item_name', 'ASC');
+		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
+		
+		//added by Mike, 20200527
+		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
+		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+		//edited by Mike, 20200709
+//		$this->db->limit(8);//1);
+		//removed by Mike, 20200819
+//		$this->db->limit(14);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}	
+
 	//edited by Mike, 20200615
 	public function getNonMedicineDetailsListViaNamePrev($param) 
 	{		
@@ -1893,6 +1935,9 @@ class Browse_Model extends CI_Model
 				//removed by Mike, 20201026
 				//$totalFeeMedicine = $totalFeeMedicine + $rowValue['fee'];								
 			}
+			//added by Mike, 20201104
+			else if ($rowValue['item_type_id']==3) { //snack
+			}
 			else {
 				//non-medicine item
 				//add 12% VAT
@@ -2071,6 +2116,9 @@ class Browse_Model extends CI_Model
 			if ($rowValue['item_type_id']==1) { //medicine
 				//removed by Mike, 20201026
 				//$totalFeeMedicine = $totalFeeMedicine + $rowValue['fee'];								
+			}
+			//added by Mike, 20201104
+			else if ($rowValue['item_type_id']==3) { //snack
 			}
 			else {
 				//non-medicine item
