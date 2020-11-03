@@ -31,9 +31,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 11pt;
-							
+
 							/* edited by Mike, 20201001 */
-							/* TO-DO: -add: auto-identify if Tablet PC */							
+							/* TO-DO: -add: auto-identify if Tablet PC */
 							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							width: 1000px
                         }
@@ -95,6 +95,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}
 						
+						span.alertSpan {
+							color: red;
+							font-weight: bold;
+						}
+						
 						table.search-result
 						{
 <!--							border: 1px solid #ab9c7d;		
@@ -126,14 +131,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left
 						}						
 
-						td.columnVat
-						{
-							font-weight: bold;
-							background-color: #0088ff; <!--#93d151; lime green-->
-							border: 2px dotted #ab9c7d;		
-							text-align: center
-						}
-
 						td.columnTableHeader
 						{
 							font-weight: bold;
@@ -141,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-						}						
+						}		
 
 						td.columnTableHeaderFee
 						{
@@ -152,6 +149,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							width: 13%;
 						}		
+
 						
 						td.imageColumn
 						{
@@ -209,62 +207,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase:hover {
 							background-color: #d4be00;
 						}
-						
+
 						/*added by Mike, 20201013*/
 						.Button-purchase:focus {
 							background-color: #d4be00;
 						}
-
-
-						.Button-addVAT {
-/*							padding: 8px 42px 8px 42px;
-*/
-							padding: 12px;
-							background-color: #ffe400;
-							font-weight: bold;
-							background-color: #00aaff; <!--#93d151; lime green-->
-							border: 2px dotted #ab9c7d;		
-							text-align: center
-							border-radius: 4px;
-
-							float: left;
-							margin-left: 4px;
-						}
-
-						.Button-addVAT:hover {
-							background-color: #0088ff; <!--#93d151; lime green-->
-						}
-						
-						.Button-addVAT:focus {
-							background-color: #0088ff; <!--#93d151; lime green-->
-						}
-
-						.Button-lessVAT {
-/*							padding: 8px 42px 8px 42px;
-*/
-							padding: 12px;
-							background-color: #ffe400;
-							font-weight: bold;
-							background-color: #ff1100; <!--#93d151; lime green-->
-							border: 2px dotted #ab9c7d;		
-							text-align: center
-							border-radius: 4px;
-
-							float: left;
-							margin-left: 4px;
-						}
-
-						.Button-lessVAT:hover {
-							background-color: #ff5500; <!--#93d151; lime green-->
-						}
-						
-						.Button-lessVAT:focus {
-							background-color: #ff5500; <!--#93d151; lime green-->
-						}
-						
-						input[type="checkbox"] {
-							transform: scale(1.5);
-						}						
 
         /*------------------*/
         /* Modal            */
@@ -288,14 +235,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     /**/
     </style>
     <title>
-      Search Non-medicine
+      Search Snack
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
     </style>
   </head>
 	  <script>
-		//added by Mike, 20200613
+		//added by Mike, 20200612
 		function onLoad() {
 			document.body.onkeydown = function(e){
 				//alert(e.keyCode);
@@ -310,7 +257,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 			};		
 		}	  
-
+	  
 		function copyText(iCount){
 //			alert("hello"+iCount);
 	 
@@ -411,19 +358,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  }
 */
 
-		//added by Mike, 20200329; edited by Mike, 20200911
+		//added by Mike, 20200329; edited by Mike, 20200414
 //		function myPopupFunction() {				
 		function myPopupFunction(itemId) {				
 			var quantity = document.getElementById("quantityParam").value;
 			var fee = document.getElementById("feeParam").value;
-			
-			//added by Mike, 20200911
-			var vatCheckedBox = document.getElementById("vatCheckBoxParam");
-			
-			if (vatCheckedBox.checked) {
-				numericalFee = eval(fee)
-				fee = numericalFee + numericalFee*.12
-			}
+			//added by Mike, 20200504
+			var resultQuantityInStockNow  = document.getElementById("resultQuantityInStockNowParam").value;
+
+//			alert("quantity: " + quantity);
+//			alert("fee: " + fee);
+//			alert("resultQuantityInStockNow: " + resultQuantityInStockNow);
+
 /*
 			var product_id = document.getElementById("product_idParam").value;
 			var customer_id = document.getElementById("customer_idParam").value;
@@ -436,6 +382,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
 */
+
 			//added by Mike, 20200419
 			if (quantity==0) {	
 			  alert("Kailangang hindi zero (0) ang QUANTITY.");
@@ -447,7 +394,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  alert("Kailangang hindi zero (0) ang FEE.");
 			  return;
 			}
-			
+
 			//do the following only if quantity is a Number, i.e. not NaN
 			if ((!isNaN(quantity)) && (!isNaN(fee))) {	
 /*
@@ -478,13 +425,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				alert("quantity: " + quantity);
 				window.location.href = "<?php echo site_url('browse/searchMedicine/');?>";
 */
-				//added by Mike, 20200330; edited by Mike, 20200411
-/*				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
+/*
+				//added by Mike, 20200330
+				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
 */
+				//added by Mike, 20200504
+				if (resultQuantityInStockNow == 0) { //zero
+					alert("Zero (0) o wala na tayo nito sa kasalukuyan.");
+					return;
+				}
 
-				//2 = Non-medicine
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"');?>";
+				if (resultQuantityInStockNow - quantity < 0) { //negative number
+					alert(resultQuantityInStockNow + " lamang ang mayroon tayo sa kasalukuyan.");
+					return;
+				}
 
+				//added by Mike, 20200330; edited by Mike, 20201104
+				//1 = Medicine; 3 = Snack
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/3/"+itemId+"/"+quantity+"/"+fee+"');?>";
 
 /*
 				//added by Mike, 20170627
@@ -532,32 +490,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 		}	
 
-		//added by Mike, 20200331; edited by Mike, 20200411
+		//added by Mike, 20200331
+		function myPopupFunctionDelete(itemId,transactionId) {				
 /*
-		function myPopupFunctionDelete(itemId,transactionId) {				
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
-		}	
-*/
-		function myPopupFunctionDelete(itemId,transactionId) {				
-			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/2/"+itemId +"/"+transactionId+"');?>";
+*/			
+			//edited by Mike, 20201104
+			//3 = snack
+			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/3/"+itemId +"/"+transactionId+"');?>";
+
 		}	
 
 		//added by Mike, 20200626
 		//re-verify: this
 		//we do not use this now
 		function myPopupFunctionDeleteAllInCart(itemId,transactionId) {				
-			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchaseAllInCart/2/"+itemId +"/"+transactionId+"');?>";
-		}	
-
-
-		//added by Mike, 20200331; edited by Mike, 20200411
 /*
-		function myPopupFunctionPay(itemId) {				
-			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
+			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+*/			
+			//edited by Mike, 20201104
+			//3 = snack
+			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchaseAllInCart/3/"+itemId +"/"+transactionId+"');?>";
+
 		}	
-*/
-		//edited by Mike, 20200608
-//		function myPopupFunctionPay(itemId) {				
+
+		//added by Mike, 20200331; edited by Mike, 20200608
+		//function myPopupFunctionPay(itemId) {				
 		function myPopupFunctionPay(itemId, patientId) {				
 			//added by Mike, 20201103
 			//verified: if a patient id already exists in the cart list
@@ -570,33 +528,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 /*
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
-*/			
+			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
+*/
 			//edited by Mike, 20200608
-			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
-		}	
-
-		//added by Mike, 20201026
-//		function myPopupFunctionPay(itemId) {				
-		function myPopupFunctionAddVAT(itemId, patientId) {				
-/*
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
-*/			
-			//edited by Mike, 20200608
-			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
-			window.location.href = "<?php echo site_url('browse/addVATBeforePayTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
-		}	
-
-		//added by Mike, 20201027
-//		function myPopupFunctionPay(itemId) {				
-		function myPopupFunctionLessVAT(itemId, patientId) {				
-/*
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/"+itemId+"');?>";
-*/			
-			//edited by Mike, 20200608
-			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
-			window.location.href = "<?php echo site_url('browse/lessVATBeforePayTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
+			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/1/"+itemId+"');?>";
+			//3 = snack
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/3/"+itemId+"/"+patientId+"');?>";
 		}	
 
 	  </script>
@@ -610,14 +547,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Search Non-medicine
+				Search Snack
 			</h2>		
 		</td>
 	  </tr>
 	</table>
 	<br/>
 	<!-- Form -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmNonMedicine')?>">
+	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmSnack')?>">
 		<?php
 			$itemCounter = 1;
 		?>
@@ -657,6 +594,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//get only name strings from array 
 		if (isset($result)) {			
 			if ($result!=null) {		
+
 /*
 				$resultCount = count($result);
 				if ($resultCount==1) {
@@ -696,43 +634,56 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
 							?>
-						</td>
+						</td>						
 					  </tr>
 <?php				
 				$iCount = 1;
 /*				foreach ($result as $value) {
 */	
+				//edited by Mike, 20200501
+//				$value = $result[0];
 
-				$value = $result[0];
-				if (isset($resultItem[0])) {
-					$value = $resultItem[0];
-				}				
+//				if (isset($resultItem)) {
 
+					//edited by Mike, 20200527
+					//edited again by Mike, 20200607
+//					$value = $resultItem[sizeof($resultItem)-1];
+					//$value = $resultItem[0];
+//					$value = $resultItem;
+
+					//edited by Mike, 20200608
+					//$value = $resultItem[0];
+					
+					//edited by Mike, 20200803
+					$value = $result[0];
+					
+					if (isset($resultItem[0])) {
+						$value = $resultItem[0];
+					}
+
+//				}
 		?>				
 		
 					  <tr class="row">
 						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+							<a href='<?php echo site_url('browse/viewItemSnack/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
-								//edited by Mike, 20200715
-								//echo $value['item_name'];
-								echo strtoupper($value['item_name']);
+								echo $value['item_name'];
 				?>		
 								</div>								
 							</a>
 						</td>
-						
-						<td class ="column">				
-								<!-- added by Mike, 20200618 -->							
+						<td class ="column">	
+								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->							
 								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 
-									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
+									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {										
 										echo 9999;
 									} 
 									else {
 										//added by Mike, 20200618
 										//echo $value['resultQuantityInStockNow'];
-										
+																				
 										if (isset($value['resultQuantityInStockNow'])) {
 											echo $value['resultQuantityInStockNow'];
 										}
@@ -740,7 +691,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											echo 0;
 										}										
 									}
-								?>">						
+								?>">
 
 								<div id="quantityInStockId<?php echo $iCount?>">
 							<?php
@@ -753,33 +704,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo $value['quantity_in_stock'];
 								}
 */
-/*
-								//edited by Mike, 20200414; edited by Mike, 20200414
-								if (($resultQuantityInStockNow<0)) {
-									echo 9999;
-								}
-								else {
-									echo $resultQuantityInStockNow;
-								}								
-*/
-								//removed by Mike, 20200615
-								//$resultQuantityInStockNow = -1;
-
-								//added by Mike, 20200615								
+								//added by Mike, 20200501; edited by Mike, 20200608
+								$resultQuantityInStockNow = -1;
 								if (isset($value['resultQuantityInStockNow'])) {
 									$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
 								}
-																
+								
 								//added by Mike, 20200615
 								if ($value['quantity_in_stock']=="") {
-									//edited by Mike, 20200615
-//									echo "0 / 0";
-									echo 9999;
+									echo "0 / 0";
 								}
-/*								//edited by Mike, 20200803
-								//edited by Mike, 20200411; edited by Mike, 20200615
+								//edited by Mike, 20200411; edited by Mike, 20200713
+/*
 								else if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {
-									echo 9999;
+									//echo 9999;
+									echo "0 / ".$value['quantity_in_stock'];
 								}
 */								
 								//added by Mike, 20200803
@@ -790,20 +729,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else if ($resultQuantityInStockNow<0) {
 									//edited by Mike, 20200723
 									//echo "0 / ".$value['quantity_in_stock'];
-
-/*									//removed by Mike, 20200803									
+									
 									if (strpos($value['item_name'], "*")!==false) {
 										//TO-DO: -update: this to use actual count
 										echo 9999;
 									}
 									else {
-*/										
 										//edited by Mike, 20200803
 										//echo "0 / ".$value['quantity_in_stock'];
 										echo "0";
-/*
 									}
-*/									
 								}
 								else {
 //									echo $resultQuantityInStockNow;
@@ -814,7 +749,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
+								<div id="itemExpirationId<?php echo $iCount?>">
 							<?php
 								//echo $value['expiration_date'];
 
@@ -822,24 +757,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 									if ($value['quantity_in_stock']==-1) {
 										echo "UNKNOWN";
-									}
+									}									
+									//added by Mike, 20200614
+									else if ($value['quantity_in_stock']=="") {
+										echo "UNKNOWN";
+									}									
 									else {
 										echo "NONE";
 									}
 								}
 								else {
+									//edited by Mike, 20200504
+									//echo $value['expiration_date'];
+									if ($value['expiration_date'] <= date("Y-m-d")) {
+										echo '<span class="alertSpan">';
+									}
+									else {
+										echo '<span>';
+									}
 									echo $value['expiration_date'];
+									echo '</span>';
 								}
 							?>
 								</div>
 						</td>						
-						<td class ="column">
+						<td class ="column">		
+								<!-- edited by Mike, 20200912 
+								<input type="hidden" id="feeParam" value="<?php echo $value['item_price']?>">
+								</input>
+-->								
+								<input type="hidden" value="<?php echo $value['item_price']?>">
+								</input>
+					
 								<div id="itemPriceId<?php echo $iCount?>">
 							<?php
 								echo $value['item_price'];
 							?>
 								</div>
 						</td>
+						<!-- added by Mike, 20200912 -->
 						<td class ="column">		
 							<!-- edited by Mike, 20200611 -->
 							<!-- increased number of digits for the fee -->
@@ -881,13 +837,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase">BUY</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
-						<!-- added by Mike, 20200911 -->
-						</td>		
-						<td class="columnVat">		
-							<label>+12%<br/>VAT</label>
-							<input type="checkbox" id="vatCheckBoxParam">
-						</td>
-						
+						</td>						
 					  </tr>
 		<?php				
 					$iCount++;		
@@ -947,17 +897,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 				$iCount = 1;
 				$cartFeeTotal = 0;
-				foreach ($cartListResult as $cartValue) {
+				foreach ($cartListResult as $cartValue) { 
 /*	
 				$value = $result[0];
 */				
-
 				
 				if ($cartValue['patient_id']!=0) {
 					$patientId = $cartValue['patient_id'];
 				}
-				
-//				echo "patientId: ".$patientId;
 		?>				
 		
 					  <tr class="row">
@@ -969,16 +916,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>								
 						</td>
 						<td class ="column">				
-								<a href='<?php 
+							<a href='<?php 
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									echo site_url('browse/viewPatient/'.$cartValue['patient_id']);
-
+									
 									//added by Mike, 20201103
 									$hasPatientInCartListParamValue = True;
 								}
 								else {
 									if ($cartValue['item_type_id']==1) { //1 = MEDICINE
 										echo site_url('browse/viewItemMedicine/'.$cartValue['item_id']);
+									}
+									//added by Mike, 20201104
+									if ($cartValue['item_type_id']==3) { //3 = SNACK
+										echo site_url('browse/viewItemSnack/'.$cartValue['item_id']);
 									}
 									else if ($cartValue['item_type_id']==2) { //2 = NON-MEDICINE
 										echo site_url('browse/viewItemNonMedicine/'.$cartValue['item_id']);
@@ -994,14 +945,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo str_replace("�","Ñ",$cartValue['patient_name']);
 								}
 								else {
-									//edited by Mike, 20200715
-									//echo $cartValue['item_name'];
-									echo strtoupper($cartValue['item_name']);
+									echo $cartValue['item_name'];
 								}
 				?>		
 								</div>								
 							</a>
-					</td>
+						</td>
 						<td class ="columnFee">				
 								<div id="cartItemPriceId<?php echo $iCount?>">
 							<?php
@@ -1032,19 +981,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnFee">				
 								<div id="cartItemQuantityId<?php echo $iCount?>">
 							<?php
-//								echo $cartValue['fee']/$cartValue['item_price'];
-//								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
-								//edited by Mike, 20200415
-								//echo floor(($cartValue['fee']/$cartValue['fee']*100)/100);							
-/*								
-								if ($cartValue['fee_quantity']==0) {
-									echo 1;
+/*							
+								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+									$iQuantity =  1;
 								}
 								else {
+	//								echo $cartValue['fee']/$cartValue['item_price'];
+									//edited by Mike, 20200501
+	//								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
 									echo $cartValue['fee_quantity'];
-								}
-*/								
+								}							
+*/
 								echo $iQuantity;
+
 							?>
 								</div>
 						</td>
@@ -1059,7 +1008,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//edited by Mike, 20200519
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									echo number_format($patientFee, 2, '.', '');
-																		
+																	
 									$cartFeeTotal = $cartFeeTotal + $patientFee;
 								}
 								else {
@@ -1115,52 +1064,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
-							<!-- added by Mike, 20200612 -->
+							<!-- added by Mike, 20200613 -->
 							<input type="hidden" id="payItemIdParam" value="<?php echo $result[0]['item_id'];?>">
 							<input type="hidden" id="payPatientIdParam" value="<?php echo $patientId;?>">
 						
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY</button>
 						</td>						
-						<!-- added by Mike, 20201026 -->
-						<td>
-						<?php 
-							  if ((isset($noVAT)) and ($noVAT)) {
-						?>
-									<button class="Button-addVAT">NO<br/>VAT</button>
-						<?php
-							  }
-							  else if (isset($addedVAT) and ($addedVAT)) {
-						?>
-								<!-- TO-DO: -update: this -->
-								<!-- note: multiple button presses cause multiple +12% VAT -->
-								<button onclick="myPopupFunctionLessVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-lessVAT">LESS<br/>VAT</button>
-						<?php							
-							  }
-							  else {
-						?>
-									<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/>VAT</button>						
-						<?php
-							  }
-						?>
-						</td>						
-
 					  </tr>
 <?php
 				echo "</table>";				
 			}
-
 ?>
 			<!-- added by Mike, 20201103 -->
 			<input type="hidden" id="hasPatientInCartListParam" value="<?php echo $hasPatientInCartListParamValue;?>">
 <?php			
-			
 			echo "<br/>";
 
 			echo '<h3>Item Purchased History</h3>';
 			
-			//added by Mike, 20200615
 			$value = $result[0];
-
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
 				echo 'There are no transactions.';
@@ -1212,13 +1134,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</td>
 							<td class ="column">				
-								<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+								<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 									<div class="itemName">
-					<?php	
-									//edited by Mike, 20200715
-									//echo $value['item_name'];
-									echo strtoupper($value['item_name']);
-
+					<?php
+									echo $value['item_name'];
 					?>		
 									</div>								
 								</a>
@@ -1226,7 +1145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 									<div id="itemPriceId<?php echo $iCount?>">
 								<?php
-									//edited by Mike, 20200414
+									//edited by Mike, 20200912
 //									echo $value['item_price'];
 
 									//added by Mike, 20200415
@@ -1253,18 +1172,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<div id="itemQuantityId<?php echo $iCount?>">
 								<?php
 	//								echo $value['fee']/$value['item_price'];
+									//edited by Mike, 20200501
 //									echo floor(($value['fee']/$value['item_price']*100)/100);
-									//edited by Mike, 20200415
-//									echo floor(($value['fee']/$value['fee']*100)/100);
-/*									
-									if ($value['fee_quantity']==0) {
-										echo 1;
-									}
-									else {
-										echo $value['fee_quantity'];									
-									}
-*/									
-									echo $iQuantity;
+									echo $value['fee_quantity'];
 								?>
 									</div>
 							</td>
@@ -1278,16 +1188,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								?>
 									</div>
 							</td>
-							<td>
+							<td>								
 								<?php //edited by Mike, 20200416 
 									if ($value['transaction_date']==date('m/d/Y')) {
-								?>							
+								?>
 								<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
 	<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 	-->
 								<?php 
 									}
-								?>	
+								?>
 							</td>						
 						  </tr>
 			<?php				
