@@ -2055,8 +2055,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['transactionDate'] = date('m/d/Y');
 		
 		$this->load->model('Browse_Model');
-
+		
+		//edited by Mike, 20201105
 		$this->Browse_Model->addTransactionServicePurchase($data);
+		//echo $this->Browse_Model->addTransactionServicePurchase($data);
 
 		//edited by Mike, 20200407
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
