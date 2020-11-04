@@ -914,6 +914,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else if ($cartValue['item_type_id']==2) { //2 = NON-MEDICINE
 										echo site_url('browse/viewItemNonMedicine/'.$cartValue['item_id']);
 									}
+									//TO-DO: -add: 3 = SNACK
 								}								
 								?>'>
 								<!-- edited by Mike, 20200806 -->
