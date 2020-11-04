@@ -5,14 +5,14 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20201022
+  @date updated: 20201104
 	
   Computer Web Browser Address (Example):
-  1) http://192.168.11.10/usbong_kms/index.php/report/viewWebAddressList
+  1) http://mosc-accounting/usbong_kms/index.php/report/viewWebAddressList
   
   Note:
   1) Previously, we used this PHP page without the CodeIgniter framework
-  http://192.168.11.10/usbong_kms/server/viewWebAddressList.php
+  http://mosc-accounting/usbong_kms/server/viewWebAddressList.php
   2) Update the file location
   
 -->
@@ -208,6 +208,8 @@
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchMedicine">http://192.168.11.10/usbong_kms/index.php/browse/searchMedicine</a><br/>
 <h3>3) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine">Search Non-Medicine</a></h3>
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine">http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine</a><br/>
+<h3>4) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchSnack">Search Snack</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchSnack">http://192.168.11.10/usbong_kms/index.php/browse/searchSnack</a><br/>
 
 <h2>II. INFORMATION DESK + ACCOUNTING UNIT</h2>
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueueAccounting">http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueueAccounting</a><br/>
