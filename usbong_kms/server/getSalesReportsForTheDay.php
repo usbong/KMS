@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201103
+  @date updated: 20201104
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -567,6 +567,70 @@
 
 	//added by Mike, 20200614
 	echo "<br/>";
+
+	//added by Mike, 20201104
+	$responses = [];
+	
+
+	//added by Mike, 20201104
+	if ($selectedSnackResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=3 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0'"))
+	{
+		//added by Mike, 20200524
+		echo "--<br />";
+
+		if ($selectedMedicineResultArray->num_rows > 0) {
+			//added by Mike, 20200524
+			if ($selectedMedicineResultArray->num_rows == 1) {
+				echo "Snack transaction for the day.<br /><br />";
+			}
+			else {
+				echo "Snack transactions for the day.<br /><br />";
+			}
+
+//						$row = $selectedResult->fetch_array();
+			//count total
+			$iFeeTotalCount = 0;				
+			$iQuantityTotalCount = 0;				
+
+			foreach ($selectedSnackResultArray as $value) {
+				if (strpos($value['item_name'], "*") === false) {
+					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+					$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+				}					
+			}
+
+			//write as .txt file
+			$jsonResponse = array(
+					"iFeeTotalCount" => $iFeeTotalCount,
+					"iQuantityTotalCount" => $iQuantityTotalCount,
+					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530					
+			);
+			$responses[] = $jsonResponse;
+			
+			$outputReportSnack = json_encode($responses);
+							
+			echo $outputReportSnack;
+							
+//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
+			
+			//removed by Mike, 20200902
+			//$sDateToday = date("Y-m-d");
+
+			//update the file location accordingly
+			//edited by Mike, 20200524
+			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicine".$sDateToday.".txt";
+			$file = $fileBasePath."snack".$sDateToday.".txt";
+			
+			file_put_contents($file, $outputReportSnack, LOCK_EX);				
+		}
+		else {
+			echo "There are no Snack item transactions for the day.";
+		}
+	}	
+	
+	//added by Mike, 20200522
+	echo "<br/>";
+
 
 	//added by Mike, 20200614
 	$responses = [];
