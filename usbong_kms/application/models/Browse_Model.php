@@ -1615,6 +1615,9 @@ class Browse_Model extends CI_Model
 */
 			$updatedMedFee = 0;
 			$updatedNonMedFee = 0;
+			
+			//TO-DO: -add: $updatedSnackFee = 0;
+
 
 			if (isset($row->med_fee)) {
 				$updatedMedFee = $row->med_fee;
@@ -1662,6 +1665,7 @@ class Browse_Model extends CI_Model
 								//$updatedNonMedFee = 0;
 								$updatedNonMedFee = $updatedNonMedFee - $row->pas_fee;	
 							}			
+							//TO-DO: -reverify: if item_type_id==3, i.e. snack
 						}
 					}
 														
@@ -2421,11 +2425,15 @@ class Browse_Model extends CI_Model
 		if (!isset($ipAddress) and !isset($machineAddress)) {
 			redirect('report/viewWebAddressList');
 		}
+		
+		//added by Mike, 20201105; removed by Mike, 20201105
+//		echo "patientId".$param['patientId'];
 
 		//edited by Mike, 20200605
 //		$this->db->select('notes, transaction_id');
 		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
         $this->db->like('notes',"UNPAID");
+		
 		$this->db->where('transaction_date', date('m/d/Y'));
 		
 		//added by Mike, 20200608
@@ -3245,8 +3253,9 @@ class Browse_Model extends CI_Model
 		//removed by Mike, 20200826
 		//return $rowArray;
 				
-		//added by Mike, 20200826
+		//added by Mike, 20200826; edited by Mike, 20201105
 		//------------------------------
+		//TO-DO: -remove: this set of instructions due to use of "get" keyword in command/method
 		//verify if the MINORSET non-med item exists in the list
 		$hasMinorSetInCartList=false;
 		foreach ($rowArray as $row) {
@@ -3269,6 +3278,9 @@ class Browse_Model extends CI_Model
 					);
 
 					$this->db->where('patient_id',$row['patient_id']);
+					//added by Mike, 20201105
+					$this->db->where('transaction_id',$row['transaction_id']);
+
 					$this->db->where('transaction_date', date('m/d/Y'));				
 					$this->db->update('transaction', $data);
 				}
@@ -3290,12 +3302,15 @@ class Browse_Model extends CI_Model
 					);
 
 					$this->db->where('patient_id',$row['patient_id']);
+					//added by Mike, 20201105
+					$this->db->where('transaction_id',$row['transaction_id']);
+					
 					$this->db->where('transaction_date', date('m/d/Y'));				
 					$this->db->update('transaction', $data);
 				}
 			}
 			unset($row);
-		}
+		}		
 		//------------------------------
 	
 		return $rowArray;			
