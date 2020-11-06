@@ -417,7 +417,14 @@ class Report_Model extends CI_Model
 		//added by Mike, 20201031
 		//includes NON-MED
 		//no need to add % when using CodeIgniter 3's not_like(...) command
-		$this->db->not_like('t2.notes',"MED ONLY");
+		//edited by Mike, 20201106
+//		$this->db->not_like('t2.notes',"MED ONLY");		
+		$this->db->not_like('t2.notes',"MED");
+		$this->db->not_like('t2.notes',"ONLY");
+		
+		//added by Mike, 20201106
+		$this->db->not_like('t2.notes',"SSS");
+		$this->db->not_like('t2.notes',"SNACK ONLY");
 
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
 		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
