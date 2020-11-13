@@ -37,3 +37,16 @@ Done!
 ### 2.2) Reference:
 1) https://ask.libreoffice.org/en/question/71000/is-there-any-way-to-default-to-a-correct-apostrophe/;<br/>
 last accessed: 20200811
+
+## 3.Q) How to export to Portable Document Format (PDF) file with text from LibreOffice Impress on [LUBUNTU Operating System (OS) version: 20.04 LTS](https://lubuntu.me/)?
+## 3.A) Answer 
+### 3.1)  List of Action Steps<br/>
+1. Go to "Terminal", e.g. "QTerminal" Window<br/>
+2. Execute Command: <b>sudo apt remove libreoffice-qt5</b><br/>
+3. Enter "Y" as "Yes" answer to "Do you want to continue? \[Y/n\]"
+
+Done!
+
+### 3.2) Reference:
+1) https://ask.libreoffice.org/en/question/241673/export-or-print-to-pdf-no-text/;<br/>
+last accessed: 20201113; answer by: Piotr Szafrański, 20200829
