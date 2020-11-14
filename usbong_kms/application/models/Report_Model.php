@@ -257,6 +257,10 @@ class Report_Model extends CI_Model
 		//includes NON-MED
 		//no need to add % when using CodeIgniter 3's not_like(...) command
 		$this->db->not_like('t2.notes',"MED ONLY");
+		
+		//added by Mike, 20201114
+		$this->db->not_like('t2.notes',"SNACK ONLY");
+
 
 //		$this->db->like('t2.notes', "NEW; NONE YET");
 //		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
@@ -1520,7 +1524,7 @@ class Report_Model extends CI_Model
 		if ($rowArray!=False) { //if value exists in array
 			foreach ($rowArray as $value) {			
 	//			echo "value: ".$value['item_id']."<br/>";
-				$this->db->where('t1.item_id !=', $value['item_id']);		
+//				$this->db->where('t1.item_id !=', $value['item_id']);		
 			}
 		}
 
@@ -1528,8 +1532,10 @@ class Report_Model extends CI_Model
 		//		$this->db->where('t3.receipt_id !=', $value['receipt_id']);		
 		//$this->db->group_by('t3.receipt_id');
 
-		//added by Mike, 20200923
-		$this->db->where('t1.item_name !=', "MINORSET");		
+		//added by Mike, 20200923; edited by Mike, 20201109
+		//$this->db->where('t1.item_name !=', "MINORSET");		
+		$this->db->not_like('t1.item_name', "MINORSET");		
+
 		
 		//added by Mike, 20200506
 //		$this->db->group_by('t1.item_name');
