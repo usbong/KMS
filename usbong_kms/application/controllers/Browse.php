@@ -2392,13 +2392,17 @@ class Browse extends CI_Controller { //MY_Controller {
 		//execute these due to select patients classified as SC, i.e. "Senior Citizens"
 		$this->session->unset_userdata('addedVAT');
 		$data['addedVAT'] = False;		
-						
+	
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
 		$data['transactionDate'] = date('m/d/Y');
 		
 		$this->load->model('Browse_Model');
+
+		//added by Mike, 20201115
+		//lessVATBeforePayTransactionItemPurchase($itemTypeId, $itemId, $patientId)		
+		$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
 	
 //		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
 
