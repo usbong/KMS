@@ -502,6 +502,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		}	
 
+		//added by Mike, 20201115		
+		function myPopupFunctionDeleteTransactionServicePurchase(medicalDoctorId,patientId,transactionId) {				
+/*			//removed by Mike, 20201115		
+			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
+			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
+*/
+
+/*
+			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
+			//therefore, we need to add a +1 to correctly identify the medical doctor
+			if ((medicalDoctorId==0)) {
+				medicalDoctorId+=1; //to be SYSON, PEDRO
+			}
+			else (medicalDoctorId==2)) {
+				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
+			}
+*/
+
+/*
+			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+*/			
+			//edited by Mike, 20200411
+			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
+
+		}	
+
 		//added by Mike, 20200626
 		//re-verify: this
 		//we do not use this now
@@ -1019,10 +1046,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
+<?php
+							//edited by Mike, 20201115
+							if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+?>
+									<button onclick="myPopupFunctionDeleteTransactionServicePurchase(<?php echo $cartValue['medical_doctor_id'].",".$cartValue['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>
+<?php
+							}
+							else {
+?>
 							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
+<?php
+							}
+?>
 						</td>						
+
 					  </tr>
 		<?php				
 					$iCount++;		

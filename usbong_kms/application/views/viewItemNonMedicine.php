@@ -12,9 +12,6 @@
 ' @date updated: 20201115
 -->
 <?php
-//TO-DO: -reverify: PAALALA: NO VAT FOR PATIENTS CLASSIFIED AS SC and PWD. 
-
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -553,6 +550,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/2/"+itemId +"/"+transactionId+"');?>";
 		}	
 
+		//added by Mike, 20201115		
+		function myPopupFunctionDeleteTransactionServicePurchase(medicalDoctorId,patientId,transactionId) {				
+/*			//removed by Mike, 20201115		
+			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
+			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
+*/
+
+/*
+			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
+			//therefore, we need to add a +1 to correctly identify the medical doctor
+			if ((medicalDoctorId==0)) {
+				medicalDoctorId+=1; //to be SYSON, PEDRO
+			}
+			else (medicalDoctorId==2)) {
+				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
+			}
+*/
+
+/*
+			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+*/			
+			//edited by Mike, 20200411
+			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
+
+		}	
+
+
 		//added by Mike, 20200626
 		//re-verify: this
 		//we do not use this now
@@ -897,14 +922,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class="columnVat">		
 							<label>+12%<br/>VAT</label>
 <?php						  //edited by Mike, 20201115							
-							  if (isset($addedVAT) and ($addedVAT)) {
-?>
-								<input type="checkbox" id="vatCheckBoxParam" onclick="return false;" checked>
-<?php
-							  }
-							  else if ((isset($noVAT)) and ($noVAT)) {
+							  if ((isset($noVAT)) and ($noVAT)) {
 ?>
 								<input type="checkbox" id="vatCheckBoxParam" onclick="return false;">
+<?php
+							  }
+							  else if (isset($addedVAT) and ($addedVAT)) {
+?>
+								<input type="checkbox" id="vatCheckBoxParam" onclick="return false;" checked>
 <?php
 							  }
 							  else {
@@ -1112,9 +1137,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
+<?php
+							//edited by Mike, 20201115
+							if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+?>
+									<button onclick="myPopupFunctionDeleteTransactionServicePurchase(<?php echo $cartValue['medical_doctor_id'].",".$cartValue['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>
+<?php
+							}
+							else {
+?>
 							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
+<?php
+							}
+?>
 						</td>						
 					  </tr>
 		<?php				

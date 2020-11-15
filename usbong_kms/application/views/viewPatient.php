@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201103
+' @date updated: 20201115
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1018,7 +1018,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td>						
+						<td>				
+							<!-- TO-DO: -reverify: delete for medicine and non-medicine items -->
 							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
