@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201103
+' @date updated: 20201115
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -442,7 +442,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				//added by Mike, 20200330; edited by Mike, 20200411
 				//1 = Medicine
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/1/"+itemId+"/"+quantity+"/"+fee+"');?>";
+				//edited by Mike, 20201115
+//				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/1/"+itemId+"/"+quantity+"/"+fee+"');?>";
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/1/"+itemId+"/"+quantity+"/"+fee+"/0');?>";
 
 /*
 				//added by Mike, 20170627

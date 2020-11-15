@@ -9,9 +9,12 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201104
+' @date updated: 20201115
 -->
 <?php
+//TO-DO: -reverify: PAALALA: NO VAT FOR PATIENTS CLASSIFIED AS SC and PWD. 
+
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -483,7 +486,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 				//2 = Non-medicine
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"');?>";
+				//edited by Mike, 20201115
+				//window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"');?>";
+				//last parameter plusVATId; where 1 = plus VAT for non-medicine items
+				if (vatCheckedBox.checked) {
+					window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"/1');?>";
+				}
+				else {
+					window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"/0');?>";
+				}
 
 
 /*
@@ -885,7 +896,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>		
 						<td class="columnVat">		
 							<label>+12%<br/>VAT</label>
-							<input type="checkbox" id="vatCheckBoxParam">
+<?php						  //edited by Mike, 20201115							
+							  if (isset($addedVAT) and ($addedVAT)) {
+?>
+								<input type="checkbox" id="vatCheckBoxParam" onclick="return false;" checked>
+<?php
+							  }
+							  else if ((isset($noVAT)) and ($noVAT)) {
+?>
+								<input type="checkbox" id="vatCheckBoxParam" onclick="return false;">
+<?php
+							  }
+							  else {
+?>								  
+								<input type="checkbox" id="vatCheckBoxParam">
+<?php
+							  }
+?>
 						</td>
 						
 					  </tr>
@@ -947,6 +974,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 				$iCount = 1;
 				$cartFeeTotal = 0;
+				
+				//added by Mike, 20201115
+				$cartFeeTotalNonMedOnly = 0;
+				
 				foreach ($cartListResult as $cartValue) {
 /*	
 				$value = $result[0];
@@ -1068,6 +1099,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo number_format($cartValue['fee'], 2, '.', '');
 
 									$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
+									
+									
+									//added by Mike, 20201115
+									if ($cartValue['item_type_id']==2) {
+										$cartFeeTotalNonMedOnly = $cartFeeTotalNonMedOnly + $cartValue['fee'];
+									}					
 								}
 				
 //								$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
@@ -1120,29 +1157,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<input type="hidden" id="payPatientIdParam" value="<?php echo $patientId;?>">
 						
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY</button>
-						</td>						
-						<!-- added by Mike, 20201026 -->
-						<td>
+						</td>
+						<!-- added by Mike, 20201026; edited by Mike, 20201115 -->
 						<?php 
 							  if ((isset($noVAT)) and ($noVAT)) {
 						?>
+								<td class ="column">				
+<?php
+								echo "<b>".number_format((float)0, 2, '.', '')."<b/>";
+?>
+								</td>						
+								<td>
 									<button class="Button-addVAT">NO<br/>VAT</button>
+								</td>						
+									
 						<?php
 							  }
 							  else if (isset($addedVAT) and ($addedVAT)) {
 						?>
-								<!-- TO-DO: -update: this -->
-								<!-- note: multiple button presses cause multiple +12% VAT -->
-								<button onclick="myPopupFunctionLessVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-lessVAT">LESS<br/>VAT</button>
+								<td class ="column">				
+<?php
+									//get total VAT
+									$cartFeeTotalWithoutVAT = $cartFeeTotalNonMedOnly/(1+0.12);
+									$cartFeeTotalVAT = $cartFeeTotalWithoutVAT*0.12;
+
+									echo "<b>".number_format((float)$cartFeeTotalVAT, 2, '.', '')."<b/>";
+?>
+								</td>
+								<td>
+									<!-- TO-DO: -update: this -->
+									<!-- note: multiple button presses cause multiple +12% VAT -->
+									<button onclick="myPopupFunctionLessVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-lessVAT">LESS<br/>VAT</button>
+								</td>
 						<?php							
 							  }
 							  else {
 						?>
-									<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/>VAT</button>						
+								<td class ="column">				
+<?php
+								echo "<b>".number_format((float)0, 2, '.', '')."<b/>";
+?>
+								</td>						
+								<td>
+									<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/>VAT</button>			
+								</td>						
 						<?php
 							  }
 						?>
-						</td>						
 
 					  </tr>
 <?php
