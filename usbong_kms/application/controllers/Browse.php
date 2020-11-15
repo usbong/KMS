@@ -1898,6 +1898,11 @@ class Browse extends CI_Controller { //MY_Controller {
 			$itemId=$param;			
 		}
 		
+		//added by Mike, 20201115
+		if (isset($_SESSION["addedVAT"])) {
+			$data['addedVAT']=$_SESSION["addedVAT"]; //TRUE			
+		}
+		
 		//edited by Mike, 20201027
 		$data['noVAT'] = false;
 //		if (isset($param['noVAT'])) {
@@ -2250,7 +2255,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	//added by Mike, 20200411; edited by Mike, 20200414
 //	public function addTransactionItemPurchase($itemId,$quantity)
 //	public function addTransactionItemPurchase($itemTypeId, $itemId, $quantity)
-	public function addTransactionItemPurchase($itemTypeId, $itemId, $quantity, $fee)
+	//edited by Mike, 20201115
+//	public function addTransactionItemPurchase($itemTypeId, $itemId, $quantity, $fee)
+	public function addTransactionItemPurchase($itemTypeId, $itemId, $quantity, $fee, $plusVATId)
 	{
 /*
 		$data['nameParam'] = $_POST[nameParam];
@@ -2268,7 +2275,19 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemId'] = $itemId;
 		$data['quantity'] = $quantity;
 		$data['fee'] = $fee;
-				
+
+		//added by Mike, 20201115
+		if ($plusVATId==1) {
+			$data['addedVAT'] = True;
+			$this->session->set_userdata('addedVAT', True);
+		}
+		else {
+			$data['addedVAT'] = False;
+			if (isset($_SESSION["addedVAT"])) {
+				$this->session->unset_userdata('addedVAT');
+			}
+		}
+						
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
@@ -2311,7 +2330,24 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->load->view('viewItemSnack', $data);
 		}	
 		else { //example: 2
+			//edited by Mike, 20201115
 			$this->load->view('viewItemNonMedicine', $data);
+/*
+			if ($plusVATId==1) {
+				$this->load->view('viewItemNonMedicine', $data);
+			}
+			else {
+				$data['addedVAT'] = False;
+				if (isset($_SESSION["addedVAT"])) {
+					$this->session->unset_userdata('addedVAT');
+				}
+
+				//note: needs $patientId
+				$this->lessVATBeforePayTransactionItemPurchase(2,
+
+				window.location.href = "<?php echo site_url('browse/lessVATBeforePayTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";			
+			}
+*/
 		}
 	}
 
@@ -2369,7 +2405,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemTypeId'] = $itemTypeId; //added by Mike, 20200616
 		$data['itemId'] = $itemId;
 		$data['transactionId'] = $transactionId;
-				
+	
+
+		//added by Mike, 20201115
+//		if (isset($addedVAT) and ($addedVAT)) {
+		if (isset($_SESSION["addedVAT"])) {
+			$data['addedVAT'] = True;
+		}
+		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
@@ -2503,8 +2546,13 @@ class Browse extends CI_Controller { //MY_Controller {
 	//added by Mike, 20201026; edited by Mike, 20201027
 	public function addVATBeforePayTransactionItemPurchase($itemTypeId, $itemId, $patientId)
 	{
+/*		//removed by Mike, 20201114
 		//added by Mike, 20201027
 		$data['addedVAT'] = True;
+		
+		//added by Mike, 20201115
+		$this->session->set_userdata('addedVAT', True);
+*/
 				
 /*
 		echo itemId: .$itemId;
@@ -2535,6 +2583,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		if ($data['outputTransaction']==null) {
 			$data['addedVAT']=False;
+			//added by Mike, 20201115
+			$this->session->unset_userdata('addedVAT');			
+			$data['noVAT']=True;
+		}
+		//added by Mike, 20201115		
+		else {
+			$data['addedVAT'] = True;			
+			$this->session->set_userdata('addedVAT', True);
 		}
 		
 /*		//removed by Mike, 20201027
@@ -2553,6 +2609,13 @@ class Browse extends CI_Controller { //MY_Controller {
 	{
 		//added by Mike, 20201027
 		$data['addedVAT'] = False;
+
+		//added by Mike, 20201115
+		if (isset($_SESSION["addedVAT"])) {
+			//$data['addedVAT']=False; //$_SESSION["addedVAT"]; //TRUE			
+
+			$this->session->unset_userdata('addedVAT');
+		}
 				
 /*
 		echo itemId: .$itemId;
