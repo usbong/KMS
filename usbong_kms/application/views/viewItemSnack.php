@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201104
+' @date updated: 20201116
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -440,9 +440,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					return;
 				}
 
-				//added by Mike, 20200330; edited by Mike, 20201104
+				//added by Mike, 20200330; edited by Mike, 20201116
 				//1 = Medicine; 3 = Snack
-				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/3/"+itemId+"/"+quantity+"/"+fee+"');?>";
+				//edited by Mike, 20201116
+//				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/3/"+itemId+"/"+quantity+"/"+fee+"');?>";
+				window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/3/"+itemId+"/"+quantity+"/"+fee+"/0');?>";
 
 /*
 				//added by Mike, 20170627
@@ -499,6 +501,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//3 = snack
 			window.location.href = "<?php echo site_url('browse/deleteTransactionItemPurchase/3/"+itemId +"/"+transactionId+"');?>";
 
+		}	
+
+		//added by Mike, 20201116
+		function myPopupFunctionDeleteTransactionServicePurchase(medicalDoctorId,patientId,transactionId) {				
+/*			//removed by Mike, 20201115		
+			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
+			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
+*/
+
+/*
+			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
+			//therefore, we need to add a +1 to correctly identify the medical doctor
+			if ((medicalDoctorId==0)) {
+				medicalDoctorId+=1; //to be SYSON, PEDRO
+			}
+			else (medicalDoctorId==2)) {
+				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
+			}
+*/
+
+/*
+			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+*/			
+			//edited by Mike, 20200411
+			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
 		}	
 
 		//added by Mike, 20200626
