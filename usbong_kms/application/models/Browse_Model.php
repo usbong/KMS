@@ -2170,7 +2170,13 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20201026
 		unset($rowValue);
 		
-		return $rowArray[0];
+		//edited by Mike, 2020116
+		//return $rowArray[0];
+		if (isset($rowArray[0])) {
+			return $rowArray[0];
+		}
+		
+		return null;		
 	}	
 
 
