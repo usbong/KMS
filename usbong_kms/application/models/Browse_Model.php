@@ -676,6 +676,10 @@ class Browse_Model extends CI_Model
 		if ($transactionQuantity==0) {
 			$this->db->where('transaction_id',$iTransactionId);
 			$this->db->delete('transaction');
+			
+			//added by Mike, 20201120
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('receipt');
 		}
 		else {			
 			$iCount = 0;
@@ -693,6 +697,10 @@ class Browse_Model extends CI_Model
 				$this->db->where('item_id',0);
 
 				$this->db->delete('transaction');
+
+				//added by Mike, 20201120
+				$this->db->where('transaction_id',$iTransactionId);
+				$this->db->delete('receipt');
 
 				//added by Mike, 20200629					
 				$iTransactionId = $iTransactionId - 1;
@@ -1548,6 +1556,10 @@ class Browse_Model extends CI_Model
 		if ((isset($row)) and ($row->notes=="UNPAID")) {
 			$this->db->where('transaction_id',$iTransactionId);
 			$this->db->delete('transaction');			
+
+			//added by Mike, 20201120
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('receipt');			
 		}
 		else {
 			//TO-DO: -identify: transaction with all items and services in the cart
@@ -1639,6 +1651,10 @@ class Browse_Model extends CI_Model
 			if ($transactionQuantity==0) {
 				$this->db->where('transaction_id',$iTransactionId);
 				$this->db->delete('transaction');
+
+				//added by Mike, 20201120
+				$this->db->where('transaction_id',$iTransactionId);
+				$this->db->delete('receipt');			
 			}
 			else {			
 				$iCount = 0;
@@ -1689,6 +1705,11 @@ class Browse_Model extends CI_Model
 					$this->db->where('item_id',$param['itemId']);
 										
 					$this->db->delete('transaction');
+
+					//added by Mike, 20201120
+					$this->db->where('transaction_id',$iTransactionId);
+					$this->db->delete('receipt');			
+
 
 					//added by Mike, 20200629					
 					$iTransactionId = $iTransactionId - 1;
