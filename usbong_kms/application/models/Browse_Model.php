@@ -2096,21 +2096,24 @@ class Browse_Model extends CI_Model
 
 		$classification = "";
 
-		if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
-			$classification = "SC; ";
-		}
-		else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
-			$classification = "PWD; ";
-		}
+		//added by Mike, 20201122
+		if (count($patientTransactionRowArray)!=0) {			
+			if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
+				$classification = "SC; ";
+			}
+			else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
+				$classification = "PWD; ";
+			}
 
-		//added by Mike, 20201027
-		if (($classification=="SC; ") or ($classification=="PWD; ")) {			
-			echo "<font color='#FF0000'><b>PAALALA: NO VAT FOR PATIENTS CLASSIFIED AS SC and PWD. </b></font><br/>";
+			//added by Mike, 20201027
+			if (($classification=="SC; ") or ($classification=="PWD; ")) {			
+				echo "<font color='#FF0000'><b>PAALALA: NO VAT FOR PATIENTS CLASSIFIED AS SC and PWD. </b></font><br/>";
 
-//			return null;
-			return "noVAT";
+	//			return null;
+				return "noVAT";
+			}
 		}
-
+		
 /*		
 		echo "patientTransactionRowArray[0]['notes']: ".$patientTransactionRowArray[0]['notes'];
 		echo "classification: ".$classification;
