@@ -2074,10 +2074,23 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['transactionDate'] = date('m/d/Y');
 		
 		$this->load->model('Browse_Model');
+
+		//added by Mike, 20201122
+		if (isset($_SESSION["addedVAT"])) {
+			$data['addedVAT']=$_SESSION["addedVAT"];
+			if (isset($data['addedVAT']) and ($data['addedVAT'])) {				
+				$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
+
+				//execute these due to select patients classified as SC, i.e. "Senior Citizens"
+				$this->session->unset_userdata('addedVAT');
+				$data['addedVAT'] = False;		
+			}
+		}
 		
 		//edited by Mike, 20201105
 		$this->Browse_Model->addTransactionServicePurchase($data);
 		//echo $this->Browse_Model->addTransactionServicePurchase($data);
+
 
 		//edited by Mike, 20200407
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
@@ -2385,24 +2398,50 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorId'] = $medicalDoctorId;
 		$data['patientId'] = $patientId;
 		$data['transactionId'] = $transactionId;
-				
-		//added by Mike, 20201115
-		$this->session->unset_userdata('noVAT');
-		$data['noVAT'] = False;
-		//execute these due to select patients classified as SC, i.e. "Senior Citizens"
-		$this->session->unset_userdata('addedVAT');
-		$data['addedVAT'] = False;		
-	
+
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
 		$data['transactionDate'] = date('m/d/Y');
+
+		$this->load->model('Browse_Model');
+
+		//added by Mike, 20201115
+		//note: when we delete patient transaction in Cart List,
+		//computer auto-removes all added VAT
+		if (isset($_SESSION["addedVAT"])) {
+			$data['addedVAT']=$_SESSION["addedVAT"];
+			if (isset($data['addedVAT']) and ($data['addedVAT'])) {
+				$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
+
+				//execute these due to select patients classified as SC, i.e. "Senior Citizens"
+				$this->session->unset_userdata('addedVAT');
+				$data['addedVAT'] = False;		
+			}
+		}
+				
+		//added by Mike, 20201115
+		$this->session->unset_userdata('noVAT');
+		$data['noVAT'] = False;
+
+/*		//removed by Mike, 20201122
+		//execute these due to select patients classified as SC, i.e. "Senior Citizens"
+		$this->session->unset_userdata('addedVAT');
+		$data['addedVAT'] = False;		
+*/	
 		
+
+/*		//removed by Mike, 20201122
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
 		$this->load->model('Browse_Model');
 
 		//added by Mike, 20201115
 		//lessVATBeforePayTransactionItemPurchase($itemTypeId, $itemId, $patientId)		
 		$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
+*/
 	
 //		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
 
