@@ -1523,8 +1523,9 @@ class Report_Model extends CI_Model
 		//edited by Mike, 20200403
 		if ($rowArray!=False) { //if value exists in array
 			foreach ($rowArray as $value) {			
+				//edited by Mike, 20201123
 	//			echo "value: ".$value['item_id']."<br/>";
-//				$this->db->where('t1.item_id !=', $value['item_id']);		
+				$this->db->where('t1.item_id !=', $value['item_id']);		
 			}
 		}
 
