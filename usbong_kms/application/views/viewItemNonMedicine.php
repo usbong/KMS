@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201115
+' @date updated: 20201128
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1207,7 +1207,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td>
 									<button class="Button-addVAT">NO<br/>VAT</button>
 								</td>						
-									
+								<!-- added by Mike, 20201128 -->
+								<td class ="column">				
+<?php
+									$cartFeeTotalNonMedOnlySCPWDDiscount = $cartFeeTotalNonMedOnly*0.12;
+
+								echo "<b>".number_format((float)$cartFeeTotalNonMedOnlySCPWDDiscount, 2, '.', '')."<b/>";
+?>
+								</td>								
+								<td>
+<?php
+								echo "<b>Non-Med<br/>SC/PWD<br/>Discount<b/>";
+?>
+								</td>
 						<?php
 							  }
 							  else if (isset($addedVAT) and ($addedVAT)) {
