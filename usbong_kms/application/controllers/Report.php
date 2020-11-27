@@ -576,15 +576,22 @@ class Report extends CI_Controller { //MY_Controller {
 							$iTransactionQuantity = $row->transaction_quantity;
 						}
 						
-						if ($iTransactionId>=$iTransactionIdMax) {
+						if ($iTransactionId>=$iTransactionIdMax) {							
 							break;
-						}
+						}						
 					}
 					while ($iTransactionQuantity <= 0);
 
 //						echo $iTransactionId."<br/>";
-
-					$iTransactionId = $iTransactionId -1;
+					//edited by Mike, 20201127
+//					$iTransactionId = $iTransactionId -1;
+					//note: if last transaction in database
+					//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);
+					if ($iTransactionId>=$iTransactionIdMax) {
+					}
+					else {
+						$iTransactionId = $iTransactionId -1;
+					}
 
 					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($iTransactionId);
 				}
