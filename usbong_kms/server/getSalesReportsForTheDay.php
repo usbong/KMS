@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201120
+  @date updated: 20201127
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -727,11 +727,71 @@
 //										echo $value['notes'];
 //										echo $value['transaction_id'];
 								//TO-DO: -update: this
-								$transactionId = $value['transaction_id'] + 1;
+								//$transactionId = $value['transaction_id'] + 1;
+								//edited by Mike, 20201127
+								$iTransactionId = $value['transaction_id'] + 1;
+								
 								//removed by Mike, 20201003
-								//echo $transactionId;
+//								echo $iTransactionId;
+								
+								//added by Mike, 20201127
+								//--------------------------------------------------
+			//						echo $iTransactionId."<br/>";
+
+									//added by Mike, 20200910
+									//identify newest transactionId
+									$iTransactionIdMax = -1;
+
+									if ($rowTransactionIdMaxArray = $mysqli->query("select max(transaction_id) As transactionIdMax from transaction")) {
+										if ($rowTransactionIdMaxArray->num_rows > 0) {
+											$iTransactionIdMax = mysqli_fetch_array($rowTransactionIdMaxArray)[0]; //'transactionIdMax'];
+										}
+									}				
+									// show an error if there is an issue with the database query
+									else
+									{
+										echo "Error: " . $mysqli->error;
+									}									
 									
-								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
+				//identify transaction with the combined fees
+				//					while ($transactionId==0) {
+									do {
+										if ($rowTransactionQuantityArray = $mysqli->query("select transaction_quantity from transaction where transaction_id='".$iTransactionId."'")) {
+											if ($rowTransactionQuantityArray->num_rows > 0) {
+												$iTransactionId = $iTransactionId + 1;
+												
+												//this is due to the transaction count can skip
+												$iTransactionQuantity = -1;
+
+												if (isset($rowTransactionQuantityArray)) {
+//													$iTransactionQuantity = $rowTransactionQuantityArray->transaction_quantity;
+													$iTransactionQuantity = mysqli_fetch_array($rowTransactionQuantityArray)[0];
+												}
+												
+												if ($iTransactionId>=$iTransactionIdMax) {							
+													break;
+												}						
+												
+												//note: if last transaction in database
+												//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);
+												if ($iTransactionId>=$iTransactionIdMax) {
+												}
+												else {
+													$iTransactionId = $iTransactionId -1;
+												}
+											}
+										}
+										// show an error if there is an issue with the database query
+										else
+										{
+											echo "Error: " . $mysqli->error;
+										}									
+									}
+									while ($iTransactionQuantity <= 0);								
+								//--------------------------------------------------
+								//edited by Mike, 20201127
+								//if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
+								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$iTransactionId."'")) {
 									$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
 									if($receiptArrayRowValue) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
