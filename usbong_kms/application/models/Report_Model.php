@@ -194,8 +194,9 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20200529; edited by Mike, 20200606
-	public function getPatientQueueReportForTheDay()
+	//added by Mike, 20200529; edited by Mike, 20201127
+//	public function getPatientQueueReportForTheDay()
+	public function getPatientQueueReportForTheDay($param)
 	{
 		//date_default_timezone_set('Asia/Hong_Kong');
 		//edited by Mike, 20201003
@@ -253,14 +254,19 @@ class Report_Model extends CI_Model
 		//added by Mike, 202005029
 		$this->db->where('t1.patient_name!=', 'NONE');
 
-		//added by Mike, 20201031
-		//includes NON-MED
-		//no need to add % when using CodeIgniter 3's not_like(...) command
-		$this->db->not_like('t2.notes',"MED ONLY");
-		
-		//added by Mike, 20201114
-		$this->db->not_like('t2.notes',"SNACK ONLY");
+		//added by Mike, 20201127
+		if ($param==0) { //info desk page
+			//added by Mike, 20201031
+			//includes NON-MED
+			//no need to add % when using CodeIgniter 3's not_like(...) command
+			$this->db->not_like('t2.notes',"MED ONLY");
 
+			//added by Mike, 20201127
+			$this->db->not_like('t2.notes',"MEDICINE ONLY");
+			
+			//added by Mike, 20201114
+			$this->db->not_like('t2.notes',"SNACK ONLY");
+		}
 
 //		$this->db->like('t2.notes', "NEW; NONE YET");
 //		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
