@@ -8,7 +8,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200724
-' @date updated: 20201018
+' @date updated: 20201127
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724

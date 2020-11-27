@@ -5,6 +5,10 @@ phantomjs saveWebPageAsImageFile.js viewReportMedicineUnified
 phantomjs saveWebPageAsImageFile.js viewReportMedicineAsteriskUnified
 REM phantomjs saveWebPageAsImageFile.js viewReportNonMedicineUnified
 phantomjs saveWebPageAsImageFile.js viewReportNonMedicine
+
+REM added by Mike, 20201127
+phantomjs saveWebPageAsImageFile.js viewReportSnack
+
 phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Pedro"
 phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Peter"
 
