@@ -1170,7 +1170,9 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->model('Report_Model');
 
 //		$data["result"] = $this->Report_Model->getPatientReportUnpaidForTheDay();
-		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		//edited by Mike, 20201127
+//		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay(0); //info desk page
 
 //		echo "count: ".count($data["result"]);
 //		echo $data["result"][0]['transaction_id'];
@@ -1219,7 +1221,9 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->model('Report_Model');
 
 //		$data["result"] = $this->Report_Model->getPatientReportUnpaidForTheDay();
-		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		//edited by Mike, 20201127
+		//$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay(1); //1 = accounting page
 
 //		echo "count: ".count($data["result"]);
 //		echo $data["result"][0]['transaction_id'];
