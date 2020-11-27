@@ -250,6 +250,12 @@ a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/vie
 http://192.168.11.10/usbong_kms/index.php/report/viewReportNonMedicine</a><br/>
 b) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportNonMedicineUnified">
 http://192.168.11.10/usbong_kms/index.php/report/viewReportNonMedicineUnified</a><br/>
+<br/>
+<b>4) SNACK</b><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportSnack">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportSnack</a><br/>
+b) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportSnackUnified">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportSnackUnified</a><br/>
 
 <h2>VI. OFFICIAL RECEIPTS:</h2>
 <b>1) MOSC</b><br/>
