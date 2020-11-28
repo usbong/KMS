@@ -2153,7 +2153,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->Browse_Model->addNewTransactionForPatient($data);
 
-		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		//edited by Mike, 20201128
+//		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay(1);
 
 		//edited by Mike, 20200601
 		//this is so that we do not add excess transactions
@@ -2611,8 +2613,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->model('Report_Model');
 	
 		$this->Browse_Model->deleteTransactionFromPatient($data);
-		
-		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+
+		//edited by Mike, 20201128
+//		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay(0);
 
 		$this->load->view('viewReportPatientQueue', $data);
 	}
@@ -2632,7 +2636,10 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 		$this->Browse_Model->deleteTransactionFromPatient($data);
 		
-		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		//edited by Mike, 20201128
+//		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
+		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay(1);
+
 
 		$this->load->view('viewReportPatientQueueAccounting', $data);
 	}
