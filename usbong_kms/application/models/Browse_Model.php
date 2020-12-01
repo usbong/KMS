@@ -3507,6 +3507,12 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 			return 0;
 		}
 		
+		//noted by Mike, 20201201
+		//TO-DO: -edit: this to use $iQuantity = $iQuantity - $value['item_total_sold'];
+		//note: where $iQuantity = item total in stock
+
+		//------------------------------------
+		
 		//edited by Mike, 20200617
 		//$this->db->select('t1.item_price, t2.fee');
 		//edited by Mike, 20200901
@@ -3550,6 +3556,8 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		
 //		echo "<br/>".$value['item_name'];
 //		echo $iQuantity."<br/>";
+		
+		//------------------------------------
 		
 		return $iQuantity;
 	}
