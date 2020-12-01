@@ -2269,5 +2269,74 @@ class Report_Model extends CI_Model
 		
 		return $query->result_array();
 	}		
+	
+	//added by Mike, 20201201
+	//note: use with $iQuantity = $iQuantity - $value['item_total_sold'];
+	//where $iQuantity = item total in stock
+	public function getTotalQuantitySoldPerItem() {		
+
+		//identify newest transactionId
+		$this->db->select_max('item_id');
+		$query = $this->db->get('item');
+		$row = $query->row();		
+		$iItemIdMax = $row->item_id;
+
+		$itemId=0;		
+		
+		while ($itemId<$iItemIdMax) {
+			$iTotalQuantitySold=0;
+	
+			//$this->db->select('t1.item_price, t2.fee');
+			//edited by Mike, 20200901
+			$this->db->select('t1.item_name, t1.item_price, t2.fee, t2.fee_quantity');
+			$this->db->from('item as t1');
+
+	//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+			$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+			$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+			$this->db->where('t1.item_id', $itemId);
+			//edited by Mike, 20200625
+			//note: we include transactions in the cart list, albeit unpaid
+			//$this->db->where('t2.notes', "PAID");
+			$this->db->like('t2.notes', "PAID");
+			$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
+
+			$query = $this->db->get('item');
+
+	//		$row = $query->row();		
+			$rowArray = $query->result_array();
+
+			$itemId=$itemId+1;
+			
+			if ($rowArray == null) {
+				continue;
+			}
+			
+			foreach ($rowArray as $value) {	
+				//edited by Mike, 20200422
+	//			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
+
+				//edited by Mike, 20200617
+	//			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+
+				//edited by Mike, 20200901
+				//$iQuantity = $iQuantity - $value['fee_quantity'];
+				//edited by Mike, 20201202
+	//			$iQuantity = $iQuantity - $value['fee_quantity'];
+				
+				$iTotalQuantitySold = $iTotalQuantitySold + $value['fee_quantity'];
+
+			}
+/*			
+			echo "<br/>".$value['item_name']." : ";
+			echo $iTotalQuantitySold." : ";
+*/
+			//UPDATE item SET item_total_sold=2 WHERE item_id=1			
+			echo "UPDATE item SET item_total_sold=".$iTotalQuantitySold." WHERE item_id=".$itemId."<br/>";
+		}		
+		//------------------------------------
+	}
 }
 ?>
