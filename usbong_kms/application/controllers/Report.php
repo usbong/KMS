@@ -1169,6 +1169,18 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewReportPriceNonMedicine', $data);
 	}
 
+	//added by Mike, 20201201
+	public function viewReportTotalQuantitySoldPerItem()
+	{
+		$this->load->model('Report_Model');
+		$data["result"] = $this->Report_Model->getTotalQuantitySoldPerItem();
+		
+		echo "***NOTHING FOLLOWS***";
+		//TO-DO: -add: this
+//		$this->load->view('viewReportSnack', $data);
+	}
+
+
 	//added by Mike, 20200529
 	//TO-DO: -add: viewPatientQueue
 //	public function viewPatientReportUnpaid()
