@@ -2285,10 +2285,12 @@ class Report_Model extends CI_Model
 		
 		while ($itemId<$iItemIdMax) {
 			$iTotalQuantitySold=0;
-	
+
+/*			echo "item_id: ".$itemId.";";
+*/
 			//$this->db->select('t1.item_price, t2.fee');
 			//edited by Mike, 20200901
-			$this->db->select('t1.item_name, t1.item_price, t2.fee, t2.fee_quantity');
+			$this->db->select('t1.item_name, t1.item_price, t2.fee, t2.fee_quantity, t2.transaction_id');
 			$this->db->from('item as t1');
 
 	//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
@@ -2307,10 +2309,13 @@ class Report_Model extends CI_Model
 
 	//		$row = $query->row();		
 			$rowArray = $query->result_array();
-
-			$itemId=$itemId+1;
-			
+/*
+			echo "count: ".count($rowArray);
+			echo "transaction_id: ";
+*/
+			//TO-DO: -update: this
 			if ($rowArray == null) {
+				$itemId=$itemId+1;
 				continue;
 			}
 			
@@ -2326,6 +2331,7 @@ class Report_Model extends CI_Model
 				//edited by Mike, 20201202
 	//			$iQuantity = $iQuantity - $value['fee_quantity'];
 				
+//				echo $value['transaction_id'].";";
 				$iTotalQuantitySold = $iTotalQuantitySold + $value['fee_quantity'];
 
 			}
@@ -2334,7 +2340,8 @@ class Report_Model extends CI_Model
 			echo $iTotalQuantitySold." : ";
 */
 			//UPDATE item SET item_total_sold=2 WHERE item_id=1			
-			echo "UPDATE item SET item_total_sold=".$iTotalQuantitySold." WHERE item_id=".$itemId."<br/>";
+			echo "UPDATE item SET item_total_sold=".$iTotalQuantitySold." WHERE item_id=".$itemId.";<br/>";
+			$itemId=$itemId+1;
 		}		
 		//------------------------------------
 	}

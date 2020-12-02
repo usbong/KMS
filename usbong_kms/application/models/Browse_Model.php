@@ -3474,7 +3474,10 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	public function getItemAvailableQuantityInStock($itemTypeId, $itemId)
 //	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
 	{			
-		$this->db->select('t2.quantity_in_stock, t1.item_name');
+		//edited by Mike, 20201202
+//		$this->db->select('t2.quantity_in_stock, t1.item_name');
+		$this->db->select('t2.quantity_in_stock, t1.item_name, t1.item_total_sold');
+
 		$this->db->from('item as t1');
 		
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -3508,11 +3511,68 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		}
 		
 		//noted by Mike, 20201201
-		//TO-DO: -edit: this to use $iQuantity = $iQuantity - $value['item_total_sold'];
+		//use $iQuantity = $iQuantity - $value['item_total_sold'];
 		//note: where $iQuantity = item total in stock
-
-		//------------------------------------
+		//added by Mike, 20201202
+/*		
+		echo $row->item_name."<br/>";
+		echo $row->item_total_sold."<br/>";
+		echo "iQuantity: ".$iQuantity."<br/>--<br/>";
+*/
+		$iQuantity = $iQuantity - $row->item_total_sold;
 		
+		//------------------------------------		
+		//edited by Mike, 20201202
+		//$this->db->select('t1.item_price, t2.fee');
+		//edited by Mike, 20200901
+		$this->db->select('t1.item_name, t1.item_price, t2.fee, t2.fee_quantity');
+		$this->db->from('item as t1');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->where('t1.item_id', $itemId);
+		//edited by Mike, 20200625
+		//note: we include transactions in the cart list, albeit unpaid
+		//$this->db->where('t2.notes', "PAID");
+		$this->db->like('t2.notes', "PAID");
+		//TO-DO: -update: the total item sold list every start of the day
+//		$this->db->where('t2.transaction_date =', "12/02/2020");
+//		echo strtoupper(date("m/d/Y"));
+		$this->db->where('t2.transaction_date =', strtoupper(date("m/d/Y")));
+
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return $iQuantity;
+//			return False; //edited by Mike, 20190722
+		}
+		
+		foreach ($rowArray as $value) {	
+			//edited by Mike, 20200422
+//			$iQuantity = $iQuantity - $value['fee']/$value['item_price'];
+
+			//edited by Mike, 20200617
+//			$iQuantity = $iQuantity - floor($value['fee']/$value['item_price']*100/100);
+
+			//edited by Mike, 20200901
+			//$iQuantity = $iQuantity - $value['fee_quantity'];
+			$iQuantity = $iQuantity - $value['fee_quantity'];
+
+		}
+		
+//		echo "<br/>".$value['item_name'];
+//		echo $iQuantity."<br/>";
+		//-------------------------------------------
+
+
+/*	//removed by Mike, 20201202
+		//------------------------------------		
 		//edited by Mike, 20200617
 		//$this->db->select('t1.item_price, t2.fee');
 		//edited by Mike, 20200901
@@ -3558,7 +3618,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 //		echo $iQuantity."<br/>";
 		
 		//------------------------------------
-		
+*/		
 		return $iQuantity;
 	}
 
