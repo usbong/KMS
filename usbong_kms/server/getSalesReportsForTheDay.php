@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201127
+  @date updated: 20201202
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -170,7 +170,15 @@
 					}
 */
 					if (strpos($value['notes'],"MINORSET")!==false) {
-						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+						//edited by Mike, 20201202
+						//$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+					
+						if (strpos($value['notes'],"MINORSETX2")!==false) {
+							$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 2;						
+						}
+						else {
+							$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+						}						
 					}
 					
 /*				}					
