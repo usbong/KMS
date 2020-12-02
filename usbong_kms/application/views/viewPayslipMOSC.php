@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20200824
+' @date updated: 20201202
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -391,8 +391,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//added by Mike, 20200819
 								$iMinorsetFee = 0;
 								if (strpos($value['notes'],"MINORSET")!==false){
+									//edited by Mike, 20201202
+/*
 									$iMinorsetFee = 500;
 									$iTotalMinorsetFee = $iTotalMinorsetFee + 500;
+*/
+									if (strpos($value['notes'],"MINORSETX2")!==false){
+										$iMinorsetFee = 1000;
+									}									
+									else {
+										$iMinorsetFee = 500;
+									}
+									$iTotalMinorsetFee = $iTotalMinorsetFee + $iMinorsetFee;
 									
 									//edited by Mike, 20200824
 //									$iFee = $iFee - 500;
