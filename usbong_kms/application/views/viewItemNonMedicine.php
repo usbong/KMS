@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201128
+' @date updated: 20201203
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1076,8 +1076,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$iQuantity =  $cartValue['fee_quantity'];
 									}
-									
-									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
+
+									//edited by Mike, 20201203
+									//echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
+									$cartValueFee = $cartValue['fee']/$iQuantity;
+									if (isset($addedVAT) and ($addedVAT)) {
+										$cartValueFeeWithoutVAT = $cartValueFee/(1+0.12);
+
+										echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".($cartValueFeeWithoutVAT*.12).")";
+									}
+									else {
+										echo number_format($cartValueFee, 2, '.', '');
+									}									
 								}
 							?>
 								</div>
