@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20200813
+' @date updated: 20201203
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -37,7 +37,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* 1128 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape */							
 							/* 900 makes the width of the output page fit in a 90% zoom scale */ 
-							width: 900px; /*1128*/ /*1024px;*/ /*802px;*/ /* 670px */
+							/* 1024 makes the width of the output page fit in a legal-sized paper set using A4 size and shrinked to fit*/ 
+							width: 1024px; /*900px;*/ /*1128*/ /*1024px;*/ /*802px;*/ /* 670px */
                         }
 						
 						div.checkBox
@@ -584,7 +585,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}							
 								
 //								echo $fFee;
-								echo number_format($fFee, 2, '.', '');
+								//edited by Mike, 20201203
+//								echo number_format($fFee, 2, '.', '');
+								echo number_format($fFee, 2, '.', ',');
 
 								$fAmountPaid += $fFee;								
 								$fTotalFee += $fFee;
@@ -610,8 +613,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="xrayFeeId<?php echo $iCount?>">
 							<?php							
 								$fXRayFee = $value['x_ray_fee'];
-								
-								echo $fXRayFee;
+
+								//edited by Mike, 20201203								
+								//echo $fXRayFee;
+								echo number_format($fXRayFee, 2, '.', ',');
 
 								$fAmountPaid += $fXRayFee;														
 								$fTotalXRayFee += $fXRayFee;
@@ -622,8 +627,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="medId<?php echo $iCount?>">
 							<?php							
 								$fMedFee = $value['med_fee'];
-								
-								echo $fMedFee;
+
+								//edited by Mike, 20201203								
+								//echo $fMedFee;
+								echo number_format($fMedFee, 2, '.', ',');								
 
 								$fAmountPaid += $fMedFee;				
 								$fTotalMedFee += $fMedFee;
@@ -635,7 +642,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php							
 								$fLabFee = $value['lab_fee'];
 								
-								echo $fLabFee;
+								//edited by Mike, 20201203								
+								//echo $fLabFee;
+								echo number_format($fLabFee, 2, '.', ',');								
 
 								$fAmountPaid += $fLabFee;												
 								$fTotalLabFee += $fLabFee;
@@ -646,7 +655,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="amountPaidId<?php echo $iCount?>">
 							<?php
 //								echo $fAmountPaid;
-								echo number_format($fAmountPaid, 2, '.', '');
+								//edited by Mike, 20201203								
+//								echo number_format($fAmountPaid, 2, '.', '');
+								echo number_format($fAmountPaid, 2, '.', ',');
 
 								$fTotalAmountPaid += $fAmountPaid;
 							?>
@@ -662,7 +673,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								   $fVatSales = $fAmountPaid - $fVatAmount;	//edited by Mike, 20200426
 								}								
 
-							    echo number_format($fVatSales, 2, '.', '');									
+								//edited by Mike, 20201203								
+//							    echo number_format($fVatSales, 2, '.', '');									
+								echo number_format($fVatSales, 2, '.', ',');
 								
 								$fTotalVatSales += $fVatSales;
 							?>
@@ -671,7 +684,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="columnFee">				
 								<div id="vatAmountId<?php echo $iCount?>">
 							<?php
-							    echo number_format($fVatAmount, 2, '.', '');									
+								//edited by Mike, 20201203								
+//							    echo number_format($fVatAmount, 2, '.', '');									
+								echo number_format($fVatAmount, 2, '.', ',');
 
 								$fTotalVatAmount += $fVatAmount;
 							?>
@@ -681,7 +696,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="amountWithVatId<?php echo $iCount?>">
 							<?php
 								$fAmountWithVat = $fAmountPaid;
-							    echo number_format($fAmountWithVat, 2, '.', '');
+
+								//edited by Mike, 20201203								
+//							    echo number_format($fAmountWithVat, 2, '.', '');
+								echo number_format($fAmountWithVat, 2, '.', ',');
 
 								$fTotalAmountWithVat += $fAmountWithVat;								
 							?>
@@ -720,7 +738,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}								
 								}
 	
-							    echo number_format($fLess20PercentDiscount, 2, '.', '');							
+								//edited by Mike, 20201203								
+//							    echo number_format($fLess20PercentDiscount, 2, '.', '');							
+								echo number_format($fLess20PercentDiscount, 2, '.', ',');
 								
 								$fTotalLess20PercentDiscount += $fLess20PercentDiscount;
 							?>
@@ -780,7 +800,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 //						echo "<b>".$fTotalFee."</b>";
-						echo "<b>".number_format($fTotalFee, 2, '.', '')."<b/>";
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalFee, 2, '.', '')."<b/>";
+						echo "<b>".number_format($fTotalFee, 2, '.', ',')."<b/>";	
 					?>
 						</div>
 				</td>
@@ -788,7 +810,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 //						echo "<b>".$fTotalXRayFee."</b>";
-						echo "<b>".number_format($fTotalXRayFee, 2, '.', '')."<b/>";		
+
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalXRayFee, 2, '.', '')."<b/>";		
+						echo "<b>".number_format($fTotalXRayFee, 2, '.', ',')."<b/>";		
 					?>
 						</div>
 				</td>
@@ -796,7 +821,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 //						echo "<b>".$fTotalMedFee."</b>";
-						echo "<b>".number_format($fTotalMedFee, 2, '.', '')."<b/>";		
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalMedFee, 2, '.', '')."<b/>";	
+						echo "<b>".number_format($fTotalMedFee, 2, '.', ',')."<b/>";							
 					?>
 						</div>
 				</td>
@@ -804,7 +831,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 //						echo "<b>".$fTotalLabFee."</b>";
-						echo "<b>".number_format($fTotalLabFee, 2, '.', '')."<b/>";		
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalLabFee, 2, '.', '')."<b/>";	
+						echo "<b>".number_format($fTotalLabFee, 2, '.', ',')."<b/>";							
 					?>
 						</div>
 				</td>						
@@ -812,35 +841,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 //						echo "<b>".$fTotalAmountPaid."</b>";
-						echo "<b>".number_format($fTotalAmountPaid, 2, '.', '')."<b/>";		
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalAmountPaid, 2, '.', '')."<b/>";		
+						echo "<b>".number_format($fTotalAmountPaid, 2, '.', ',')."<b/>";								
 					?>
 						</div>
 				</td>						
 				<td class ="columnFee">				
 						<div>
 					<?php
-						echo "<b>".number_format($fTotalVatSales, 2, '.', '')."<b/>";		
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalVatSales, 2, '.', '')."<b/>";		
+						echo "<b>".number_format($fTotalVatSales, 2, '.', ',')."<b/>";		
 					?>
 						</div>
 				</td>						
 				<td class ="columnFee">				
 						<div>
 					<?php
-						echo "<b>".number_format($fTotalVatAmount, 2, '.', '')."<b/>";		
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalVatAmount, 2, '.', '')."<b/>";		
+						echo "<b>".number_format($fTotalVatAmount, 2, '.', ',')."<b/>";
 					?>
 						</div>
 				</td>						
 				<td class ="columnFee">				
 						<div>
 					<?php
-						echo "<b>".number_format($fTotalAmountWithVat, 2, '.', '')."<b/>";		
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalAmountWithVat, 2, '.', '')."<b/>";		
+						echo "<b>".number_format($fTotalAmountWithVat, 2, '.', ',')."<b/>";
 					?>
 						</div>
 				</td>						
 				<td class ="columnFee">				
 						<div>
 					<?php
-						echo "<b>".number_format($fTotalLess20PercentDiscount, 2, '.', '')."<b/>";		
+						//edited by Mike, 20201203								
+//						echo "<b>".number_format($fTotalLess20PercentDiscount, 2, '.', '')."<b/>";		
+						echo "<b>".number_format($fTotalLess20PercentDiscount, 2, '.', ',')."<b/>";
 					?>
 						</div>
 				</td>						
