@@ -964,6 +964,14 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 			}
 		}
+/*
+		//edited by Mike, 20201204
+		//TO-DO: -reverify: remove excess zero quantity in list
+//		foreach ($data['result'] as $value) {				
+		foreach ($outputArray as $value) {				
+			echo $value['item_name']." : ".$value['resultQuantityInStockNow']."<br/>";
+		}
+*/				
 		
 		//edited by Mike, 20200723
 		//note: this is due to the following removed function is not available in PHP 5.3
