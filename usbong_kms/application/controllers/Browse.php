@@ -898,7 +898,22 @@ class Browse extends CI_Controller { //MY_Controller {
 						}
 					}
 					else {
-						array_push($outputArray, $value);
+						//edited by Mike, 20201204
+//						array_push($outputArray, $value);
+
+						if ($iSameItemTotalCount>2) {
+							if (($iSameItemCount == ($iSameItemTotalCount)) or //if last item in the list of same items
+								($iSameItemCount == ($iSameItemTotalCount - 1))){  //if second to the last item in the list of same items
+								array_push($outputArray, $value);
+							}
+							
+/*							echo $iSameItemCount.": ".$value['item_name']." : ".$value['resultQuantityInStockNow']."<br/>";
+							array_push($outputArray, $value);
+*/
+						}
+						else {
+							array_push($outputArray, $value);
+						}						
 					}
 
 					$iSameItemCount = $iSameItemCount + 1;
@@ -920,7 +935,6 @@ class Browse extends CI_Controller { //MY_Controller {
 					}
 					
 //					echo $iSameItemCount;
-					
 					if ($iSameItemTotalCount>1) {							
 						if ($value['resultQuantityInStockNow']!=0) {
 							array_push($outputArray, $value);						
@@ -964,9 +978,9 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 			}
 		}
-/*
+
 		//edited by Mike, 20201204
-		//TO-DO: -reverify: remove excess zero quantity in list
+/*		//TO-DO: -reverify: remove excess zero quantity in list
 //		foreach ($data['result'] as $value) {				
 		foreach ($outputArray as $value) {				
 			echo $value['item_name']." : ".$value['resultQuantityInStockNow']."<br/>";
