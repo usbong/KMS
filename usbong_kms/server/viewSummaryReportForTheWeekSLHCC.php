@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200927
+  @date updated: 20201206
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit (SLHCC)
@@ -171,8 +171,11 @@
 
 	$sEndDate = str_replace("-","",$endDate->format("Y-m-d"));
 		
+	//edited by Mike, 20201206
 	$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook".$sStartDate."~".$sEndDate.".csv";
-	
+	//note: use this to set by hand the week of a collection report 
+	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201123~20201128.csv";
+	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201116~20201121.csv";	
 
 	echo "<br/>";
 	echo "<table>";
