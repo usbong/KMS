@@ -2466,7 +2466,20 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20201105; removed by Mike, 20201105
 //		echo "patientId".$param['patientId'];
+		
+		//added by Mike, 20201210
+		//note: transactions added at Information Desk using another IP address
+		//machine address not yet successfully identified
+		//part 0		
+		$data = array(
+					'notes' => "IN-QUEUE; PAID" //"PAID"
+				);
 
+		$this->db->where('notes',"IN-QUEUE; UNPAID");
+		$this->db->where('patient_id', $param['patientId']);
+		$this->db->update('transaction', $data);
+
+		
 		//edited by Mike, 20200605
 //		$this->db->select('notes, transaction_id');
 		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
@@ -2506,12 +2519,11 @@ class Browse_Model extends CI_Model
 			//edited by Mike, 20200530
 			//$this->db->where('transaction_date', date('m/d/Y'));
 			$this->db->where('transaction_id', $rowValue['transaction_id']);
-
-/*			//removed by Mike, 20200822
-			//added by Mike, 20200821
+			
+			//added by Mike, 20201210
 			$this->db->where('ip_address_id', $ipAddress);
 			$this->db->where('machine_address_id', $machineAddress);
-*/
+
 			$this->db->update('transaction', $data);
 			
 			//added by Mike, 20200605
