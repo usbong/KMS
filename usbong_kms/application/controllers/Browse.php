@@ -2829,8 +2829,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->viewItemNonMedicine($data);
 	}		
 		
-	//added by Mike, 20200411; edited by Mike, 20200608
-	public function payTransactionItemPurchase($itemTypeId, $itemId, $patientId)
+	//added by Mike, 20200411; edited by Mike, 20201210
+//	public function payTransactionItemPurchase($itemTypeId, $itemId, $patientId)
+	public function payTransactionItemPurchase($itemTypeId, $itemId, $patientId, $medicalDoctorId)
 	{
 /*
 		echo itemId: .$itemId;
@@ -2840,6 +2841,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		//added by Mike, 20200616
 		$data['itemTypeId'] = $itemTypeId;
+		
+		//added by Mike, 20201210
+		$data['medicalDoctorId'] = $medicalDoctorId;
+		$data['patientId'] = $patientId;
 				
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
