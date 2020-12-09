@@ -647,7 +647,7 @@ class Browse_Model extends CI_Model
 */
 
 	//added by Mike, 20200517; edited by Mike, 20200629
-	//updated instructions to not execute the following action:
+	//updated instructions to NOT execute the following action:
 	//if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
 	public function deleteTransactionServicePurchase($param) 
 	{			
@@ -655,6 +655,21 @@ class Browse_Model extends CI_Model
         $this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
 */
+
+		//added by Mike, 20201210
+		//-----
+		//note: transactions added at Information Desk using another IP address
+		//machine address not yet successfully identified
+		//part 0		
+		$data = array(
+					'notes' => "IN-QUEUE; UNPAID" //"PAID"
+				);
+
+		$this->db->where('notes',"IN-QUEUE; PAID");
+		$this->db->where('patient_id', $param['patientId']);
+		$this->db->update('transaction', $data);
+		//-----
+
 
 		$iTransactionId = $param['transactionId'];
 
@@ -694,13 +709,41 @@ class Browse_Model extends CI_Model
 //				$this->db->where('patient_id!=',0);
 				
 				//added by Mike, 20200629
+				//----
 				$this->db->where('item_id',0);
-
 				$this->db->delete('transaction');
 
 				//added by Mike, 20201120
 				$this->db->where('transaction_id',$iTransactionId);
 				$this->db->delete('receipt');
+
+				//added by Mike, 20201210
+				$this->db->select('notes');
+				$this->db->where('transaction_id',$iTransactionId);
+				$this->db->where('item_id!=',0);
+				$query = $this->db->get('transaction');
+				$itemTransactionRow = $query->row();
+				
+				if (isset($itemTransactionRow->notes)) {
+					if ((strpos($itemTransactionRow->notes,"SC")!==false) 
+						and (strpos($itemTransactionRow->notes,"DISCOUNTED")!==true)) {
+						$classification = "SC; ";
+					}
+					else if (strpos($itemTransactionRow->notes,"PWD")!==false) {
+						$classification = "PWD; ";
+					}
+				
+					$updatedNotes = str_replace($classification,"",$itemTransactionRow->notes);
+
+					$data = array(
+							'notes' => $updatedNotes
+						);
+
+					$this->db->where('transaction_id',$iTransactionId);
+					$this->db->update('transaction', $data);
+				}
+				//----
+
 
 				//added by Mike, 20200629					
 				$iTransactionId = $iTransactionId - 1;
@@ -1913,8 +1956,11 @@ class Browse_Model extends CI_Model
 		$patientTransactionRowArray = $query->result_array();
 
 		$classification = "";
-
-		if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
+		
+		//edited by Mike, 202012010
+//		if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
+		if ((strpos($patientTransactionRowArray[0]['notes'],"SC")!==false)
+			and (strpos($patientTransactionRowArray[0]['notes'],"DISCOUNTED")!==true)) {
 			$classification = "SC; ";
 		}
 		else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
@@ -2227,6 +2273,11 @@ class Browse_Model extends CI_Model
 		$this->db->select('notes');
 		$this->db->where('patient_id', $patientId);
 		$this->db->where('transaction_date', date('m/d/Y'));
+
+		//added by Mike, 20201210
+		$this->db->where('ip_address_id', $ipAddress);
+		$this->db->where('machine_address_id', $machineAddress);
+
 		$query = $this->db->get('transaction');		
 		$patientTransactionRowArray = $query->result_array();
 
