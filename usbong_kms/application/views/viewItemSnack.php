@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201116
+' @date updated: 20201211
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -250,9 +250,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				if (e.keyCode==17) { //Ctrl key
 					var itemIdInput = document.getElementById("payItemIdParam").value;
 					var patientIdInput = document.getElementById("payPatientIdParam").value;
+					//added by Mike, 20201210
+					var medicalDoctorIdInput = document.getElementById("payMedicalDoctorIdParam").value;
 
 					if (itemIdInput !== null && itemIdInput !== '') { //verify only one
-						myPopupFunctionPay(itemIdInput, patientIdInput);
+						//edited by Mike, 20201211
+						//myPopupFunctionPay(itemIdInput, patientIdInput);
+						myPopupFunctionPay(itemIdInput, patientIdInput, medicalDoctorIdInput);
 					}
 				}
 			};		
@@ -542,9 +546,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		}	
 
-		//added by Mike, 20200331; edited by Mike, 20200608
+		//added by Mike, 20200331; edited by Mike, 20201211
 		//function myPopupFunctionPay(itemId) {				
-		function myPopupFunctionPay(itemId, patientId) {				
+//		function myPopupFunctionPay(itemId, patientId) {				
+		function myPopupFunctionPay(itemId, patientId, medicalDoctorId) {				
 			//added by Mike, 20201103
 			//verified: if a patient id already exists in the cart list
 			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
@@ -560,8 +565,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 			//edited by Mike, 20200608
 			//window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/1/"+itemId+"');?>";
+
+			//edited by Mike, 20201211
 			//3 = snack
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/3/"+itemId+"/"+patientId+"');?>";
+//			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/3/"+itemId+"/"+patientId+"');?>";
+			
+			//note: all carts should include a patient transation with Medical Doctor Identification
+			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/3/"+itemId+"/"+patientId+"/"+medicalDoctorId+"');?>";
+			
 		}	
 
 	  </script>
@@ -921,6 +932,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200608
 				//note: at present, the computer server accepts only 1 patient per cart list
 				$patientId = 0; //none
+
+				//added by Mike, 20201210
+				$medicalDoctorId = 1; //DR. PEDRO
 				
 				//add: table headers
 				$iCount = 1;
@@ -1095,8 +1109,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<!-- added by Mike, 20200613 -->
 							<input type="hidden" id="payItemIdParam" value="<?php echo $result[0]['item_id'];?>">
 							<input type="hidden" id="payPatientIdParam" value="<?php echo $patientId;?>">
+							<!-- edited by Mike, 20201211 -->						
+							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $medicalDoctorId;?>">
 						
-							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY</button>
+							<!-- edited by Mike, 20201211 -->
+							<!--
+							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY
+							-->
+							
+							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId.",".$medicalDoctorId;?>)" class="Button-purchase">PAY
+							</button>	
+												
 						</td>						
 					  </tr>
 <?php

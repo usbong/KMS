@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201210
+' @date updated: 20201211
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -254,7 +254,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					var medicalDoctorIdInput = document.getElementById("payMedicalDoctorIdParam").value;
 
 					if (itemIdInput !== null && itemIdInput !== '') { //verify only one
-						//edited by Mike, 202012010
+						//edited by Mike, 20201211
 						//myPopupFunctionPay(itemIdInput, patientIdInput);
 						myPopupFunctionPay(itemIdInput, patientIdInput, medicalDoctorIdInput);
 					}
@@ -1122,6 +1122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<!-- added by Mike, 20200613 -->
 							<input type="hidden" id="payItemIdParam" value="<?php echo $result[0]['item_id'];?>">
 							<input type="hidden" id="payPatientIdParam" value="<?php echo $patientId;?>">
+							<!-- added by Mike, 20201210 -->
 							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $medicalDoctorId;?>">
 							
 							<!-- edited by Mike, 20201210 -->
