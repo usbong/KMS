@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201208
+  @date updated: 20201211
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -766,9 +766,13 @@
 				//identify transaction with the combined fees
 				//					while ($transactionId==0) {
 									do {
+//										echo "iTransactionId: ".$iTransactionId;
+										
 										if ($rowTransactionQuantityArray = $mysqli->query("select transaction_quantity from transaction where transaction_id='".$iTransactionId."'")) {
-											if ($rowTransactionQuantityArray->num_rows > 0) {
+											if ($rowTransactionQuantityArray->num_rows > 0) {												
 												$iTransactionId = $iTransactionId + 1;
+
+												//echo "iTransactionId: ".$iTransactionId;
 												
 												//this is due to the transaction count can skip
 												$iTransactionQuantity = -1;
@@ -785,10 +789,12 @@
 												//note: if last transaction in database
 												//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);
 												if ($iTransactionId>=$iTransactionIdMax) {
-												}
+												}/* //removed by Mike, 20201211
 												else {
 													$iTransactionId = $iTransactionId -1;
-												}
+												}*/
+												
+//												echo "iTransactionQuantity: ".$iTransactionQuantity;
 											}
 										}
 										// show an error if there is an issue with the database query
@@ -796,6 +802,9 @@
 										{
 											echo "Error: " . $mysqli->error;
 										}									
+
+//												echo "ditoITransactionQuantity: ".$iTransactionQuantity;
+
 									}
 									while ($iTransactionQuantity <= 0);								
 								//--------------------------------------------------
