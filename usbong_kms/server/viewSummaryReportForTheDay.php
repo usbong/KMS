@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20200813
+  @date updated: 20201212
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
   Output:
@@ -229,8 +229,8 @@
 						if ($iColumnCount==7) { //COUNT
 							//integer value
 						}
-						//added by Mike, 20200813						
-						else if ((strpos(utf8_encode($data[$iColumnCount+1]),"#")!==false)) {
+						//added by Mike, 20200813; edited by Mike, 20201212
+						else if (isset($data[$iColumnCount+1]) and ((strpos(utf8_encode($data[$iColumnCount+1]),"#")!==false))) {
 							//integer value
 						}						
 						else {
