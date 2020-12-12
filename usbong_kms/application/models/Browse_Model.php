@@ -1332,6 +1332,7 @@ class Browse_Model extends CI_Model
 */			
 		$medFee = 0;
 		$nonMedFee = 0;
+		$snackFee = 0; //added by Mike, 20201212
 		
 		//added by Mike, 20200703
 		if ($row->item_type_id==1) { //medicine
