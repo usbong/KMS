@@ -952,6 +952,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 									$patientFee = $cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
 									echo number_format($patientFee, 2, '.', '');
+
+									//added by Mike, 20201212
+									$cartValuePatientId = $cartValue['patient_id'];
 								}
 								else {
 									if ($cartValue['fee_quantity']==0) {
@@ -1026,9 +1029,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<!-- edited by Mike, 20201212 -->
 							<!--
 							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>							-->		
-							<?php 
-								$cartValuePatientId = $cartValue['patient_id'];
-							?>
 							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$cartValuePatientId.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>														
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
