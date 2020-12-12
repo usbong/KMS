@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201211
+' @date updated: 20201212
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -970,7 +970,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										echo site_url('browse/viewItemMedicine/'.$cartValue['item_id']);
 									}
 									//added by Mike, 20201104
-									if ($cartValue['item_type_id']==3) { //3 = SNACK
+									else if ($cartValue['item_type_id']==3) { //3 = SNACK
 										echo site_url('browse/viewItemSnack/'.$cartValue['item_id']);
 									}
 									else if ($cartValue['item_type_id']==2) { //2 = NON-MEDICINE
@@ -1001,7 +1001,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$iQuantity =  1;
 
 									$patientFee = $cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
-									echo number_format($patientFee, 2, '.', '');
+
+									//edited by Mike, 20201212
+									//echo number_format($patientFee, 2, '.', '');
+//									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');
+									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+
 								}
 								else {
 									if ($cartValue['fee_quantity']==0) {

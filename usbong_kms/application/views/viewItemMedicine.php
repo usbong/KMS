@@ -973,6 +973,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									if ($cartValue['item_type_id']==1) { //1 = MEDICINE
 										echo site_url('browse/viewItemMedicine/'.$cartValue['item_id']);
 									}
+									//added by Mike, 20201212
+									else if ($cartValue['item_type_id']==3) { //3 = SNACK
+										echo site_url('browse/viewItemSnack/'.$cartValue['item_id']);
+									}
 									else if ($cartValue['item_type_id']==2) { //2 = NON-MEDICINE
 										echo site_url('browse/viewItemNonMedicine/'.$cartValue['item_id']);
 									}
@@ -1001,7 +1005,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$iQuantity =  1;
 
 									$patientFee = $cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
-									echo number_format($patientFee, 2, '.', '');
+
+									//edited by Mike, 20201212
+									//echo number_format($patientFee, 2, '.', '');
+//									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');
+									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+									
 								}
 								else {
 									if ($cartValue['fee_quantity']==0) {
