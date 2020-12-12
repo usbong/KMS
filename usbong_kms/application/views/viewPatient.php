@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201128
+' @date updated: 20201212
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -888,6 +888,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200519
 				$patientFee = 0;
 				
+				//added by Mike, 20201212
+				$cartValuePatientId = -1;
+				
 				foreach ($cartListResult as $cartValue) {
 /*	
 				$value = $result[0];
@@ -1020,7 +1023,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td>				
 							<!-- TO-DO: -reverify: delete for medicine and non-medicine items -->
-							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+							<!-- edited by Mike, 20201212 -->
+							<!--
+							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>							-->		
+							<?php 
+								$cartValuePatientId = $cartValue['patient_id'];
+							?>
+							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$cartValuePatientId.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>														
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
@@ -1062,9 +1071,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td>
 							<!-- added by Mike, 20200612 -->
 							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $value['medical_doctor_id'];?>">
+							<!-- edited by Mike, 20201212 -->
+							<!--
 							<input type="hidden" id="payPatientIdParam" value="<?php echo $value['patient_id'];?>">
-
 							<button onclick="myPopupFunctionPay(<?php echo $value['medical_doctor_id'].",".$value['patient_id']?>)" class="Button-purchase">PAY</button>
+							-->
+							<input type="hidden" id="payPatientIdParam" value="<?php echo $cartValuePatientId;?>">
+							<button onclick="myPopupFunctionPay(<?php echo $value['medical_doctor_id'].",".$cartValuePatientId?>)" class="Button-purchase">PAY</button>
+							
 						</td>						
 					  </tr>					
 <?php
