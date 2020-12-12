@@ -725,6 +725,9 @@ class Browse_Model extends CI_Model
 				$itemTransactionRow = $query->row();
 				
 				if (isset($itemTransactionRow->notes)) {
+					//added by Mike, 20201212
+					$classification="";
+					
 					if ((strpos($itemTransactionRow->notes,"SC")!==false) 
 						and (strpos($itemTransactionRow->notes,"DISCOUNTED")!==true)) {
 						$classification = "SC; ";
@@ -1334,8 +1337,12 @@ class Browse_Model extends CI_Model
 		if ($row->item_type_id==1) { //medicine
 			$medFee = $param['quantity'] * $param['fee'];
 		}
-		else { //non-medicine
+		//edited by Mike, 20201212
+		else if ($row->item_type_id==2) { //non-medicine
 			$nonMedFee = $param['quantity'] * $param['fee'];
+		}		
+		else { //snack
+			$snackFee = $param['quantity'] * $param['fee'];
 		}
 		
 		$data = array(
@@ -1352,6 +1359,8 @@ class Browse_Model extends CI_Model
 					//added by Mike, 20200703
 					'med_fee' => $medFee,
 					'pas_fee' => $nonMedFee,
+					//added by Mike, 20201212
+					'snack_fee' => $snackFee,
 					//added by Mike, 20200821
 					'ip_address_id' => $ipAddress,
 					'machine_address_id' => $machineAddress
@@ -1678,9 +1687,7 @@ class Browse_Model extends CI_Model
 */
 			$updatedMedFee = 0;
 			$updatedNonMedFee = 0;
-			
-			//TO-DO: -add: $updatedSnackFee = 0;
-
+			$updatedSnackFee = 0; //added by Mike, 20201212
 
 			if (isset($row->med_fee)) {
 				$updatedMedFee = $row->med_fee;
@@ -1732,7 +1739,12 @@ class Browse_Model extends CI_Model
 								//$updatedNonMedFee = 0;
 								$updatedNonMedFee = $updatedNonMedFee - $row->pas_fee;	
 							}			
-							//TO-DO: -reverify: if item_type_id==3, i.e. snack
+							//added by Mike, 20201212
+							else if ($row->item_type_id==3) {
+								//edited by Mike, 20200831
+								//$updatedNonMedFee = 0;
+								$updatedSnackFee = $updatedSnackFee - $row->snack_fee;	
+							}			
 						}
 					}
 														
@@ -1797,7 +1809,9 @@ class Browse_Model extends CI_Model
 			$data = array(
 						'transaction_quantity' => $updatedTransactionQuantity,
 						'med_fee' => $updatedMedFee,
-						'pas_fee' => $updatedNonMedFee
+						'pas_fee' => $updatedNonMedFee,
+						//added by Mike, 20201212
+						'snack_fee' => $updatedSnackFee						
 					);
 
 			//removed by Mike, 20200701
@@ -2314,7 +2328,9 @@ class Browse_Model extends CI_Model
 
 		$totalFeeMedicine = 0;
 		$totalFeeNonMedicine = 0;
-
+		//added by Mike, 20201212
+		$totalFeeSnack = 0;
+		
 		//added by Mike, 20200610
 		//echo "count: ".count($rowArray);
 		$transactionQuantity = count($rowArray)+1; //start at 1
@@ -2323,9 +2339,15 @@ class Browse_Model extends CI_Model
 			if ($rowValue['item_type_id']==1) { //medicine
 				$totalFeeMedicine = $totalFeeMedicine + $rowValue['fee'];								
 			}
-			else {
+			//edited by Mike, 20201212
+			else if ($rowValue['item_type_id']==2) { //non-medicine
 				$totalFeeNonMedicine = $totalFeeNonMedicine + $rowValue['fee'];
 			}		
+			else {
+				$totalFeeSnack = $totalFeeSnack + $rowValue['fee'];
+			}
+
+			
 /*			echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
 			echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
 			echo ">";
@@ -2344,6 +2366,7 @@ class Browse_Model extends CI_Model
 					'fee' => 0,
 					'med_fee' => $totalFeeMedicine,
 					'pas_fee' => $totalFeeNonMedicine,
+					'snack_fee' => $totalFeeSnack, //added by Mike, 20201212
 					'transaction_type_name' => "CASH",
 					'report_id' => 0,
 					//edited by Mike, 20200916
@@ -2377,7 +2400,9 @@ class Browse_Model extends CI_Model
 		//return $outputTransactionId;
 		//edited by Mike, 20200616
 //		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
-		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
+		//edited by Mike, 20201212
+//		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
+		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity');
 		$this->db->where('transaction_id', $outputTransactionId);
 		//added by Mike, 20200821
 		$this->db->where('ip_address_id', $ipAddress);
