@@ -2706,12 +2706,37 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200529
 	public function addPatientName($param) 
 	{		
+		//added by Mike, 20201214
+		//verify if patient name already exists
+		//TO-DO: -add: notify Unit member if similar patient names already exist
+		$this->db->select('patient_name, patient_id');
+		$this->db->where('patient_name', $param['nameParam']);
+		$query = $this->db->get('patient');	
+		
+		$rowArray = $query->result_array();
+		
+		if (isset($rowArray) and (count($rowArray)>0)) {
+			//TO-DO: -add: this in view
+			//echo "PATIENT NAME ALREADY EXISTS IN COMPUTER DATABASE!";
+			
+			return $rowArray[0]['patient_id'];
+		}
+		else {
+			$data = array(
+						'patient_name' => $param['nameParam']
+					);
+
+			$this->db->insert('patient', $data);			
+			return $this->db->insert_id();
+		}
+/*		//edited by Mike, 20201214	
 		$data = array(
 					'patient_name' => $param['nameParam']
 				);
 
 		$this->db->insert('patient', $data);
 		return $this->db->insert_id();
+*/		
 	}	
 
 	//added by Mike, 20200529; edited by Mike, 20200530
