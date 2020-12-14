@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201211
+' @date updated: 20201214
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1104,10 +1104,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20201203
 									//echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
 									$cartValueFee = $cartValue['fee']/$iQuantity;
-									if (isset($addedVAT) and ($addedVAT)) {
-										$cartValueFeeWithoutVAT = $cartValueFee/(1+0.12);
+									
+									//edited by Mike, 20201214
+									if ($cartValue['item_type_id']==2) { //NON-MED ITEM
+										//note: verify first if noVAT 
+										if ((isset($noVAT)) and ($noVAT)) {
+											$cartValueFeeWithoutVAT = $cartValueFee - $cartValueFee*0.12;
 
-										echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".($cartValueFeeWithoutVAT*.12).")";
+											echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
+										}
+										else if (isset($addedVAT) and ($addedVAT)) {
+											$cartValueFeeWithoutVAT = $cartValueFee/(1+0.12);
+											
+											//edited by Mike, 20201214
+											//echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".($cartValueFeeWithoutVAT*.12).")";
+											echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
+										}
+										else {
+											echo number_format($cartValueFee, 2, '.', '');
+										}									
 									}
 									else {
 										echo number_format($cartValueFee, 2, '.', '');
@@ -1158,8 +1173,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo number_format($cartValue['fee'], 2, '.', '');
 
 									$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
-									
-									
+
 									//added by Mike, 20201115
 									if ($cartValue['item_type_id']==2) {
 										$cartFeeTotalNonMedOnly = $cartFeeTotalNonMedOnly + $cartValue['fee'];
