@@ -2305,6 +2305,9 @@ class Report_Model extends CI_Model
 			$this->db->like('t2.notes', "PAID");
 			$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
 
+			//added by Mike, 20201215
+			$this->db->where('t2.transaction_date <', date("m/d/Y")); //i.e., date today
+
 			$query = $this->db->get('item');
 
 	//		$row = $query->row();		
@@ -2342,6 +2345,9 @@ class Report_Model extends CI_Model
 			//UPDATE item SET item_total_sold=2 WHERE item_id=1			
 			echo "UPDATE item SET item_total_sold=".$iTotalQuantitySold." WHERE item_id=".$itemId.";<br/>";
 			$itemId=$itemId+1;
+			
+			//added by Mike, 20201215
+			//TO-DO: -add: auto-insert in computer database
 		}		
 		//------------------------------------
 	}
