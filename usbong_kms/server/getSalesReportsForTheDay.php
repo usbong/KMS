@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201211
+  @date updated: 20201216
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -808,10 +808,18 @@
 									}
 									while ($iTransactionQuantity <= 0);								
 								//--------------------------------------------------
+								
+								//added by Mike, 20201216
+								$iTransactionId = $iTransactionId -1;
+
 								//edited by Mike, 20201127
 								//if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
+									echo $iTransactionId;
 								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$iTransactionId."'")) {
 									$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
+
+									echo "dito".$receiptArrayRowValue['receipt_number'];
+
 									if($receiptArrayRowValue) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
