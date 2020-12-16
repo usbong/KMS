@@ -1173,9 +1173,9 @@ class Report extends CI_Controller { //MY_Controller {
 	public function viewReportTotalQuantitySoldPerItem()
 	{
 		$this->load->model('Report_Model');
-		$data["result"] = $this->Report_Model->getTotalQuantitySoldPerItem();
-		
+		$data["result"] = $this->Report_Model->getTotalQuantitySoldPerItem();		
 		echo "***NOTHING FOLLOWS***";
+		
 		//TO-DO: -add: this
 //		$this->load->view('viewReportSnack', $data);
 	}

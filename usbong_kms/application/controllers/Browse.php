@@ -3260,4 +3260,12 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		return $outputResult;		
 	}
+	
+	//added by Mike, 20201216
+	public function updateTotalQuantitySoldPerItem()
+	{
+		$this->load->model('Browse_Model');
+		$this->Browse_Model->updateTotalQuantitySoldPerItem();		
+		echo "***NOTHING FOLLOWS***";		
+	}
 }
