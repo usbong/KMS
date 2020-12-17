@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20201104
+  @date updated: 20201217
 	
   Computer Web Browser Address (Example):
   1) http://mosc-accounting/usbong_kms/index.php/report/viewWebAddressList
@@ -231,6 +231,10 @@ Examples:<br/>
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Pedro</a><br/>
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Peter">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Peter</a><br/>
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Chastity</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Rodil">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Rodil</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Honesto">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Honesto</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Gracia">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Gracia</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel</a><br/>
 
 <h2>V. REPORTS</h2>
 <b>1) MEDICINE</b><br/>
