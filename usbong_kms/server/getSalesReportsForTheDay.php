@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201216
+  @date updated: 20201217
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -703,6 +703,9 @@
 					$iPrivateQuantityTotalCount = 0; //added by Mike, 20200531
 					$iNoChargeQuantityTotalCount = 0; //added by Mike, 20200531
 
+					//added by Mike, 20201217
+//					$iTransactionQuantity = 0;
+
 					foreach ($selectedMedicalDoctorResultArray as $value) {
 		//				if (strpos($value['item_name'], "*") === false) {
 						//removed by Mike, 20200712
@@ -781,30 +784,31 @@
 //													$iTransactionQuantity = $rowTransactionQuantityArray->transaction_quantity;
 													$iTransactionQuantity = mysqli_fetch_array($rowTransactionQuantityArray)[0];
 												}
-												
+
+												//note: if last transaction in database
+												//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);												
 												if ($iTransactionId>=$iTransactionIdMax) {							
 													break;
 												}						
 												
-												//note: if last transaction in database
-												//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);
-												if ($iTransactionId>=$iTransactionIdMax) {
-												}/* //removed by Mike, 20201211
+												/*if ($iTransactionId>=$iTransactionIdMax) {
+												}*//* //removed by Mike, 20201211
 												else {
 													$iTransactionId = $iTransactionId -1;
 												}*/
 												
 //												echo "iTransactionQuantity: ".$iTransactionQuantity;
 											}
+											//added by Mike, 20201217
+											else {
+												break;
+											}
 										}
 										// show an error if there is an issue with the database query
 										else
 										{
 											echo "Error: " . $mysqli->error;
-										}									
-
-//												echo "ditoITransactionQuantity: ".$iTransactionQuantity;
-
+										}
 									}
 									while ($iTransactionQuantity <= 0);								
 								//--------------------------------------------------
@@ -814,11 +818,11 @@
 
 								//edited by Mike, 20201127
 								//if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
-									echo $iTransactionId;
+//									echo $iTransactionId;
 								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$iTransactionId."'")) {
 									$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
 
-									echo "dito".$receiptArrayRowValue['receipt_number'];
+//									echo "dito".$receiptArrayRowValue['receipt_number'];
 
 									if($receiptArrayRowValue) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
