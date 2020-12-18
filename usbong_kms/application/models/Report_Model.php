@@ -268,6 +268,7 @@ class Report_Model extends CI_Model
 			$this->db->not_like('t2.notes',"SNACK ONLY");
 		}
 
+
 //		$this->db->like('t2.notes', "NEW; NONE YET");
 //		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
 

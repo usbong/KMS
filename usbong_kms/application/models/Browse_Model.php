@@ -2742,12 +2742,15 @@ class Browse_Model extends CI_Model
 	//added by Mike, 20200529; edited by Mike, 20200530
 	public function addNewTransactionForPatient($param) 
 	{			
-		$this->db->select('transaction_id, patient_id');
+		//edited by Mike, 20201218
+		//$this->db->select('transaction_id, patient_id');
+		$this->db->select('transaction_id, patient_id, notes');
+
 		//edited by Mike, 20200602
 //        $this->db->where('notes',"IN-QUEUE; UNPAID");
 		//these are @information desk
 		//we do not anymore add a new transaction for the patient after payment
-		//in addition, we do not add a new transactions for the apatient that already has an unpaid transaction for the day
+		//in addition, we do not add a new transactions for the patient that already has an unpaid transaction for the day
         $this->db->like('notes',"PAID"); 
 
 		$this->db->where('transaction_date', date('m/d/Y'));
@@ -2774,7 +2777,29 @@ class Browse_Model extends CI_Model
 			$this->db->insert('transaction', $data);
 			return $this->db->insert_id();
 		}
+/*		//edited by Mike, 20201218		
 		else {
+			return False;
+		}
+*/		
+		else {
+			foreach ($rowArray as $rowValue) {
+				//"MED ONLY", "MEDICINE ONLY", "SNACK ONLY"
+				if (strpos($rowValue['notes'], "ONLY")!==false) {
+					$data = array(						
+								'patient_id' => $param['patientId'],
+								'item_id' => 0,
+								'transaction_date' => date('m/d/Y'),
+								'report_id' => 0,
+								'medical_doctor_id' => $param['medicalDoctorId'],						
+								'notes' => "IN-QUEUE; UNPAID"
+							);
+
+					$this->db->insert('transaction', $data);
+					return $this->db->insert_id();					
+				}
+			}
+			
 			return False;
 		}
 	}	
