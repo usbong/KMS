@@ -1201,7 +1201,7 @@ class Report extends CI_Controller { //MY_Controller {
 		//note: this is due to the following removed function is not available in PHP 5.3
 		//$outputResult = [];
 		$outputResult = array();
-		
+				
 		//edited by Mike, 20200602
 		if ($data["result"]!=False) {
 //		if ((isset($data["result"])) and (count($data["result"])>1)) {

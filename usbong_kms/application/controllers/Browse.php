@@ -2169,7 +2169,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
 		$data['transactionDate'] = date('m/d/Y');
-		
+				
 		$this->load->model('Browse_Model');
 		$this->load->model('Report_Model');
 
@@ -2178,6 +2178,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20201128
 //		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay(1);
+
+		//note: IF a patient first bought an item, e.g. face shield, 
+		//AND the Info Desk Unit added the patient in the wait list
+		//AND a Unit member from Info Desk or Accounting Unit deletes the patient,
+		//all transactions with the patient_id for the day are deleted from the database 
+		//the purchased item is not deleted
+		//TO-DO: -update: this
 
 		//edited by Mike, 20200601
 		//this is so that we do not add excess transactions
