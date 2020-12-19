@@ -901,14 +901,27 @@ class Browse extends CI_Controller { //MY_Controller {
 						//edited by Mike, 20201204
 //						array_push($outputArray, $value);
 						
-						//TO-DO: -reverify: this
+						//TO-DO: -identify: remaining quantity of in-stock item
+						//still reaches item's last entry in the inventory list
+						//if not, no need to add in displayed list
+						//additional note: 
+						//observation: displayed list includes 3 or more of same item in inventory list,
+						//cause: delivered in-stock items excess; increased in returned for exchange items, etc
+						//TO-DO: -update: this
 						//edited by Mike, 20201219
-						if ($iSameItemTotalCount<=3) {
+/*						if ($iSameItemTotalCount<=2) {
+							array_push($outputArray, $value);
+						}
+						else if ($iSameItemTotalCount<=3) {
 							if (($iSameItemCount == ($iSameItemTotalCount))) {//if last item in the list of same items
 							}
 							else {
 								array_push($outputArray, $value);
 							}
+						}
+*/						
+						if ($iSameItemTotalCount<=3) {
+							array_push($outputArray, $value);
 						}
 						else if ($iSameItemTotalCount>3) {
 							if (($iSameItemCount == ($iSameItemTotalCount)) or //if last item in the list of same items
