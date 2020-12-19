@@ -900,27 +900,31 @@ class Browse extends CI_Controller { //MY_Controller {
 					else {
 						//edited by Mike, 20201204
 //						array_push($outputArray, $value);
-
-						if ($iSameItemTotalCount>2) {
-							//edited by Mike, 20201219
-/*							if (($iSameItemCount == ($iSameItemTotalCount)) or //if last item in the list of same items
-								($iSameItemCount == ($iSameItemTotalCount - 1))){  //if second to the last item in the list of same items
-*/								
-							if (($iSameItemCount == ($iSameItemTotalCount - 1)) or //if last item in the list of same items
-								($iSameItemCount == ($iSameItemTotalCount - 2))){  //if second to the last item in the list of same items
-
+						
+						//TO-DO: -reverify: this
+						//edited by Mike, 20201219
+						if ($iSameItemTotalCount<=3) {
+							if (($iSameItemCount == ($iSameItemTotalCount))) {//if last item in the list of same items
+							}
+							else {
 								array_push($outputArray, $value);
 							}
+						}
+						else if ($iSameItemTotalCount>3) {
+							if (($iSameItemCount == ($iSameItemTotalCount)) or //if last item in the list of same items
+								($iSameItemCount == ($iSameItemTotalCount - 1))){  //if second to the last item in the list of same items
+								array_push($outputArray, $value);
 							
 ////							echo $iSameItemCount.": ".$value['item_name']." : ".$value['resultQuantityInStockNow']."<br/>";
 ////							array_push($outputArray, $value);
+							}
 						}
 						else {
 							array_push($outputArray, $value);
 						}						
+
 						
 					}
-
 					$iSameItemCount = $iSameItemCount + 1;
 
 				}
