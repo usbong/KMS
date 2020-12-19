@@ -851,7 +851,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		//note: this is due to the following removed function is not available in PHP 5.3
 		//$outputArray = [];
 		$outputArray = array();
-		
+
 		//TO-DO: -reverify: this
 		//TO-DO: -add: in non-med
 		//added by Mike, 20200811
@@ -902,18 +902,23 @@ class Browse extends CI_Controller { //MY_Controller {
 //						array_push($outputArray, $value);
 
 						if ($iSameItemTotalCount>2) {
-							if (($iSameItemCount == ($iSameItemTotalCount)) or //if last item in the list of same items
+							//edited by Mike, 20201219
+/*							if (($iSameItemCount == ($iSameItemTotalCount)) or //if last item in the list of same items
 								($iSameItemCount == ($iSameItemTotalCount - 1))){  //if second to the last item in the list of same items
+*/								
+							if (($iSameItemCount == ($iSameItemTotalCount - 1)) or //if last item in the list of same items
+								($iSameItemCount == ($iSameItemTotalCount - 2))){  //if second to the last item in the list of same items
+
 								array_push($outputArray, $value);
 							}
 							
-/*							echo $iSameItemCount.": ".$value['item_name']." : ".$value['resultQuantityInStockNow']."<br/>";
-							array_push($outputArray, $value);
-*/
+////							echo $iSameItemCount.": ".$value['item_name']." : ".$value['resultQuantityInStockNow']."<br/>";
+////							array_push($outputArray, $value);
 						}
 						else {
 							array_push($outputArray, $value);
 						}						
+						
 					}
 
 					$iSameItemCount = $iSameItemCount + 1;
