@@ -1,0 +1,57 @@
+# Notes: Speed-up Knowledge Management System (KMS)
+XAMPP CONTROL PANEL v3.2.4
+PHP Version 7.3.9
+MySQL mysqlnd 5.0.12-dev - 20150407
+
+Win 7 Ultimate Service Pack 1 (2009)
+Intel(R) Core(TM) i3-3220 CPU @3.30GHz 3.30GHz
+5.00GB (4.88GB Usable)
+64-bit Operating System
+
+tablet pc
+7secs to add vigel cream using buy button
+--> enable opcache; all before ; The location of the OPcache blacklist file (wildcards allowed).
+--> MySQL's my.ini
+#added by Mike, 20201220
+bind-address = ::          # no ipv6
+--> now 4secs
+; This setting is on by default.
+; edited by Mike, 20201220; set to off
+;report_zend_debug = 0
+report_zend_debug = 0
+--> now 3secs
+
+cashier pc
+4secs to add vigel cream using buy button
+--> 7 bounces
+--> enable opcache
+--> MySQL's my.ini
+#added by Mike, 20201220
+bind-address = ::          # no ipv6
+--> 6 bounces
+--> now 3secs
+; This setting is on by default.
+; edited by Mike, 20201220; set to off
+;report_zend_debug = 0
+--> still 3secs
+--> enable opcache; all including this and after: The location of the OPcache blacklist file (wildcards allowed).
+--> 5 bounces
+--> now 3secs
+
+https://dev.mysql.com/doc/refman/8.0/en/ipv6-server-config.html
+http://httpd.apache.org/docs/2.2/bind.html
+
+
+[opcache]
+;edited by Mike, 20201220
+;note: opcache-related options enabled
+
+
+;edited by Mike, 20201220
+
+[opcache]
+; Determines if Zend OPCache is enabled
+;opcache.enable=1
+
+; Determines if Zend OPCache is enabled for the CLI version of PHP
+;opcache.enable_cli=0
