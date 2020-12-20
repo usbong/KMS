@@ -1032,7 +1032,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$itemTypeId = 1; //1 = Medicine
 		$data['itemTypeId'] = $itemTypeId; //added by Mike, 20200615
 
-		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		//removed by Mike, 20201220
+		//$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 		
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
@@ -1051,14 +1052,18 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
-		
+
+		//edited by Mike, 20201220
 		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+		//$data['result'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+		//$data['resultItem'] = $data['result'];
 		$data['resultItem'] = $this->getResultItemQuantity($data);
-		
+				
 		//edited by Mike, 20200608
 		//$data['itemName'] = $data['resultItem'][0]['item_name'];
-		$data['itemName'] = $data['result'][0]['item_name'];
-		
+		//edited by Mike, 20201220
+		//$data['itemName'] = $data['result'][0]['item_name'];
+		$data['itemName'] = $data['resultItem'][0]['item_name'];		
 
 /*		
 		foreach ($data['resultItem'] as $value) {
@@ -1388,12 +1393,21 @@ class Browse extends CI_Controller { //MY_Controller {
 		$iCount = 0;
 		$itemId = -1;
 
-		//edited by Mike, 20200527
-		$remainingItemNow = 0;
+		//edited by Mike, 20200527; removed by Mike, 20201220
+//		$remainingItemNow = 0;
 //		$remainingPaidItem = 0; //added by Mike, 20200501
 		
-		if ($data['resultItem'] == True) {
+		//edited by Mike, 20201220
+		if ($data['resultItem'] == True) {				
+//		if ($data['result'] == True) {				
+			//TO-DO: -reverify: this
+			//added by Mike, 20201220; edited by Mike, 20201220
+			//$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $data['resultItem'][0]['item_id']); 
+			$remainingItemNow = $data['resultQuantityInStockNow'];
+
+			//edited by Mike, 20201220
 			foreach ($data['resultItem'] as $value) {				
+//			foreach ($data['result'] as $value) {
 				//edited by Mike, 20200422
 				//$itemId = $value['item_id'];
 				if ($itemId==$value['item_id']) {
@@ -1419,7 +1433,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					
 					//edited by Mike, 20200527
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+
+					//removed by Mike, 20201220
+//					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 										
 //					echo $remainingItemNow;	
 					
@@ -1474,8 +1490,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$outputArray = [];
 		$outputArray = array();
 
-		if ($data['resultItem'] == True) {
+		//edited by Mike, 20201220
+		if ($data['resultItem'] == True) {				
+//		if ($data['result'] == True) {						
+			//edited by Mike, 20201220
 			foreach ($data['resultItem'] as $value) {				
+			//foreach ($data['result'] as $value) {				
 			
 //				echo $value['item_name'];
 			
@@ -1978,8 +1998,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200615
 		$itemTypeId = 2; //2 = Non-medicine
 		$data['itemTypeId'] = $itemTypeId;
+		
+		//added by Mike, 20201220
+		//TO-DO: -reverify: to eliminate excess steps
 	
-		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		//removed by Mike, 20201220
+		//$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 		
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
@@ -1999,12 +2023,29 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
 		
+		//edited by Mike, 20201220
 		$data['resultItem'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+/*
+		$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+		//echo count($data['result']);
+	
+		$data['resultItem'] = $data['result'];
 		$data['resultItem'] = $this->getResultItemQuantity($data);
-		
+
+		//echo count($data['resultItem']);
+	
+		//added by Mike, 20201220
+		//select non-medicine items do not yet have actual inventory count
+		if (count($data['resultItem'])==0) {
+			$data['resultItem'] = $data['result'];
+		}
+*/
+
 		//edited by Mike, 20200608
 		//$data['itemName'] = $data['resultItem'][0]['item_name'];
-		$data['itemName'] = $data['result'][0]['item_name'];	
+		//removed by Mike, 20201220
+//		$data['itemName'] = $data['result'][0]['item_name'];	
+
 
 /*		
 		foreach ($data['resultItem'] as $value) {
@@ -2028,7 +2069,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$itemTypeId = 3; //3 = snack//1 = Medicine
 		$data['itemTypeId'] = $itemTypeId; //added by Mike, 20200615
 
-		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		//edited by Mike, 20201220
+		//$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 		
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
@@ -2047,13 +2090,18 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
-		
-		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+
+		//edited by Mike, 20201220
+		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+		//removed by Mike, 20201220
+		//TO-DO: -add: actual quantity of each item in inventory list
+/*		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		$data['resultItem'] = $this->getResultItemQuantity($data);
-		
+*/		
 		//edited by Mike, 20200608
 		//$data['itemName'] = $data['resultItem'][0]['item_name'];
-		$data['itemName'] = $data['result'][0]['item_name'];
+		//removed by Mike, 20201220
+		//$data['itemName'] = $data['result'][0]['item_name'];
 		
 
 /*		
@@ -2396,10 +2444,15 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->Browse_Model->addTransactionItemPurchase($data);
 		
-		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		//added by Mike, 20201220
+		//TO-DO: -reverify: to eliminate excess steps
+	
+		//edited by Mike, 20201220
+		//$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 
 		//added by Mike, 20200406
-		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);		
 
 		//added by Mike, 20200601; removed by Mike, 20200602
 //		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
@@ -2415,17 +2468,25 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$this->load->view('viewItemNonMedicine', $data);
 
 		//added by Mike, 20200501; edited by Mike, 20200603
-		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
-		$data['resultItem'] = $this->getResultItemQuantity($data);
+		//removed by Mike, 20201220
+		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);	
+		//$data['resultItem'] = $this->getResultItemQuantity($data);
+
+//		echo "hallo".count($data['resultItem']);
+//		echo $data['resultItem'][0]['item_name'];
 
 		if ($itemTypeId=="1") {
+			//added by Mike, 20201220
+			$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);	
+			$data['resultItem'] = $this->getResultItemQuantity($data);
+
 			$this->load->view('viewItemMedicine', $data);
 		}
 		//added by Mike, 20201104
 		else if ($itemTypeId=="3") {
 			$this->load->view('viewItemSnack', $data);
 		}	
-		else { //example: 2
+		else { //example: 2		
 			//edited by Mike, 20201115
 			$this->load->view('viewItemNonMedicine', $data);
 /*
@@ -2571,7 +2632,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->Browse_Model->deleteTransactionItemPurchase($data);
 		
-		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId,$itemId);
+		//edited by Mike, 20201220
+		//$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId,$itemId);
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsList($itemTypeId,$itemId);
 
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
@@ -2587,10 +2650,16 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
 
 		//added by Mike, 20200501; edited by Mike, 20200603
-		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
-		$data['resultItem'] = $this->getResultItemQuantity($data);
+		//edited by Mike, 20201220
+		//removed by Mike, 20201220
+		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);	
+		//$data['resultItem'] = $this->getResultItemQuantity($data);
 
 		if ($itemTypeId==1) {
+			//added by Mike, 20201220
+			$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);	
+			$data['resultItem'] = $this->getResultItemQuantity($data);
+
 			$this->load->view('viewItemMedicine', $data);
 		}
 		//added by Mike, 20201104
