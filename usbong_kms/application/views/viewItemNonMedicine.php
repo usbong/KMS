@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201214
+' @date updated: 20201220
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -704,8 +704,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<?php
 	
 		//get only name strings from array 
+/*		//edited by Mike, 20201220
 		if (isset($result)) {			
 			if ($result!=null) {		
+*/
+
+		if (isset($resultItem[0])) {
+			if ($resultItem[0]!=null) {
+				
 /*
 				$resultCount = count($result);
 				if ($resultCount==1) {
@@ -752,10 +758,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*				foreach ($result as $value) {
 */	
 
-				$value = $result[0];
+				//edited by Mike, 20200803
+				//edited by Mike, 20201220
+/*					$value = $result[0];
+				
 				if (isset($resultItem[0])) {
 					$value = $resultItem[0];
-				}				
+				}
+*/
+				$value = $resultItem[0];
 
 		?>				
 		
@@ -1194,7 +1205,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							}
 							else {
 ?>
-							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+<!--	edited by Mike, 20201220
+							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>
+-->
+							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>
+							
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 <?php
@@ -1237,8 +1252,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
-							<!-- added by Mike, 20200612 -->
+							<!-- added by Mike, 20200612; edited by Mike, 20201220 -->
+<!--							
 							<input type="hidden" id="payItemIdParam" value="<?php echo $result[0]['item_id'];?>">
+-->							
+							<input type="hidden" id="payItemIdParam" value="<?php echo $value['item_id'];?>">
+
 							<input type="hidden" id="payPatientIdParam" value="<?php echo $patientId;?>">
 							<!-- added by Mike, 20201210 -->
 							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $medicalDoctorId;?>">
@@ -1247,9 +1266,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<!--
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY
 							-->
-							
+							<!-- edited by Mike, 20201220
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId.",".$medicalDoctorId;?>)" class="Button-purchase">PAY
 							</button>	
+							-->
+							<button onclick="myPopupFunctionPay(<?php echo $value['item_id'].",".$patientId.",".$medicalDoctorId;?>)" class="Button-purchase">PAY
+							</button>	
+
 						</td>
 						<!-- added by Mike, 20201026; edited by Mike, 20201115 -->
 						<?php 
@@ -1292,7 +1315,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td>
 									<!-- TO-DO: -update: this -->
 									<!-- note: multiple button presses cause multiple +12% VAT -->
+<!--								//edited by Mike, 20201220
 									<button onclick="myPopupFunctionLessVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-lessVAT">LESS<br/>VAT</button>
+-->
+									<button onclick="myPopupFunctionLessVAT(<?php echo $value['item_id'].",".$patientId;?>)" class="Button-lessVAT">LESS<br/>VAT</button>
+
 								</td>
 						<?php							
 							  }
@@ -1304,7 +1331,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 								</td>						
 								<td>
+<!-- edited by Mike, 20201220								
 									<button onclick="myPopupFunctionAddVAT(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/>VAT</button>			
+-->
+									<button onclick="myPopupFunctionAddVAT(<?php echo $value['item_id'].",".$patientId;?>)" class="Button-addVAT">ADD<br/>VAT</button>			
+
 								</td>						
 						<?php
 							  }
@@ -1324,8 +1355,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			echo '<h3>Item Purchased History</h3>';
 			
-			//added by Mike, 20200615
-			$value = $result[0];
+			//added by Mike, 20200615; edited by Mike, 20201220
+			//$value = $result[0];
+			$value = $resultPaid[0];
 
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					

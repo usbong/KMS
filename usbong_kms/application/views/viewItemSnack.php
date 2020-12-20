@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201212
+' @date updated: 20201220
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -631,8 +631,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<?php
 	
 		//get only name strings from array 
+/*		//edited by Mike, 20201220
 		if (isset($result)) {			
 			if ($result!=null) {		
+*/
+
+		if (isset($resultItem[0])) {
+			if ($resultItem[0]!=null) {
 
 /*
 				$resultCount = count($result);
@@ -694,11 +699,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//$value = $resultItem[0];
 					
 					//edited by Mike, 20200803
-					$value = $result[0];
+					//edited by Mike, 20201220
+	/*					$value = $result[0];
 					
 					if (isset($resultItem[0])) {
 						$value = $resultItem[0];
 					}
+	*/
+					$value = $resultItem[0];
+
 
 //				}
 		?>				
@@ -1071,7 +1080,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
+<!--	edited by Mike, 20201220
 							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+-->
+							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
@@ -1111,8 +1124,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td>
-							<!-- added by Mike, 20200613 -->
-							<input type="hidden" id="payItemIdParam" value="<?php echo $result[0]['item_id'];?>">
+							<!-- added by Mike, 20200613; edited by Mike, 20201220 -->
+<!--							<input type="hidden" id="payItemIdParam" value="<?php echo $result[0]['item_id'];?>">
+-->
+							<input type="hidden" id="payItemIdParam" value="<?php echo $value['item_id'];?>">
+							
 							<input type="hidden" id="payPatientIdParam" value="<?php echo $patientId;?>">
 							<!-- edited by Mike, 20201211 -->						
 							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $medicalDoctorId;?>">
@@ -1121,8 +1137,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<!--
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY
 							-->
-							
+
+							<!-- edited by Mike, 20201220 -->							
+<!--
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId.",".$medicalDoctorId;?>)" class="Button-purchase">PAY
+							</button>	
+-->
+							<button onclick="myPopupFunctionPay(<?php echo $value['item_id'].",".$patientId.",".$medicalDoctorId;?>)" class="Button-purchase">PAY
 							</button>	
 												
 						</td>						
@@ -1138,7 +1159,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			echo '<h3>Item Purchased History</h3>';
 			
-			$value = $result[0];
+			//edited by Mike, 20201220
+			//$value = $result[0];
+			$value = $resultPaid[0];
+			
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
 				echo 'There are no transactions.';
