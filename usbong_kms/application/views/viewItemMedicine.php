@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201220
+' @date updated: 20201221
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -372,7 +372,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //			alert("quantity: " + quantity);
 //			alert("fee: " + fee);
-//			alert("resultQuantityInStockNow: " + resultQuantityInStockNow);
+			alert("resultQuantityInStockNow: " + resultQuantityInStockNow);
 
 /*
 			var product_id = document.getElementById("product_idParam").value;
@@ -722,9 +722,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</a>
 						</td>
 						<td class ="column">	
-								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->							
-								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 
-									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {										
+								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->	
+								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 							
+									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {	
 										echo 9999;
 									} 
 									else {
