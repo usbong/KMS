@@ -1057,13 +1057,23 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		//$data['result'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		//$data['resultItem'] = $data['result'];
-		$data['resultItem'] = $this->getResultItemQuantity($data);
+		
+		//edited by Mike, 20201221
+		//$data['resultItem'] = $this->getResultItemQuantity($data);
+		//echo count($data['resultItem']);
+		$resultItemQuantityArray = $this->getResultItemQuantity($data);
+		if (count($resultItemQuantityArray)==0) {			
+		}
+		else {
+			$data['resultItem']=$resultItemQuantityArray;
+		}
 				
 		//edited by Mike, 20200608
 		//$data['itemName'] = $data['resultItem'][0]['item_name'];
 		//edited by Mike, 20201220
 		//$data['itemName'] = $data['result'][0]['item_name'];
-		$data['itemName'] = $data['resultItem'][0]['item_name'];		
+		//removed by Mike, 20201221
+		//$data['itemName'] = $data['resultItem'][0]['item_name'];		
 
 /*		
 		foreach ($data['resultItem'] as $value) {
@@ -2025,6 +2035,19 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		//edited by Mike, 20201220
 		$data['resultItem'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+		
+		//added by Mike, 20201221
+		//TO-DO: -add: inventory count of non-medicine item
+		//at present, unit member can add item even with zero quantity
+		//$data['resultItem'] = $this->getResultItemQuantity($data);
+		//echo count($data['resultItem']);
+		$resultItemQuantityArray = $this->getResultItemQuantity($data);
+		if (count($resultItemQuantityArray)==0) {		
+		}
+		else {
+			$data['resultItem']=$resultItemQuantityArray;
+		}
+
 /*
 		$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
 		//echo count($data['result']);
@@ -2090,6 +2113,16 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
+
+		//added by Mike, 20201221
+		//$data['resultItem'] = $this->getResultItemQuantity($data);
+		//echo count($data['resultItem']);
+		$resultItemQuantityArray = $this->getResultItemQuantity($data);
+		if (count($resultItemQuantityArray)==0) {			
+		}
+		else {
+			$data['resultItem']=$resultItemQuantityArray;
+		}
 
 		//edited by Mike, 20201220
 		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
