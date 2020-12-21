@@ -893,7 +893,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					//This is to make the output list shorter.
 					//The list is ordered by expiration date.
 					if (!$bHasNoneZeroQuantity) {
-						if ($iSameItemCount == ($iSameItemTotalCount - 1)) { //if last item in the list of same items
+						//edited by Mike, 20201222
+//						if ($iSameItemCount == ($iSameItemTotalCount - 1)) { //if second to the last item in the list of same items
+						if ($iSameItemCount == ($iSameItemTotalCount)) { //if last item in the list of same items
 							array_push($outputArray, $value);
 						}
 					}
@@ -1058,11 +1060,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$data['result'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		//$data['resultItem'] = $data['result'];
 		
-		//edited by Mike, 20201221
+		//added by Mike, 20201221; edited by Mike, 20201222
 		//$data['resultItem'] = $this->getResultItemQuantity($data);
 		//echo count($data['resultItem']);
 		$resultItemQuantityArray = $this->getResultItemQuantity($data);
-		if (count($resultItemQuantityArray)==0) {			
+		if (count($resultItemQuantityArray)==0) {
+//			$ilastResultItemCount = count($data['resultItem']);
+//			$data['resultItem'][$ilastResultItemCount]['resultQuantityInStockNow']=0;
+			$data['resultQuantityInStockNow']=0;
 		}
 		else {
 			$data['resultItem']=$resultItemQuantityArray;
@@ -1618,7 +1623,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultItem'] = $outputArray;
 */		
 		foreach ($outputArray as $value) {
-			if ($value['resultQuantityInStockNow']==0) {				
+			if ($value['resultQuantityInStockNow']==0) {
 			}
 			else {
 				array_push($data['resultItem'], $value);
@@ -2036,17 +2041,21 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20201220
 		$data['resultItem'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
 		
-		//added by Mike, 20201221
+		//added by Mike, 20201221; edited by Mike, 20201222
 		//TO-DO: -add: inventory count of non-medicine item
 		//at present, unit member can add item even with zero quantity
 		//$data['resultItem'] = $this->getResultItemQuantity($data);
 		//echo count($data['resultItem']);
+		//$data['resultItem'] = $this->getResultItemQuantity($data);
+		//echo count($data['resultItem']);
 		$resultItemQuantityArray = $this->getResultItemQuantity($data);
-		if (count($resultItemQuantityArray)==0) {		
+		if (count($resultItemQuantityArray)==0) {
+			$data['resultQuantityInStockNow']=0;
 		}
 		else {
 			$data['resultItem']=$resultItemQuantityArray;
 		}
+
 
 /*
 		$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
@@ -2114,11 +2123,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
 
-		//added by Mike, 20201221
+		//added by Mike, 20201221; edited by Mike, 20201222
+		//$data['resultItem'] = $this->getResultItemQuantity($data);
+		//echo count($data['resultItem']);
 		//$data['resultItem'] = $this->getResultItemQuantity($data);
 		//echo count($data['resultItem']);
 		$resultItemQuantityArray = $this->getResultItemQuantity($data);
-		if (count($resultItemQuantityArray)==0) {			
+		if (count($resultItemQuantityArray)==0) {
+			//no need to add this for snack items
+//			$data['resultQuantityInStockNow']=0;
 		}
 		else {
 			$data['resultItem']=$resultItemQuantityArray;
@@ -2511,7 +2524,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		if ($itemTypeId=="1") {
 			//added by Mike, 20201220
 			$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);	
-			$data['resultItem'] = $this->getResultItemQuantity($data);
+
+			//edited by Mike, 20201220
+			//$data['resultItem'] = $this->getResultItemQuantity($data);
+			$resultItemQuantityArray = $this->getResultItemQuantity($data);
+			if (count($resultItemQuantityArray)==0) {			
+			}
+			else {
+				$data['resultItem']=$resultItemQuantityArray;
+			}
 
 			$this->load->view('viewItemMedicine', $data);
 		}
@@ -2691,7 +2712,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		if ($itemTypeId==1) {
 			//added by Mike, 20201220
 			$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);	
-			$data['resultItem'] = $this->getResultItemQuantity($data);
+			//edited by Mike, 20201220
+			//$data['resultItem'] = $this->getResultItemQuantity($data);
+			$resultItemQuantityArray = $this->getResultItemQuantity($data);
+			if (count($resultItemQuantityArray)==0) {			
+			}
+			else {
+				$data['resultItem']=$resultItemQuantityArray;
+			}
 
 			$this->load->view('viewItemMedicine', $data);
 		}
