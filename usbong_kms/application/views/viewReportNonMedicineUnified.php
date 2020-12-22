@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200507
-' @date updated: 20201002
+' @date updated: 20201222
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -530,7 +530,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//$fFee = $value['fee']/ (1 + 0.12);
 									//TO-DO: -ADD: SC/PWD IN ITEM NOTES
 									//echo $value['notes'];
-									if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+									//edited by Mike, 20201222
+//									if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+									if (strpos($value['notes'],"DISCOUNTED")!==false) {
+										//computation equal with "WI"
+										$fFee = $value['fee']-$dAddedVATAmount;										
+									}
+									else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 										$fFee = $value['fee'];
 									}
 									else {

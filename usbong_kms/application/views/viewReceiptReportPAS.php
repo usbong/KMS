@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20201203
+' @date updated: 20201222
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -553,11 +553,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//edited by Mike, 20200619
 								//removed temporarily by Mike, 20200619
-								//added by Mike, 20201003
-								if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
+								//added by Mike, 20201003; edited by Mike, 20201222
+								//if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
+								if (strpos(strtoupper($value['notes']),"DISCOUNTED")!==false) {
+								   //computation equal with "WI"
+								   $fVatAmount = number_format($fAmountPaid/1.12*0.12, 2, '.', '');
+								   $fVatSales = $fAmountPaid - $fVatAmount;	//edited by Mike, 20200426
 								}
-								else { //WI								
-								
+								else if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
+
+
+								}
+								else { //WI																
 								   $fVatAmount = number_format($fAmountPaid/1.12*0.12, 2, '.', '');
 								   $fVatSales = $fAmountPaid - $fVatAmount;	//edited by Mike, 20200426
 								}								
