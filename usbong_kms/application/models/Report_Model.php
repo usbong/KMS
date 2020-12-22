@@ -1457,12 +1457,18 @@ class Report_Model extends CI_Model
 						//edited by Mike, 20200916
 						//+added: SC/PWD IN ITEM NOTES
 						//echo $value['notes'];
-						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+						//edited by Mike, 20201222
+//						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+						if (strpos($value['notes'],"DISCOUNTED")!==false) {
+							//computation equal with "WI"
+							$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
+							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;							
+						}
+						else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 							$dAddedVATAmount = 0;
 						}
 						else {
 							$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
-
 							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
 						}
 					}		
@@ -1652,15 +1658,18 @@ class Report_Model extends CI_Model
 						//edited by Mike, 20200916
 						//+added: SC/PWD IN ITEM NOTES
 						//echo $value['notes'];
-						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+						//edited by Mike, 20201222
+//						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+						if (strpos($value['notes'],"DISCOUNTED")!==false) {
+							$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
+							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
+						}
+						else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 							$dAddedVATAmount = 0;
-
 //						echo ">>>>".$dAddedVATAmount;
-
 						}
 						else {
 							$dAddedVATAmount = $value['fee'] - ($value['fee'] / ( 1 + 0.12));
-
 							$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
 						
 						//removed by Mike, 20201003
