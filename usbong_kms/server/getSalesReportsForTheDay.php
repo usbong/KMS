@@ -6,11 +6,10 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201222
+  @date updated: 20201223
   
   Input:
   1) Sales reports for the day in the database (DB)
-
   Output:
   1) Automatically connect to the DB and get the sales reports for the day from the DB
   --> Afterwards, write the reports as .txt text in the computer server's set location
@@ -886,7 +885,6 @@
 													$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 												}
 											}
-
 											// free result set
 											mysqli_free_result($receiptArray);											
 										}
@@ -896,7 +894,6 @@
 											echo "Error: " . $mysqli->error;
 										}
 									}									
-
 									$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
 								}
 */								
@@ -1207,7 +1204,9 @@
 //	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0'"))
 	//edited by Mike, 20201222
 //	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID' and t2.transaction_quantity='0'"))
+	//edited by Mike, 20201223
+//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID' and t2.transaction_quantity='0'"))
+	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID' and t2.transaction_quantity='0'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -1238,30 +1237,37 @@
 					echo "dito".$value['transaction_id']."<br/>";
 */
 					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {						
-						$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
-						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+						//edited by Mike, 20201223
+						if (strpos($value['notes'],"DISCOUNTED")!==false) {
+						}
+						else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+						}
+						else {										
+							$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
+							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
 
-						//Note: fee_quantity can be 6, albeit in cash register, it is 1
-						//This is due to several non-med items are combined into 1 transaction in Cash Register
-						//TO-DO: -update: this
-//echo "fee_quantity: ".$value['fee_quantity'];
+							//Note: fee_quantity can be 6, albeit in cash register, it is 1
+							//This is due to several non-med items are combined into 1 transaction in Cash Register
+							//TO-DO: -update: this
+	//echo "fee_quantity: ".$value['fee_quantity'];
 
-						//added by Mike, 20200812
-						//Reference: https://www.php.net/number_format;
-						//last accessed: 20200812
-						//Rounding Rules
-						//input: 60.00000000000006
-						//output: 60.00
-						//input: 60.005
-						//output: 60.01
-						//input: 60.004
-						//output: 60.00
-						$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
-						
-/*						//removed by Mike, 20200708
-						$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
-						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
-*/
+							//added by Mike, 20200812
+							//Reference: https://www.php.net/number_format;
+							//last accessed: 20200812
+							//Rounding Rules
+							//input: 60.00000000000006
+							//output: 60.00
+							//input: 60.005
+							//output: 60.01
+							//input: 60.004
+							//output: 60.00
+							$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
+							
+	/*						//removed by Mike, 20200708
+							$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
+							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+	*/
+						}
 					}
 					//removed by Mike, 20200708
 /*					else {
