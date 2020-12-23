@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201221
+' @date updated: 20201211
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -372,7 +372,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //			alert("quantity: " + quantity);
 //			alert("fee: " + fee);
-			alert("resultQuantityInStockNow: " + resultQuantityInStockNow);
+//			alert("resultQuantityInStockNow: " + resultQuantityInStockNow);
 
 /*
 			var product_id = document.getElementById("product_idParam").value;
@@ -632,13 +632,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<?php
 	
 		//get only name strings from array 
-/*		//edited by Mike, 20201220
 		if (isset($result)) {			
 			if ($result!=null) {		
-*/
-		if (isset($resultItem[0])) {
-			if ($resultItem[0]!=null) {
-
 /*
 				$resultCount = count($result);
 				if ($resultCount==1) {
@@ -699,14 +694,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//$value = $resultItem[0];
 					
 					//edited by Mike, 20200803
-					//edited by Mike, 20201220
-/*					$value = $result[0];
+					$value = $result[0];
 					
 					if (isset($resultItem[0])) {
 						$value = $resultItem[0];
 					}
-*/
-					$value = $resultItem[0];
 
 //				}
 		?>				
@@ -722,9 +714,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</a>
 						</td>
 						<td class ="column">	
-								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->	
-								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 							
-									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {	
+								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->							
+								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 
+									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {										
 										echo 9999;
 									} 
 									else {
@@ -1091,11 +1083,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							}
 							else {
 ?>
-<!--	edited by Mike, 20201220
 							<button onclick="myPopupFunctionDelete(<?php echo $result[0]['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
--->
-							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id']/*echo $cartValue['item_id']*/.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>									
-
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 <?php
@@ -1140,11 +1128,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td>
 							<!-- added by Mike, 20200613 -->
-<!--						//edited by Mike, 20201220
 							<input type="hidden" id="payItemIdParam" value="<?php echo $result[0]['item_id'];?>">
--->
-							<input type="hidden" id="payItemIdParam" value="<?php echo $value['item_id'];?>">
-
 							<input type="hidden" id="payPatientIdParam" value="<?php echo $patientId;?>">
 							<!-- added by Mike, 20201210 -->
 							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $medicalDoctorId;?>">
@@ -1153,14 +1137,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<!--
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId;?>)" class="Button-purchase">PAY
 							-->
-
-<!--						//edited by Mike, 20201220							
+							
 							<button onclick="myPopupFunctionPay(<?php echo $result[0]['item_id'].",".$patientId.",".$medicalDoctorId;?>)" class="Button-purchase">PAY
 							</button>
--->
-							<button onclick="myPopupFunctionPay(<?php echo $value['item_id'].",".$patientId.",".$medicalDoctorId;?>)" class="Button-purchase">PAY
-							</button>
-
 						</td>						
 					  </tr>
 <?php
@@ -1173,11 +1152,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<br/>";
 
 			echo '<h3>Item Purchased History</h3>';
-
-			//edited by Mike, 20201220
-			//$value = $result[0];
-			$value = $resultPaid[0];
-
+			
+			$value = $result[0];
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
 				echo 'There are no transactions.';
