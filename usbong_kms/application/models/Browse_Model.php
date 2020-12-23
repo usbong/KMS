@@ -1972,15 +1972,22 @@ class Browse_Model extends CI_Model
 
 		$classification = "";
 		
-		//edited by Mike, 202012010
+		//edited by Mike, 20201210
 //		if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
-		if ((strpos($patientTransactionRowArray[0]['notes'],"SC")!==false)
+	//edited by Mike, 20201224
+/*		if ((strpos($patientTransactionRowArray[0]['notes'],"SC")!==false)
 			and (strpos($patientTransactionRowArray[0]['notes'],"DISCOUNTED")!==true)) {
+*/
+		if (strpos($patientTransactionRowArray[0]['notes'],"DISCOUNTED")!==false) {
+		}
+		else if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
 			$classification = "SC; ";
 		}
 		else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
 			$classification = "PWD; ";
 		}
+
+echo $classification;
 
 		//added by Mike, 20201027
 		if (($classification=="SC; ") or ($classification=="PWD; ")) {			
@@ -2300,7 +2307,13 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20201027
 		if (isset($patientTransactionRowArray[0])) {
-			if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
+			//edited by Mike, 20201224
+			//if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
+			if (strpos($patientTransactionRowArray[0]['notes'],"DISCOUNTED")!==false) {
+				//TO-DO: verify: if set $classification = "DISCOUNTED; " is necessary
+				$classification = "DISCOUNTED; ";
+			}
+			else if (strpos($patientTransactionRowArray[0]['notes'],"SC")!==false) {
 				$classification = "SC; ";
 			}
 			else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
