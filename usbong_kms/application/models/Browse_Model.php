@@ -728,8 +728,14 @@ class Browse_Model extends CI_Model
 					//added by Mike, 20201212
 					$classification="";
 					
-					if ((strpos($itemTransactionRow->notes,"SC")!==false) 
+					//edited by Mike, 20201224
+/*					if ((strpos($itemTransactionRow->notes,"SC")!==false) 
 						and (strpos($itemTransactionRow->notes,"DISCOUNTED")!==true)) {
+*/
+					if (strpos($itemTransactionRow->notes,"DISCOUNTED")!==false) {
+						$classification = "DISCOUNTED; ";
+					}
+					else if (strpos($itemTransactionRow->notes,"SC")!==false) {
 						$classification = "SC; ";
 					}
 					else if (strpos($itemTransactionRow->notes,"PWD")!==false) {
