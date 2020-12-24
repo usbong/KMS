@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201212
+' @date updated: 20201224
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -517,7 +517,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */			
 			//edited by Mike, 20200411
 			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
-
 		}	
 
 		//added by Mike, 20200331; edited by Mike, 20200411
