@@ -2524,8 +2524,13 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->load->view('viewItemNonMedicine', $data);
 		}
 */
-
 		$this->load->view('viewPatient', $data);		
+		//added by Mike, 20201224
+		//note: when Unit member deletes patient transactions from Cart List
+		//AND deletes an item, e.g. non-medicine, computer automatically goes
+		//to the patient page with patient name, "CANCELLED",
+		//so that Unit member can view remaining items in Cart List
+		//additional note: multiple items may already exist in the Cart List
 	}
 	
 
