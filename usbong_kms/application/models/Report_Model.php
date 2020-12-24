@@ -714,9 +714,28 @@ class Report_Model extends CI_Model
 			//removed by Mike, 20200723			
 			//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
 		}
-		
-		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+
+/*		//TO-DO: -update: keyphrase, "currentMonthNum", to "nextMonthNum"
+		echo $param["monthNum"]."<br/>";		
+		echo $param["currentMonthNum"]."<br/>";
+*/
+		//edited by Mike, 20201224
+/*		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
 		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+*/
+		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+
+		if ($param["monthNum"]=="12") {			
+			//echo date('Y', strtotime('+1 year'));
+			//echo $param["currentMonthNum"]."/01/".date('Y', strtotime('+1 year'));
+			
+			//note: STR_TO_DATE output format: YYYY-mm-dd
+//			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <","2021-01-01");
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date('Y', strtotime('+1 year'))."-".$param["currentMonthNum"]."-01");
+		}
+		else {
+			$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+		}
 
 		//edited by Mike, 20200426
 		$this->db->order_by('t4.receipt_number', 'ASC');//ASC');
