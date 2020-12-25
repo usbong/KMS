@@ -723,6 +723,17 @@ class Report_Model extends CI_Model
 /*		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
 		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
 */
+
+		//added by Mike, 20201225
+		$nextMonthNum = ""; //note: if not set, KMS shall notify Unit member with error message
+		if (isset($param["currentMonthNum"]) and ($param["currentMonthNum"]!==0)) {
+			$nextMonthNum = $param["currentMonthNum"];
+		}
+
+		if (isset($param["nextMonthNum"]) and ($param["nextMonthNum"]!==0)) {
+			$nextMonthNum = $param["nextMonthNum"];
+		}
+		
 		//edited by Mike, 20201225
 /*		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
 */
@@ -735,14 +746,20 @@ class Report_Model extends CI_Model
 			
 			//note: STR_TO_DATE output format: YYYY-mm-dd
 //			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <","2021-01-01");
-			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date('Y', strtotime('+1 year'))."-".$param["currentMonthNum"]."-01");
+
+			//edited by Mike, 20201225
+//			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date('Y', strtotime('+1 year'))."-".$param["currentMonthNum"]."-01");
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date('Y', strtotime('+1 year'))."-".$nextMonthNum."-01");
+
 		}
 		else {
 			//edited by Mike, 20201225
 /*	$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
 */	
 			//note: STR_TO_DATE output format: YYYY-mm-dd
-			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y")."-".$param["currentMonthNum"]."-01");
+			//edited by Mike, 20201225
+//			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y")."-".$param["currentMonthNum"]."-01");
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y")."-".$nextMonthNum."-01");
 		}
 
 		//edited by Mike, 20200426
