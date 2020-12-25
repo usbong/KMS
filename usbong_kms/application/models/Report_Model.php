@@ -723,7 +723,11 @@ class Report_Model extends CI_Model
 /*		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
 		$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
 */
-		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+		//edited by Mike, 20201225
+/*		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
+*/
+		//note: STR_TO_DATE output format: YYYY-mm-dd
+		$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') >=",date('Y')."-".$param["monthNum"]."-01");
 
 		if ($param["monthNum"]=="12") {			
 			//echo date('Y', strtotime('+1 year'));
@@ -734,7 +738,11 @@ class Report_Model extends CI_Model
 			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date('Y', strtotime('+1 year'))."-".$param["currentMonthNum"]."-01");
 		}
 		else {
-			$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+			//edited by Mike, 20201225
+/*	$this->db->where('t2.transaction_date<',$param["currentMonthNum"]."/01/".date("Y"));
+*/	
+			//note: STR_TO_DATE output format: YYYY-mm-dd
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y")."-".$param["currentMonthNum"]."-01");
 		}
 
 		//edited by Mike, 20200426
