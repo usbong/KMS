@@ -8,14 +8,14 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 
   @author: Michael Syson
-  @date created: 20201226
+  @date created: 20201227
   @date updated: 20201227
 
   Input:
-  1) Referral Summary Worksheet with counts and amounts in .csv (comma-separated value) file using Tab as the delimiter from Sta. Lucia Health Care Center (SLHCC) Master List Workbook
+  1) Annual Year End Summary Worksheet with counts and amounts in .csv (comma-separated value) file using Tab as the delimiter from Sta. Lucia Health Care Center (SLHCC) Master List Workbook
 
   Output:
-  1) Referral Summary Worksheet that is viewable on a Computer Web Browser  
+  1) Annual Year End  Worksheet that is viewable on a Computer Web Browser  
   
   Note:
   1) We can reuse this set of instructions with other .csv files that need to be viewable on a Computer Web Browser.
@@ -136,7 +136,7 @@
     /**/
     </style>
     <title>
-      Patient Referral from Medical Doctor Summary Report (SLHCC)
+      Annual Year End Summary Report (SLHCC)
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -180,7 +180,7 @@
 	
 	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201221~20201224.csv";	
 
-	$filename="D:\Usbong\SLHCC\Master List\generateDoctorReferralPTTreatmentReportFromMasterList\java\output\ReferralIncentiveSummaryReportOutput.csv";
+	$filename="D:\Usbong\SLHCC\Master List\generateAnnualYearEndSummaryReportOfAllInputFilesFromMasterList\output\AnnualYearEndSummaryReportOutput.csv";
 
 
 	echo "<br/>";
@@ -216,13 +216,30 @@
 				//edited by Mike, 20200725
 				//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
 				
-				//added by Mike, 20200726
-				$cellValue = utf8_encode($data[$iColumnCount]);
+				//added by Mike, 20200726; edited by Mike, 20201227
+				//$cellValue = utf8_encode($data[$iColumnCount]);
+				$cellValue = strtoupper(utf8_encode($data[$iColumnCount]));
 
 				if (($iRowCount==0) and ($iColumnCount==0)) {
 						//sky blue
 						echo "<td class='column' bgcolor='#00CCFF'><b>".$cellValue."</b></td>";
 				}
+				//added by Mike, 20201227
+				//note: we add these in sequence
+				else if (strpos($cellValue, "TOTAL:")!==false) {
+						//green
+						echo "<td class='column' bgcolor='#FFFF00'><b>".$cellValue."</b></td>";
+				}
+				else if (strpos($cellValue, ":")!==false) {
+						//green
+						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
+				}
+				else if (strpos($cellValue, "MEDICAL DOCTOR NAME")!==false) {
+						//green
+						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
+				}
+
+/*	//removed by Mike, 20201227
 				else if ($iRowCount==1) {
 						//green
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
@@ -235,6 +252,7 @@
 						//green
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
 				}
+*/
 
 /*
 				//I. CASH
@@ -291,70 +309,21 @@
 						//$cellValue = number_format($cellValue, 2, '.', '');					
 						//edited by Mike, 20201226
 						//$cellValue = number_format($cellValue, 2, '.', ',');
+
+/*				//removed by Mike, 20201227
 						if ($iColumnCount==2) { //count
 							$cellValue = number_format($cellValue, 0, '', ',');
 						}
 						else {
 							$cellValue = number_format($cellValue, 2, '.', ',');
 						}
+*/
 					
-/*
-						//PT TREATMENT (Payslip): Value
-						if (($iRowCount==5) and ($iColumnCount==1)) {
-								//orange
-								echo "<td class='column' bgcolor='#FF9900' style='text-align:right'><b>".$cellValue."</b></td>";
-						}
-						//PT TREATMENT (Actual): Value
-						else if (($iRowCount==6) and ($iColumnCount==1)) {
-								//yellow
-								echo "<td class='column' bgcolor='#FFFF00' style='text-align:right'><b>".$cellValue."</b></td>";
-						}
-						//HMO (Forecasted): Value
-						else if (($iRowCount==10) and ($iColumnCount==1)) {
-								//orange
-								echo "<td class='column' bgcolor='#FF9900' style='text-align:right'><b>".$cellValue."</b></td>";
-						}
-						//CASH & HMO (Forecasted): Value
-						else if (($iRowCount==13) and ($iColumnCount==1)) {
-								//orange
-								echo "<td class='column' bgcolor='#FF9900' style='text-align:right'><b>".$cellValue."</b></td>";
-						}						
-						//UNCOLLECTED CASH: TOTAL
-						else if (($iRowCount==15) and ($iColumnCount==1)) {
-							if ($cellValue!=0) {
-								echo "<td class='column' bgcolor='#FF1100' style='text-align:right'><b>".$cellValue."</b></td>";
-							}
-							else {
-								echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
-							}
-						}
-						//UNCOLLECTED CASH: Grand Total (including prev weeks)
-						else if (($iRowCount==16) and ($iColumnCount==1)) {
-							if ($cellValue!=0) {
-								echo "<td class='column' bgcolor='#FF1100' style='text-align:right'><b>".$cellValue."</b></td>";
-							}
-							else {
-								echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
-							}
-						}						
-*/						
-						//last column with number value
-						if ($iColumnCount==$num) {
-							//yellow
-//							echo "<td class='column' bgcolor='#FFDD00' style='text-align:right'>".$cellValue."</td>";
+						//added by Mike, 20201227
+						//count
+						$cellValue = number_format($cellValue, 0, '', ',');
 
-//							if (strpos($cellValue,"0.00")!==false) {
-							if ($cellValue=="0.00") {
-								//red
-								echo "<td class='column' bgcolor='#FFFFFF' style='text-align:right'>".$cellValue."</td>";
-							}
-							else {
-								echo "<td class='column' bgcolor='#FFDD00' style='text-align:right'>".$cellValue."</td>";
-							}
-						}
-						else {
-							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
-						}
+						echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 					}
 					else {
 						//echo "<td class='column'><b>".$cellValue."</b></td>";
