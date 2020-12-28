@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201224
+' @date updated: 20201228
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -224,8 +224,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-weight: bold;
 							background-color: #00aaff; <!--#93d151; lime green-->
 							border: 2px dotted #ab9c7d;		
-							text-align: center
-							border-radius: 4px;
+							<!-- edited by Mike, 20201228 -->
+							text-align: center;
+							border-radius: 6px;
 
 							float: left;
 							margin-left: 4px;
@@ -247,8 +248,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-weight: bold;
 							background-color: #ff1100; <!--#93d151; lime green-->
 							border: 2px dotted #ab9c7d;		
-							text-align: center
-							border-radius: 4px;
+							<!-- edited by Mike, 20201228 -->
+							text-align: center;
+							border-radius: 6px;
 
 							float: left;
 							margin-left: 4px;
@@ -1090,6 +1092,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20201212
 									//echo number_format($patientFee, 2, '.', '');
 //									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');
+
 									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
 								}
 								else {
@@ -1118,7 +1121,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											
 											//edited by Mike, 20201214
 											//echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".($cartValueFeeWithoutVAT*.12).")";
+											
 											echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
+
+											//added by Mike, 20201228
+											//echo "(".number_format($cartValueFee, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '')." - ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
+											
 										}
 										else {
 											echo number_format($cartValueFee, 2, '.', '');
