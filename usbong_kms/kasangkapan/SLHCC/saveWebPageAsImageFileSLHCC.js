@@ -31,12 +31,11 @@ var fileExtension = '.html'; //'';//edited by Mike, 20200802
 //added by Mike, 20200725
 var dateToday = new Date(); 
 
-/* //removed by Mike, 202000802
+//added by Mike, 20201231
 if (isFromServerFolder=="-s") {
 	webAddress = 'http://localhost/usbong_kms/server/';
 	fileExtension = '.php';
 }
-*/
 
 console.log("Filename: " + fileName);
 
