@@ -49,12 +49,7 @@
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
-							width: 860px;/* 802px;*//* 670px */
-							
-							/* use zoom 67% scale*/
-							zoom: 67%; /* at present, command not support in Mozilla Firefox */				
-							transform: scale(0.67);
-							transform-origin: 0 0;							
+							width: 860px;/* 802px;*//* 670px */							
                         }
 						
 						div.copyright
@@ -77,6 +72,17 @@
 							float: left;
 							text-align: center;
 						}
+
+						table
+						{
+							width: 100%;
+							border: 1px dotted #ab9c7d;
+						}						
+
+						tr.row
+						{
+							border: 1px dotted #ab9c7d;
+						}						
 						
 						table.imageTable
 						{
@@ -95,7 +101,9 @@
 
 						td.column
 						{
-							border: 1px dotted #ab9c7d;		
+							border: 1px dotted #ab9c7d;
+							padding: 0;
+							margin: 0;
 							text-align: left; <!--center-->
 						}						
 
@@ -180,9 +188,11 @@
 	
 	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201221~20201224.csv";	
 
-	$filename="D:\Usbong\SLHCC\Master List\generateAnnualYearEndSummaryReportOfAllInputFilesFromMasterList\output\AnnualYearEndSummaryReportOutput.csv";
-
-
+	//edited by Mike, 20201231
+	//$filename="D:\Usbong\SLHCC\Master List\generateAnnualYearEndSummaryReportOfAllInputFilesFromMasterList\output\AnnualYearEndSummaryReportOutput.csv";
+	//note: we use \\; otherwise "2020" becomes changed 
+	$filename="D:\\2020\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";
+	
 	echo "<br/>";
 	echo "<table>";
 					
@@ -192,6 +202,9 @@
 
 	//added by Mike, 20200523
 	if (!file_exists($filename)) {
+		
+		echo $filename;
+		
 		//add the day of the week
 		//edited by Mike, 20200726
 		//$dateToday = (new DateTime())->format('Y-m-d, l');
@@ -207,7 +220,17 @@
 		$iRowCount = -1; //we later add 1 to make start value zero (0)
 		//if (($handle = fopen("test.csv", "r")) !== FALSE) {
 		if (($handle = fopen($filename, "r")) !== FALSE) {
-		  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+		  //edited by Mike, 20201231		 		  
+//		  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+
+		  $sDelimiter = ","; //default delimiter of input .txt file:  comma
+		  //identify if input .txt file uses Tab as the delimiter
+		  if (strpos(fread($handle, 1000), "\t") !== FALSE) {			  
+			$sDelimiter = "\t";
+		  }		  
+		  rewind($handle);
+	
+		  while (($data = fgetcsv($handle, 1000, $sDelimiter)) !== FALSE) {			  
 			$num = count($data) -1; //we add -1 for the computer to not include the excess cell due to the ending \n
 		//    echo "<p> $num fields in line $row: <br /></p>\n";
 			$iRowCount++;
@@ -234,44 +257,22 @@
 						//green
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
 				}
+				//added by Mike, 20201231
+				else if (strpos($cellValue, "CONSULTATION COUNT UNDER EACH CLASSIFICATION")!==false) {
+						//sky blue
+						echo "<td class='column' bgcolor='#00CCFF'><b>".$cellValue."</b></td>";
+				}
+				//edited by Mike, 20201231
+				/*
 				else if (strpos($cellValue, "MEDICAL DOCTOR NAME")!==false) {
 						//green
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
 				}
-
-/*	//removed by Mike, 20201227
-				else if ($iRowCount==1) {
+				*/
+				else if (strpos($data[0], "MEDICAL DOCTOR NAME")!==false) {
 						//green
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
-				}
-				else if (strpos($cellValue, "Report")!==false) {
-						//sky blue
-						echo "<td class='column' bgcolor='#00CCFF'><b>".$cellValue."</b></td>";
-				}
-				else if (strpos($cellValue, ":")!==false) {
-						//green
-						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
-				}
-*/
-
-/*
-				//I. CASH
-				else if (($iRowCount==4) and ($iColumnCount==0)) {
-						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
-				}
-				//II. HMO (Forecasted)
-				else if (($iRowCount==9) and ($iColumnCount==0)) {
-						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
-				}
-				//III. HMO (Forecasted)
-				else if (($iRowCount==12) and ($iColumnCount==0)) {
-						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
-				}
-				//IV. UNCOLLECTED CASH
-				else if (($iRowCount==14) and ($iColumnCount==0)) {
-						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
-				}
-*/				
+				}				
 				else {
 					//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
 					//edited by Mike, 20200726
