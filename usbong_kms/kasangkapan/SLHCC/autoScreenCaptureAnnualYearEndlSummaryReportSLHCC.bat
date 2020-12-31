@@ -1,9 +1,10 @@
-phantomjs saveWebPageAsImageFileSLHCC.js viewAnnualYearEndSummaryReporSLHCC -s
+phantomjs saveWebPageAsImageFileSLHCC.js viewAnnualYearEndSummaryReportSLHCC -s
 
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
 
-explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\SLHCC\output\"%myDate%
-
-rem "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\SLHCC\output\"%sOutput%
+rem edited by Mike, 20201231
+rem explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\SLHCC\output\"%myDate%
+rem explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\SLHCC\output\"%sOutput%
+explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\SLHCC\output\SLHCC\"%myDate%
 
 pause
