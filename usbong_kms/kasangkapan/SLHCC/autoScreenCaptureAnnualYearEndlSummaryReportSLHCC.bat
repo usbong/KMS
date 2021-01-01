@@ -1,5 +1,9 @@
 phantomjs saveWebPageAsImageFileSLHCC.js viewAnnualYearEndSummaryReportSLHCC -s
 
+rem added by Mike, 20210101
+phantomjs saveWebPageAsImageFileSLHCC.js outputAnnualYearEndSummaryReportChart -a
+
+
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
 
 rem edited by Mike, 20201231

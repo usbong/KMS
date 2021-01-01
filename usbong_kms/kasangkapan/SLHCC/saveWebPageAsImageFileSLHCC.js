@@ -8,7 +8,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200724
-' @date updated: 20201006
+' @date updated: 20210101
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -21,6 +21,10 @@ var fileName = system.args[1];
 
 //added by Mike, 20200726
 var isFromServerFolder = system.args[2];
+
+//added by Mike, 20210101
+isFromAnnualReportAddSoftwareOutputFolder = system.args[2];
+
 //var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
 //edited by Mike, 20200830
 //var webAddress = 'file:///D:/Usbong/SLHCC/202007/'; //default
@@ -35,6 +39,12 @@ var dateToday = new Date();
 if (isFromServerFolder=="-s") {
 	webAddress = 'http://localhost/usbong_kms/server/';
 	fileExtension = '.php';
+}
+
+//added by Mike, 20210101
+if (isFromAnnualReportAddSoftwareOutputFolder=="-a") {
+	webAddress = 'file:///D:/2020/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
+	fileExtension = '.html';
 }
 
 console.log("Filename: " + fileName);
