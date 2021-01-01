@@ -11,4 +11,5 @@ rem explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin
 rem explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\SLHCC\output\"%sOutput%
 explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\SLHCC\output\SLHCC\"%myDate%
 
-pause
+rem removed by Mike, 20210101
+rem pause
