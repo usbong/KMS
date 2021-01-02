@@ -7,7 +7,7 @@ COLUMNS<br/>
 <br/>
 4: PAGE 2 FRONT RIGHT ONLY<br/>
 <br/>
-5\~6: PAGE 2 BACK LEFT AND RIGHT<br/>
+5~6: PAGE 2 BACK LEFT AND RIGHT<br/>
 <br/>
 7: PAGE 2 FRONT LEFT ONLY<br/>
 <br/>
@@ -18,7 +18,7 @@ COLUMNS<br/>
 ## Total Number (COLUMNS): 12
 <br/>
 COLUMNS<br/>
-1\~3: PAGE 1 FRONT LEFT AND RIGHT; PAGE 1 BACK LEFT ONLY<br/>
+1~3: PAGE 1 FRONT LEFT AND RIGHT; PAGE 1 BACK LEFT ONLY<br/>
 <br/>
 4: PAGE 2 FRONT RIGHT ONLY<br/>
 <br/>
@@ -26,7 +26,7 @@ COLUMNS<br/>
 <br/>
 6: PAGE 3 FRONT RIGHT<br/>
 <br/>
-7\~8: PAGE 3 BACK LEFT AND RIGHT<br/>
+7~8: PAGE 3 BACK LEFT AND RIGHT<br/>
 <br/>
 9: PAGE 3 FRONT LEFT<br/>
 <br/>
