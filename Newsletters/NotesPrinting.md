@@ -3,7 +3,7 @@
 ## Total Number (COLUMNS): 8<br/>
 <br/>
 COLUMNS<br/>
-1\~3: PAGE 1 FRONT LEFT AND RIGHT; PAGE 1 BACK LEFT ONLY<br/>
+1~3: PAGE 1 FRONT LEFT AND RIGHT; PAGE 1 BACK LEFT ONLY<br/>
 <br/>
 4: PAGE 2 FRONT RIGHT ONLY<br/>
 <br/>
@@ -38,4 +38,3 @@ COLUMNS<br/>
 <br/>
 
 TO-DO: -add: computer automation
-
