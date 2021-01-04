@@ -700,19 +700,31 @@ class Report_Model extends CI_Model
 
 		$this->db->where('t4.receipt_number!=',0);					
 
-		//edited by Mike, 20200721
-		if ($param["monthNum"]<="06") {		
-		  $this->db->group_by('t4.receipt_id');		
+		//added by Mike, 20210105
+		if (!isset($param["yearNum"])) {
+			$param["yearNum"] = date("Y");
+//			echo $param["yearNum"];
 		}
-		else { //get the earliest transaction that use the receipt number			
-			//edited by Mike, 20200723
-			$this->db->group_by('t4.receipt_id');		
-//			$this->db->where('t4.receipt_id = (SELECT MAX(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
 
-			//removed by Mike, 20200723
-			//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
-			//removed by Mike, 20200723			
-			//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
+		//edited by Mike, 20210105
+		if ($param["yearNum"] < 2021) {
+			//edited by Mike, 20200721
+			if ($param["monthNum"]<="06") {		
+			  $this->db->group_by('t4.receipt_id');		
+			}
+			else { //get the earliest transaction that use the receipt number			
+				//edited by Mike, 20200723
+				$this->db->group_by('t4.receipt_id');		
+	//			$this->db->where('t4.receipt_id = (SELECT MAX(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
+
+				//removed by Mike, 20200723
+				//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number)',NULL,FALSE);
+				//removed by Mike, 20200723			
+				//$this->db->where('t4.receipt_id = (SELECT MIN(t.receipt_id) FROM receipt as t WHERE t.receipt_number=t4.receipt_number and t.transaction_id=t2.transaction_id)',NULL,FALSE);
+			}
+		}
+		else {
+			$this->db->group_by('t4.receipt_id');		
 		}
 
 /*		//TO-DO: -update: keyphrase, "currentMonthNum", to "nextMonthNum"
@@ -738,7 +750,9 @@ class Report_Model extends CI_Model
 /*		$this->db->where('t2.transaction_date>=',$param["monthNum"]."/01/".date("Y"));
 */
 		//note: STR_TO_DATE output format: YYYY-mm-dd
-		$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') >=",date('Y')."-".$param["monthNum"]."-01");
+		//edited by Mike, 20210105
+//		$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') >=",date('Y')."-".$param["monthNum"]."-01");
+		$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') >=",$param["yearNum"]."-".$param["monthNum"]."-01");
 
 		if ($param["monthNum"]=="12") {			
 			//echo date('Y', strtotime('+1 year'));
@@ -749,7 +763,10 @@ class Report_Model extends CI_Model
 
 			//edited by Mike, 20201225
 //			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date('Y', strtotime('+1 year'))."-".$param["currentMonthNum"]."-01");
-			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date('Y', strtotime('+1 year'))."-".$nextMonthNum."-01");
+
+			//edited by Mike, 20210105
+//			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date('Y', strtotime('+1 year'))."-".$nextMonthNum."-01");
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",($param["yearNum"]+1)."-".$nextMonthNum."-01");
 
 		}
 		else {
@@ -759,7 +776,10 @@ class Report_Model extends CI_Model
 			//note: STR_TO_DATE output format: YYYY-mm-dd
 			//edited by Mike, 20201225
 //			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y")."-".$param["currentMonthNum"]."-01");
-			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y")."-".$nextMonthNum."-01");
+			//edited by Mike, 20210105
+//			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y")."-".$nextMonthNum."-01");
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",$param["yearNum"]."-".$nextMonthNum."-01");
+
 		}
 
 		//edited by Mike, 20200426
