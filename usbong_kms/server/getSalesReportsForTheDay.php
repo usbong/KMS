@@ -6,10 +6,11 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20201223
+  @date updated: 20210104
   
   Input:
   1) Sales reports for the day in the database (DB)
+
   Output:
   1) Automatically connect to the DB and get the sales reports for the day from the DB
   --> Afterwards, write the reports as .txt text in the computer server's set location
@@ -885,6 +886,7 @@
 													$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 												}
 											}
+
 											// free result set
 											mysqli_free_result($receiptArray);											
 										}
@@ -894,6 +896,7 @@
 											echo "Error: " . $mysqli->error;
 										}
 									}									
+
 									$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
 								}
 */								
@@ -1242,10 +1245,14 @@
 						}
 						else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 						}
-						else {										
+						else {
 							$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
 							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
 
+/*	//removed by Mike, 20210104
+						echo $value['item_name'];
+						echo "dito".$value['transaction_id']."<br/>";
+*/
 							//Note: fee_quantity can be 6, albeit in cash register, it is 1
 							//This is due to several non-med items are combined into 1 transaction in Cash Register
 							//TO-DO: -update: this
@@ -1266,7 +1273,7 @@
 	/*						//removed by Mike, 20200708
 							$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
 							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
-	*/
+*/
 						}
 					}
 					//removed by Mike, 20200708
