@@ -267,6 +267,15 @@ class Report extends CI_Controller { //MY_Controller {
 		echo "monthNum: ".$data["monthNum"];
 		echo "currentMonthNum: ".$data["currentMonthNum"];
 */		
+		//added by Mike, 20210105
+		if ($data["currentMonthNum"]==1) {
+			$data["yearNum"] = date("Y")-1;		
+			//echo $data["yearNum"];		
+		}
+		else {
+			$data["yearNum"] = date("Y");		
+		}
+		
 		$data["result"] = $this->Report_Model->getReceiptReportForTheMonth($data);
 
 		$this->load->view('viewReceiptReportMOSC', $data);
@@ -399,6 +408,15 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["monthNum"] = date("m", $previousMonth);
 		$data["currentMonthNum"] = date("m", $currentMonth);
+
+		//added by Mike, 20210105
+		if ($data["currentMonthNum"]==1) {
+			$data["yearNum"] = date("Y")-1;		
+			//echo $data["yearNum"];		
+		}
+		else {
+			$data["yearNum"] = date("Y");		
+		}
 		
 		//edited by Mike, 20200708
 //		if ($data["monthNum"]<="05") {
