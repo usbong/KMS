@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20200910
+  @date updated: 20210105
   Input:
   1) MySQL Database with X-Ray Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
   Output:
@@ -39,11 +39,15 @@
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
 							width: 860px;/* 802px;*//* 670px */
-							
+
+							/* removed by Mike, 20210105 */
 							/* use zoom 67% scale*/
-							zoom: 67%; /* at present, command not support in Mozilla Firefox */				
+							/* at present, command not support in Mozilla Firefox */				
+/*							zoom: 67%; 
+	
 							transform: scale(0.67);
-							transform-origin: 0 0;							
+							transform-origin: 0 0;	
+*/							
                         }
 						
 						div.copyright
@@ -153,7 +157,9 @@
 
     echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC"."</b><br/>";
 	echo "<br/>";
-    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2020-09-01)"."</u></b><br/>";
+	//edited by Mike, 20210105
+//    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2020-09-01)"."</u></b><br/>";
+    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2021-01-01)"."</u></b><br/>";
 
 	echo "<br/>";
 	echo "<table>";
