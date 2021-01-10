@@ -1,11 +1,11 @@
 <!--
-  Copyright 2020 Usbong Social Systems, Inc.
+  Copyright 2020~2021 Usbong Social Systems, Inc.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20201217
+  @date updated: 20210110
 	
   Computer Web Browser Address (Example):
   1) http://mosc-accounting/usbong_kms/index.php/report/viewWebAddressList
@@ -311,7 +311,7 @@ where "06" = "June 2020"<br/>
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y")?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
