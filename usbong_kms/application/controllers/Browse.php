@@ -1048,8 +1048,9 @@ class Browse extends CI_Controller { //MY_Controller {
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 			
-		//added by Mike, 20200406; edited by Mike, 20200407
-		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+		//added by Mike, 20200406; edited by Mike, 20200407; edited again by Mike, 20210110		
+//		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($data);
 
 		//added by Mike, 20200501; edited by Mike, 20200604
 		$data['itemTypeId'] = $itemTypeId;
@@ -1425,9 +1426,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					
 					//edited by Mike, 20200527
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					//added by Mike, 20210110; removed by Mike, 20210110
-					//$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
+					//edited by Mike, 20210110
+//					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
 											
 //					echo $remainingItemNow;	
 					
@@ -1989,7 +1990,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemTypeId'] = $itemTypeId;
 	
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
-		
+				
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
@@ -2001,7 +2002,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 						
 		//added by Mike, 20200406; edited by Mike, 20200407
-		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+		//edited by Mike, 20210110
+//		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+//		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($data['result']);
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($data);
 
 		//added by Mike, 20200501; edited by Mike, 20200604
 		$data['itemTypeId'] = $itemTypeId;
