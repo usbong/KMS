@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201224
+' @date updated: 20210110
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -963,9 +963,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$cartValuePatientId = $cartValue['patient_id'];
 								}
 								else {
+									
 									if ($cartValue['fee_quantity']==0) {
 	//									$iQuantity =  1;
-										$iQuantity =  floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
+										//edited by Mike, 20210110
+										if ($cartValue['item_price']==0) {
+											$iQuantity =  1;//floor(0/100);
+										}
+										else {
+											$iQuantity =  floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
+										}
+
 									}
 									else {
 										$iQuantity =  $cartValue['fee_quantity'];

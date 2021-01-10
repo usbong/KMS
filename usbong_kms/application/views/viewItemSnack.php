@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201224
+' @date updated: 20210110
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -749,8 +749,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$resultQuantityInStockNow = $value['resultQuantityInStockNow'];
 								}
 								
-								//added by Mike, 20200615
-								if ($value['quantity_in_stock']=="") {
+								//added by Mike, 20200615; edited by Mike, 20210110
+								if (!isset($value['quantity_in_stock'])) {
+									echo "9999";
+								}
+								else if ($value['quantity_in_stock']=="") {
 									echo "0 / 0";
 								}
 								//edited by Mike, 20200411; edited by Mike, 20200713
@@ -791,9 +794,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div id="itemExpirationId<?php echo $iCount?>">
 							<?php
 								//echo $value['expiration_date'];
-
-								if ($value['expiration_date']==0) {
-
+								//edited by Mike, 20210110
+								if (!isset($value['expiration_date'])) {
+									echo "UNKNOWN";
+								}
+								else if ($value['expiration_date']==0) {
 									if ($value['quantity_in_stock']==-1) {
 										echo "UNKNOWN";
 									}									
@@ -1139,7 +1144,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo '<h3>Item Purchased History</h3>';
 			
 			$value = $result[0];
-			if ((!isset($value)) or ($value['transaction_date']=="")) {				
+			//edited by Mike, 20210110
+//			if ((!isset($value)) or ($value['transaction_date']=="")) {				
+			if (!isset($value)) {				
 				echo '<div>';					
 				echo 'There are no transactions.';
 				echo '</div>';					

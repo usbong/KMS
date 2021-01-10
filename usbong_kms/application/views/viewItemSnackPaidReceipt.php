@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20201104
+' @date updated: 20210110
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -698,7 +698,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo '<h3>Item Purchased History</h3>';
 			
 			$value = $result[0];
-			if ((!isset($value)) or ($value['transaction_date']=="")) {				
+			//edited by Mike, 20210110
+//			if ((!isset($value)) or ($value['transaction_date']=="")) {				
+			if (!isset($value)) {
 				echo '<div>';					
 				echo 'There are no transactions.';
 				echo '</div>';					
