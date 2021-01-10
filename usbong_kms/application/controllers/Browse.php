@@ -1056,8 +1056,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
-		
-		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+
+		//edited by Mike, 20210110
+		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);
+
+
 		$data['resultItem'] = $this->getResultItemQuantity($data);		
 		
 		//edited by Mike, 20200608
@@ -2012,7 +2016,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
 		
-		$data['resultItem'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+		
+		//edited by Mike, 20210110
+		//$data['resultItem'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);
+		
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 		
 		//edited by Mike, 20200608
@@ -2061,7 +2069,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
 		
-		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+		//edited by Mike, 20210110
+		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 		
 		//edited by Mike, 20200608
@@ -2158,7 +2168,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200601
 		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
-		//added by Mike, 202005019
+		//added by Mike, 202005019;
+		//TO-DO: reverify: use $patientId instead of join command
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 		
 		//edited by Mike, 20200519
@@ -2428,7 +2439,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$this->load->view('viewItemNonMedicine', $data);
 
 		//added by Mike, 20200501; edited by Mike, 20200603
-		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
+		//edited by Mike, 20210110
+//		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 
 		if ($itemTypeId=="1") {
@@ -2605,7 +2618,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
 
 		//added by Mike, 20200501; edited by Mike, 20200603
-		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
+		//edited by Mike, 20210110
+		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);		
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);		
+
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 
 		if ($itemTypeId==1) {
