@@ -255,7 +255,9 @@ class Browse_Model extends CI_Model
 		
 		$query = $this->db->get('item');
 */
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+		//edited by Mike, 20210110
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -317,8 +319,10 @@ class Browse_Model extends CI_Model
 
 	//added by Mike, 20201104
 	public function getSnackDetailsListViaName($param) 
-	{		
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+	{
+		//edited by Mike, 20210110
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -510,8 +514,10 @@ class Browse_Model extends CI_Model
 		
 		$query = $this->db->get('item');
 */
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
-
+		//edited by Mike, 20210110
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+ 
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
 
@@ -3629,9 +3635,12 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 					echo "dito".$iQuantity;
 				}
 	*/
-	public function getItemAvailableQuantityInStock($itemTypeId, $itemId)
+	//edited by Mike, 20210110
+//	public function getItemAvailableQuantityInStock($itemTypeId, $itemId)
+	public function getItemAvailableQuantityInStock($itemValue)
 //	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
 	{			
+/*	//removed by Mike, 20210110
 		//edited by Mike, 20201202
 //		$this->db->select('t2.quantity_in_stock, t1.item_name');
 		$this->db->select('t2.quantity_in_stock, t1.item_name, t1.item_total_sold');
@@ -3645,6 +3654,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		$query = $this->db->get('item');
 
 		$row = $query->row();
+*/
 		
 		//TO-DO: -add: use multiple inventory transactions of the same item
 /*
@@ -3653,10 +3663,14 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		echo "<br/>";
 */
 		$iQuantity = 0;
-		//added by Mike, 20200411
-		if (isset($row->quantity_in_stock)) {
+		//added by Mike, 20200411; edited by Mike, 20210110
+/*		if (isset($row->quantity_in_stock)) {
 			$iQuantity = $row->quantity_in_stock;
 
+		}
+*/
+		if (isset($itemValue['quantity_in_stock'])) {
+			$iQuantity = $itemValue['quantity_in_stock'];
 		}
 		//added by Mike, 20200414
 		else {			
@@ -3677,7 +3691,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		echo $row->item_total_sold."<br/>";
 		echo "iQuantity: ".$iQuantity."<br/>--<br/>";
 */
-		$iQuantity = $iQuantity - $row->item_total_sold;
+		//edited by Mike, 20210110
+//		$iQuantity = $iQuantity - $row->item_total_sold;
+		$iQuantity = $iQuantity - $itemValue['item_total_sold'];
 		
 		//------------------------------------		
 		//edited by Mike, 20201202
@@ -3690,8 +3706,11 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
 
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		
+		//edited by Mike, 20210110
+//		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t1.item_id', $itemValue['item_id']);
 
-		$this->db->where('t1.item_id', $itemId);
 		//edited by Mike, 20200625
 		//note: we include transactions in the cart list, albeit unpaid
 		//$this->db->where('t2.notes', "PAID");
@@ -3721,7 +3740,6 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 			//edited by Mike, 20200901
 			//$iQuantity = $iQuantity - $value['fee_quantity'];
 			$iQuantity = $iQuantity - $value['fee_quantity'];
-
 		}
 		
 //		echo "<br/>".$value['item_name'];
