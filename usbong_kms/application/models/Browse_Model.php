@@ -449,6 +449,7 @@ class Browse_Model extends CI_Model
 	}	
 
 	//added by Mike, 20200603
+	//TO-DO: -use: getItemDetailsListViaId(...)
 	public function getMedicineDetailsListViaId($param) 
 	{		
 		//edited by Mike, 20210110
@@ -464,6 +465,56 @@ class Browse_Model extends CI_Model
 		$this->db->where('t1.item_id!=', 0); //0 = NONE
 
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
+
+		//edited by Mike, 20200604
+		$this->db->where('t1.item_id', $param['itemId']);
+
+		//added by Mike, 20200607
+//		$this->db->order_by('t1.item_name', 'ASC');
+		//$this->db->order_by('t2.added_datetime_stamp', 'ASC'); //we do this for cases with equal expiration dates
+		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
+				
+		//added by Mike, 20200527
+		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
+		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+//		$this->db->limit(8);//1);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+//		echo report_id: .$rowArray[0]['report_id'];
+		
+/*		return $row->report_description;
+*/
+//		return $rowArray[0]['report_description'];
+		
+		return $rowArray;
+	}	
+
+	//added by Mike, 20210110
+	public function getItemDetailsListViaId($param) 
+	{		
+	
+		//edited by Mike, 20210110
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+
+		$this->db->from('item as t1');
+		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		$this->db->group_by('t2.inventory_id');
+		
+		//added by Mike, 20200521
+		$this->db->where('t1.item_id!=', 0); //0 = NONE
+
+		$this->db->where('t1.item_type_id', $param['itemTypeId']); //1); //1 = Medicine
 
 		//edited by Mike, 20200604
 		$this->db->where('t1.item_id', $param['itemId']);
@@ -1732,7 +1783,10 @@ class Browse_Model extends CI_Model
 */
 					//20200629
 					//identify if transaction is classified as medicine or non-medicine
-					$this->db->select('t1.item_id, t2.item_type_id, t1.med_fee, t1.pas_fee');
+					//edited by Mike, 20210110
+//					$this->db->select('t1.item_id, t2.item_type_id, t1.med_fee, t1.pas_fee');
+					$this->db->select('t1.item_id, t2.item_type_id, t1.med_fee, t1.pas_fee, t1.snack_fee');
+
 					$this->db->from('transaction as t1');	
 					$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');		
 					$this->db->where('t1.transaction_id', $iTransactionId);
@@ -3187,18 +3241,26 @@ echo $classification;
 	{		
 		//edited by Mike, 20210110
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date, t4.medical_doctor_name, t4.medical_doctor_id, t5.patient_name, t5.patient_id');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date, t4.medical_doctor_name, t4.medical_doctor_id, t5.patient_name, t5.patient_id');
+		//edited by Mike, 20210110
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.transaction_id, t2.transaction_date, t2.fee, t3.quantity_in_stock, t3.expiration_date, t4.medical_doctor_name, t4.medical_doctor_id, t5.patient_name, t5.patient_id');
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.transaction_id, t2.transaction_date, t2.fee, t4.medical_doctor_name, t4.medical_doctor_id, t5.patient_name, t5.patient_id');
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.transaction_id, t2.transaction_date, t2.fee');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold');
 
 		$this->db->from('item as t1');
-		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
-		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+
+		//removed by Mike, 20210110
+//		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+//		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+/*
 		$this->db->join('medical_doctor as t4', 't2.medical_doctor_id = t4.medical_doctor_id', 'LEFT');
 		$this->db->join('patient as t5', 't2.patient_id = t5.patient_id', 'LEFT');
-
+*/
 		$this->db->distinct('t1.item_name');
 
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
-		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+		//removed by Mike, 20210110
+//		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
 
 //		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200501
 
@@ -3209,8 +3271,8 @@ echo $classification;
 		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 
 
-		//edited by Mike, 20200401
-		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+		//edited by Mike, 20200401; removed by Mike, 20210110
+//		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 
 		//added by Mike, 20200401
 		$this->db->limit(8);
@@ -3330,10 +3392,17 @@ echo $classification;
 	public function getPaidItemDetailsList($itemTypeId, $itemId) 
 	{		
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.quantity_in_stock, t3.expiration_date');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp, t3.quantity_in_stock, t3.expiration_date');
+		//edited by Mike, 20210110
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp, t3.quantity_in_stock, t3.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp');
+
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
-		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+		//removed by Mike, 20210110
+		//excess join commands cause delay; 
+		//example: med item: ACECLOFENAC (DICLOTOL) 100mg 
+		//23seconds (prev) --> 15seconds (now)
+//		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
 		$this->db->distinct('t1.item_name');
 
 //		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
@@ -3432,11 +3501,16 @@ echo $classification;
 /*		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t3.patient_name, t3.patient_id');
 */
+		//edited by Mike, 20210110
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.medical_doctor_id, t3.patient_name, t3.patient_id');
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.medical_doctor_id, t2.patient_id');
 
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		//removed by Mike, 20210110; added again by Mike, 20210110
 		$this->db->join('patient as t3', 't2.patient_id = t3.patient_id', 'LEFT');
+		//added by Mike, 20210110
+//		$this->db->where('t2.patient_id!=', 0);
 
 		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200407
 		
