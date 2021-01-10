@@ -294,7 +294,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					
 					//edited by Mike, 20200527
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					//edited by Mike, 20210110
+//					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
 										
 //					echo $remainingItemNow;	
 					
@@ -557,7 +559,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					
 					//edited by Mike, 20200527
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					//edited by Mike, 20210110
+					//$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
 										
 //					echo $remainingItemNow;	
 					
@@ -795,9 +799,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					//edited by Mike, 20200501
 					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
 					
-					//edited by Mike, 20200527
+					//edited by Mike, 20210110
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
 										
 					
 					if ($remainingItemNow < 0) {
@@ -1140,7 +1144,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					
 					//edited by Mike, 20200527
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					//edited by Mike, 20210110
+//					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
 										
 //					echo $remainingItemNow;	
 					
@@ -1420,7 +1426,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					//edited by Mike, 20200527
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-										
+					//added by Mike, 20210110; removed by Mike, 20210110
+					//$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
+											
 //					echo $remainingItemNow;	
 					
 					if ($remainingItemNow < 0) {
@@ -1642,8 +1650,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					
 					//edited by Mike, 20200527
 					//$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
-
+					//edited by Mike, 20210110
+					//$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
 
 					//edited by Mike, 20200528
 //					if ($remainingItemNow < 0) {
