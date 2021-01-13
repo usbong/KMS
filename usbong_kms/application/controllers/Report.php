@@ -688,8 +688,11 @@ class Report extends CI_Controller { //MY_Controller {
 					//note: we do +1 to get the transactionId for the MOSC OR from the receipt table
 /*					$transactionId = $value['transaction_id']+1;
 					echo $transactionId."<br/>";
-*/
-					$iTransactionId = $value['transaction_id']+1;
+*/					
+					//edited by Mike, 20210113
+					//TO-DO: -reverify: this
+	//				$iTransactionId = $value['transaction_id']+1;
+					$iTransactionId = $value['transaction_id'];
 
 					//identify transaction with the combined fees
 //					while ($transactionId==0) {
