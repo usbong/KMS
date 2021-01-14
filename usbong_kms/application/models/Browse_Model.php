@@ -3981,7 +3981,10 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 			//note: we include transactions in the cart list, albeit unpaid
 			//$this->db->where('t2.notes', "PAID");
 			$this->db->like('t2.notes', "PAID");
-			$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
+			//edited by Mike, 20210114
+//			$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') >=","2020-04-06");
+
 
 			//added by Mike, 20201215; edited by Mike, 20210114
 //			$this->db->where('t2.transaction_date <', date("m/d/Y")); //i.e., date today
