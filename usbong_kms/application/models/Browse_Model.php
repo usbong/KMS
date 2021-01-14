@@ -3983,8 +3983,13 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 			$this->db->like('t2.notes', "PAID");
 			$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
 
-			//added by Mike, 20201215
-			$this->db->where('t2.transaction_date <', date("m/d/Y")); //i.e., date today
+			//added by Mike, 20201215; edited by Mike, 20210114
+//			$this->db->where('t2.transaction_date <', date("m/d/Y")); //i.e., date today
+//			$this->db->where('t2.transaction_date <', "01/13/2021"); //i.e., date today
+			//note: STR_TO_DATE output format: YYYY-mm-dd
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y-m-d"));
+
+
 
 			$query = $this->db->get('item');
 
