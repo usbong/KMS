@@ -194,6 +194,32 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
+	//added by Mike, 20210115
+	public function getPatientLastVisitBeforeToday($param) {
+		//$this->db->select('MAX(added_datetime_stamp)');
+		$this->db->select('added_datetime_stamp');
+		
+		$this->db->where('patient_id=',$param['patient_id']);
+		$this->db->order_by('added_datetime_stamp', 'DESC');//DESC');
+		$this->db->limit(1,1);
+//		$this->db->distinct();
+
+		$query = $this->db->get('transaction');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+
+//		if ($row == null) {					
+		if ($rowArray == null) {			
+			return False;
+		}
+
+//		return $row;		
+//		return $rowArray;
+		return $rowArray[0]['added_datetime_stamp'];
+
+	}
+
 	//added by Mike, 20200529; edited by Mike, 20201127
 //	public function getPatientQueueReportForTheDay()
 	public function getPatientQueueReportForTheDay($param)
@@ -226,8 +252,10 @@ class Report_Model extends CI_Model
 		//edited by Mike, 20200607
 		//$this->db->select_max('t2.added_datetime_stamp');
 		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
-
+		
+		//edited by Mike, 20210115
 		$this->db->where('t2.transaction_date',date("m/d/Y"));
+		//$this->db->where('t2.transaction_date!=',date("m/d/Y"));
 
 		//added by Mike, 20200601
 		//TO-DO: -reverify: this
