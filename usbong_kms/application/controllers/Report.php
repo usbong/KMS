@@ -1354,7 +1354,9 @@ class Report extends CI_Controller { //MY_Controller {
 					if ($value['medical_doctor_id']==0) {
 						$value['medical_doctor_id']=1;
 					}					
-					
+					//added by Mike, 20210115
+					//add patient's previous_visit
+					$value['previous_visit'] = $this->Report_Model->getPatientLastVisitBeforeToday($value); 										
 					array_push($outputResult, $value);
 				}
 			}
@@ -1367,7 +1369,7 @@ class Report extends CI_Controller { //MY_Controller {
 
 			$data["result"]  = $outputResult;
 		}
-		
+			
 		$this->load->view('viewReportPatientQueue', $data);
 	}
 
