@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20210110
+' @date updated: 20210115
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -750,6 +750,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>											
+						<!-- added by Mike, 20210115 -->
+						<td class ="columnTableHeader">				
+								<div class="tableHeader">
+							<?php
+									echo "PREVIOUS VISIT";
+							?>
+								</div>
+						</td>											
+
 						<td class ="columnTableHeader">				
 								<div class="tableHeader">
 							<?php
@@ -823,6 +832,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>								
 						<!-- added by Mike, 20201003 -->
+						<td class ="column">				
+						</td>											
+						<!-- added by Mike, 20210115 -->
 						<td class ="column">				
 						</td>											
 						<td class ="column">				
@@ -919,6 +931,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
+<!-- added by Mike, 20210115 -->
+						<td class ="column">				
+								<div class="lastVisitDate" id="lastVisitId<?php echo $iCount?>">
+							<?php
+									if (isset($value['previous_visit'])) {
+										if ($value['previous_visit']==0) {
+											echo DATE("Y-m-d"); //new transaction
+										}
+										else {
+											echo DATE("Y-m-d", strtotime($value['previous_visit']));
+										}
+									}
+									else {
+										echo DATE("Y-m-d");
+									}
+									
+//									echo (string) $value['last_visit'];
+							?>
+								</div>
+						</td>						
+
 						<td class ="column">				
 								<div>
 							<?php
