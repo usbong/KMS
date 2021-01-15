@@ -834,9 +834,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<!-- added by Mike, 20201003 -->
 						<td class ="column">				
 						</td>											
-						<!-- added by Mike, 20210115 -->
-						<td class ="column">				
-						</td>											
 						<td class ="column">				
 						</td>											
 
