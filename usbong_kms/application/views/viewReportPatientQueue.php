@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20210115
+' @date updated: 20210116
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -934,14 +934,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 									if (isset($value['previous_visit'])) {
 										if ($value['previous_visit']==0) {
-											echo DATE("Y-m-d"); //new transaction
+											//removed by Mike, 20210116
+//											echo DATE("Y-m-d"); //new transaction
 										}
 										else {
 											echo DATE("Y-m-d", strtotime($value['previous_visit']));
 										}
 									}
 									else {
-										echo DATE("Y-m-d");
+										//removed by Mike, 20210116
+//										echo DATE("Y-m-d"); //new transaction
 									}
 									
 //									echo (string) $value['last_visit'];
