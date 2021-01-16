@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210104
+  @date updated: 20210116
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -1236,7 +1236,8 @@
 				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
 //				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' group by t1.receipt_id"))
 				{
-/*					echo $value['item_name'];
+/*
+					echo $value['item_name'];
 					echo "dito".$value['transaction_id']."<br/>";
 */
 					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {						
@@ -1246,13 +1247,22 @@
 						else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 						}
 						else {
+
+//added by Mike, 20210116
+//note: if PAS OR# not yet added to KMS after transaction, add by hand 12% to all non-med items 
+//ECHO $iFeeTotalCount."<BR/>";
+
 							$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
 							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+
+//added by Mike, 20210116
+//ECHO $iFeeTotalCount."<BR/>";
 
 /*	//removed by Mike, 20210104
 						echo $value['item_name'];
 						echo "dito".$value['transaction_id']."<br/>";
 */
+
 							//Note: fee_quantity can be 6, albeit in cash register, it is 1
 							//This is due to several non-med items are combined into 1 transaction in Cash Register
 							//TO-DO: -update: this
