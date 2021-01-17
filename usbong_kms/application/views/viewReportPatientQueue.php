@@ -78,6 +78,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #ff8000;
 						}						
 
+						div.tableHeaderaveWaitToDoneTime
+						{
+							text-align: center;							
+							background-color: #ffdd00; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+						}						
+
 						span.asterisk
 						{
 							color: #ff0000;
@@ -126,6 +133,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}						
 
 						table.addPatientTable
+						{
+							border: 2px dotted #ab9c7d;		
+							margin-top: 10px;
+						}						
+
+						table.aveWaitToDoneTimeTable
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
@@ -1023,21 +1036,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$d2=new DateTime($value['start_datetime_stamp']);
 									$diff=$d2->diff($d1);
 
-/* //TO-DO: -update: this
-									//added by Mike, 20210117
-									if ($dtTotalWaitDoneElapsedTime==0) {
-										echo "diff".$diff->format("%H:%I");
+									$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime+$diff->h*60+$diff->i;
 
-
-										$dtTotalWaitDoneElapsedTime = new DateTime(); 
-										//$dtTotalWaitDoneElapsedTime->add(new DateInterval("PT".$diff->format("%H")."H"));
-										
-										echo "hallo".$dtTotalWaitDoneElapsedTime->format("H");
-									}
-									else {
-										$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime->add($diff);
-									}
-*/									
 									$iTotalWaitDoneElapsedTimeCount=$iTotalWaitDoneElapsedTimeCount+1;
 
 									echo "<span class='alertGoldSpan'>";
@@ -1081,21 +1081,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //					echo "<br/>";
 				}				
 				
-				echo "</table>";		
-				
-				//added by Mike, 20210117
-/*	//TO-DO: -update: this
-				echo "<br/>";
-				
-//				echo "Ave. Wait Done Time: ".$dtTotalWaitDoneElapsedTime->format("%H:%I")/$iTotalWaitDoneElapsedTimeCount;				
-				echo $dtTotalWaitDoneElapsedTime->format("%H:%I");
-*/							
+				echo "</table>";						
 				echo "<br/>";				
 				echo '<div>***NOTHING FOLLOWS***';	
 //			}
 		}
 		
 		?>
+
+	<!-- added by Mike, 20210117 -->
+	<table class="aveWaitToDoneTimeTable">
+	<tr>
+		<td>
+			<div class="tableHeaderaveWaitToDoneTime">
+<?php				
+				$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime/$iTotalWaitDoneElapsedTimeCount;
+
+				$iHour=intval($dtTotalWaitDoneElapsedTime/60);
+				$iSec=$dtTotalWaitDoneElapsedTime%60;				
+				$sHour="".$iHour;
+				$sSec="".$iSec;
+				
+				if ($iHour<10) {
+					$sHour="0".$iHour;
+				}
+
+				if ($iSec<10) {
+					$sSec="0".$iSec;
+				}
+				echo "<b>AVE. WAIT TO DONE TIME (HH:MM): ".$sHour.":".$sSec."<b>";
+?>
+			</div>
+		</td>
+	</tr>
+	<tr>
 
 	<!-- added by Mike, 20200530 -->
 	<table class="addPatientTable">
