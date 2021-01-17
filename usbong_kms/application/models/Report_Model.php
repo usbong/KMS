@@ -194,14 +194,14 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}	
 
-	//added by Mike, 20210115
-	public function getPatientLastVisitBeforeToday($param) {
+	//added by Mike, 20210115; edited by Mike, 20210117
+	public function getPatientPreviousVisitBeforeToday($param) {
 		//$this->db->select('MAX(added_datetime_stamp)');
 		$this->db->select('added_datetime_stamp');
 		
 		$this->db->where('patient_id=',$param['patient_id']);
 		$this->db->order_by('added_datetime_stamp', 'DESC');//DESC');
-		$this->db->limit(1,1);
+		$this->db->limit(1,1); //get the second transaction
 //		$this->db->distinct();
 
 		$query = $this->db->get('transaction');
@@ -219,6 +219,34 @@ class Report_Model extends CI_Model
 		return $rowArray[0]['added_datetime_stamp'];
 
 	}
+
+	//added by Mike, 20210117
+	public function getPatientWaitDoneElapsedTime($param) {
+		//$this->db->select('MAX(added_datetime_stamp)');
+		$this->db->select('added_datetime_stamp');
+		
+		$this->db->where('patient_id=',$param['patient_id']);
+		$this->db->order_by('added_datetime_stamp', 'DESC');//DESC');
+		$this->db->limit(1,0); //get the first transaction
+//		$this->db->distinct();
+
+		$this->db->where('notes=',"IN-QUEUE; PAID");
+	
+		$query = $this->db->get('transaction');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+
+//		if ($row == null) {					
+		if ($rowArray == null) {			
+			return False;
+		}
+
+//		return $row;		
+//		return $rowArray;
+		return $rowArray[0]['added_datetime_stamp'];
+	}
+
 
 	//added by Mike, 20200529; edited by Mike, 20201127
 //	public function getPatientQueueReportForTheDay()
