@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20210116
+' @date updated: 20210117
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -783,6 +783,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20201013
 				$iWaitCount = 1;
 				
+				//added by Mike, 20210117
+				$dtTotalWaitDoneElapsedTime=0;
+				$iTotalWaitDoneElapsedTimeCount=0;
+
+				
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
 	/*	
@@ -1014,9 +1019,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "</span>";
 								}
 								else {
+									//added by Mike, 20210117
+									$d2=new DateTime($value['start_datetime_stamp']);
+									$diff=$d2->diff($d1);
+
+/* //TO-DO: -update: this
+									//added by Mike, 20210117
+									if ($dtTotalWaitDoneElapsedTime==0) {
+										echo "diff".$diff->format("%H:%I");
+
+
+										$dtTotalWaitDoneElapsedTime = new DateTime(); 
+										//$dtTotalWaitDoneElapsedTime->add(new DateInterval("PT".$diff->format("%H")."H"));
+										
+										echo "hallo".$dtTotalWaitDoneElapsedTime->format("H");
+									}
+									else {
+										$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime->add($diff);
+									}
+*/									
+									$iTotalWaitDoneElapsedTimeCount=$iTotalWaitDoneElapsedTimeCount+1;
+
 									echo "<span class='alertGoldSpan'>";
 										//TO-DO: -update: this							
-										echo "DONE!";
+										echo "DONE!"."<br/>";
+										
+/*										//added by Mike, 20210117; removed by Mike, 20210117
+										echo "<br/>".$value['start_datetime_stamp'];
+										echo "<br/>".$value['added_datetime_stamp'];
+*/										
+										//added by Mike, 20210117
+										echo $diff->format("%H:%I");
+										
 									echo "</span>";									
 								}
 
@@ -1047,7 +1081,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //					echo "<br/>";
 				}				
 				
-				echo "</table>";				
+				echo "</table>";		
+				
+				//added by Mike, 20210117
+/*	//TO-DO: -update: this
+				echo "<br/>";
+				
+//				echo "Ave. Wait Done Time: ".$dtTotalWaitDoneElapsedTime->format("%H:%I")/$iTotalWaitDoneElapsedTimeCount;				
+				echo $dtTotalWaitDoneElapsedTime->format("%H:%I");
+*/							
 				echo "<br/>";				
 				echo '<div>***NOTHING FOLLOWS***';	
 //			}
