@@ -122,6 +122,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							color: #ff9900;
 							font-weight: bold;
 						}						
+
+						span.alertOrangeSpan {
+							color: #ff8000;
+							font-weight: bold;
+						}						
 						
 						table.search-result
 						{
@@ -653,7 +658,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$dtTotalWaitDoneElapsedTime=0;
 		$iTotalWaitDoneElapsedTimeCount=0;
 
-
 		if ((isset($result)) and ($result!=False)) {
 			$resultCount = count($result);
 		}
@@ -729,6 +733,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>											
+						
+						<!-- added by Mike, 20210118 -->
+						<td class ="columnTableHeader">				
+								<div class="tableHeader">
+							<?php
+									echo "PREVIOUS VISIT";
+							?>
+								</div>
+						</td>											
+
+						
 						<td class ="columnTableHeader">				
 								<div class="tableHeader">
 							<?php
@@ -803,7 +818,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>											
 						<td class ="column">				
-						</td>											
+						</td>			
+						<!-- added by Mike, 20201003 -->
+						<td class ="column">				
+						</td>						
 						<td class ="column">				
 						</td>											
 				</tr>
@@ -830,7 +848,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo $iMedicalDoctorCount;
 				?>		
 						</td>
-	
+
 						<!-- added by Mike, 20201013 -->
 						<td class ="columnCount">				
 				<?php
@@ -895,6 +913,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
+
+<!-- added by Mike, 20210115 -->
+						<td class ="column">				
+								<div class="lastVisitDate" id="lastVisitId<?php echo $iCount?>">
+							<?php
+									if (isset($value['previous_visit'])) {
+										if ($value['previous_visit']==0) {
+											//removed by Mike, 20210116
+//											echo DATE("Y-m-d"); //new transaction
+										}
+										else {
+											echo DATE("Y-m-d", strtotime($value['previous_visit']));
+										}
+									}
+									else {
+										//removed by Mike, 20210116
+//										echo DATE("Y-m-d"); //new transaction
+									}
+									
+//									echo (string) $value['last_visit'];
+							?>
+								</div>
+						</td>						
+
 						<td class ="column">				
 								<div>
 							<?php
@@ -959,22 +1001,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$d2=new DateTime($value['start_datetime_stamp']);
 									$diff=$d2->diff($d1);
 
-									$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime+$diff->h*60+$diff->i;
+									//edited by Mike, 20210118
+									$iElapsedTime=$diff->h*60+$diff->i;
+									
+									//edited by Mike, 20210118
+									if ($iElapsedTime==0) {
+									}
+									else {
+										$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime+$iElapsedTime;
 
-									$iTotalWaitDoneElapsedTimeCount=$iTotalWaitDoneElapsedTimeCount+1;
+										$iTotalWaitDoneElapsedTimeCount=$iTotalWaitDoneElapsedTimeCount+1;
+									}
+									
+									//added by Mike, 20210118
+									if ($iElapsedTime==0) {
+										echo "<span class='alertOrangeSpan'>";
+											echo "DONE!"."<br/>";
+											echo "START TIME?";
+										echo "</span>";
+									}
+									else {
+										echo "<span class='alertGoldSpan'>";
+											//TO-DO: -update: this							
+											echo "DONE!"."<br/>";
+											
+	/*										//added by Mike, 20210118; removed by Mike, 20210118
+											echo "<br/>".$value['start_datetime_stamp'];
+											echo "<br/>".$value['added_datetime_stamp'];
+	*/										
 
-									echo "<span class='alertGoldSpan'>";
-										//TO-DO: -update: this							
-										echo "DONE!"."<br/>";
-										
-/*										//added by Mike, 20210118; removed by Mike, 20210118
-										echo "<br/>".$value['start_datetime_stamp'];
-										echo "<br/>".$value['added_datetime_stamp'];
-*/										
-										//added by Mike, 20210118
-										echo $diff->format("%H:%I");										
-									echo "</span>";									
-
+											//added by Mike, 20210118
+											echo $diff->format("%H:%I");										
+										echo "</span>";
+									}
 								}
 
 

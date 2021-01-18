@@ -125,6 +125,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							color: #ff9900;
 							font-weight: bold;
 						}						
+
+						span.alertOrangeSpan {
+							color: #ff8000;
+							font-weight: bold;
+						}						
 						
 						table.search-result
 						{
@@ -1031,26 +1036,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "</span>";
 								}
 								else {
-									//added by Mike, 20210117
+									//added by Mike, 20210118
 									$d2=new DateTime($value['start_datetime_stamp']);
 									$diff=$d2->diff($d1);
 
-									$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime+$diff->h*60+$diff->i;
+									//edited by Mike, 20210118
+									$iElapsedTime=$diff->h*60+$diff->i;
+									
+									//edited by Mike, 20210118
+									if ($iElapsedTime==0) {
+									}
+									else {
+										$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime+$iElapsedTime;
 
-									$iTotalWaitDoneElapsedTimeCount=$iTotalWaitDoneElapsedTimeCount+1;
+										$iTotalWaitDoneElapsedTimeCount=$iTotalWaitDoneElapsedTimeCount+1;
+									}
+									
+									//added by Mike, 20210118
+									if ($iElapsedTime==0) {
+										echo "<span class='alertOrangeSpan'>";
+											echo "DONE!"."<br/>";
+											echo "START TIME?";
+										echo "</span>";
+									}
+									else {
+										echo "<span class='alertGoldSpan'>";
+											//TO-DO: -update: this							
+											echo "DONE!"."<br/>";
+											
+	/*										//added by Mike, 20210118; removed by Mike, 20210118
+											echo "<br/>".$value['start_datetime_stamp'];
+											echo "<br/>".$value['added_datetime_stamp'];
+	*/										
 
-									echo "<span class='alertGoldSpan'>";
-										//TO-DO: -update: this							
-										echo "DONE!"."<br/>";
-										
-/*										//added by Mike, 20210117; removed by Mike, 20210117
-										echo "<br/>".$value['start_datetime_stamp'];
-										echo "<br/>".$value['added_datetime_stamp'];
-*/										
-										//added by Mike, 20210117
-										echo $diff->format("%H:%I");
-										
-									echo "</span>";									
+											//added by Mike, 20210118
+											echo $diff->format("%H:%I");										
+										echo "</span>";
+									}
 								}
 
 
