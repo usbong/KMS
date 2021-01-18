@@ -1411,6 +1411,13 @@ class Report extends CI_Controller { //MY_Controller {
 					if ($value['medical_doctor_id']==0) {
 						$value['medical_doctor_id']=1;
 					}
+
+					//added by Mike, 20210118
+					//add patient's previous_visit
+					$value['previous_visit'] = $this->Report_Model->getPatientPreviousVisitBeforeToday($value);
+
+					//added by Mike, 20210118
+					$value['start_datetime_stamp'] = $this->Report_Model->getPatientWaitDoneElapsedTime($value);
 					
 					array_push($outputResult, $value);
 				}
