@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20210117
+' @date updated: 20210118
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -688,6 +688,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200530
 		$resultCount = 0;
 
+		//added by Mike, 20210118
+		$dtTotalWaitDoneElapsedTime=0;
+		$iTotalWaitDoneElapsedTimeCount=0;
+		
 		if ((isset($result)) and ($result!=False)) {
 			$resultCount = count($result);
 		}
@@ -795,12 +799,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				//added by Mike, 20201013
 				$iWaitCount = 1;
-				
-				//added by Mike, 20210117
-				$dtTotalWaitDoneElapsedTime=0;
-				$iTotalWaitDoneElapsedTimeCount=0;
-
-				
+								
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
 	/*	
@@ -1094,9 +1093,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<tr>
 		<td>
 			<div class="tableHeaderaveWaitToDoneTime">
-<?php				
-				$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime/$iTotalWaitDoneElapsedTimeCount;
-
+<?php			
+				//edited by Mike, 20210118
+				if ($iTotalWaitDoneElapsedTimeCount!=0) {
+					$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime/$iTotalWaitDoneElapsedTimeCount;	
+				}
+	
 				$iHour=intval($dtTotalWaitDoneElapsedTime/60);
 				$iSec=$dtTotalWaitDoneElapsedTime%60;				
 				$sHour="".$iHour;
@@ -1114,7 +1116,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</td>
 	</tr>
-	<tr>
 
 	<!-- added by Mike, 20200530 -->
 	<table class="addPatientTable">

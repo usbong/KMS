@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20210110
+' @date updated: 20210118
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -75,6 +75,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #ff8000;
 						}						
 
+						div.tableHeaderaveWaitToDoneTime
+						{
+							text-align: center;							
+							background-color: #ffdd00; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+						}						
+
 						span.asterisk
 						{
 							color: #ff0000;
@@ -123,6 +130,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}						
 
 						table.addPatientTable
+						{
+							border: 2px dotted #ab9c7d;		
+							margin-top: 10px;
+						}						
+
+						table.aveWaitToDoneTimeTable
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
@@ -636,6 +649,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200530
 		$resultCount = 0;
 
+		//added by Mike, 20210118
+		$dtTotalWaitDoneElapsedTime=0;
+		$iTotalWaitDoneElapsedTimeCount=0;
+
+
 		if ((isset($result)) and ($result!=False)) {
 			$resultCount = count($result);
 		}
@@ -734,6 +752,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 				//added by Mike, 20201013
 				$iWaitCount = 1;
+
+				//added by Mike, 20210118
+				$dtTotalWaitDoneElapsedTime=0;
+				$iTotalWaitDoneElapsedTimeCount=0;
 				
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
@@ -933,10 +955,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "</span>";
 								}
 								else {
+									//added by Mike, 20210118
+									$d2=new DateTime($value['start_datetime_stamp']);
+									$diff=$d2->diff($d1);
+
+									$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime+$diff->h*60+$diff->i;
+
+									$iTotalWaitDoneElapsedTimeCount=$iTotalWaitDoneElapsedTimeCount+1;
+
 									echo "<span class='alertGoldSpan'>";
 										//TO-DO: -update: this							
-										echo "DONE!";
+										echo "DONE!"."<br/>";
+										
+/*										//added by Mike, 20210118; removed by Mike, 20210118
+										echo "<br/>".$value['start_datetime_stamp'];
+										echo "<br/>".$value['added_datetime_stamp'];
+*/										
+										//added by Mike, 20210118
+										echo $diff->format("%H:%I");										
 									echo "</span>";									
+
 								}
 
 
@@ -973,6 +1011,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 		
 		?>
+
+	<!-- added by Mike, 20210117 -->
+	<table class="aveWaitToDoneTimeTable">
+	<tr>
+		<td>
+			<div class="tableHeaderaveWaitToDoneTime">
+<?php			
+				//edited by Mike, 20210118
+				if ($iTotalWaitDoneElapsedTimeCount!=0) {
+					$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime/$iTotalWaitDoneElapsedTimeCount;	
+				}
+	
+				$iHour=intval($dtTotalWaitDoneElapsedTime/60);
+				$iSec=$dtTotalWaitDoneElapsedTime%60;				
+				$sHour="".$iHour;
+				$sSec="".$iSec;
+				
+				if ($iHour<10) {
+					$sHour="0".$iHour;
+				}
+
+				if ($iSec<10) {
+					$sSec="0".$iSec;
+				}
+				echo "<b>AVE. WAIT TO DONE TIME (HH:MM): ".$sHour.":".$sSec."<b>";
+?>
+			</div>
+		</td>
+	</tr>
 
 	<!-- added by Mike, 20200530 -->
 	<table class="addPatientTable">
