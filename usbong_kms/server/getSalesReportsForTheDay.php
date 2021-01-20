@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210116
+  @date updated: 20210120
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -793,7 +793,7 @@
 
 												//note: if last transaction in database
 												//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);												
-												if ($iTransactionId>=$iTransactionIdMax) {							
+												if ($iTransactionId>=$iTransactionIdMax) {
 													break;
 												}						
 												
@@ -819,8 +819,15 @@
 									while ($iTransactionQuantity <= 0);								
 								//--------------------------------------------------
 								
-								//added by Mike, 20201216
-								$iTransactionId = $iTransactionId -1;
+								//added by Mike, 20201216; edited by Mike, 20210120
+								//$iTransactionId = $iTransactionId -1;
+								if ($iTransactionId>=$iTransactionIdMax) {
+									$iTransactionId = $iTransactionIdMax;
+								}
+								else {
+									$iTransactionId = $iTransactionId -1;
+								}									
+
 
 								//edited by Mike, 20201127
 								//if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
