@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210110
+' @date updated: 20210120
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -70,8 +70,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							background-color: #00ff00; <!--#93d151; lime green-->
 							border: 1pt solid #00ff00;
-						}						
+						}
 
+						div.tableHeaderAddNewPatient
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #ff8000; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+						}						
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -96,6 +104,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							height: auto;
 							float: left;
 							text-align: center;
+						}						
+
+						table.addPatientTable
+						{
+							border: 2px dotted #ab9c7d;		
+							margin-top: 10px;
 						}						
 						
 						table.search-result
@@ -449,53 +463,60 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo '<br/>2) Reverify that the spelling is correct.';				
 				echo '<br/>3) Add <b>new</b> patient name.';				
 				echo '<br/><br/>';
-				echo '</div>';		
-
-				//added by Mike, 20200529
-?>				
-	<!-- Form -->
-	<form method="post" action="<?php echo site_url('browse/addPatientName/')?>">
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>Last Name <span class="asterisk">*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>				
-				  <input type="text" class="patient-input" placeholder="" name="patientLastNameParam" required>
-				</td>
-			  </tr>
-			</table>
-		</div>
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>First Name </span><span class="asterisk">*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-				  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
-				</td>
-			  </tr>
-			</table>
-		</div>	
-		<br />
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Submit
-		</button>
-	</form>
-
-<?php
-				
-				
+				echo '</div>';				
 			}			
 		}
 	?>
+	<table class="addPatientTable">
+	<tr>
+		<td>
+			<div class="tableHeaderAddNewPatient">
+				ADD NEW PATIENT
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<!-- Form -->
+		<form method="post" action="<?php echo site_url('browse/addPatientNameInformationDesk/')?>">
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>Last Name <span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>				
+					  <input type="text" class="patient-input" placeholder="" name="patientLastNameParam" required>
+					</td>
+				  </tr>
+				</table>
+			</div>
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>First Name </span><span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+					  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
+					</td>
+				  </tr>
+				</table>
+			</div>	
+			<br />
+			<!-- Buttons -->
+			<button type="submit" class="Button-login">
+				Submit
+			</button>
+		</form>
+		</td>
+	</tr>
+	</table>
+		
 	<br />
 	<br />
 	<br />
