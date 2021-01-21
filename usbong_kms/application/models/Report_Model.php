@@ -274,12 +274,16 @@ class Report_Model extends CI_Model
 
 		//added by Mike, 20200601; edited by Mike, 20200606
 		//TO-DO: -reverify: this
-		$this->db->group_by('t2.patient_id');
+		//removed by Mike, 20210122
+//		$this->db->group_by('t2.patient_id');
+
 		//$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_date=t2.transaction_date)',NULL,FALSE);
 
+/* //removed by Mike, 20210122
 		//edited by Mike, 20200607
 		//$this->db->select_max('t2.added_datetime_stamp');
 		$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+*/
 		
 		//edited by Mike, 20210115
 		$this->db->where('t2.transaction_date',date("m/d/Y"));
@@ -322,6 +326,18 @@ class Report_Model extends CI_Model
 			
 			//added by Mike, 20201114
 			$this->db->not_like('t2.notes',"SNACK ONLY");
+
+			$this->db->group_by('t2.patient_id');
+			$this->db->group_by('t2.notes');
+
+			//added by Mike, 20210122
+			//$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+		}
+		//added by Mike, 20210122
+		else {
+			$this->db->group_by('t2.patient_id');
+
+			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
 		}
 
 
