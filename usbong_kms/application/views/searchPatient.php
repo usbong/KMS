@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210120
+' @date updated: 20210121
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -478,7 +478,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<tr>
 		<td>
 		<!-- Form -->
-		<form method="post" action="<?php echo site_url('browse/addPatientNameInformationDesk/')?>">
+		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
+		<!-- "browse/addPatientName" faster -->
+		<form method="post" action="<?php echo site_url('browse/addPatientName/')?>">
 			<div>
 				<table width="100%">
 				  <tr>
