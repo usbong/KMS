@@ -2703,6 +2703,51 @@ class Browse extends CI_Controller { //MY_Controller {
 //		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay(0);
 
+//added by Mike, 20210121
+		//-----		
+//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputResult = [];
+		$outputResult = array();
+		
+		//edited by Mike, 20200602
+		if ($data["result"]!=False) {
+//		if ((isset($data["result"])) and (count($data["result"])>1)) {
+			foreach ($data["result"] as $value) {
+				if (($value['fee']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				//added by Mike, 20200602
+				//medical_doctor_name = "NEW; NONE YET"
+				else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				else {
+					//added by Mike, 20201022
+					if ($value['medical_doctor_id']==0) {
+						$value['medical_doctor_id']=1;
+					}
+
+					//added by Mike, 20210118
+					//add patient's previous_visit
+					$value['previous_visit'] = $this->Report_Model->getPatientPreviousVisitBeforeToday($value);
+
+					//added by Mike, 20210118
+					$value['start_datetime_stamp'] = $this->Report_Model->getPatientWaitDoneElapsedTime($value);
+					
+					array_push($outputResult, $value);
+				}
+			}
+			
+			//added by Mike, 20201022
+			//TO-DO: -reverify: these
+			$transactionIdColumn = array_column($outputResult, 'transaction_id');
+			$medicalDoctorIdColumn = array_column($outputResult, 'medical_doctor_id');
+			array_multisort($medicalDoctorIdColumn, SORT_ASC, $transactionIdColumn, SORT_ASC, $outputResult);
+			
+			$data["result"]  = $outputResult;
+		}
+		//-----
+
 		$this->load->view('viewReportPatientQueue', $data);
 	}
 
@@ -2725,6 +2770,50 @@ class Browse extends CI_Controller { //MY_Controller {
 //		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
 		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay(1);
 
+		//added by Mike, 20210121
+		//-----		
+//do not include transactions whose fee = 0 and notes = "IN-QUEUE; PAID"
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputResult = [];
+		$outputResult = array();
+		
+		//edited by Mike, 20200602
+		if ($data["result"]!=False) {
+//		if ((isset($data["result"])) and (count($data["result"])>1)) {
+			foreach ($data["result"] as $value) {
+				if (($value['fee']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				//added by Mike, 20200602
+				//medical_doctor_name = "NEW; NONE YET"
+				else if (($value['medical_doctor_id']==0) and ($value['notes']=="IN-QUEUE; PAID")) {
+				}
+				else {
+					//added by Mike, 20201022
+					if ($value['medical_doctor_id']==0) {
+						$value['medical_doctor_id']=1;
+					}
+
+					//added by Mike, 20210118
+					//add patient's previous_visit
+					$value['previous_visit'] = $this->Report_Model->getPatientPreviousVisitBeforeToday($value);
+
+					//added by Mike, 20210118
+					$value['start_datetime_stamp'] = $this->Report_Model->getPatientWaitDoneElapsedTime($value);
+					
+					array_push($outputResult, $value);
+				}
+			}
+			
+			//added by Mike, 20201022
+			//TO-DO: -reverify: these
+			$transactionIdColumn = array_column($outputResult, 'transaction_id');
+			$medicalDoctorIdColumn = array_column($outputResult, 'medical_doctor_id');
+			array_multisort($medicalDoctorIdColumn, SORT_ASC, $transactionIdColumn, SORT_ASC, $outputResult);
+			
+			$data["result"]  = $outputResult;
+		}
+		//-----
 
 		$this->load->view('viewReportPatientQueueAccounting', $data);
 	}
