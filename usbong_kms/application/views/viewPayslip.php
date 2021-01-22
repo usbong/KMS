@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210110
+' @date updated: 20210122
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -496,7 +496,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 									//added by Mike, 20200507
 									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
-										$iMOSC = ($value['fee']-500)*.30;
+										//$iMOSC = ($value['fee']-500)*.30;
+										//edited by Mike, 20210122
+										//max dexa: 2
+										if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+											$iMOSC = ($value['fee']-1000)*.30;
+										}
+										else {
+											$iMOSC = ($value['fee']-500)*.30;
+										}
 									}
 /*									//removed by Mike, 20200824									
 									//added by Mike, 20200824
@@ -558,7 +566,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 									//added by Mike, 20200403; edited by Mike, 20200507
 									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
-										$iNetPF = ($value['fee']-500)*.70+500;
+										//edited by Mike, 20210122
+										//$iNetPF = ($value['fee']-500)*.70+500;
+										//max dexa: 2
+										if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+											$iNetPF = ($value['fee']-1000)*.70+1000;
+										}
+										else {
+											$iNetPF = ($value['fee']-500)*.70+500;
+										}
 									}
 /*									//removed by Mike, 20200824									
 									//added by Mike, 20200824
