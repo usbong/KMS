@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210120
+  @date updated: 20210122
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -912,10 +912,24 @@
 
 							//TO-DO: -reverify: this
 							if (strpos($value['notes'],"DEXA")!==false) {
+								//edited by Mike, 20210122
+/*
 								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 								
 								//added by Mike, 20200531
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+*/
+								//max dexa: 2
+								if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
+									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
+								}
+								else {
+									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+									
+									//added by Mike, 20200531
+									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+								}
 							}
 							
 							if (strpos($value['notes'],"MINORSET")!==false) {
@@ -1048,10 +1062,24 @@
 						//TO-DO: -reverify: if +DEXA
 						//added by Mike, 20200829
 						if (strpos($value['notes'],"DEXA")!==false) {
+							//edited by Mike, 20210122
+/*
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
 							//added by Mike, 20200531
 							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+*/
+							//max dexa: 2
+							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
+							}
+							else {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+								
+								//added by Mike, 20200531
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+							}
 						}
 						else {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
@@ -1060,10 +1088,25 @@
 					else {
 						//edited by Mike, 20200829
 						if (strpos($value['notes'],"DEXA")!==false) {
+							//edited by Mike, 20210122
+/*
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
 							//added by Mike, 20200531
 							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+*/
+							//max dexa: 2
+							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
+							}
+							else {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+								
+								//added by Mike, 20200531
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+							}
+
 						}
 						else if (strpos($value['notes'],"NC")!==false) {
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
