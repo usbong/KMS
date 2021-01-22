@@ -2486,7 +2486,10 @@ echo $classification;
 //		$this->db->select('transaction_id, fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
 		//edited by Mike, 20201212
 //		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
-		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity');
+		//edited by Mike, 20210122
+//		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity');
+		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
+
 		$this->db->where('transaction_id', $outputTransactionId);
 		//added by Mike, 20200821
 		$this->db->where('ip_address_id', $ipAddress);
@@ -2627,10 +2630,11 @@ echo $classification;
 		//added by Mike, 20201105; removed by Mike, 20201105
 //		echo "patientId".$param['patientId'];
 		
-		//added by Mike, 20201210
+		//added by Mike, 20201210; removed by Mike, 20210122
 		//note: transactions added at Information Desk using another IP address
 		//machine address not yet successfully identified
 		//part 0		
+/*		
 		$data = array(
 					'notes' => "IN-QUEUE; PAID" //"PAID"
 				);
@@ -2638,12 +2642,15 @@ echo $classification;
 		$this->db->where('notes',"IN-QUEUE; UNPAID");
 		$this->db->where('patient_id', $param['patientId']);
 		$this->db->update('transaction', $data);
-
+*/
 		
 		//edited by Mike, 20200605
 //		$this->db->select('notes, transaction_id');
-		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
-        $this->db->like('notes',"UNPAID");
+		//edited by Mike, 20210122
+//		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
+		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id, item_id');
+        
+		$this->db->like('notes',"UNPAID");
 		
 		$this->db->where('transaction_date', date('m/d/Y'));
 		
@@ -2667,7 +2674,41 @@ echo $classification;
 		//added by Mike, 20200607
 		$outputTransaction = null;
 
+		//added by Mike, 20210122
+		//---
+		//note: transactions added at Information Desk using another IP address
+		//machine address not yet successfully identified
+		//part 0
+		$bHasPaidForServiceTransaction=false;
+		
 		foreach ($rowArray as $rowValue) {
+			//identify transactions that are snack only, non-med only, and med only
+			//we use "ONLY" keyword
+			if (strpos($rowValue['notes'],"ONLY")!==false) {
+			}
+			else {
+				if (strpos($rowValue['notes'],"IN-QUEUE")!==false) {
+					if ($rowValue['item_id']==0) {
+						$bHasPaidForServiceTransaction=true;
+					}
+				}
+			}
+		}
+
+		if ($bHasPaidForServiceTransaction) {
+			$data = array(
+						'notes' => "IN-QUEUE; PAID" //"PAID"
+					);
+
+			$this->db->where('notes',"IN-QUEUE; UNPAID");
+			$this->db->where('patient_id', $param['patientId']);
+			$this->db->update('transaction', $data);
+		}
+		//TO-DO: -reverify: transaction_quantity due to "IN-QUEUE; PAID"
+		//value may be 3, albeit not in the adjacent sequence in list
+		//---
+		
+		foreach ($rowArray as $rowValue) {			
 			//part 1
 			$updatedValue = str_replace("UNPAID","PAID",$rowValue['notes']);
 			
