@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210110
+' @date updated: 20210122
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -463,7 +463,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//added by Mike, 20200518; edited by Mike, 20200523
 			//the following instruction is not yet supported by all computer web browsers
 //			if (notes.includes("DEXA")) {
-			if (notes.indexOf("DEXA")!==-1) {
+			//edited by Mike, 20210122
+			if (notes.indexOf("DEXA2")!==-1) {
+				professionalFee = parseInt(professionalFee) + 500*2;
+			}
+			else if (notes.indexOf("DEXA")!==-1) {
 				professionalFee = parseInt(professionalFee) + 500;
 			}
 
