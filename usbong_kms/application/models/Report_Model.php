@@ -292,6 +292,8 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200601
 		//TO-DO: -reverify: this
 		$this->db->where('t1.patient_id!=',0);
+		//added by Mike, 20210123
+		$this->db->where('t1.patient_id!=',-1);
 
 		//removed by Mike, 20200601
 /*		$this->db->where('t2.fee!=',0);
