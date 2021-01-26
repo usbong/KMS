@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210110
+' @date updated: 20210126
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -348,6 +348,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php				
 				$iCount = 1;
 				foreach ($result as $value) {
+					//added by Mike, 20210126
+					//TO-DO: -update: in Browse.php, confirmNonMedicine(...)
+					//sort in reverse $outputArray
+					//to eliminate excess resultQuantityInStockNow=0;
+					//albeit keep if the last remaining with 0 resultQuantityInStockNow value
+					if ($value['resultQuantityInStockNow']==0) {
+//						continue;
+					}
+
 		?>				
 		
 					  <tr class="row">
