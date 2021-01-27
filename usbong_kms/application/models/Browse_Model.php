@@ -2688,6 +2688,15 @@ echo $classification;
 			}
 			else {
 				if (strpos($rowValue['notes'],"IN-QUEUE")!==false) {
+					//removed by Mike, 20210127
+/*					
+					if ($rowValue['item_id']!=0) {
+						$bHasPaidForServiceTransaction=true;
+					}
+*/
+				}
+				//added by Mike, 20210127
+				else {
 					if ($rowValue['item_id']==0) {
 						$bHasPaidForServiceTransaction=true;
 					}
