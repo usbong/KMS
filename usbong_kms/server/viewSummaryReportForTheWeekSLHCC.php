@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020 Usbong Social Systems, Inc.
+  Copyright 2020~2021 Usbong Social Systems, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 
@@ -9,7 +9,7 @@
 
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20201206
+  @date updated: 20210127
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit (SLHCC)
@@ -173,6 +173,10 @@
 		
 	//edited by Mike, 20201206
 	$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook".$sStartDate."~".$sEndDate.".csv";
+
+//added by Mike, 20210127
+//	$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20210118~20210123Halimbawa.csv";
+	
 	//note: use this to set by hand the week of a collection report 
 	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201123~20201128.csv";
 	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201116~20201121.csv";	
@@ -348,7 +352,7 @@
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y"); ?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
