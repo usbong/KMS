@@ -2648,7 +2648,9 @@ echo $classification;
 //		$this->db->select('notes, transaction_id');
 		//edited by Mike, 20210122
 //		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
-		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id, item_id');
+		//edited by Mike, 20210127
+//		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id, item_id');
+		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id, item_id, med_fee, pas_fee, snack_fee');
         
 		$this->db->like('notes',"UNPAID");
 		
@@ -2680,8 +2682,25 @@ echo $classification;
 		//machine address not yet successfully identified
 		//part 0
 		$bHasPaidForServiceTransaction=false;
-		
-		foreach ($rowArray as $rowValue) {
+				
+		//edited by Mike, 20210128		
+//		foreach ($rowArray as $rowValue) {
+		foreach ($rowArray as &$rowValue) {
+			//added by Mike, 20210128
+			if (strpos($rowValue['notes'],"IN-QUEUE")!==false) {
+			}
+			else {
+				//added by Mike, 20210127
+				if (($rowValue['fee']==0) and ($rowValue['x_ray_fee']==0) and ($rowValue['lab_fee']==0)){
+					if (strpos($rowValue['notes'], "ONLY")!==false) {
+					}
+					else {
+						//edited by Mike, 20210128
+						$rowValue['notes']=$rowValue['notes']."; ONLY";
+					}
+				}
+			}
+//--
 			//identify transactions that are snack only, non-med only, and med only
 			//we use "ONLY" keyword
 			if (strpos($rowValue['notes'],"ONLY")!==false) {
@@ -2703,6 +2722,8 @@ echo $classification;
 				}
 			}
 		}
+		//added by Mike, 20210128
+		unset($rowValue);
 
 		if ($bHasPaidForServiceTransaction) {
 			$data = array(
@@ -2720,7 +2741,7 @@ echo $classification;
 		foreach ($rowArray as $rowValue) {			
 			//part 1
 			$updatedValue = str_replace("UNPAID","PAID",$rowValue['notes']);
-			
+						
 			$data = array(
 						'notes' => $updatedValue //"PAID"
 					);
@@ -2755,8 +2776,7 @@ echo $classification;
 						'machine_address_id' => $machineAddress
 					);
 			
-			//added by Mike, 20200605
-			
+			//added by Mike, 20200605			
 			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
 
 			//added by Mike, 20200821
@@ -2765,16 +2785,12 @@ echo $classification;
 
 			$this->db->update('transaction', $dataOutputTransaction);			
 			
-			//added by Mike, 20200606
-			//$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, med_fee, pas_fee, medical_doctor_id, patient_id');
-			//edited by Mike, 20200607
-			//$this->db->select('med_fee, pas_fee, transaction_id');
-			//edited by Mike, 20200609
-			//$this->db->select('med_fee, pas_fee, transaction_id, medical_doctor_id');
-
 			//edited by Mike, 20200721
 //			$this->db->select('med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
-			$this->db->select('fee, med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
+			//edited by Mike, 20210128
+//			$this->db->select('fee, med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
+			$this->db->select('fee, med_fee, pas_fee, snack_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity, notes');
+
 			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
 
 			//added by Mike, 20200821
@@ -2787,6 +2803,55 @@ echo $classification;
 			
 			$outputTransaction = $rowArray[0];
 		}
+
+		//added by Mike, 20210128
+		//part 3
+		//--
+				//added by Mike, 20210127
+				if (($outputTransaction['fee']==0) and ($outputTransaction['x_ray_fee']==0) and ($outputTransaction['lab_fee']==0)){
+										
+					$updatedValue=$outputTransaction['notes'];
+					
+					//if auto-added "ONLY" keyword
+					if (strpos($outputTransaction['notes'], "; ONLY")!==false) {
+						//if not equal
+						if (strcmp(strval($outputTransaction['med_fee']),"0.00")!==0) {
+							$updatedValue = str_replace("ONLY","MED ONLY",$updatedValue);	
+						}
+
+					echo ">> ".$updatedValue."<br/>";
+
+//		echo "NON-MED FEE: ".$outputTransaction['pas_fee']."<br/>";
+
+						//if not equal
+						if (strcmp(strval($outputTransaction['pas_fee']),"0.00")!==0) {
+							$updatedValue = str_replace("ONLY","NON-MED ONLY",$updatedValue);
+						}
+						
+						//if not equal
+						if (strcmp(strval($outputTransaction['snack_fee']),"0.00")!==0) {
+							$updatedValue = str_replace("ONLY","SNACK ONLY",$updatedValue);
+						}
+					}
+				}
+			//--
+
+			if (strpos($updatedValue,"MED NON-MED")!==false) {
+				$updatedValue = str_replace("MED NON-MED", "MED, NON-MED", $updatedValue);
+			}
+
+			if (strpos($updatedValue,"MED SNACK")!==false) {
+				$updatedValue = str_replace("MED SNACK", "MED, SNACK", $updatedValue);
+			}
+		
+			$data = array(
+						'notes' => $updatedValue //"PAID"
+					);
+
+			$this->db->where('transaction_id', $outputTransaction['transaction_id']);
+			$this->db->update('transaction', $data);
+	
+			//note: patient transaction (not combined) only has "ONLY" in its notes
 		
 		return $outputTransaction; //$rowArray[0];
 
