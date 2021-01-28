@@ -318,7 +318,8 @@ class Report_Model extends CI_Model
 
 		//added by Mike, 20201127
 		if ($param==0) { //info desk page
-			//added by Mike, 20201031
+			//added by Mike, 20201031; edited by Mike, 20210128
+/*
 			//includes NON-MED
 			//no need to add % when using CodeIgniter 3's not_like(...) command
 			$this->db->not_like('t2.notes',"MED ONLY");
@@ -328,6 +329,8 @@ class Report_Model extends CI_Model
 			
 			//added by Mike, 20201114
 			$this->db->not_like('t2.notes',"SNACK ONLY");
+*/
+			$this->db->not_like('t2.notes',"ONLY");
 
 			$this->db->group_by('t2.patient_id');
 			$this->db->group_by('t2.notes');
