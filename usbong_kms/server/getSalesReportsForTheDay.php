@@ -1,12 +1,12 @@
 <?php
 /*
-  Copyright 2020 Usbong Social Systems, Inc.
+  Copyright 2020~2021 Usbong Social Systems, Inc.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210122
+  @date updated: 20210129
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -529,7 +529,9 @@
 	//edited by Mike, 20201026
 	//note: in certain cases, pressing delete button deletes transaction with LAB fee and transaction quantity zero
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	//edited by Mike, 20210129
+//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
