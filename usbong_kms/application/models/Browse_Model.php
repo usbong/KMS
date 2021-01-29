@@ -2692,7 +2692,10 @@ echo $classification;
 			else {
 				//added by Mike, 20210127
 				if (($rowValue['fee']==0) and ($rowValue['x_ray_fee']==0) and ($rowValue['lab_fee']==0)){
-					if (strpos($rowValue['notes'], "ONLY")!==false) {
+					//added by Mike, 20210129
+					if (strpos($rowValue['notes'],"NC;")!==false) {
+					}					
+					else if (strpos($rowValue['notes'], "ONLY")!==false) {
 					}
 					else {
 						//edited by Mike, 20210128
