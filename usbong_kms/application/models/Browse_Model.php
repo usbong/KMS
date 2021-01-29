@@ -2818,8 +2818,8 @@ echo $classification;
 						if (strcmp(strval($outputTransaction['med_fee']),"0.00")!==0) {
 							$updatedValue = str_replace("ONLY","MED ONLY",$updatedValue);	
 						}
-
-					echo ">> ".$updatedValue."<br/>";
+//removed by Mike, 20210129
+//					echo ">> ".$updatedValue."<br/>";
 
 //		echo "NON-MED FEE: ".$outputTransaction['pas_fee']."<br/>";
 
