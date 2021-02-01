@@ -2,7 +2,7 @@
 
 ## I. Screenshots
 ### 1) Information Desk
-<img src="https://github.com/usbong/KMS/blob/master/Screenshots/informationDesk.png" width="80%">
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/viewReportPatientQueue1.png" width="60%">
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/informationDeskAddNewPatientMikhail.png" width="80%">
 
 ### 2) Cashier/Accounting
@@ -22,7 +22,7 @@ https://www.apachefriends.org/index.html
 <b>Technologies:</b> Apache Web Server, MySQL, PHP, phpMyAdmin
 
 ## Open Source Software License
-Copyright 2019~2020 Usbong Social Systems, Inc.
+Copyright 2019~2021 Usbong Social Systems, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
