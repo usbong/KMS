@@ -31,9 +31,13 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 ## III. Add-on Software Tools
-### Chat
+### 1) Chat
 [LAN Messenger: Instant Messenging Client (Official Website)](http://lanmsngr.sourceforge.net/) <br/>
 Action: [Download](https://sourceforge.net/projects/lanmsngr/)
+
+### 2) Auto-screen Capture Photograph Image
+[PhantomJS Tool (Official Website)](https://phantomjs.org/) <br/>
+
 
 #### Notes
 1) LAN = Local Area Network<br/>
