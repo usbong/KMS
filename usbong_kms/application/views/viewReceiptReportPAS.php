@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
+' Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200420
-' @date updated: 20210110
+' @date updated: 20210205
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -561,8 +561,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								   $fVatSales = $fAmountPaid - $fVatAmount;	//edited by Mike, 20200426
 								}
 								else if ((strpos(strtoupper($value['notes']),"SC")!==false) or (strpos(strtoupper($value['notes']),"PWD")!==false)) {
-
-
 								}
 								else { //WI																
 								   $fVatAmount = number_format($fAmountPaid/1.12*0.12, 2, '.', '');
@@ -599,7 +597,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$fTotalAmountWithVat += $fAmountWithVat;								
 							?>
 								</div>
-						</td>						
+						</td>		
 					  </tr>
 		<?php				
 					$iCount++;		
