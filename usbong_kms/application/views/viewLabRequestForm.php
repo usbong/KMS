@@ -94,6 +94,12 @@
 							text-align: center;
 						}						
 
+						td.columnFieldName
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: left;
+						}						
+
 						td.columnBorderBottom
 						{
 							border: 1px dotted #ab9c7d;		
@@ -128,6 +134,13 @@
 							display: inline-block;
 							text-align: right;
 						}												
+
+						div.checkBox
+						{
+							border: 1.5pt solid black; height: 9pt; width: 9pt;
+							text-align: center;
+							float: left
+						}
     /**/
     </style>
     <title>
@@ -260,11 +273,17 @@ echo "<br/>";
 					echo "<td class='column' style='text-align:right'><b>".$cellValue."</b></td>";
 				}
 				else {
-					if ($iColumnCount==0) {
-						echo "<td class='column' style='text-align:left'>".$cellValue."</td>";
-					}
+
+//					if (($iColumnCount+1<count($data)) and ((utf8_encode($data[$iColumnCount+1]))=="TOTAL")) {
+					if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="DATE")) {
+						echo "<td class='column' style='text-align:center'>".strtoupper(date('Y-m-d, l'))."</td>";
+					}						
 					else {
-						echo "<td class='column'>".$cellValue."</td>";
+						//added by Mike, 20210206
+						$cellValue=str_replace("?", "<div class='checkBox'></div>",$cellValue);
+						
+						//blank space HTML command: "&nbsp;"
+						echo "<td class='columnFieldName'><b>".$cellValue."</b></td>";
 					}
 				}
 			}
@@ -282,7 +301,7 @@ echo "<br/>";
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
