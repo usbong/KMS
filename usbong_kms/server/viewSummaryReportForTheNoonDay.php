@@ -1,11 +1,11 @@
 <!--
-  Copyright 2020 Usbong Social Systems, Inc.
+  Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20201021
+  @date updated: 20210206
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
   Output:
@@ -195,7 +195,7 @@
 	$decodedJSONFileArray[4][0] = "lab";
 	$decodedJSONFileArray[5][0] = "sss";
 	$decodedJSONFileArray[6][0] = "minor";
-	$decodedJSONFileArray[7][0] = "REJUSO,CHASTITYAMOR";
+	$decodedJSONFileArray[7][0] = "REJUSO-MORALES,CHASTITYAMOR";
 	$decodedJSONFileArray[8][0] = "ESPINOSA,JHONSEL";
 	$decodedJSONFileArray[9][0] = "DELAPAZ,RODIL";
 	$decodedJSONFileArray[10][0] = "LASAM,HONESTO";
