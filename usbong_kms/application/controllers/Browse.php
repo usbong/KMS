@@ -1079,7 +1079,6 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewItemMedicine', $data);
 	}
 
-
 	//added by Mike, 20200328; edited by Mike, 20200603
 	public function viewItemMedicineOK($itemId)
 	{
@@ -3421,4 +3420,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->Browse_Model->updateTotalQuantitySoldPerItem();		
 		echo "***NOTHING FOLLOWS***";		
 	}
+	
+	//added by Mike, 20210206
+	public function viewLabRequestForm()
+	{
+//		$data['nameParam'] = $_POST[nameParam];
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->view('viewLabRequestForm');
+	}	
 }
