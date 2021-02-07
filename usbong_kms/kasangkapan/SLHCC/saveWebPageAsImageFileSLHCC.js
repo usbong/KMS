@@ -9,7 +9,7 @@
 ' @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20210204
+' @date updated: 20210207
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -78,7 +78,9 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	//edited by Mike, 20200725
     //page.render('output/'+fileName+'.png');
 //	page.render('output/'+dDateToday.toISOString()+'/'+fileName+'1.png');
-	page.render('output/SLHCC/'+dDateToday.toISOString()+'/'+fileName+'1.png');
+	//edited by Mike, 20210207
+//	page.render('output/SLHCC/'+dDateToday.toISOString()+'/'+fileName+'1.png');
+	page.render('output/'+dDateToday.toISOString()+'/'+fileName+'1.png');
 
 /*	
     console.log("windowScreenHeight: " + window.screen.height);
