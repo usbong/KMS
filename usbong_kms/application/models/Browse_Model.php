@@ -288,11 +288,21 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20200607
 		$this->db->order_by('t1.item_name', 'ASC');
-		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
+	
+//removed by Mike, 20210207
+//		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
 		
 		//added by Mike, 20200527
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
-		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+//removed by Mike, 20210207
+//		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+		//added by Mike, 20210207
+		//we use added_datetime_stamp due to select medicine items may be bought,
+		//albeit not based on nearest expiration date
+		//due to excess patient waiting time to find item
+		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
+
 
 		//edited by Mike, 20200709
 //		$this->db->limit(8);//1);
@@ -338,11 +348,19 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20200607
 		$this->db->order_by('t1.item_name', 'ASC');
-		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
+//removed by Mike, 20210207
+//		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
 		
 		//added by Mike, 20200527
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
-		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+//removed by Mike, 20210207
+//		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+//added by Mike, 20210207
+		//we use added_datetime_stamp due to select medicine items may be bought,
+		//albeit not based on nearest expiration date
+		//due to excess patient waiting time to find item
+		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
 
 		//edited by Mike, 20200709
 //		$this->db->limit(8);//1);
@@ -522,11 +540,21 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20200607
 //		$this->db->order_by('t1.item_name', 'ASC');
 		//$this->db->order_by('t2.added_datetime_stamp', 'ASC'); //we do this for cases with equal expiration dates
-		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
+
+//removed by Mike, 20210207
+//		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
 				
 		//added by Mike, 20200527
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
-		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+		//removed by Mike, 20210207
+//		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');		
+
+		//added by Mike, 20210207
+		//we use added_datetime_stamp due to select medicine items may be bought,
+		//albeit not based on nearest expiration date
+		//due to excess patient waiting time to find item
+		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
 
 //		$this->db->limit(8);//1);
 		
@@ -602,11 +630,21 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20200607
 		$this->db->order_by('t1.item_name', 'ASC');
-		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
-		
+
+//removed by Mike, 20210207
+//		$this->db->order_by('t2.inventory_id', 'ASC'); //we do this for cases with equal expiration dates
+				
 		//added by Mike, 20200527
 		//$this->db->order_by('t2.expiration_date', 'DESC');//ASC');
-		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+		//removed by Mike, 20210207
+//		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
+		//added by Mike, 20210207
+		//we use added_datetime_stamp due to select medicine items may be bought,
+		//albeit not based on nearest expiration date
+		//due to excess patient waiting time to find item
+		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
 
 		//edited by Mike, 20200811
 		//$this->db->limit(8);//1);
