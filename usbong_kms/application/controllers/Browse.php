@@ -935,6 +935,13 @@ class Browse extends CI_Controller { //MY_Controller {
 ////							echo $iSameItemCount.": ".$value['item_name']." : ".$value['resultQuantityInStockNow']."<br/>";
 ////							array_push($outputArray, $value);
 							}
+							//added by Mike, 20210207
+							else {
+								//echo $value['resultQuantityInStockNow']."<br/>";
+								if ($value['resultQuantityInStockNow']!=0) {
+									array_push($outputArray, $value);
+								}
+							}
 						}
 						else {
 							array_push($outputArray, $value);
