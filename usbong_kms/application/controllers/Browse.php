@@ -3428,14 +3428,25 @@ class Browse extends CI_Controller { //MY_Controller {
 		echo "***NOTHING FOLLOWS***";		
 	}
 	
-	//added by Mike, 20210206
+	//added by Mike, 20210206; edited by Mike, 20210209
 	public function viewLabRequestForm()
+//	public function viewLabRequestForm($patientId) //TO-DO: -add: in searchPatientLabUnit
 	{
+		//added by Mike, 20210209		
+		$patientId=1;
+		
 //		$data['nameParam'] = $_POST[nameParam];
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
-		$this->load->view('viewLabRequestForm');
+		//added by Mike, 20210209
+		$this->load->model('Browse_Model');
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+
+		//edited by Mike, 20210209
+		//$this->load->view('viewLabRequestForm');
+		$this->load->view('viewLabRequestForm', $data);
 	}	
 }
