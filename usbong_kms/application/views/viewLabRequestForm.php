@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210206
+  @date updated: 20210208
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -75,6 +75,18 @@
 -->
 						}						
 
+						table.formTable
+						{
+							width: 90%;
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}				
+
+						table.bottomSectionTable
+						{
+							width: 100%;
+						}
+
 						tr.rowEvenNumber {
 							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
 							border: 1pt solid #00ff00;		
@@ -133,7 +145,20 @@
 							width: 50%;
 							display: inline-block;
 							text-align: right;
+						}						
+
+						td.formDateColumn
+						{
+							width: 50%;
+							text-align: right;
 						}												
+
+						td.requestingPhysicianNameColumn
+						{
+							width: 90%;
+							display: inline-block;
+							text-align: right;
+						}						
 
 						div.checkBox
 						{
@@ -166,7 +191,14 @@
 	
 	//edited by Mike, 20210206
 //	$filename="C:\\xampp\\htdocs\\usbong_kms\\kasangkapan\\phantomjs-2.1.1-windows\\bin\\output\\2015\\201505~201507.csv";
-	$filename="G:\\Usbong MOSC\\Everyone\\Information Desk\\Laboratory\\templates\\MOSCLabRequestForm.csv";
+//edited by Mike, 20210208
+//update file location
+//	$filename="G:\\Usbong MOSC\\Everyone\\Information Desk\\Laboratory\\templates\\MOSCLabRequestForm.csv";
+
+	$filename="D:\\Usbong\\LABORATORY\\templates\\MOSCLabRequestForm.csv";
+	
+	//added by Mike, 20210208
+	$iCheckboxCount=0;
 ?>
 	<table class="imageTable">
 	  <tr>
@@ -183,6 +215,19 @@
 	  </tr>
 	</table>
 
+	<table class="formTable">
+	  <tr>
+		<td>
+			<h3>REQUEST FORM</h3>
+		</td>
+		<td class="formDateColumn">
+			<h3>DATE: <?php
+					echo strtoupper(date('Y-m-d, l'));
+				 ?>
+			</h3>
+		</td>
+	  </tr>
+</table>
 <?php
 /*
     echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>";
@@ -210,7 +255,7 @@
 	<tr>
 -->
 <?php
-echo "<br/>";
+//echo "<br/>";
 	echo "<table>";
 				
 	//TO-DO: -add: auto-identify and update date format to use YYYY-MM-DD
@@ -275,16 +320,26 @@ echo "<br/>";
 				else {
 
 //					if (($iColumnCount+1<count($data)) and ((utf8_encode($data[$iColumnCount+1]))=="TOTAL")) {
+/*	//removed by Mike, 20210208					
 					if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="DATE")) {
-						echo "<td class='column' style='text-align:center'>".strtoupper(date('Y-m-d, l'))."</td>";
+					echo "<td class='column' style='text-align:center'>".strtoupper(date('Y-m-d, l'))."</td>";
 					}						
 					else {
-						//added by Mike, 20210206
-						$cellValue=str_replace("?", "<div class='checkBox'></div>",$cellValue);
-						
+*/					
+						//edited by Mike, 20210206
+						//$cellValue=str_replace("?", "<div class='checkBox'></div>",$cellValue);
+						if (strpos($cellValue,"?")!==false) {
+							
+							$cellValue=str_replace("?", "<input type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
+							
+							$iCheckboxCount=$iCheckboxCount+1;
+						}
+
 						//blank space HTML command: "&nbsp;"
 						echo "<td class='columnFieldName'><b>".$cellValue."</b></td>";
+/*	//removed by Mike, 20210208					
 					}
+*/					
 				}
 			}
 			echo '</tr><tr class="row">';
@@ -296,7 +351,16 @@ echo "<br/>";
 	}
 ?>
 	</table>
-	<br />
+	<br />	
+	<table class="bottomSectionTable">
+	  <tr>
+		<td class="requestingPhysicianNameColumn">
+			<b>REQUESTING PHYSICIAN</b>
+		</td>
+	  </tr>
+	</table>	
+	<br />		
+	<br />		
 	<div>***NOTHING FOLLOWS***</div>
 	<br />
 	<br />
