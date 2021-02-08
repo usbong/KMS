@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20210206
+  @date updated: 20210208
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
   Output:
@@ -634,12 +634,15 @@
 						}						
 						//CASH REGISTER TOTAL
 						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="TOTAL")) {
-								//edited by Mike, 20201021
-								//echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
-								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$pfTotal."</td>";
+							//added by Mike, 20210208
+							$pfTotal = number_format($pfTotal, 2, '.', '');
+
+							//edited by Mike, 20201021
+							//echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+							echo "<td class='columnBorderTopBottom' style='text-align:right'>".$pfTotal."</td>";
 						}
 						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="GRAND TOTAL")) {
-								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+							echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
 						}
 						else {							 
 							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
