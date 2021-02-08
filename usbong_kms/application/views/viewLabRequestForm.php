@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210208
+  @date updated: 20210209
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -41,9 +41,9 @@
 							/* Legal Size; Landscape*/							
 							width: 860px;/* 802px;*//* 670px */
 							
-							/* use zoom 67% scale*/
-							zoom: 67%; /* at present, command not support in Mozilla Firefox */				
-							transform: scale(0.67);
+							/* use zoom 67% (prev) scale*/
+							zoom: 90%; /* at present, command not support in Mozilla Firefox */				
+							transform: scale(0.90);
 							transform-origin: 0 0;							
                         }
 						
@@ -165,6 +165,17 @@
 							border: 1.5pt solid black; height: 9pt; width: 9pt;
 							text-align: center;
 							float: left
+						}
+
+						select.medicalDoctorSelect
+						{
+							font-size: 12pt;
+							text-align: right;							
+						}
+						
+						option.medicalDoctorOption
+						{
+							font-size: 12pt;
 						}
     /**/
     </style>
@@ -356,6 +367,45 @@
 	  <tr>
 		<td class="requestingPhysicianNameColumn">
 			<b>REQUESTING PHYSICIAN</b>
+		</td>
+		<!-- added by Mike, 20210209 -->
+		<td class="requestingPhysicianNameColumn">
+	<?php 
+		if ($result[0]["medical_doctor_name"]==""){
+//			echo "<br/>There are no transactions for the day.";
+
+			//default value
+			$result[0]["medical_doctor_name"] = 1; //SYSON, PEDRO
+		}
+?>			
+
+<!-- +updated: this -->
+<!--
+			<select id="medicalDoctorIdParam">
+			  <option value="1">SYSON, PEDRO</option>
+			  <option value="2">SYSON, PETER</option>
+			  <option value="3">REJUSO-MORALES, CHASTITY AMOR</option>
+			</select>						
+-->
+<?php			
+
+			if (isset($medicalDoctorId)) {
+			}
+			else {
+				$medicalDoctorId = $result[0]["medical_doctor_id"];
+			}
+
+			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam'>";			
+				foreach ($medicalDoctorList as $medicalDoctorValue) {
+					  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
+						echo "<option class='medicalDoctorOption' value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+					  }			  	  
+					  else {
+						echo "<option class='medicalDoctorOption' value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
+					  }				
+				   }
+			echo "</select>";
+	?>		
 		</td>
 	  </tr>
 	</table>	
