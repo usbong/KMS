@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210209
+  @date updated: 20210210
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -100,13 +100,18 @@
 							font-weight: bold;							
 						}						
 
+						td.addressAnswerColumn
+						{
+							width: 84%;
+						}						
+
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
 
-						td.columnFieldName
+						td.columnField
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: left;
@@ -191,6 +196,17 @@
 							border-radius: 3px;	    	    
 							text-align: right;
 							width: 30%;
+						}
+
+						input.inputText {
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 0px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							text-align: left;
+							width: 98%;
 						}
 
 						div.buttonSubmit
@@ -281,7 +297,7 @@
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
-<form id="browse-form" method="post" action="<?php echo site_url('browse/searchPatientLabUnit')?>">
+<form id="labRequestFormId" method="post" action="<?php echo site_url('browse/searchPatientLabUnit')?>">
 
 <table>
 	<tr>
@@ -301,6 +317,14 @@
 		?>		
 			</div>								
 		</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="tableHeaderColumn">
+			ADDRESS:
+		</td>
+		<td class="addressAnswerColumn">
+			<input class='inputText' type='text' id='inputTextAddressId'></textarea>
 		</td>
 	</tr>
 </table>	
@@ -425,10 +449,26 @@
 								$cellValue=$result[0]["medical_doctor_name"];
 							}
 						}
+/*	//removed by Mike, 20210210
+						//added by Mike, 20210210
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="ADDRESS")) {
+							//TO-DO: -add: patient address in patient table of MySQL database
 
+//							$cellValue="<textarea class='inputText' rows='3' id='inputTextAddressId' form ='labRequestFormId'></textarea>";
+
+
+							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
+						}
+						else if (($iColumnCount-2>=0) and (utf8_encode($data[$iColumnCount-2])=="ADDRESS")) {
+							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
+						}
+						else if (($iColumnCount-3>=0) and (utf8_encode($data[$iColumnCount-3])=="ADDRESS")) {
+							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
+						}
+*/						
 						
 						if (strpos($cellValue,"SEX")!==false) {							
-							echo "<td class='columnFieldName'><b>".$cellValue;
+							echo "<td class='columnField'><b>".$cellValue;
 
 ?>
 							<select id='selectSexId'>
@@ -453,9 +493,13 @@
 						else if (strpos($cellValue,"PHYSICIAN")!==false) {
 							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
 						}
+						//added by Mike, 20210210
+						else if (strpos($cellValue,"ADDRESS")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}
 						else {
 							//blank space HTML command: "&nbsp;"
-							echo "<td class='columnFieldName'><b>".$cellValue."</b></td>";
+							echo "<td class='columnField'><b>".$cellValue."</b></td>";
 						}
 
 
