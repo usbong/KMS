@@ -100,6 +100,14 @@
 							font-weight: bold;
 						}						
 
+						td.tableHeaderColumn
+						{
+							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;		
+							text-align: center;
+							font-weight: bold;							
+						}						
+
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
@@ -206,10 +214,16 @@
 //update file location
 //	$filename="G:\\Usbong MOSC\\Everyone\\Information Desk\\Laboratory\\templates\\MOSCLabRequestForm.csv";
 
-	$filename="D:\\Usbong\\LABORATORY\\templates\\MOSCLabRequestForm.csv";
+//edited by Mike, 20210209
+//	$filename="D:\\Usbong\\LABORATORY\\templates\\MOSCLabRequestForm.csv";
+	$filename="C:\\xampp\\htdocs\\usbong_kms\\usbongTemplates\\MOSCLabRequestForm.csv";
 	
 	//added by Mike, 20210208
 	$iCheckboxCount=0;
+	
+	//added by Mike, 20210209
+	$iCount = 1;
+	$value = $result[0];
 ?>
 	<table class="imageTable">
 	  <tr>
@@ -239,6 +253,26 @@
 		</td>
 	  </tr>
 </table>
+<!-- added by Mike, 20210209 -->
+<table>
+	<tr>
+		<td class="tableHeaderColumn">
+			PATIENT NAME:
+		</td>
+		<td>
+		<a href='<?php echo site_url('browse/viewLabRequestForm/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+			<div class="patientName">
+		<?php
+			//TO-DO: -update: this
+			//echo $value['patient_name'];
+			echo str_replace("ï¿½","Ã‘",$value['patient_name']);
+		?>		
+			</div>								
+		</a>
+		</td>
+	</tr>
+</table>	
+
 <?php
 /*
     echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>";
