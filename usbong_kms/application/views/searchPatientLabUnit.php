@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210209
+' @date updated: 20210210
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -304,7 +304,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Search Patient (Lab Unit)
+				Search Patient<br/>
+				@Laboratory Unit
 			</h2>		
 		</td>
 	  </tr>
