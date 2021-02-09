@@ -234,6 +234,86 @@ class Browse_Model extends CI_Model
 		return $outputArray;
 	}	
 
+	//added by Mike, 20210209
+	public function getNewestPatientDetailsListViaId($param) 
+	{		
+		//we use this at MOSC
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
+
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+//		$this->db->distinct('t1.patient_name');
+//		$this->db->group_by('t1.patient_name');
+		$this->db->group_by('t2.added_datetime_stamp');
+
+//		$this->db->group_by('t1.patient_id');
+		
+		//edited by Mike, 20210209
+//		$this->db->like('t1.patient_name', $param['nameParam']);
+		$this->db->where('t1.patient_id', $param['idParam']);
+		
+		//added by Mike, 20200427
+		$this->db->where('t1.patient_name !=', "CANCELLED");
+
+		//added by Mike, 20200529
+		$this->db->where('t1.patient_name !=', "NONE");
+
+		//edited by Mike, 20200527
+//		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+//		$this->db->order_by('t1.patient_name', 'ASC'); //ASC
+		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
+
+		//removed by Mike, 20200527
+//		$this->db->limit(8);//1);
+		
+		$query = $this->db->get('patient');
+
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+	
+		//added by Mike, 20200522
+		//get only the patient transaction whose transaction date is the newest
+		//note that if the patient consulted with multiple medical doctors,
+		//the patient name will appear multiple times for each medical doctor
+		$outputArray = array();
+
+		$patientId = -1;
+		$bIsSamePatientId = false;
+
+		foreach($rowArray as $row) {			 
+			if ($patientId==$row["patient_id"]) {
+				$bIsSamePatientId = true;
+			}
+			else {
+				$patientId = $row["patient_id"];
+				$bIsSamePatientId = false;
+			}
+			
+			//edited by Mike, 20200601
+			
+			if (!$bIsSamePatientId) {
+				array_push($outputArray, $row);
+			}
+
+		}		
+	
+//		echo report_id: .$rowArray[0]['report_id'];
+		
+/*		return $row->report_description;
+*/
+//		return $rowArray[0]['report_description'];
+
+//		return $rowArray;
+		return $outputArray;
+	}	
+	
 	//edited by Mike, 20200411; edited by Mike, 20200819
 	public function getNonMedicineDetailsListViaName($param) 
 	{		
