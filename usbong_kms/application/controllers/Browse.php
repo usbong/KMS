@@ -185,13 +185,30 @@ class Browse extends CI_Controller { //MY_Controller {
 	}
 
 	//added by Mike, 20200517
-	public function confirmPatientLabUnit()
+//	public function confirmPatientLabUnit()
+	public function confirmPatientLabUnit($param)
 	{
 		$data['nameParam'] = $_POST['nameParam'];
-		
+
 		if (!isset($data['nameParam'])) {
 			redirect('browse/searchPatientLabUnit');
 		}
+
+/* //removed by Mike, 20210209	
+		//$data['nameParam'] = $_POST['nameParam'];
+
+		//added by Mike, 20210209
+		if ($param!="0") {
+			$data['idParam'] = $param;
+		}
+		else {
+			$data['nameParam'] = $_POST['nameParam'];
+			
+			if (!isset($data['nameParam'])) {
+				redirect('browse/searchPatientLabUnit');
+			}
+		}
+*/		
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -204,6 +221,22 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200602
 		//$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
 		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
+
+/* //removed by Mike, 20210209
+//		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
+
+		if (isset($data['idParam'])) {
+			$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaId($data);
+
+			$this->load->view('viewLabRequestForm', $data);
+
+		}
+		else {
+			$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
+
+			$this->load->view('searchPatientLabUnit', $data);
+		}
+*/		
 
 		$this->load->view('searchPatientLabUnit', $data);
 	}
