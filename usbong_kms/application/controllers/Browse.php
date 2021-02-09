@@ -2433,6 +2433,42 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('searchPatient', $data);	
 	}
+
+	//added by Mike, 20210209
+	public function addPatientNameLabUnit()
+	{
+		$data['patientLastNameParam'] = $_POST['patientLastNameParam'];
+		$data['patientFirstNameParam'] = $_POST['patientFirstNameParam'];
+
+/*	//removed by Mike, 20210209
+		if (!isset($data['patientLastNameParam'])) {
+			redirect('browse/searchMedicine');
+		}
+
+		if (!isset($data['patientFirstNameParam'])) {
+			redirect('browse/searchMedicine');
+		}
+*/
+
+		$data['nameParam'] = $data['patientLastNameParam'].", ".$data['patientFirstNameParam'];
+		$data['nameParam'] = strtoupper($data['nameParam']);
+						
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+	
+		$patientId = $this->Browse_Model->addPatientName($data);
+		
+	
+//		$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+
+		$this->load->view('searchPatientLabUnit', $data);	
+	}
+
 	
 	//added by Mike, 20200411; edited by Mike, 20200414
 //	public function addTransactionItemPurchase($itemId,$quantity)
