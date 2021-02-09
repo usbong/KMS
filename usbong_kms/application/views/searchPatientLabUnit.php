@@ -312,7 +312,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 	<!-- Form -->
 	<!-- TO-DO: -update: site_url value -->
-	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmPatientLabUnit')?>">
+	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmPatientLabUnit/0')?>">
 		<?php
 			$itemCounter = 1;
 		?>

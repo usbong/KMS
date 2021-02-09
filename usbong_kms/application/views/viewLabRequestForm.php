@@ -260,7 +260,10 @@
 			PATIENT NAME:
 		</td>
 		<td>
-		<a href='<?php echo site_url('browse/viewLabRequestForm/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+<!--
+		<a href='<?php echo site_url('browse/confirmPatientLabUnit/'.str_replace("ï¿½","Ã‘",$value['patient_name']))?>' id="viewPatientId<?php echo $iCount?>">
+-->
+		<a href='<?php echo site_url('browse/confirmPatientLabUnit/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
 			<div class="patientName">
 		<?php
 			//TO-DO: -update: this
