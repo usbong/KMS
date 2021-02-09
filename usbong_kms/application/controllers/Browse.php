@@ -173,6 +173,42 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchPatient', $data);
 	}
 
+	//added by Mike, 20210209
+	public function searchPatientLabUnit()
+	{		
+		$data['param'] = $this->input->get('param'); //added by Mike, 20170616
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->view('searchPatientLabUnit', $data);
+	}
+
+	//added by Mike, 20200517
+	public function confirmPatientLabUnit()
+	{
+		$data['nameParam'] = $_POST['nameParam'];
+		
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchPatientLabUnit');
+		}
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+
+		$this->load->model('Browse_Model');
+		
+		//edited by Mike, 20200602
+		//$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
+
+		$this->load->view('searchPatientLabUnit', $data);
+	}
+
+
 	//added by Mike, 20200529
 	public function searchPatientInformationDesk()
 	{		
@@ -3429,11 +3465,11 @@ class Browse extends CI_Controller { //MY_Controller {
 	}
 	
 	//added by Mike, 20210206; edited by Mike, 20210209
-	public function viewLabRequestForm()
-//	public function viewLabRequestForm($patientId) //TO-DO: -add: in searchPatientLabUnit
+//	public function viewLabRequestForm()
+	public function viewLabRequestForm($patientId) //+added: in searchPatientLabUnit
 	{
 		//added by Mike, 20210209		
-		$patientId=1;
+//		$patientId=1; //removed by Mike, 20210209
 		
 //		$data['nameParam'] = $_POST[nameParam];
 		
