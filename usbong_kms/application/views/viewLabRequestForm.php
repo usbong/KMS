@@ -170,7 +170,15 @@
 
 						div.checkBox
 						{
-							border: 1.5pt solid black; height: 9pt; width: 9pt;
+							border: 1.5pt solid black; height: 14pt; width: 14pt;
+							text-align: center;
+							float: left
+						}
+
+						<!-- added by Mike, 20210209 -->
+						input.inputCheckBox
+						{
+							border: 1.5pt solid black; height: 14pt; width: 14pt;
 							text-align: center;
 							float: left
 						}
@@ -376,9 +384,10 @@
 */					
 						//edited by Mike, 20210206
 						//$cellValue=str_replace("?", "<div class='checkBox'></div>",$cellValue);
-						if (strpos($cellValue,"?")!==false) {
-							
-							$cellValue=str_replace("?", "<input type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
+						if (strpos($cellValue,"?")!==false) {							
+							//edited by Mike, 20210209
+//							$cellValue=str_replace("?", "<input type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
+							$cellValue=str_replace("?", "<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
 							
 							$iCheckboxCount=$iCheckboxCount+1;
 						}
