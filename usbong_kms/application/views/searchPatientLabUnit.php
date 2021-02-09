@@ -480,7 +480,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- Form -->
 		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
 		<!-- "browse/addPatientName" faster -->
-		<form method="post" action="<?php echo site_url('browse/addPatientName/')?>">
+		<form method="post" action="<?php echo site_url('browse/addPatientNameLabUnit/')?>">
 			<div>
 				<table width="100%">
 				  <tr>
