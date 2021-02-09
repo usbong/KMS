@@ -95,16 +95,8 @@
 						td.tableHeaderColumn
 						{
 							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;		
-							text-align: center;
-							font-weight: bold;
-						}						
-
-						td.tableHeaderColumn
-						{
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;		
-							text-align: center;
+							border: 1pt solid #00ff00;
+							text-align: left;
 							font-weight: bold;							
 						}						
 
@@ -118,6 +110,13 @@
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: left;
+						}						
+
+						td.columnFieldNameAge
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: left;
+							width: 25%;
 						}						
 
 						td.columnBorderBottom
@@ -186,14 +185,12 @@
 						input.inputAgeTextBox { 
 							background-color: #fCfCfC;
 							color: #68502b;
-							padding: 10px;
-							font-size: 16px;
+							padding: 0px;
+							font-size: 20px;
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
 							text-align: right;
-							width: 70%;
-
-							float: left;
+							width: 30%;
 						}
 
 						div.buttonSubmit
@@ -316,7 +313,9 @@
     echo "<b>TEL. NO. (8) 941-4888; MONDAY - SATURDAY; 9:00 A.M. -  5:00 P.M.</b><br/>";
 */
 
-	echo "<table>";
+//removed by Mike, 20210209
+//	echo "<table>";
+
 /*
 	echo "<tr>";
 	echo "<td>";
@@ -415,6 +414,18 @@
 							
 							$iCheckboxCount=$iCheckboxCount+1;
 						}
+
+						//added by Mike, 20210209
+						if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PHYSICIAN")) {
+							if ($result[0]["medical_doctor_name"]==""){
+								//default value
+								$result[0]["medical_doctor_name"] = "SYSON, PEDRO (DEFAULT)";
+							}
+							else {
+								$cellValue=$result[0]["medical_doctor_name"];
+							}
+						}
+
 						
 						if (strpos($cellValue,"SEX")!==false) {							
 							echo "<td class='columnFieldName'><b>".$cellValue;
@@ -428,12 +439,25 @@
 							echo "</b></td>";
 
 						}
+						//added by Mike, 20210209
+						//TO-DO: -add: birthday to auto-compute age
+						else if (strpos($cellValue,"AGE")!==false) {							
+							echo "<td class='columnFieldNameAge'><b>".$cellValue."</b>";
+
+?>
+							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" value="1" min="1" max="999">
+<?php
+							echo "</td>";
+
+						}
+						else if (strpos($cellValue,"PHYSICIAN")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}
 						else {
 							//blank space HTML command: "&nbsp;"
 							echo "<td class='columnFieldName'><b>".$cellValue."</b></td>";
 						}
 
-//TO-DO: -add: birthday to auto-compute age
 
 //removed by Mike, 20210209
 /*						//blank space HTML command: "&nbsp;"
