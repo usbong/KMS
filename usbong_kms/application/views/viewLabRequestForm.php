@@ -183,6 +183,25 @@
 							float: left
 						}
 
+						input.inputAgeTextBox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 10px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							text-align: right;
+							width: 70%;
+
+							float: left;
+						}
+
+						div.buttonSubmit
+						{
+							font-size: 16px;
+							font-weight: bold;
+						}
+
 						select.medicalDoctorSelect
 						{
 							font-size: 12pt;
@@ -192,7 +211,8 @@
 						option.medicalDoctorOption
 						{
 							font-size: 12pt;
-						}
+						}											
+						
     /**/
     </style>
     <title>
@@ -262,6 +282,10 @@
 	  </tr>
 </table>
 <!-- added by Mike, 20210209 -->
+<!-- TO-DO: -add: lab request list for the day -->
+<!-- Form -->
+<form id="browse-form" method="post" action="<?php echo site_url('browse/searchPatientLabUnit')?>">
+
 <table>
 	<tr>
 		<td class="tableHeaderColumn">
@@ -391,9 +415,31 @@
 							
 							$iCheckboxCount=$iCheckboxCount+1;
 						}
+						
+						if (strpos($cellValue,"SEX")!==false) {							
+							echo "<td class='columnFieldName'><b>".$cellValue;
 
-						//blank space HTML command: "&nbsp;"
+?>
+							<select id='selectSexId'>
+							  <option value='1'>MALE</option>
+							  <option value='2'>FEMALE</option>
+							</select>
+<?php
+							echo "</b></td>";
+
+						}
+						else {
+							//blank space HTML command: "&nbsp;"
+							echo "<td class='columnFieldName'><b>".$cellValue."</b></td>";
+						}
+
+//TO-DO: -add: birthday to auto-compute age
+
+//removed by Mike, 20210209
+/*						//blank space HTML command: "&nbsp;"
 						echo "<td class='columnFieldName'><b>".$cellValue."</b></td>";
+*/						
+						
 /*	//removed by Mike, 20210208					
 					}
 */					
@@ -454,11 +500,21 @@
 	?>		
 		</td>
 	  </tr>
+	  <!-- added by Mike, 20210209 -->
+	  <tr>
+		  <td class="requestingPhysicianNameColumn">
+			<br/>
+			<!-- Buttons -->
+			<button type="submit">
+				<div class="buttonSubmit">Submit</div>
+			</button>
+		  </td>
+	  </tr>
 	</table>	
-	<br />		
+</form>
+
 	<br />		
 	<div>***NOTHING FOLLOWS***</div>
-	<br />
 	<br />
 	<div class="copyright">
 		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
