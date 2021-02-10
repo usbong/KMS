@@ -102,7 +102,12 @@
 
 						td.addressAnswerColumn
 						{
-							width: 84%;
+							width: 25%; <!-- 84% -->
+						}						
+
+						td.postalAddressAnswerColumn
+						{
+							width: 10%;
 						}						
 
 						td.column
@@ -226,6 +231,17 @@
 							font-size: 12pt;
 						}											
 						
+<!-- added by Mike, 20210210 -->
+<!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
+	last accessed: 20200321
+	answer by: Rich Bradshaw on 20110903T0759
+	edited by: Peter Mortensen on 20190511T2239
+-->
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */												
+
     /**/
     </style>
     <title>
@@ -297,7 +313,7 @@
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
-<form id="labRequestFormId" method="post" action="<?php echo site_url('browse/searchPatientLabUnit')?>">
+<form id="labRequestFormId" method="post" action="<?php echo site_url('browse/confirmLabRequestForm')?>">
 
 <table>
 	<tr>
@@ -324,7 +340,16 @@
 			ADDRESS:
 		</td>
 		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' id='inputTextAddressId'></textarea>
+			<input class='inputText' type='text' id='inputTextAddressId' placeholder='LOCATION'></textarea>
+		</td>
+		<td class="addressAnswerColumn">
+			<input class='inputText' type='text' id='inputTextAddressId' placeholder='BARANGAY'></textarea>
+		</td>
+		<td class="addressAnswerColumn">
+			<input class='inputText' type='text' id='inputTextAddressId' placeholder='PROVINCE・CITY・PH'></textarea>
+		</td>
+		<td class="postalAddressAnswerColumn">
+			<input class='inputText' type='text' id='inputTextPostalAddressId' placeholder='POSTAL#'></textarea>
 		</td>
 	</tr>
 </table>	
