@@ -77,7 +77,7 @@
 
 						table.formTable
 						{
-							width: 90%;
+							width: 100%; //90%
 <!--							border: 1px solid #ab9c7d;		
 -->
 						}				
@@ -160,7 +160,7 @@
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 59%; /*50%*/
 							display: inline-block;
 							text-align: right;
 						}						
@@ -173,7 +173,7 @@
 
 						td.requestingPhysicianNameColumn
 						{
-							width: 90%;
+							width: 100%; /*90%*/
 							display: inline-block;
 							text-align: right;
 						}						
@@ -197,19 +197,25 @@
 						input[type=checkbox]
 						{
 						  /* Double-sized Checkboxes */
-						  -ms-transform: scale(2); /* IE */
-						  -moz-transform: scale(2); /* FF */
-						  -webkit-transform: scale(2); /* Safari and Chrome */
-						  -o-transform: scale(2); /* Opera */
-						  transform: scale(2);
+						  -ms-transform: scale(1.7); /* IE */
+						  -moz-transform: scale(1.7); /* FF */
+						  -webkit-transform: scale(1.7); /* Safari and Chrome */
+						  -o-transform: scale(1.7); /* Opera */
+						  transform: scale(1.7);
 						  padding: 10px;
 						}						
+
+						/* added by Mike, 20210210 */
+						input[type=checkbox]:focus-within
+						{
+							outline :2px solid #0011f1; //blue
+						}
 
 						input.inputAgeTextBox { 
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 0px;
-							font-size: 20px;
+							font-size: 18px;
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
 							text-align: right;
@@ -220,7 +226,7 @@
 						input[type=tel]:focus 
 						{
 							/*color:#0011f1;*/
-							border: 1.5px solid black; /*#0011f1;*/
+							border: 1.7px solid #0011f1; /*black;*/
 						}
 
 						input.inputText {
@@ -232,6 +238,13 @@
 							border-radius: 3px;	    	    
 							text-align: left;
 							width: 98%;
+						}
+
+						/* added by Mike, 20210210 */
+						input[type=text]:focus 
+						{
+							/*color:#0011f1;*/
+							border: 1.7px solid #0011f1; /*black;*/
 						}
 
 						div.buttonSubmit
@@ -313,7 +326,7 @@
 		<td class="pageNameColumn">
 			<h3>
 				MARIKINA ORTHOPEDIC SPECIALTY CLINIC<br/>
-				LABORATORY UNIT<br/>
+				LABORATORY UNIT
 			</h3>		
 		</td>
 	  </tr>
@@ -583,6 +596,8 @@
 		<td class="requestingPhysicianNameColumn">
 			<b>REQUESTING PHYSICIAN</b>
 		</td>
+	  </tr>
+	  <tr>
 		<!-- added by Mike, 20210209 -->
 		<td class="requestingPhysicianNameColumn">
 	<?php 
