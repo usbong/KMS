@@ -216,6 +216,13 @@
 							width: 30%;
 						}
 
+						/* added by Mike, 20210210 */
+						input[type=tel]:focus 
+						{
+							/*color:#0011f1;*/
+							border: 1.5px solid black; /*#0011f1;*/
+						}
+
 						input.inputText {
 							background-color: #fCfCfC;
 							color: #68502b;
@@ -230,7 +237,9 @@
 						div.buttonSubmit
 						{
 							font-size: 16px;
+/*							//removed by Mike, 20210210
 							font-weight: bold;
+*/
 						}
 
 						select.medicalDoctorSelect
@@ -521,9 +530,17 @@
 						//TO-DO: -add: birthday to auto-compute age
 						else if (strpos($cellValue,"AGE")!==false) {							
 							echo "<td class='columnFieldNameAge'><b>".$cellValue."</b>";
-
 ?>
+<!-- edited by Mike, 20210210 -->
+<!--
 							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" value="1" min="1" max="999">
+-->
+							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999">
+							<select id='selectAgeId'>
+							  <option value='1'>YRS</option>
+							  <option value='2'>MOS</option>
+							</select>
+
 <?php
 							echo "</td>";
 
