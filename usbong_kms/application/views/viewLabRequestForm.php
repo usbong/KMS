@@ -375,16 +375,16 @@
 			ADDRESS:
 		</td>
 		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' id='inputTextAddressId' placeholder='LOCATION'></textarea>
+			<input class='inputText' type='text' name='inputTextLocationAddressId' placeholder='LOCATION' required>
 		</td>
 		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' id='inputTextAddressId' placeholder='BARANGAY'></textarea>
+			<input class='inputText' type='text' name='inputTextAddressId' placeholder='BARANGAY' required>
 		</td>
 		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' id='inputTextAddressId' placeholder='PROVINCE・CITY・PH'></textarea>
+			<input class='inputText' type='text' name='inputTextAddressId' placeholder='PROVINCE・CITY・PH' required>
 		</td>
 		<td class="postalAddressAnswerColumn">
-			<input class='inputText' type='text' id='inputTextPostalAddressId' placeholder='POSTAL'></textarea>
+			<input class='inputText' type='text' name='inputTextPostalAddressId' placeholder='POSTAL' required>
 		</td>
 	</tr>
 </table>	
@@ -642,6 +642,8 @@
 	  <tr>
 		  <td class="requestingPhysicianNameColumn">
 			<br/>
+				  <input type="text" class="browse-input" placeholder="" name="nameParam" value="ha" required>
+			
 			<!-- Buttons -->
 			<button type="submit">
 				<div class="buttonSubmit">Submit</div>
