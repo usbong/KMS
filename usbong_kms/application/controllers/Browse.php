@@ -248,6 +248,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	{
 		$data['nameParam'] = $_POST['nameParam'];
 
+		//TO-DO: -add: the rest
+		//echo "DITO: ".$_POST['inputTextLocationAddressId'];
+
 		if (!isset($data['nameParam'])) {
 			redirect('browse/searchPatientLabUnit');
 		}
