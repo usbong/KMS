@@ -98,6 +98,7 @@
 							border: 1pt solid #00ff00;
 							text-align: left;
 							font-weight: bold;							
+							width: 17%; <!-- 84% -->
 						}						
 
 						td.addressAnswerColumn
@@ -191,6 +192,18 @@
 							text-align: center;
 							float: left
 						}
+
+						<!-- added by Mike, 20210210 -->						
+						input[type=checkbox]
+						{
+						  /* Double-sized Checkboxes */
+						  -ms-transform: scale(2); /* IE */
+						  -moz-transform: scale(2); /* FF */
+						  -webkit-transform: scale(2); /* Safari and Chrome */
+						  -o-transform: scale(2); /* Opera */
+						  transform: scale(2);
+						  padding: 10px;
+						}						
 
 						input.inputAgeTextBox { 
 							background-color: #fCfCfC;
@@ -349,7 +362,7 @@
 			<input class='inputText' type='text' id='inputTextAddressId' placeholder='PROVINCE・CITY・PH'></textarea>
 		</td>
 		<td class="postalAddressAnswerColumn">
-			<input class='inputText' type='text' id='inputTextPostalAddressId' placeholder='POSTAL#'></textarea>
+			<input class='inputText' type='text' id='inputTextPostalAddressId' placeholder='POSTAL'></textarea>
 		</td>
 	</tr>
 </table>	
