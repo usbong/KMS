@@ -190,10 +190,10 @@
 						{
 							border: 1.5pt solid black; height: 14pt; width: 14pt;
 							text-align: center;
-							float: left
+							float: left;
 						}
 
-						<!-- added by Mike, 20210210 -->						
+						/* added by Mike, 20210210 */
 						input[type=checkbox]
 						{
 						  /* Double-sized Checkboxes */
