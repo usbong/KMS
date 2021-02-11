@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210211
+  @date updated: 20210212
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -587,7 +587,7 @@
 							echo "<td class='columnField'><b>".$cellValue;
 
 ?>
-							<select id='selectSexIdParam' name='inputSelectSexNameParam' form='labRequestFormId'>
+							<select id='selectSexIdParam' name='selectSexNameParam' form='labRequestFormId'>
 							  <option value='0'>MALE</option>
 							  <option value='1'>FEMALE</option>
 							</select>
@@ -609,8 +609,8 @@
 <!--
 							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" value="1" min="1" max="999">
 -->
-							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
-							<select id='selectAgeUnitIdParam'>
+							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
+							<select id='selectAgeUnitIdParam' name='selectAgeUnitNameParam'>
 							  <option value='0'>YRS</option>
 							  <option value='1'>MOS</option>
 							</select>
@@ -688,7 +688,7 @@
 			
 			//edited by Mike, 20210212
 //			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam'>";			
-			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam' name='medicalDoctorNameParam' form='labRequestFormId'>";			
+			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam' name='selectMedicalDoctorNameParam' form='labRequestFormId'>";			
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
 					  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
 						echo "<option class='medicalDoctorOption' value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
