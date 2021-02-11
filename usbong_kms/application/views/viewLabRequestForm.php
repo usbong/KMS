@@ -375,16 +375,16 @@
 			ADDRESS:
 		</td>
 		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' name='inputTextLocationAddressId' placeholder='LOCATION' required>
+			<input class='inputText' type='text' name='inputTextLocationAddressName' placeholder='LOCATION' required>
 		</td>
 		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' name='inputTextAddressId' placeholder='BARANGAY' required>
+			<input class='inputText' type='text' name='inputTextBarangayAddressName' placeholder='BARANGAY' required>
 		</td>
 		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' name='inputTextAddressId' placeholder='PROVINCE・CITY・PH' required>
+			<input class='inputText' type='text' name='inputTextProvinceCityPhAddressName' placeholder='PROVINCE・CITY・PH' required>
 		</td>
 		<td class="postalAddressAnswerColumn">
-			<input class='inputText' type='text' name='inputTextPostalAddressId' placeholder='POSTAL' required>
+			<input class='inputText' type='text' name='inputTextPostalAddressName' placeholder='POSTAL' required>
 		</td>
 	</tr>
 </table>	
@@ -494,7 +494,23 @@
 						if (strpos($cellValue,"?")!==false) {							
 							//edited by Mike, 20210209
 //							$cellValue=str_replace("?", "<input type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
-							$cellValue=str_replace("?", "<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
+
+//edited by Mike, 20210211
+//							$cellValue=str_replace("?", "<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
+
+							$cellValue=str_replace("?","",$cellValue);
+
+							$cellValue="<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."' name='inputCheckBox".$iCheckboxCount."Name'>".$cellValue;
+
+/* //TO-DO: -reverify: this	
+//							$cellValue="<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."' name='inputCheckBox".$cellValue."Name'>".$cellValue;
+	
+							echo $cellValue."<BR/>";	
+							
+							$cellValue="<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."' name='inputCheckBoxURINALYSISName'>".$cellValue;	
+							
+							//inputCheckBoxURINALYSISName
+*/	
 							
 							$iCheckboxCount=$iCheckboxCount+1;
 						}
@@ -548,7 +564,7 @@
 <!--
 							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" value="1" min="1" max="999">
 -->
-							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999">
+							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
 							<select id='selectAgeId'>
 							  <option value='1'>YRS</option>
 							  <option value='2'>MOS</option>
@@ -641,9 +657,7 @@
 	  <!-- added by Mike, 20210209 -->
 	  <tr>
 		  <td class="requestingPhysicianNameColumn">
-			<br/>
-				  <input type="text" class="browse-input" placeholder="" name="nameParam" value="ha" required>
-			
+			<br/>			
 			<!-- Buttons -->
 			<button type="submit">
 				<div class="buttonSubmit">Submit</div>
