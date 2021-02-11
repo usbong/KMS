@@ -246,9 +246,6 @@ class Browse extends CI_Controller { //MY_Controller {
 	//TO-DO: -update: this	
 	public function confirmLabRequestForm()
 	{
-		//removed by Mike, 20210211
-//		$data['nameParam'] = $_POST['nameParam'];
-
 		//TO-DO: -add: the rest
 		//echo "DITO: ".$_POST['inputTextLocationAddressName'];
 		//echo "DITO: ".$_POST['inputCheckBoxName'];
@@ -257,17 +254,23 @@ class Browse extends CI_Controller { //MY_Controller {
 //		echo "PATIENT ID PARAM: ".$_POST['patientIdNameParam'];
 		$data['patientIdNameParam'] = $_POST['patientIdNameParam'];
 
-		echo "OTHERS ANSWER PARAM: ".$_POST['inputTextOthersAnswerName'];
 
 		//TO-DO: -add: patient birthday to auto-compute age
 		//note: the following are required parameters
-//		echo "SEX PARAM: ".$_POST['selectSexNameParam'];
-		$data['sexParam'] = $_POST['selectSexNameParam'];
-
+/*		
+		echo "SEX PARAM: ".$_POST['selectSexNameParam'];
 		echo "MD PARAM: ".$_POST['selectMedicalDoctorNameParam'];
 		echo "AGE PARAM: ".$_POST['inputAgeNameParam'];
 		echo "AGE UNIT PARAM: ".$_POST['selectAgeUnitNameParam'];
+*/
 		
+		$data['selectMedicalDoctorNameParam'] = $_POST['selectMedicalDoctorNameParam'];
+		$data['selectSexNameParam'] = $_POST['selectSexNameParam'];
+		$data['inputAgeNameParam'] = $_POST['inputAgeNameParam'];
+		$data['selectAgeUnitNameParam'] = $_POST['selectAgeUnitNameParam'];
+
+		//TO-DO: -add: checkbox answers
+		echo "OTHERS ANSWER PARAM: ".$_POST['inputTextOthersAnswerName'];
 
 		
 		//TO-DO: -add: auto-count
