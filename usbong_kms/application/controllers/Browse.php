@@ -253,8 +253,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//echo "DITO: ".$_POST['inputTextLocationAddressName'];
 		//echo "DITO: ".$_POST['inputCheckBoxName'];
 
-		//TO-DO: -add: auto-count
+//added by Mike, 20210211
+//		echo "DITO: ".$_POST['inputSelectSexNameParam'];
 
+
+		//TO-DO: -add: auto-count
+/*	//edited by Mike, 20210211
 		$data['inputCheckBox0'] = "";
 		$data['inputCheckBox1'] = "";
 		$data['inputCheckBox2'] = "";
@@ -276,6 +280,19 @@ class Browse extends CI_Controller { //MY_Controller {
 
 			echo "DITO: ".$data['inputCheckBox2'];
 		}
+*/
+		$iInputCheckBoxCount=0;
+		$iInputCheckBoxCountMax=40;
+		for ($iInputCheckBoxCount=0; $iInputCheckBoxCount<$iInputCheckBoxCountMax; $iInputCheckBoxCount++) {
+			$data['inputCheckBox'.$iInputCheckBoxCount] = "";			
+
+			if (isset($_POST['inputCheckBox'.$iInputCheckBoxCount])) {
+				$data['inputCheckBox'.$iInputCheckBoxCount] = $_POST['inputCheckBox'.$iInputCheckBoxCount];
+
+				echo "DITO: ".$data['inputCheckBox'.$iInputCheckBoxCount].": ".$iInputCheckBoxCount."<br/>";
+			}
+		}
+
 		
 /* //removed by Mike, 20210211
 		if (!isset($data['nameParam'])) {
