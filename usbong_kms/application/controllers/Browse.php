@@ -254,13 +254,21 @@ class Browse extends CI_Controller { //MY_Controller {
 		//echo "DITO: ".$_POST['inputCheckBoxName'];
 
 //added by Mike, 20210212
-		echo "SEX PARAM: ".$_POST['selectSexNameParam'];
+//		echo "PATIENT ID PARAM: ".$_POST['patientIdNameParam'];
+		$data['patientIdNameParam'] = $_POST['patientIdNameParam'];
+
+		echo "OTHERS ANSWER PARAM: ".$_POST['inputTextOthersAnswerName'];
+
+		//TO-DO: -add: patient birthday to auto-compute age
+		//note: the following are required parameters
+//		echo "SEX PARAM: ".$_POST['selectSexNameParam'];
+		$data['sexParam'] = $_POST['selectSexNameParam'];
+
 		echo "MD PARAM: ".$_POST['selectMedicalDoctorNameParam'];
 		echo "AGE PARAM: ".$_POST['inputAgeNameParam'];
 		echo "AGE UNIT PARAM: ".$_POST['selectAgeUnitNameParam'];
-
 		
-		//TO-DO: -add: received data via POST command into database
+
 		
 		//TO-DO: -add: auto-count
 /*	//edited by Mike, 20210211
@@ -305,6 +313,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$machineAddress = $this->session->userdata("client_machine_address");
 
 		$this->load->model('Browse_Model');
+
+		//added by Mike, 20210212
+		$this->Browse_Model->addLabTransactionServicePurchase($data);
+
 		
 /*		//removed by Mike, 20210211
 		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
