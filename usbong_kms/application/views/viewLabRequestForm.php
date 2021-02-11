@@ -303,9 +303,12 @@
 				return;
 			}
 
-			alert("sexId"+sexId);
+//			alert("sexId"+sexId);
 //			alert("ageUnitId"+ageUnitId);
 
+			var iInputCheckBoxCount=0;
+			var iInputCheckBoxCountMax=40;
+			
 			//note: this does not update hidden input value sent via form POST command
 //			document.getElementById("inputSelectSexNameParam").value = sexId;
 
@@ -375,7 +378,9 @@
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
 <form id="labRequestFormId" method="post" action="<?php echo site_url('browse/confirmLabRequestForm')?>">
-
+<!--
+<form id="labRequestFormId" method="post">
+-->
 <table>
 	<tr>
 		<td class="tableHeaderColumn">
@@ -582,13 +587,15 @@
 							echo "<td class='columnField'><b>".$cellValue;
 
 ?>
-							<select id='selectSexIdParam'>
-							  <option value='1'>MALE</option>
-							  <option value='2'>FEMALE</option>
+							<select id='selectSexIdParam' name='inputSelectSexNameParam' form='labRequestFormId'>
+							  <option value='0'>MALE</option>
+							  <option value='1'>FEMALE</option>
 							</select>
 							
 							<!-- added by Mike, 20210211 -->
+<!--							
 							<input type='hidden' name='inputSelectSexNameParam' value='20'>
+-->							
 <?php
 							echo "</b></td>";
 
@@ -604,8 +611,8 @@
 -->
 							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
 							<select id='selectAgeUnitIdParam'>
-							  <option value='1'>YRS</option>
-							  <option value='2'>MOS</option>
+							  <option value='0'>YRS</option>
+							  <option value='1'>MOS</option>
 							</select>
 
 <?php
@@ -678,8 +685,10 @@
 			else {
 				$medicalDoctorId = $result[0]["medical_doctor_id"];
 			}
-
-			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam'>";			
+			
+			//edited by Mike, 20210212
+//			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam'>";			
+			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam' name='medicalDoctorNameParam' form='labRequestFormId'>";			
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
 					  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
 						echo "<option class='medicalDoctorOption' value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
@@ -697,7 +706,10 @@
 		  <td class="requestingPhysicianNameColumn">
 			<br/>			
 			<!-- Buttons -->
+<!--
 			<button type="submit" onclick="myPopupFunction(<?php echo $value['patient_id'];?>)">
+-->			
+			<button type="submit">			
 				<div class="buttonSubmit">Submit</div>
 			</button>
 		  </td>
