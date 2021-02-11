@@ -243,19 +243,45 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	//added by Mike, 20210210
 	//TO-DO: -update: database
-	//TO-DO: -update: this
+	//TO-DO: -update: this	
 	public function confirmLabRequestForm()
 	{
-		$data['nameParam'] = $_POST['nameParam'];
+		//removed by Mike, 20210211
+//		$data['nameParam'] = $_POST['nameParam'];
 
 		//TO-DO: -add: the rest
 		//echo "DITO: ".$_POST['inputTextLocationAddressName'];
-		echo "DITO: ".$_POST['inputCheckBox0Name'];
-//		echo "DITO: ".$_POST['inputCheckBoxURINALYSISName'];
+		//echo "DITO: ".$_POST['inputCheckBoxName'];
 
+		//TO-DO: -add: auto-count
+
+		$data['inputCheckBox0'] = "";
+		$data['inputCheckBox1'] = "";
+		$data['inputCheckBox2'] = "";
+
+		if (isset($_POST['inputCheckBox0'])) {
+			$data['inputCheckBox0'] = $_POST['inputCheckBox0'];
+
+			echo "DITO: ".$data['inputCheckBox0'];
+		}
+
+		if (isset($_POST['inputCheckBox1'])) {
+			$data['inputCheckBox1'] = $_POST['inputCheckBox1'];
+
+			echo "DITO: ".$data['inputCheckBox1'];
+		}
+
+		if (isset($_POST['inputCheckBox2'])) {
+			$data['inputCheckBox2'] = $_POST['inputCheckBox2'];
+
+			echo "DITO: ".$data['inputCheckBox2'];
+		}
+		
+/* //removed by Mike, 20210211
 		if (!isset($data['nameParam'])) {
 			redirect('browse/searchPatientLabUnit');
 		}
+*/
 
 /* //removed by Mike, 20210209	
 		//$data['nameParam'] = $_POST['nameParam'];
@@ -281,9 +307,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->model('Browse_Model');
 		
-		//edited by Mike, 20200602
-		//$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+/*		//removed by Mike, 20210211
 		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
+*/
 
 /* //removed by Mike, 20210209
 //		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
@@ -301,7 +327,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 */		
 
+/*		//removed by Mike, 20210211
 		$this->load->view('searchPatientLabUnit', $data);
+*/
 	}
 
 	//added by Mike, 20200529
