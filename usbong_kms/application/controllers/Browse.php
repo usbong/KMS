@@ -254,8 +254,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//echo "DITO: ".$_POST['inputCheckBoxName'];
 
 //added by Mike, 20210212
-		echo "SEX PARAM: ".$_POST['inputSelectSexNameParam'];
-		echo "MD PARAM: ".$_POST['medicalDoctorNameParam'];
+		echo "SEX PARAM: ".$_POST['selectSexNameParam'];
+		echo "MD PARAM: ".$_POST['selectMedicalDoctorNameParam'];
+		echo "AGE PARAM: ".$_POST['inputAgeNameParam'];
+		echo "AGE UNIT PARAM: ".$_POST['selectAgeUnitNameParam'];
+
 		
 		//TO-DO: -add: received data via POST command into database
 		
@@ -294,30 +297,7 @@ class Browse extends CI_Controller { //MY_Controller {
 				echo "DITO: ".$data['inputCheckBox'.$iInputCheckBoxCount].": ".$iInputCheckBoxCount."<br/>";
 			}
 		}
-
-		
-/* //removed by Mike, 20210211
-		if (!isset($data['nameParam'])) {
-			redirect('browse/searchPatientLabUnit');
-		}
-*/
-
-/* //removed by Mike, 20210209	
-		//$data['nameParam'] = $_POST['nameParam'];
-
-		//added by Mike, 20210209
-		if ($param!="0") {
-			$data['idParam'] = $param;
-		}
-		else {
-			$data['nameParam'] = $_POST['nameParam'];
 			
-			if (!isset($data['nameParam'])) {
-				redirect('browse/searchPatientLabUnit');
-			}
-		}
-*/		
-		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
