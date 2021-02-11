@@ -253,10 +253,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//echo "DITO: ".$_POST['inputTextLocationAddressName'];
 		//echo "DITO: ".$_POST['inputCheckBoxName'];
 
-//added by Mike, 20210211
-//		echo "DITO: ".$_POST['inputSelectSexNameParam'];
-
-
+//added by Mike, 20210212
+		echo "SEX PARAM: ".$_POST['inputSelectSexNameParam'];
+		echo "MD PARAM: ".$_POST['medicalDoctorNameParam'];
+		
+		//TO-DO: -add: received data via POST command into database
+		
 		//TO-DO: -add: auto-count
 /*	//edited by Mike, 20210211
 		$data['inputCheckBox0'] = "";
