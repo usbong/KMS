@@ -399,6 +399,10 @@
 		?>		
 			</div>								
 		</a>
+
+		<!-- added by Mike, 20210212 -->
+		<input type="hidden" name="patientIdNameParam" value="<?php echo $value['patient_id'];?>" form="labRequestFormId">
+
 		</td>
 	</tr>
 <!-- removed by Mike, 20210211 -->
