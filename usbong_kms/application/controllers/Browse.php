@@ -1028,7 +1028,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					//This is to make the output list shorter.
 					//The list is ordered by expiration date.
 					if (!$bHasNoneZeroQuantity) {
-						if ($iSameItemCount == ($iSameItemTotalCount - 1)) { //if last item in the list of same items
+						//edited by Mike, 20210211
+//						if ($iSameItemCount == ($iSameItemTotalCount - 1)) { //if last item in the list of same items
+						if ($iSameItemCount == ($iSameItemTotalCount)) { //if last item in the list of same items
 							array_push($outputArray, $value);
 						}
 					}
@@ -1076,9 +1078,7 @@ class Browse extends CI_Controller { //MY_Controller {
 						}
 						else {
 							array_push($outputArray, $value);
-						}						
-
-						
+						}												
 					}
 					$iSameItemCount = $iSameItemCount + 1;
 
