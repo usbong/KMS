@@ -160,6 +160,8 @@ class Browse_Model extends CI_Model
 	public function getNewestPatientDetailsListViaName($param) 
 	{		
 		//we use this at MOSC
+		//added by Mike, 20210212
+		//TO-DO: -add: sex, age, etc
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
 
 		$this->db->from('patient as t1');
@@ -3020,6 +3022,18 @@ echo $classification;
 		$this->db->where('transaction_date', date('m/d/Y'));
         $this->db->update('transaction', $data);
 */		
+	}	
+
+
+	//added by Mike, 20210212
+	public function addLabTransactionServicePurchase($param) 
+	{		
+		$data = array(
+			'sex_id' => $param['sexParam']
+		);
+
+		$this->db->where('patient_id',$param['patientIdNameParam']);
+		$this->db->update('patient', $data);
 	}	
 
 	//added by Mike, 20200529
