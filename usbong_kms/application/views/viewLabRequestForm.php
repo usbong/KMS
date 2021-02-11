@@ -287,6 +287,32 @@
     </style>
   </head>
 	  <script>
+		//added by Mike, 20210211
+		function myPopupFunction(patientId) {	
+			//edited by Mike, 20200522
+			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
+			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;			
+			var sexId = document.getElementById("selectSexIdParam").selectedIndex;			
+			var ageUnitId = document.getElementById("selectAgeUnitIdParam").selectedIndex;			
+
+//			alert("medicalDoctorId"+medicalDoctorId);
+			//0 = ANY; SUMMARY = 3
+			if ((medicalDoctorId==0) || (medicalDoctorId==3)) {
+				alert("Pumili ng Medical Doctor na hindi \"ANY\" o \"SUMMARY\".");
+				return;
+			}
+
+			alert("sexId"+sexId);
+//			alert("ageUnitId"+ageUnitId);
+
+			//note: this does not update hidden input value sent via form POST command
+//			document.getElementById("inputSelectSexNameParam").value = sexId;
+
+/*
+			window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
+*/			
+		}		  
 	  </script>
   <body>
 <?php
@@ -556,10 +582,13 @@
 							echo "<td class='columnField'><b>".$cellValue;
 
 ?>
-							<select id='selectSexId'>
+							<select id='selectSexIdParam'>
 							  <option value='1'>MALE</option>
 							  <option value='2'>FEMALE</option>
 							</select>
+							
+							<!-- added by Mike, 20210211 -->
+							<input type='hidden' name='inputSelectSexNameParam' value='20'>
 <?php
 							echo "</b></td>";
 
@@ -574,7 +603,7 @@
 							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" value="1" min="1" max="999">
 -->
 							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
-							<select id='selectAgeId'>
+							<select id='selectAgeUnitIdParam'>
 							  <option value='1'>YRS</option>
 							  <option value='2'>MOS</option>
 							</select>
@@ -668,7 +697,7 @@
 		  <td class="requestingPhysicianNameColumn">
 			<br/>			
 			<!-- Buttons -->
-			<button type="submit">
+			<button type="submit" onclick="myPopupFunction(<?php echo $value['patient_id'];?>)">
 				<div class="buttonSubmit">Submit</div>
 			</button>
 		  </td>
