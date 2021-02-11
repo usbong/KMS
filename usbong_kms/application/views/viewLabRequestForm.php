@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210210
+  @date updated: 20210211
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -98,7 +98,7 @@
 							border: 1pt solid #00ff00;
 							text-align: left;
 							font-weight: bold;							
-							width: 17%; <!-- 84% -->
+							width: 20%; <!-- 17%; --> <!-- 84% -->
 						}						
 
 						td.addressAnswerColumn
@@ -370,6 +370,8 @@
 		</a>
 		</td>
 	</tr>
+<!-- removed by Mike, 20210211 -->
+<!--
 	<tr>
 		<td class="tableHeaderColumn">
 			ADDRESS:
@@ -387,6 +389,7 @@
 			<input class='inputText' type='text' name='inputTextPostalAddressName' placeholder='POSTAL' required>
 		</td>
 	</tr>
+-->	
 </table>	
 
 <?php
@@ -497,21 +500,22 @@
 
 //edited by Mike, 20210211
 //							$cellValue=str_replace("?", "<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
-
+//							$cellValue=str_replace("?", "<input class='inputCheckBox' type='checkBox' name='1'>",$cellValue);
 							$cellValue=str_replace("?","",$cellValue);
 
-							$cellValue="<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."' name='inputCheckBox".$iCheckboxCount."Name'>".$cellValue;
+//echo $iCheckboxCount.": ".$cellValue."<br/>";
 
-/* //TO-DO: -reverify: this	
-//							$cellValue="<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."' name='inputCheckBox".$cellValue."Name'>".$cellValue;
-	
-							echo $cellValue."<BR/>";	
-							
-							$cellValue="<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."' name='inputCheckBoxURINALYSISName'>".$cellValue;	
-							
-							//inputCheckBoxURINALYSISName
-*/	
-							
+//							$cellValue="<input class='inputCheckBox' type='checkBox' name='1' form='labRequestFormId'>".$cellValue;
+//							$cellValue="<input class='inputCheckBox' type='checkBox' name='".$iCheckboxCount."'>".$cellValue;
+							$cellValue="<input class='inputCheckBox' type='checkBox' name='inputCheckBox".$iCheckboxCount."'>".$cellValue;
+
+
+							//added by Mike, 20210211
+/* //removed by Mike, 20210211							
+							if (strpos($cellValue, "OTHERS:")!==false) {
+								$cellValue=$cellValue;
+							}
+*/							
 							$iCheckboxCount=$iCheckboxCount+1;
 						}
 
@@ -525,6 +529,11 @@
 								$cellValue=$result[0]["medical_doctor_name"];
 							}
 						}
+						//added by Mike, 20210211
+						else if ((utf8_encode($data[$iColumnCount])=="OTHERS ANSWER")) {
+							$cellValue=str_replace("OTHERS ANSWER","<input class='inputText' type='text' id='inputTextOthersAnswerId' name='inputTextOthersAnswerName' form='labRequestFormId'>",$cellValue);
+						}
+						
 /*	//removed by Mike, 20210210
 						//added by Mike, 20210210
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="ADDRESS")) {
