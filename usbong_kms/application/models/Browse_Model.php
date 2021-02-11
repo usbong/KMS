@@ -3028,12 +3028,20 @@ echo $classification;
 	//added by Mike, 20210212
 	public function addLabTransactionServicePurchase($param) 
 	{		
+		//TO-DO: -add: patient birthday to auto-compute age
+		//TO-DO: -add: update medical_doctor_id during transaction payment
+
 		$data = array(
-			'sex_id' => $param['sexParam']
+			'sex_id' => $param['selectSexNameParam'],
+			'age' => $param['inputAgeNameParam'],
+			'age_unit' => $param['selectAgeUnitNameParam'],
+			'medical_doctor_id' => $param['selectMedicalDoctorNameParam']
 		);
 
 		$this->db->where('patient_id',$param['patientIdNameParam']);
 		$this->db->update('patient', $data);
+		
+		
 	}	
 
 	//added by Mike, 20200529
