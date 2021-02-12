@@ -220,6 +220,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		//edited by Mike, 20200602
 		//$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
+		//TO-DO: -update: this
 		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
 
 /* //removed by Mike, 20210209
@@ -3652,7 +3653,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210209
 		$this->load->model('Browse_Model');
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
-		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+		//edited by Mike, 20210212
+//		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);		
+		$data['result'] = $this->Browse_Model->getDetailsListViaIdLabUnit($patientId);
 
 		//edited by Mike, 20210209
 		//$this->load->view('viewLabRequestForm');
