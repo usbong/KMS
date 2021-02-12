@@ -639,7 +639,13 @@
 <!--
 							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" value="1" min="1" max="999">
 -->
+
+<!--	//edited by Mike, 20210212
 							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
+-->
+							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="<?php echo $result[0]["age"];?>" min="1" max="999" required>
+
+							
 <!--	//edited by Mike, 20210212
 							<select id='selectAgeUnitIdParam' name='selectAgeUnitNameParam'>
 							  <option value='0'>YRS</option>
