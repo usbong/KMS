@@ -555,10 +555,12 @@
 						}
 
 						//added by Mike, 20210209
-						if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PHYSICIAN")) {
-							if ($result[0]["medical_doctor_name"]==""){
+						if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PHYSICIAN")) {							
+							if ($result[0]["medical_doctor_name"]==""){							
 								//default value
-								$result[0]["medical_doctor_name"] = "SYSON, PEDRO (DEFAULT)";
+								//edited by Mike, 20210212
+								//$result[0]["medical_doctor_name"] = "SYSON, PEDRO (DEFAULT)";
+								$cellValue="SYSON, PEDRO (DEFAULT)";
 							}
 							else {
 								$cellValue=$result[0]["medical_doctor_name"];
@@ -589,11 +591,34 @@
 						
 						if (strpos($cellValue,"SEX")!==false) {							
 							echo "<td class='columnField'><b>".$cellValue;
-
+							echo "<select id='selectSexIdParam' name='selectSexNameParam' form='labRequestFormId'>";
+							
+							//note: no echo output after select command
 ?>
+<!-- edited by Mike, 20210212 -->
+<!--
 							<select id='selectSexIdParam' name='selectSexNameParam' form='labRequestFormId'>
 							  <option value='0'>MALE</option>
 							  <option value='1'>FEMALE</option>
+-->
+<?php							
+//							for ($iCount=0; $iCount<2; $iCount++) {
+							  if (isset($result[0]["sex_id"])) {
+								  if ($result[0]["sex_id"]==0) {
+									echo "<option value='0' selected='selected'>MALE</option>";
+									echo "<option value='1'>FEMALE</option>";
+								  }
+								  else {
+									echo "<option value='0'>MALE</option>";
+									echo "<option value='1' selected='selected'>FEMALE</option>";
+								  }
+							  }			  	  
+							  else {
+									echo "<option value='0'>MALE</option>";			  							
+									echo "<option value='1'>FEMALE</option>";			  														
+							  }				
+//						   }
+?>
 							</select>
 							
 							<!-- added by Mike, 20210211 -->
