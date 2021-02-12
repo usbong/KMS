@@ -345,6 +345,7 @@
 	//added by Mike, 20210209
 	$iCount = 1;
 	$value = $result[0];
+	
 ?>
 	<table class="imageTable">
 	  <tr>
@@ -639,10 +640,33 @@
 							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" value="1" min="1" max="999">
 -->
 							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
+<!--	//edited by Mike, 20210212
 							<select id='selectAgeUnitIdParam' name='selectAgeUnitNameParam'>
 							  <option value='0'>YRS</option>
 							  <option value='1'>MOS</option>
 							</select>
+-->
+
+<?php							
+							echo "<select id='selectAgeUnitIdParam' name='selectAgeUnitNameParam'>";
+
+							  if (isset($result[0]["age_unit"])) {
+								  if ($result[0]["age_unit"]==0) {
+									echo "<option value='0' selected='selected'>YRS</option>";
+									echo "<option value='1'>MOS</option>";
+								  }
+								  else {
+									echo "<option value='0'>YRS</option>";
+									echo "<option value='1' selected='selected'>MOS</option>";
+								  }
+							  }			  	  
+							  else {
+									echo "<option value='0'>YRS</option>";			  							
+									echo "<option value='1'>MOS</option>";			  														
+							  }				
+
+							echo "</select>";
+?>
 
 <?php
 							echo "</td>";
@@ -691,12 +715,14 @@
 		<!-- added by Mike, 20210209 -->
 		<td class="requestingPhysicianNameColumn">
 	<?php 
+/* removed by Mike, 20210212	
 		if ($result[0]["medical_doctor_name"]==""){
 //			echo "<br/>There are no transactions for the day.";
 
 			//default value
 			$result[0]["medical_doctor_name"] = 1; //SYSON, PEDRO
 		}
+*/
 ?>			
 
 <!-- +updated: this -->
@@ -708,13 +734,20 @@
 			</select>						
 -->
 <?php			
-
+/*
 			if (isset($medicalDoctorId)) {
 			}
 			else {
-				$medicalDoctorId = $result[0]["medical_doctor_id"];
+				$medicalDoctorId = $value["medical_doctor_id"];//$result[0]["medical_doctor_id"];
 			}
+*/
 			
+			$medicalDoctorId = $value["medical_doctor_id"];
+			if ($medicalDoctorId=="") {
+				$medicalDoctorId=1; //default; DR. PEDRO
+			}
+	
+						
 			//edited by Mike, 20210212
 //			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam'>";			
 			echo "<select class='medicalDoctorSelect' id='medicalDoctorIdParam' name='selectMedicalDoctorNameParam' form='labRequestFormId'>";			
@@ -725,7 +758,7 @@
 					  else {
 						echo "<option class='medicalDoctorOption' value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
 					  }				
-				   }
+				}
 			echo "</select>";
 	?>		
 		</td>
