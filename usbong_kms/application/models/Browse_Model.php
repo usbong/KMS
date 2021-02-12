@@ -163,6 +163,7 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20210212
 		//TO-DO: -add: sex, age, etc
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
+//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id, t1.sex, t1.age, t1.age_unit');
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -3171,6 +3172,43 @@ echo $classification;
 	{		
 		//edited by Mike, 20200541
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+//		$this->db->distinct('t1.patient_name');
+//		$this->db->like('t1.patient_name', $param['nameParam']);
+		$this->db->where('t1.patient_id', $nameId);		
+
+		//added by Mike, 20200523
+//		$this->db->order_by('t2.transaction_date`', 'DESC');//ASC');
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
+		//added by Mike, 20200529; edited by Mike, 20200606
+		$this->db->group_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+		//$this->db->group_by('t2.transaction_date`', 'DESC');//ASC');
+		
+		$query = $this->db->get('patient');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}	
+	
+	//added by Mike, 20210212
+	//TO-DO: -reverify: this
+	//consider eliminating excess steps
+	public function getDetailsListViaIdLabUnit($nameId) 
+	{		
+		//edited by Mike, 20200541
+//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit');
+
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
