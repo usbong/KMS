@@ -303,10 +303,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		for ($iInputCheckBoxCount=0; $iInputCheckBoxCount<$iInputCheckBoxCountMax; $iInputCheckBoxCount++) {
 			$data['inputCheckBox'.$iInputCheckBoxCount] = "";			
 
+			//added by Mike, 20210212
+			//note: execute +1 to inputCheckBox count in database 
 			if (isset($_POST['inputCheckBox'.$iInputCheckBoxCount])) {
 				$data['inputCheckBox'.$iInputCheckBoxCount] = $_POST['inputCheckBox'.$iInputCheckBoxCount];
 
-				echo "DITO: ".$data['inputCheckBox'.$iInputCheckBoxCount].": ".$iInputCheckBoxCount."<br/>";
+//removed by Mike, 20210212
+//				echo "DITO: ".$data['inputCheckBox'.$iInputCheckBoxCount].": ".$iInputCheckBoxCount."<br/>";
 			}
 		}
 			
