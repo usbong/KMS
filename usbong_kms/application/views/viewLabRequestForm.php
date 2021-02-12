@@ -540,6 +540,7 @@
 							$cellValue=str_replace("?","",$cellValue);
 
 //echo $iCheckboxCount.": ".$cellValue."<br/>";
+echo $cellValue."<br/>";
 
 //							$cellValue="<input class='inputCheckBox' type='checkBox' name='1' form='labRequestFormId'>".$cellValue;
 //							$cellValue="<input class='inputCheckBox' type='checkBox' name='".$iCheckboxCount."'>".$cellValue;
