@@ -2177,8 +2177,8 @@ class Browse_Model extends CI_Model
 		else if (strpos($patientTransactionRowArray[0]['notes'],"PWD")!==false) {
 			$classification = "PWD; ";
 		}
-
-echo $classification;
+//removed by Mike, 20210214
+//echo $classification;
 
 		//added by Mike, 20201027
 		if (($classification=="SC; ") or ($classification=="PWD; ")) {			
@@ -2242,7 +2242,7 @@ echo $classification;
 				//$totalFeeNonMedicine = $totalFeeNonMedicine + $rowValue['fee'];
 
 				//added by Mike, 20201026
-				$data = array(
+				$data = array(				
 							'fee' => $rowValue['fee'],
 							'pas_fee' => $rowValue['fee'],
 						);
@@ -2564,7 +2564,7 @@ echo $classification;
 */
 		
 		$data = array(
-					'patient_id' => 0,
+					'patient_id' => 0,					
 					'item_id' => 0,
 					'transaction_date' => date('m/d/Y'),
 					'medical_doctor_id' => 0,
@@ -2591,6 +2591,10 @@ echo $classification;
 					//edited by Mike, 20200916
 //					'notes' => "PAID",
 					'notes' => $classification."PAID",
+
+
+					//added by Mike, 20210214
+					'patient_id' => $patientId //TO-DO: -reverify: this
 				);
 
         $this->db->where('notes',"UNPAID");
