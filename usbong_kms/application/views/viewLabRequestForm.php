@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210212
+  @date updated: 20210213
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -540,7 +540,8 @@
 							$cellValue=str_replace("?","",$cellValue);
 
 //echo $iCheckboxCount.": ".$cellValue."<br/>";
-echo $cellValue."<br/>";
+//removed by Mike, 20210213
+//echo $cellValue."<br/>";
 
 //							$cellValue="<input class='inputCheckBox' type='checkBox' name='1' form='labRequestFormId'>".$cellValue;
 //							$cellValue="<input class='inputCheckBox' type='checkBox' name='".$iCheckboxCount."'>".$cellValue;
