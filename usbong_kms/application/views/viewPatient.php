@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210122
+' @date updated: 20210214
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -222,7 +222,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px solid #68502b;
 							width: 100%;
 							border-radius: 3px;	    	    
-
 							float: left;
 						}
 						
@@ -812,11 +811,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										}
 									}" required>
 						</td>
+<!-- edited by Mike, 20210214
 						<td class="column">
 							<select id="classificationParam" class="Classification-select">
 							  <option value="0">WI</option>
 							  <option value="1">SC</option>
 							  <option value="2">PWD</option>
+							</select>						
+						</td>
+-->
+						<td class="column">
+							<select id="classificationParam" class="Classification-select">
+<?php
+							  if (isset($resultPaid[0]["notes"])) {
+								  if (strpos($resultPaid[0]["notes"],"SC")!==false) {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1' selected='selected'>SC</option>";
+									echo "<option value='2'>PWD</option>";
+								  }
+								  else if (strpos($resultPaid[0]["notes"],"PWD")!==false) {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1'>SC</option>";
+									echo "<option value='2' selected='selected'>PWD</option>";
+								  }
+								  else {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1'>SC</option>";
+									echo "<option value='2'>PWD</option>";
+								  }
+							  }			  	  
+							  else {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1'>SC</option>";
+									echo "<option value='2'>PWD</option>";		
+							  }				
+?>
 							</select>						
 						</td>
 						<td class="column">
