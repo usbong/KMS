@@ -571,7 +571,7 @@
 						}
 						//added by Mike, 20210211
 						else if ((utf8_encode($data[$iColumnCount])=="OTHERS ANSWER")) {
-							$cellValue=str_replace("OTHERS ANSWER","<input class='inputText' type='text' id='inputTextOthersAnswerId' name='inputTextOthersAnswerName' form='labRequestFormId'>",$cellValue);
+							$cellValue=str_replace("OTHERS ANSWER","<input class='inputText' type='text' id='inputTextOthersAnswerId' name='inputTextOthersAnswerNameParam' form='labRequestFormId'>",$cellValue);
 						}
 						
 /*	//removed by Mike, 20210210
