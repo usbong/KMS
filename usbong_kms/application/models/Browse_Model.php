@@ -3046,7 +3046,41 @@ class Browse_Model extends CI_Model
 		$this->db->where('patient_id',$param['patientIdNameParam']);
 		$this->db->update('patient', $data);
 		
-		
+		//added by Mike, 20210216
+		for ($iInputCheckBoxCount=0; $iInputCheckBoxCount<$param['iInputCheckBoxCountMax']; $iInputCheckBoxCount++) {
+
+			//note: execute +1 to inputCheckBox count in database 
+			if (isset($param['inputCheckBox'.$iInputCheckBoxCount])) {
+				//echo $param['inputCheckBox'.$iInputCheckBoxCount];
+				
+				if (strpos($param['inputCheckBox'.$iInputCheckBoxCount],"on")!==false) {
+					$data = array(
+						'lab_service_item_id' => $iInputCheckBoxCount+1,
+						'patient_id' => $param['patientIdNameParam'],
+						'lab_service_date' => date("Y-m-d"),
+					);
+					$this->db->insert('lab_service', $data);			
+					//return $this->db->insert_id();
+				}
+			}
+		}
+
+		//added by Mike, 20210216
+		//auto-add "OTHERS:" non-blank text value, even if checkBox not ticked
+		if (isset($param['inputTextOthersAnswerNameParam'])) {
+			if (strlen(trim($param['inputTextOthersAnswerNameParam']))==0) {
+			}
+			else {
+				$data = array(
+					'lab_service_item_id' => 35, //"OTHERS:" value in lab_service_item table
+					'notes' => $param['inputTextOthersAnswerNameParam'],
+					'patient_id' => $param['patientIdNameParam'],
+					'lab_service_date' => date("Y-m-d"),
+				);
+				$this->db->insert('lab_service', $data);			
+				//return $this->db->insert_id();
+			}
+		}
 	}	
 
 	//added by Mike, 20200529
