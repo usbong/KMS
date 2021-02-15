@@ -271,8 +271,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['selectAgeUnitNameParam'] = $_POST['selectAgeUnitNameParam'];
 
 		//TO-DO: -add: checkbox answers
-		echo "OTHERS ANSWER PARAM: ".$_POST['inputTextOthersAnswerName'];
-
+		//edited by Mike, 20210216
+//		echo "OTHERS ANSWER PARAM: ".$_POST['inputTextOthersAnswerName'];
+		if (isset($_POST['inputTextOthersAnswerNameParam'])) {
+			$data['inputTextOthersAnswerNameParam'] = $_POST['inputTextOthersAnswerNameParam'];
+			
+//			echo "dito".$data['inputTextOthersAnswerNameParam'];
+		}
 		
 		//TO-DO: -add: auto-count
 /*	//edited by Mike, 20210211
@@ -300,6 +305,10 @@ class Browse extends CI_Controller { //MY_Controller {
 */
 		$iInputCheckBoxCount=0;
 		$iInputCheckBoxCountMax=40;
+		
+		//added by Mike, 20210216
+		$data['iInputCheckBoxCountMax']=$iInputCheckBoxCountMax;
+		
 		for ($iInputCheckBoxCount=0; $iInputCheckBoxCount<$iInputCheckBoxCountMax; $iInputCheckBoxCount++) {
 			$data['inputCheckBox'.$iInputCheckBoxCount] = "";			
 
@@ -345,9 +354,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 */		
 
-/*		//removed by Mike, 20210211
+		//removed by Mike, 20210211; added by Mike, 20210216
 		$this->load->view('searchPatientLabUnit', $data);
-*/
+
 	}
 
 	//added by Mike, 20200529
