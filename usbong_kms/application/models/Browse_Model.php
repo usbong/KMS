@@ -1856,6 +1856,7 @@ class Browse_Model extends CI_Model
 
 /*			echo "iTransactionId: ".$iTransactionId;
 */
+
 			//edited by Mike, 20200630
 //			$iTransactionId = $iTransactionId - 1;
 			$iTransactionIdCart = $iTransactionId - 1;
@@ -1943,17 +1944,24 @@ class Browse_Model extends CI_Model
 					$this->db->where('transaction_id',$iTransactionId);
 
 					//edited by Mike, 20200629
-					$this->db->where('patient_id',0);
+					//removed by Mike, 20210216; 
+					//we now add the patient_id in each purchased item transaction
+//					$this->db->where('patient_id',0);
 					
 					//added by Mike, 20200629
 	//				$this->db->where('item_id',0);
 					
 					//added by Mike, 20200831
 					$this->db->where('item_id',$param['itemId']);
-										
+
+/*					ECHO "DELETE".$iTransactionId;										
+					ECHO "DELETE_PARAM_ITEM_ID".$param['itemId'];										
+*/
 					$this->db->delete('transaction');
 
 					//added by Mike, 20201120
+/*					ECHO "DELETE".$iTransactionId;
+*/
 					$this->db->where('transaction_id',$iTransactionId);
 					$this->db->delete('receipt');			
 
