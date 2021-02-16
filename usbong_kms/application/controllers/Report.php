@@ -915,6 +915,19 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewReportSnackUnified', $data);
 	}
+
+	//added by Mike, 20210216
+	public function viewReportLabRequest()
+	{
+/* //TO-DO: -update: this		
+		$this->load->model('Report_Model');
+		$itemTypeId = 3; //3 = Snack
+
+		$data["result"] = $this->Report_Model->getPurchasedItemTransactionsForTheDay($itemTypeId);
+*/
+
+		$this->load->view('viewReportLabRequest');//, $data);
+	}
 	
 	//added by Mike, 20200427; edited by Mike, 20200515
 	public function viewReportMedicineOutOfStock()
