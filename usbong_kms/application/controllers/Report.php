@@ -925,8 +925,11 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$data["result"] = $this->Report_Model->getPurchasedItemTransactionsForTheDay($itemTypeId);
 */
+		$this->load->model('Report_Model');
+		$data["result"]=$this->Report_Model->getRequestedLabTransactionsForTheDay();
 
-		$this->load->view('viewReportLabRequest');//, $data);
+//		$this->load->view('viewReportLabRequest');//, $data);
+		$this->load->view('viewReportLabRequest', $data);
 	}
 	
 	//added by Mike, 20200427; edited by Mike, 20200515
