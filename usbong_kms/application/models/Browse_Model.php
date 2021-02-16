@@ -3073,7 +3073,10 @@ class Browse_Model extends CI_Model
 			else {
 				$data = array(
 					'lab_service_item_id' => 35, //"OTHERS:" value in lab_service_item table
-					'notes' => $param['inputTextOthersAnswerNameParam'],
+					//edited by Mike, 20210216
+//					'notes' => $param['inputTextOthersAnswerNameParam'],
+					'lab_service_notes' => $param['inputTextOthersAnswerNameParam'],
+
 					'patient_id' => $param['patientIdNameParam'],
 					'lab_service_date' => date("Y-m-d"),
 				);
