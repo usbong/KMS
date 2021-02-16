@@ -1976,6 +1976,52 @@ class Report_Model extends CI_Model
 		return $outputArray;
 	}
 
+	//added by Mike, 20210216
+	public function getRequestedLabTransactionsForTheDay() 
+	{	
+		$this->db->select('t1.patient_id, t1.lab_service_notes, t4.lab_service_item_name, t2.patient_name, t3.medical_doctor_name');
+		$this->db->from('lab_service as t1');
+		$this->db->join('patient as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('lab_service_item as t4', 't1.lab_service_item_id = t4.lab_service_item_id', 'LEFT');
+
+//		$this->db->distinct('t1.item_name');
+
+//		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t1.lab_service_date', date("Y-m-d"));		
+
+/* //removed by Mike, 20210216
+		//edited by Mike, 20200403
+		if ($rowArray!=False) { //if value exists in array
+			foreach ($rowArray as $value) {			
+	//			echo "value: ".$value['item_id']."<br/>";
+				$this->db->where('t1.item_id !=', $value['item_id']);		
+			}
+		}
+*/
+		$this->db->group_by('t4.lab_service_item_id');
+
+		$this->db->order_by('t1.added_datetime_stamp`', 'ASC'); //'DESC');//ASC');
+//		$this->db->order_by('t1.added_datetime_stamp`', 'DESC'); //'DESC');//ASC');
+
+		$this->db->where('t1.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM lab_service as t WHERE t.lab_service_date=t1.lab_service_date and t.lab_service_item_id=t1.lab_service_item_id)',NULL,FALSE);
+
+
+		//added by Mike, 20200401
+//		$this->db->limit(8);
+		
+		$query = $this->db->get('lab_service');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}	
+
 	//added by Mike, 20200402
 	public function getMedicineTransactionsForTheDay() 
 	{	
