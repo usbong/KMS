@@ -3056,7 +3056,6 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20210216
 		for ($iInputCheckBoxCount=0; $iInputCheckBoxCount<$param['iInputCheckBoxCountMax']; $iInputCheckBoxCount++) {
-
 			//note: execute +1 to inputCheckBox count in database 
 			if (isset($param['inputCheckBox'.$iInputCheckBoxCount])) {
 				//echo $param['inputCheckBox'.$iInputCheckBoxCount];
@@ -3080,15 +3079,15 @@ class Browse_Model extends CI_Model
 			}
 			else {
 				$data = array(
-					'lab_service_item_id' => 35, //"OTHERS:" value in lab_service_item table
-					//edited by Mike, 20210216
-//					'notes' => $param['inputTextOthersAnswerNameParam'],
-					'lab_service_notes' => $param['inputTextOthersAnswerNameParam'],
-
-					'patient_id' => $param['patientIdNameParam'],
-					'lab_service_date' => date("Y-m-d"),
+					'lab_service_notes' => $param['inputTextOthersAnswerNameParam']
 				);
-				$this->db->insert('lab_service', $data);			
+								
+				$this->db->where('patient_id',$param['patientIdNameParam']);
+				$this->db->where('lab_service_item_id',35); //"OTHERS:" value in lab_service_item table
+				$this->db->where('lab_service_date', date("Y-m-d"));				
+				$this->db->update('lab_service', $data);
+
+//				$this->db->insert('lab_service', $data);			
 				//return $this->db->insert_id();
 			}
 		}
