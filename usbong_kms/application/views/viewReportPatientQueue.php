@@ -21,7 +21,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="utf-8">
 	<!-- added by Mike, 20201003 -->
 	<!-- note: 1 = 1 second -->
+	<!-- edited by Mike, 20210217 -->
+	<!--
 	<meta http-equiv="refresh" content="30.0">
+	-->
+	<meta http-equiv="refresh" content="60.0">
 
     <!-- Reference: Apache Friends Dashboard index.html -->
     <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
@@ -1105,7 +1109,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>						
 						<td>
+						<?php 
+							//added by Mike, 20210217
+							if (strpos($value['notes'],"UNPAID")!==false) {
+						?>
 							<button onclick="myPopupFunctionDeletePatientTransaction(<?php echo $value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+						<?php
+							}
+						?>
 						</td>
 					  </tr>
 		<?php				
