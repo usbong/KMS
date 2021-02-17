@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20210118
+' @date updated: 20210217
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -935,17 +935,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo $value['medical_doctor_name'];
 //								if ($value['medical_doctor_name']=="") {
 								
-								//edited by Mike, 20201019
-								//we set the id to default, i.e. DR. PEDRO
-//								if ($value['medical_doctor_id']==0) { //ANY
-								if ($value['medical_doctor_name']=="ANY") { //ANY
-									echo "NEW; NONE YET";
+								//edited by Mike, 20201019; edited again by Mike, 20210217
+								if (strpos($value['notes'],"PAID")!==false) {
+									if ($value['medical_doctor_name']=="ANY") { //ANY
+										echo "SYSON, PEDRO"; //default
+									}
+									else {										
+										echo $value['medical_doctor_name'];
+
+									}								
 								}
 								else {
-									
-									echo $value['medical_doctor_name'];
+									//we set the id to default, i.e. DR. PEDRO
+	//								if ($value['medical_doctor_id']==0) { //ANY
+									if ($value['medical_doctor_name']=="ANY") { //ANY
+										echo "NEW; NONE YET";
+									}
+									else {										
+										echo $value['medical_doctor_name'];
 
-								}								
+									}								
+								}
+
 								
 							?>
 								</div>
