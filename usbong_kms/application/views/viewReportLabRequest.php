@@ -475,22 +475,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class ="column">				
-							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
+							<a href='<?php echo site_url('browse/viewLabRequestForm/'.$value['patient_id']);?>' id="viewPatientId<?php echo $iCount?>">
 								<div class="patientName">
-				<?php
-//								echo $value['patient_name'];
-								echo str_replace("�","Ñ",$value['patient_name']);
-//								echo str_replace("ufffd","Ñ",$value['patient_name']);
-				?>		
-								</div>								
+							<?php
+								//TO-DO: -update: this
+								//echo $value['patient_name'];
+								echo str_replace("ï¿½","Ã‘",$value['patient_name']);
+							?>		
+								</div>															
 							</a>
 						</td>
-<!-- TO-DO: -update: this	-->
 						<td class ="column">				
+								<div class="medicalDoctorName">
+				<?php
+								echo str_replace("�","Ñ",$value['medical_doctor_name']);
+				?>		
+								</div>
 						</td>
 						<td class ="column">				
+							<div class="itemServiceName">
+			<?php
+							echo $value['lab_service_item_name'];
+			?>		
+							</div>
 						</td>
 						<td class ="column">				
+							<div class="notes">
+			<?php
+							echo $value['lab_service_notes'];
+			?>		
+							</div>
 						</td>
 					  </tr>
 		<?php				
