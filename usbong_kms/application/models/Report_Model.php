@@ -316,6 +316,12 @@ class Report_Model extends CI_Model
 		//added by Mike, 202005029
 		$this->db->where('t1.patient_name!=', 'NONE');
 
+		//added by Mike, 20210217
+		$this->db->where('t1.patient_id!=', 3543); //NONE, WALA
+		$this->db->where('t1.patient_id!=', 3559); //WALK-IN, WALA
+		$this->db->where('t1.patient_id!=', -1); //CANCELLED
+
+
 		//added by Mike, 20201127
 		if ($param==0) { //info desk page
 			//added by Mike, 20201031; edited by Mike, 20210128
