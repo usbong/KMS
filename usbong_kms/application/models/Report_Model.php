@@ -227,8 +227,8 @@ class Report_Model extends CI_Model
 		
 		$this->db->where('patient_id=',$param['patient_id']);
 
-		//added by Mike, 20210218
-		$this->db->where('transaction_date=',date("m-d-Y"));
+		//added by Mike, 20210218; edited by Mike, 20210219
+		$this->db->where('transaction_date=',date("m/d/Y")); //date("m-d-Y")
 
 		$this->db->order_by('added_datetime_stamp', 'DESC');//DESC');
 		$this->db->limit(1,0); //get the first transaction
