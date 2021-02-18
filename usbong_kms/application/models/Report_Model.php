@@ -1535,6 +1535,9 @@ class Report_Model extends CI_Model
 		//$outputArray = [];
 		$outputArray = array();
 		
+		//added by Mike, 20210218
+		$sameItemOutputArray = array();
+		
 		$currentValue = "";
 		
 		if ($rowArray!=False) { //if value exists in array
@@ -1551,11 +1554,13 @@ class Report_Model extends CI_Model
 				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id'])) {
 //				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id']) && $iCurrentItemReceiptNumber) {
 //					echo "push<br/>";
-					array_push($outputArray, $currentValue);
+
+					//removed by Mike, 20210218
+/*					array_push($outputArray, $currentValue);
 					
 					$iItemQuantity = 0;
 					$dItemTotalFee = 0;
-					
+*/					
 					$iCurrentItemId=$value['item_id'];
 				}
 				//added by Mike, 20200912
@@ -1566,7 +1571,18 @@ class Report_Model extends CI_Model
 						echo "dito".$iCurrentItemReceiptNumber;
 					}
 */					
+
+/* //removed by Mike, 20210218
+					//added by Mike, 20210218
+					$iItemQuantity = 0;
+					$dItemTotalFee = 0;
+*/
 				}
+
+				//added by Mike, 20210218
+				$iItemQuantity = 0;
+				$dItemTotalFee = 0;
+
 
 				//quantity
 				if ($value['fee_quantity']==0) {
@@ -1639,9 +1655,20 @@ class Report_Model extends CI_Model
 				$currentValue = $value;
 		
 //				echo "value: ".$value['item_id']."<br/>";
+
+				//added by Mike, 20210218
+				if (($iCurrentItemId!=-1) && ($iCurrentItemId!=$value['item_id'])) {
+				}
+				else {
+					array_push($sameItemOutputArray, $currentValue);
+				}
 			}
 
-			array_push($outputArray, $currentValue);
+			//edited by Mike, 20210218
+//			array_push($outputArray, $currentValue);
+			foreach ($sameItemOutputArray as $value) {
+				array_push($outputArray, $value);
+			}		
 		}
 		
 		//edited by Mike, 20200506
