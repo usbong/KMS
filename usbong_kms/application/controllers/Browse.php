@@ -915,6 +915,10 @@ class Browse extends CI_Controller { //MY_Controller {
 	}
 
 	//added by Mike, 20200328; edited by Mike, 20200417
+	//added by Mike, 20210218
+	//use sort asc with added_datetime_stamp
+	//update added_datetime_stamp value due to select medicine items sold,
+	//albeit not the nearest to expire
 	public function confirmMedicine()
 	{
 		$data['nameParam'] = $_POST['nameParam'];
@@ -988,6 +992,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					//edited by Mike, 20210110
 //					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
 					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
+
+//					echo "new>".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
+//echo "hallo".$data['result'][$iCount]['expiration_date'].":".$remainingItemNow."<br/>";
 										
 					
 					if ($remainingItemNow < 0) {
@@ -995,6 +1002,10 @@ class Browse extends CI_Controller { //MY_Controller {
 						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
 						
 //						$remainingPaidItem = $remainingPaidItem - $data['result'][$iCount]['resultQuantityInStockNow'];
+
+						//added by Mike, 20210218
+						//$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
+
 					}
 					else {
 						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
@@ -1006,8 +1017,16 @@ class Browse extends CI_Controller { //MY_Controller {
 					//edited by Mike, 20200501
 					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
 
+//echo "dito".$data['result'][$iCount]['expiration_date'].":".$remainingItemNow."<br/>";
+//					echo ">".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
+
 					if ($remainingItemNow < 0) { //already negative
+
+//					echo ">".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
+				
 						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
+							
+//							echo ">>>";
 							$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
 							
 							$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
@@ -1023,6 +1042,9 @@ class Browse extends CI_Controller { //MY_Controller {
 					else {
 						$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
 					}
+
+//echo "dito".$data['result'][$iCount]['expiration_date'].":".$remainingItemNow."<br/>";
+	
 				}
 				
 //				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId, $value['expiration_date']); //"0";
@@ -1111,7 +1133,9 @@ class Browse extends CI_Controller { //MY_Controller {
 								array_push($outputArray, $value);
 							}
 						}
-*/						
+*/
+	//added by Mike, 20210218						
+	//TO-DO: -reverify: this
 						if ($iSameItemTotalCount<=3) {
 							array_push($outputArray, $value);
 						}
@@ -1134,6 +1158,9 @@ class Browse extends CI_Controller { //MY_Controller {
 						else {
 							array_push($outputArray, $value);
 						}												
+	//added by Mike, 20210218						
+	//array_push($outputArray, $value);
+
 					}
 					$iSameItemCount = $iSameItemCount + 1;
 
