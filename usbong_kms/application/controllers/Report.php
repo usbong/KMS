@@ -1434,7 +1434,7 @@ class Report extends CI_Controller { //MY_Controller {
 
 					//added by Mike, 20210118
 					$value['start_datetime_stamp'] = $this->Report_Model->getPatientWaitDoneElapsedTime($value);
-					
+												
 					array_push($outputResult, $value);
 				}
 			}
