@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20210218
+' @date updated: 20210219
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -103,6 +103,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						span.spanAddedAtCashierUnitCount
 						{
 							color: #ff0000;
+							font-weight: bold;
+							font-size: 12pt;
+						}
+
+						span.spanAddedAtCashierUnitCountZero
+						{
+							color: #ff8000;
 							font-weight: bold;
 							font-size: 12pt;
 						}
@@ -1076,6 +1083,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//echo $value['start_datetime_stamp']."<br/>";
 
 									$iElapsedTime=0;
+																		
 									if ($value['start_datetime_stamp']!=0) {
 										//added by Mike, 20210118
 										$d2=new DateTime($value['start_datetime_stamp']);
@@ -1083,9 +1091,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 										//edited by Mike, 20210118
 										$iElapsedTime=$diff->h*60+$diff->i;
+
+										//added by Mike, 20210219
+										//note: finished in 1min, elapsed time classifed
+										//to be "DONE! START TIME?"; 
+										//reverify: if physical examination executed, etc
+										//$iElapsedTime=$diff->h*60+$diff->i+$diff->s;
+
 									}
-									
-									
+																		
 									//edited by Mike, 20210118
 									if ($iElapsedTime==0) {
 									}
@@ -1197,10 +1211,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="tableHeaderAddedAtCashierUnitCount">
 		<?php
 			//added by Mike, 20210218
-			echo "<b>ADDED AT CASHIER UNIT COUNT: </b>";
+			echo "<b>ADDED @CASHIER UNIT COUNT: </b>";
 
-			//added by Mike, 20210218
-			echo "<span class='spanAddedAtCashierUnitCount'>".$iTotalWaitDoneElapsedTimeAddedAtCashierUnit."</span>";
+			//added by Mike, 20210218; edited by Mike, 20210219
+			if ($iTotalWaitDoneElapsedTimeAddedAtCashierUnit!=0) {
+				echo "<span class='spanAddedAtCashierUnitCount'>".$iTotalWaitDoneElapsedTimeAddedAtCashierUnit."</span>";
+			}				
+			else {
+				echo "<span class='spanAddedAtCashierUnitCountZero'>".$iTotalWaitDoneElapsedTimeAddedAtCashierUnit."</span>";
+			}
 		?>
 			</div>
 		</td>
