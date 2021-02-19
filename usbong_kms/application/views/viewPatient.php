@@ -678,6 +678,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "</select>";
 	?>
 	<br/>
+<!-- added by Mike, 20210219 -->
+<!-- removed by Mike, 20210219 -->
+<!-- TO-DO: -add: viewPatientIndexCard -->
+<!--
+	<table>
+	<tr>
+		<td class="tableHeaderColumn">
+			<b>ADDRESS:</b>
+		</td>
+		<td class="addressAnswerColumn">
+			<input class='inputText' type='text' name='inputTextLocationAddressName' placeholder='LOCATION' required>
+		</td>
+		<td class="addressAnswerColumn">
+			<input class='inputText' type='text' name='inputTextBarangayAddressName' placeholder='BARANGAY' required>
+		</td>
+		<td class="addressAnswerColumn">
+			<input class='inputText' type='text' name='inputTextProvinceCityPhAddressName' placeholder='PROVINCE・CITY・PH' required>
+		</td>
+		<td class="postalAddressAnswerColumn">
+			<input class='inputText' type='text' name='inputTextPostalAddressName' placeholder='POSTAL' required>
+		</td>
+	</tr>
+	</table>
+-->	
+	
 <!--	<br/> 
 -->
 <!--	TO-DO: -update: this
