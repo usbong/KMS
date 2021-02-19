@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210214
+' @date updated: 20210219
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -824,6 +824,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<select id="classificationParam" class="Classification-select">
 <?php
 							  if (isset($resultPaid[0]["notes"])) {
+								  //edited by Mike, 20210219
+								  if (strpos($resultPaid[0]["notes"],"DISCOUNTED")!==false) {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1'>SC</option>";
+									echo "<option value='2'>PWD</option>";
+								  }
 								  if (strpos($resultPaid[0]["notes"],"SC")!==false) {
 									echo "<option value='0'>WI</option>";
 									echo "<option value='1' selected='selected'>SC</option>";
