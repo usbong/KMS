@@ -715,10 +715,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "</select>";
 	?>
 	<br/>
-<!-- added by Mike, 20210219 -->
-<!-- removed by Mike, 20210219 -->
-<!-- TO-DO: -add: viewPatientIndexCard -->
-<!--
+<!-- added by Mike, 20210220 -->
 	<table>
 	<tr>
 		<td class="tableHeaderColumn">
@@ -738,7 +735,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 	</tr>
 	</table>
--->	
 	
 <!--	<br/> 
 -->
