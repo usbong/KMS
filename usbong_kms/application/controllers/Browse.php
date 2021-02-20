@@ -2159,6 +2159,43 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewPatient', $data);
 	}
 	
+	//added by Mike, 20200517
+	public function viewPatientIndexCard($patientId)
+	{
+//		$data['nameParam'] = $_POST[nameParam];
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+
+		//edited by Mike, 20200407
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+				
+		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+		
+		//added by Mike, 20200601; removed by Mike, 20200608
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+
+		//TO-DO: -update: this
+/*
+		$itemTypeId = 2;
+	
+		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsLpdist($itemTypeId, $itemId);
+		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+*/	
+		$this->load->view('viewPatientIndexCard', $data);
+	}
+
 
 	//added by Mike, 20200411; edited by Mike, 20200615
 	//edited by Mike, 20201027
