@@ -33,7 +33,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 11pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							/* edited by Mike, 20210220 */
+							/*width: 670px*/
+							width: 720px							
                         }
 						
 						div.checkBox
@@ -178,6 +180,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 26%;
 						}						
 
+						input.inputText
+						{
+							font-size: 14pt;						
+						}
 						
 						td.imageColumn
 						{
@@ -187,7 +193,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 58%;/*50%;*/
 							display: inline-block;
 							text-align: right;
 						}						
@@ -730,9 +736,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<td class="addressAnswerColumn">
 			<input class='inputText' type='text' name='inputTextProvinceCityPhAddressName' placeholder='PROVINCE・CITY・PH' required>
 		</td>
+	</tr>
+	<tr>
+		<td class="tableHeaderColumn">
+		</td>		
 		<td class="postalAddressAnswerColumn">
 			<input class='inputText' type='text' name='inputTextPostalAddressName' placeholder='POSTAL' required>
 		</td>
+		<td class="tableHeaderColumn">
+		</td>	
+		<td class="tableHeaderColumn">
+		</td>	
 	</tr>
 	</table>
 	
