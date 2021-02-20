@@ -594,7 +594,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Search Patient
+				Search Patient<br/>
+				@INDEX CARD PAGE
 			</h2>		
 		</td>
 	  </tr>
