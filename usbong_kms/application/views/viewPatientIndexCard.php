@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210220
+' @date updated: 20210224
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -183,6 +183,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.inputText
 						{
 							font-size: 14pt;						
+						}
+
+						input.inputTextOccupation
+						{
+							font-size: 14pt;						
+							width: 100%;
 						}
 						
 						td.imageColumn
@@ -674,7 +680,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
 */
-			echo "<b>MEDICAL DOCTOR: </b>";		
+
+//edited by Mike, 20210224
+//			echo "<b>MEDICAL DOCTOR: </b>";		
+
+echo "<table>";
+	echo "<tr>";
+		echo "<td>";
+					echo "<b>MEDICAL DOCTOR: </b>";		
+		echo "</td>";
+		echo "<td>";
+			
 ?>			
 
 <!-- +updated: this -->
@@ -719,6 +735,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 */				
 			echo "</select>";
+
+//added by Mike, 20210224
+		echo "</td>";
+	echo "</tr>";			
+echo "</table>";
+
 	?>
 	<br/>
 <!-- added by Mike, 20210220 -->
@@ -748,6 +770,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<td class="tableHeaderColumn">
 		</td>	
 	</tr>
+	</table>	
+<!-- added by Mike, 20210224 -->	
+	<br/>
+	<table width="100%">			
+		<tr>
+			<td class="tableHeaderColumn" width="20%">
+				<b>OCCUPATION:</b>
+			</td>
+			<td class="occupationAnswerColumn">
+				<input class='inputTextOccupation' type='text' name='inputTextOccupationName' placeholder='hal. computer services salesperson' required>
+			</td>
+		</tr>
 	</table>
 	
 <!--	<br/> 
