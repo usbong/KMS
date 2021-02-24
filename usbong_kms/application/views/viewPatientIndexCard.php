@@ -60,6 +60,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							text-align: left;
 						}
+						
+						/* added by Mike, 20210224 */
+						div.patientName
+						{
+							font-size: 14pt;
+						}
 
 						div.tableHeader
 						{
@@ -740,8 +746,73 @@ echo "<table>";
 		echo "</td>";
 	echo "</tr>";			
 echo "</table>";
-
 	?>
+<!-- added by Mike, 20210224 -->
+	<br/>
+		<table>				
+		  <tr class="row">
+			<td class ="columnTableHeader">				
+	<?php
+				echo "PATIENT NAME";
+	?>		
+			</td>
+			<td class ="columnTableHeaderClassification">				
+				<?php
+					echo "CLASSIFICATION";
+				?>
+			</td>
+		  </tr>
+		  <tr class="row">
+			<td class ="column">				
+				<a href='<?php echo site_url('browse/viewPatient/'.$result[0]['patient_id'])?>' id="viewPatientId">
+					<div class="patientName">
+	<?php
+					//TO-DO: -update: this
+					//echo $value['patient_name'];
+					echo str_replace("ï¿½","Ã‘",$result[0]['patient_name']);
+	?>		
+					</div>								
+				</a>
+			</td>
+			<td class="column">
+				<select id="classificationParam" class="Classification-select">
+<?php
+				  if (isset($resultPaid[0]["notes"])) {
+					  //edited by Mike, 20210219
+					  if (strpos($resultPaid[0]["notes"],"DISCOUNTED")!==false) {
+						echo "<option value='0'>WI</option>";
+						echo "<option value='1'>SC</option>";
+						echo "<option value='2'>PWD</option>";
+					  }
+					  if (strpos($resultPaid[0]["notes"],"SC")!==false) {
+						echo "<option value='0'>WI</option>";
+						echo "<option value='1' selected='selected'>SC</option>";
+						echo "<option value='2'>PWD</option>";
+					  }
+					  else if (strpos($resultPaid[0]["notes"],"PWD")!==false) {
+						echo "<option value='0'>WI</option>";
+						echo "<option value='1'>SC</option>";
+						echo "<option value='2' selected='selected'>PWD</option>";
+					  }
+					  else {
+						echo "<option value='0'>WI</option>";
+						echo "<option value='1'>SC</option>";
+						echo "<option value='2'>PWD</option>";
+					  }
+				  }			  	  
+				  else {
+						echo "<option value='0'>WI</option>";
+						echo "<option value='1'>SC</option>";
+						echo "<option value='2'>PWD</option>";		
+				  }				
+?>
+				</select>						
+			</td>
+
+		  </tr>
+		</table>				
+
+
 	<br/>
 <!-- added by Mike, 20210220 -->
 	<table>
