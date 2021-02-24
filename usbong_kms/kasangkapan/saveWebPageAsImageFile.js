@@ -1,5 +1,7 @@
 /*
+'
 ' Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+'
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
 ' http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +11,7 @@
 ' @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20210129
+' @date updated: 20210225
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -24,6 +26,23 @@ var fileName = system.args[1];
 var isFromServerFolder = system.args[2];
 var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
 var fileExtension = '';
+
+//added by Mike, 20210225
+var iPostPositionInFilename=fileName.indexOf("/_post")
+var data=""
+
+if (iPostPositionInFilename !== -1) {
+	//Reference: https://stackoverflow.com/questions/1989009/javascript-substring;
+	//answer by: Chirag, 20130411T0835
+	//notes: 
+	//syntax: string.substring(start [, stop])
+	//syntax: string.substr(start [, length])
+
+	filename=fileName.substring(0,iPostPositionInFilename);
+	data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
+
+	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
+}	
 
 //added by Mike, 20201017
 var isNoonReport = system.args[3];
@@ -48,9 +67,16 @@ else {
 console.log("Filename: " + fileName);
 
 var page = require('webpage').create();
+
+//added by Mike, 20210225; removed by Mike, 20210225
+//var data='nameParam=zerodol';
+
 //edited by Mike, 20200726
 //page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(status) {
-page.open(webAddress+fileName+fileExtension, function(status) {
+
+//edited by Mike, 20210225
+//page.open(webAddress+fileName+fileExtension, function(status) {
+page.open(webAddress+fileName+fileExtension, 'post', data, function(status) {
   console.log("Status: " + status);
   
   if(status === "success") {
@@ -73,9 +99,7 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	else {
 		//edited by Mike, 20201018
 //		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport1.png');
-		//edited by Mike, 20210129
-//		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report1.png');
-		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'ReportNoon.png');
+		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report1.png');
 	}
 
 /*	
