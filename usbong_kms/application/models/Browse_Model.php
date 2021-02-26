@@ -2166,6 +2166,13 @@ class Browse_Model extends CI_Model
 		$this->db->select('notes');
 		$this->db->where('patient_id', $patientId);
 		$this->db->where('transaction_date', date('m/d/Y'));
+		
+		//added by Mike, 20210226
+		//get the newest transaction
+		//removed by Mike, 20210226
+//		$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=transaction_date and t.patient_id=patient_id)',NULL,FALSE);
+		$this->db->order_by('added_datetime_stamp', 'DESC');//ASC');
+		
 		$query = $this->db->get('transaction');		
 		$patientTransactionRowArray = $query->result_array();
 
@@ -2358,6 +2365,11 @@ class Browse_Model extends CI_Model
 		$this->db->select('notes');
 		$this->db->where('patient_id', $patientId);
 		$this->db->where('transaction_date', date('m/d/Y'));
+		
+		//added by Mike, 20210226
+		//get the newest transaction
+		$this->db->order_by('added_datetime_stamp', 'DESC');//ASC');
+		
 		$query = $this->db->get('transaction');		
 		$patientTransactionRowArray = $query->result_array();
 
