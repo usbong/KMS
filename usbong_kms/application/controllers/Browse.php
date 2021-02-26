@@ -2786,6 +2786,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		if (isset($_SESSION["addedVAT"])) {
 			$data['addedVAT']=$_SESSION["addedVAT"];
 			if (isset($data['addedVAT']) and ($data['addedVAT'])) {
+				//edited by Mike, 20210226
+				
 				$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
 
 				//execute these due to select patients classified as SC, i.e. "Senior Citizens"
