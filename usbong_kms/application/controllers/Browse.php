@@ -3353,6 +3353,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);			
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 
+		//added by Mike, 20210227
+		//execute these due to only select patients classified as SC, i.e. "Senior Citizens"
+		//-----
+		$this->session->unset_userdata('addedVAT');
+		$data['addedVAT'] = False;		
+		$this->session->unset_userdata('noVAT');
+		$data['noVAT'] = False;		
+		//-----
+
 		//edited by Mike, 20200508; edited by Mike, 20200509
 		if ($itemTypeId==1) {
 //			$this->load->view('viewItemMedicine', $data);
@@ -3426,6 +3435,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20210227
+		//execute these due to only select patients classified as SC, i.e. "Senior Citizens"
+		//-----
+		$this->session->unset_userdata('addedVAT');
+		$data['addedVAT'] = False;		
+		$this->session->unset_userdata('noVAT');
+		$data['noVAT'] = False;		
+		//-----
 
 		$this->load->view('viewPatientPaidReceipt', $data);
 	}		
