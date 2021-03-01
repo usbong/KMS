@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210222
+  @date updated: 20210301
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -1302,6 +1302,9 @@
 					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {						
 						//edited by Mike, 20201223
 						if (strpos($value['notes'],"DISCOUNTED")!==false) {
+							//added by Mike, 20210301							
+							$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
+							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];							
 						}
 						else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 						}
@@ -1326,24 +1329,25 @@
 							//This is due to several non-med items are combined into 1 transaction in Cash Register
 							//TO-DO: -update: this
 	//echo "fee_quantity: ".$value['fee_quantity'];
-
-							//added by Mike, 20200812
-							//Reference: https://www.php.net/number_format;
-							//last accessed: 20200812
-							//Rounding Rules
-							//input: 60.00000000000006
-							//output: 60.00
-							//input: 60.005
-							//output: 60.01
-							//input: 60.004
-							//output: 60.00
-							$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
 							
 	/*						//removed by Mike, 20200708
 							$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
 							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
 */
 						}
+						
+						//added by Mike, 20200812; added by Mike, 20210301
+						//Reference: https://www.php.net/number_format;
+						//last accessed: 20200812
+						//Rounding Rules
+						//input: 60.00000000000006
+						//output: 60.00
+						//input: 60.005
+						//output: 60.01
+						//input: 60.004
+						//output: 60.00
+						$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
+						
 					}
 					//removed by Mike, 20200708
 /*					else {
