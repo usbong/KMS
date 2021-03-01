@@ -3594,7 +3594,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['receiptNumberPAS'] = 0;
 
 		if (isset($_POST["officialReceiptNumberMOSCParam"])) {
-			$data['receiptNumberMOSC'] = $_POST["officialReceiptNumberMOSCParam"];			
+			$data['receiptNumberMOSC'] = $_POST["officialReceiptNumberMOSCParam"];
 		}
 
 		if (isset($_POST["officialReceiptNumberMedicalDoctorParam"])) {
