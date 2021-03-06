@@ -1,24 +1,29 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
-'
-' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
-'
-' http://www.apache.org/licenses/LICENSE-2.0
-'
-' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-'
-' @author: Michael Syson
-' @date created: 20200306
-' @date updated: 20210224
+  Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
+  @author: Michael Syson
+  @date created: 20200818
+  @date updated: 20210213
+
+  Input:
+  1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
+  Output:
+  1) Laboratory Request Form that is viewable on a Computer Web Browser  
+  
+  Computer Web Browser Address (Example):
+  1) http://localhost/usbong_kms/server/viewCSVFileMOSCLabRequestForm.php   
 -->
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+//defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8">
+   <!-- <meta charset="utf-8"> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- Reference: Apache Friends Dashboard index.html -->
     <!-- "Always force latest IE rendering engine or request Chrome Frame" -->
@@ -30,61 +35,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							/* edited by Mike, 20210220 */
-							/*width: 670px*/
-							width: 720px							
+							/* Legal Size; Landscape*/							
+							width: 860px; /*860px;*/ /* 802px;*//* 670px */
+							
+							/* use zoom 67% (prev) scale*/
+							zoom: 90%; /* at present, command not support in Mozilla Firefox */				
+							transform: scale(0.90);
+							transform-origin: 0 0;							
                         }
-						
-						div.checkBox
-						{
-							border: 1.5pt solid black; height: 9pt; width: 9pt;
-							text-align: center;
-							float: left
-						}
-						
-						div.option
-						{
-							padding: 2pt;
-							display: inline-block;
-						}
 						
 						div.copyright
 						{
 							text-align: center;
 						}
 						
-						div.itemName
-						{
-							text-align: left;
-						}
-						
-						/* added by Mike, 20210224 */
-						div.patientName
-						{
-							font-size: 14pt;
-						}
-
-						div.tableHeader
-						{
-							font-weight: bold;
-							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
-						}
-
-						input.browse-input
-						{
-							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
-							height: 100%;
-						}	
-
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -101,12 +68,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}
 						
-						table.search-result
-						{
-<!--							border: 1px solid #ab9c7d;		
--->
-						}						
-
 						table.imageTable
 						{
 							width: 100%;
@@ -114,64 +75,98 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+						input.inputText
+						{
+							font-size: 14pt;						
+						}
+
+						input.browse-input
+						{
+							width: 100%;
+							max-width: 500px;
+														
+							resize: none;
+
+							height: 100%;
+						}	
+
+						table.formTable
+						{
+							width: 100%; //90%
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}				
+
+						table.bottomSectionTable
+						{
+							width: 100%;
+						}
+
+						tr.rowEvenNumber {
+							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
+							border: 1pt solid #00ff00;		
+						}
+
+						td.tableHeaderColumn
+						{
+							background-color: #00ff00; <!--#93d151; lime green-->
+							border: 1pt solid #00ff00;
+							text-align: left;
+							font-weight: bold;							
+							width: 20%; <!-- 17%; --> <!-- 84% -->
+						}						
+
+						td.addressAnswerColumn
+						{
+							width: 25%; <!-- 84% -->
+						}						
+
+						td.postalAddressAnswerColumn
+						{
+							width: 10%;
+						}						
+
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: left
+							text-align: center;
 						}						
 
-						td.columnFee
+						td.columnField
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: right
+							text-align: left;
 						}						
 
-						td.columnNotes
+						td.columnFieldNameAge
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: left
+							text-align: left;
+							width: 25%;
 						}						
 
-						td.columnTableHeader
+						td.columnBorderBottom
 						{
-							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
+							border-bottom: 4px double black;
 							text-align: center;
-							width: 26%;
 						}						
 
-						td.columnTableHeaderFee
+						td.columnBorderBottomDotted
 						{
-							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
+							border-bottom: 2px dotted black;
 							text-align: center;
-							width: 13%;
-						}		
+						}						
 
-						td.columnTableHeaderClassification
+						td.columnBorderTopBottom
 						{
-							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
+							border-top: 2px solid black;
+							border-bottom: 4px double black;
 							text-align: center;
-							width: 12%;
-						}		
-
-						td.columnTableHeaderNotes
-						{
-							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
-							border: 1px dotted #ab9c7d;		
-							text-align: center;
-							width: 26%;
-						}		
-
+						}						
+						
 						td.columnTableHeaderDate
 						{
 							padding-left: 0px;
@@ -186,17 +181,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 26%;
 						}						
 
-						input.inputText
-						{
-							font-size: 14pt;						
-						}
-
-						input.inputTextOccupation
-						{
-							font-size: 14pt;						
-							width: 100%;
-						}
-						
 						td.imageColumn
 						{
 							width: 40%;
@@ -205,405 +189,194 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 58%;/*50%;*/
+							width: 59%; /*50%*/
 							display: inline-block;
 							text-align: right;
 						}						
 
-						.Fee-textbox { 
+						td.formDateColumn
+						{
+							width: 50%;
+							text-align: right;
+						}												
+
+						td.requestingPhysicianNameColumn
+						{
+							width: 100%; /*90%*/
+							display: inline-block;
+							text-align: right;
+						}						
+
+						div.checkBox
+						{
+							border: 1.5pt solid black; height: 14pt; width: 14pt;
+							text-align: center;
+							float: left
+						}
+
+						<!-- added by Mike, 20210209 -->
+						input.inputCheckBox
+						{
+							border: 1.5pt solid black; height: 14pt; width: 14pt;
+							text-align: center;
+							float: left;
+						}
+
+						/* added by Mike, 20210210 */
+						input[type=checkbox]
+						{
+						  /* Double-sized Checkboxes */
+						  -ms-transform: scale(1.7); /* IE */
+						  -moz-transform: scale(1.7); /* FF */
+						  -webkit-transform: scale(1.7); /* Safari and Chrome */
+						  -o-transform: scale(1.7); /* Opera */
+						  transform: scale(1.7);
+						  padding: 10px;
+						}						
+
+						/* added by Mike, 20210210 */
+						input[type=checkbox]:focus-within
+						{
+							outline :2px solid #0011f1; //blue
+						}
+
+						input.inputAgeTextBox { 
 							background-color: #fCfCfC;
 							color: #68502b;
-							padding: 10px;
-							font-size: 16px;
+							padding: 0px;
+							font-size: 18px;
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
 							text-align: right;
-							width: 70%;
-
-							float: left;
+							width: 30%;
 						}
 
-						.Quantity-textbox { 
-							background-color: #fCfCfC;
-							color: #68502b;
-							padding: 12px;
-							font-size: 16px;
-							border: 1px solid #68502b;
-							width: 20%;
-							border-radius: 3px;	    	    
-
-							float: left;
+						/* added by Mike, 20210210 */
+						input[type=tel]:focus 
+						{
+							/*color:#0011f1;*/
+							border: 1.7px solid #0011f1; /*black;*/
 						}
 
-						.Notes-textbox { 
+/*
+						input.inputText {
 							background-color: #fCfCfC;
 							color: #68502b;
-							padding: 12px;
+							padding: 0px;
 							font-size: 16px;
 							border: 1px solid #68502b;
-							width: 82%;
 							border-radius: 3px;	    	    
-
-							float: left;
+							text-align: left;
+							width: 98%;
 						}
 
-						.Classification-select { 
-							background-color: #fCfCfC;
-							color: #68502b;
-							padding: 12px;
+						input[type=text]:focus 
+						{
+							/*color:#0011f1;*/
+							border: 1.7px solid #0011f1; /*black;*/
+						}
+*/
+
+						div.buttonSubmit
+						{
 							font-size: 16px;
-							border: 1px solid #68502b;
-							width: 100%;
-							border-radius: 3px;	    	    
-							float: left;
+/*							//removed by Mike, 20210210
+							font-weight: bold;
+*/
+						}
+
+						select.medicalDoctorSelect
+						{
+							font-size: 12pt;
+							text-align: right;							
 						}
 						
-						.Button-purchase {
-/*							padding: 8px 42px 8px 42px;
-*/
-							padding: 12px;
-							background-color: #ffe400;
-							color: #222222;
-							font-size: 16px;
-							font-weight: bold;
+						option.medicalDoctorOption
+						{
+							font-size: 12pt;
+						}											
+						
+<!-- added by Mike, 20210210 -->
+<!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
+	last accessed: 20200321
+	answer by: Rich Bradshaw on 20110903T0759
+	edited by: Peter Mortensen on 20190511T2239
+-->
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */												
 
-							border: 0px solid;		
-							border-radius: 4px;
-
-							float: left;
-							margin-left: 4px;
-						}
-
-						.Button-purchase:hover {
-							background-color: #d4be00;
-						}
-
-						/*added by Mike, 20201013*/
-						.Button-purchase:focus {
-							background-color: #d4be00;
-						}
-
-        /*------------------*/
-        /* Modal            */
-        /*------------------*/
-
-        .modal-header {
-            padding-bottom: 0px;
-            border-bottom: none;
-        }
-
-        .modal-body {
-            font-size: 15px;
-            color: rgb(75, 75, 75);
-        }
-
-        .modal-footer {
-            padding-top: 0px;
-            border-top: none;
-        }
-		
     /**/
     </style>
     <title>
-      Search Patient
+      MARIKINA ORTHOPEDIC SPECIALTY CLINIC (MOSC): INDEX CARD
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
     </style>
   </head>
-	  <script>		
-		//added by Mike, 20200612
-		function onLoad() {
-			document.body.onkeydown = function(e){
-				//alert(e.keyCode);
-				//note keycode not = Character key
-				if (e.keyCode==17) { //Ctrl key
-					var medicalDoctorIdInput = document.getElementById("payMedicalDoctorIdParam").value;
-					var patientIdInput = document.getElementById("payPatientIdParam").value;
-
-					if (medicalDoctorIdInput !== null && medicalDoctorIdInput !== '') { //verify only one
-						myPopupFunctionPay(medicalDoctorIdInput, patientIdInput);
-					}
-				}
-			};		
-		}
-		
-		function copyText(iCount){
-//			alert("hello"+iCount);
-	 
-			//Reference: https://stackoverflow.com/questions/51625169/click-on-text-to-copy-a-link-to-the-clipboard;
-			//last accessed: 20200307
-			//answer by: colxi on 20180801; edited by: Lord Nazo on 20180801	 
-/*	 
-			var holdText = document.getElementById("patientNameId"+iCount).innerText;
-			const el = document.createElement('textarea');
-		    el.value = holdText;
-			document.body.appendChild(el);
-			el.select();
-			document.execCommand('copy');
-			document.body.removeChild(el);
-			//alert("text: "+holdText);
-*/
-			var sHoldTextPatientName = document.getElementById("patientNameId"+iCount).innerText;
-			var sHoldTextFee = document.getElementById("feeId"+iCount).innerText; //.innerText;
-
-//			alert("sHoldTextPatientName: "+sHoldTextPatientName);
-//			alert("sHoldTextFee: "+sHoldTextFee);
-
-			var sHoldTextTransactionTypeName = document.getElementById("transactionTypeNameId"+iCount).innerText;
-
-			var sTreatmentTypeName = document.getElementById("treatmentTypeNameId"+iCount).innerText;
-
-			var sDiscountAmount = "";
-			var sTotalAmount = "0";
-			
-			if (sHoldTextTransactionTypeName=="CASH") {
-				//alert("CASH!");
-				sTotalAmount = sHoldTextFee;
-			}
-			else if (sHoldTextTransactionTypeName=="SC/PWD") {
-				//note: solve the values of the other variables using one (1) known variable value
-				sTotalAmount = sHoldTextFee
-				sHoldTextFee = -sHoldTextFee/(0.20-1);
-				sDiscountAmount = "" + sHoldTextFee*0.20;
-			}
-			else if (sHoldTextTransactionTypeName=="NC") {
-				sHoldTextFee = "NC";				
-				sTotalAmount = "NC";				
-			}						
-			else { //hmo
-				sHoldTextFee = "HMO";				
-				sTotalAmount = sHoldTextTransactionTypeName.toLowerCase();				
-			}
-			
-			const el = document.createElement('textarea');
-/*		    
-			el.value = sHoldTextPatientName+ "\t" + sHoldTextFee + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
-			document.body.appendChild(el);
-*/			
-
-			sTreatmentTypeName = sTreatmentTypeName.toUpperCase();
-			
-			if ((sTreatmentTypeName=="SWT") || (sTreatmentTypeName=="SHOCKWAVE")) {
-				el.value = sHoldTextPatientName + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" +sHoldTextFee + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
-			}
-			else if (sTreatmentTypeName=="LASER") {
-				el.value = sHoldTextPatientName + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" +sHoldTextFee + "\t" + "\t" + sDiscountAmount + "\t" + "\t" + sTotalAmount;
-			}
-			else if (sTreatmentTypeName=="OT") {
-				el.value = sHoldTextPatientName + "\t" + "\t" + sHoldTextFee + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
-			}
-			else if (sTreatmentTypeName=="IN-PT") {
-				el.value = sHoldTextPatientName + "\t" + "\t" + "\t" + "\t" + sHoldTextFee + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
-			}
-			else {
-				el.value = sHoldTextPatientName+ "\t" + sHoldTextFee + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + sDiscountAmount + "\t" + sTotalAmount;
-			}
-			
-			document.body.appendChild(el);							
-			el.select();
-			document.execCommand('copy');
-			document.body.removeChild(el);
-
-//			alert("text: "+sHoldTextPatientName + sHoldTextFee);//el.value);
-
-		}
-/*	  
-		  defaultScrollWidth = 0;
-		  
-		  function auto_grow(element) {
-			element.style.height = "5px";
-			element.style.height = (element.scrollHeight*4)+"px";
-			if (defaultScrollWidth == 0) {
-				defaultScrollWidth = element.scrollWidth; //i.e. 42% of the width of the full width of the Browser Window
-				alert("defaultScrollWidth: "+defaultScrollWidth);
-			}
-			else if (element.scrollWidth < defaultScrollWidth){
-//				defaultScrollWidth = 100%;
-				defaultScrollWidth = element.scrollWidth;
-//				alert("defaultScrollWidth: "+defaultScrollWidth);
-			}
-				
-			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
-		  }
-*/
-
-		//added by Mike, 20200329; edited by Mike, 20200806
-//		function myPopupFunction() {				
+	  <script>
+		//added by Mike, 20210211
 		function myPopupFunction(patientId) {	
 			//edited by Mike, 20200522
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
 			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;			
-			var professionalFee = document.getElementById("professionalFeeParam").value;
-			var xRayFee = document.getElementById("xRayFeeParam").value;
-			var labFee = document.getElementById("labFeeParam").value;
-			var classification = document.getElementById("classificationParam").value;
-			var notes = document.getElementById("notesParam").value;
+			var sexId = document.getElementById("selectSexIdParam").selectedIndex;			
+			var ageUnitId = document.getElementById("selectAgeUnitIdParam").selectedIndex;			
 
-
-			//added by Mike, 20200806
-			//verified: if a patient id already exists in the cart list
-			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
-	
-			if (hasPatientInCartList) {
-				alert("Isang (1) pasyente lamang ang maaaring idagdag sa bawat Cart List.");
-				return;
-			}
-	
-			//added by Mike, 20200525
-//			alert(notes);
-			notes = notes.replace(";", "u003B"); //semicolon
-			notes = notes.replace(",", "u002C"); //comma
-	
-			//added by Mike, 20200526
-			notes = notes.toUpperCase();
-
-			//added by Mike, 20201103
+//			alert("medicalDoctorId"+medicalDoctorId);
 			//0 = ANY; SUMMARY = 3
 			if ((medicalDoctorId==0) || (medicalDoctorId==3)) {
 				alert("Pumili ng Medical Doctor na hindi \"ANY\" o \"SUMMARY\".");
 				return;
 			}
-	
-//			alert("after: " + notes);
-			//added by Mike, 20200523
-//			alert(medicalDoctorId);
-			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
-			//therefore, we need to add a +1 to correctly identify the medical doctor
-/*			
-			if ((medicalDoctorId==0)) {
-				medicalDoctorId+=1; //to be SYSON, PEDRO
-			}
-			else (medicalDoctorId==2)) {
-				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
-			}
-*/
-			//added by Mike, 20200611
-			if (professionalFee.trim()==="") {
-				professionalFee = 0;
-			}
-			//added by Mike, 20200611
-			if (xRayFee.trim()==="") {
-				xRayFee = 0;
-			}
-			//added by Mike, 20200611
-			if (labFee.trim()==="") {
-				labFee = 0;
-			}
 
-			//added by Mike, 20200518; edited by Mike, 20200523
-			//the following instruction is not yet supported by all computer web browsers
-//			if (notes.includes("DEXA")) {
-			//edited by Mike, 20210122
-			if (notes.indexOf("DEXA2")!==-1) {
-				professionalFee = parseInt(professionalFee) + 500*2;
-			}
-			else if (notes.indexOf("DEXA")!==-1) {
-				professionalFee = parseInt(professionalFee) + 500;
-			}
+//			alert("sexId"+sexId);
+//			alert("ageUnitId"+ageUnitId);
 
-/*	//removed by Mike, 20200824			
-			//added by Mike, 20200819
-			if (notes.indexOf("MINORSET")!==-1) {
-				professionalFee = parseInt(professionalFee) + 500;
-			}
-*/
-			if (notes.trim()==="") {
-				notes = "NONE";
-			}
+			var iInputCheckBoxCount=0;
+			var iInputCheckBoxCountMax=40;
 			
-			//added by Mike, 20200602
-			if (notes.indexOf("NC")!==-1) { //gratis, i.e. NO CHARGE
-				professionalFee = 0;
-			}
-
-			//do the following only if value is a Number, i.e. not NaN
-			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
-				window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
-			}
-		}	
-
-		//added by Mike, 20200331; edited by Mike, 20200411
-/*
-		function myPopupFunctionDelete(itemId,transactionId) {				
-			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
-		}	
-*/
-		function myPopupFunctionDelete(medicalDoctorId,patientId,transactionId) {				
-			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
-			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
-			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
-
-			//added by Mike, 20200523
-//			alert(medicalDoctorId);
-/*
-			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
-			//therefore, we need to add a +1 to correctly identify the medical doctor
-			if ((medicalDoctorId==0)) {
-				medicalDoctorId+=1; //to be SYSON, PEDRO
-			}
-			else (medicalDoctorId==2)) {
-				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
-			}
-*/
+			//note: this does not update hidden input value sent via form POST command
+//			document.getElementById("inputSelectSexNameParam").value = sexId;
 
 /*
-			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+			window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
 */			
-			//edited by Mike, 20200411
-			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
-		}	
-
-		//added by Mike, 20200331; edited by Mike, 20200411
-/*
-		function myPopupFunctionPay(itemId) {				
-			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
-		}	
-*/
-		//edited by Mike, 20200519
-/*
-		function myPopupFunctionPay(itemId) {				
-			//edited by Mike, 20200411
-			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"');?>";
-			
-		}	
-*/
-		function myPopupFunctionPay(medicalDoctorId,patientId) {				
-			//alert("hallo");
-
-			//added by Mike, 20201103
-			//verified: if a patient id already exists in the cart list
-			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
-	
-			if (!hasPatientInCartList) {
-				alert("Kailangang may isang (1) pasyente sa bawat Cart List.");
-				return;
-			}
-			
-			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
-			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
-			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
-
-			//added by Mike, 20200523
-//			alert(medicalDoctorId);
-			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
-			//therefore, we need to add a +1 to correctly identify the medical doctor
-/*
-			if ((medicalDoctorId==0)) {
-				medicalDoctorId+=1; //to be SYSON, PEDRO
-			}
-			else (medicalDoctorId==2)) {
-				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
-			}
-*/
-
-			window.location.href = "<?php echo site_url('browse/payTransactionServiceAndItemPurchase/"+medicalDoctorId+"/"+patientId+"');?>";
-		}	
-
+		}		  
 	  </script>
-  <!-- edited by Mike, 20200612 -->
-  <body onload="onLoad();">
+  <body>
+<?php
+	date_default_timezone_set('Asia/Hong_Kong');
+	
+	//edited by Mike, 20200726
+	//$dateToday = (new DateTime())->format('Y-m-d');
+	$dateToday = Date('Y-m-d');
+
+	// connect to the database
+//	include('usbong-kms-connect.php');
+//	$mysqli->set_charset("utf8");
+	
+	//edited by Mike, 20210206
+//	$filename="C:\\xampp\\htdocs\\usbong_kms\\kasangkapan\\phantomjs-2.1.1-windows\\bin\\output\\2015\\201505~201507.csv";
+//edited by Mike, 20210208
+//update file location
+//	$filename="G:\\Usbong MOSC\\Everyone\\Information Desk\\Laboratory\\templates\\MOSCLabRequestForm.csv";
+
+//edited by Mike, 20210209
+//	$filename="D:\\Usbong\\LABORATORY\\templates\\MOSCLabRequestForm.csv";
+	$filename="C:\\xampp\\htdocs\\usbong_kms\\usbongTemplates\\MOSCIndexCard.csv";
+	
+	//added by Mike, 20210208
+	$iCheckboxCount=0;
+	
+	//added by Mike, 20210209
+	$iCount = 1;
+	$value = $result[0];
+	
+?>
 	<table class="imageTable">
 	  <tr>
 		<td class="imageColumn">				
@@ -651,11 +424,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</button>
 	</form>
 	<br/>
-	<br/>
-<!--	//removed by Mike, 20210220
-	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
-	</div>
--->
 	<table>
 		<tr>
 			<td class="columnTableHeaderDate">
@@ -675,6 +443,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</tr>
 	</table>
 
+
+<!-- added by Mike, 20210209 -->
+<!-- TO-DO: -add: lab request list for the day -->
+<!-- Form -->
+<form id="labRequestFormId" method="post" action="<?php echo site_url('browse/confirmLabRequestForm')?>">
+<!--
+<form id="labRequestFormId" method="post">
+-->
 	<?php 
 		//edited by Mike, 20200518
 		if ($result[0]["medical_doctor_name"]==""){
@@ -686,17 +462,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
 */
-
-//edited by Mike, 20210224
-//			echo "<b>MEDICAL DOCTOR: </b>";		
-
-echo "<table>";
-	echo "<tr>";
-		echo "<td>";
-					echo "<b>MEDICAL DOCTOR: </b>";		
-		echo "</td>";
-		echo "<td>";
-			
+			echo "<b>MEDICAL DOCTOR: </b>";		
 ?>			
 
 <!-- +updated: this -->
@@ -741,757 +507,325 @@ echo "<table>";
 				}
 */				
 			echo "</select>";
-
-//added by Mike, 20210224
-		echo "</td>";
-	echo "</tr>";			
-echo "</table>";
 	?>
-<!-- added by Mike, 20210224 -->
 	<br/>
-		<table>				
-		  <tr class="row">
-			<td class ="columnTableHeader">				
-	<?php
-				echo "PATIENT NAME";
-	?>		
-			</td>
-			<td class ="columnTableHeaderClassification">				
-				<?php
-					echo "CLASSIFICATION";
-				?>
-			</td>
-		  </tr>
-		  <tr class="row">
-			<td class ="column">				
-				<a href='<?php echo site_url('browse/viewPatient/'.$result[0]['patient_id'])?>' id="viewPatientId">
-					<div class="patientName">
-	<?php
-					//TO-DO: -update: this
-					//echo $value['patient_name'];
-					echo str_replace("ï¿½","Ã‘",$result[0]['patient_name']);
-	?>		
-					</div>								
-				</a>
-			</td>
-			<td class="column">
-				<select id="classificationParam" class="Classification-select">
 <?php
-				  if (isset($resultPaid[0]["notes"])) {
-					  //edited by Mike, 20210219
-					  if (strpos($resultPaid[0]["notes"],"DISCOUNTED")!==false) {
-						echo "<option value='0'>WI</option>";
-						echo "<option value='1'>SC</option>";
-						echo "<option value='2'>PWD</option>";
-					  }
-					  if (strpos($resultPaid[0]["notes"],"SC")!==false) {
-						echo "<option value='0'>WI</option>";
-						echo "<option value='1' selected='selected'>SC</option>";
-						echo "<option value='2'>PWD</option>";
-					  }
-					  else if (strpos($resultPaid[0]["notes"],"PWD")!==false) {
-						echo "<option value='0'>WI</option>";
-						echo "<option value='1'>SC</option>";
-						echo "<option value='2' selected='selected'>PWD</option>";
-					  }
-					  else {
-						echo "<option value='0'>WI</option>";
-						echo "<option value='1'>SC</option>";
-						echo "<option value='2'>PWD</option>";
-					  }
-				  }			  	  
-				  else {
-						echo "<option value='0'>WI</option>";
-						echo "<option value='1'>SC</option>";
-						echo "<option value='2'>PWD</option>";		
-				  }				
-?>
-				</select>						
-			</td>
-
-		  </tr>
-		</table>				
-
-
-	<br/>
-<!-- added by Mike, 20210220 -->
-	<table>
-	<tr>
-		<td class="tableHeaderColumn">
-			<b>ADDRESS:</b>
-		</td>
-		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' name='inputTextLocationAddressName' placeholder='LOCATION' required>
-		</td>
-		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' name='inputTextBarangayAddressName' placeholder='BARANGAY' required>
-		</td>
-		<td class="addressAnswerColumn">
-			<input class='inputText' type='text' name='inputTextProvinceCityPhAddressName' placeholder='PROVINCE・CITY・PH' required>
-		</td>
-	</tr>
-	<tr>
-		<td class="tableHeaderColumn">
-		</td>		
-		<td class="postalAddressAnswerColumn">
-			<input class='inputText' type='text' name='inputTextPostalAddressName' placeholder='POSTAL' required>
-		</td>
-		<td class="tableHeaderColumn">
-		</td>	
-		<td class="tableHeaderColumn">
-		</td>	
-	</tr>
-	</table>	
-<!-- added by Mike, 20210224 -->	
-	<br/>
-	<table width="100%">			
-		<tr>
-			<td class="tableHeaderColumn" width="20%">
-				<b>OCCUPATION:</b>
-			</td>
-			<td class="occupationAnswerColumn">
-				<input class='inputTextOccupation' type='text' name='inputTextOccupationName' placeholder='hal. computer services salesperson' required>
-			</td>
-		</tr>
-	</table>
-	
-<!--	<br/> 
--->
-<!--	TO-DO: -update: this
--->	
-	
-<!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
--->	
-	<?php
-	
-		//get only name strings from array 
-		if (isset($result)) {			
-			if ($result!=null) {		
 /*
-				$resultCount = count($result);
-				if ($resultCount==1) {
-					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
+    echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>";
+    echo "<b>OUT-PATIENT ORTHOPEDICS, X-RAY, PHYSICAL AND OCCUPATION THERAPY</b><br/>";
+    echo "<b>#2 E. MANALO AVE., STO. NIÑO, 1820, MARIKINA CITY, PHILIPPINES</b><br/>";
+    echo "<b>TEL. NO. (8) 941-4888; MONDAY - SATURDAY; 9:00 A.M. -  5:00 P.M.</b><br/>";
+*/
+
+//removed by Mike, 20210209
+//	echo "<table>";
+
+/*
+	echo "<tr>";
+	echo "<td>";
+*/					
+	//TO-DO: -add: notes column
+
+	//table headers
+?>	
+<!--
+	<tr>
+	<td class='tableHeaderColumn'><b>COUNT</b></td>
+	<td class='tableHeaderColumn'><b>BODY LOCATION</b></td>
+	<td class='tableHeaderColumn'><b>TYPE</b></td>
+	<td class='tableHeaderColumn'><b>PRICE</b></td>
+	<td class='tableHeaderColumn'><b>SC/PWD<br/>PRICE</b></td>
+	<tr>
+-->
+<?php
+//echo "<br/>";
+	echo "<table>";
+				
+	//TO-DO: -add: auto-identify and update date format to use YYYY-MM-DD
+	
+	echo '<tr class="row">';
+
+	ini_set('auto_detect_line_endings', true);
+
+	//added by Mike, 20200523
+	if (!file_exists($filename)) {
+		//add the day of the week
+		//edited by Mike, 20200726
+		//$sDateToday = (new DateTime())->format('Y-m-d, l');
+		$sDateToday = Date('Y-m-d, l');
+
+		echo $filename;
+
+		echo "There are no transactions for the day, ".$sDateToday.".";
+	}
+	else {
+		//Reference: https://stackoverflow.com/questions/9139202/how-to-parse-a-csv-file-using-php;
+		//answer by: thenetimp, 20120204T0730
+		//edited by: thenetimp, 20170823T1704
+
+		$iRowCount = -1; //we later add 1 to make start value zero (0)
+		//if (($handle = fopen("test.csv", "r")) !== FALSE) {
+		if (($handle = fopen($filename, "r")) !== FALSE) {
+		  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+			$num = count($data) -1; //we add -1 for the computer to not include the excess cell due to the ending \n
+		//    echo "<p> $num fields in line $row: <br /></p>\n";
+			$iRowCount++;
+			for ($iColumnCount=0; $iColumnCount <= $num; $iColumnCount++) {
+		//        echo $data[$c] . "<br />\n";
+				//edited by Mike, 20200725
+				//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+				
+				//added by Mike, 20200726
+				//$cellValue = $data[$iColumnCount];	
+				$cellValue = utf8_encode($data[$iColumnCount]);
+				
+				if (is_numeric($cellValue)) {
+					if ((strpos($cellValue,"#")!==false)) {
+						//integer value
+					}						
+					else {
+						//add two digits after the decimal point
+						//Reference: https://www.php.net/number_format;
+						//last accessed: 20200812
+						//input: 60
+						//output: 60.00
+						//Note: Rounding Rules
+						//input: 60.00000000000006
+						//output: 60.00
+						//input: 60.005
+						//output: 60.01
+						//input: 60.004
+						//output: 60.00
+						$cellValue = number_format($cellValue, 2, '.', ',');
+					}
+					echo "<td class='column' style='text-align:right'><b>".$cellValue."</b></td>";
 				}
 				else {
-					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
-				}			
-*/
-				echo "<br/>";
-				echo "<table class='search-result'>";
-				
-				//add: table headers
-?>				
-					  <tr class="row">
-						<td class ="columnTableHeader">				
-				<?php
-							echo "PATIENT NAME";
-				?>		
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "PF";
-							?>
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "X-RAY";
-							?>
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "LAB";
-							?>
-						</td>
-						<td class ="columnTableHeaderClassification">				
-							<?php
-								echo "CLASSIFI-<br/>CATION";
-							?>
-						</td>
 
-						<td class ="columnTableHeaderNotes">				
-							<?php
-								echo "ADDITIONAL<br/>NOTES";
-							?>
-						</td>
-					  </tr>
-<?php				
-				$iCount = 1;
-/*				foreach ($result as $value) {
-*/	
+//					if (($iColumnCount+1<count($data)) and ((utf8_encode($data[$iColumnCount+1]))=="TOTAL")) {
+/*	//removed by Mike, 20210208					
+					if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="DATE")) {
+					echo "<td class='column' style='text-align:center'>".strtoupper(date('Y-m-d, l'))."</td>";
+					}						
+					else {
+*/					
+						//edited by Mike, 20210206
+						//$cellValue=str_replace("?", "<div class='checkBox'></div>",$cellValue);
+						if (strpos($cellValue,"?")!==false) {							
+							//edited by Mike, 20210209
+//							$cellValue=str_replace("?", "<input type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
 
-				$value = $result[0];
+//edited by Mike, 20210211
+//							$cellValue=str_replace("?", "<input class='inputCheckBox' type='checkBox' id='".$iCheckboxCount."'>",$cellValue);
+//							$cellValue=str_replace("?", "<input class='inputCheckBox' type='checkBox' name='1'>",$cellValue);
+							$cellValue=str_replace("?","",$cellValue);
 
-		?>				
-		
-					  <tr class="row">
-						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
-								<div class="patientName">
-				<?php
-								//TO-DO: -update: this
-								//echo $value['patient_name'];
-								echo str_replace("ï¿½","Ã‘",$value['patient_name']);
-				?>		
-								</div>								
-							</a>
-						</td>
-						<td class ="column">				
-							<!-- edited by Mike, 20200602 -->
-							<!-- default value is now 800, instead of 600 -->
-							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="800" min="1" max="99999" 
-						onKeyPress="var key = event.keyCode || event.charCode;		
-									const keyBackspace = 8;
-									const keyDelete = 46;
-									const keyLeftArrow = 37;
-									const keyRightArrow = 39;
-						
-									if (this.value.length == 5) {			
-										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-											return true;
-										}
-										else {
-											return false;										
-										}
-									}" required>						
-						</td>
-						<td class ="column">				
-							<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="99999" 
-						onKeyPress="var key = event.keyCode || event.charCode;		
-									const keyBackspace = 8;
-									const keyDelete = 46;
-									const keyLeftArrow = 37;
-									const keyRightArrow = 39;
-						
-									if (this.value.length == 5) {			
-										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-											return true;
-										}
-										else {
-											return false;										
-										}
-									}" required>
-						</td>
-						<td class ="column">
-							<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="99999" 
-						onKeyPress="var key = event.keyCode || event.charCode;		
-									const keyBackspace = 8;
-									const keyDelete = 46;
-									const keyLeftArrow = 37;
-									const keyRightArrow = 39;
-						
-									if (this.value.length == 5) {			
-										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-											return true;
-										}
-										else {
-											return false;										
-										}
-									}" required>
-						</td>
-<!-- edited by Mike, 20210214
-						<td class="column">
-							<select id="classificationParam" class="Classification-select">
-							  <option value="0">WI</option>
-							  <option value="1">SC</option>
-							  <option value="2">PWD</option>
-							</select>						
-						</td>
--->
-						<td class="column">
-							<select id="classificationParam" class="Classification-select">
+//echo $iCheckboxCount.": ".$cellValue."<br/>";
+//removed by Mike, 20210213
+//echo $cellValue."<br/>";
+
+//							$cellValue="<input class='inputCheckBox' type='checkBox' name='1' form='labRequestFormId'>".$cellValue;
+//							$cellValue="<input class='inputCheckBox' type='checkBox' name='".$iCheckboxCount."'>".$cellValue;
+							$cellValue="<input class='inputCheckBox' type='checkBox' name='inputCheckBox".$iCheckboxCount."'>".$cellValue;
+
+
+							//added by Mike, 20210211
+/* //removed by Mike, 20210211							
+							if (strpos($cellValue, "OTHERS:")!==false) {
+								$cellValue=$cellValue;
+							}
+*/							
+							$iCheckboxCount=$iCheckboxCount+1;
+						}
+
+						//added by Mike, 20210209
+						if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PHYSICIAN")) {							
+							if ($result[0]["medical_doctor_name"]==""){							
+								//default value
+								//edited by Mike, 20210212
+								//$result[0]["medical_doctor_name"] = "SYSON, PEDRO (DEFAULT)";
+								$cellValue="SYSON, PEDRO (DEFAULT)";
+							}
+							else {
+								$cellValue=$result[0]["medical_doctor_name"];
+							}
+						}
+						//added by Mike, 20210306
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PATIENT NAME")) {						
+						$cellValue="<a href='".site_url('browse/viewPatient/'.$value['patient_id'])."' id='viewPatientId'>
+							<div class='patientName'>".
+								str_replace('ï¿½','Ã‘',$value['patient_name'])."
+							</div>								
+						</a>";
+?>
+		<input type="hidden" name="patientIdNameParam" value="<?php echo $value['patient_id'];?>" form="indexCardId">
 <?php
-							  if (isset($resultPaid[0]["notes"])) {
-								  //edited by Mike, 20210219
-								  if (strpos($resultPaid[0]["notes"],"DISCOUNTED")!==false) {
-									echo "<option value='0'>WI</option>";
-									echo "<option value='1'>SC</option>";
-									echo "<option value='2'>PWD</option>";
-								  }
-								  if (strpos($resultPaid[0]["notes"],"SC")!==false) {
-									echo "<option value='0'>WI</option>";
-									echo "<option value='1' selected='selected'>SC</option>";
-									echo "<option value='2'>PWD</option>";
-								  }
-								  else if (strpos($resultPaid[0]["notes"],"PWD")!==false) {
-									echo "<option value='0'>WI</option>";
-									echo "<option value='1'>SC</option>";
-									echo "<option value='2' selected='selected'>PWD</option>";
+						}
+						//added by Mike, 20210211
+						else if ((utf8_encode($data[$iColumnCount])=="OTHERS ANSWER")) {
+							$cellValue=str_replace("OTHERS ANSWER","<input class='inputText' type='text' id='inputTextOthersAnswerId' name='inputTextOthersAnswerNameParam' form='labRequestFormId'>",$cellValue);
+						}
+						
+/*	//removed by Mike, 20210210
+						//added by Mike, 20210210
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="ADDRESS")) {
+							//TO-DO: -add: patient address in patient table of MySQL database
+
+//							$cellValue="<textarea class='inputText' rows='3' id='inputTextAddressId' form ='labRequestFormId'></textarea>";
+
+
+							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
+						}
+						else if (($iColumnCount-2>=0) and (utf8_encode($data[$iColumnCount-2])=="ADDRESS")) {
+							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
+						}
+						else if (($iColumnCount-3>=0) and (utf8_encode($data[$iColumnCount-3])=="ADDRESS")) {
+							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
+						}
+*/						
+						
+						if (strpos($cellValue,"SEX")!==false) {							
+							echo "<td class='columnField'><b>".$cellValue;
+							echo "<select id='selectSexIdParam' name='selectSexNameParam' form='labRequestFormId'>";
+							
+							//note: no echo output after select command
+?>
+<!-- edited by Mike, 20210212 -->
+<!--
+							<select id='selectSexIdParam' name='selectSexNameParam' form='labRequestFormId'>
+							  <option value='0'>MALE</option>
+							  <option value='1'>FEMALE</option>
+-->
+<?php							
+//							for ($iCount=0; $iCount<2; $iCount++) {
+							  if (isset($result[0]["sex_id"])) {
+								  if ($result[0]["sex_id"]==0) {
+									echo "<option value='0' selected='selected'>MALE</option>";
+									echo "<option value='1'>FEMALE</option>";
 								  }
 								  else {
-									echo "<option value='0'>WI</option>";
-									echo "<option value='1'>SC</option>";
-									echo "<option value='2'>PWD</option>";
+									echo "<option value='0'>MALE</option>";
+									echo "<option value='1' selected='selected'>FEMALE</option>";
 								  }
 							  }			  	  
 							  else {
-									echo "<option value='0'>WI</option>";
-									echo "<option value='1'>SC</option>";
-									echo "<option value='2'>PWD</option>";		
+									echo "<option value='0'>MALE</option>";			  							
+									echo "<option value='1'>FEMALE</option>";			  														
 							  }				
+//						   }
 ?>
-							</select>						
-						</td>
-						<td class="column">
-							<input type="text" id="notesParam" class="Notes-textbox no-spin" value="NONE" required>
-						</td>						
-					    <td>		
-							<button onclick="myPopupFunction(<?php echo $value['patient_id'];?>)" class="Button-purchase">ADD</button>									
-<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
--->
-						</td>						
-					  </tr>
-		<?php				
-					$iCount++;		
-//					echo "<br/>";
-/*				}				
-*/
-				echo "</table>";				
-				echo "<br/>";				
-//				echo '<div>***NOTHING FOLLOWS***';	
-				echo "<br/>";				
-			}
-			else {					
-				//edited by Mike, 20200331
-				if (isset($nameParam)) {
-					echo '<div>';					
-					echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our medicine names.';
-					echo '<br><br>Recommendation:';
-					echo '<br>&#x25CF; Reverify that the spelling is correct.';				
-					echo '</div>';					
-				}
-			}			
-
-			//TO-DO: -add: paid receipt page
-			//TO-DO: -update: this
-
-
-			//added by Mike, 20200401
-			echo '<h3>Cart List</h3>';
-
-			//added by Mike, 20200806
-			$hasPatientInCartListParamValue = False;
-
-			$cartListResultCount = 0;
-			
-			if ((isset($cartListResult)) and ($cartListResult!=False)) {
-				$cartListResultCount = count($cartListResult);
-			}
-
-			//cart list			
-			if ($cartListResultCount==0) {		
-				//edited by Mike, 20200529
-				echo '<div>';					
-				echo 'There are no transactions.';
-				echo '</div>';									
-			}
-			else {
-//				$cartListResultCount = count($cartListResult);
-				if ($cartListResultCount==1) {
-					echo '<div>Showing <b>'.count($cartListResult).'</b> result found.</div>';
-				}
-				else {
-					echo '<div>Showing <b>'.count($cartListResult).'</b> results found.</div>';			
-				}			
-				echo '<br/>';
-				
-				echo "<table class='search-result'>";
-				
-				//add: table headers
-				$iCount = 1;
-				$cartFeeTotal = 0;
-				
-				//added by Mike, 20200519
-				$patientFee = 0;
-				
-				//added by Mike, 20201212
-				$cartValuePatientId = -1;
-				
-				foreach ($cartListResult as $cartValue) {
-/*	
-				$value = $result[0];
-*/				
-		?>				
-		
-					  <tr class="row">
-						<td class ="column">				
-							<div class="transactionDate">
-				<?php
-								echo $cartValue['transaction_date'];
-				?>		
-							</div>								
-						</td>
-						<td class ="column">				
-							<a href='<?php 
-								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
-									echo site_url('browse/viewPatient/'.$cartValue['patient_id']);
-								}
-								else {
-									if ($cartValue['item_type_id']==1) { //1 = MEDICINE
-										echo site_url('browse/viewItemMedicine/'.$cartValue['item_id']);
-									}
-									//added by Mike, 20201212
-									else if ($cartValue['item_type_id']==3) { //3 = SNACK
-										echo site_url('browse/viewItemSnack/'.$cartValue['item_id']);
-									}
-									else if ($cartValue['item_type_id']==2) { //2 = NON-MEDICINE
-										echo site_url('browse/viewItemNonMedicine/'.$cartValue['item_id']);
-									}									
-								}								
-								?>'>
-								<!-- edited by Mike, 20200806 -->
-								<div class="cartItemName">
-				<?php
-								//edited by Mike, 20200806
-								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
-									//TO-DO: -update: this
-									//echo $cartValue['patient_name'];
-									echo str_replace("ï¿½","Ã‘",$cartValue['patient_name']);
-									
-									$hasPatientInCartListParamValue = True;
-								}
-								else {
-									echo $cartValue['item_name'];
-								}
-								
-
-				?>		
-								</div>								
-							</a>
-						</td>
-						<td class ="columnFee">				
-								<div id="cartItemPriceId<?php echo $iCount?>">
-							<?php
-								//edited by Mike, 20200414
-//								echo $cartValue['item_price'];
-
-								//added by Mike, 20200415; edited by Mike, 20200519
-								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
-									$iQuantity =  1;
-
-									$patientFee = $cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
-									
-									//edited by Mike, 20201212
-									//echo number_format($patientFee, 2, '.', '');
-//									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');									
-									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
-
-									//added by Mike, 20201212
-									$cartValuePatientId = $cartValue['patient_id'];
-								}
-								else {
-									
-									if ($cartValue['fee_quantity']==0) {
-	//									$iQuantity =  1;
-										//edited by Mike, 20210110
-										if ($cartValue['item_price']==0) {
-											$iQuantity =  1;//floor(0/100);
-										}
-										else {
-											$iQuantity =  floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
-										}
-
-									}
-									else {
-										$iQuantity =  $cartValue['fee_quantity'];
-									}
-									
-									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-								}
-/*
-								//edited by Mike, 20200419
-								//echo $cartValue['fee']/$iQuantity;	
-								echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-*/
-
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-						x
-						</td>
-						<td class ="columnFee">				
-								<div id="cartItemQuantityId<?php echo $iCount?>">
-							<?php
-//								echo $cartValue['fee']/$cartValue['item_price'];
-//								echo floor(($cartValue['fee']/$cartValue['item_price']*100)/100);
-								//edited by Mike, 20200415
-								//echo floor(($cartValue['fee']/$cartValue['fee']*100)/100);							
-/*								
-								if ($cartValue['fee_quantity']==0) {
-									echo 1;
-								}
-								else {
-									echo $cartValue['fee_quantity'];
-								}
-*/								
-								echo $iQuantity;
-							?>
-								</div>
-						</td>
-						<td class ="column">				
-						=
-						</td>
-						<td class ="columnFee">				
-								<div id="cartFeeId<?php echo $iCount?>">
-							<?php
-								//echo $cartValue['fee'];
-								
-								//edited by Mike, 20200519
-								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
-									echo number_format($patientFee, 2, '.', '');
-																		
-									$cartFeeTotal = $cartFeeTotal + $patientFee;
-								}
-								else {
-									//edited by Mike, 20200521
-//									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-									echo number_format($cartValue['fee'], 2, '.', '');
-
-									$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
-								}
-				
-//								$cartFeeTotal = $cartFeeTotal + $cartValue['fee'];
-							?>
-								</div>
-						</td>
-						<td>				
-							<!-- TO-DO: -reverify: delete for medicine and non-medicine items -->
-							<!-- edited by Mike, 20201212 -->
-							<!--
-							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>							-->		
-							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$cartValuePatientId.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>														
-<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
--->
-						</td>						
-					  </tr>
-		<?php				
-					$iCount++;		
-//					echo "<br/>";
-				}				
-?>
-				<!-- TOTAL -->				
-					  <tr class="row">
-						<td class ="column">				
-							<div class="total">
-				<?php
-								echo "<b>TOTAL</b>";
-				?>		
-							</div>								
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						=
-						</td>
-						<td class ="column">				
-								<div id="feeTotalId<?php echo $iCount?>">
-							<?php
-//								echo "<b>".$cartFeeTotal."<b/>";
-								
-								echo "<b>".number_format((float)$cartFeeTotal, 2, '.', '')."<b/>";
-							?>
-								</div>
-						</td>
-						<td>
-							<!-- added by Mike, 20200612 -->
-							<input type="hidden" id="payMedicalDoctorIdParam" value="<?php echo $value['medical_doctor_id'];?>">
-							<!-- edited by Mike, 20201212 -->
-							<!--
-							<input type="hidden" id="payPatientIdParam" value="<?php echo $value['patient_id'];?>">
-							<button onclick="myPopupFunctionPay(<?php echo $value['medical_doctor_id'].",".$value['patient_id']?>)" class="Button-purchase">PAY</button>
-							-->
-							<input type="hidden" id="payPatientIdParam" value="<?php echo $cartValuePatientId;?>">
-							<button onclick="myPopupFunctionPay(<?php echo $value['medical_doctor_id'].",".$cartValuePatientId?>)" class="Button-purchase">PAY</button>
+							</select>
 							
-						</td>						
-					  </tr>					
+							<!-- added by Mike, 20210211 -->
+<!--							
+							<input type='hidden' name='inputSelectSexNameParam' value='20'>
+-->							
 <?php
-				echo "</table>";				
-			}
+							echo "</b></td>";
+
+						}
+						//added by Mike, 20210209
+						//TO-DO: -add: birthday to auto-compute age
+						else if (strpos($cellValue,"AGE")!==false) {							
+							echo "<td class='columnFieldNameAge'><b>".$cellValue."</b>";
 ?>
-			<!-- added by Mike, 20200806 -->
-			<input type="hidden" id="hasPatientInCartListParam" value="<?php echo $hasPatientInCartListParamValue;?>">
+<!-- edited by Mike, 20210210 -->
+<!--
+							<input type="tel" id="inputAgeId" class="inputAgeTextBox no-spin" value="1" min="1" max="999">
+-->
+
+<!--	//edited by Mike, 20210212
+							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
+-->
+							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="<?php echo $result[0]["age"];?>" min="1" max="999" required>
+
+							
+<!--	//edited by Mike, 20210212
+							<select id='selectAgeUnitIdParam' name='selectAgeUnitNameParam'>
+							  <option value='0'>YRS</option>
+							  <option value='1'>MOS</option>
+							</select>
+-->
+
+<?php							
+							echo "<select id='selectAgeUnitIdParam' name='selectAgeUnitNameParam'>";
+
+							  if (isset($result[0]["age_unit"])) {
+								  if ($result[0]["age_unit"]==0) {
+									echo "<option value='0' selected='selected'>YRS</option>";
+									echo "<option value='1'>MOS</option>";
+								  }
+								  else {
+									echo "<option value='0'>YRS</option>";
+									echo "<option value='1' selected='selected'>MOS</option>";
+								  }
+							  }			  	  
+							  else {
+									echo "<option value='0'>YRS</option>";			  							
+									echo "<option value='1'>MOS</option>";			  														
+							  }				
+
+							echo "</select>";
+?>
 
 <?php
-/*			
-			echo "<br/>";
-*/
-			echo '<h3>Patient Purchased Service History</h3>';
+							echo "</td>";
 
-			if ((!isset($value)) or ($value['transaction_date']=="")) {				
-				echo '<div>';					
-				echo 'There are no transactions.';
-				echo '</div>';					
-			}
-			else {
-				//edited by Mike, 20200406
-				$resultCount = 0;
+						}
+						else if (strpos($cellValue,"PHYSICIAN")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}
+						//added by Mike, 20210210
+						else if (strpos($cellValue,"ADDRESS")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}
+						//added by Mike, 20210306
+						else if (strpos($cellValue,"PATIENT NAME")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}						
+						else {
+							//blank space HTML command: "&nbsp;"
+							echo "<td class='columnField'><b>".$cellValue."</b></td>";
+						}
 
-				if ((isset($resultPaid)) and ($resultPaid!=False)) {
-					$resultCount = count($resultPaid);
-				}
-	
-				//item purchase history			
-				if ($resultCount==0) {				
-					echo '<div>';					
-					echo 'There are no transactions.';
-					echo '</div>';					
-				}
-				else {
-	//				$resultCount = count($resultPaid);
-					if ($resultCount==1) {
-						echo '<div>Showing <b>'.count($resultPaid).'</b> result found.</div>';
+
+//removed by Mike, 20210209
+/*						//blank space HTML command: "&nbsp;"
+						echo "<td class='columnFieldName'><b>".$cellValue."</b></td>";
+*/						
+						
+/*	//removed by Mike, 20210208					
 					}
-					else {
-						echo '<div>Showing <b>'.count($resultPaid).'</b> results found.</div>';			
-					}			
-					echo '<br/>';
-					
-					echo "<table class='search-result'>";
-					
-					//add: table headers
-					//added by Mike, 20200806
-?>				
-					  <tr class="row">
-						<td class ="columnTableHeader">				
-				<?php
-							echo "ADDED DATETIME";
-				?>		
-						</td>
-
-						<td class ="columnTableHeader">				
-				<?php
-							echo "PATIENT NAME";
-				?>		
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "PF";
-							?>
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "X-RAY";
-							?>
-						</td>
-						<td class ="columnTableHeaderFee">				
-							<?php
-								echo "LAB";
-							?>
-						</td>
-						<td class ="columnTableHeaderNotes">				
-							<?php
-								echo "CLASSIFICATION<br/>& NOTES";
-							?>
-						</td>
-
-						<td class ="columnTableHeaderNotes">				
-							<?php
-								echo "TOTAL";
-							?>
-						</td>
-					  </tr>
-			<?php
-
-
-					$iCount = 1;
-					foreach ($resultPaid as $value) {
-	/*	
-					$value = $result[0];
-	*/				
-			?>				
-			
-						  <tr class="row">
-							<td class ="column">				
-								<div class="transactionDate">
-					<?php
-									//edited by Mike, 20200507
-									//echo $value['transaction_date'];
-									//echo $value['added_datetime_stamp'];
-									echo str_replace(" ","T",$value['added_datetime_stamp']);
-					?>		
-								</div>								
-							</td>
-							<td class ="column">				
-								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
-									<div class="patientName">
-					<?php
-									//TO-DO: -update: this
-									//echo $value['patient_name'];
-									echo str_replace("ï¿½","Ã‘",$value['patient_name']);
-	
-					?>		
-									</div>								
-								</a>							
-							</td>							
-							<td class ="columnFee">				
-								<?php
-									echo $value['fee'];
-								?>
-							</td>
-							<td class ="columnFee">				
-								<?php
-									echo $value['x_ray_fee'];
-								?>
-							</td>
-							<td class ="columnFee">				
-								<?php
-									echo $value['lab_fee'];
-								?>
-							</td>
-							<td class ="columnNotes">				
-								<?php
-									//edited by Mike, 20200518
-									//echo $value['notes'];
-									
-									if ($value['notes']=="") {
-										echo "NONE";
-									}
-									else {
-										echo $value['notes'];
-									}
-								?>
-							</td>
-							<!-- added by Mike, 20200518 -->
-							<td class ="columnFee">				
-								<?php
-									$totalFee = $value['fee'] + $value['x_ray_fee'] + $value['lab_fee'];
-									//echo $totalFee;
-
-									echo number_format($totalFee, 2, '.', '');
-								?>
-							</td>
-							<td>								
-								<?php //edited by Mike, 20200416 
-									if ($value['transaction_date']==date('m/d/Y')) {
-								?>
-								<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
-									
-	<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
-	-->
-								<?php 
-									}
-								?>
-							</td>						
-						  </tr>
-			<?php				
-						$iCount++;		
-	//					echo "<br/>";
-					}				
-					echo "</table>";				
-				}				
+*/					
+				}
 			}
+			echo '</tr><tr class="row">';
+		  }
+		  echo '</tr>';
+		  
+		  fclose($handle);
 		}
-	?>
-	<br />
-	<br />
-	<br />
+	}
+?>
+	</table>
+	<table class="bottomSectionTable">
+	  <tr>
+		  <td class="requestingPhysicianNameColumn">
+			<br/>			
+			<!-- Buttons -->
+<!--
+			<button type="submit" onclick="myPopupFunction(<?php echo $value['patient_id'];?>)">
+-->			
+			<button type="submit">			
+				<div class="buttonSubmit">Submit</div>
+			</button>
+		  </td>
+	  </tr>
+	</table>	
+</form>
+
+	<br />		
+	<div>***NOTHING FOLLOWS***</div>
 	<br />
 	<div class="copyright">
 		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
