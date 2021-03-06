@@ -2168,7 +2168,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
 		$this->load->model('Browse_Model');
-
+		
+/*	//removed by Mike, 20210306
 		//edited by Mike, 20200407
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
@@ -2181,6 +2182,7 @@ class Browse extends CI_Controller { //MY_Controller {
 
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+*/
 
 		//TO-DO: -update: this
 /*
@@ -2193,6 +2195,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
 */	
+
+		//added by Mike, 20210209
+		$this->load->model('Browse_Model');
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
+
 		$this->load->view('viewPatientIndexCard', $data);
 	}
 
