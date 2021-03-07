@@ -77,7 +77,7 @@
 
 						input.inputText
 						{
-							font-size: 14pt;						
+							font-size: 12pt;						
 						}
 
 						input.browse-input
@@ -252,11 +252,13 @@
 						}
 
 						/* added by Mike, 20210210 */
+/* removed by Mike, 20210307						
 						input[type=tel]:focus 
 						{
 							/*color:#0011f1;*/
 							border: 1.7px solid #0011f1; /*black;*/
-						}
+*/						}
+						
 
 /*
 						input.inputText {
@@ -726,8 +728,16 @@
 							  }				
 							$cellValue=$cellValue."</select>";
 						}
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="OCCUPATION")) {						
+							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId'>";
+						}
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="BIRTHDAY")) {
+							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId'>";
+						}
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CONTACT#")) {						
+							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId'>";
+						}
 
-						
 						//note: another set of if-then, if-else statements
 						if (strpos($cellValue,"SEX")!==false) {					
 							echo "<td class='columnField'><b>".$cellValue;
@@ -806,8 +816,8 @@
 								  }
 							  }			  	  
 							  else {
-									echo "<option value='0'>YRS</option>";			  							
-									echo "<option value='1'>MOS</option>";			  														
+									echo "<option value='0'>YRS</option>";
+									echo "<option value='1'>MOS</option>";			
 							  }				
 
 							echo "</select>";
@@ -820,14 +830,55 @@
 						else if (strpos($cellValue,"PHYSICIAN")!==false) {
 							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
 						}
+/*	//removed by Mike, 20210307						
 						//added by Mike, 20210210
 						else if (strpos($cellValue,"ADDRESS")!==false) {
 							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
 						}
+*/						
 						//added by Mike, 20210306
 						else if (strpos($cellValue,"PATIENT NAME")!==false) {
 							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
 						}						
+						//added by Mike, 20210307
+						else if (strpos($cellValue,"LOCATION")!==false) {
+							echo "<td class='columnField'>
+									<input class='inputText' type='text' id='inputTextLocationAddressId' name='inputTextLocationAddressIdNameParam'
+									placeholder='LOCATION'
+									form='indexCardId'>
+									</input>
+								  </td>";
+						}						
+						else if (strpos($cellValue,"BARANGAY")!==false) {
+							echo "<td class='columnField'>
+									<input class='inputText' type='text' id='inputTextBarangayAddressId' name='inputTextBarangayAddressIdNameParam'
+									placeholder='BARANGAY'
+									form='indexCardId'>
+									</input>
+								  </td>";
+						}						
+						else if (strpos($cellValue,"POSTAL")!==false) {
+							echo "<td class='columnField'>
+									<input class='inputText' type='text' id='inputTextPostalAddressId' name='inputTextPostalAddressIdNameParam'
+									placeholder='POSTAL'
+									form='indexCardId'>
+									</input>
+								  </td>";
+						}						
+						else if (strpos($cellValue,"PROVINCE/CITY/PH")!==false) {
+							echo "<td class='columnField'>
+									<input class='inputText' type='text' id='inputTextProvinceCityPhAddressId' name='inputTextProvinceCityPhAddressIdNameParam'
+									placeholder='PROVINCE/CITY/PH'
+									form='indexCardId'>
+									</input>
+								  </td>";
+						}
+/* //removed by Mike, 20210307						
+						//added by Mike, 20210307
+						else if (strlen(trim($cellValue))!=0) {						
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}
+*/
 						else {
 							//blank space HTML command: "&nbsp;"
 							echo "<td class='columnField'><b>".$cellValue."</b></td>";
