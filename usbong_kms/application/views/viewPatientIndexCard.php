@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210213
+  @date updated: 20210307
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -447,9 +447,9 @@
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
-<form id="labRequestFormId" method="post" action="<?php echo site_url('browse/confirmLabRequestForm')?>">
+<form id="indexCardId" method="post" action="<?php echo site_url('browse/confirmLabRequestForm')?>">
 <!--
-<form id="labRequestFormId" method="post">
+<form id="indexCardId" method="post">
 -->
 	<?php 
 		//edited by Mike, 20200518
@@ -624,7 +624,7 @@
 //removed by Mike, 20210213
 //echo $cellValue."<br/>";
 
-//							$cellValue="<input class='inputCheckBox' type='checkBox' name='1' form='labRequestFormId'>".$cellValue;
+//							$cellValue="<input class='inputCheckBox' type='checkBox' name='1' form='indexCardId'>".$cellValue;
 //							$cellValue="<input class='inputCheckBox' type='checkBox' name='".$iCheckboxCount."'>".$cellValue;
 							$cellValue="<input class='inputCheckBox' type='checkBox' name='inputCheckBox".$iCheckboxCount."'>".$cellValue;
 
@@ -663,7 +663,7 @@
 						}
 						//added by Mike, 20210211
 						else if ((utf8_encode($data[$iColumnCount])=="OTHERS ANSWER")) {
-							$cellValue=str_replace("OTHERS ANSWER","<input class='inputText' type='text' id='inputTextOthersAnswerId' name='inputTextOthersAnswerNameParam' form='labRequestFormId'>",$cellValue);
+							$cellValue=str_replace("OTHERS ANSWER","<input class='inputText' type='text' id='inputTextOthersAnswerId' name='inputTextOthersAnswerNameParam' form='indexCardId'>",$cellValue);
 						}
 						
 /*	//removed by Mike, 20210210
@@ -671,7 +671,7 @@
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="ADDRESS")) {
 							//TO-DO: -add: patient address in patient table of MySQL database
 
-//							$cellValue="<textarea class='inputText' rows='3' id='inputTextAddressId' form ='labRequestFormId'></textarea>";
+//							$cellValue="<textarea class='inputText' rows='3' id='inputTextAddressId' form ='indexCardId'></textarea>";
 
 
 							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
@@ -683,16 +683,61 @@
 							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
 						}
 */						
+
+						//added by Mike, 20210306
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR ID")) {						
+							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' form='indexCardId'>";
+						}
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
+							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam' form='indexCardId'>";
+							
+							  if (isset($result[0]["civil_status_id"])) {
+								  if ($result[0]["sex_id"]==0) {
+									$cellValue=$cellValue."<option value='0' selected='selected'>SINGLE</option>
+									<option value='1'>MARRIED</option>
+									<option value='2'>WIDOWED</option>
+									<option value='3'>SEPARATED</option>";
+								  }
+								  else if ($result[0]["sex_id"]==1) {
+									$cellValue=$cellValue."<option value='0'>SINGLE</option>
+									<option value='1' selected='selected'>MARRIED</option>
+									<option value='2'>WIDOWED</option>
+									<option value='3'>SEPARATED</option>";
+								  }
+								  else if ($result[0]["sex_id"]==2) {
+									$cellValue=$cellValue."<option value='0'>SINGLE</option>
+									<option value='1'>MARRIED</option>
+									<option value='2' selected='selected'>WIDOWED</option>
+									<option value='3'>SEPARATED</option>";
+								  }
+//								  else if ($result[0]["sex_id"]==3) {
+								  else {
+									$cellValue=$cellValue."<option value='0'>SINGLE</option>
+									<option value='1'>MARRIED</option>
+									<option value='2'>WIDOWED</option>
+									<option value='3' selected='selected'>SEPARATED</option>";
+								  }								  
+							  }			  	  
+							  else {
+								$cellValue=$cellValue."<option value='0' selected='selected'>SINGLE</option>
+								<option value='1'>MARRIED</option>
+								<option value='2'>WIDOWED</option>
+								<option value='3'>SEPARATED</option>";
+							  }				
+							$cellValue=$cellValue."</select>";
+						}
+
 						
-						if (strpos($cellValue,"SEX")!==false) {							
+						//note: another set of if-then, if-else statements
+						if (strpos($cellValue,"SEX")!==false) {					
 							echo "<td class='columnField'><b>".$cellValue;
-							echo "<select id='selectSexIdParam' name='selectSexNameParam' form='labRequestFormId'>";
+							echo "<select id='selectSexIdParam' name='selectSexNameParam' form='indexCardId'>";
 							
 							//note: no echo output after select command
 ?>
 <!-- edited by Mike, 20210212 -->
 <!--
-							<select id='selectSexIdParam' name='selectSexNameParam' form='labRequestFormId'>
+							<select id='selectSexIdParam' name='selectSexNameParam' form='indexCardId'>
 							  <option value='0'>MALE</option>
 							  <option value='1'>FEMALE</option>
 -->
