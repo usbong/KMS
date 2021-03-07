@@ -687,8 +687,8 @@
 */						
 
 						//added by Mike, 20210306
-						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR ID")) {						
-							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' form='indexCardId'>";
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR")) {						
+							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId'>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
 							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam' form='indexCardId'>";
