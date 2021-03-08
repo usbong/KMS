@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210307
+  @date updated: 20210308
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -42,9 +42,10 @@
 							width: 860px; /*860px;*/ /* 802px;*//* 670px */
 							
 							/* use zoom 67% (prev) scale*/
-							zoom: 90%; /* at present, command not support in Mozilla Firefox */				
+/*							zoom: 90%; /* at present, command not support in Mozilla Firefox */				
 							transform: scale(0.90);
 							transform-origin: 0 0;							
+*/							
                         }
 						
 						div.copyright
@@ -89,7 +90,14 @@
 
 							height: 100%;
 						}	
-
+						
+						select.selectSex
+						{
+							margin-left: 10px;
+							padding-right: 10px;							
+							width: 60%;
+						}
+						
 						table.formTable
 						{
 							width: 100%; //90%
@@ -113,7 +121,7 @@
 							border: 1pt solid #00ff00;
 							text-align: left;
 							font-weight: bold;							
-							width: 20%; <!-- 17%; --> <!-- 84% -->
+							width: 80%; <!-- 17%; --> <!-- 84% -->
 						}						
 
 						td.addressAnswerColumn
@@ -136,6 +144,13 @@
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: left;
+						}						
+
+						td.columnFieldName
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: left;
+							width: 25%;
 						}						
 
 						td.columnFieldNameAge
@@ -691,22 +706,22 @@
 							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId'>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
-							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam' form='indexCardId'>";
+							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam'form='indexCardId'>";
 							
 							  if (isset($result[0]["civil_status_id"])) {
-								  if ($result[0]["sex_id"]==0) {
+								  if ($result[0]["civil_status_id"]==0) {
 									$cellValue=$cellValue."<option value='0' selected='selected'>SINGLE</option>
 									<option value='1'>MARRIED</option>
 									<option value='2'>WIDOWED</option>
 									<option value='3'>SEPARATED</option>";
 								  }
-								  else if ($result[0]["sex_id"]==1) {
+								  else if ($result[0]["civil_status_id"]==1) {
 									$cellValue=$cellValue."<option value='0'>SINGLE</option>
 									<option value='1' selected='selected'>MARRIED</option>
 									<option value='2'>WIDOWED</option>
 									<option value='3'>SEPARATED</option>";
 								  }
-								  else if ($result[0]["sex_id"]==2) {
+								  else if ($result[0]["civil_status_id"]==2) {
 									$cellValue=$cellValue."<option value='0'>SINGLE</option>
 									<option value='1'>MARRIED</option>
 									<option value='2' selected='selected'>WIDOWED</option>
@@ -740,8 +755,8 @@
 
 						//note: another set of if-then, if-else statements
 						if (strpos($cellValue,"SEX")!==false) {					
-							echo "<td class='columnField'><b>".$cellValue;
-							echo "<select id='selectSexIdParam' name='selectSexNameParam' form='indexCardId'>";
+							echo "<td class='columnFieldName'><b>".$cellValue;
+							echo "<select id='selectSexIdParam' name='selectSexNameParam' class='selectSex'  form='indexCardId'>";
 							
 							//note: no echo output after select command
 ?>
@@ -755,17 +770,17 @@
 //							for ($iCount=0; $iCount<2; $iCount++) {
 							  if (isset($result[0]["sex_id"])) {
 								  if ($result[0]["sex_id"]==0) {
-									echo "<option value='0' selected='selected'>MALE</option>";
-									echo "<option value='1'>FEMALE</option>";
+									echo "<option value='0' selected='selected'>M</option>";
+									echo "<option value='1'>F</option>";
 								  }
 								  else {
-									echo "<option value='0'>MALE</option>";
-									echo "<option value='1' selected='selected'>FEMALE</option>";
+									echo "<option value='0'>M</option>";
+									echo "<option value='1' selected='selected'>F</option>";
 								  }
 							  }			  	  
 							  else {
-									echo "<option value='0'>MALE</option>";			  							
-									echo "<option value='1'>FEMALE</option>";			  														
+									echo "<option value='0'>M</option>";			  							
+									echo "<option value='1'>F</option>";			  														
 							  }				
 //						   }
 ?>
