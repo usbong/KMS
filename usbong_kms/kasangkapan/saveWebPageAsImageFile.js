@@ -11,7 +11,7 @@
 ' @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20210225
+' @date updated: 20210309
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -94,7 +94,16 @@ page.open(webAddress+fileName+fileExtension, 'post', data, function(status) {
 //	page.render('output/20200727/'+fileName+'1.png');
 
 	if (noonFolderName=="") {
-		page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+		//edited by Mike, 20210309
+		//page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+		//with POST data, e.g. for use with med item reports to pharmaceutical companies
+		if (data != "") { //has post data
+			page.render('output/'+dateToday.toISOString()+'/'+fileName+'V'+getDateToISOStringWithTimeStamp()+'.png');
+//			page.render('output/'+dateToday.toISOString()+'/'+fileName+'V.png');
+		}
+		else {
+			page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+		}		
 	}
 	else {
 		//edited by Mike, 20201018
@@ -121,7 +130,18 @@ page.open(webAddress+fileName+fileExtension, 'post', data, function(status) {
 	  //page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+iCount+'.png');
 
 	  if (noonFolderName=="") {
-		page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+
+		//edited by Mike, 20210309
+		//page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+		//with POST data, e.g. for use with med item reports to pharmaceutical companies
+		if (data != "") { //has post data
+			page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'V'+getDateToISOStringWithTimeStamp()+'.png');
+		}
+		else {
+			page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+		}		
+
+
 	  }
 	  else {
 		  //edited by Mike, 20201018
@@ -176,6 +196,21 @@ if (Date.prototype.toISOString) {
        return this.getFullYear()+""+
 			pad(this.getMonth()+1)+""+
             pad(this.getDate());
+	}
 
-    }
+}
+
+//added by Mike, 20210309
+function getDateToISOStringWithTimeStamp() {
+	function pad(n) { return n < 10 ? '0' + n : n; }
+	
+	myDateTime = new Date();
+	
+	return myDateTime.getFullYear() +
+		pad(myDateTime.getMonth() + 1) +
+		pad(myDateTime.getDate()) + 'T' +
+		pad(myDateTime.getHours()) +
+		pad(myDateTime.getMinutes());
+
+//	return "hallo";
 }
