@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210220
+' @date updated: 20210313
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -886,12 +886,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php
 							  if (isset($resultPaid[0]["notes"])) {
 								  //edited by Mike, 20210219
+								  //added by Mike, 20210313
+								  //note: keyword "DISCOUNTED"
 								  if (strpos($resultPaid[0]["notes"],"DISCOUNTED")!==false) {
 									echo "<option value='0'>WI</option>";
 									echo "<option value='1'>SC</option>";
 									echo "<option value='2'>PWD</option>";
 								  }
-								  if (strpos($resultPaid[0]["notes"],"SC")!==false) {
+//edited by Mike, 20210313
+//								  if (strpos($resultPaid[0]["notes"],"SC")!==false) {
+								  else if (strpos($resultPaid[0]["notes"],"SC")!==false) {
 									echo "<option value='0'>WI</option>";
 									echo "<option value='1' selected='selected'>SC</option>";
 									echo "<option value='2'>PWD</option>";
