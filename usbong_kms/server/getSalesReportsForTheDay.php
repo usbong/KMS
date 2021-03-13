@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210301
+  @date updated: 20210313
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -1076,17 +1076,32 @@
 							//added by Mike, 20200531
 							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 */
+
 							//max dexa: 2
+/* //edited by Mike, 20210313							
 							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
 								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
 							}
 							else {
 								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
-								
+
 								//added by Mike, 20200531
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 							}
+*/
+							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
+							}
+							else {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+								
+								//added by Mike, 20200531
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+							}							
+
 						}
 						else {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
