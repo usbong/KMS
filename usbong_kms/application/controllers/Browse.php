@@ -2201,6 +2201,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
 
+		//added by Mike, 20210314
+		$data['resultPaidMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatient(1, $patientId); //1 = MED ITEM
+
 		$this->load->view('viewPatientIndexCard', $data);
 	}
 
