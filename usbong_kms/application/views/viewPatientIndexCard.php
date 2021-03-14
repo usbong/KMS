@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210308
+  @date updated: 20210314
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -42,10 +42,9 @@
 							width: 860px; /*860px;*/ /* 802px;*//* 670px */
 							
 							/* use zoom 67% (prev) scale*/
-/*							zoom: 90%; /* at present, command not support in Mozilla Firefox */				
+							zoom: 90%; /* at present, command not support in Mozilla Firefox */				
 							transform: scale(0.90);
 							transform-origin: 0 0;							
-*/							
                         }
 						
 						div.copyright
@@ -90,14 +89,7 @@
 
 							height: 100%;
 						}	
-						
-						select.selectSex
-						{
-							margin-left: 10px;
-							padding-right: 10px;							
-							width: 60%;
-						}
-						
+
 						table.formTable
 						{
 							width: 100%; //90%
@@ -121,7 +113,7 @@
 							border: 1pt solid #00ff00;
 							text-align: left;
 							font-weight: bold;							
-							width: 80%; <!-- 17%; --> <!-- 84% -->
+							width: 20%; <!-- 17%; --> <!-- 84% -->
 						}						
 
 						td.addressAnswerColumn
@@ -146,11 +138,16 @@
 							text-align: left;
 						}						
 
-						td.columnFieldName
+						td.columnName
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: left;
-							width: 25%;
+						}						
+
+						td.columnNumber
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: right;
 						}						
 
 						td.columnFieldNameAge
@@ -158,7 +155,25 @@
 							border: 1px dotted #ab9c7d;		
 							text-align: left;
 							width: 25%;
-						}						
+						}					
+
+						td.columnTableHeader
+						{
+							font-weight: bold;
+							background-color: #00ff00; 
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+						}		
+
+						td.columnTableHeaderFee
+						{
+							font-weight: bold;
+							background-color: #00ff00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 13%;
+						}		
+						
 
 						td.columnBorderBottom
 						{
@@ -294,7 +309,7 @@
 						}
 */
 
-						div.buttonSubmit
+						div.buttonSubmitUpdate
 						{
 							font-size: 16px;
 /*							//removed by Mike, 20210210
@@ -706,22 +721,22 @@
 							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId'>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
-							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam'form='indexCardId'>";
+							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam' form='indexCardId'>";
 							
 							  if (isset($result[0]["civil_status_id"])) {
-								  if ($result[0]["civil_status_id"]==0) {
+								  if ($result[0]["sex_id"]==0) {
 									$cellValue=$cellValue."<option value='0' selected='selected'>SINGLE</option>
 									<option value='1'>MARRIED</option>
 									<option value='2'>WIDOWED</option>
 									<option value='3'>SEPARATED</option>";
 								  }
-								  else if ($result[0]["civil_status_id"]==1) {
+								  else if ($result[0]["sex_id"]==1) {
 									$cellValue=$cellValue."<option value='0'>SINGLE</option>
 									<option value='1' selected='selected'>MARRIED</option>
 									<option value='2'>WIDOWED</option>
 									<option value='3'>SEPARATED</option>";
 								  }
-								  else if ($result[0]["civil_status_id"]==2) {
+								  else if ($result[0]["sex_id"]==2) {
 									$cellValue=$cellValue."<option value='0'>SINGLE</option>
 									<option value='1'>MARRIED</option>
 									<option value='2' selected='selected'>WIDOWED</option>
@@ -755,8 +770,8 @@
 
 						//note: another set of if-then, if-else statements
 						if (strpos($cellValue,"SEX")!==false) {					
-							echo "<td class='columnFieldName'><b>".$cellValue;
-							echo "<select id='selectSexIdParam' name='selectSexNameParam' class='selectSex'  form='indexCardId'>";
+							echo "<td class='columnField'><b>".$cellValue;
+							echo "<select id='selectSexIdParam' name='selectSexNameParam' form='indexCardId'>";
 							
 							//note: no echo output after select command
 ?>
@@ -770,17 +785,17 @@
 //							for ($iCount=0; $iCount<2; $iCount++) {
 							  if (isset($result[0]["sex_id"])) {
 								  if ($result[0]["sex_id"]==0) {
-									echo "<option value='0' selected='selected'>M</option>";
-									echo "<option value='1'>F</option>";
+									echo "<option value='0' selected='selected'>MALE</option>";
+									echo "<option value='1'>FEMALE</option>";
 								  }
 								  else {
-									echo "<option value='0'>M</option>";
-									echo "<option value='1' selected='selected'>F</option>";
+									echo "<option value='0'>MALE</option>";
+									echo "<option value='1' selected='selected'>FEMALE</option>";
 								  }
 							  }			  	  
 							  else {
-									echo "<option value='0'>M</option>";			  							
-									echo "<option value='1'>F</option>";			  														
+									echo "<option value='0'>MALE</option>";			  							
+									echo "<option value='1'>FEMALE</option>";			  														
 							  }				
 //						   }
 ?>
@@ -928,16 +943,222 @@
 			<button type="submit" onclick="myPopupFunction(<?php echo $value['patient_id'];?>)">
 -->			
 			<button type="submit">			
-				<div class="buttonSubmit">Submit</div>
+				<div class="buttonSubmitUpdate">Update</div>
 			</button>
 		  </td>
 	  </tr>
 	</table>	
 </form>
-
+<!-- removed by Mike, 20210314
 	<br />		
 	<div>***NOTHING FOLLOWS***</div>
 	<br />
+-->
+<?php	
+		echo '<h3>Patient Purchased Medicine Item History</h3>';
+
+		if ((!isset($value)) or ($value['transaction_date']=="")) {				
+			echo '<div>';					
+			echo 'There are no transactions.';
+			echo '</div>';					
+		}
+		else {
+			//edited by Mike, 20200406
+			$resultCount = 0;
+
+			if ((isset($resultPaidMedItem)) and ($resultPaidMedItem!=False)) {
+				$resultCount = count($resultPaidMedItem);
+			}
+
+			//item purchase history			
+			if ($resultCount==0) {				
+				echo '<div>';					
+				echo 'There are no transactions.';
+				echo '</div>';					
+			}
+			else {
+//				$resultCount = count($resultPaid);
+				if ($resultCount==1) {
+					echo '<div>Showing <b>'.count($resultPaidMedItem).'</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.count($resultPaidMedItem).'</b> results found.</div>';			
+				}			
+				echo '<br/>';
+			
+				echo "<table class='search-result'>";
+
+				//add: table headers
+?>				
+					  <tr class="row">
+						<td class="columnTableHeader">				
+				<?php
+							echo "DATE";
+				?>		
+						</td>
+						<td class="columnTableHeader">				
+				<?php
+							echo "COUNT";
+				?>		
+						</td>
+						<td class="columnTableHeader">				
+				<?php
+							echo "ITEM NAME";
+				?>		
+						</td>
+						<td class="columnTableHeader">				
+							<?php
+								echo "PRICE"; //"ITEM PRICE";
+							?>
+						</td>
+						<td class="columnTableHeaderFee">				
+							<?php
+								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
+							?>
+						</td>						
+						<td class="column">				
+						</td>
+						<td class="columnTableHeader">				
+							<?php
+								echo "QTY";
+							?>
+						</td>
+						<td class="column">				
+						</td>
+						<td class="columnTableHeader">				
+							<?php
+								echo "TOTAL";
+							?>
+						</td>
+					  </tr>
+<?php				
+				  $iCount=1;
+				  $iCountForTheDay=0;
+				  $sCurrentTransactionDate="";
+
+				  foreach ($resultPaidMedItem as $value) {
+/* //removed by Mike, 20210314					  
+					if ($sCurrentTransactionDate==$value['transaction_date']) {
+						$iCountForTheDay=$iCountForTheDay+1;
+					}
+					else {
+					  $iCountForTheDay=1;
+					}
+					  
+					$sCurrentTransactionDate=$value['transaction_date'];				  
+*/					
+		?>						
+					  <tr class="row">
+						<td class="column">				
+							<?php
+//								echo $value['transaction_date'];
+
+					if ($sCurrentTransactionDate==$value['transaction_date']) {
+						$iCountForTheDay=$iCountForTheDay+1;
+					}
+					else {
+					  $iCountForTheDay=1;
+//					  echo $value['transaction_date'];
+					  echo date('Y-m-d', strtotime($value['transaction_date']));
+					}
+					  
+					$sCurrentTransactionDate=$value['transaction_date'];				  
+
+							?>
+						</td>
+						<td class="column">				
+							<?php
+								echo $iCountForTheDay;
+							?>
+						</td>
+
+						<td class="columnName">				
+							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+								<div class="itemName">
+				<?php
+								echo $value['item_name'];
+				?>		
+								</div>								
+							</a>
+						</td>
+						<td class="columnNumber">		
+								<!-- edited by Mike, 20200912 
+								<input type="hidden" id="feeParam" value="<?php echo $value['item_price']?>">
+								</input>
+-->								
+								<input type="hidden" value="<?php echo $value['item_price']?>">
+								</input>
+					
+								<div id="itemPriceId<?php echo $iCount?>">
+							<?php
+								echo $value['item_price'];
+							?>
+								</div>
+						</td>
+						<td class="columnNumber">				
+								<div id="feeId<?php echo $iCount?>">
+							<?php
+								echo $value['fee'];
+								
+//								$dTotalFee = $dTotalFee + $value['fee'];
+							?>
+								</div>
+						</td>
+						<td>
+							x
+						</td>
+						<td class="columnNumber">				
+								<div id="itemQuantityId<?php echo $iCount?>">
+							<?php
+//								echo floor(($value['fee']/$value['item_price']*100)/100);
+//								$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								//edited by Mike, 20200415
+								if ($value['fee_quantity']==0) {
+//									$iQuantity =  1;
+									$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+								}
+								else {
+									$iQuantity =  $value['fee_quantity'];
+								}
+
+								echo $iQuantity;
+								
+//								$iTotalQuantity = $iTotalQuantity + $iQuantity;
+							?>
+								</div>
+						</td>
+						<td class="column">				
+						=
+						</td>
+						<td class="columnNumber">				
+								<div id="feeId<?php echo $iCount?>">
+							<?php
+								echo $value['fee'];
+								
+//								$dTotalFee = $dTotalFee + $value['fee'];
+							?>
+								</div>
+						</td>
+					  </tr>
+		<?php				
+					$currentItemId = $value['item_id'];					
+
+					$iCount++;		
+/*					echo "<br/>";
+*/					
+				}				
+
+				echo "</table>";				
+				echo "<br/>";				
+//				echo '<div>***NOTHING FOLLOWS***';	
+				echo "<br/>";				
+				
+				
+			}
+
+		}
+?>	
+	
 	<div class="copyright">
 		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
