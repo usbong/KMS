@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210315
+  @date updated: 20210316
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -954,6 +954,25 @@
 	<div>***NOTHING FOLLOWS***</div>
 	<br />
 -->
+
+<!-- added by Mike, 20210316 -->
+		<h3>Patient Index Card History</h3>
+				
+		<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('image/confirmStoreIndexCardImage/'.$value['transaction_id'].'/'.$value['patient_id'])?>">
+			<input type="hidden" name="reportTypeNameParam" value="Report Image">
+			<input style="font-size: 16px;" id="uploadFilesId" name="reportParamUploadFiles[]" type="file" multiple="multiple" accept="image/*" onInput="showAlert();"/>
+		</form>
+
+		<script language="javascript" type="text/javascript">
+			function showAlert() {
+				document.getElementById('myFormId').submit();
+	//			alert("Hey there!" + document.getElementById("uploadFilesId").value);
+			}
+		</script>
+
+		<br/>
+		<br/>
+		
 <?php	
 		echo '<h3>Patient Purchased Medicine Item History</h3>';
 
