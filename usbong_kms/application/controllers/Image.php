@@ -136,6 +136,131 @@ class Image extends CI_Controller { //MY_Controller {
 				  </script>";			
 		}
 	}
+
+	//added by Mike, 20210316
+	public function confirmStoreIndexCardImage($transactionId, $patientId)
+	{	
+		//added by Mike, 20191119
+		if (isset($_SESSION['jsonResponses'])) {
+//		if (empty($_POST["reportTypeNameParam"])) {
+			unset($_SESSION['jsonResponses']);
+
+			redirect(base_url()); //Report page
+		}
+	
+		$responses = array(); //added by Mike, 20191120
+		//TO-DO: -update: this
+//		$this->load->model('Image_Model');
+		$this->load->model('Report_Model');
+//		$this->load->model('Account_Model');
+
+		$field = "reportParam";
+		$count = 1;
+
+		//edited by Mike, 20191025		
+		$data["reportTypeNameParam"] = $_POST["reportTypeNameParam"];
+//		$data["reportTypeId"] = $_POST["reportTypeIdParam"];
+		
+		$data["reportTypeId"] = $this->Report_Model->getReportTypeIdViaReportTypeName($data);
+
+//		if ($data["reportTypeId"] == 3) { //Incident Report
+		switch ($data["reportTypeId"]) {
+			//TO-DO: -update: 3, 4.. with name constant 
+			case 5: //Report Image
+				$data["memberId"] = 1;
+				$data["reportItemId"] = $count; //1
+
+				//TO-DO: -add: store the QR Code image file location in the database				
+				//TO-DO: -add: store the contents, i.e. Report details, of the QR Code image file in the database				
+				//TO-DO: -update: this
+				$data["is_success"] = "Report Image";
+				
+				$fileCount = count($_FILES['reportParamUploadFiles']['name']);
+								   
+				for($i=0;$i<$fileCount;$i++)
+				{
+					//get the contents of each file
+					$data["reportAnswerParam"] = file_get_contents($_FILES['reportParamUploadFiles']['tmp_name'][$i]);
+
+					//added by Mike, 20191123; edited by Mike, 20200314
+//					$outputFolder = "pictures"; //note: this folder already exists
+					//edited by Mike, 20210316
+//					$outputFolder = "assets"; //note: this folder already exists	
+					$outputFolder = "larawan"; //note: this folder already exists	
+
+					$outputFilename = $_FILES['reportParamUploadFiles']['name'][$i]; //.png
+					//$outputFile = "image.png";
+					
+					//echo "File contents: ".$data["reportAnswerParam"]."<br/>";
+
+					//TO-DO: -add: create new folder
+					//edited by Mike, 20210316
+//					$data["outputFileLocation"] = $outputFolder."/".$transactionId."-".$outputFilename;
+					$data["outputFileLocation"] = $outputFolder."/".$patientId."-".$outputFilename;
+					
+					//update filename if it already exists
+					$iCountFilename = 1;
+					while (file_exists($data["outputFileLocation"])) {
+						$data["outputFileLocation"] = str_replace(".", "(".$iCountFilename.").",$data["outputFileLocation"]);
+					}
+					
+					//added by Mike, 20200314
+					$data["transactionId"] = $transactionId;
+
+					//file_put_contents($outputFolder."/".$outputFilename, $data["reportAnswerParam"]);										
+
+					file_put_contents($data["outputFileLocation"], $data["reportAnswerParam"]);										
+//					$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
+
+					$data["is_success"] = $this->Report_Model->insertReportImage($data);
+
+				}				
+				break;				
+		}
+
+		//added by Mike, 20191119
+		$_POST = array();
+								
+		//added by Mike, 20190722; edited by Mike, 20200313
+//		if ($data["is_success"]) {									
+		if (!empty($data["is_success"])) {									
+			if (!empty($responses)) {
+				$_SESSION['jsonResponses'] = json_encode($responses);
+/*								
+				echo "<script>
+						alert('You have successfully submitted your report. Thank you. Peace.');					
+						window.location.href='".site_url('report/autoGenerateQRCodeImage/')."';
+					  </script>";			
+*/					  
+				echo "<script>
+						alert('You have successfully submitted your report. Thank you. Peace.');
+						window.location.href='".site_url("browse/viewPatientIndexCard/".$patientId)."';
+					  </script>";			
+
+			}
+			else {
+/*				
+				echo "<script>
+						alert('You have successfully submitted your report. Thank you. Peace.');
+						window.location.href='".base_url()."';
+					  </script>";			
+*/					  
+				echo "<script>
+						alert('You have successfully submitted your report. Thank you. Peace.');
+						window.location.href='".site_url("browse/viewPatientIndexCard/".$patientId)."';
+					  </script>";			
+			}			
+		}			
+		else {
+			//TO-DO: -add: instructions to automatically file the unclassified incident report
+			echo "<script>
+					alert('PROBLEM: Your report is unclassified. We have automatically filed an incident report with the system administrator. We shall notify you of our analysis and the corresponding action to resolve it. Thank you. Peace.');
+					window.location.href='".base_url()."';
+				  </script>";			
+		}
+	}
+	
+
 	
 	public function confirmStoreImageOnly($transactionId)
 	{	
