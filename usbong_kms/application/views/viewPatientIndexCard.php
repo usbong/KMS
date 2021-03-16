@@ -67,7 +67,16 @@
 							float: left;
 							text-align: center;
 						}
-						
+		
+						img.Image-indexCard {
+							max-width: 90%;
+							height: auto;
+							float: left;
+							text-align: center;
+							padding-left: 20px;
+							padding-top: 10px;
+						}
+		
 						table.imageTable
 						{
 							width: 100%;
@@ -957,7 +966,61 @@
 
 <!-- added by Mike, 20210316 -->
 		<h3>Patient Index Card History</h3>
+
+<?php
+		if ((!isset($value)) or ($value['transaction_date']=="")) {				
+			echo '<div>';					
+			echo 'There are no transactions.';
+			echo '</div>';					
+		}
+		else {
+			//edited by Mike, 20200406
+			$resultCount = 0;
+
+			if ((isset($resultIndexCardImageList)) and ($resultIndexCardImageList!=False)) {
+				$resultCount = count($resultIndexCardImageList);
+			}
+
+			//item purchase history			
+			if ($resultCount==0) {				
+				echo '<div>';					
+				echo 'There are no transactions.';
+				echo '</div>';					
+			}
+			else {
+//				$resultCount = count($resultPaid);
+				if ($resultCount==1) {
+					echo '<div>Showing <b>'.count($resultIndexCardImageList).'</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.count($resultIndexCardImageList).'</b> results found.</div>';			
+				}			
+				echo '<br/>';
+
+				foreach ($resultIndexCardImageList as $indexCardImageListValue) {				
+			
+					echo "<table class='search-result'>";
+
+					//add: table headers
+	?>				
+					  <tr class="row">
+						<td class="column">
+							<img class="Image-indexCard" src="<?php echo base_url($indexCardImageListValue['image_filename']);?>">		
+
+							<?php
+								echo $indexCardImageListValue['image_filename'];
+							?>
+
+						</td>
+					  </tr>
+	<?php
+				}
 				
+				echo "</table>";
+			}
+		}
+?>
+		<br/>
 		<form id="myFormId" enctype="multipart/form-data" method="post" action="<?php echo site_url('image/confirmStoreIndexCardImage/'.$value['transaction_id'].'/'.$value['patient_id'])?>">
 			<input type="hidden" name="reportTypeNameParam" value="Report Image">
 			<input style="font-size: 16px;" id="uploadFilesId" name="reportParamUploadFiles[]" type="file" multiple="multiple" accept="image/*" onInput="showAlert();"/>
@@ -1007,7 +1070,7 @@
 			
 				echo "<table class='search-result'>";
 
-				//add: table headers
+				//add: table headers				
 ?>				
 					  <tr class="row">
 						<td class="columnTableHeader">				
