@@ -4222,6 +4222,29 @@ class Browse_Model extends CI_Model
 	}		
 
 
+	//added by Mike, 20210316
+	public function getIndexCardImageListForPatient($patientId) 
+    {		
+		$this->db->select('transaction_id, image_filename');
+
+		$this->db->where('patient_id', $patientId); //2 = Non-medicine
+
+		$this->db->order_by('added_datetime_stamp`', 'DESC');//ASC');
+
+		$this->db->limit(8);
+		
+		$query = $this->db->get('image');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+		
+		return $rowArray;
+	}		
+
+
 	//added by Mike, 20200328; edited by Mike, 20200519
 	public function getItemDetailsListViaNotesUnpaid() 
 	{		

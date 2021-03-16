@@ -101,11 +101,21 @@ class Report_Model extends CI_Model
 		}
 */
 
+		//added by Mike, 20210316
+		if (!isset($param["patientId"])) {
+			$param["patientId"]=0;
+		}
+
 		$data = array(
 
 					'image_filename' => $param['outputFileLocation'],
 					'transaction_id' => $param["transactionId"], //1
+
+					//added by Mike, 20210316
+					'patient_id' => $param["patientId"], //1
+
 //					'added_datetime_stamp' => $addedDateTimeStamp
+					
 				);
 		
 		$this->db->insert('image', $data);
