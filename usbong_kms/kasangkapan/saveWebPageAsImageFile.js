@@ -11,7 +11,7 @@
 ' @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20210309
+' @date updated: 20210316
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -205,6 +205,9 @@ function getDateToISOStringWithTimeStamp() {
 	function pad(n) { return n < 10 ? '0' + n : n; }
 	
 	myDateTime = new Date();
+	
+	//added by Mike, 20210316
+	myDateTime.toLocaleString('en-US', { timeZone: 'Asia/Manila' })
 	
 	return myDateTime.getFullYear() +
 		pad(myDateTime.getMonth() + 1) +
