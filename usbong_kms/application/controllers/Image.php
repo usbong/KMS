@@ -212,6 +212,9 @@ class Image extends CI_Controller { //MY_Controller {
 					file_put_contents($data["outputFileLocation"], $data["reportAnswerParam"]);										
 //					$data["is_success"] = $this->Report_Model->insertReportFromEachLocation($data);
 
+					//added by Mike, 20210316
+					$data["patientId"] = $patientId;
+
 					$data["is_success"] = $this->Report_Model->insertReportImage($data);
 
 				}				
