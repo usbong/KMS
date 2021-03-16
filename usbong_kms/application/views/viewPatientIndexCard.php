@@ -42,7 +42,7 @@
 							width: 860px; /*860px;*/ /* 802px;*//* 670px */
 							
 							/* use zoom 67% (prev) scale*/
-							zoom: 90%; /* at present, command not support in Mozilla Firefox */				
+							zoom: 90%; /* at present, command not supported in Mozilla Firefox */				
 							transform: scale(0.90);
 							transform-origin: 0 0;							
                         }
@@ -69,12 +69,12 @@
 						}
 		
 						img.Image-indexCard {
-							max-width: 90%;
+							max-width: 100%;
 							height: auto;
 							float: left;
 							text-align: center;
-							padding-left: 20px;
-							padding-top: 10px;
+							padding-left: 0px;
+							padding-top: 0px;
 						}
 		
 						table.imageTable
@@ -101,7 +101,7 @@
 
 						table.formTable
 						{
-							width: 100%; //90%
+							width: 100%;
 <!--							border: 1px solid #ab9c7d;		
 -->
 						}				
@@ -1448,7 +1448,7 @@
 
 		}
 ?>	
-	
+	<br/>
 	<div class="copyright">
 		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
