@@ -106,6 +106,12 @@ class Report_Model extends CI_Model
 			$param["patientId"]=0;
 		}
 
+		//added by Mike, 20210317
+		if ((!isset($param["transactionId"])) or ($param["transactionId"]==0)){
+			$param["transactionId"]=-1;
+		}
+
+
 		$data = array(
 
 					'image_filename' => $param['outputFileLocation'],
