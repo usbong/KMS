@@ -488,7 +488,7 @@
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
-<form id="indexCardId" method="post" action="<?php echo site_url('browse/confirmLabRequestForm')?>">
+<form id="indexCardId" method="post" action="<?php echo site_url('browse/confirmUpdateIndexCardForm/'.$result[0]['patient_id'])?>">
 <!--
 <form id="indexCardId" method="post">
 -->
@@ -521,8 +521,10 @@
 			else {
 				$medicalDoctorId = $result[0]["medical_doctor_id"];
 			}
-
-			echo "<select id='medicalDoctorIdParam'>";			
+			
+			//edited by Mike, 20210318
+			//echo "<select id='medicalDoctorIdParam'>"
+			echo "<select id='medicalDoctorIdParam' name='selectMedicalDoctorNameParam'>";			
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
 				  //edited by Mike, 20200523
 				  //TO-DO: -update: this
