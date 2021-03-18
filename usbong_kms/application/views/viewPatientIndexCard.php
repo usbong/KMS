@@ -728,26 +728,26 @@
 */						
 
 						//added by Mike, 20210306
-						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR")) {						
+						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR")) {
 							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' required>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
 							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam' form='indexCardId'>";
 							
 							  if (isset($result[0]["civil_status_id"])) {
-								  if ($result[0]["sex_id"]==0) {
+								  if ($result[0]["civil_status_id"]==0) {
 									$cellValue=$cellValue."<option value='0' selected='selected'>SINGLE</option>
 									<option value='1'>MARRIED</option>
 									<option value='2'>WIDOWED</option>
 									<option value='3'>SEPARATED</option>";
 								  }
-								  else if ($result[0]["sex_id"]==1) {
+								  else if ($result[0]["civil_status_id"]==1) {
 									$cellValue=$cellValue."<option value='0'>SINGLE</option>
 									<option value='1' selected='selected'>MARRIED</option>
 									<option value='2'>WIDOWED</option>
 									<option value='3'>SEPARATED</option>";
 								  }
-								  else if ($result[0]["sex_id"]==2) {
+								  else if ($result[0]["civil_status_id"]==2) {
 									$cellValue=$cellValue."<option value='0'>SINGLE</option>
 									<option value='1'>MARRIED</option>
 									<option value='2' selected='selected'>WIDOWED</option>
