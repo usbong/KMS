@@ -4857,5 +4857,47 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		}		
 		//------------------------------------
 	}
+
+	//added by Mike, 20210319
+	public function updateIndexCardForm($param) {
+		//TO-DO: -add: these in patient table structure
+/*		
+//		echo "PWD/SENIOR PARAM: ".$_POST['inputTextPwdSeniorIdNameParam'];
+		$data['inputTextPwdSeniorIdNameParam'] = strtoupper(trim($_POST['inputTextPwdSeniorIdNameParam']));
+
+//		echo "CIVIL STATUS PARAM: ".$_POST['selectCivilStatusNameParam'];
+		$data['selectCivilStatusNameParam'] = strtoupper(trim($_POST['selectCivilStatusNameParam']));
+
+//		echo "OCCUPATION PARAM: ".$_POST['inputTextOccupationIdNameParam'];
+		$data['inputTextOccupationIdNameParam'] = strtoupper(trim($_POST['inputTextOccupationIdNameParam']));
+
+//		echo "BIRTHDAY PARAM: ".$_POST['inputTextBirthdayIdNameParam'];
+		$data['inputTextBirthdayIdNameParam'] = strtoupper(trim($_POST['inputTextBirthdayIdNameParam']));
+
+//		echo "CONTACT# PARAM: ".$_POST['inputTextContactNumberIdNameParam'];
+		$data['inputTextContactNumberIdNameParam'] = strtoupper(trim($_POST['inputTextContactNumberIdNameParam']));
+
+//		echo "ADDRESS LOCATION PARAM: ".$_POST['inputTextLocationAddressIdNameParam'];
+		$data['inputTextLocationAddressIdNameParam'] = strtoupper(trim($_POST['inputTextLocationAddressIdNameParam']));
+		
+//		echo "ADDRESS BARANGAY PARAM: ".$_POST['inputTextBarangayAddressIdNameParam'];
+		$data['inputTextBarangayAddressIdNameParam'] = strtoupper(trim($_POST['inputTextBarangayAddressIdNameParam']));
+		
+//		echo "ADDRESS POSTAL PARAM: ".$_POST['inputTextPostalAddressIdNameParam'];
+		$data['inputTextPostalAddressIdNameParam'] = strtoupper(trim($_POST['inputTextPostalAddressIdNameParam']));
+
+		$data['inputTextProvinceCityPhAddressIdNameParam'] = strtoupper(trim($_POST['inputTextProvinceCityPhAddressIdNameParam']));
+*/			
+
+		$data = array(
+			'sex_id' => $param['selectSexNameParam'],
+			'age' => $param['inputAgeNameParam'],
+			'age_unit' => $param['selectAgeUnitNameParam'],
+			'medical_doctor_id' => $param['selectMedicalDoctorNameParam']			
+		);
+
+		$this->db->where('patient_id',$param['patientIdNameParam']);
+		$this->db->update('patient', $data);
+	}	
 }
 ?>
