@@ -359,6 +359,62 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	}
 
+
+
+	//added by Mike, 20210318
+	public function confirmUpdateIndexCardForm($patientId)
+	{
+		//TO-DO: -add: the rest
+		//echo "DITO: ".$_POST['inputTextLocationAddressName'];
+		//echo "DITO: ".$_POST['inputCheckBoxName'];
+
+//added by Mike, 20210212
+//		echo "PATIENT ID PARAM: ".$_POST['patientIdNameParam'];
+		$data['patientIdNameParam'] = $_POST['patientIdNameParam'];
+
+		//TO-DO: -add: patient birthday to auto-compute age
+		//note: the following are required parameters
+/*		
+		echo "SEX PARAM: ".$_POST['selectSexNameParam'];
+		echo "MD PARAM: ".$_POST['selectMedicalDoctorNameParam'];
+		echo "AGE PARAM: ".$_POST['inputAgeNameParam'];
+		echo "AGE UNIT PARAM: ".$_POST['selectAgeUnitNameParam'];
+*/
+		
+		$data['selectMedicalDoctorNameParam'] = $_POST['selectMedicalDoctorNameParam'];
+		$data['selectSexNameParam'] = $_POST['selectSexNameParam'];
+		$data['inputAgeNameParam'] = $_POST['inputAgeNameParam'];
+		$data['selectAgeUnitNameParam'] = $_POST['selectAgeUnitNameParam'];
+
+		//TO-DO: -add: checkbox answers
+		//edited by Mike, 20210216
+//		echo "OTHERS ANSWER PARAM: ".$_POST['inputTextOthersAnswerName'];
+		if (isset($_POST['inputTextOthersAnswerNameParam'])) {
+			$data['inputTextOthersAnswerNameParam'] = $_POST['inputTextOthersAnswerNameParam'];
+			
+//			echo "dito".$data['inputTextOthersAnswerNameParam'];
+		}
+		
+			
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+
+		$this->load->model('Browse_Model');
+
+		//added by Mike, 20210318
+		//TO-DO: update: this
+//		$this->Browse_Model->addLabTransactionServicePurchase($data);
+
+		//removed by Mike, 20210211; added by Mike, 20210216
+//		$this->load->view('viewPatientIndexCard', $data);
+
+		$this->viewPatientIndexCard($patientId);
+	}
+
+
 	//added by Mike, 20200529
 	public function searchPatientInformationDesk()
 	{		
