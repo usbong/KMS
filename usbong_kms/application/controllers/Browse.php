@@ -422,13 +422,12 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->model('Browse_Model');
 
-		//added by Mike, 20210318
-		//TO-DO: update: this
-//		$this->Browse_Model->addLabTransactionServicePurchase($data);
+		//added by Mike, 20210319
+		$this->Browse_Model->updateIndexCardForm($data);
 
 		//removed by Mike, 20210211; added by Mike, 20210216
 //		$this->load->view('viewPatientIndexCard', $data);
-
+		
 		$this->viewPatientIndexCard($patientId);
 	}
 
@@ -2273,6 +2272,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210209
 		$this->load->model('Browse_Model');
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+
 		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
 
 		//added by Mike, 20210314
