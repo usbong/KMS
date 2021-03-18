@@ -381,20 +381,38 @@ class Browse extends CI_Controller { //MY_Controller {
 		echo "AGE UNIT PARAM: ".$_POST['selectAgeUnitNameParam'];
 */
 		
-		$data['selectMedicalDoctorNameParam'] = $_POST['selectMedicalDoctorNameParam'];
-		$data['selectSexNameParam'] = $_POST['selectSexNameParam'];
-		$data['inputAgeNameParam'] = $_POST['inputAgeNameParam'];
-		$data['selectAgeUnitNameParam'] = $_POST['selectAgeUnitNameParam'];
+		$data['selectMedicalDoctorNameParam'] = strtoupper(trim($_POST['selectMedicalDoctorNameParam']));
+		$data['selectSexNameParam'] = strtoupper(trim($_POST['selectSexNameParam']));
+		$data['inputAgeNameParam'] = strtoupper(trim($_POST['inputAgeNameParam']));
+		$data['selectAgeUnitNameParam'] = strtoupper(trim($_POST['selectAgeUnitNameParam']));
 
-		//TO-DO: -add: checkbox answers
-		//edited by Mike, 20210216
-//		echo "OTHERS ANSWER PARAM: ".$_POST['inputTextOthersAnswerName'];
-		if (isset($_POST['inputTextOthersAnswerNameParam'])) {
-			$data['inputTextOthersAnswerNameParam'] = $_POST['inputTextOthersAnswerNameParam'];
-			
-//			echo "dito".$data['inputTextOthersAnswerNameParam'];
-		}
+		//added by Mike, 20210318
+//		echo "PWD/SENIOR PARAM: ".$_POST['inputTextPwdSeniorIdNameParam'];
+		$data['inputTextPwdSeniorIdNameParam'] = strtoupper(trim($_POST['inputTextPwdSeniorIdNameParam']));
+
+//		echo "CIVIL STATUS PARAM: ".$_POST['selectCivilStatusNameParam'];
+		$data['selectCivilStatusNameParam'] = strtoupper(trim($_POST['selectCivilStatusNameParam']));
+
+//		echo "OCCUPATION PARAM: ".$_POST['inputTextOccupationIdNameParam'];
+		$data['inputTextOccupationIdNameParam'] = strtoupper(trim($_POST['inputTextOccupationIdNameParam']));
+
+//		echo "BIRTHDAY PARAM: ".$_POST['inputTextBirthdayIdNameParam'];
+		$data['inputTextBirthdayIdNameParam'] = strtoupper(trim($_POST['inputTextBirthdayIdNameParam']));
+
+//		echo "CONTACT# PARAM: ".$_POST['inputTextContactNumberIdNameParam'];
+		$data['inputTextContactNumberIdNameParam'] = strtoupper(trim($_POST['inputTextContactNumberIdNameParam']));
+
+//		echo "ADDRESS LOCATION PARAM: ".$_POST['inputTextLocationAddressIdNameParam'];
+		$data['inputTextLocationAddressIdNameParam'] = strtoupper(trim($_POST['inputTextLocationAddressIdNameParam']));
 		
+//		echo "ADDRESS BARANGAY PARAM: ".$_POST['inputTextBarangayAddressIdNameParam'];
+		$data['inputTextBarangayAddressIdNameParam'] = strtoupper(trim($_POST['inputTextBarangayAddressIdNameParam']));
+		
+//		echo "ADDRESS POSTAL PARAM: ".$_POST['inputTextPostalAddressIdNameParam'];
+		$data['inputTextPostalAddressIdNameParam'] = strtoupper(trim($_POST['inputTextPostalAddressIdNameParam']));
+
+//		echo "ADDRESS PROVINCE CITY PH PARAM: ".$_POST['inputTextProvinceCityPhAddressIdNameParam'];
+		$data['inputTextProvinceCityPhAddressIdNameParam'] = strtoupper(trim($_POST['inputTextProvinceCityPhAddressIdNameParam']));
 			
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
