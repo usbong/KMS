@@ -729,7 +729,7 @@
 
 						//added by Mike, 20210306
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR")) {						
-							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId'>";
+							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' required>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
 							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam' form='indexCardId'>";
@@ -770,13 +770,13 @@
 							$cellValue=$cellValue."</select>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="OCCUPATION")) {						
-							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId'>";
+							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId' required>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="BIRTHDAY")) {
-							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId'>";
+							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' required>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CONTACT#")) {						
-							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId'>";
+							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId' required>";
 						}
 
 						//note: another set of if-then, if-else statements
@@ -886,7 +886,7 @@
 							echo "<td class='columnField'>
 									<input class='inputText' type='text' id='inputTextLocationAddressId' name='inputTextLocationAddressIdNameParam'
 									placeholder='LOCATION'
-									form='indexCardId'>
+									form='indexCardId' required>
 									</input>
 								  </td>";
 						}						
@@ -894,7 +894,7 @@
 							echo "<td class='columnField'>
 									<input class='inputText' type='text' id='inputTextBarangayAddressId' name='inputTextBarangayAddressIdNameParam'
 									placeholder='BARANGAY'
-									form='indexCardId'>
+									form='indexCardId' required>
 									</input>
 								  </td>";
 						}						
@@ -902,7 +902,7 @@
 							echo "<td class='columnField'>
 									<input class='inputText' type='text' id='inputTextPostalAddressId' name='inputTextPostalAddressIdNameParam'
 									placeholder='POSTAL'
-									form='indexCardId'>
+									form='indexCardId' required>
 									</input>
 								  </td>";
 						}						
@@ -910,7 +910,7 @@
 							echo "<td class='columnField'>
 									<input class='inputText' type='text' id='inputTextProvinceCityPhAddressId' name='inputTextProvinceCityPhAddressIdNameParam'
 									placeholder='PROVINCE/CITY/PH'
-									form='indexCardId'>
+									form='indexCardId' required>
 									</input>
 								  </td>";
 						}
