@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210318
+  @date updated: 20210319
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -729,7 +729,21 @@
 
 						//added by Mike, 20210306
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR")) {
-							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' required>";
+							//added by Mike, 20210319
+/*							
+							if (isset($result[0]["pwd_senior_id"])){
+								$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' value='".$result[0]["pwd_senior_id"]."' required>";
+							}
+							else {
+								$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' required>";
+							}
+*/							
+							$myValue="";
+							if (isset($result[0]["pwd_senior_id"])){
+								$myValue=$result[0]["pwd_senior_id"];
+							}
+							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' value='".$myValue."' required>";
+
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
 							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam' form='indexCardId'>";
