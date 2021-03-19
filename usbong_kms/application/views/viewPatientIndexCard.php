@@ -99,6 +99,16 @@
 							height: 100%;
 						}	
 
+						span.spanAgeFieldName
+						{
+							background-color: #00ff00; <!--#93d151; lime green-->
+						}
+
+						span.spanSexFieldName
+						{
+							background-color: #00ff00; <!--#93d151; lime green-->
+						}
+
 						table.formTable
 						{
 							width: 100%;
@@ -819,7 +829,7 @@
 
 						//note: another set of if-then, if-else statements
 						if (strpos($cellValue,"SEX")!==false) {					
-							echo "<td class='columnField'><b>".$cellValue;
+							echo "<td class='columnField'><b><span class='spanSexFieldName'>".$cellValue."</span>";
 							echo "<select id='selectSexIdParam' name='selectSexNameParam' form='indexCardId'>";
 							
 							//note: no echo output after select command
@@ -861,7 +871,8 @@
 						//added by Mike, 20210209
 						//TO-DO: -add: birthday to auto-compute age
 						else if (strpos($cellValue,"AGE")!==false) {							
-							echo "<td class='columnFieldNameAge'><b>".$cellValue."</b>";
+						
+							echo "<td class='columnFieldNameAge'><b><span class='spanAgeFieldName'>".$cellValue."</span></b>";
 ?>
 <!-- edited by Mike, 20210210 -->
 <!--
@@ -918,7 +929,32 @@
 						//added by Mike, 20210306
 						else if (strpos($cellValue,"PATIENT NAME")!==false) {
 							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}
+						//added by Mike, 20210319
+						else if (strpos($cellValue,"ADDRESS")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
 						}						
+						//added by Mike, 20210319
+						else if (strpos($cellValue,"PWD/SENIOR")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}						
+						//added by Mike, 20210319
+						else if (strpos($cellValue,"CIVIL STATUS")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}						
+						//added by Mike, 20210319
+						else if (strpos($cellValue,"OCCUPATION")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}						
+						//added by Mike, 20210319
+						else if (strpos($cellValue,"BIRTHDAY")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}						
+						//added by Mike, 20210319
+						else if (strpos($cellValue,"CONTACT#")!==false) {
+							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
+						}						
+
 						//added by Mike, 20210307
 						else if (strpos($cellValue,"LOCATION")!==false) {
 /* //edited by Mike, 20210319							
@@ -934,11 +970,11 @@
 								$myValue=$result[0]["location_address"];
 							}
 
-							echo "<td class='columnField'>
+							echo "<td class='columnField'><b>
 									<input class='inputText' type='text' id='inputTextLocationAddressId' name='inputTextLocationAddressIdNameParam'
 									placeholder='LOCATION'
 									form='indexCardId' value='".$myValue."' required>
-									</input>
+									</input></b>
 								  </td>";
 						}						
 						else if (strpos($cellValue,"BARANGAY")!==false) {
@@ -955,11 +991,11 @@
 								$myValue=$result[0]["barangay_address"];
 							}
 
-							echo "<td class='columnField'>
+							echo "<td class='columnField'><b>
 									<input class='inputText' type='text' id='inputTextBarangayAddressId' name='inputTextBarangayAddressIdNameParam'
 									placeholder='BARANGAY'
 									form='indexCardId' value='".$myValue."' required>
-									</input>
+									</input></b>
 								  </td>";
 						}						
 						else if (strpos($cellValue,"POSTAL")!==false) {
@@ -976,11 +1012,11 @@
 								$myValue=$result[0]["postal_address"];
 							}
 
-							echo "<td class='columnField'>
+							echo "<td class='columnField'><b>
 									<input class='inputText' type='text' id='inputTextPostalAddressId' name='inputTextPostalAddressIdNameParam'
 									placeholder='POSTAL'
 									form='indexCardId' value='".$myValue."' required>
-									</input>
+									</input></b>
 								  </td>";
 						}						
 						else if (strpos($cellValue,"PROVINCE/CITY/PH")!==false) {
@@ -997,11 +1033,11 @@
 								$myValue=$result[0]["province_city_ph_address"];
 							}
 
-							echo "<td class='columnField'>
+							echo "<td class='columnField'><b>
 									<input class='inputText' type='text' id='inputTextProvinceCityPhAddressId' name='inputTextProvinceCityPhAddressIdNameParam'
 									placeholder='PROVINCE/CITY/PH'
 									form='indexCardId' value='".$myValue."' required>
-									</input>
+									</input></b>
 								  </td>";
 						}
 /* //removed by Mike, 20210307						
