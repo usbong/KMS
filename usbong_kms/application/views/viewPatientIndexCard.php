@@ -784,13 +784,37 @@
 							$cellValue=$cellValue."</select>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="OCCUPATION")) {						
+/*							//edited by Mike, 20210319							
 							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId' required>";
+*/
+							$myValue="";
+							if (isset($result[0]["occupation"])){
+								$myValue=$result[0]["occupation"];
+							}
+
+							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId'  value='".$myValue."' required>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="BIRTHDAY")) {
+/*							//edited by Mike, 20210319							
 							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' required>";
+*/
+							$myValue="";
+							if (isset($result[0]["birthday"])){
+								$myValue=$result[0]["birthday"];
+							}
+
+							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' value='".$myValue."' required>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CONTACT#")) {						
+/* //edited by Mike, 20210319						
 							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId' required>";
+*/
+							$myValue="";
+							if (isset($result[0]["contact_number"])){
+								$myValue=$result[0]["contact_number"];
+							}
+
+							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId'  value='".$myValue."' required>";
 						}
 
 						//note: another set of if-then, if-else statements
@@ -897,34 +921,86 @@
 						}						
 						//added by Mike, 20210307
 						else if (strpos($cellValue,"LOCATION")!==false) {
+/* //edited by Mike, 20210319							
 							echo "<td class='columnField'>
 									<input class='inputText' type='text' id='inputTextLocationAddressId' name='inputTextLocationAddressIdNameParam'
 									placeholder='LOCATION'
 									form='indexCardId' required>
 									</input>
 								  </td>";
+*/
+							$myValue="";
+							if (isset($result[0]["location_address"])){
+								$myValue=$result[0]["location_address"];
+							}
+
+							echo "<td class='columnField'>
+									<input class='inputText' type='text' id='inputTextLocationAddressId' name='inputTextLocationAddressIdNameParam'
+									placeholder='LOCATION'
+									form='indexCardId' value='".$myValue."' required>
+									</input>
+								  </td>";
 						}						
 						else if (strpos($cellValue,"BARANGAY")!==false) {
+/* //edited by Mike, 20210319							
 							echo "<td class='columnField'>
 									<input class='inputText' type='text' id='inputTextBarangayAddressId' name='inputTextBarangayAddressIdNameParam'
 									placeholder='BARANGAY'
 									form='indexCardId' required>
 									</input>
 								  </td>";
+*/
+							$myValue="";
+							if (isset($result[0]["barangay_address"])){
+								$myValue=$result[0]["barangay_address"];
+							}
+
+							echo "<td class='columnField'>
+									<input class='inputText' type='text' id='inputTextBarangayAddressId' name='inputTextBarangayAddressIdNameParam'
+									placeholder='BARANGAY'
+									form='indexCardId' value='".$myValue."' required>
+									</input>
+								  </td>";
 						}						
 						else if (strpos($cellValue,"POSTAL")!==false) {
+/* //edited by Mike, 20210319							
 							echo "<td class='columnField'>
 									<input class='inputText' type='text' id='inputTextPostalAddressId' name='inputTextPostalAddressIdNameParam'
 									placeholder='POSTAL'
 									form='indexCardId' required>
 									</input>
 								  </td>";
+*/
+							$myValue="";
+							if (isset($result[0]["postal_address"])){
+								$myValue=$result[0]["postal_address"];
+							}
+
+							echo "<td class='columnField'>
+									<input class='inputText' type='text' id='inputTextPostalAddressId' name='inputTextPostalAddressIdNameParam'
+									placeholder='POSTAL'
+									form='indexCardId' value='".$myValue."' required>
+									</input>
+								  </td>";
 						}						
 						else if (strpos($cellValue,"PROVINCE/CITY/PH")!==false) {
+/* //edited by Mike, 20210319							
 							echo "<td class='columnField'>
 									<input class='inputText' type='text' id='inputTextProvinceCityPhAddressId' name='inputTextProvinceCityPhAddressIdNameParam'
 									placeholder='PROVINCE/CITY/PH'
 									form='indexCardId' required>
+									</input>
+								  </td>";
+*/
+							$myValue="";
+							if (isset($result[0]["province_city_ph_address"])){
+								$myValue=$result[0]["province_city_ph_address"];
+							}
+
+							echo "<td class='columnField'>
+									<input class='inputText' type='text' id='inputTextProvinceCityPhAddressId' name='inputTextProvinceCityPhAddressIdNameParam'
+									placeholder='PROVINCE/CITY/PH'
+									form='indexCardId' value='".$myValue."' required>
 									</input>
 								  </td>";
 						}
