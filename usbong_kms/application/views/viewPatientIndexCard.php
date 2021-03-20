@@ -121,6 +121,11 @@
 							width: 100%;
 						}
 
+						table.indexCardImageListTable
+						{
+							width: 100%;
+						}
+
 						tr.rowEvenNumber {
 							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
 							border: 1pt solid #00ff00;		
@@ -249,7 +254,14 @@
 							text-align: right;
 						}												
 
-						td.requestingPhysicianNameColumn
+						td.updateIndexCardColumn
+						{
+							width: 100%; /*90%*/
+							display: inline-block;
+							text-align: right;
+						}						
+
+						td.foldUnfoldIndexCardImageListColumn
 						{
 							width: 100%; /*90%*/
 							display: inline-block;
@@ -396,7 +408,34 @@
 /*
 			window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
 */			
-		}		  
+		}		 
+
+		//added by Mike, 20210320
+		function myFoldIndexCardImageListFunction(iPatientId) {			
+//			alert("hallo");			
+
+			bFoldImageListValue = document.getElementById("foldImageListId").value;
+			
+			//0=FALSE; 1=TRUE
+			if (bFoldImageListValue==0) {
+				bFoldImageListValue=1;
+			}
+			else {
+				bFoldImageListValue=0;
+			}
+
+			//note: we reload page with updated parameter, 
+			//so we can use PHP command to execute if-else using its updated value
+			document.getElementById("foldImageListId").setAttribute('value',bFoldImageListValue);	
+
+//			alert("bFoldImageListValue: "+bFoldImageListValue);			
+				
+			//note: reload causes value to be reset
+//			location.reload();
+
+			window.location.href = "<?php echo site_url('browse/viewPatientIndexCard/"+iPatientId+"/"+bFoldImageListValue+"');?>";			
+		}
+		
 	  </script>
   <body>
 <?php
@@ -1073,7 +1112,7 @@
 	</table>
 	<table class="bottomSectionTable">
 	  <tr>
-		  <td class="requestingPhysicianNameColumn">
+		  <td class="updateIndexCardColumn">
 			<br/>			
 			<!-- Buttons -->
 <!--
@@ -1093,8 +1132,7 @@
 -->
 
 <!-- added by Mike, 20210316 -->
-		<h3>Patient Index Card History</h3>
-
+		<h3>Patient Index Card History</h3>				
 <?php
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
 			echo '<div>';					
@@ -1109,42 +1147,74 @@
 				$resultCount = count($resultIndexCardImageList);
 			}
 
-			//item purchase history			
-			if ($resultCount==0) {				
-				echo '<div>';					
-				echo 'There are no transactions.';
-				echo '</div>';					
+?>
+			<!-- added by Mike, 20210320 -->
+			<input type="hidden" id="foldImageListId" value="<?php echo $bFoldImageListValue;?>">
+<?php
+			if ($bFoldImageListValue) {
+					//edited by Mike, 20210320
+					echo '<table class="indexCardImageListTable"><tr>';
+					echo '<td>';				
+	//				$resultCount = count($resultPaid);
+					if ($resultCount==1) {
+						echo '<div>Hiding <b>'.count($resultIndexCardImageList).'</b> result found.</div>';
+					}
+					else {
+						echo '<div>Hiding <b>'.count($resultIndexCardImageList).'</b> results found.</div>';			
+					}			
+					echo '</td>';
+					echo '<td class="foldUnfoldIndexCardImageListColumn">';
+						echo '<button onclick="myFoldIndexCardImageListFunction('.$result[0]['patient_id'].')">Unfold Image List</button>';
+					echo '</td>';
+					echo '</table></tr>';
 			}
 			else {
-//				$resultCount = count($resultPaid);
-				if ($resultCount==1) {
-					echo '<div>Showing <b>'.count($resultIndexCardImageList).'</b> result found.</div>';
-				}
-				else {
-					echo '<div>Showing <b>'.count($resultIndexCardImageList).'</b> results found.</div>';			
-				}			
-				echo '<br/>';
-
-				foreach ($resultIndexCardImageList as $indexCardImageListValue) {				
-			
-					echo "<table class='search-result'>";
-
-					//add: table headers
-	?>				
-					  <tr class="row">
-						<td class="column">
-							<?php
-								//edited by Mike, 20210320
-								echo $indexCardImageListValue['image_filename'];
-							?>
-						
-							<img class="Image-indexCard" src="<?php echo base_url($indexCardImageListValue['image_filename']);?>">		
-						</td>
-					  </tr>
-	<?php
-				}
 				
-				echo "</table>";
+				//item purchase history			
+				if ($resultCount==0) {				
+					echo '<div>';					
+					echo 'There are no transactions.';
+					echo '</div>';					
+				}
+				else {		
+					//edited by Mike, 20210320
+					echo '<table class="indexCardImageListTable"><tr>';
+					echo '<td>';				
+	//				$resultCount = count($resultPaid);
+					if ($resultCount==1) {
+						echo '<div>Showing <b>'.count($resultIndexCardImageList).'</b> result found.</div>';
+					}
+					else {
+						echo '<div>Showing <b>'.count($resultIndexCardImageList).'</b> results found.</div>';			
+					}			
+					echo '</td>';
+					echo '<td class="foldUnfoldIndexCardImageListColumn">';
+						echo '<button onclick="myFoldIndexCardImageListFunction('.$result[0]['patient_id'].')">Fold Image List</button>';
+					echo '</td>';
+					echo '</table></tr>';
+
+					echo '<br/>';
+
+					foreach ($resultIndexCardImageList as $indexCardImageListValue) {		  
+						echo "<table class='search-result'>";
+
+						//add: table headers
+		?>				
+						  <tr class="row">
+							<td class="column">
+								<?php
+									//edited by Mike, 20210320
+									echo $indexCardImageListValue['image_filename'];
+								?>
+							
+								<img class="Image-indexCard" src="<?php echo base_url($indexCardImageListValue['image_filename']);?>">		
+							</td>
+						  </tr>
+		<?php
+					}
+					
+					echo "</table>";
+				}
 			}
 		}
 ?>

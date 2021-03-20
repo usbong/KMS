@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210313
+' @date updated: 20210320
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -643,7 +643,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 			</td>
 			<td class="columnTableHeaderIndexCard">
+<!-- edited by Mike, 20210320
 					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'])?>' id="viewPatientIndexCard">
+-->					
+					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
+					
 						<div class="patientName">
 		<?php
 						//echo $value['patient_name'];
