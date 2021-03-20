@@ -2232,8 +2232,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewPatient', $data);
 	}
 	
-	//added by Mike, 20200517
-	public function viewPatientIndexCard($patientId)
+	//added by Mike, 20200517; edited by Mike, 20210320
+//	public function viewPatientIndexCard($patientId)
+	public function viewPatientIndexCard($patientId, $bFoldImageListValue)	
 	{
 //		$data['nameParam'] = $_POST[nameParam];
 		
@@ -2283,6 +2284,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20210316
 		$data['resultIndexCardImageList'] = $this->Browse_Model->getIndexCardImageListForPatient($patientId);
+
+		//added by Mike, 20210320
+		$data['bFoldImageListValue'] = $bFoldImageListValue;
 
 		$this->load->view('viewPatientIndexCard', $data);
 	}
