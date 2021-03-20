@@ -460,8 +460,11 @@
 	  
 //edited by Mike, 20210209
 //	$filename="D:\\Usbong\\LABORATORY\\templates\\MOSCLabRequestForm.csv";
-	$filename="C:\\xampp\\htdocs\\usbong_kms\\usbongTemplates\\MOSCIndexCard.csv";
-	
+	  
+//edited by Mike, 20210320	  
+//	$filename="C:\\xampp\\htdocs\\usbong_kms\\usbongTemplates\\MOSCIndexCard.csv";
+	$filename="/opt/lampp/htdocs/usbong_kms/usbongTemplates/MOSCIndexCard.csv";
+	  
 	//added by Mike, 20210208
 	$iCheckboxCount=0;
 	
