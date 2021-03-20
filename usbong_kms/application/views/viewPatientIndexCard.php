@@ -455,6 +455,9 @@
 //update file location
 //	$filename="G:\\Usbong MOSC\\Everyone\\Information Desk\\Laboratory\\templates\\MOSCLabRequestForm.csv";
 
+	//added by Mike, 20210320
+	//TO-DO: -add: filename location in Database, so that no need to edit viewPatientIndexCard .php file 
+	  
 //edited by Mike, 20210209
 //	$filename="D:\\Usbong\\LABORATORY\\templates\\MOSCLabRequestForm.csv";
 	$filename="C:\\xampp\\htdocs\\usbong_kms\\usbongTemplates\\MOSCIndexCard.csv";
