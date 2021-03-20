@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210319
+  @date updated: 20210320
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -1133,12 +1133,12 @@
 	?>				
 					  <tr class="row">
 						<td class="column">
-							<img class="Image-indexCard" src="<?php echo base_url($indexCardImageListValue['image_filename']);?>">		
-
 							<?php
+								//edited by Mike, 20210320
 								echo $indexCardImageListValue['image_filename'];
 							?>
-
+						
+							<img class="Image-indexCard" src="<?php echo base_url($indexCardImageListValue['image_filename']);?>">		
 						</td>
 					  </tr>
 	<?php
