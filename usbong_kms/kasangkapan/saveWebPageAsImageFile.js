@@ -11,7 +11,7 @@
 ' @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20210316
+' @date updated: 20210321
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -22,9 +22,15 @@
 var system = require('system');
 var fileName = system.args[1];
 
+//added by Mike, 20210321
+var computerServerAddress = 'http://localhost';
+
 //added by Mike, 20200726
 var isFromServerFolder = system.args[2];
-var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
+//edited by Mike, 20210321
+//var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
+var webAddress = computerServerAddress+'/usbong_kms/index.php/REPORT/'; //default
+
 var fileExtension = '';
 
 //added by Mike, 20210225
@@ -41,7 +47,9 @@ if (iPostPositionInFilename !== -1) {
 	filename=fileName.substring(0,iPostPositionInFilename);
 	data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
 
-	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
+	//edited by Mike, 20210321
+//	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
+	webAddress = computerServerAddress+'/usbong_kms/index.php/browse/';
 }	
 
 //added by Mike, 20201017
@@ -53,7 +61,10 @@ var noonFolderName = 'noonReport/';
 var dateToday = new Date(); 
 
 if (isFromServerFolder=="-s") {
-	webAddress = 'http://localhost/usbong_kms/server/';
+	//edited by Mike, 20210321
+//	webAddress = 'http://localhost/usbong_kms/server/';
+	webAddress = computerServerAddress+'/usbong_kms/server/';
+
 	fileExtension = '.php';
 }
 
