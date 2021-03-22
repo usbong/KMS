@@ -24,6 +24,8 @@
 # 2) set phantomjs executable file to "Trust this executable"
 # 3) put phantomjs executable file in the same directory as Bash Shell command, e.g. autoScreenCaptureReportMedicineIPCA.sh
 # --> example: /opt/lampp/htdocs/usbong_kms/kasangkapan
+# 4) update: input/kasangkapanConfig.txt to set computer server address
+# --> default: http://localhost
 
 # edited by Mike, 20210320
 # set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
@@ -37,37 +39,51 @@ myDateDay=${myDateDay:0:3} #get first 3 characters in string
 
 echo $myDateDay
 
-./phantomjs saveWebPageAsImageFile.js viewReportMedicineUnified
-./phantomjs saveWebPageAsImageFile.js viewReportMedicineAsteriskUnified
-# phantomjs saveWebPageAsImageFile.js viewReportNonMedicineUnified
-./phantomjs saveWebPageAsImageFile.js viewReportNonMedicine
-./phantomjs saveWebPageAsImageFile.js viewReportSnack
+#cat ./input/kasangkapanConfig.txt
+#note: python -c 'print "hallo"'
+if [ -e ./input/kasangkapanConfig.txt ]; then
+	myComputerServerAddress=$(cat ./input/kasangkapanConfig.txt | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["computerServerAddress"]')
+else 
+	echo "Computer: \"./input/kasangkapanConfig.txt\" does not exist.";
+	echo "Computer: We use as default computer server address: \"http://localhost\".";
+fi 
 
-./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Pedro"
-./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Peter"
+echo $myComputerServerAddress
+
+#edited by Mike, 20210321
+# ./phantomjs saveWebPageAsImageFile.js viewReportMedicineUnified http://192.168.1.10
+./phantomjs saveWebPageAsImageFile.js viewReportMedicineUnified $myComputerServerAddress
+
+./phantomjs saveWebPageAsImageFile.js viewReportMedicineAsteriskUnified $myComputerServerAddress
+# phantomjs saveWebPageAsImageFile.js viewReportNonMedicineUnified
+./phantomjs saveWebPageAsImageFile.js viewReportNonMedicine $myComputerServerAddress
+./phantomjs saveWebPageAsImageFile.js viewReportSnack $myComputerServerAddress
+
+./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Pedro" $myComputerServerAddress
+./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Peter" $myComputerServerAddress
 
 # reminder: add space before and after bracket
 
-if [ "$myDateDay" = "Mon" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Chastity"
+if [ "$myDateDay" = "Mon" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Chastity" $myComputerServerAddress
 fi
-if [ "$myDateDay" = "Tue" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil"
+if [ "$myDateDay" = "Tue" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil" $myComputerServerAddress
 fi
-if [ "$myDateDay" = "Thu" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil"
+if [ "$myDateDay" = "Thu" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil" $myComputerServerAddress
 fi
-if [ "$myDateDay" = "Wed" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto"
+if [ "$myDateDay" = "Wed" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto" $myComputerServerAddress
 fi
-if [ "$myDateDay" = "Fri" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto"
+if [ "$myDateDay" = "Fri" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto" $myComputerServerAddress
 fi
-if [ "$myDateDay" = "Sat" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Gracia"
+if [ "$myDateDay" = "Sat" ]; then ./phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Gracia" $myComputerServerAddress
 fi
 
-./phantomjs saveWebPageAsImageFile.js viewReceiptReportForTheDay
-./phantomjs saveWebPageAsImageFile.js viewReceiptReportPASForTheDay
-./phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s
+./phantomjs saveWebPageAsImageFile.js viewReceiptReportForTheDay $myComputerServerAddress
+./phantomjs saveWebPageAsImageFile.js viewReceiptReportPASForTheDay $myComputerServerAddress
+./phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s $myComputerServerAddress
 
 # edited by Mike, 20201205
 # phantomjs saveWebPageAsImageFile.js viewReportPatientQueueAccounting
-./phantomjs saveWebPageAsImageFile.js viewReportPatientQueue
+./phantomjs saveWebPageAsImageFile.js viewReportPatientQueue $myComputerServerAddress
 
 #explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
 xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/output/"$myDate

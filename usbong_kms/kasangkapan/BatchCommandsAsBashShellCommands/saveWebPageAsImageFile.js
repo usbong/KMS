@@ -22,8 +22,20 @@
 var system = require('system');
 var fileName = system.args[1];
 
-//added by Mike, 20210321
+//added by Mike, 20210321; edited by Mike, 20210322
 var computerServerAddress = 'http://localhost';
+var sCommandName = system.args;
+//output example: saveWebPageAsImageFile.js,viewReportMedicineUnified
+//pattern: delimited by comma
+//console.log("sCommandName: " + sCommandName);
+//console.log("sCommandName length: " + system.args.length);
+	
+//if last input argument has keyword, "http"
+if (sCommandName[system.args.length-1].indexOf("http") !== -1) {
+//	console.log("hallo");
+	computerServerAddress = sCommandName[system.args.length-1];
+}
+//console.log("computerServerAddress : " + computerServerAddress);
 
 //added by Mike, 20200726
 var isFromServerFolder = system.args[2];
