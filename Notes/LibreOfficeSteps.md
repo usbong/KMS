@@ -7,11 +7,13 @@ Linux Machine, e.g. LUBUNTU (version: LTS 20.04)<br/>
 1. Execute the following command on Terminal:<br/>
 <b>sudo apt-get install openjdk-8-jdk</b><br/>
 <br/>
-<b>Additional Note:</b><br/>
+<b>Additional Notes:</b><br/>
 1. "8" in "openjdk-8-jdk" is the Java version<br/>
 2. "jdk", i.e. Java Development Kit, empowers us to write instructions using the Java Computer Language and make, i.e. compile, them into objects classified to be ".class" files.<br/>
 --> These .class files are executed by the Java Virtual Machine (JVM).<br/>
---> If we set "jdk" to be "jre", i.e. Java Runtime Environment, we can only execute .class files using the JVM.
+--> If we set "jdk" to be "jre", i.e. Java Runtime Environment, we can only execute .class files using the JVM.<br/>
+<b>References:</b><br/>
+1. https://openjdk.java.net/install/; last accessed: 20210323
 
 ## 1.Q) How to add a "MACRO" Menu Item with a button to execute it?
 <b>Objective:</b> Eliminate excess steps to command the computer to execute a macro, i.e. set of instructions<br/>
