@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210313
+  @date updated: 20210323
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -42,6 +42,10 @@
 	//added by Mike, 20200524
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
 	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	
+	//added by Mike, 20210323
+	//With Linux Machine, if $fileBasePath does not exist, Computer writes in the same folder where getSalesReportsForTheDay.php is located
+	//the file name includes the value of $fileBasePath
 
 	//added by Mike, 20200902
 	//$sDateToday = date("Y-m-d");
