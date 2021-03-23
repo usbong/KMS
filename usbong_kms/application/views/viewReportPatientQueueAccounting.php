@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200529
-' @date updated: 20210121
+' @date updated: 20210323
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -80,7 +80,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;							
 							background-color: #ffdd00; <!--#93d151; lime green-->
 							border: 1pt solid #ff8000;
+						}		
+						
+						div.tableHeaderAddedAtCashierUnitCount
+						{
+							text-align: right;							
+
+/*							
+							text-align: center;							
+							background-color: #ffdd00; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+*/							
 						}						
+
+						span.spanAddedAtCashierUnitCount
+						{
+							color: #ff0000;
+							font-weight: bold;
+							font-size: 12pt;
+						}
+
+						span.spanAddedAtCashierUnitCountZero
+						{
+							color: #ff8000;
+							font-weight: bold;
+							font-size: 12pt;
+						}										
 
 						span.asterisk
 						{
@@ -658,6 +683,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$dtTotalWaitDoneElapsedTime=0;
 		$iTotalWaitDoneElapsedTimeCount=0;
 
+		//added by Mike, 20210323
+		$iTotalWaitDoneElapsedTimeAddedAtCashierUnit=0; //added at Accounting/Cashier Unit
+
 		if ((isset($result)) and ($result!=False)) {
 			$resultCount = count($result);
 		}
@@ -997,13 +1025,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "</span>";
 								}
 								else {
-									//added by Mike, 20210118
-									$d2=new DateTime($value['start_datetime_stamp']);
-									$diff=$d2->diff($d1);
-
-									//edited by Mike, 20210118
-									$iElapsedTime=$diff->h*60+$diff->i;
-									
+									//added by Mike, 20210323
+									$iElapsedTime=0;
+																		
+									if ($value['start_datetime_stamp']!=0) {													//added by Mike, 20210118
+										$d2=new DateTime($value['start_datetime_stamp']);
+										$diff=$d2->diff($d1);
+	
+										//edited by Mike, 20210118
+										$iElapsedTime=$diff->h*60+$diff->i;
+									}
+										
 									//edited by Mike, 20210118
 									if ($iElapsedTime==0) {
 									}
@@ -1019,6 +1051,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											echo "DONE!"."<br/>";
 											echo "START TIME?";
 										echo "</span>";
+										
+									//added by Mike, 20210218
+										$iTotalWaitDoneElapsedTimeAddedAtCashierUnit=$iTotalWaitDoneElapsedTimeAddedAtCashierUnit+1;										
 									}
 									else {
 										echo "<span class='alertGoldSpan'>";
@@ -1096,6 +1131,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 				echo "<b>AVE. WAIT TO DONE TIME (HH:MM): ".$sHour.":".$sSec."<b>";
 ?>
+			</div>
+		</td>
+	</tr>
+
+	<tr>
+		<!-- added by Mike, 20210323 -->
+		<td>
+			<div class="tableHeaderAddedAtCashierUnitCount">
+		<?php
+			echo "<b>ADDED @CASHIER UNIT COUNT: </b>";
+
+			if ($iTotalWaitDoneElapsedTimeAddedAtCashierUnit!=0) {
+				echo "<span class='spanAddedAtCashierUnitCount'>".$iTotalWaitDoneElapsedTimeAddedAtCashierUnit."</span>";
+			}				
+			else {
+				echo "<span class='spanAddedAtCashierUnitCountZero'>".$iTotalWaitDoneElapsedTimeAddedAtCashierUnit."</span>";
+			}
+		?>
 			</div>
 		</td>
 	</tr>

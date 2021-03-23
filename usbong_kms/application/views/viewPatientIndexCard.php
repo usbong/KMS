@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210320
+  @date updated: 20210323
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -86,7 +86,8 @@
 
 						input.inputText
 						{
-							font-size: 12pt;						
+							font-size: 12pt;	
+							width: 92%;							
 						}
 
 						input.browse-input
@@ -107,14 +108,7 @@
 						span.spanSexFieldName
 						{
 							background-color: #00ff00; <!--#93d151; lime green-->
-						}
-
-						table.formTable
-						{
-							width: 100%;
-<!--							border: 1px solid #ab9c7d;		
--->
-						}				
+						}								
 
 						table.bottomSectionTable
 						{
@@ -130,14 +124,14 @@
 							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
 							border: 1pt solid #00ff00;		
 						}
-
+						
 						td.tableHeaderColumn
 						{
 							background-color: #00ff00; <!--#93d151; lime green-->
 							border: 1pt solid #00ff00;
 							text-align: left;
 							font-weight: bold;							
-							width: 20%; <!-- 17%; --> <!-- 84% -->
+							width: 16%; <!-- 17%; --> <!-- 84% -->
 						}						
 
 						td.addressAnswerColumn
@@ -153,7 +147,7 @@
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: center;
+							text-align: center;							
 						}						
 
 						td.columnField
@@ -165,7 +159,7 @@
 						td.columnName
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: left;
+							text-align: left;							
 						}						
 
 						td.columnNumber
@@ -543,10 +537,7 @@
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
-<form id="indexCardId" method="post" action="<?php echo site_url('browse/confirmUpdateIndexCardForm/'.$result[0]['patient_id'])?>">
-<!--
-<form id="indexCardId" method="post">
--->
+<form id="indexCardId" method="post"action="<?php echo site_url('browse/confirmUpdateIndexCardForm/'.$result[0]['patient_id'])?>">
 	<?php 
 		//edited by Mike, 20200518
 		if ($result[0]["medical_doctor_name"]==""){
