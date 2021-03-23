@@ -13,7 +13,7 @@ Linux Machine, e.g. LUBUNTU (version: LTS 20.04)<br/>
 --> These .class files are executed by the Java Virtual Machine (JVM).<br/>
 --> If we set "jdk" to be "jre", i.e. Java Runtime Environment, we can only execute .class files using the JVM.<br/>
 <br/>
-<b>References:</b><br/>
+<b>Reference:</b><br/>
 1. https://openjdk.java.net/install/; last accessed: 20210323
 
 ## 1.Q) How to add a "MACRO" Menu Item with a button to execute it?
