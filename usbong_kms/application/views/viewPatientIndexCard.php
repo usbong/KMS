@@ -1330,6 +1330,9 @@
 				  $iCount=1;
 				  $iCountForTheDay=0;
 				  $sCurrentTransactionDate="";
+				  
+				  //added by Mike, 20210407
+				  $iTotalResultPaidMedItemCount = count($resultPaidMedItem);				  
 
 				  foreach ($resultPaidMedItem as $value) {
 /* //removed by Mike, 20210314					  
@@ -1443,10 +1446,20 @@
 					  </tr>
 					  
 		<?php		
-				  //added by Mike, 20210407				  
-//				  if ($iCountForTheDay==1) {
-					if (($sCurrentTransactionDate=="") or 			
-						($sCurrentTransactionDate==$value['transaction_date'])) {
+				  //added by Mike, 20210407
+/*				  
+				  echo "sCurrentTransactionDate: ".$sCurrentTransactionDate."<br/>";
+				  echo "transaction_date: ".$value['transaction_date']."<br/>";
+
+echo "iCount: ".$iCount."<br/>";
+echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;				   		
+*/				   				  
+//TO-DO: -update: this due to $iTotalResultPaidMedItemCount not only for the day
+					if ((($sCurrentTransactionDate=="") and
+						($sCurrentTransactionDate!=$value['transaction_date']) and 
+						($iCount==$iTotalResultPaidMedItemCount)) or
+							($iCount==($iTotalResultPaidMedItemCount))) {	
+							
 		?>
 				<tr class="row">
 						<td class="column">				
@@ -1498,8 +1511,6 @@
 
 		}
 ?>	
-
-
 
 
 <?php	
@@ -1583,6 +1594,8 @@
 				  $iCount=1;
 				  $iCountForTheDay=0;
 				  $sCurrentTransactionDate="";
+				  
+				  $iTotalResultPaidNonMedItemCount = count($resultPaidNonMedItem);
 
 				  foreach ($resultPaidNonMedItem as $value) {
 /* //removed by Mike, 20210314					  
@@ -1608,10 +1621,13 @@
 					  $iCountForTheDay=1;
 //					  echo $value['transaction_date'];
 					  echo date('Y-m-d', strtotime($value['transaction_date']));
+
+					  //added by Mike, 20210407
+					  $dTotalFee = 0;					  
 					}
 					  
-					$sCurrentTransactionDate=$value['transaction_date'];				  
-
+					//removed by Mike, 20210407
+//					$sCurrentTransactionDate=$value['transaction_date'];	
 							?>
 						</td>
 						<td class="column">				
@@ -1621,7 +1637,7 @@
 						</td>
 
 						<td class="columnName">				
-							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
 								echo $value['item_name'];
@@ -1683,18 +1699,66 @@
 							<?php
 								echo $value['fee'];
 								
-//								$dTotalFee = $dTotalFee + $value['fee'];
+								//added by Mike, 20210407
+								$dTotalFee = $dTotalFee + $value['fee'];
 							?>
 								</div>
 						</td>
 					  </tr>
-		<?php				
+		<?php		
+				  //added by Mike, 20210407				  
+//				  if ($iCountForTheDay==1) {
+//echo "hallo".$sCurrentTransactionDate."<br/>";
+						
+/*	//edited by Mike, 20210407
+echo "iCount: ".$iCount."<br/>";
+echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
+*/
+					if ((($sCurrentTransactionDate=="") and
+						($sCurrentTransactionDate!=$value['transaction_date']) and 
+						($iCount==$iTotalResultPaidNonMedItemCount)) or
+							($iCount==($iTotalResultPaidNonMedItemCount))) {	
+											
+		?>
+				<tr class="row">
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>
+						<td class="columnGrandTotalName">				
+				<?php
+							echo "GRAND TOTAL FOR THE DAY (NON-MED ITEM)";
+				?>		
+						</td>
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>						
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>
+						<td class="columnTotalFee">				
+							<?php
+								echo number_format($dTotalFee, 2, '.', '');
+							?>
+						</td>
+					  </tr>
+		
+		
+<?php					
+					}
+					$sCurrentTransactionDate=$value['transaction_date'];				  
+					
+						
 					$currentItemId = $value['item_id'];					
 
 					$iCount++;		
 /*					echo "<br/>";
 */					
-				}				
+				}			
 
 				echo "</table>";				
 				echo "<br/>";				
