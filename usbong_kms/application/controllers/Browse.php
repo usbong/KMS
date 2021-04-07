@@ -361,8 +361,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 
 
-	//added by Mike, 20210318
-	public function confirmUpdateIndexCardForm($patientId)
+	//added by Mike, 20210318; edited by Mike, 20210407
+//	public function confirmUpdateIndexCardForm($patientId)
+	public function confirmUpdateIndexCardForm($patientId, $bFoldImageListValue)
 	{
 		//TO-DO: -add: the rest
 		//echo "DITO: ".$_POST['inputTextLocationAddressName'];
@@ -428,7 +429,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//removed by Mike, 20210211; added by Mike, 20210216
 //		$this->load->view('viewPatientIndexCard', $data);
 		
-		$this->viewPatientIndexCard($patientId);
+		//edited by Mike, 20210407		
+//		$this->viewPatientIndexCard($patientId);
+		$this->viewPatientIndexCard($patientId,0);
 	}
 
 
