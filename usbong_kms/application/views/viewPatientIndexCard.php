@@ -150,6 +150,23 @@
 							text-align: center;							
 						}						
 
+						/* added by Mike, 20210407 */
+						td.columnTotalFee
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;							
+							color: #ff8000;	
+							font-weight: bold;													
+						}	
+
+						/* added by Mike, 20210407 */
+						td.columnGrandTotalName
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;							
+							font-weight: bold;													
+						}	
+						
 						td.columnField
 						{
 							border: 1px dotted #ab9c7d;		
@@ -1338,9 +1355,14 @@
 					  $iCountForTheDay=1;
 //					  echo $value['transaction_date'];
 					  echo date('Y-m-d', strtotime($value['transaction_date']));
-					}
 					  
-					$sCurrentTransactionDate=$value['transaction_date'];				  
+					  //added by Mike, 20210407
+					  $dTotalFee = 0;
+						  
+					}
+					
+					//removed by Mike, 20210407
+//					$sCurrentTransactionDate=$value['transaction_date'];				  
 
 							?>
 						</td>
@@ -1413,12 +1435,52 @@
 							<?php
 								echo $value['fee'];
 								
-//								$dTotalFee = $dTotalFee + $value['fee'];
+								//added by Mike, 20210407							
+								$dTotalFee = $dTotalFee + $value['fee'];
 							?>
 								</div>
 						</td>
 					  </tr>
-		<?php				
+					  
+		<?php		
+				  //added by Mike, 20210407				  
+//				  if ($iCountForTheDay==1) {
+					if (($sCurrentTransactionDate=="") or 			
+						($sCurrentTransactionDate==$value['transaction_date'])) {
+		?>
+				<tr class="row">
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>
+						<td class="columnGrandTotalName">				
+				<?php
+							echo "GRAND TOTAL FOR THE DAY (MED ITEM)";
+				?>		
+						</td>
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>						
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>
+						<td class="column">				
+						</td>
+						<td class="columnTotalFee">				
+							<?php
+								echo number_format($dTotalFee, 2, '.', '');
+							?>
+						</td>
+					  </tr>
+		
+		
+<?php					
+					}
+					$sCurrentTransactionDate=$value['transaction_date'];				  
+					
+						
 					$currentItemId = $value['item_id'];					
 
 					$iCount++;		
