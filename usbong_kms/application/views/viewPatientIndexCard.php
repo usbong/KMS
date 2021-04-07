@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210323
+  @date updated: 20210407
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -520,7 +520,8 @@
 				<b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 			</td>
 			<td class="columnTableHeaderIndexCard">
-					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'])?>' id="viewPatientIndexCard">
+					<!-- edited by Mike, 20210407 -->
+					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
 						<div class="patientName">
 		<?php
 						//echo $value['patient_name'];
@@ -537,7 +538,7 @@
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
-<form id="indexCardId" method="post"action="<?php echo site_url('browse/confirmUpdateIndexCardForm/'.$result[0]['patient_id'])?>">
+<form id="indexCardId" method="post"action="<?php echo site_url('browse/confirmUpdateIndexCardForm/'.$result[0]['patient_id'].'/0')?>">
 	<?php 
 		//edited by Mike, 20200518
 		if ($result[0]["medical_doctor_name"]==""){
