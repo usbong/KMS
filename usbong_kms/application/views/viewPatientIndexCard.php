@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210408
+  @date updated: 20210412
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -1334,6 +1334,9 @@
 				  $iCountForTheDay=0;
 				  $sCurrentTransactionDate="";
 				  
+				  //added by Mike, 20210412
+				  $dTotalFee = 0;					  
+				  				  
 				  //added by Mike, 20210407
 				  $iTotalResultPaidMedItemCount = count($resultPaidMedItem);				  
 
@@ -1366,9 +1369,14 @@
 					else {
 					  $iCountForTheDay=1;
 //					  echo $value['transaction_date'];
-
-					if ((($sCurrentTransactionDate!="") and ($sCurrentTransactionDate!=$value['transaction_date'])) or
+						
+					//edited by Mike, 20210412
+/*					if ((($sCurrentTransactionDate!="") and ($sCurrentTransactionDate!=$value['transaction_date'])) or
 							($iCount==($iTotalResultPaidMedItemCount))) {	
+*/
+					if (($dTotalFee!=0) and ((($sCurrentTransactionDate!="") and($sCurrentTransactionDate!=$value['transaction_date'])) or
+							($iCount==($iTotalResultPaidMedItemCount)))) {							
+							
 		?>
 				<tr class="row">
 						<td class="column">				
@@ -1377,7 +1385,7 @@
 						</td>
 						<td class="columnGrandTotalName">				
 				<?php
-							echo "GRAND TOTAL FOR THE DAY (MED ITEM)";
+							echo "TOTAL FOR THE DAY (MED ITEM)";
 				?>		
 						</td>
 						<td class="column">				
@@ -1513,7 +1521,7 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 						</td>
 						<td class="columnGrandTotalName">				
 				<?php
-							echo "GRAND TOTAL FOR THE DAY (MED ITEM)";
+							echo "TOTAL FOR THE DAY (MED ITEM)";
 				?>		
 						</td>
 						<td class="column">				
@@ -1636,6 +1644,10 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 				  $sCurrentTransactionDate="";
 				  
 				  $iTotalResultPaidNonMedItemCount = count($resultPaidNonMedItem);
+					
+				  //added by Mike, 20210412
+				  $dTotalFee = 0;					  
+
 
 				  foreach ($resultPaidNonMedItem as $value) {
 /* //removed by Mike, 20210314					  
@@ -1666,8 +1678,12 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 					  $iCountForTheDay=1;
 //					  echo $value['transaction_date'];
 
-					if ((($sCurrentTransactionDate!="") and ($sCurrentTransactionDate!=$value['transaction_date'])) or
+					//edited by Mike, 20210412
+/*					if ((($sCurrentTransactionDate!="") and ($sCurrentTransactionDate!=$value['transaction_date'])) or
 							($iCount==($iTotalResultPaidNonMedItemCount))) {	
+*/
+					if (($dTotalFee!=0) and ((($sCurrentTransactionDate!="") and($sCurrentTransactionDate!=$value['transaction_date'])) or
+							($iCount==($iTotalResultPaidNonMedItemCount)))) {							
 		?>
 				<tr class="row">
 						<td class="column">				
@@ -1676,7 +1692,7 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 						</td>
 						<td class="columnGrandTotalName">				
 				<?php
-							echo "GRAND TOTAL FOR THE DAY (NON-MED ITEM)";
+							echo "TOTAL FOR THE DAY (NON-MED ITEM)";
 				?>		
 						</td>
 						<td class="column">				
@@ -1811,7 +1827,7 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 						</td>
 						<td class="columnGrandTotalName">				
 				<?php
-							echo "GRAND TOTAL FOR THE DAY (NON-MED ITEM)";
+							echo "TOTAL FOR THE DAY (NON-MED ITEM)";
 				?>		
 						</td>
 						<td class="column">				
