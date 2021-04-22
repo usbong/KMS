@@ -1149,6 +1149,18 @@ class Browse_Model extends CI_Model
 			//edited by Mike, 20200721
 //			$this->db->select('t1.patient_id, t3.item_type_id');
 
+			//added by Mike, 20210422
+			if ($iCount==0) {
+				$this->db->select('patient_id');
+				$this->db->where('transaction_id',$param['transactionId']);
+				$query = $this->db->get('transaction');
+				$rowArray = $query->result_array();
+
+				if (count($rowArray)!=0) {				
+					$patientId=$rowArray[0]['patient_id'];
+				}
+			}
+
 			//edited by Mike, 20210302
 //			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee');
 			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee, t1.item_id');
@@ -1157,6 +1169,10 @@ class Browse_Model extends CI_Model
 			$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');
 			$this->db->join('item_type as t3', 't2.item_type_id = t3.item_type_id', 'LEFT');
 			$this->db->where('t1.transaction_id',$param['transactionId']);
+			
+			//added by Mike, 20210422
+			$this->db->where('t1.patient_id',$patientId);
+			
 			$query = $this->db->get('transaction');
 			$rowArray = $query->result_array();
 						
