@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210320
+' @date updated: 20210424
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -413,6 +413,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200329; edited by Mike, 20200806
 //		function myPopupFunction() {				
 		function myPopupFunction(patientId) {	
+			//added by Mike, 20210424
+			//note: we add this command to prevent multiple button clicks
+			//received by computer server before identifying that a patient transaction
+			//already exists in Cart List from Database
+			document.getElementById("addButtonId").disabled = true;
+				
 			//edited by Mike, 20200522
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
@@ -500,11 +506,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				professionalFee = 0;
 			}
 
+//			setTimeout(setButton("addButtonId",false),30000);
+
 			//do the following only if value is a Number, i.e. not NaN
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
 				window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
 			}
+	
+			//added by Mike, 20210424
+			//note: no need to add this due to computer enables button after reloading page
+//			document.getElementById("addButtonId").disabled = false;
+//			setTimeout(setButton("addButtonId",false),300000);
 		}	
+		
+		//added by Mike, 20210424; removed by Mike, 20210424
+/*
+		function setButton(buttonId, isDisabled) {
+			document.getElementById(buttonId).disabled = isDisabled;
+		}
+*/		
 
 		//added by Mike, 20200331; edited by Mike, 20200411
 /*
@@ -926,8 +946,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class="column">
 							<input type="text" id="notesParam" class="Notes-textbox no-spin" value="NONE" required>
 						</td>						
-					    <td>		
-							<button onclick="myPopupFunction(<?php echo $value['patient_id'];?>)" class="Button-purchase">ADD</button>									
+					    <td>
+							<button onclick="myPopupFunction(<?php echo $value['patient_id'];?>)" class="Button-purchase" id="addButtonId">ADD</button>
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
