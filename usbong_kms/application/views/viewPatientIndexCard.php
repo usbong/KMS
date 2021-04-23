@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210412
+  @date updated: 20210423
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -1309,9 +1309,9 @@
 								echo "PRICE"; //"ITEM PRICE";
 							?>
 						</td>
-						<td class="columnTableHeaderFee">				
+						<td class="columnTableHeader">				
 							<?php
-								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
+								echo "ACTUAL<br/>FEE"; //"ITEM FEE, i.e. discounted price, set price";
 							?>
 						</td>						
 						<td class="column">				
@@ -1454,7 +1454,9 @@
 						<td class="columnNumber">				
 								<div id="feeId<?php echo $iCount?>">
 							<?php
-								echo $value['fee'];
+								//edited by Mike, 20210423
+//								echo $value['fee'];
+								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
 								
 //								$dTotalFee = $dTotalFee + $value['fee'];
 							?>
@@ -1618,9 +1620,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 								echo "PRICE"; //"ITEM PRICE";
 							?>
 						</td>
-						<td class="columnTableHeaderFee">				
+						<td class="columnTableHeader">				
 							<?php
-								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
+								echo "ACTUAL<br/>FEE"; //"ITEM FEE, i.e. discounted price, set price";
 							?>
 						</td>						
 						<td class="column">				
@@ -1760,7 +1762,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 						<td class="columnNumber">				
 								<div id="feeId<?php echo $iCount?>">
 							<?php
-								echo $value['fee'];
+								//edited by Mike, 20210423
+//								echo $value['fee'];
+								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
 								
 //								$dTotalFee = $dTotalFee + $value['fee'];
 							?>
