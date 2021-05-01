@@ -9,7 +9,8 @@
 '
 ' @author: Michael Syson
   @date created: 20191120
-  @date updated: 20200404
+  @date updated: 20210501
+  
   Given:
   1) Image with the details of the report
   Output:
@@ -134,8 +135,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 ?>
 	<div class="copyright">
-		<!-- TO-DO: -add: automatically write the present year -->
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>	
   </body>
 </html>
