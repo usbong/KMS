@@ -235,9 +235,16 @@ class Image extends CI_Controller { //MY_Controller {
 						window.location.href='".site_url('report/autoGenerateQRCodeImage/')."';
 					  </script>";			
 */					  
+				//edited by Mike, 20210501
+/*
 				echo "<script>
 						alert('You have successfully submitted your report. Thank you. Peace.');
 						window.location.href='".site_url("browse/viewPatientIndexCard/".$patientId)."';
+					  </script>";			
+*/
+				echo "<script>
+						alert('You have successfully submitted your report. Thank you. Peace.');
+						window.location.href='".site_url("browse/viewPatientIndexCard/".$patientId)."/0';
 					  </script>";			
 
 			}
@@ -248,9 +255,16 @@ class Image extends CI_Controller { //MY_Controller {
 						window.location.href='".base_url()."';
 					  </script>";			
 */					  
+				//edited by Mike, 20210501
+/*
 				echo "<script>
 						alert('You have successfully submitted your report. Thank you. Peace.');
 						window.location.href='".site_url("browse/viewPatientIndexCard/".$patientId)."';
+					  </script>";			
+*/					  
+				echo "<script>
+						alert('You have successfully submitted your report. Thank you. Peace.');
+						window.location.href='".site_url("browse/viewPatientIndexCard/".$patientId)."/0';
 					  </script>";			
 			}			
 		}			
