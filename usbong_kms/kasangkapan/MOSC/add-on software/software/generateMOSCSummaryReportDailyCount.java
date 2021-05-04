@@ -15,7 +15,7 @@
  * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
  * @author: SYSON, MICHAEL B.
  * @date created: 20201023
- * @last updated: 20210502
+ * @last updated: 20210504
  *
  */
  
@@ -398,7 +398,6 @@ public class generateMOSCSummaryReportDailyCount {
 		medicalDoctorsList[6] = "ESPINOSA,JHONSEL";
 		//added by Mike, 20210502
 		medicalDoctorsList[7] = "REJUSO-MORALES,CHASTITYAMOR";
-		
 
 /*
 //	  medicalDoctorsList = new String[7]; //String[1]; 
