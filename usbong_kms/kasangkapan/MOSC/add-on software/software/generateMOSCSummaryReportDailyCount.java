@@ -15,7 +15,7 @@
  * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
  * @author: SYSON, MICHAEL B.
  * @date created: 20201023
- * @last updated: 20210504
+ * @last updated: 20210505
  *
  */
  
@@ -104,6 +104,7 @@ import utils.IncidenceNumberComparator; //added by Mike, 20190418
 */ 
 
 //TO-DO: -delete: excess instructions
+//TO-DO: -add: do not include NC in count
 
 public class generateMOSCSummaryReportDailyCount {	
 	private static boolean isInDebugMode = true; //edited by Mike, 20190131
@@ -2465,7 +2466,7 @@ System.out.println("iYearKey: " + iYearKey + "; iDateValuesArrayIntCount: " + iD
 
 							//note: 0:iQuantityTotalCount
 							columnValuesArray[0] = jo_inside.getInt("iQuantityTotalCount");
-
+							
 							dateContainer.put(dateValuesArrayInt[iMonthYearCount], columnValuesArray);
 						  
 						  //added by Mike, 20201026
@@ -2482,6 +2483,11 @@ System.out.println("iYearKey: " + iYearKey + "; iDateValuesArrayIntCount: " + iD
 							dateContainer.get(dateValuesArrayInt[iMonthYearCount])[0]
 */							
 						}
+						
+						//added by Mike, 20210505
+						//do not include "No Charge" (NC), i.e. gratis
+						columnValuesArray[0] = columnValuesArray[0]-jo_inside.getInt("iNoChargeQuantityTotalCount");
+						
 					}
 			}
 		}
