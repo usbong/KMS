@@ -15,7 +15,7 @@
  * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
  * @author: SYSON, MICHAEL B.
  * @date created: 20201023
- * @last updated: 20210505
+ * @last updated: 20210510
  *
  */
  
@@ -776,11 +776,12 @@ public class generateMOSCSummaryReportDailyCount {
 			}
 
 //System.out.println(getYearOnlyAsInt(dateValuesArray[iDateValuesArrayIntCount]));
-System.out.println("dateValuesArray[iDateValuesArrayIntCount]: "+dateValuesArray[iDateValuesArrayIntCount]);
-			
+/*System.out.println("dateValuesArray[iDateValuesArrayIntCount]: "+dateValuesArray[iDateValuesArrayIntCount]);
+*/			
 			iYearKey = getYearOnlyAsInt(dateValuesArray[iDateValuesArrayIntCount]);
 
-System.out.println(">>>>>>>>>>>>DITO: iYearKey: "+iYearKey+"; "+iDateValuesArrayIntCount);
+/*System.out.println(">>>>>>>>>>>>DITO: iYearKey: "+iYearKey+"; "+iDateValuesArrayIntCount);
+*/
 //	iYearKey=2020;		
 			
 /*	//removed by Mike, 20201027
@@ -846,8 +847,8 @@ consultationMonthlyStatisticsContainer.get(iYearKey)[iDateValuesArrayIntCount]=(
 */
 
 				if (dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])!=null) {
-					System.out.println("hallo>>>>>>>> "+(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
-					
+/*					System.out.println("hallo>>>>>>>> "+(int) dateContainer.get(dateValuesArrayInt[iDateValuesArrayIntCount])[0]);
+*/					
 					//overwrite value inside container
 					//overwrite only those values whose date is the year 2020-05 onwards
 					//edited by Mike, 20210502
@@ -2864,8 +2865,13 @@ System.out.println("iYearKey: " + iYearKey + "; iDateValuesArrayIntCount: " + iD
 				rowCount++;
 //				System.out.println("rowCount: "+rowCount);
 			}
-			
+
 //			s = s.replace("<?php echo $data['date'];?>", "" + dateValue.toUpperCase());
+			//added by Mike, 20210510
+			DateFormat dateFormat = new SimpleDateFormat("yyyy");
+			Date myDate = new Date();
+//			System.out.println(dateFormat.format(myDate));			
+			s = s.replace("<?php echo date('Y');?>", "" + dateFormat.format(myDate));
 
 			//added by Mike, 20190504
 			if (s.contains("<!-- FILE TYPE  -->")) {
@@ -2978,8 +2984,8 @@ System.out.println("iYearKey: " + iYearKey + "; iDateValuesArrayIntCount: " + iD
 
 //added by Mike, 20210502						
 //note: verify execute "generateMOSCSummaryReportDailyCount.java" for each month
-System.out.println(">>>>>>> inputMonthString: "+inputMonthString+"; monthString: "+monthString);	
-						
+/*System.out.println(">>>>>>> inputMonthString: "+inputMonthString+"; monthString: "+monthString);	
+*/						
 							if ((inputMonthString.equals(monthString)) && yearKey == inputYear) {
 
 //System.out.println("totalTreatmentCount: "+totalTreatmentCount);
