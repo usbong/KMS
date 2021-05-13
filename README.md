@@ -45,7 +45,21 @@ Action: [Download](https://sourceforge.net/projects/lanmsngr/)
 2.1) Installation Steps:<br/>
 2.1.1) <b>sudo apt-get install wine</b><br/>
 2.1.2) <b>wine lmc-1.2.35-win32.exe</b><br/>
---> You may verify using another version of the executable file.
+--> You may verify using another version of the executable file.<br/>
+DONE!<br/>
+3) Auto-start LAN Messenger<br/>
+--> verified: with [LUBUNTU 20.04LTS Operating System (OS)](lubuntu.me)<br/>
+--> 3.1) Click Preferences -> LXQt Settings -> Session Settings<br/>
+--> 3.2) Click "Autostart" icon in left panel<br/>
+--> 3.3) Click "Add" Button<br/>
+--> Name: "LAN MESSENGER"<br/>
+--> Command: wine \"/home/unit_member/.wine/drive_c/Program Files (x86)/LAN Messenger/lmc.exe\"<br/>
+--> <b>Additional Notes:</b><br/>
+--> Update correct location of "lmc.exe"<br/>
+--> No need to put check mark in checkbox of "Wait for system tray"<br/>
+--> 3.4) Click: "OK"<br/>
+--> 3.5) Click: "Close"<br/>
+--> DONE!
 
 ## IV. System Integration @Partner Clinic and Peripheral Units
 To eliminate excess steps and inefficient time usage, the Marikina Orthopedic Specialty Clinic (MOSC) requested Usbong's services to automate routine, monotonous tasks and share with unit members know-how on computers.<br/><br/>
