@@ -49,9 +49,9 @@ Action: [Download](https://sourceforge.net/projects/lanmsngr/)
 DONE!<br/>
 3) Auto-start LAN Messenger<br/>
 --> verified: with [LUBUNTU 20.04LTS Operating System (OS)](lubuntu.me)<br/>
---> 3.1) Click Preferences -> LXQt Settings -> Session Settings<br/>
---> 3.2) Click "Autostart" icon in left panel<br/>
---> 3.3) Click "Add" Button<br/>
+--> 3.1) Click: Preferences -> LXQt Settings -> Session Settings<br/>
+--> 3.2) Click: "Autostart" icon in left panel<br/>
+--> 3.3) Click: "Add" Button<br/>
 --> Name: "LAN MESSENGER"<br/>
 --> Command: wine \"/home/unit_member/.wine/drive_c/Program Files (x86)/LAN Messenger/lmc.exe\"<br/>
 --> <b>Additional Notes:</b><br/>
