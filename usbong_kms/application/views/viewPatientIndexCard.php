@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210514
+  @date updated: 20210515
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -1558,7 +1558,8 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 				echo "</table>";				
 				echo "<br/>";				
 //				echo '<div>***NOTHING FOLLOWS***';	
-				echo "<br/>";				
+//removed by Mike, 20210515
+//				echo "<br/>";				
 				
 				
 			}
@@ -1865,9 +1866,10 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 
 				echo "</table>";				
 				echo "<br/>";				
-//				echo '<div>***NOTHING FOLLOWS***';	
+//removed by Mike, 20210515				
+/*				echo '<div>***NOTHING FOLLOWS***';
 				echo "<br/>";								
-				
+*/				
 			}
 		}
 ?>	
@@ -2178,7 +2180,8 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 
 				echo "</table>";				
 				echo "<br/>";				
-//				echo '<div>***NOTHING FOLLOWS***';	
+//added by Mike, 20210515				
+				echo '<div>***NOTHING FOLLOWS***';	
 				echo "<br/>";				
 				
 				
