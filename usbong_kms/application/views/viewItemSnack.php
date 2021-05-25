@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210509
+' @date updated: 20210526
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -364,7 +364,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		//added by Mike, 20200329; edited by Mike, 20200414
 //		function myPopupFunction() {				
-		function myPopupFunction(itemId) {				
+		function myPopupFunction(itemId) {
+			//added by Mike, 20210526
+			//note: we add this command to prevent multiple button clicks
+			//received by computer server before identifying that a patient transaction
+			//already exists in Cart List from Database
+			document.getElementById("buyButtonId").disabled = true;
+		
 			var quantity = document.getElementById("quantityParam").value;
 			var fee = document.getElementById("feeParam").value;
 			//added by Mike, 20200504
@@ -899,7 +905,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											return false;										
 										}
 									}" required>						
-							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase">BUY</button>									
+							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase" id="buyButtonId">BUY</button>									
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
