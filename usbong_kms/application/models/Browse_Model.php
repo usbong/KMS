@@ -4250,7 +4250,8 @@ class Browse_Model extends CI_Model
 
 		$this->db->order_by('added_datetime_stamp`', 'DESC');//ASC');
 
-		$this->db->limit(8);
+		//removed by Mike, 20210528
+//		$this->db->limit(8);
 		
 		$query = $this->db->get('image');
 
