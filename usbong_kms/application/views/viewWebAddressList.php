@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200602
-  @date updated: 20210110
+  @date updated: 20210531
 	
   Computer Web Browser Address (Example):
   1) http://mosc-accounting/usbong_kms/index.php/report/viewWebAddressList
@@ -304,6 +304,12 @@ Example:<br/>
 http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportPASFor/06</a><br/>
 <br/>
 where "06" = "June 2020"<br/>
+<!-- added by Mike, 2021530 -->
+<h2>VII. PRICE LISTS:</h2>
+<b>1) X-RAY UNIT</b><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/server/viewXRayPriceList.php">
+http://192.168.11.10/usbong_kms/server/viewXRayPriceList.php<br/>
+</a>
 
 <br/>
 	<br />
