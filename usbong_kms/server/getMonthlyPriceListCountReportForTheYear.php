@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210607
+  @date updated: 20210608
   
   Input:
   1) Item details and sales reports for the year in the database (DB)
@@ -86,14 +86,20 @@
 */
 	//TO-DO: -add: med and non-med only counts in other Medical Doctors report
 	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and transaction_quantity!='0' group by patient_id"))
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
 
+	if ($selectedMedItemPriceListResultArray = $mysqli->query("select item_id, item_name, item_price, item_total_sold from item where item_type_id='1'"))	
+	
+/*
+	//note:
+		if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id and c.added_datetime_stamp = (select max(c2.added_datetime_stamp) from x_ray_service as c2 where c.x_ray_body_location_id=c2.x_ray_body_location_id and c.x_ray_type_id=c2.x_ray_type_id)"))	
+*/			
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
 
-		if ($selectedMedicalDoctorResultArray->num_rows > 0) {
+		if ($selectedMedItemPriceListResultArray->num_rows > 0) {
 			
+/*			
 			//added by Mike, 20200524
 			if ($selectedMedicalDoctorResultArray->num_rows == 1) {
 				echo "SYSON, PEDRO's transaction for the day.<br /><br />";
@@ -101,101 +107,27 @@
 			else {
 				echo "SYSON, PEDRO's transactions for the day.<br /><br />";
 			}
+*/
+			$iCount=1;
 
-//						$row = $selectedResult->fetch_array();
-			//count total
-			$iFeeTotalCount = 0;				
-			$iQuantityTotalCount = 0;				
-
-			$iNetFeeTotalCount = 0; //added by Mike, 20200530
-			$iDexaQuantityTotalCount = 0; //added by Mike, 20200531
-			$iPrivateQuantityTotalCount = 0; //added by Mike, 20200531
-			$iNoChargeQuantityTotalCount = 0; //added by Mike, 20200531
-			
-			//added by Mike, 20201027
-			$iMedOnlyQuantityTotalCount = 0;	
-			//added by Mike, 20201031
-			$iNonMedOnlyQuantityTotalCount = 0;	
-
-			foreach ($selectedMedicalDoctorResultArray as $value) {
+			foreach ($selectedMedItemPriceListResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
 				//removed by Mike, 20200711
 /*				if ($value['fee'] !== "0.00") {
 */	
-
-					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
-
-					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+					echo $iCount.": ".$value['item_name']."<br/>";
 					
-					//added by Mike, 20201027; edited by Mike, 20201031
-					//note: order/sequence is important
-					//if not NC and NET FEE=0, X-RAY=0, LAB=0, MINOR SET=0					
-					if ((!strpos($value['notes'],"NC")!==false) and ($value['fee']==0) and ($value['x_ray_fee']==0) and ($value['lab_fee']==0)) {
-						//med_fee not 0
-						if ($value['med_fee']!=0) { //edited by Mike, 20201031
-							$iMedOnlyQuantityTotalCount = $iMedOnlyQuantityTotalCount + 1;
-						}
-						//pas_fee not 0
-						if ($value['pas_fee']!=0) { //edited by Mike, 20201031
-							$iNonMedOnlyQuantityTotalCount = $iNonMedOnlyQuantityTotalCount + 1;
-						}
-					}
-					else {
-						//added by Mike, 20201106
-						//TO-DO: -update: this due to variation in keywords, e.g. "MEDICINE"
-						//TO-DO: -update: this due to include snack items
-						//note: at present, SQL query does not include these items in the result
-						if (strpos($value['notes'],"NON-MED ONLY")!==false) {
-							$iNonMedOnlyQuantityTotalCount = $iNonMedOnlyQuantityTotalCount + 1;
-						}
-						else if (strpos($value['notes'],"MED ONLY")!==false) {
-							$iMedOnlyQuantityTotalCount = $iMedOnlyQuantityTotalCount + 1;
-						}
-					}
+					$iCount=$iCount+1;
 					
-					//edited by Mike, 20201019
-					if (strpos($value['notes'],"PRIVATE")!==false) {
-						//removed by Mike, 20201019
-						//do not include for DR. PEDRO transaction
-//						$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
-						
-						//added by Mike, 20200531
-						$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;						
-					}
-
-					if (strpos($value['notes'],"NC")!==false) {
-						$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
-					}
-					else if (strpos($value['notes'],"NO CHARGE")!==false) {
-						$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
-					}
-
-/*					//edited by Mike, 20200825
-					//added by Mike, 20200819
-					if (strpos($value['notes'],"MINORSET")!==false) {
-						$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;
-						
-						$iFeeTotalCount = $iFeeTotalCount - 500;
-						$iQuantityTotalCount = $iQuantityTotalCount - 1;
-					}
-*/
-					if (strpos($value['notes'],"MINORSET")!==false) {
-						//edited by Mike, 20201202
-						//$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
 					
-						if (strpos($value['notes'],"MINORSETX2")!==false) {
-							$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 2;						
-						}
-						else {
-							$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
-						}						
-					}
+					//TO-DO: -add: total item sold for each month of the year
 					
 /*				}					
 */
 			}
 
 			//write as .txt file
+/*
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
 					"iQuantityTotalCount" => $iQuantityTotalCount,
@@ -211,6 +143,7 @@
 					//added by Mike, 20201031
 					"iNonMedOnlyQuantityTotalCount" => $iNonMedOnlyQuantityTotalCount		
 			);
+			
 			$responses[] = $jsonResponse;
 			
 			$outputReportMedicalDoctor = json_encode($responses);
@@ -226,12 +159,14 @@
 			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
-			$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
+			$file = $fileBasePath."priceListCountReportMedItemV".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
+*/
+
 		}
 		else {
-			echo "There are no SYSON, PEDRO transactions for the day.";
+			echo "There are no MED ITEM transactions for the year.";
 		}
 	}		
 	// show an error if there is an issue with the database query
@@ -244,6 +179,9 @@
 
 	$responses = [];
 	
+	
+	//TO-DO: -update: this
+
 
 	//x-ray
 //	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0'"))
