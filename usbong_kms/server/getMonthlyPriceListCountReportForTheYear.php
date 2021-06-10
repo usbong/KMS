@@ -249,7 +249,7 @@
 		
 		  <!-- ANSWERS Row -->		  		  
 <?php		  
-	if ($selectedMedItemPriceListResultArray = $mysqli->query("select item_id, item_name, item_price, item_total_sold from item where item_type_id='1'"))	
+	if ($selectedMedItemPriceListResultArray = $mysqli->query("select item_id, item_name, item_price, item_cost_discounted, item_cost, item_total_sold from item where item_type_id='1'"))	
 	{
 		if ($selectedMedItemPriceListResultArray->num_rows > 0) {			
 			$iCount=1;
@@ -341,12 +341,20 @@
 
 					//column 6: DISC COST
 					echo '<td class ="columnFee">';
-//					echo $value['item_price'];
+					if (strpos($value['item_cost_discounted'],"-1")!==0) {						
+						echo $value['item_cost_discounted'];
+					}
+					else {
+					}
 					echo "</td>";
 
 					//column 7: COST
 					echo '<td class ="columnFee">';
-//					echo $value['item_price'];
+					if (strpos($value['item_cost_discounted'],"-1")!==0) {						
+					echo $value['item_cost'];
+					}
+					else {
+					}
 					echo "</td>";
 
 
