@@ -275,7 +275,10 @@
 				//TO-DO: -reverify: in Report_Model, getPurchasedItemTransactionsForTheDayUnifiedAll(...)
 				
 				 //note: transaction_date format: date('m/d/Y')
-				 if ($iItemTotalSoldForTheMonthResultArray = $mysqli->query("select  transaction_id, fee_quantity from transaction where item_id='".$value['item_id']."' and transaction_date>='".$sMonth."/01/".$sYear."' and transaction_date<='".$sMonth."/31/".$sYear."'")) {
+				//edited by Mike, 20210610
+//				 if ($iItemTotalSoldForTheMonthResultArray = $mysqli->query("select  transaction_id, fee_quantity from transaction where item_id='".$value['item_id']."' and transaction_date>='".$sMonth."/01/".$sYear."' and transaction_date<='".$sMonth."/31/".$sYear."'")) {
+
+				 if ($iItemTotalSoldForTheMonthResultArray = $mysqli->query("select  transaction_id, fee_quantity from transaction where item_id='".$value['item_id']."' and STR_TO_DATE(transaction_date, '%m/%d/%Y')>='".$sYear."/".$sMonth."/01' and STR_TO_DATE(transaction_date, '%m/%d/%Y')<='".$sYear."/".$sMonth."/31'")) {
 
 //					if ($iItemTotalSoldForTheMonthResultArray->num_rows > 0) {			
 					 
