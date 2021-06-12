@@ -6,7 +6,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210610
+  @date updated: 20210612
   
   Input:
   1) Item details and sales reports for the year in the database (DB)
@@ -249,12 +249,165 @@
 		
 		  <!-- ANSWERS Row -->		  		  
 <?php		  
-	if ($selectedMedItemPriceListResultArray = $mysqli->query("select item_id, item_name, item_price, item_cost_discounted, item_cost, item_total_sold from item where item_type_id='1'"))	
+	//edited by Mike, 20210612
+//	if ($selectedMedItemPriceListResultArray = $mysqli->query("select item_id, item_name, item_price, item_cost_discounted, item_cost, item_total_sold from item where item_type_id='1'"))	
+	if ($selectedMedItemPriceListResultArray = $mysqli->query("select item_id, item_name, item_price, item_cost_discounted, item_cost, item_total_sold from item where item_type_id='1' order by item_name ASC"))
 	{
 		if ($selectedMedItemPriceListResultArray->num_rows > 0) {			
 			$iCount=1;
 
 			foreach ($selectedMedItemPriceListResultArray as $value) {
+			   //added by Mike, 20210612
+			   //no need to add these
+//			   if ($value['item_id']=="4") { 
+			   if (strpos(strtoupper($value['item_name']), "NONE")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "ADVIL IMPORTED 200MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "AGMASET 445MG; SET OF 3")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "CLOXACILLIN 500MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "CO-AMOXICLAV (RAFONEX) 625MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "COLCHICINE (GENERIC/VONWELT) TAB 500MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "COLCHICINE (GOUTNIL) TAB 500MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "COLCHICINE (RHEA) TAB 500MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "DICLOFENAC SODIUM GEL (ARNIL) 20G")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "ETORICOXIB (ARCOXIA) 120MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold
+			   if (strpos(strtoupper($value['item_name']), "ETORICOXIB (ETOXI-120) 120MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "ETORICOXIB (SEFOXIB) 120MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold
+			   if (strpos(strtoupper($value['item_name']), "ETORICOXIB (XIBRA-120) 120MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "ETORICOXIB (XIBRA) 60MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "FEBUXOSTAT (FURIC) 80MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "GABARON (GABA.) 300MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "ISOFLAV-CR CAP")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "LIDOCAINE HCL (EUROCAINE) 5ML")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "LORNOXICAN (ZORNICA-4)")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "LOSARTAN POTASSIUM (AMGEL) 50MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "LOSARTAN POTASSIUM (LOZAK) 100MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "LOSARTAN POTASSIUM (VONWELT) 100MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold
+			   if (strpos(strtoupper($value['item_name']), "MEFENAMIC ACID (MEGYXAN) 500MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold
+			   if (strpos(strtoupper($value['item_name']), "MELOXICAM (TERACAM) 15MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "METFORMIN (ADIAC) TAB 500MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "METOPROLOL (PROLOL) TAB 100MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "NAPROXEN (NAPLEX) 500MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold
+			   if (strpos(strtoupper($value['item_name']), "NAPROXEN (SONAP) 500MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold
+			   if (strpos(strtoupper($value['item_name']), "NAPROXEN (SONAP) 500MG UPDATED")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold
+			   if (strpos(strtoupper($value['item_name']), "OMEPRAZOLE (INHIBITA) 40MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "OMEPRAZOLE (MEPRACID) 20MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "PARA + ORPHENADRINECITRATE (PROPARFORTE) 650/35MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "PARA + TRAMADOL HCL (CETRADOL) 325/37.5")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "PARA + TRAMADOL HCL (DOLOGESIC) 325/37.5")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "PARA + TRAMADOL HCL (TRAP) 325/37.5")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "PREDNISONE (DERPSON) TAB 5MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold
+			   if (strpos(strtoupper($value['item_name']), "ROSUVASTATIN CALCIUM (ROSUBOLUC-10) 10MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold			   
+			   if (strpos(strtoupper($value['item_name']), "SODIUM ASCORBATE (SOVIT-CEE) 500MG")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold			   			   
+			   if (strpos(strtoupper($value['item_name']), "TRAMADOL HYDROCHLORIDE (E-DOL) CAP 50MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "VIARTRIL-S CAP 500MG")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "VIARTRIL-S POWDER SACHET")!==false) { 
+				   continue;
+			   }
+			   if (strpos(strtoupper($value['item_name']), "ATORVASTATIN CALCIUM (MYTORVAS) 20MG FILM-COATED TAB")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold			   			   
+			   if (strpos(strtoupper($value['item_name']), "HYALURONIC ACID FOR INTRA-ARTICULAR SINGLE INJECTION 90MG/3ML (OPTIVISC SINGLE)")!==false) { 
+				   continue;
+			   }
+			   //note: select items sold			   			   
+			   if (strpos(strtoupper($value['item_name']), "HYALURONIC ACID SODIUM SALT 1.5% SOLUTION FOR INTRA-ARTICULAR INJECTION (HYALONE)")!==false) { 
+				   continue;
+			   }
+			   			   
+			    			     				
+				
+			   //---
 				
 			   //added by Mike, 20210609
 			   $iItemTotalSoldCountArray = array();
@@ -326,7 +479,9 @@
 
 					//column 3: ITEM NAME
 					echo '<td class ="columnName">';
-					echo $value['item_name'];
+					//edited by Mike, 20210612
+//					echo $value['item_name'];
+					echo strtoupper($value['item_name']);
 					echo "</td>";
 
 					//column 4: MERC PRICE
