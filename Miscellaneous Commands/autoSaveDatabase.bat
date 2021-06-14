@@ -11,16 +11,23 @@ REM Auto-save MySQL Database with Windows Personal Computer (PC)
 REM company: USBONG
 REM author: SYSON, MICHAEL B.
 REM date created: 20210613
-REM last updated: 20210613
+REM last updated: 20210614
 REM @website address: http://www.usbong.ph
 
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
 set myTime=%time:~0,2%%time:~3,2%
 
-cd "C:xampp\mysql\bin\"
+echo %myTime%
+
+cd "C:\xampp\mysql\bin\"
 
 C:
 
+REM TO-DO: -update: time to include zero if <10
+
 REM note: add: password after "-p" to auto-save 
 REM without need to enter the password as input with every execution
-mysqldump -uroot -p usbong_kms > "D:\Usbong\DB\halimbawa\usbong_kmsV"%myDate%"T"%myTime%
+mysqldump -uroot -p usbong_kms > "C:\Usbong\DB\SLHCC\usbong_kmsSLHCCV"%myDate%
+rem "T"%myTime%
+
+pause
