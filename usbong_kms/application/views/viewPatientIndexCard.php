@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210515
+  @date updated: 20210616
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -1457,7 +1457,9 @@
 							<?php
 								//edited by Mike, 20210423
 //								echo $value['fee'];
-								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
+								//edited by Mike, 20210616
+//								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
+								echo "@".number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
 								
 //								$dTotalFee = $dTotalFee + $value['fee'];
 							?>
@@ -1766,7 +1768,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 							<?php
 								//edited by Mike, 20210423
 //								echo $value['fee'];
-								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
+								//edited by Mike, 20210616
+//								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
+								echo "@".number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
 								
 //								$dTotalFee = $dTotalFee + $value['fee'];
 							?>
@@ -2080,7 +2084,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 							<?php
 								//edited by Mike, 20210423
 //								echo $value['fee'];
-								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
+								//edited by Mike, 20210616
+//								echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
+								echo "@".number_format($value['fee']/$value['fee_quantity'], 2, '.', '');								
 								
 //								$dTotalFee = $dTotalFee + $value['fee'];
 							?>
