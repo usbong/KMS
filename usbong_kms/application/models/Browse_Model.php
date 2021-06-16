@@ -162,7 +162,10 @@ class Browse_Model extends CI_Model
 		//we use this at MOSC
 		//added by Mike, 20210212
 		//TO-DO: -add: sex, age, etc
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
+		//edited by Mike, 20210616
+//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id');
+		
 //		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id, t1.sex, t1.age, t1.age_unit');
 
 		$this->db->from('patient as t1');
@@ -176,6 +179,10 @@ class Browse_Model extends CI_Model
 //		$this->db->group_by('t1.patient_id');
 
 		$this->db->like('t1.patient_name', $param['nameParam']);
+
+		//added by Mike, 20210616
+		$this->db->not_like('t2.notes', "ONLY");
+		$this->db->where('t2.transaction_quantity !=', 0);
 		
 		//added by Mike, 20200427
 		$this->db->where('t1.patient_name !=', "CANCELLED");
