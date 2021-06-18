@@ -1315,8 +1315,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 					  </tr>
 					
-					
-					
 			<?php
 					//add: table headers
 					$iCount = 1;
@@ -1346,7 +1344,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>								
 								</a>
 							</td>
-
 							<td class ="column">				
 								<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 									<div class="itemName">
