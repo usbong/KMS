@@ -9,7 +9,10 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210424
+' @date updated: 20210618
+
+//TO-DO: -fix: computer adds patient after pressing reload
+
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1084,8 +1087,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									
 									//edited by Mike, 20201212
 									//echo number_format($patientFee, 2, '.', '');
-//									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');									
-									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+//									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');					
+									//edited by Mike, 20210618
+//									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+									echo "@(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
 
 									//added by Mike, 20201212
 									$cartValuePatientId = $cartValue['patient_id'];
@@ -1106,8 +1111,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$iQuantity =  $cartValue['fee_quantity'];
 									}
+									//edited by Mike, 20210618
+//									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
+									echo "@".number_format($cartValue['fee']/$iQuantity, 2, '.', '');
 									
-									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
 								}
 /*
 								//edited by Mike, 20200419

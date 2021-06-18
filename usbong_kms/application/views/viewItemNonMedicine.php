@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210526
+' @date updated: 20210618
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1125,8 +1125,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20201212
 									//echo number_format($patientFee, 2, '.', '');
 //									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');
-
-									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+									//edited by Mike, 20210618
+//									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+									echo "@(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
 								}
 								else {
 									if ($cartValue['fee_quantity']==0) {
@@ -1147,26 +1148,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										if ((isset($noVAT)) and ($noVAT)) {
 											$cartValueFeeWithoutVAT = $cartValueFee - $cartValueFee*0.12;
 
-											echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
+											//edited by Mike, 20210618
+//											echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
+											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
+											
 										}
 										else if (isset($addedVAT) and ($addedVAT)) {
 											$cartValueFeeWithoutVAT = $cartValueFee/(1+0.12);
 											
 											//edited by Mike, 20201214
 											//echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".($cartValueFeeWithoutVAT*.12).")";
-											
-											echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
+
+											//edited by Mike, 20210618
+											//echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
+											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
 
 											//added by Mike, 20201228
 											//echo "(".number_format($cartValueFee, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '')." - ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
 											
 										}
 										else {
-											echo number_format($cartValueFee, 2, '.', '');
+											//edited by Mike, 20210618
+//											echo number_format($cartValueFee, 2, '.', '');
+											echo "@".number_format($cartValueFee, 2, '.', '');
 										}									
 									}
 									else {
-										echo number_format($cartValueFee, 2, '.', '');
+										//edited by Mike, 20210618
+//										echo number_format($cartValueFee, 2, '.', '');
+										echo "@".number_format($cartValueFee, 2, '.', '');
 									}									
 								}
 							?>
