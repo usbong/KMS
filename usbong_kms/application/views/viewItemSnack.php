@@ -1254,8 +1254,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //									echo $value['fee'];
 									//edited by Mike, 20200501
 									//echo $value['fee']/$iQuantity;
-									echo number_format((float)$value['fee']/$iQuantity, 2, '.', '');
-
+									
+									//edited by Mike, 20210618
+//									echo number_format((float)$value['fee']/$iQuantity, 2, '.', '');
+									echo "@".number_format((float)$value['fee']/$iQuantity, 2, '.', '');
 								?>
 									</div>
 							</td>
