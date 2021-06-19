@@ -152,6 +152,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							width: 13%;
 						}		
+						
+						td.columnTableHeaderDateHistory
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 15%;
+						}							
 
 						td.columnTableHeaderPatientNameHistory
 						{
@@ -1507,7 +1514,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			?>				
 			
 						  <tr class="row">
-							<td class ="column">				
+							<td class ="columnTableHeaderDateHistory">				
 								<div class="transactionDate">
 					<?php
 									//edited by Mike, 20200507
@@ -1518,14 +1525,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</td>
 							<td class ="columnName">				
-								<a href='<?php echo site_url('browse/viewPatient/'.$value['item_id'])?>' id="viewPatientId<?php echo $iCount?>">
+								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
 									<div class="patientName">
 					<?php
 									echo $value['patient_name'];
 					?>		
 									</div>								
 								</a>
-							</td>							
+							</td>
 							<td class ="column">				
 								<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 									<div class="itemName">

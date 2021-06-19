@@ -150,6 +150,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							width: 13%;
 						}		
+						
+						td.columnTableHeaderDateHistory
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 15%;
+						}								
 
 						td.columnTableHeaderPatientNameHistory
 						{
@@ -1325,18 +1332,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			?>				
 			
 						  <tr class="row">
-							<td class ="column">				
+							<td class ="columnTableHeaderDateHistory">				
 								<div class="transactionDate">
 					<?php
 									//edited by Mike, 20200507
 									//echo $value['transaction_date'];
 									//echo $value['added_datetime_stamp'];
+									//edited by Mike, 20210619
 									echo str_replace(" ","T",$value['added_datetime_stamp']);
+//									echo str_replace(" ","<br/>T",$value['added_datetime_stamp']);
 					?>		
 								</div>								
 							</td>
 							<td class ="columnName">				
-								<a href='<?php echo site_url('browse/viewPatient/'.$value['item_id'])?>' id="viewPatientId<?php echo $iCount?>">
+								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
 									<div class="patientName">
 					<?php
 									echo $value['patient_name'];
