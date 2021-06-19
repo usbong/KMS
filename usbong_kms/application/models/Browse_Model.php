@@ -4166,7 +4166,7 @@ class Browse_Model extends CI_Model
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp, t3.quantity_in_stock, t3.expiration_date');
 		//edited by Mike, 20210619
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp, t3.patient_name');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp, t2.patient_id, t3.patient_name');
 
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
