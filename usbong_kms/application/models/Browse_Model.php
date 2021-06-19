@@ -183,7 +183,9 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20210616
 		$this->db->not_like('t2.notes', "ONLY");
 		//note: added combined total transaction 2020-06-11 onwards
-		$this->db->where('t2.transaction_quantity !=', 0); 
+		//removed by Mike, 20210619
+		//TO-DO: -reverify: this action
+//		$this->db->where('t2.transaction_quantity !=', 0); 
 		
 		//added by Mike, 20200427
 		$this->db->where('t1.patient_name !=', "CANCELLED");
