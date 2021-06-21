@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210618
+' @date updated: 20210622
 
 //TO-DO: -fix: computer adds patient after pressing reload
 
@@ -1073,9 +1073,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class ="columnFee">				
-								<div id="cartItemPriceId<?php echo $iCount?>">
 							<?php
+//edited by Mike, 20210622							
 								//edited by Mike, 20200414
 //								echo $cartValue['item_price'];
 
@@ -1085,13 +1084,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 									$patientFee = $cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
 									
-									//edited by Mike, 20201212
-									//echo number_format($patientFee, 2, '.', '');
-//									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');					
-									//edited by Mike, 20210618
-//									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
-									echo "@(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
-
 									//added by Mike, 20201212
 									$cartValuePatientId = $cartValue['patient_id'];
 								}
@@ -1111,20 +1103,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$iQuantity =  $cartValue['fee_quantity'];
 									}
-									//edited by Mike, 20210618
-//									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-									echo "@".number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-									
 								}
-/*
-								//edited by Mike, 20200419
-								//echo $cartValue['fee']/$iQuantity;	
-								echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-*/
-
 							?>
-								</div>
-						</td>
 						<td class ="column">				
 						x
 						</td>
@@ -1147,6 +1127,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<td class ="columnFee">				
+								<div id="cartItemPriceId<?php echo $iCount?>">
+							<?php
+//edited by Mike, 20210622							
+								//edited by Mike, 20200414
+//								echo $cartValue['item_price'];
+
+								//added by Mike, 20200415; edited by Mike, 20200519
+								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+									echo "@(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+								}
+								else {
+									echo "@".number_format($cartValue['fee']/$iQuantity, 2, '.', '');									
+								}
+							?>
+								</div>
+						</td>
+
 						<td class ="column">				
 						=
 						</td>

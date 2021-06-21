@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200517
-' @date updated: 20210110
+' @date updated: 20210622
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -32,8 +32,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-family: Arial;
 							font-size: 11pt;
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							/* edited by Mike, 20210622 */
+							/* TO-DO: -add: auto-identify if Tablet PC */
+							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							/*width: 670px*/
+							width: 1000px							
                         }
 						
 						div.checkBox
@@ -116,10 +119,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: right
+							text-align: left /* right //edited by Mike, 20210622 */
 						}						
 
 						td.columnFee

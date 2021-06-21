@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210619
+' @date updated: 20210622
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1079,22 +1079,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class ="columnFee">				
-								<div id="cartItemPriceId<?php echo $iCount?>">
 							<?php
+//edited by Mike, 20210622							
 								//added by Mike, 20200415; edited by Mike, 20200519
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									$iQuantity =  1;
 
 									$patientFee = $cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
-
-									//edited by Mike, 20201212
-									//echo number_format($patientFee, 2, '.', '');
-//									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');
-									//edited by Mike, 20210618
-//									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
-									echo "@(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
-
 								}
 								else {
 									if ($cartValue['fee_quantity']==0) {
@@ -1104,14 +1095,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$iQuantity =  $cartValue['fee_quantity'];
 									}
-
-									//edited by Mike, 20210618
-//									echo number_format($cartValue['fee']/$iQuantity, 2, '.', '');
-									echo "@".number_format($cartValue['fee']/$iQuantity, 2, '.', '');									
 								}
-							?>
-								</div>
-						</td>
+							?>						
 						<td class ="column">				
 						x
 						</td>
@@ -1131,6 +1116,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 								echo $iQuantity;
 
+							?>
+								</div>
+						</td>
+						<td class ="columnFee">				
+								<div id="cartItemPriceId<?php echo $iCount?>">
+							<?php
+//edited by Mike, 20210622							
+								//added by Mike, 20200415; edited by Mike, 20200519
+								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+									echo "@(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+								}
+								else {
+									echo "@".number_format($cartValue['fee']/$iQuantity, 2, '.', '');									
+								}
 							?>
 								</div>
 						</td>
@@ -1281,16 +1280,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "ITEM NAME";
 				?>		
 						</td>
+						<td class ="columnTableHeaderBlankHistory">				
+						</td>						
 						<td class ="columnTableHeaderFeeHistory">				
 							<?php
-								echo "FEE";
+								echo "QTY";
 							?>
 						</td>
 						<td class ="columnTableHeaderBlankHistory">				
 						</td>						
 						<td class ="columnTableHeaderFeeHistory">				
 							<?php
-								echo "QTY";
+								echo "FEE";
 							?>
 						</td>
 						<td class ="columnTableHeaderBlankHistory">				
@@ -1340,6 +1341,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>								
 								</a>
 							</td>
+								<?php
+//edited by Mike, 20210622								
+									//edited by Mike, 20200912
+//									echo $value['item_price'];
+
+									//added by Mike, 20200415
+									if ($value['fee_quantity']==0) {
+	//									$iQuantity =  1;
+										$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
+									}
+									else {
+										$iQuantity =  $value['fee_quantity'];
+									}
+								?>
+							<td class ="column">				
+							x
+							</td>
+							<td class ="column">				
+									<div id="itemQuantityId<?php echo $iCount?>">
+								<?php
+	//								echo $value['fee']/$value['item_price'];
+									//edited by Mike, 20200501
+//									echo floor(($value['fee']/$value['item_price']*100)/100);
+									echo $value['fee_quantity'];
+								?>
+									</div>
+							</td>
+							<td class ="column">				
+							</td>							
 							<td class ="column">				
 									<div id="itemPriceId<?php echo $iCount?>">
 								<?php
@@ -1362,19 +1392,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20210618
 //									echo number_format((float)$value['fee']/$iQuantity, 2, '.', '');
 									echo "@".number_format((float)$value['fee']/$iQuantity, 2, '.', '');
-								?>
-									</div>
-							</td>
-							<td class ="column">				
-							x
-							</td>
-							<td class ="column">				
-									<div id="itemQuantityId<?php echo $iCount?>">
-								<?php
-	//								echo $value['fee']/$value['item_price'];
-									//edited by Mike, 20200501
-//									echo floor(($value['fee']/$value['item_price']*100)/100);
-									echo $value['fee_quantity'];
 								?>
 									</div>
 							</td>

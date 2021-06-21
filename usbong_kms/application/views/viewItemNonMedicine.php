@@ -1168,21 +1168,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 					</td>
-						<td class ="columnFee">				
-								<div id="cartItemPriceId<?php echo $iCount?>">
-							<?php
+<?php
+	//edited by Mike, 20210622
 								//added by Mike, 20200415; edited by Mike, 20200519
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									$iQuantity =  1;
 
 									$patientFee = $cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
-
-									//edited by Mike, 20201212
-									//echo number_format($patientFee, 2, '.', '');
-//									echo $cartValue['fee']."+".$cartValue['x_ray_fee']."+".$cartValue['lab_fee']."=".number_format($patientFee, 2, '.', '');
-									//edited by Mike, 20210618
-//									echo "(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
-									echo "@(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
 								}
 								else {
 									if ($cartValue['fee_quantity']==0) {
@@ -1202,41 +1194,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//note: verify first if noVAT 
 										if ((isset($noVAT)) and ($noVAT)) {
 											$cartValueFeeWithoutVAT = $cartValueFee - $cartValueFee*0.12;
-
-											//edited by Mike, 20210618
-//											echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
-											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
-											
 										}
 										else if (isset($addedVAT) and ($addedVAT)) {
 											$cartValueFeeWithoutVAT = $cartValueFee/(1+0.12);
-											
-											//edited by Mike, 20201214
-											//echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".($cartValueFeeWithoutVAT*.12).")";
-
-											//edited by Mike, 20210618
-											//echo "(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
-											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
-
-											//added by Mike, 20201228
-											//echo "(".number_format($cartValueFee, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '')." - ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
-											
 										}
 										else {
-											//edited by Mike, 20210618
-//											echo number_format($cartValueFee, 2, '.', '');
-											echo "@".number_format($cartValueFee, 2, '.', '');
 										}									
 									}
 									else {
-										//edited by Mike, 20210618
-//										echo number_format($cartValueFee, 2, '.', '');
-										echo "@".number_format($cartValueFee, 2, '.', '');
 									}									
 								}
-							?>
-								</div>
-						</td>
+?>					
 						<td class ="column">				
 						x
 						</td>
@@ -1256,6 +1224,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 */								
 								echo $iQuantity;
+							?>
+								</div>
+						</td>
+						<td class ="columnFee">				
+								<div id="cartItemPriceId<?php echo $iCount?>">
+							<?php
+//edited by Mike, 20210622							
+								//added by Mike, 20200415; edited by Mike, 20200519
+								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
+									echo "@(".$cartValue['fee']." + ".$cartValue['x_ray_fee']." + ".$cartValue['lab_fee'].")";
+								}
+								else {
+									//edited by Mike, 20201214
+									if ($cartValue['item_type_id']==2) { //NON-MED ITEM
+										//note: verify first if noVAT 
+										if ((isset($noVAT)) and ($noVAT)) {
+											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
+										}
+										else if (isset($addedVAT) and ($addedVAT)) {
+											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
+										}
+										else {
+											//edited by Mike, 20210618
+//											echo number_format($cartValueFee, 2, '.', '');
+											echo "@".number_format($cartValueFee, 2, '.', '');
+										}									
+									}
+									else {
+										//edited by Mike, 20210618
+//										echo number_format($cartValueFee, 2, '.', '');
+										echo "@".number_format($cartValueFee, 2, '.', '');
+									}									
+								}
 							?>
 								</div>
 						</td>
@@ -1483,16 +1484,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "ITEM NAME";
 				?>		
 						</td>
-						<td class ="columnTableHeaderFeeHistory">				
-							<?php
-								echo "FEE";
-							?>
-						</td>
 						<td class ="columnTableHeaderBlankHistory">				
 						</td>						
 						<td class ="columnTableHeaderFeeHistory">				
 							<?php
 								echo "QTY";
+							?>
+						</td>
+						<td class ="columnTableHeaderBlankHistory">				
+						</td>
+						<td class ="columnTableHeaderFeeHistory">				
+							<?php
+								echo "FEE";
 							?>
 						</td>
 						<td class ="columnTableHeaderBlankHistory">				
@@ -1545,12 +1548,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>								
 								</a>
 							</td>
-							<td class ="column">				
-									<div id="itemPriceId<?php echo $iCount?>">
 								<?php
-									//edited by Mike, 20200414
-//									echo $value['item_price'];
-
+//edited by Mike, 20210622
 									//added by Mike, 20200415
 									if ($value['fee_quantity']==0) {
 	//									$iQuantity =  1;
@@ -1559,17 +1558,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$iQuantity =  $value['fee_quantity'];
 									}
-									
-//									echo $value['fee'];
-									//edited by Mike, 20200501
-									//echo $value['fee']/$iQuantity;
-									//edited by Mike, 20210618
-//									echo number_format((float)$value['fee']/$iQuantity, 2, '.', '');
-									echo "@".number_format((float)$value['fee']/$iQuantity, 2, '.', '');
-
 								?>
-									</div>
-							</td>
 							<td class ="column">				
 							x
 							</td>
@@ -1589,6 +1578,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 */									
 									echo $iQuantity;
+								?>
+									</div>
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+									<div id="itemPriceId<?php echo $iCount?>">
+								<?php
+									echo "@".number_format((float)$value['fee']/$iQuantity, 2, '.', '');
 								?>
 									</div>
 							</td>
