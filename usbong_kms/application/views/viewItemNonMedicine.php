@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210619
+' @date updated: 20210622
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1240,7 +1240,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									if ($cartValue['item_type_id']==2) { //NON-MED ITEM
 										//note: verify first if noVAT 
 										if ((isset($noVAT)) and ($noVAT)) {
-											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
+											//edited by Mike, 20210622
+//											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '').")";
+											echo "@(".number_format($cartValueFee, 2, '.', '')." + ".number_format($cartValueFee*.12, 2, '.', '')." - ".number_format($cartValueFee*.12, 2, '.', '').")";
+											
+											
 										}
 										else if (isset($addedVAT) and ($addedVAT)) {
 											echo "@(".number_format($cartValueFeeWithoutVAT, 2, '.', '')." + ".number_format($cartValueFeeWithoutVAT*.12, 2, '.', '').")";
