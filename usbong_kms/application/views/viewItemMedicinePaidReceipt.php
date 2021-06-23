@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210110
+' @date updated: 20210624
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -131,6 +131,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}						
 						
+						td.columnTableHeaderDateHistory
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 15%;
+						}							
+
+						td.columnTableHeaderPatientNameHistory
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 20%;
+						}		
+
+						td.columnTableHeaderItemNameHistory
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 28%;
+						}		
+
+						td.columnTableHeaderHistory
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 2%;
+						}		
+
+						td.columnTableHeaderFeeHistory
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 2%;
+						}		
+
+						td.columnTableHeaderBlankHistory
+						{
+							font-weight: bold;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 2%;
+						}
+												
 						td.imageColumn
 						{
 							width: 40%;
@@ -727,6 +782,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo '<br/>';
 					
 					echo "<table class='search-result'>";
+
+?>
+
+					  <tr class="row">
+						<td class ="columnTableHeaderHistory">				
+				<?php
+							echo "ADDED DATETIME";
+				?>		
+						</td>
+						<td class ="columnTableHeaderPatientNameHistory">				
+				<?php
+							echo "PATIENT NAME";
+				?>		
+						</td>
+
+						<td class ="columnTableHeaderItemNameHistory">				
+				<?php
+							echo "ITEM NAME";
+				?>		
+						</td>
+						<td class ="columnTableHeaderBlankHistory">				
+						</td>						
+						<td class ="columnTableHeaderFeeHistory">				
+							<?php
+								echo "QTY";
+							?>
+						</td>
+						<td class ="columnTableHeaderBlankHistory">				
+						</td>
+						<td class ="columnTableHeaderFeeHistory">				
+							<?php
+								echo "FEE";
+							?>
+						</td>
+						<td class ="columnTableHeaderBlankHistory">				
+						</td>						
+						<td class ="columnTableHeaderFeeHistory">				
+							<?php
+								echo "TOTAL";
+							?>
+						</td>
+					  </tr>
+					
+			<?php					
+
 					
 					//add: table headers
 					$iCount = 1;
@@ -747,6 +847,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>		
 								</div>								
 							</td>
+							<td class ="columnName">				
+								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+									<div class="patientName">
+					<?php
+									echo $value['patient_name'];
+					?>		
+									</div>								
+								</a>
+							</td>							
 							<td class ="column">				
 								<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 									<div class="itemName">
@@ -756,9 +865,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>								
 								</a>
 							</td>
-							<td class ="column">				
-									<div id="itemPriceId<?php echo $iCount?>">
 								<?php
+//edited by Mike, 20210624								
 									//edited by Mike, 20200912
 //									echo $value['item_price'];
 
@@ -770,14 +878,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$iQuantity =  $value['fee_quantity'];
 									}
-									
-//									echo $value['fee'];
-									//edited by Mike, 20200501
-									//echo $value['fee']/$iQuantity;
-									echo number_format((float)$value['fee']/$iQuantity, 2, '.', '');
 								?>
-									</div>
-							</td>
 							<td class ="column">				
 							x
 							</td>
@@ -791,6 +892,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								?>
 									</div>
 							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+									<div id="itemPriceId<?php echo $iCount?>">
+								<?php
+									echo "@".number_format((float)$value['fee']/$iQuantity, 2, '.', '');
+								?>
+									</div>
+							</td>
+
 							<td class ="column">				
 							=
 							</td>
