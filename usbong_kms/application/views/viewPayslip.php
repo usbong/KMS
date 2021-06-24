@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210122
+' @date updated: 20210624
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -328,11 +328,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$iMOSC = 0;
 		$iNetPF = 0;
 		$iXRayFee = 0;
+		$iLabFee = 0; //added by Mike, 20210624
 
 		$iTotalFee = 0;
 		$iTotalMOSC = 0;
 		$iTotalNetPF = 0;
 		$iTotalXRayFee = 0;
+		$iTotalLabFee = 0; //added by Mike, 20210624
 
 		//added by Mike, 20200824
 		$iTotalMinorsetFee = 0;
@@ -417,6 +419,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
+						<td class ="columnTableHeaderFee">				
+								<div class="tableHeader">
+							<?php
+									echo "LAB FEE";
+							?>
+								</div>
+						</td>
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -626,11 +635,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<div id="notesId<?php echo $iCount?>">
 						<?php
 								$iXRayFee = floor(($value['x_ray_fee']*100)/100);
+								
+								//added by Mike, 20210624
+								$iLabFee = floor(($value['lab_fee']*100)/100);
 
 								if ($value['notes']=="") {	
-									//edited by Mike, 20200415
+									//edited by Mike, 20210624
 //										echo "NONE";								
-									if (($iFee==0) and ($iMOSC==0) and ($iNetPF==0) and ($iXRayFee==0)) {
+									if (($iFee==0) and ($iMOSC==0) and ($iNetPF==0) and ($iXRayFee==0) and ($iLabFee==0)) {
 										echo "UNPAID";
 									}
 									else {
@@ -673,6 +685,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
+						<td class ="column">				
+								<div id="xrayFeeId<?php echo $iCount?>">
+							<?php
+								//edited by Mike, 20200415
+//								echo $value['x_ray_fee'];
+								//output: whole numbers
+//								echo floor(($value['x_ray_fee']*100)/100);								
+//								$iXRayFee = floor(($value['x_ray_fee']*100)/100);
+
+								echo $iLabFee;
+
+								$iTotalLabFee += $iLabFee; //$value['x_ray_fee'];
+							?>
+								</div>
+						</td>						
+
 					  </tr>
 		<?php				
 					$iCount++;		
@@ -737,6 +765,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div>
 					<?php
 						echo "<b>".$iTotalXRayFee."</b>";
+					?>
+						</div>
+				</td>						
+				<td class ="column">				
+						<div>
+					<?php
+						echo "<b>".$iTotalLabFee."</b>";
 					?>
 						</div>
 				</td>						
