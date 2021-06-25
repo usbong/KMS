@@ -2297,6 +2297,31 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewPatientIndexCard', $data);
 	}
 
+	//added by Mike, 20210626
+	public function viewAcknowledgmentForm($patientId)	
+	{
+//		$data['nameParam'] = $_POST[nameParam];
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+		
+		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
+
+		//added by Mike, 20210314
+		$data['resultPaidMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(1, $patientId); //1 = MED ITEM
+
+		//added by Mike, 20210315
+		$data['resultPaidNonMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(2, $patientId); //2 = NON-MED ITEM
+
+		//added by Mike, 20210514
+		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId); //3 = SNACK ITEM
+
+
+		$this->load->view('viewAcknowledgmentForm', $data);		
+	}
+
 
 	//added by Mike, 20200411; edited by Mike, 20200615
 	//edited by Mike, 20201027
@@ -3545,6 +3570,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->session->unset_userdata('noVAT');
 		$data['noVAT'] = False;		
 		//-----
+
+		//added by Mike, 20210626
+/* /removed by Mike, 20210626		
+		//auto-generate Acknowledgment Form
+//		$data['outputTransaction']
+		echo "<script>
+				window.open('".site_url()."/report/viewAcknowledgmentForm/".$data['outputTransaction']."/".$medicalDoctorId."/".$patientId');
+			  </script>";
+*/			  
 
 		$this->load->view('viewPatientPaidReceipt', $data);
 	}		

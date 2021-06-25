@@ -745,7 +745,7 @@ class Report extends CI_Controller { //MY_Controller {
 			$this->load->view('viewPayslip', $data);
 		}
 	}
-
+	
 	//added by Mike, 20200518
 	public function viewPayslipWebForPrev($medicalDoctorName)
 	{		
