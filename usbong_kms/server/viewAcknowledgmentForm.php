@@ -64,7 +64,8 @@
 						div.formTitle
 						{
 							text-align: center;
-							font-weight: bold;							
+/*							font-weight: bold;*/	
+							font-size: 14pt;
 						}
 						
 						img.Image-companyLogo {
@@ -97,17 +98,49 @@
 -->
 						}						
 
+						table.tablePart3
+						{
+							width: 100%;
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}						
+
 						tr.rowEvenNumber {
 							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
 							border: 1pt solid #00ff00;		
 						}
 
+						td.tableHeaderColumnPart1
+						{
+							text-align: left;
+/*							font-weight: bold;
+*/
+						}						
+
 						td.tableHeaderColumnPart2
 						{
 							border: 1px solid #000000;		
 							text-align: center;
-							font-weight: bold;
+/*							font-weight: bold;
+*/
 						}						
+
+						td.tableHeaderColumnPart3dot1
+						{
+							text-align: left;
+/*							font-weight: bold;
+*/
+							width: 70%;							
+						}						
+
+						td.tableHeaderColumnPart3dot2
+						{
+							text-align: left;
+/*							font-weight: bold;
+*/
+							width: 30%;							
+						}						
+
 
 						td.column
 						{
@@ -119,7 +152,16 @@
 						{
 							border: 1px dotted #000000;		
 							text-align: right;
-						}						
+						}
+
+						td.columnFeeTotal
+						{
+							border: 1px dotted #000000;		
+							text-align: right;
+							font-size: 14pt;
+							font-weight: bold;
+						}
+						
 
 						td.columnBorderBottom
 						{
@@ -183,7 +225,7 @@
 
 ?>
 	<div class="formTitle">
-		ACKNOWLEDGMENT FORM
+		<b>ACKNOWLEDGMENT FORM</b>
 	</div>
 
 <!--	<b>DATE:</b><?php echo " ".$dateToday; ?>
@@ -193,7 +235,7 @@
 	<!-- PART 1 -->	
 	<table>
 		<tr>
-			<td>
+			<td class="tableHeaderColumnPart1">
 				<b>TO:</b>
 			</td>
 			<td>
@@ -205,7 +247,7 @@
 			</td>
 			<td>
 			</td>
-			<td>
+			<td class="tableHeaderColumnPart1">
 				<b>DATE:</b>
 			</td>
 			<td>
@@ -213,7 +255,7 @@
 			</td>			
 		</tr>
 		<tr>
-			<td>
+			<td class="tableHeaderColumnPart1">
 				<b>ADDRESS:</b>
 			</td>
 			<td>
@@ -225,7 +267,7 @@
 			</td>
 			<td>
 			</td>
-			<td>
+			<td class="tableHeaderColumnPart1">
 				<b>OSCA/PWD ID NO.:</b>
 			</td>
 			<td>
@@ -243,7 +285,7 @@
 			</td>
 			<td>
 			</td>
-			<td>
+			<td class="tableHeaderColumnPart1">
 				<b>SIGNATURE:</b>
 			</td>
 			<td>
@@ -293,12 +335,122 @@
 			</td>
 		</tr>
 
+		<tr>
+			<td class="columnFee">
+			</td>
+			<td class="column">
+			</td>
+			<td class="column">
+				DR. HALIMBAWA, USBONG
+			</td>
+			<td class="columnFee">
+			</td>
+			<td class="columnFee">
+			</td>
+		</tr>
+
+		<tr>
+			<td class="columnFee">
+				1
+			</td>
+			<td class="column">
+				PC
+			</td>
+			<td class="column">
+				X-RAY EXAM
+			</td>
+			<td class="columnFee">
+				400
+			</td>
+			<td class="columnFee">
+				400
+			</td>
+		</tr>
+
+		<tr>
+			<td class="columnFee">
+				1
+			</td>
+			<td class="column">
+				PC
+			</td>
+			<td class="column">
+				LONGBONE ARM SLING BLUE
+			</td>
+			<td class="columnFee">
+				250
+			</td>
+			<td class="columnFee">
+				250
+			</td>
+		</tr>
+
+		<tr>
+			<td class="columnFee">
+			</td>
+			<td class="column">
+			</td>
+			<td class="column">
+				ADULT -LARGE
+			</td>
+			<td class="columnFee">
+			</td>
+			<td class="columnFee">
+			</td>
+		</tr>
+
+		<!-- PART 2: TOTAL -->
+		<tr>
+			<td class="columnFee">
+			</td>
+			<td class="column">
+			</td>
+			<td class="column">
+			</td>
+			<td class="columnFee">
+			</td>
+			<td class="columnFeeTotal">
+				2150
+			</td>
+		</tr>	
+	</table>
+
+	<br/>
+
+	<!-- PART 3 -->
+	<table class="tablePart3">
+		<tr>
+			<td class="tableHeaderColumnPart3dot1">
+				<b>BY:</b>
+			</td>
+			<td class="tableHeaderColumnPart3dot2">
+				<b>RECEIVED BY:</b>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br/>
+			</td>
+			<td>
+			</td>						
+		</tr>
+		<tr>
+			<td class="tableHeaderColumnPart3dot1">
+				SYSON, MICHAEL B.
+			</td>
+			<td class="tableHeaderColumnPart3dot2">
+				_________________
+			</td>
+		</tr>
 	</table>
 	
 <?php
 
 	//TO-DO: -update: this
 
+	echo "<br/>";
+	echo "<br/>";
+	echo "<br/>";
 	echo "<br/>";
 	echo "<table>";
 /*
