@@ -82,6 +82,13 @@
 -->
 						}						
 
+						table.tablePart1
+						{
+							width: 100%;
+<!--							border: 1px solid #ab9c7d;		
+-->
+						}						
+
 						table.tablePart2
 						{
 							width: 100%;
@@ -219,13 +226,16 @@
 	<br
 	
 	<!-- PART 1 -->	
-	<table>
+	<table class="tablePart1">
 		<tr>
 			<td class="tableHeaderColumnPart1">
 				<b>TO:</b>
 			</td>
 			<td>
-				BERGSTEIN, AKI
+<?php			
+				//BERGSTEIN, AKI
+				echo $result[0]['patient_name'];
+?>				
 			</td>
 			<td>
 			</td>
@@ -245,7 +255,13 @@
 				<b>ADDRESS:</b>
 			</td>
 			<td>
-				STO. NIÑO, 1820, MARIKINA CITY
+<?php			
+				//STO. NIÑO, 1820, MARIKINA CITY
+				echo $result[0]['location_address'];
+				echo ", ".$result[0]['barangay_address'];
+				echo ", ".$result[0]['postal_address'];
+				echo ", ".$result[0]['province_city_ph_address'];				
+?>				
 			</td>
 			<td>
 			</td>
@@ -257,7 +273,15 @@
 				<b>OSCA/PWD ID NO.:</b>
 			</td>
 			<td>
-				N/A
+<?php		
+				//if (strpos($result[0]['location_address'],"")!==false) {
+				if (empty($result[0]['pwd_senior_id'])) {
+					echo "N/A";
+				}
+				else {
+					echo $result[0]['pwd_senior_id'];
+				}
+?>
 			</td>			
 		</tr>
 		<tr>
@@ -275,7 +299,15 @@
 				<b>SIGNATURE:</b>
 			</td>
 			<td>
-				N/A
+<?php		
+				if (empty($result[0]['pwd_senior_id'])) {
+					echo "N/A";
+				}
+				else {
+//					echo $result[0]['pwd_senior_id'];
+					echo "<br/>__________";
+				}
+?>
 			</td>			
 		</tr>
 	</table>
@@ -303,6 +335,39 @@
 		</tr>
 
 		<!-- PART 2: ANSWER -->
+		<!-- patient transaction -->
+<?php		
+		if (count($resultPaid) > 0) {
+			echo "<tr>";
+
+			//auto-identify fee, e.g. Consultation+Procedure, X-RAY
+			if ($resultPaid[0]['fee']!=0) {
+				echo "<td class='columnFee'>";
+				echo "1";
+				echo "</td>";			
+				echo "<td class='column'>";
+				echo "SET";
+				echo "</td>";			
+				echo "<td class='column'>";
+				echo "PROFESSIONAL FEE";
+				echo "</td>";	
+				echo "<td class='columnFee'>";
+				echo $resultPaid[0]['fee'];
+				echo "</td>";	
+				echo "<td class='columnFee'>";
+				echo $resultPaid[0]['fee'];
+				echo "</td>";
+			}
+			
+
+
+
+
+			echo "</tr>";			
+		}
+?>		
+
+<!--		
 		<tr>
 			<td class="columnFee">
 				1
@@ -384,6 +449,7 @@
 			<td class="columnFee">
 			</td>
 		</tr>
+-->
 
 		<!-- PART 2: TOTAL -->
 		<tr>
@@ -396,7 +462,12 @@
 			<td class="columnFee">
 			</td>
 			<td class="columnFeeTotal">
-				2150
+<?php			
+				//TO-DO: -update: this
+				//2150
+				echo number_format(2150, 2, '.', '');
+				
+?>				
 			</td>
 		</tr>	
 	</table>
