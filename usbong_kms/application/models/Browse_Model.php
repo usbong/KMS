@@ -4256,6 +4256,53 @@ class Browse_Model extends CI_Model
 	}		
 
 
+	//added by Mike, 20210626
+	public function getPaidItemDetailsListForPatientForTheDay($itemTypeId, $patientId) 
+	{		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp');
+
+		$this->db->from('item as t1');
+		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+		//removed by Mike, 20210110
+		//excess join commands cause delay; 
+		//example: med item: ACECLOFENAC (DICLOTOL) 100mg 
+		//23seconds (prev) --> 15seconds (now)
+//		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+		$this->db->distinct('t1.item_name');
+
+//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+		$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+		
+		//edited by Mike, 20200923
+//		$this->db->where('t2.notes', 'PAID'); //TO-DO: -update: to not include UNPAID if we use like(...)
+		$this->db->like('t2.notes', 'PAID'); //TO-DO: -update: to not include UNPAID if we use like(...)
+		$this->db->not_like('t2.notes', "UNPAID");
+
+//		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
+
+		//added by Mike, 20210314
+		$this->db->where('t2.patient_id', $patientId);
+		$this->db->where('t1.item_id!=', -1);
+		$this->db->where('t2.item_id!=', 0);
+
+		$this->db->where('t2.fee!=', 0);
+
+		//added by Mike, 20210626
+		$this->db->where('t2.transaction_date', date('m/d/Y'));
+		
+		$query = $this->db->get('item');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+		
+		return $rowArray;
+	}		
+
+
 	//added by Mike, 20210316
 	public function getIndexCardImageListForPatient($patientId) 
     {		
