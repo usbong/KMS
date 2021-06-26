@@ -338,34 +338,131 @@
 		<!-- patient transaction -->
 <?php		
 		if (count($resultPaid) > 0) {
-			echo "<tr>";
-
 			//auto-identify fee, e.g. Consultation+Procedure, X-RAY
+						
 			if ($resultPaid[0]['fee']!=0) {
-				echo "<td class='columnFee'>";
-				echo "1";
-				echo "</td>";			
-				echo "<td class='column'>";
-				echo "SET";
-				echo "</td>";			
-				echo "<td class='column'>";
-				echo "PROFESSIONAL FEE";
-				echo "</td>";	
-				echo "<td class='columnFee'>";
-				echo $resultPaid[0]['fee'];
-				echo "</td>";	
-				echo "<td class='columnFee'>";
-				echo $resultPaid[0]['fee'];
-				echo "</td>";
+				echo "<tr>";
+					echo "<td class='columnFee'>";
+					echo "1";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "SET";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "PROF FEE: DR. ".$resultPaid[0]['medical_doctor_name'];
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					//echo $resultPaid[0]['fee'];
+					echo number_format($resultPaid[0]['fee'], 2, '.', '');
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					//echo $resultPaid[0]['fee'];
+					echo number_format($resultPaid[0]['fee'], 2, '.', '');
+					echo "</td>";
+				echo "</tr>";			
+			}
+			else {
+				if ((strpos($resultPaid[0]['notes'],"NC;")!=0)!==false) {
+					echo "<tr>";
+						echo "<td class='columnFee'>";
+						echo "1";
+						echo "</td>";			
+						echo "<td class='column'>";
+						echo "SET";
+						echo "</td>";			
+						echo "<td class='column'>";
+						echo "PROFESSIONAL FEE: GRATIS";
+						echo "</td>";	
+						echo "<td class='columnFee'>";
+						echo "0.00";
+						echo "</td>";	
+						echo "<td class='columnFee'>";
+						echo "0.00";
+						echo "</td>";
+					echo "</tr>";			
+				}				
 			}
 			
-
-
-
-
-			echo "</tr>";			
+			if ($resultPaid[0]['x_ray_fee']!=0) {
+				echo "<tr>";
+					echo "<td class='columnFee'>";
+					echo "1";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "SET";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "X-RAY EXAM";
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					//echo $resultPaid[0]['x_ray_fee'];
+					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', '');
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					//echo $resultPaid[0]['x_ray_fee'];
+					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', '');
+					echo "</td>";
+				echo "</tr>";			
+			}
+			
+			if ($resultPaid[0]['lab_fee']!=0) {
+				echo "<tr>";
+					echo "<td class='columnFee'>";
+					echo "1";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "SET";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "LAB EXAM";
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					//echo $resultPaid[0]['lab_fee'];
+					echo number_format($resultPaid[0]['lab_fee'], 2, '.', '');
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					//echo $resultPaid[0]['lab_fee'];
+					echo number_format($resultPaid[0]['lab_fee'], 2, '.', '');
+					echo "</td>";
+				echo "</tr>";			
+			}
 		}
 ?>		
+
+		<!-- med item transaction -->
+<?php		
+		if (count($resultPaidMedItem) > 0) {			
+			if ((isset($resultPaidMedItem)) and ($resultPaidMedItem!=False)) {
+//				$resultCount = count($resultPaidMedItem);			
+			
+				foreach ($resultPaidMedItem as $value) {
+					if ($value['fee']!=0) {
+						echo "<tr>";
+							echo "<td class='columnFee'>";
+							echo $value['fee_quantity'];
+							echo "</td>";			
+							echo "<td class='column'>";
+							echo "PCS";
+							echo "</td>";			
+							echo "<td class='column'>";
+							echo strtoupper($value['item_name']);
+							echo "</td>";
+							echo "<td class='columnFee'>";
+//							echo $value['fee']/$value['fee_quantity'];
+							echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+							//echo $value['fee'];
+							echo number_format($value['fee'], 2, '.', '');
+							echo "</td>";
+						echo "</tr>";			
+					}
+				}
+			}
+		}
+?>		
+
+
 
 <!--		
 		<tr>
@@ -465,8 +562,7 @@
 <?php			
 				//TO-DO: -update: this
 				//2150
-				echo number_format(2150, 2, '.', '');
-				
+				echo number_format(2150, 2, '.', '');				
 ?>				
 			</td>
 		</tr>	
