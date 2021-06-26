@@ -4158,6 +4158,47 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
+
+	//added by Mike, 20210626
+	public function getPaidPatientDetailsListForTheDayNoItemFee($medicalDoctorId, $patientId) 
+	{		
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+		$this->db->distinct('t1.patient_name');
+		
+		$this->db->where('t2.transaction_quantity!=',0);
+		$this->db->where('t2.notes!=', 'UNPAID');
+		$this->db->where('t1.patient_id', $patientId);
+
+		$this->db->not_like('t2.notes', "ONLY");
+		$this->db->where('t2.transaction_date',date("m/d/Y"));
+
+		
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+		
+		foreach ($rowArray as $key => $rowValue) {
+			if (strpos(strtoupper($rowValue['notes']),"UNPAID")!==false) {
+//				if (($key = array_search($rowValue, $rowArray)) !== false) {
+					unset($rowArray[$key]);
+//				}
+//				unset($rowValue);
+			}
+		}
+		
+		return $rowArray;
+	}		
+
+
+
 	//added by Mike, 20200406; edited by Mike, 20200507
 	//note: items that are added a day or so after the transaction date would be shown in the view item page's history as a transaction on the day it was added
 	//To correct its transaction date, we update its added datetime stamp to the transaction date with time 0.
