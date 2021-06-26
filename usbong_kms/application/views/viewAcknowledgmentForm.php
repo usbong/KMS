@@ -215,6 +215,8 @@
 	$dateToday = Date('Y-m-d');
 
 	//TO-DO: -update: this
+	
+	$totalAmountFee=0;
 
 ?>
 	<div class="formTitle">
@@ -360,6 +362,8 @@
 					echo number_format($resultPaid[0]['fee'], 2, '.', '');
 					echo "</td>";
 				echo "</tr>";			
+								
+				$totalAmountFee+=$resultPaid[0]['fee'];
 			}
 			else {
 				if ((strpos($resultPaid[0]['notes'],"NC;")!=0)!==false) {
@@ -401,8 +405,10 @@
 					echo "<td class='columnFee'>";
 					//echo $resultPaid[0]['x_ray_fee'];
 					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', '');
-					echo "</td>";
-				echo "</tr>";			
+					echo "</td>";					
+				echo "</tr>";	
+
+				$totalAmountFee+=$resultPaid[0]['x_ray_fee'];								
 			}
 			
 			if ($resultPaid[0]['lab_fee']!=0) {
@@ -425,6 +431,8 @@
 					echo number_format($resultPaid[0]['lab_fee'], 2, '.', '');
 					echo "</td>";
 				echo "</tr>";			
+
+				$totalAmountFee+=$resultPaid[0]['lab_fee'];								
 			}
 		}
 ?>		
@@ -435,14 +443,21 @@
 			if ((isset($resultPaidMedItem)) and ($resultPaidMedItem!=False)) {
 //				$resultCount = count($resultPaidMedItem);			
 			
-				foreach ($resultPaidMedItem as $value) {
+				foreach ($resultPaidMedItem as $value) {					
 					if ($value['fee']!=0) {
 						echo "<tr>";
 							echo "<td class='columnFee'>";
 							echo $value['fee_quantity'];
 							echo "</td>";			
 							echo "<td class='column'>";
-							echo "PCS";
+							
+							if ($value['fee_quantity']==1) {
+								echo "PC";
+							}
+							else {
+								echo "PCS";
+							}
+
 							echo "</td>";			
 							echo "<td class='column'>";
 							echo strtoupper($value['item_name']);
@@ -456,12 +471,97 @@
 							echo number_format($value['fee'], 2, '.', '');
 							echo "</td>";
 						echo "</tr>";			
+
+						$totalAmountFee+=$value['fee'];
 					}
 				}
 			}
 		}
 ?>		
 
+		<!-- non-med item transaction -->
+<?php		
+		if (count($resultPaidNonMedItem) > 0) {			
+			if ((isset($resultPaidNonMedItem)) and ($resultPaidNonMedItem!=False)) {
+//				$resultCount = count($resultPaidMedItem);			
+			
+				foreach ($resultPaidNonMedItem as $value) {					
+					if ($value['fee']!=0) {
+						echo "<tr>";
+							echo "<td class='columnFee'>";
+							echo $value['fee_quantity'];
+							echo "</td>";			
+							echo "<td class='column'>";
+
+							if ($value['fee_quantity']==1) {
+								echo "PC";
+							}
+							else {
+								echo "PCS";
+							}
+
+							echo "</td>";			
+							echo "<td class='column'>";
+							echo strtoupper($value['item_name']);
+							echo "</td>";
+							echo "<td class='columnFee'>";
+//							echo $value['fee']/$value['fee_quantity'];
+							echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+							//echo $value['fee'];
+							echo number_format($value['fee'], 2, '.', '');
+							echo "</td>";
+						echo "</tr>";			
+
+						$totalAmountFee+=$value['fee'];
+					}
+				}
+			}
+		}
+?>		
+
+		<!-- snack item transaction -->
+<?php		
+		if (count($resultPaidSnackItem) > 0) {			
+			if ((isset($resultPaidSnackItem)) and ($resultPaidSnackItem!=False)) {
+//				$resultCount = count($resultPaidMedItem);			
+			
+				foreach ($resultPaidSnackItem as $value) {					
+					if ($value['fee']!=0) {
+						echo "<tr>";
+							echo "<td class='columnFee'>";
+							echo $value['fee_quantity'];
+							echo "</td>";			
+							echo "<td class='column'>";
+
+							if ($value['fee_quantity']==1) {
+								echo "PC";
+							}
+							else {
+								echo "PCS";
+							}
+
+							echo "</td>";			
+							echo "<td class='column'>";
+							echo strtoupper($value['item_name']);
+							echo "</td>";
+							echo "<td class='columnFee'>";
+//							echo $value['fee']/$value['fee_quantity'];
+							echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+							//echo $value['fee'];
+							echo number_format($value['fee'], 2, '.', '');
+							echo "</td>";
+						echo "</tr>";			
+
+						$totalAmountFee+=$value['fee'];
+					}
+				}
+			}
+		}
+?>
 
 
 <!--		
@@ -562,7 +662,7 @@
 <?php			
 				//TO-DO: -update: this
 				//2150
-				echo number_format(2150, 2, '.', '');				
+				echo number_format($totalAmountFee, 2, '.', '');
 ?>				
 			</td>
 		</tr>	
