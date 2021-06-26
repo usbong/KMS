@@ -5,7 +5,7 @@
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210616
+  @date updated: 20210626
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -497,7 +497,15 @@
 		<td class="pageNameColumn">
 			<h2>
 				Search Patient<br/>
-				@INDEX CARD PAGE
+<!--				@INDEX CARD PAGE
+-->				
+					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
+						<div class="patientName">
+		<?php
+						echo "@INDEX CARD PAGE"
+		?>		
+						</div>								
+					</a>				
 			</h2>		
 		</td>
 	  </tr>
@@ -541,16 +549,10 @@
 				<b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 			</td>
 			<td class="columnTableHeaderIndexCard">
-					<!-- edited by Mike, 20210407 -->
-					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
-						<div class="patientName">
-		<?php
-						//echo $value['patient_name'];
-	//					echo str_replace("ï¿½","Ã‘",$value['patient_name']);
-						echo "INDEX CARD"
-		?>		
-						</div>								
-					</a>
+				<?php echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'])."' id='viewAcknowledgmentFormId' target='_blank'>
+							ACKNOWLEDGMENT FORM
+						</a>";
+				?>
 			</td>
 		</tr>
 	</table>
@@ -648,6 +650,7 @@
 	<td class='tableHeaderColumn'><b>SC/PWD<br/>PRICE</b></td>
 	<tr>
 -->
+
 <?php
 //echo "<br/>";
 	echo "<table>";
