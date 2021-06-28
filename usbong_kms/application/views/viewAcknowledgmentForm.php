@@ -7,7 +7,7 @@
   @company: USBONG
   @author: Michael Syson
   @date created: 20200818
-  @date updated: 20210626
+  @date updated: 20210628
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -339,7 +339,8 @@
 		<!-- PART 2: ANSWER -->
 		<!-- patient transaction -->
 <?php		
-		if (count($resultPaid) > 0) {
+		//edited by Mike, 20210628
+		if (($resultPaid!=null) and (count($resultPaid) > 0)) {					
 			//auto-identify fee, e.g. Consultation+Procedure, X-RAY
 						
 			if ($resultPaid[0]['fee']!=0) {
@@ -439,7 +440,8 @@
 
 		<!-- med item transaction -->
 <?php		
-		if (count($resultPaidMedItem) > 0) {			
+		//edited by Mike, 20210628
+		if (($resultPaidMedItem!=null) and (count($resultPaidMedItem) > 0)) {					
 			if ((isset($resultPaidMedItem)) and ($resultPaidMedItem!=False)) {
 //				$resultCount = count($resultPaidMedItem);			
 			
@@ -481,7 +483,8 @@
 
 		<!-- non-med item transaction -->
 <?php		
-		if (count($resultPaidNonMedItem) > 0) {			
+		//edited by Mike, 20210628
+		if (($resultPaidNonMedItem!=null) and (count($resultPaidNonMedItem) > 0)) {			
 			if ((isset($resultPaidNonMedItem)) and ($resultPaidNonMedItem!=False)) {
 //				$resultCount = count($resultPaidMedItem);			
 			
@@ -523,7 +526,8 @@
 
 		<!-- snack item transaction -->
 <?php		
-		if (count($resultPaidSnackItem) > 0) {			
+		//edited by Mike, 20210628
+		if (($resultPaidSnackItem!=null) and (count($resultPaidSnackItem) > 0)) {
 			if ((isset($resultPaidSnackItem)) and ($resultPaidSnackItem!=False)) {
 //				$resultCount = count($resultPaidMedItem);			
 			
