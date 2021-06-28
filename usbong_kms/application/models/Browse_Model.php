@@ -3603,6 +3603,24 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}
 
+	//added by Mike, 20210629
+	public function getCashierList() {
+		$this->db->select('cashier_id, cashier_name');
+		
+		$query = $this->db->get('cashier');	
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+	
+//		echo $rowArray[0]["cashier_id"]." : ".$rowArray[0]["cashier_name"];
+
+		return $rowArray;
+	}
+
+
 	//TO-DO: -reverify: this
 	//consider eliminating excess steps
 	public function getDetailsListViaId($nameId) 
