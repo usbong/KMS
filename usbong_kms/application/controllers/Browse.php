@@ -2307,6 +2307,10 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->model('Browse_Model');
 		
+		//added by Mike, 20210629
+		$data['cashierList'] = $this->Browse_Model->getCashierList();
+
+		
 		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
 
 		//added by Mike, 20210626
