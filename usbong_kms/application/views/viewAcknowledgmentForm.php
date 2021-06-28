@@ -1,13 +1,13 @@
 <!--
-  Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+  Copyright 2020~2021 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   
   @company: USBONG
-  @author: Michael Syson
+  @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210628
+  @date updated: 20210629
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -73,6 +73,10 @@
 							height: auto;
 							float: left;
 							text-align: center;
+						}
+						
+						select.cashierNameSelect {
+							font-size: 12pt;
 						}
 						
 						table.imageTable
@@ -220,6 +224,7 @@
 
 ?>
 	<div class="formTitle">
+		<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
 		<b>ACKNOWLEDGMENT FORM</b>
 	</div>
 
@@ -693,7 +698,27 @@
 		</tr>
 		<tr>
 			<td class="tableHeaderColumnPart3dot1">
-				SYSON, MICHAEL B.
+<!-- 
+				<select class="cashierNameSelect">
+					<option value='0' selected='selected'>SYSON, MICHAEL B.</option>
+					<option value='1'>HALIMBAWA, USBONG</option>			
+				</select>
+-->
+<?php				
+				echo "<select class='cashierNameSelect'>";
+
+				foreach ($cashierList as $cashierValue) {
+					if ($cashierValue["cashier_id"]==0) {
+						echo "<option value='".$cashierValue["cashier_id"]."' selected='selected'>".$cashierValue["cashier_name"]."</option>";						
+					}
+					else {					  
+						echo "<option value='".$cashierValue['cashier_id']."'>".$cashierValue["cashier_name"]."</option>";					  
+				   }
+				}
+				
+				echo "</select>";
+?>
+				
 			</td>
 			<td class="tableHeaderColumnPart3dot2">
 				_________________
