@@ -4361,11 +4361,12 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}		
 
-
 	//added by Mike, 20210316
 	public function getIndexCardImageListForPatient($patientId) 
     {		
-		$this->db->select('transaction_id, image_filename');
+		//edited by Mike, 20210630
+//		$this->db->select('transaction_id, image_filename');
+		$this->db->select('transaction_id, image_filename, image_id');
 
 		$this->db->where('patient_id', $patientId); //2 = Non-medicine
 
@@ -4384,6 +4385,24 @@ class Browse_Model extends CI_Model
 		
 		return $rowArray;
 	}		
+
+	//added by Mike, 20210630
+	public function deleteIndexCardImageViaId($iIndexCardImageId) {
+		$this->db->select('image_filename');
+		$this->db->where('image_id', $iIndexCardImageId); 
+		$query = $this->db->get('image');
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+		
+		unlink($rowArray[0]['image_filename']);  //deletes file in system folder
+
+		//deletes image file transaction row in MySQL DB
+		$this->db->where('image_id',$iIndexCardImageId);
+		$this->db->delete('image');
+	}
 
 
 	//added by Mike, 20200328; edited by Mike, 20200519
