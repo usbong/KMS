@@ -2296,7 +2296,20 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewPatientIndexCard', $data);
 	}
+	
+	//added by Mike, 20210630
+	public function deletePatientIndexCard($patientId, $iIndexCardImageId)	
+	{
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
 
+		$this->load->model('Browse_Model');
+
+		$this->Browse_Model->deleteIndexCardImageViaId($iIndexCardImageId);
+		
+		$this->viewPatientIndexCard($patientId, 0); //$bFoldImageListValue
+	}
+	
 	//added by Mike, 20210626
 	public function viewAcknowledgmentForm($patientId)	
 	{
