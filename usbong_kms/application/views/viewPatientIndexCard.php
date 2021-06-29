@@ -1,20 +1,14 @@
 <!--
-  Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+  Copyright 2020~2021 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-  @author: Michael Syson
+
+  @company: USBONG
+  @author: SYSON, MICHAEL B.
   @date created: 20200818
   @date updated: 20210626
-
-  Input:
-  1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
-  Output:
-  1) Laboratory Request Form that is viewable on a Computer Web Browser  
-  
-  Computer Web Browser Address (Example):
-  1) http://localhost/usbong_kms/server/viewCSVFileMOSCLabRequestForm.php   
-  
+  @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
 -->
@@ -363,6 +357,11 @@
 */
 						}
 
+						div.buttonDeleteImage
+						{
+							font-size: 16px;
+						}
+
 						select.medicalDoctorSelect
 						{
 							font-size: 12pt;
@@ -450,6 +449,21 @@
 
 			window.location.href = "<?php echo site_url('browse/viewPatientIndexCard/"+iPatientId+"/"+bFoldImageListValue+"');?>";			
 		}
+				
+		//added by Mike, 20210630
+		function myDeleteIndexCardImageFunction(iPatientId,iIndexCardImageId) {
+//			alert("hallo");			
+
+//			bFoldImageListValue = document.getElementById("foldImageListId").value;
+			
+//			alert("bFoldImageListValue: "+bFoldImageListValue);			
+				
+			//note: reload causes value to be reset
+//			location.reload();
+
+			window.location.href = "<?php echo site_url('browse/deletePatientIndexCard/"+iPatientId+"/"+iIndexCardImageId+"');?>";			
+		}
+		
 		
 	  </script>
   <body>
@@ -1224,11 +1238,25 @@
 		?>				
 						  <tr class="row">
 							<td class="column">
+								<!-- added by Mike, 20210630 -->
+<?php								
+								echo '<button onclick="myDeleteIndexCardImageFunction('.$result[0]['patient_id'].','.$indexCardImageListValue['image_id'].')">								
+									<div class="buttonDeleteImage">Delete</div>
+								</button>';
+?>
+								<br/>
+							</td>
+							<td class="column">
 								<?php
 									//edited by Mike, 20210320
 									echo $indexCardImageListValue['image_filename'];
 								?>
-							
+							</td>
+						  </tr>
+						  <tr>
+							<td>
+							</td>
+							<td class="column">
 								<img class="Image-indexCard" src="<?php echo base_url($indexCardImageListValue['image_filename']);?>">		
 							</td>
 						  </tr>
