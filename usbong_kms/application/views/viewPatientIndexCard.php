@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210626
+  @date updated: 20210630
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -371,7 +371,13 @@
 						option.medicalDoctorOption
 						{
 							font-size: 12pt;
-						}											
+						}			
+
+						table.tableIndexCardImage
+						{
+							border: 2px solid #00ddaa; /*sky blue;*/
+						}
+						
 						
 <!-- added by Mike, 20210210 -->
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
@@ -1232,7 +1238,7 @@
 					echo '<br/>';
 
 					foreach ($resultIndexCardImageList as $indexCardImageListValue) {		  
-						echo "<table class='search-result'>";
+						echo "<table class='tableIndexCardImage'>";
 
 						//add: table headers
 		?>				
