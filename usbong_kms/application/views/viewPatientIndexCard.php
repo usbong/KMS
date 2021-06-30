@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210630
+  @date updated: 20210701
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -108,6 +108,11 @@
 							background-color: #00ff00; <!--#93d151; lime green-->
 						}								
 
+						span.spanTotalFeeGold
+						{							
+							color: #ff8000;	
+						}
+
 						table.bottomSectionTable
 						{
 							width: 100%;
@@ -197,17 +202,7 @@
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}		
-
-						td.columnTableHeaderFee
-						{
-							font-weight: bold;
-							background-color: #00ff00;
-							border: 1px dotted #ab9c7d;		
-							text-align: center;
-							width: 13%;
-						}		
 						
-
 						td.columnBorderBottom
 						{
 							border: 1px dotted #ab9c7d;		
@@ -230,12 +225,33 @@
 							text-align: center;
 						}						
 						
-						td.columnTableHeaderDate
+						td.columnTableHeaderNotes
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 26%;
+						}								
+						
+						td.columnDateToday
 						{
 							padding-left: 0px;
 							text-align: left;
 							width: 26%;
-						}						
+						}		
+
+						td.columnTableHeaderDate
+						{
+							font-weight: bold;
+							background-color: #00ff00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00ff00; -->
+							border: 1px dotted #ab9c7d;
+							padding-left: 0px;
+							text-align: center;
+							width: 1%;
+						}		
 
 						td.columnTableHeaderIndexCard
 						{
@@ -276,6 +292,11 @@
 							display: inline-block;
 							text-align: right;
 						}						
+
+						div.transactionDate
+						{
+							width: 1%;							
+						}
 
 						div.checkBox
 						{
@@ -371,13 +392,12 @@
 						option.medicalDoctorOption
 						{
 							font-size: 12pt;
-						}			
+						}	
 
 						table.tableIndexCardImage
 						{
-							border: 2px solid #00ddaa; /*sky blue;*/
-						}
-						
+							border: 2px solid #00ddaa; /*river sea blue green;*/
+						}						
 						
 <!-- added by Mike, 20210210 -->
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
@@ -565,7 +585,7 @@
 	<br/>
 	<table>
 		<tr>
-			<td class="columnTableHeaderDate">
+			<td class="columnDateToday">
 				<b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 			</td>
 			<td class="columnTableHeaderIndexCard">
@@ -1237,9 +1257,8 @@
 
 					echo '<br/>';
 
-					foreach ($resultIndexCardImageList as $indexCardImageListValue) {		  
-						echo "<table class='tableIndexCardImage'>";
-
+					foreach ($resultIndexCardImageList as $indexCardImageListValue) {	  
+							echo "<table class='tableIndexCardImage'>";
 						//add: table headers
 		?>				
 						  <tr class="row">
@@ -1290,6 +1309,182 @@
 		<br/>
 		<br/>
 		
+<?php
+		//added by Mike, 20210701
+		echo '<h3>Patient Purchased Service History</h3>';
+
+		if ((!isset($value)) or ($value['transaction_date']=="")) {				
+			echo '<div>';					
+			echo 'There are no transactions.';
+			echo '</div>';					
+		}
+		else {
+			//edited by Mike, 20200406
+			$resultCount = 0;
+
+			if ((isset($resultPaid)) and ($resultPaid!=False)) {
+				$resultCount = count($resultPaid);
+			}
+
+			//item purchase history			
+			if ($resultCount==0) {				
+				echo '<div>';					
+				echo 'There are no transactions.';
+				echo '</div>';					
+			}
+			else {
+	//				$resultCount = count($resultPaid);
+				if ($resultCount==1) {
+					echo '<div>Showing <b>'.count($resultPaid).'</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.count($resultPaid).'</b> results found.</div>';			
+				}			
+				echo '<br/>';
+				
+				echo "<table class='search-result'>";
+				
+				//add: table headers
+				//added by Mike, 20200806
+	?>				
+				  <tr class="row">
+					<td class ="columnTableHeaderDate">				
+			<?php
+						echo "ADDED DATETIME";
+			?>		
+					</td>
+
+					<td class ="columnTableHeader">				
+			<?php
+						echo "PATIENT NAME";
+			?>		
+					</td>
+					<td class ="columnTableHeader">				
+						<?php
+							echo "PF";
+						?>
+					</td>
+					<td class ="columnTableHeader">				
+						<?php
+							echo "X-RAY";
+						?>
+					</td>
+					<td class ="columnTableHeader">				
+						<?php
+							echo "LAB";
+						?>
+					</td>
+					<td class ="columnTableHeaderNotes">				
+						<?php
+							echo "CLASSIFICATION<br/>& NOTES";
+						?>
+					</td>
+
+					<td class ="columnTableHeader">				
+						<?php
+							echo "TOTAL";
+						?>
+					</td>
+				  </tr>
+	<?php
+
+
+			$iCount = 1;
+			foreach ($resultPaid as $value) {
+/*	
+			$value = $result[0];
+*/				
+	?>				
+	
+				  <tr class="row">
+					<td class ="column">				
+						<div class="transactionDate">
+			<?php
+							//echo $value['added_datetime_stamp'];
+							echo str_replace(" ","T",$value['added_datetime_stamp']);
+							//echo $value['transaction_date'];
+//							echo str_replace(" ","<br/>T",$value['added_datetime_stamp']);
+			?>		
+						</div>								
+					</td>
+					<td class ="columnName">				
+						<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+							<div class="patientName">
+			<?php
+							//TO-DO: -update: this
+							//echo $value['patient_name'];
+							echo str_replace("ï¿½","Ã‘",$value['patient_name']);
+
+			?>		
+							</div>								
+						</a>							
+					</td>							
+					<td class ="columnNumber">				
+						<?php
+							echo $value['fee'];
+						?>
+					</td>
+					<td class ="columnNumber">				
+						<?php
+							echo $value['x_ray_fee'];
+						?>
+					</td>
+					<td class ="columnNumber">				
+						<?php
+							echo $value['lab_fee'];
+						?>
+					</td>
+					<td class ="columnNotes">				
+						<?php
+							//edited by Mike, 20200518
+							//echo $value['notes'];
+							
+							if ($value['notes']=="") {
+								echo "NONE";
+							}
+							else {
+								echo $value['notes'];
+							}
+						?>
+					</td>
+					<td class ="columnNumber">
+						<?php
+							$totalFee = $value['fee'] + $value['x_ray_fee'] + $value['lab_fee'];
+							//echo $totalFee;
+							//echo number_format($totalFee, 2, '.', '');
+							
+							if ($totalFee!=0) {
+								echo "<span class='spanTotalFeeGold'>".number_format($totalFee, 2, '.', '')."</span>";
+							}
+							else {
+								echo number_format($totalFee, 2, '.', '');
+							}							
+						?>
+					</td>
+					<td>								
+						<?php //edited by Mike, 20200416 
+							if ($value['transaction_date']==date('m/d/Y')) {
+						?>
+						<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+							
+<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+-->
+						<?php 
+							}
+						?>
+					</td>						
+				  </tr>
+<?php				
+				$iCount++;		
+//					echo "<br/>";
+			}				
+			echo "</table>";				
+		}
+	}
+?>
+	<br />
+	<br />
+				
 <?php	
 		echo '<h3>Patient Purchased Medicine Item History</h3>';
 
