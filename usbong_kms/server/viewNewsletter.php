@@ -40,6 +40,7 @@
                         {
 							font-family: Arial;
 							font-size: 12pt;
+							color: rgb(120,63,4);
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
@@ -55,25 +56,44 @@
 							transform-origin: 0 0;	
 */							
                         }
-						
-						div.copyright
-						{
-							text-align: center;
-						}
-						
+												
 						div.formTitle
 						{
 							text-align: center;
 /*							font-weight: bold;*/	
 							font-size: 14pt;
+							color: rgb(0,0,0); /* black */
 						}
 						
 						div.newsletterTitle
 						{
 							text-align: center;
 							font-size: 12pt;
+							font-weight: bold;
+						}
+
+						div.newsletterSubTitle
+						{
+							text-align: center;
+							font-size: 12pt;
+							color: rgb(0,0,0); /* black */
 						}
 						
+						div.newsletterDate
+						{
+							text-align: right;
+							font-size: 12pt;
+							font-weight: bold;
+							color: #e69138 /* orange */
+						}
+
+						div.copyright
+						{
+							text-align: center;
+							font-size: 10pt;
+							color: rgb(0,0,0); /* black */
+						}
+					
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -211,10 +231,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
     </style>
+	<base href="http://localhost/usbong_kms/" target="_blank">
   </head>
 	  <script>
 	  </script>
   <body>
+  
 <?php
 	date_default_timezone_set('Asia/Hong_Kong');
 	
@@ -230,6 +252,13 @@
 	//TO-DO: -update: this
 
 ?>
+	<table class="imageTable">
+	  <tr>
+		<td class="imageColumn">				
+			<img class="Image-companyLogo" src="assets/images/usbongLogo.png">
+		</td>	
+	</table>
+	<br/>	
 	<div class="formTitle">
 		<b>USBONG NEWSLETTER</b>
 	</div>
@@ -242,21 +271,30 @@
 		Manloloko as 化け物 (bakemono; naibang bagay)<br/>
 		Solution: Alles klar (All clear)<br/>
 	</div>
+	<br>
+	<div class="newsletterSubTitle">
+		PHILIPPINES: USBONG CONTINUES TO PROVIDE<br/>
+		COMPUTER SERVICE ASSISTANCE<br/>
+		BY SHARING KNOW-HOW ON MAPARAANG PAGBIBILANG<br/>
+	</div>
 	<br>	
+	<div class="newsletterDate">
 	JULY  2021
+	</div>
 	<br>
 	<br>
-
-PHILIPPINES: USBONG CONTINUES TO PROVIDE
-COMPUTER SERVICE ASSISTANCE
-BY SHARING KNOW-HOW ON MAPARAANG PAGBIBILANG
 	
 	
 	<br>
 	<br>
 	<br />
 	<div class="copyright">
-		<span>© SYSON, MICHAEL B. & USBONG. 2011~2021. All rights reserved.</span>
+		<span>
+			© SYSON, MICHAEL B. & USBONG. 2011~2021. All rights reserved.<br/>
+			<a href="https://creativecommons.org/licenses/by/4.0/">
+				Creative Commons Attribution License BY 4.0
+			</a>
+		</span>
 	</div>		 
   </body>
 </html>
