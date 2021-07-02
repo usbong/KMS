@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20210701
-  @date updated: 20210701
+  @date updated: 20210702
   @website address: http://www.usbong.ph
 
   Input:
@@ -59,16 +59,16 @@
 												
 						div.formTitle
 						{
-							text-align: center;
+							text-align: right;
 /*							font-weight: bold;*/	
-							font-size: 14pt;
+							font-size: 12pt;
 							color: rgb(0,0,0); /* black */
 						}
 						
 						div.newsletterTitle
 						{
 							text-align: center;
-							font-size: 12pt;
+							font-size: 16pt;
 							font-weight: bold;
 						}
 
@@ -84,7 +84,7 @@
 							text-align: right;
 							font-size: 12pt;
 							font-weight: bold;
-							color: #e69138 /* orange */
+							color: #cd580f /* #e69138 orange */
 						}
 
 						div.copyright
@@ -94,6 +94,27 @@
 							color: rgb(0,0,0); /* black */
 						}
 					
+						h3
+						{
+							color: rgb(0,0,0); /* black */							
+						}
+					
+						h4
+						{
+							color: rgb(64,64,64); /* from black to white */							
+						}
+
+						h5
+						{
+							/* note: nearer to black, due to font size */
+							color: rgb(32,32,32); /* from black to white */							
+						}
+						
+						b
+						{
+							color: rgb(0,0,0); /* from black to white */ 							
+						}
+
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -257,11 +278,12 @@
 		<td class="imageColumn">				
 			<img class="Image-companyLogo" src="assets/images/usbongLogo.png">
 		</td>	
+		<td class="pageNameColumn">
+			<div class="formTitle">
+				<b>USBONG NEWSLETTER</b>
+			</div>		
+		</td>
 	</table>
-	<br/>	
-	<div class="formTitle">
-		<b>USBONG NEWSLETTER</b>
-	</div>
 
 <!--	<b>DATE:</b><?php echo " ".$dateToday; ?>
 -->
@@ -283,7 +305,19 @@
 	</div>
 	<br>
 	<br>
-	
+
+To eliminate excess steps and inefficient time usage, Marikina Orthopedic Specialty Clinic (MOSC) requested Usbong's services to automate routine, monotonous tasks and share with unit members know-how on computers.
+
+<h3>1) Continued to update Knowledge Management System (KMS)</h3>
+<h4>1.1) continued: to share know-how on computers and Information Technology (IT) tools</h4>
+<h5>1.1.1) LibreOffice Calc</h5>
+--> observed: select Unit members use Font Size that causes human eyes to be strained<br/>
+<br/>
+<b>Recommended Action:</b> Increase Font Size of text via Zoom tool, e.g. set to 150% size
+<br/>
+<br/>
+--> As for printed text, we can put it closer to our eyes to make text larger.<br/>
+<h5>1.1.2) Cash Register Machine</h6>
 	
 	<br>
 	<br>
