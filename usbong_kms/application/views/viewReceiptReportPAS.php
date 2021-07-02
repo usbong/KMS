@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+' Copyright 2020~2021 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -7,9 +7,12 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @author: Michael Syson
+' @company: USBONG
+' @author: SYSON, MICHAEL B.
 ' @date created: 20200420
-' @date updated: 20210205
+' @date updated: 20210702
+' @website address: http://www.usbong.php
+'
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -158,6 +161,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 							text-align: right;
 						}										
+
+						span.usbongWebsiteAddressSpan
+						{
+							/* color: rgb(83,128,34);*/ /* dark lime green rgb(103,157,43);*/
+							color: rgb(0,0,0); /* black */
+							font-weight: bold;
+						}
 
     /**/
     </style>
@@ -709,7 +719,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y")?>. All rights reserved.</span>
+		© <span class="usbongWebsiteAddressSpan">www.usbong.ph </span><span>2011~<?php echo date("Y")?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
