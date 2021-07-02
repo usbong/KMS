@@ -25,7 +25,7 @@
                                 font-family: Arial;
 								font-size: 9pt;
 								/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-								width: 670px 
+								width: 640px 
                         }
 						
 						div.checkBox
@@ -78,8 +78,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
     </style>
+	<script>
+		function setCopyrightYear()
+		{
+			//added by Mike, 20210702
+			//reference: https://stackoverflow.com/questions/32540044/html-display-current-date/32540196;
+			//last accessed: 20210702
+			//answer by: Masood Ahmad, 20181030T1706
+//			window.onload = setInterval(clock,1000);
+//			function clock()
+			var d = new Date();
+			var year = d.getFullYear();
+							
+			document.getElementById("dateId").innerHTML=year;
+		}
+	</script>	
   </head>
-  <body>
+  <body onload="setCopyrightYear()">
 	<h3>
       MARIKINA ORTHOPEDIC SPECIALTY CLINIC (MOSC) HQ
 	<br />
@@ -104,7 +119,7 @@
 	<br />
 	<br />
 	<div class="copyright">
-		© <span class="usbongWebsiteAddressSpan">www.usbong.ph </span><span>2011~<?php echo date("Y")?>. All rights reserved.</span>
+		© <span class="usbongWebsiteAddressSpan">www.usbong.ph </span>2011~<span id="dateId"></span>. All rights reserved.		
 	</div>		 		 
   </body>
 </html>
