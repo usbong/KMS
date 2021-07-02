@@ -1,6 +1,6 @@
 /*
 '
-' Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+' Copyright 2020~2021 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -8,10 +8,11 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
+' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20210321
+' @date updated: 20210702
+' @website address: http://www.usbong.ph
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -22,15 +23,12 @@
 var system = require('system');
 var fileName = system.args[1];
 
-//added by Mike, 20210321
-var computerServerAddress = 'http://localhost';
-
 //added by Mike, 20200726
 var isFromServerFolder = system.args[2];
-//edited by Mike, 20210321
-//var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
-var webAddress = computerServerAddress+'/usbong_kms/index.php/REPORT/'; //default
+//added by Mike, 20210702
+var isFromKasangkapanFolder = system.args[2];
 
+var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
 var fileExtension = '';
 
 //added by Mike, 20210225
@@ -47,9 +45,7 @@ if (iPostPositionInFilename !== -1) {
 	filename=fileName.substring(0,iPostPositionInFilename);
 	data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
 
-	//edited by Mike, 20210321
-//	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
-	webAddress = computerServerAddress+'/usbong_kms/index.php/browse/';
+	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
 }	
 
 //added by Mike, 20201017
@@ -61,12 +57,16 @@ var noonFolderName = 'noonReport/';
 var dateToday = new Date(); 
 
 if (isFromServerFolder=="-s") {
-	//edited by Mike, 20210321
-//	webAddress = 'http://localhost/usbong_kms/server/';
-	webAddress = computerServerAddress+'/usbong_kms/server/';
-
+	webAddress = 'http://localhost/usbong_kms/server/';
 	fileExtension = '.php';
 }
+
+//added by Mike, 20210702
+if (isFromKasangkapanFolder=="-k") {
+	webAddress = 'http://localhost/usbong_kms/kasangkapan/output/';
+	fileExtension = '.html';
+}
+
 
 //added by Mike, 20201017
 if (isNoonReport=="-noon") {
