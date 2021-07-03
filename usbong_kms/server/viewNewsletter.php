@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20210701
-  @date updated: 20210702
+  @date updated: 20210703
   @website address: http://www.usbong.ph
 
   Input:
@@ -129,6 +129,11 @@
 							height: auto;
 							float: left;
 							text-align: center;
+						}
+						
+						img.newsletterImage {
+							max-width: 100%;
+							height: auto;
 						}
 						
 						table.imageTable
@@ -311,6 +316,16 @@ To eliminate excess steps and inefficient time usage, Marikina Orthopedic Specia
 <h3>1) Continued to update Knowledge Management System (KMS)</h3>
 <h4>1.1) continued: to share know-how on computers and Information Technology (IT) tools</h4>
 <h5>1.1.1) LibreOffice Calc</h5>
+
+<table>
+	<tr>
+		<td>
+			<img class="newsletterImage" src="assets/images/newsletter/libreOfficeCalcZoomToolV20210612T0856.png">
+		</td>
+	</tr>
+</table>
+<br/>
+
 --> observed: select Unit members use Font Size that causes human eyes to be strained<br/>
 <br/>
 <b>Recommended Action:</b> Increase Font Size of text via Zoom tool, e.g. set to 150% size
