@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20210701
-  @date updated: 20210703
+  @date updated: 20210704
   @website address: http://www.usbong.ph
 
   Input:
@@ -18,6 +18,10 @@
   
   Computer Web Browser Address (Example):
   1) http://localhost/usbong_kms/server/viewNewsletter.php   
+  
+  Recommended Reference:
+  1) https://www.w3schools.com/howto/howto_css_table_center.asp;
+  //last accessed: 20210703
 -->
 <?php
 //defined('BASEPATH') OR exit('No direct script access allowed');
@@ -155,7 +159,48 @@
 							width: 100%;
 <!--							border: 1px solid #ab9c7d;		
 -->
-						}						
+						}	
+						
+						a.menuLink
+						{
+							color: rgb(64,64,64);
+							text-decoration: none;
+						}
+
+						a.menuLink:hover
+						{
+							color: rgb(64,64,64);
+							text-decoration: underline;
+						}
+
+						table.menuTable
+						{
+							width: 80%;
+							border: 1px solid rgb(146,208,80);
+							border-collapse: collapse;							 
+							font-size: 10pt;
+							/* Commands to Center-Align Table */
+							margin-left: auto;
+							margin-right: auto;
+						}
+
+						tr.menuRow
+						{
+							background-color: rgb(146,208,80);
+							text-align: center;							
+						}
+						
+						td.menuColumn
+						{
+							background-color: rgb(146,208,80);
+							text-align: center;							
+						}
+
+						td.menuColumn:hover
+						{
+							background-color: rgb(121,176,62);
+							text-align: center;							
+						}
 
 						tr.rowEvenNumber {
 							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
@@ -289,9 +334,51 @@
 			</div>		
 		</td>
 	</table>
-
+	<br/>
 <!--	<b>DATE:</b><?php echo " ".$dateToday; ?>
 -->
+	
+	<!-- menu bar -->
+	<table class="menuTable">
+	  <tr class="menuRow">
+		<td class="menuColumn">				
+			<a class="menuLink" href="https://creativecommons.org/licenses/by/4.0/">		
+				Computer
+			</a>
+		</td>	
+		<td class="menuColumn">				
+			<a class="menuLink" href="https://creativecommons.org/licenses/by/4.0/">		
+				Services
+			</a>
+		</td>	
+		<td class="menuColumn">				
+			<a class="menuLink" href="https://creativecommons.org/licenses/by/4.0/">		
+				Team
+			</a>
+		</td>	
+		<td class="menuColumn">				
+			<a class="menuLink" href="https://creativecommons.org/licenses/by/4.0/">		
+				Partners
+			</a>
+		</td>	
+		<td class="menuColumn">				
+			<a class="menuLink" href="https://creativecommons.org/licenses/by/4.0/">		
+				Open Source
+			</a>
+		</td>	
+		<td class="menuColumn">				
+			<a class="menuLink" href="https://creativecommons.org/licenses/by/4.0/">		
+				EXCEL
+			</a>
+		</td>	
+		<td class="menuColumn">				
+			<a class="menuLink" href="https://creativecommons.org/licenses/by/4.0/">		
+				Contact
+			</a>
+		</td>
+	</table>
+
+
 	<br>	
 	<div class="newsletterTitle">
 		EXPENSES > INCOME PATTERN<br/>
