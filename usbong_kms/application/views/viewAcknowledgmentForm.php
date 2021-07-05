@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210629
+  @date updated: 20210706
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -96,8 +96,11 @@
 						table.tablePart2
 						{
 							width: 100%;
+							
 <!--							border: 1px solid #ab9c7d;		
 -->
+							border: 1px solid rgb(255,255,255);
+							border-collapse: collapse;							 
 						}						
 
 						table.tablePart3
@@ -361,11 +364,13 @@
 					echo "</td>";	
 					echo "<td class='columnFee'>";
 					//echo $resultPaid[0]['fee'];
-					echo number_format($resultPaid[0]['fee'], 2, '.', '');
+					//edited by Mike, 20210706
+					echo number_format($resultPaid[0]['fee'], 2, '.', ',');
 					echo "</td>";	
 					echo "<td class='columnFee'>";
 					//echo $resultPaid[0]['fee'];
-					echo number_format($resultPaid[0]['fee'], 2, '.', '');
+					//edited by Mike, 20210706
+					echo number_format($resultPaid[0]['fee'], 2, '.', ',');
 					echo "</td>";
 				echo "</tr>";			
 								
@@ -381,7 +386,9 @@
 						echo "SET";
 						echo "</td>";			
 						echo "<td class='column'>";
-						echo "PROFESSIONAL FEE: GRATIS";
+						//edited by Mike, 20210706
+//						echo "PROFESSIONAL FEE: GRATIS";
+						echo "PROF FEE: DR. ".$resultPaid[0]['medical_doctor_name']."; GRATIS";
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						echo "0.00";
@@ -406,11 +413,13 @@
 					echo "</td>";	
 					echo "<td class='columnFee'>";
 					//echo $resultPaid[0]['x_ray_fee'];
-					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', '');
+					//edited by Mike, 20210706
+					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', ',');
 					echo "</td>";	
 					echo "<td class='columnFee'>";
 					//echo $resultPaid[0]['x_ray_fee'];
-					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', '');
+					//edited by Mike, 20210706
+					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', ',');
 					echo "</td>";					
 				echo "</tr>";	
 
@@ -430,11 +439,13 @@
 					echo "</td>";	
 					echo "<td class='columnFee'>";
 					//echo $resultPaid[0]['lab_fee'];
-					echo number_format($resultPaid[0]['lab_fee'], 2, '.', '');
+					//edited by Mike, 20210706
+					echo number_format($resultPaid[0]['lab_fee'], 2, '.', ',');
 					echo "</td>";	
 					echo "<td class='columnFee'>";
 					//echo $resultPaid[0]['lab_fee'];
-					echo number_format($resultPaid[0]['lab_fee'], 2, '.', '');
+					//edited by Mike, 20210706
+					echo number_format($resultPaid[0]['lab_fee'], 2, '.', ',');
 					echo "</td>";
 				echo "</tr>";			
 
@@ -471,11 +482,13 @@
 							echo "</td>";
 							echo "<td class='columnFee'>";
 //							echo $value['fee']/$value['fee_quantity'];
-							echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');
+							//edited by Mike, 20210706
+							echo number_format($value['fee']/$value['fee_quantity'], 2, '.', ',');
 							echo "</td>";	
 							echo "<td class='columnFee'>";
 							//echo $value['fee'];
-							echo number_format($value['fee'], 2, '.', '');
+							//edited by Mike, 20210706
+							echo number_format($value['fee'], 2, '.', ',');
 							echo "</td>";
 						echo "</tr>";			
 
@@ -518,7 +531,8 @@
 							echo "</td>";	
 							echo "<td class='columnFee'>";
 							//echo $value['fee'];
-							echo number_format($value['fee'], 2, '.', '');
+							//edited by Mike, 20210706							
+							echo number_format($value['fee'], 2, '.', ',');
 							echo "</td>";
 						echo "</tr>";			
 
@@ -557,11 +571,13 @@
 							echo "</td>";
 							echo "<td class='columnFee'>";
 //							echo $value['fee']/$value['fee_quantity'];
-							echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');
+							//edited by Mike, 20210706
+							echo number_format($value['fee']/$value['fee_quantity'], 2, '.', ',');
 							echo "</td>";	
 							echo "<td class='columnFee'>";
 							//echo $value['fee'];
-							echo number_format($value['fee'], 2, '.', '');
+							//edited by Mike, 20210706
+							echo number_format($value['fee'], 2, '.', ',');
 							echo "</td>";
 						echo "</tr>";			
 
@@ -669,9 +685,9 @@
 			</td>
 			<td class="columnFeeTotal">
 <?php			
-				//TO-DO: -update: this
-				//2150
-				echo number_format($totalAmountFee, 2, '.', '');
+				//edited by Mike, 20210706
+//				echo number_format($totalAmountFee, 2, '.', '');
+				echo number_format($totalAmountFee, 2, '.', ',');				
 ?>				
 			</td>
 		</tr>	
