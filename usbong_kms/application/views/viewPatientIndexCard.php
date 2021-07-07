@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210701
+  @date updated: 20210707
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -1313,6 +1313,9 @@
 		//added by Mike, 20210701
 		echo '<h3>Patient Purchased Service History</h3>';
 
+		//added by Mike, 20210707
+		$value = $resultPaid[0];
+
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
 			echo '<div>';					
 			echo 'There are no transactions.';
@@ -1479,13 +1482,11 @@
 //					echo "<br/>";
 			}				
 			echo "</table>";				
+			echo "<br />"; //added by Mike, 20210707
+
 		}
 	}
-?>
-	<br />
-	<br />
-				
-<?php	
+
 		echo '<h3>Patient Purchased Medicine Item History</h3>';
 
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
