@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2021 Usbong Social Systems, Inc.
+  Copyright 2020~2021 SYSON, MICHAEL B.
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 
@@ -7,9 +7,11 @@
 
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 
+  @company: USBONG
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20210127
+  @date updated: 20210711
+  @website address: http://www.usbong.ph
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit (SLHCC)
@@ -152,9 +154,6 @@
 
 	//TO-DO: -update: file location
 
-	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20200803~20200808.csv";
-	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20200824~20200829.csv";
-
 	//added by Mike, 20200830
 	//TO-DO: -reverify: with lower versions of PHP, i.e. not 5.+
 	//note: generate the report every Sunday
@@ -174,12 +173,17 @@
 	//edited by Mike, 20201206
 	$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook".$sStartDate."~".$sEndDate.".csv";
 
+//	$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20210607~20210612.csv";
+
+
 //added by Mike, 20210127
 //	$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20210118~20210123Halimbawa.csv";
 	
 	//note: use this to set by hand the week of a collection report 
 	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201123~20201128.csv";
 	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201116~20201121.csv";	
+
+//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20210426~20210501.csv";	
 
 	echo "<br/>";
 	echo "<table>";
@@ -234,6 +238,11 @@
 				}
 				//IV. UNCOLLECTED CASH
 				else if (($iRowCount==14) and ($iColumnCount==0)) {
+						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
+				}
+				//added by Mike, 20210711
+				//V. TOTAL COUNTS
+				else if (($iRowCount==17) and ($iColumnCount==0)) {
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
 				}
 				else {
@@ -309,6 +318,22 @@
 							else {
 								echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 							}
+						}						
+						//added by Mike, 20210711
+						//TOTAL COUNTS: Cash Total Count
+						else if (($iRowCount==18) and ($iColumnCount==1)) {
+							//yellow
+							echo "<td class='column' bgcolor='#FFFF00' style='text-align:right'><b>".$cellValue."</b></td>";
+						}						
+						//TOTAL COUNTS: HMO Total Count						
+						else if (($iRowCount==19) and ($iColumnCount==1)) {
+							//yellow
+							echo "<td class='column' bgcolor='#FFFF00' style='text-align:right'><b>".$cellValue."</b></td>";
+						}						
+						//TOTAL COUNTS: Grand Total Count
+						else if (($iRowCount==20) and ($iColumnCount==1)) {
+							//yellow
+							echo "<td class='column' bgcolor='#FFFF00' style='text-align:right'><b>".$cellValue."</b></td>";
 						}						
 						else {
 							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
