@@ -14,6 +14,7 @@
 #### <b>b) Report</b>
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierPurchasedNonMedicineReportWithVAT.png" width="80%">
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierPurchasedNonMedicineReportWithVATOfficialReceiptV2.png" width="80%">
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/exampleAcknowledgmentFormTrimmed.png" width="60%">
 
 ## II. Add-on Software Requirements
 ### XAMPP
@@ -22,13 +23,17 @@ https://www.apachefriends.org/index.html
 <b>Technologies:</b> Apache Web Server, MySQL, PHP, phpMyAdmin
 
 ## Open Source Software License
-Copyright 2019~2021 Usbong Social Systems, Inc.
+Copyright 2019~2021 SYSON, MICHAEL B.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
    http://www.apache.org/licenses/LICENSE-2.0
   
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+@company: USBONG<br/>
+@author: SYSON, MICHAEL B.<br/>
+@website address: http://www.usbong.ph<br/>
 
 ## III. Add-on Software Tools
 ### 1) Chat
