@@ -182,6 +182,7 @@ class Browse_Model extends CI_Model
 
 		//added by Mike, 20210616
 		$this->db->not_like('t2.notes', "ONLY");
+
 		//note: added combined total transaction 2020-06-11 onwards
 		//removed by Mike, 20210619
 		//TO-DO: -reverify: this action
@@ -219,22 +220,29 @@ class Browse_Model extends CI_Model
 
 		$patientId = -1;
 		$bIsSamePatientId = false;
-
+		
 		foreach($rowArray as $row) {			 
-			if ($patientId==$row["patient_id"]) {
+			if ($patientId==$row["patient_id"]) {				
 				$bIsSamePatientId = true;
+
+				//added by Mike, 20210719
+				if ($row["medical_doctor_id"]==0) { //ANY
+				}
+				else {
+					array_pop($outputArray);
+					array_push($outputArray, $row);
+					break;
+				}				
 			}
 			else {
 				$patientId = $row["patient_id"];
 				$bIsSamePatientId = false;
 			}
 			
-			//edited by Mike, 20200601
-			
+			//edited by Mike, 20200601			
 			if (!$bIsSamePatientId) {
 				array_push($outputArray, $row);
 			}
-
 		}		
 	
 //		echo report_id: .$rowArray[0]['report_id'];
