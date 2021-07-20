@@ -2313,8 +2313,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->viewPatientIndexCard($patientId, 0); //$bFoldImageListValue
 	}
 	
-	//added by Mike, 20210626
-	public function viewAcknowledgmentForm($patientId)	
+	//added by Mike, 20210626; edited by Mike, 20210720
+//	public function viewAcknowledgmentForm($patientId)	
+	public function viewAcknowledgmentForm($patientId, $transactionDate)	
 	{
 //		$data['nameParam'] = $_POST[nameParam];
 		
@@ -2335,8 +2336,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20210720
 		//$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId);
 
+		//removed by Mike, 20210720
 //		$transactionDate = date("m/d/Y", strtotime("07/19/2021"));
-		$transactionDate = date("m/d/Y");
+//		$transactionDate = date("m/d/Y");
+
+
+//echo ">>>transactionDate: ".$transactionDate;
+		$transactionDate = str_replace("-","/",$transactionDate);
 
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, $transactionDate);
 
