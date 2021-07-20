@@ -266,7 +266,6 @@
 				<b>DATE:</b>
 			</td>
 			<td>
-				<!-- TO-DO: -add: set date -->
 				<?php echo $dateToday; ?>				
 			</td>			
 		</tr>

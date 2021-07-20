@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210707
+  @date updated: 20210720
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -589,10 +589,19 @@
 				<b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 			</td>
 			<td class="columnTableHeaderIndexCard">
-				<?php echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'])."' id='viewAcknowledgmentFormId' target='_blank'>
+				<?php
+					//edited by Mike, 20210720
+					/*echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'])."' id='viewAcknowledgmentFormId' target='_blank'>
+							ACKNOWLEDGMENT FORM
+						</a>";
+					*/
+			
+					//note: we update the date format to m/d/y in Browse.php (Controller folder)
+					echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y"))."' id='viewAcknowledgmentFormId' target='_blank'>
 							ACKNOWLEDGMENT FORM
 						</a>";
 				?>
+				
 			</td>
 		</tr>
 	</table>
@@ -1387,7 +1396,7 @@
 						<?php
 							echo "TOTAL";
 						?>
-					</td>
+					</td>					
 				  </tr>
 	<?php
 
@@ -1403,11 +1412,14 @@
 					<td class ="column">				
 						<div class="transactionDate">
 			<?php
-							//echo $value['added_datetime_stamp'];
-							echo str_replace(" ","T",$value['added_datetime_stamp']);
-							//echo $value['transaction_date'];
-//							echo str_replace(" ","<br/>T",$value['added_datetime_stamp']);
-			?>		
+							//edited by Mike, 20210720
+//							echo str_replace(" ","T",$value['added_datetime_stamp']);
+
+					echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+
+							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+						</a>";
+				?>
 						</div>								
 					</td>
 					<td class ="columnName">				
