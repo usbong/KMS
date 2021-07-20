@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
+' Copyright 2020~2021 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -7,9 +7,11 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @author: Michael Syson
+' @company: USBONG
+' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210622
+' @date updated: 20210721
+' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
 
@@ -1328,11 +1330,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 								<div class="transactionDate">
 					<?php
-									//edited by Mike, 20200507
-									//echo $value['transaction_date'];
-									//echo $value['added_datetime_stamp'];
-									echo str_replace(" ","T",$value['added_datetime_stamp']);
-					?>		
+							//edited by Mike, 20210721
+							//TO-DO: -add: official receipt number, et cetera if exist
+
+//							echo str_replace(" ","T",$value['added_datetime_stamp']);
+
+					echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+
+							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+						</a>";
+				?>
 								</div>								
 							</td>
 							<td class ="column">				
@@ -1411,7 +1418,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
