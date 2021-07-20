@@ -178,22 +178,29 @@ class Browse_Model extends CI_Model
 
 //		$this->db->group_by('t1.patient_id');
 
-		$this->db->like('t1.patient_name', $param['nameParam']);
+		//added by Mike, 20210721
+		if ((strpos(strtoupper($param['nameParam']),"NONE")!==0)
+			or (strpos(strtoupper($param['nameParam']),"WALA")!==0)) {
+			$this->db->where('t1.patient_id =', 0); //"NONE" patient_id=0			
+		}
+		else {
+			$this->db->like('t1.patient_name', $param['nameParam']);
 
-		//added by Mike, 20210616
-		$this->db->not_like('t2.notes', "ONLY");
+			//added by Mike, 20210616
+			$this->db->not_like('t2.notes', "ONLY");
 
-		//note: added combined total transaction 2020-06-11 onwards
-		//removed by Mike, 20210619
-		//TO-DO: -reverify: this action
-//		$this->db->where('t2.transaction_quantity !=', 0); 
+			//note: added combined total transaction 2020-06-11 onwards
+			//removed by Mike, 20210619
+			//TO-DO: -reverify: this action
+	//		$this->db->where('t2.transaction_quantity !=', 0); 
+			
+			//added by Mike, 20200427
+			$this->db->where('t1.patient_name !=', "CANCELLED");
+
+			//added by Mike, 20200529
+			$this->db->where('t1.patient_name !=', "NONE");
+		}
 		
-		//added by Mike, 20200427
-		$this->db->where('t1.patient_name !=', "CANCELLED");
-
-		//added by Mike, 20200529
-		$this->db->where('t1.patient_name !=', "NONE");
-
 		//edited by Mike, 20200527
 //		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
 //		$this->db->order_by('t1.patient_name', 'ASC'); //ASC
