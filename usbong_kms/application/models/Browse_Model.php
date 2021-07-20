@@ -4186,8 +4186,10 @@ class Browse_Model extends CI_Model
 
 
 	//added by Mike, 20210626
-	public function getPaidPatientDetailsListForTheDayNoItemFee($medicalDoctorId, $patientId) 
-	{		
+	//edited by Mike, 20210720
+//	public function getPaidPatientDetailsListForTheDayNoItemFee($medicalDoctorId, $patientId) 
+	public function getPaidPatientDetailsListForTheDayNoItemFee($medicalDoctorId, $patientId,$transactionDate) 
+	{			
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -4199,10 +4201,13 @@ class Browse_Model extends CI_Model
 		$this->db->where('t2.notes!=', 'UNPAID');
 		$this->db->where('t1.patient_id', $patientId);
 
-		$this->db->not_like('t2.notes', "ONLY");
-		$this->db->where('t2.transaction_date',date("m/d/Y"));
-
+		//removed by Mike, 20210720
+//		$this->db->not_like('t2.notes', "ONLY");
 		
+		//edited by Mike, 20210720
+//		$this->db->where('t2.transaction_date',date("m/d/Y"));
+		$this->db->where('t2.transaction_date',date("m/d/Y", strtotime($transactionDate)));
+				
 		$query = $this->db->get('patient');
 
 		$rowArray = $query->result_array();
@@ -4323,8 +4328,9 @@ class Browse_Model extends CI_Model
 	}		
 
 
-	//added by Mike, 20210626
-	public function getPaidItemDetailsListForPatientForTheDay($itemTypeId, $patientId) 
+	//added by Mike, 20210626; edited by Mike, 20210720
+//	public function getPaidItemDetailsListForPatientForTheDay($itemTypeId, $patientId) 
+	public function getPaidItemDetailsListForPatientForTheDay($itemTypeId, $patientId, $transactionDate) 
 	{		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.added_datetime_stamp');
 
@@ -4355,8 +4361,9 @@ class Browse_Model extends CI_Model
 
 		$this->db->where('t2.fee!=', 0);
 
-		//added by Mike, 20210626
-		$this->db->where('t2.transaction_date', date('m/d/Y'));
+		//added by Mike, 20210626; edited by Mike, 20210720
+//		$this->db->where('t2.transaction_date', date('m/d/Y'));
+		$this->db->where('t2.transaction_date', date('m/d/Y', strtotime($transactionDate)));
 		
 		$query = $this->db->get('item');
 
