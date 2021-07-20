@@ -2331,18 +2331,28 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20210626
 //		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($data['result'][0]['medical_doctor_id'], $patientId);
-		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId);
 
+		//edited by Mike, 20210720
+		//$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId);
 
-		//added by Mike, 20210314
-		$data['resultPaidMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(1, $patientId); //1 = MED ITEM
+//		$transactionDate = date("m/d/Y", strtotime("07/19/2021"));
+		$transactionDate = date("m/d/Y");
 
-		//added by Mike, 20210315
-		$data['resultPaidNonMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(2, $patientId); //2 = NON-MED ITEM
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, $transactionDate);
 
-		//added by Mike, 20210514
-		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId); //3 = SNACK ITEM
+//		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, date("m/d/Y"));
 
+		//added by Mike, 20210314; edited by Mike, 20210720		
+		//$data['resultPaidMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(1, $patientId); //1 = MED ITEM
+		$data['resultPaidMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(1, $patientId, $transactionDate); //1 = MED ITEM
+
+		//added by Mike, 20210315; edited by Mike, 20210720
+//		$data['resultPaidNonMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(2, $patientId); //2 = NON-MED ITEM
+		$data['resultPaidNonMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(2, $patientId, $transactionDate); //2 = NON-MED ITEM
+
+		//added by Mike, 20210514; edited by Mike, 20210720
+//		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId); //3 = SNACK ITEM
+		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId, $transactionDate); //3 = SNACK ITEM
 
 		$this->load->view('viewAcknowledgmentForm', $data);		
 	}
