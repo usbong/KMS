@@ -225,14 +225,17 @@ class Browse_Model extends CI_Model
 			if ($patientId==$row["patient_id"]) {				
 				$bIsSamePatientId = true;
 
-				//added by Mike, 20210719
-				if ($row["medical_doctor_id"]==0) { //ANY
-				}
-				else {
+				//added by Mike, 20210719; edited by Mike, 20210720
+				//TO-DO: -reverify: this
+				$prevRowOfSamePatient = array_pop($outputArray);
+
+				if ($prevRowOfSamePatient["medical_doctor_id"]==0) { //ANY
 					array_pop($outputArray);
 					array_push($outputArray, $row);
-					break;
 				}				
+				else {
+					array_push($outputArray, $prevRowOfSamePatient);
+				}
 			}
 			else {
 				$patientId = $row["patient_id"];
