@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210706
+  @date updated: 20210720
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -219,7 +219,19 @@
 	
 	//edited by Mike, 20200726
 	//$dateToday = (new DateTime())->format('Y-m-d');
-	$dateToday = Date('Y-m-d');
+	
+	//edited by Mike, 20210720
+	//$dateToday = Date('Y-m-d');
+//	$dateToday = $result[0]['transaction_date'];
+//	$dateToday = $resultPaid[0]['transaction_date'];
+	
+	//if no paid transaction
+	if ($resultPaid[0]['transaction_date']=="") {
+		$dateToday = date('Y-m-d');
+	}
+	else {
+		$dateToday = date('Y-m-d',strtotime($resultPaid[0]['transaction_date']));
+	}
 
 	//TO-DO: -update: this
 	
@@ -230,9 +242,6 @@
 		<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
 		<b>ACKNOWLEDGMENT FORM</b>
 	</div>
-
-<!--	<b>DATE:</b><?php echo " ".$dateToday; ?>
--->
 	<br
 	
 	<!-- PART 1 -->	
@@ -257,6 +266,7 @@
 				<b>DATE:</b>
 			</td>
 			<td>
+				<!-- TO-DO: -add: set date -->
 				<?php echo $dateToday; ?>				
 			</td>			
 		</tr>
