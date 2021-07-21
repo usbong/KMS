@@ -164,26 +164,39 @@ class Browse_Model extends CI_Model
 		//TO-DO: -add: sex, age, etc
 		//edited by Mike, 20210616
 //		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
+
+/* //edited by Mike, 20210721
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t3.medical_doctor_name, t3.medical_doctor_id');
 		
-//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id, t1.sex, t1.age, t1.age_unit');
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
-//		$this->db->distinct('t1.patient_name');
-//		$this->db->group_by('t1.patient_name');
 		$this->db->group_by('t2.added_datetime_stamp');
-
-//		$this->db->group_by('t1.patient_id');
+*/
 
 		//added by Mike, 20210721
-		if ((strpos(strtoupper($param['nameParam']),"NONE")!==0)
-			or (strpos(strtoupper($param['nameParam']),"WALA")!==0)) {
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes');
+		
+		//TO-DO: update: due to patient name has keywords "NONE" and/or "WALA"
+		if ((strpos(strtoupper($param['nameParam']),"NONE")!==false)
+			or (strpos(strtoupper($param['nameParam']),"WALA")!==false)) {
+					
+			$this->db->from('patient as t1');
+			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+
+			$this->db->group_by('t2.added_datetime_stamp');
+				
 			$this->db->where('t1.patient_id =', 0); //"NONE" patient_id=0			
 		}
 		else {
+			$this->db->from('patient as t1');
+			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+			$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+			$this->db->group_by('t2.added_datetime_stamp');
+
 			$this->db->like('t1.patient_name', $param['nameParam']);
 
 			//added by Mike, 20210616
@@ -202,8 +215,6 @@ class Browse_Model extends CI_Model
 		}
 		
 		//edited by Mike, 20200527
-//		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
-//		$this->db->order_by('t1.patient_name', 'ASC'); //ASC
 		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
 
 		//removed by Mike, 20200527
@@ -235,8 +246,11 @@ class Browse_Model extends CI_Model
 				//added by Mike, 20210719; edited by Mike, 20210720
 				//TO-DO: -reverify: this
 				$prevRowOfSamePatient = array_pop($outputArray);
+				
+				//edited by Mike, 20210721
+//				if ($prevRowOfSamePatient["medical_doctor_id"]==0) { //ANY
+				if (!isset($prevRowOfSamePatient["medical_doctor_id"]) or ($prevRowOfSamePatient["medical_doctor_id"]==0)) { //ANY
 
-				if ($prevRowOfSamePatient["medical_doctor_id"]==0) { //ANY
 					array_pop($outputArray);
 					array_push($outputArray, $row);
 				}				
