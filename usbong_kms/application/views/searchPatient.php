@@ -436,7 +436,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//edited by Mike, 20200518
 //								echo $value['medical_doctor_name'];
-								if ($value['medical_doctor_name']=="") {
+//edited by Mike, 20210721
+//								if ($value['medical_doctor_name']=="") {
+								if (!isset($value['medical_doctor_name']) or ($value['medical_doctor_name']=="")) {
 									echo "NEW; NONE YET";
 								}
 								else {
