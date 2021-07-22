@@ -176,12 +176,18 @@ class Browse_Model extends CI_Model
 		$this->db->group_by('t2.added_datetime_stamp');
 */
 
+		//TO-DO: -reverify: this
+
+/*		//removed by Mike, 20210723
 		//added by Mike, 20210721
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes');
+*/
 		
 		//TO-DO: update: due to patient name has keywords "NONE" and/or "WALA"
 		if ((strpos(strtoupper($param['nameParam']),"NONE")!==false)
 			or (strpos(strtoupper($param['nameParam']),"WALA")!==false)) {
+			//added by Mike, 20210723
+			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id');
 					
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -189,8 +195,14 @@ class Browse_Model extends CI_Model
 			$this->db->group_by('t2.added_datetime_stamp');
 				
 			$this->db->where('t1.patient_id =', 0); //"NONE" patient_id=0			
+			
+			//added by Mike, 20210723
+			$this->db->where('t2.item_id =', 0);			
 		}
 		else {
+			//added by Mike, 20210723
+			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id, t3.medical_doctor_name');
+
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 			$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
@@ -199,8 +211,14 @@ class Browse_Model extends CI_Model
 
 			$this->db->like('t1.patient_name', $param['nameParam']);
 
-			//added by Mike, 20210616
-			$this->db->not_like('t2.notes', "ONLY");
+			//added by Mike, 20210616; edited by Mike, 20210723
+			//note: due to add in output only last visit 
+			//for service transaction, e.g. Consultation
+			
+			//note: output shall not include patients who buy item ONLY
+			//example: med item only
+			
+//			$this->db->not_like('t2.notes', "ONLY");
 
 			//note: added combined total transaction 2020-06-11 onwards
 			//removed by Mike, 20210619
@@ -239,10 +257,36 @@ class Browse_Model extends CI_Model
 		$patientId = -1;
 		$bIsSamePatientId = false;
 		
-		foreach($rowArray as $row) {			 
+		foreach($rowArray as $row) {
+			//added by Mike, 20210723			
+			//if patient name is "NONE", et cetera; 
+			//previously, combined transactions did need 
+			//to have a set medical_doctor_id
+			//backward compatible
+			//TO-DO: -reverify: this
+			if ($row["patient_id"]==0) {
+			}
+			else {			
+				if ($row["medical_doctor_id"]==0) {
+					continue;
+				}
+			}
+						
 			if ($patientId==$row["patient_id"]) {				
 				$bIsSamePatientId = true;
 
+				$prevRowOfSamePatient = array_pop($outputArray);
+				
+				//TO-DO: -reverify: this
+				
+				if (strpos($prevRowOfSamePatient["notes"],"ONLY") !==false) { //ANY
+					array_push($outputArray, $row);
+				}
+				else {
+					array_push($outputArray, $prevRowOfSamePatient);
+				}
+				
+/*	//removed by Mike, 20210723
 				//added by Mike, 20210719; edited by Mike, 20210720
 				//TO-DO: -reverify: this
 				$prevRowOfSamePatient = array_pop($outputArray);
@@ -253,10 +297,11 @@ class Browse_Model extends CI_Model
 
 					array_pop($outputArray);
 					array_push($outputArray, $row);
-				}				
+				}
 				else {
 					array_push($outputArray, $prevRowOfSamePatient);
 				}
+*/				
 			}
 			else {
 				$patientId = $row["patient_id"];
