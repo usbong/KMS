@@ -258,6 +258,11 @@ class Browse_Model extends CI_Model
 		$bIsSamePatientId = false;
 		
 		foreach($rowArray as $row) {
+			//added by Mike, 20210723
+			if ($bIsSamePatientId) {
+				break;
+			}
+						
 			//added by Mike, 20210723			
 			//if patient name is "NONE", et cetera; 
 			//previously, combined transactions did need 
