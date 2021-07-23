@@ -273,7 +273,13 @@ class Browse_Model extends CI_Model
 			}
 			else {
 				if ($row["medical_doctor_id"]==0) {
-					continue;
+					//edited by Mike, 20210723
+					//continue
+					if (strpos($row["notes"], "IN-QUEUE")!==false) {
+					}
+					else {
+						continue;
+					}
 				}
 			}
 						
