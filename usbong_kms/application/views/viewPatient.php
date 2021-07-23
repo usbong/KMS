@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210721
+' @date updated: 20210723
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -1243,12 +1243,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 			echo '<h3>Patient Purchased Service History</h3>';
 
+/*	//removed by Mike, 20210723
 			if ((!isset($value)) or ($value['transaction_date']=="")) {				
 				echo '<div>';					
 				echo 'There are no transactions.';
 				echo '</div>';					
 			}
 			else {
+*/				
 				//edited by Mike, 20200406
 				$resultCount = 0;
 
@@ -1410,7 +1412,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}				
 					echo "</table>";				
 				}				
+/*	//removed by Mike, 20210723
 			}
+*/			
 		}
 	?>
 	<br />
