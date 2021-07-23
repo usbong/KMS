@@ -197,8 +197,9 @@ class Browse_Model extends CI_Model
 			//edited by Mike, 20210723
 //			$this->db->group_by('t2.added_datetime_stamp');
 			$this->db->group_by('t1.patient_id');
-				
-			$this->db->where('t1.patient_id =', 0); //"NONE" patient_id=0			
+			
+			//"NONE" patient_id=0			
+			$this->db->where('t1.patient_id =', 3543); //3543="NONE, WALA" 					
 			
 			//added by Mike, 20210723
 			$this->db->where('t2.item_id =', 0);			
