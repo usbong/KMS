@@ -2213,25 +2213,21 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 				
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
-		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
-		
-		//added by Mike, 20200601; removed by Mike, 20200608
-//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+			
+		//TO-DO: -reverify: this action; due to transactions with patient_id=0 is over 10,000
+		//reminder: item transactions also use patient_id 0
+		//reminder: use "NONE, WALA", instead of "NONE" for transactions 
+		//whose patient_id is not certain
+		if ($patientId==0) { //if patient name is "NONE", et cetera
+			$data['resultPaid']=null;
+			$data['cartListResult']=null;			
+		}
+		else {
+			$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
-//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
-		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+			$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+		}
 
-		//TO-DO: -update: this
-/*
-		$itemTypeId = 2;
-	
-		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
-		//added by Mike, 20200406
-		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsLpdist($itemTypeId, $itemId);
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
-		//added by Mike, 20200406; edited by Mike, 20200407
-		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
-*/	
 		$this->load->view('viewPatient', $data);
 	}
 	
