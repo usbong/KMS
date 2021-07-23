@@ -184,6 +184,8 @@ class Browse_Model extends CI_Model
 */
 		
 		//TO-DO: update: due to patient name has keywords "NONE" and/or "WALA"
+		//reminder: we use "NONE, WALA" for transactions
+		//whose patient_id is not certain
 		if ((strpos(strtoupper($param['nameParam']),"NONE")!==false)
 			or (strpos(strtoupper($param['nameParam']),"WALA")!==false)) {
 			//added by Mike, 20210723
@@ -272,7 +274,7 @@ class Browse_Model extends CI_Model
 			if ($row["patient_id"]==0) {
 			}
 			else {
-				if ($row["medical_doctor_id"]==0) {
+				if ($row["medical_doctor_id"]==0) { //NONE; not patient, "NONE, WALA"
 					//edited by Mike, 20210723
 					//continue
 					if (strpos($row["notes"], "IN-QUEUE")!==false) {
@@ -3717,7 +3719,7 @@ class Browse_Model extends CI_Model
 
 	//TO-DO: -reverify: this
 	//consider eliminating excess steps
-	public function getDetailsListViaId($nameId) 
+	public function getDetailsListViaIdPrevV20210723T1453($nameId) 
 	{		
 		//edited by Mike, 20200541
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
@@ -3734,8 +3736,38 @@ class Browse_Model extends CI_Model
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 
 		//added by Mike, 20200529; edited by Mike, 20200606
-		$this->db->group_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
+		//edited by Mike, 20210723
+//		$this->db->group_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+		$this->db->group_by('t1.patient_id`', 'DESC');//ASC');
+
 		//$this->db->group_by('t2.transaction_date`', 'DESC');//ASC');
+		
+		$query = $this->db->get('patient');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}	
+
+	public function getDetailsListViaId($nameId) 
+	{		
+		//edited by Mike, 20200541
+		$this->db->select('t1.patient_name, t1.patient_id, t3.medical_doctor_id, t3.medical_doctor_name');
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+		$this->db->where('t1.patient_id', $nameId);		
+
+		//edited by Mike, 20210723
+		$this->db->group_by('t1.patient_id`', 'DESC');//ASC');
+
 		
 		$query = $this->db->get('patient');
 
@@ -4209,6 +4241,10 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20200611
 		$this->db->where('t2.transaction_quantity!=',0);
+
+		//added by Mike, 20210723
+		$this->db->where('t3.medical_doctor_id!=',0);
+
 
 		//removed by Mike, 20200611
 /*
