@@ -191,8 +191,10 @@ class Browse_Model extends CI_Model
 					
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-
-			$this->db->group_by('t2.added_datetime_stamp');
+			
+			//edited by Mike, 20210723
+//			$this->db->group_by('t2.added_datetime_stamp');
+			$this->db->group_by('t1.patient_id');
 				
 			$this->db->where('t1.patient_id =', 0); //"NONE" patient_id=0			
 			
@@ -206,6 +208,9 @@ class Browse_Model extends CI_Model
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 			$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+			//added by Mike, 20210723
+			//TO-DO: -add: max for same patient_id
 
 			$this->db->group_by('t2.added_datetime_stamp');
 
@@ -256,13 +261,8 @@ class Browse_Model extends CI_Model
 
 		$patientId = -1;
 		$bIsSamePatientId = false;
-		
+				
 		foreach($rowArray as $row) {
-			//added by Mike, 20210723
-			if ($bIsSamePatientId) {
-				break;
-			}
-						
 			//added by Mike, 20210723			
 			//if patient name is "NONE", et cetera; 
 			//previously, combined transactions did need 
@@ -271,13 +271,19 @@ class Browse_Model extends CI_Model
 			//TO-DO: -reverify: this
 			if ($row["patient_id"]==0) {
 			}
-			else {			
+			else {
 				if ($row["medical_doctor_id"]==0) {
 					continue;
 				}
 			}
 						
 			if ($patientId==$row["patient_id"]) {				
+
+				//added by Mike, 20210723
+				if ($bIsSamePatientId) {
+					continue;
+				}							
+						
 				$bIsSamePatientId = true;
 
 				$prevRowOfSamePatient = array_pop($outputArray);
