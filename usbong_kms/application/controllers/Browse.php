@@ -2211,7 +2211,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200407
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
-				
+		
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 			
 		//TO-DO: -reverify: this action; due to transactions with patient_id=0 is over 10,000
@@ -2223,10 +2223,16 @@ class Browse extends CI_Controller { //MY_Controller {
 			$data['cartListResult']=null;			
 		}
 		else {
+			//TO-DO: -update: function instructions due to $medicalDoctorId not used as input
 			$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
 			$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 		}
+
+		//added by Mike, 20210724
+//		echo ">>".$medicalDoctorId;
+//		echo ">>".$data['resultPaid'][0]['medical_doctor_id'];
+		$data['result'][0]['medical_doctor_id']=$data['resultPaid'][0]['medical_doctor_id'];
 
 		$this->load->view('viewPatient', $data);
 	}
