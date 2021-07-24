@@ -193,16 +193,33 @@ class Browse_Model extends CI_Model
 					
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+
+			//added by Mike, 2021724
+			//notes: -reverify: add last visit date as column in patient table
+			//-update: to speed-up viewPatient 
+			//-reverify: limit to get a set of transactions from the newest
 			
-			//edited by Mike, 20210723
-//			$this->db->group_by('t2.added_datetime_stamp');
-			$this->db->group_by('t1.patient_id');
+			//edited by Mike, 20210723; edited by Mike, 20210724
+			//$this->db->group_by('t2.added_datetime_stamp');
+
+			//execution time equal with group_by(...)?
+/*			$this->db->order_by('t2.added_datetime_stamp', 'DESC');
+			$this->db->limit(1);
+*/			
+			$iPatientNoneWalaId=3543;
+
+			//execution time fastest
+			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id='.$iPatientNoneWalaId.')',NULL,FALSE);
+						
+//			$this->db->group_by('t1.patient_id'); //note: faster to execute than added_datetime_stamp
 			
 			//"NONE" patient_id=0			
-			$this->db->where('t1.patient_id =', 3543); //3543="NONE, WALA" 					
+			$this->db->where('t1.patient_id =', $iPatientNoneWalaId); //3543="NONE, WALA" 					
 			
 			//added by Mike, 20210723
 			$this->db->where('t2.item_id =', 0);			
+						
+			//$this->db->limit(1); //note: when added, query execution time not noticeably faster
 		}
 		else {
 			//added by Mike, 20210723
