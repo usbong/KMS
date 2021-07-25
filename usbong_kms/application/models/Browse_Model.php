@@ -188,6 +188,7 @@ class Browse_Model extends CI_Model
 		//whose patient_id is not certain
 		if ((strpos(strtoupper($param['nameParam']),"NONE")!==false)
 			or (strpos(strtoupper($param['nameParam']),"WALA")!==false)) {
+								
 			//added by Mike, 20210723
 			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id');
 					
@@ -212,7 +213,8 @@ class Browse_Model extends CI_Model
 			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id='.$iPatientNoneWalaId.')',NULL,FALSE);
 						
 //			$this->db->group_by('t1.patient_id'); //note: faster to execute than added_datetime_stamp
-			
+
+			//removed by Mike, 20210726
 			//"NONE" patient_id=0			
 			$this->db->where('t1.patient_id =', $iPatientNoneWalaId); //3543="NONE, WALA" 					
 			
@@ -232,7 +234,10 @@ class Browse_Model extends CI_Model
 			//added by Mike, 20210723
 			//TO-DO: -add: max for same patient_id
 
-			$this->db->group_by('t2.added_datetime_stamp');
+			//edited by Mike, 20210726
+			//$this->db->group_by('t2.added_datetime_stamp');
+			//execution time fastest
+			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
 
 			$this->db->like('t1.patient_name', $param['nameParam']);
 
@@ -270,7 +275,26 @@ class Browse_Model extends CI_Model
 		$rowArray = $query->result_array();
 		
 		if ($rowArray == null) {			
-			return False; //edited by Mike, 20190722
+			//added by Mike, 20210726
+			//if exists in patient table
+			//no transaction yet
+			$this->db->select('t1.patient_name, t1.patient_id, t1.medical_doctor_id');		
+			$this->db->from('patient as t1');		
+			$this->db->like('t1.patient_name', $param['nameParam']);
+			$this->db->group_by('t1.patient_id');
+
+			$queryPatientTableOnly = $this->db->get('patient');
+
+			$rowArrayPatientTableOnly = $queryPatientTableOnly->result_array();
+			
+			if ($rowArrayPatientTableOnly == null) {
+				return False;
+			}		
+
+			$rowArray=$rowArrayPatientTableOnly;
+
+			//removed by Mike, 20210726
+			//return False; //edited by Mike, 20190722
 		}
 	
 		//added by Mike, 20200522
@@ -292,13 +316,24 @@ class Browse_Model extends CI_Model
 			if ($row["patient_id"]==0) {
 			}
 			else {
-				if ($row["medical_doctor_id"]==0) { //NONE; not patient, "NONE, WALA"
-					//edited by Mike, 20210723
-					//continue
-					if (strpos($row["notes"], "IN-QUEUE")!==false) {
-					}
-					else {
-						continue;
+				//edited by Mike, 20210726
+				if (isset($row["notes"])) {
+					if ($row["medical_doctor_id"]==0) { //NONE; not patient, "NONE, WALA"
+						//edited by Mike, 20210723
+						//continue
+						//edited by Mike, 20210726
+						//if (strpos($row["notes"], "IN-QUEUE")!==false) {
+						if (isset($row["notes"])) {
+							if (strpos($row["notes"], "IN-QUEUE")!==false) {
+
+							}
+							else {
+								continue;
+							}
+						}
+						else {
+							continue;
+						}
 					}
 				}
 			}
