@@ -10,7 +10,7 @@
   @company: USBONG
   @author: Michael Syson
   @date created: 20200522
-  @date updated: 20210711
+  @date updated: 20210728
   @website address: http://www.usbong.ph
 
   Input:
@@ -150,7 +150,7 @@
 	
 	//edited by Mike, 20200726
 	//$dateToday = (new DateTime())->format('Y-m-d');
-	$dateToday = Date('Y-m-d');
+//	$dateToday = Date('Y-m-d'); //removed by Mike, 20210728
 
 	//TO-DO: -update: file location
 
@@ -159,6 +159,8 @@
 	//note: generate the report every Sunday
 	//auto-identify the start and end dates
 	$dateToday = Date('Y-m-d');	
+//	$dateToday = "2021-07-25"; //note: set date to be the SUNDAY of the target week
+
 
 	$startDate = new DateTime($dateToday);
 	$startDate->modify("-6 day");
@@ -377,7 +379,7 @@
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y"); ?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y"); ?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
