@@ -235,11 +235,18 @@ class Browse_Model extends CI_Model
 			//TO-DO: -add: max for same patient_id
 
 			//edited by Mike, 20210726
-			//$this->db->group_by('t2.added_datetime_stamp');
+//			$this->db->group_by('t2.added_datetime_stamp');
 			//execution time fastest
+			//added by Mike, 20210727
+			//TO-DO: -reverify: this due to needs additional letters 
+			//for patient name to be displayed in search results list
 			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
 
-			$this->db->like('t1.patient_name', $param['nameParam']);
+			//-reverify: slow execution to cause computer server restart
+//			$this->db->group_by('t1.patient_id');
+
+
+//			$this->db->like('t1.patient_name', $param['nameParam']);
 
 			//added by Mike, 20210616; edited by Mike, 20210723
 			//note: due to add in output only last visit 
@@ -274,7 +281,7 @@ class Browse_Model extends CI_Model
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
 		
-		if ($rowArray == null) {			
+		if ($rowArray == null) {	
 			//added by Mike, 20210726
 			//if exists in patient table
 			//no transaction yet
