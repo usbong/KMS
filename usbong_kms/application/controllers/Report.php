@@ -781,6 +781,16 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewXray', $data);
 	}	
 
+	//added by Mike, 20210729
+	public function viewReportLab()
+	{						
+		$this->load->model('Report_Model');
+
+		$data["result"] = $this->Report_Model->getLabForTheDay();
+
+		$this->load->view('viewLab', $data);
+	}	
+
 	//added by Mike, 20200412
 	public function viewReportNonMedicine()
 	{
