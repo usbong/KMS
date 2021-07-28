@@ -136,7 +136,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     /**/
     </style>
     <title>
-      X-ray Report for the Day (MOSC)
+      Lab Report for the Day (MOSC)
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -252,7 +252,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				X-ray Report for the Day (MOSC)
+				Lab Report for the Day (MOSC)
 			</h2>		
 		</td>
 	  </tr>
@@ -336,7 +336,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class ="tableHeaderColumn">				
 							<?php
-									echo "X-RAY";
+									echo "LAB";
 							?>
 						</td>
 					  </tr>
@@ -411,19 +411,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						</td>
 						<td class ="column">				
-								<div id="xrayFeeId<?php echo $iCount?>">
+								<div id="labFeeId<?php echo $iCount?>">
 							<?php
-								//output: whole numbers							
 								//edited by Mike, 20200415
-//								echo floor(($value['x_ray_fee']*100)/100);
-								$iXRayFee = floor(($value['x_ray_fee']*100)/100);
-								
-								//echo $iXRayFee;
-								echo number_format($iXRayFee,0,'',',');
-								
-								$iTotalXRayFee += $iXRayFee; //$value['x_ray_fee'];
+//								echo $value['x_ray_fee'];
+								//output: whole numbers
+//								echo floor(($value['x_ray_fee']*100)/100);								
+								$iLabFee = floor(($value['lab_fee']*100)/100);
+
+								//echo $iLabFee;
+								echo number_format($iLabFee,0,'',',');
+
+								$iTotalLabFee += $iLabFee; //$value['x_ray_fee'];
 							?>
-								</div>
+								</div>								</div>
 						</td>
 					  </tr>
 		<?php				
@@ -468,7 +469,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td class ="column">				
 						<div>
 					<?php
-						echo "<b>".number_format($iTotalXRayFee,0,'',',')."</b>";
+						echo "<b>".number_format($iTotalLabFee,0,'',',')."</b>";
 					?>
 						</div>
 				</td>
