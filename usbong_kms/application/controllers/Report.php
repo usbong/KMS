@@ -1535,6 +1535,10 @@ class Report extends CI_Controller { //MY_Controller {
 				//added by Mike, 20201127
 				window.open('viewReportSnackUnified','_blank');
 
+				//added by Mike, 20210729
+				window.open('viewReportXray','_blank');
+				window.open('viewReportLab','_blank');
+
 			</script>";	
 
 		//note: the web address remains ".../viewAllSummaryReportsForTheDay"
@@ -1557,8 +1561,12 @@ class Report extends CI_Controller { //MY_Controller {
 				window.open('viewReceiptReportForTheDay','_blank');
 				window.open('viewReceiptReportPASForTheDay','_blank');
 
-//added by Mike, 20201127
+				//added by Mike, 20201127
 				window.open('viewReportSnack','_blank');
+
+				//added by Mike, 20210729
+				window.open('viewReportXray','_blank');
+				window.open('viewReportLab','_blank');
 
 			</script>";	
 
