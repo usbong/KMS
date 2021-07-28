@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20210712
+  @date updated: 20210729
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -265,6 +265,15 @@ a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/vie
 http://192.168.11.10/usbong_kms/index.php/report/viewReportSnack</a><br/>
 b) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportSnackUnified">
 http://192.168.11.10/usbong_kms/index.php/report/viewReportSnackUnified</a><br/>
+<br/>
+<b>5) X-RAY</b><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportXray">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportXray</a><br/>
+<br/>
+<b>6) LAB</b><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportLab">http://192.168.11.10/usbong_kms/index.php/report/viewReportLab</a><br/>
+<br/>
+
 
 <h2>VI. OFFICIAL RECEIPTS:</h2>
 <b>1) MOSC</b><br/>
