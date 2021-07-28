@@ -771,6 +771,16 @@ class Report extends CI_Controller { //MY_Controller {
 		}
 	}
 
+	//added by Mike, 20210728
+	public function viewReportXray()
+	{						
+		$this->load->model('Report_Model');
+
+		$data["result"] = $this->Report_Model->getXrayForTheDay();
+
+		$this->load->view('viewXray', $data);
+	}	
+
 	//added by Mike, 20200412
 	public function viewReportNonMedicine()
 	{
