@@ -462,6 +462,37 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}
 	
+	//added by Mike, 20210728
+	public function getXrayForTheDay() {
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.x_ray_fee, t2.medical_doctor_id, t3.medical_doctor_name'); 
+		
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+		$this->db->distinct('t1.patient_name');
+				
+		//added by Mike, 20200324
+		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+
+		$this->db->where('t2.x_ray_fee!=',0);
+		$this->db->where('t2.transaction_quantity!=',0);
+
+//		$this->db->order_by('t2.transaction_id', 'ASC');
+		$this->db->order_by('t2.medical_doctor_id', 'ASC');
+
+		
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+
+		return $rowArray;
+	}
+	
 	//added by Mike, 20200908
 	public function getReceiptNumber($transactionId) {
 //		echo $transactionId."<br/>";
