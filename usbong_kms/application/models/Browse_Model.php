@@ -242,9 +242,11 @@ class Browse_Model extends CI_Model
 			//for patient name to be displayed in search results list
 
 			//removed by Mike, 20210730
-//			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
+			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
 
-
+			//added by Mike, 20210730
+			//TO-DO: -add: another query COMMAND to identify patient's newest transaction			
+/*			//TO-DO: -update: this
 			//-reverify: slow execution to cause computer server restart
 //			$this->db->group_by('t1.patient_id');
 
@@ -254,6 +256,8 @@ class Browse_Model extends CI_Model
 			//TO-DO: -reverify: cause of select patients NOT added in results
 			//-reverify: use of %...% via phpmyadmin output NOT equal with CodeIgniter output
 			$this->db->group_by('t1.patient_id');
+//			$this->db->group_by('t2.added_datetime_stamp');
+
 			//edited by Mike, 20210730
 //			$this->db->like('t1.patient_name', "%".$param['nameParam']."%");
 //			$this->db->like('t1.patient_name', $param['nameParam'], 'both');
@@ -261,10 +265,10 @@ class Browse_Model extends CI_Model
 //			$this->db->where("t1.patient_name LIKE '%".$param['nameParam']."%'");
 			
 			//TO-DO: -reverify: use: transaction_date max for each patient_id
-//			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
+//			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id)',NULL,FALSE);
 
 			$this->db->limit(5);
-
+*/
 
 //			$this->db->like('t1.patient_name', $param['nameParam']);
 
@@ -291,6 +295,7 @@ class Browse_Model extends CI_Model
 		
 		//edited by Mike, 20200527
 		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
+//		$this->db->order_by('t2.added_datetime_stamp', 'ASC');
 
 		//removed by Mike, 20200527
 //		$this->db->limit(8);//1);
