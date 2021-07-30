@@ -224,88 +224,91 @@ class Browse_Model extends CI_Model
 			//$this->db->limit(1); //note: when added, query execution time not noticeably faster
 		}
 		else {
-			//added by Mike, 20210723
-			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id, t3.medical_doctor_name');
+			//added by Mike, 20210723; edited by Mike, 20210730
+			//part 1
+			$this->db->select('t1.patient_id');
 
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-			$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
-			//added by Mike, 20210723
-			//TO-DO: -add: max for same patient_id
-
-			//edited by Mike, 20210726
-//			$this->db->group_by('t2.added_datetime_stamp');
-			//execution time fastest
-			//added by Mike, 20210727
-			//TO-DO: -reverify: this due to needs additional letters 
-			//for patient name to be displayed in search results list
-
-			//removed by Mike, 20210730
-			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
-
-			//added by Mike, 20210730
-			//TO-DO: -add: another query COMMAND to identify patient's newest transaction			
-/*			//TO-DO: -update: this
-			//-reverify: slow execution to cause computer server restart
-//			$this->db->group_by('t1.patient_id');
-
-			//added by Mike, 20210730
-			//note: reduces need to enter more letters, in exchange for slower execution time
-			//1~2secs vs ~1sec "...where MAX" instruction
-			//TO-DO: -reverify: cause of select patients NOT added in results
-			//-reverify: use of %...% via phpmyadmin output NOT equal with CodeIgniter output
-			$this->db->group_by('t1.patient_id');
-//			$this->db->group_by('t2.added_datetime_stamp');
-
-			//edited by Mike, 20210730
-//			$this->db->like('t1.patient_name', "%".$param['nameParam']."%");
-//			$this->db->like('t1.patient_name', $param['nameParam'], 'both');
 			$this->db->like('t1.patient_name', $param['nameParam']);
-//			$this->db->where("t1.patient_name LIKE '%".$param['nameParam']."%'");
-			
-			//TO-DO: -reverify: use: transaction_date max for each patient_id
-//			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id)',NULL,FALSE);
+			$this->db->group_by('t1.patient_id');
 
 			$this->db->limit(5);
-*/
-
-//			$this->db->like('t1.patient_name', $param['nameParam']);
-
-			//added by Mike, 20210616; edited by Mike, 20210723
-			//note: due to add in output only last visit 
-			//for service transaction, e.g. Consultation
-			
-			//note: output shall not include patients who buy item ONLY
-			//example: med item only
-			
-//			$this->db->not_like('t2.notes', "ONLY");
-
-			//note: added combined total transaction 2020-06-11 onwards
-			//removed by Mike, 20210619
-			//TO-DO: -reverify: this action
-	//		$this->db->where('t2.transaction_quantity !=', 0); 
-			
-			//added by Mike, 20200427
+		
 			$this->db->where('t1.patient_name !=', "CANCELLED");
-
-			//added by Mike, 20200529
 			$this->db->where('t1.patient_name !=', "NONE");
-		}
-		
-		//edited by Mike, 20200527
-		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
-//		$this->db->order_by('t2.added_datetime_stamp', 'ASC');
-
-		//removed by Mike, 20200527
-//		$this->db->limit(8);//1);
-		
-		$query = $this->db->get('patient');
-
-
-//		$row = $query->row();		
-		$rowArray = $query->result_array();
 			
+			$query = $this->db->get('patient');
+			$rowArrayPart1 = $query->result_array();
+				
+//			echo "part1: ".count($rowArrayPart1)."<br/>";
+						
+//--			
+			//TO-DO: -reverify: this
+			
+			//part 2
+			$rowArray = array();
+
+			if (isset($rowArrayPart1)) {									
+//				echo "part2: ";
+
+				foreach($rowArrayPart1 as $row) {					
+//					echo ">>".$row["patient_id"];
+								
+					$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id, t3.medical_doctor_name');
+
+					$this->db->from('patient as t1');
+					$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+					$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+				//TO-DO: -update: this
+				//-reverify: slow execution to cause computer server restart
+	//			$this->db->group_by('t1.patient_id');
+
+				//added by Mike, 20210730
+				//note: reduces need to enter more letters, in exchange for slower execution time
+				//1~2secs vs ~1sec "...where MAX" instruction
+				//TO-DO: -reverify: cause of select patients NOT added in results
+				//-reverify: use of %...% via phpmyadmin output NOT equal with CodeIgniter output
+				
+	//			$this->db->where('t2.patient_id = (SELECT MAX(t.patient_id) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
+
+	//			$this->db->where('t2.patient_id = (SELECT MAX(p.patient_id) FROM patient as p WHERE p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);				
+				
+					//edited by Mike, 20210730
+					//TO-DO: -reverify: this
+		//			$this->db->group_by('t1.patient_id');
+					$this->db->group_by('t2.added_datetime_stamp');
+		//			$this->db->group_by('t2.patient_id');
+
+					//edited by Mike, 20210730
+		//			$this->db->like('t1.patient_name', "%".$param['nameParam']."%");
+		//			$this->db->like('t1.patient_name', $param['nameParam'], 'both');
+					//$this->db->like('t1.patient_name', $param['nameParam']);
+		//			$this->db->where("t1.patient_name LIKE '%".$param['nameParam']."%'");
+					
+					$this->db->where('t1.patient_id', $row['patient_id']);
+									
+					//added by Mike, 20200427
+					$this->db->where('t1.patient_name !=', "CANCELLED");
+
+					//added by Mike, 20200529
+					$this->db->where('t1.patient_name !=', "NONE");
+
+					$this->db->order_by('t2.added_datetime_stamp', 'DESC');
+
+					$query = $this->db->get('patient');
+
+					$rowArrayPart2 = $query->result_array();
+						
+//					echo "part2: ".$rowArrayPart2[0]['patient_name'];
+					
+					array_push($rowArray, $rowArrayPart2[0]);				
+				}
+			}			
+		}
+					
 //		echo count($rowArray);
 		
 		//edited by Mike, 20210730
@@ -343,6 +346,9 @@ class Browse_Model extends CI_Model
 		$bIsSamePatientId = false;
 				
 		foreach($rowArray as $row) {
+			
+//			echo ">>".$row["patient_id"];
+			
 			//added by Mike, 20210723			
 			//if patient name is "NONE", et cetera; 
 			//previously, combined transactions did need 
