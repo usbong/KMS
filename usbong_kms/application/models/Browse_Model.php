@@ -244,14 +244,25 @@ class Browse_Model extends CI_Model
 			//removed by Mike, 20210730
 //			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
 
+
 			//-reverify: slow execution to cause computer server restart
 //			$this->db->group_by('t1.patient_id');
 
 			//added by Mike, 20210730
 			//note: reduces need to enter more letters, in exchange for slower execution time
 			//1~2secs vs ~1sec "...where MAX" instruction
+			//TO-DO: -reverify: cause of select patients NOT added in results
+			//-reverify: use of %...% via phpmyadmin output NOT equal with CodeIgniter output
 			$this->db->group_by('t1.patient_id');
+			//edited by Mike, 20210730
+//			$this->db->like('t1.patient_name', "%".$param['nameParam']."%");
+//			$this->db->like('t1.patient_name', $param['nameParam'], 'both');
 			$this->db->like('t1.patient_name', $param['nameParam']);
+//			$this->db->where("t1.patient_name LIKE '%".$param['nameParam']."%'");
+			
+			//TO-DO: -reverify: use: transaction_date max for each patient_id
+//			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
+
 			$this->db->limit(5);
 
 
@@ -289,8 +300,12 @@ class Browse_Model extends CI_Model
 
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
+			
+//		echo count($rowArray);
 		
-		if ($rowArray == null) {	
+		//edited by Mike, 20210730
+//		if ($rowArray == null) {	
+		if (!isset($rowArray)) {			
 			//added by Mike, 20210726
 			//if exists in patient table
 			//no transaction yet
