@@ -450,12 +450,12 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function confirmPatientInformationDesk()
 	{
 		$data['nameParam'] = $_POST['nameParam'];
-		
-		//added by Mike, 20200328
+				
+		//added by Mike, 20210730
 		if (!isset($data['nameParam'])) {
-			redirect('browse/searchPatientInformationDesk');
+			redirect('report/viewReportPatientQueue');
 		}
-		
+				
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
@@ -464,6 +464,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200530
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 	
+//			echo $data['medicalDoctorList'][0]['medical_doctor_name'];
+
 		//edited by Mike, 20200601
 		//$data['result'] = $this->Browse_Model->getDetailsListViaName($data);		
 		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);		
