@@ -240,10 +240,19 @@ class Browse_Model extends CI_Model
 			//added by Mike, 20210727
 			//TO-DO: -reverify: this due to needs additional letters 
 			//for patient name to be displayed in search results list
-			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
+
+			//removed by Mike, 20210730
+//			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t, patient as p WHERE t.patient_id=p.patient_id and p.patient_name LIKE "%'.$param['nameParam'].'%")',NULL,FALSE);
 
 			//-reverify: slow execution to cause computer server restart
 //			$this->db->group_by('t1.patient_id');
+
+			//added by Mike, 20210730
+			//note: reduces need to enter more letters, in exchange for slower execution time
+			//1~2secs vs ~1sec "...where MAX" instruction
+			$this->db->group_by('t1.patient_id');
+			$this->db->like('t1.patient_name', $param['nameParam']);
+			$this->db->limit(5);
 
 
 //			$this->db->like('t1.patient_name', $param['nameParam']);
