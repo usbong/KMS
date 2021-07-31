@@ -222,6 +222,10 @@ class Browse_Model extends CI_Model
 			$this->db->where('t2.item_id =', 0);			
 						
 			//$this->db->limit(1); //note: when added, query execution time not noticeably faster
+			
+			//added by Mike, 20210731
+			$query = $this->db->get('patient');
+			$rowArray = $query->result_array();			
 		}
 		else {
 			//added by Mike, 20210723; edited by Mike, 20210730
