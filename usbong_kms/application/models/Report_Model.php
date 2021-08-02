@@ -474,6 +474,7 @@ class Report_Model extends CI_Model
 				
 		//added by Mike, 20200324
 		$this->db->where('t2.transaction_date=',date("m/d/Y"));
+//		$this->db->where('t2.transaction_date=',"07/31/2021");
 
 		$this->db->where('t2.x_ray_fee!=',0);
 		$this->db->where('t2.transaction_quantity!=',0);
