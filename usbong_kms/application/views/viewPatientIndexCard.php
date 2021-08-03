@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210720
+  @date updated: 20210803
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -862,7 +862,9 @@
 							if (isset($result[0]["pwd_senior_id"])){
 								$myValue=$result[0]["pwd_senior_id"];
 							}
-							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' value='".$myValue."' required>";
+							//edited by Mike, 20210803
+							//$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' value='".$myValue."' required>";
+							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' value='".$myValue."'>";
 
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
@@ -912,7 +914,9 @@
 								$myValue=$result[0]["occupation"];
 							}
 
-							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId'  value='".$myValue."' required>";
+							//edited by Mike, 20210803
+//							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId'  value='".$myValue."' required>";
+							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId'  value='".$myValue."'>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="BIRTHDAY")) {
 /*							//edited by Mike, 20210319							
@@ -923,7 +927,9 @@
 								$myValue=$result[0]["birthday"];
 							}
 
-							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' value='".$myValue."' required>";
+							//edited by Mike, 20210803
+//							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' value='".$myValue."' required>";
+							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' value='".$myValue."'>";
 						}
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CONTACT#")) {						
 /* //edited by Mike, 20210319						
@@ -934,7 +940,9 @@
 								$myValue=$result[0]["contact_number"];
 							}
 
-							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId'  value='".$myValue."' required>";
+							//edited by Mike, 20210803
+//							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId'  value='".$myValue."' required>";
+							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId'  value='".$myValue."'>";
 						}
 
 						//note: another set of if-then, if-else statements
@@ -992,8 +1000,10 @@
 <!--	//edited by Mike, 20210212
 							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="" min="1" max="999" required>
 -->
+<!-- edited by Mike, 20210803
 							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="<?php echo $result[0]["age"];?>" min="1" max="999" required>
-
+-->
+							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="<?php echo $result[0]["age"];?>" min="1" max="999">
 							
 <!--	//edited by Mike, 20210212
 							<select id='selectAgeUnitIdParam' name='selectAgeUnitNameParam'>
@@ -1080,12 +1090,20 @@
 								$myValue=$result[0]["location_address"];
 							}
 
-							echo "<td class='columnField'><b>
+							//edited by Mike, 20210803
+							/*echo "<td class='columnField'><b>
 									<input class='inputText' type='text' id='inputTextLocationAddressId' name='inputTextLocationAddressIdNameParam'
 									placeholder='LOCATION'
 									form='indexCardId' value='".$myValue."' required>
 									</input></b>
 								  </td>";
+							*/
+							echo "<td class='columnField'><b>
+									<input class='inputText' type='text' id='inputTextLocationAddressId' name='inputTextLocationAddressIdNameParam'
+									placeholder='LOCATION'
+									form='indexCardId' value='".$myValue."'>
+									</input></b>
+								  </td>";								  
 						}						
 						else if (strpos($cellValue,"BARANGAY")!==false) {
 /* //edited by Mike, 20210319							
@@ -1101,12 +1119,20 @@
 								$myValue=$result[0]["barangay_address"];
 							}
 
-							echo "<td class='columnField'><b>
+							//edited by Mike, 20210803
+/*							echo "<td class='columnField'><b>
 									<input class='inputText' type='text' id='inputTextBarangayAddressId' name='inputTextBarangayAddressIdNameParam'
 									placeholder='BARANGAY'
 									form='indexCardId' value='".$myValue."' required>
 									</input></b>
 								  </td>";
+*/
+							echo "<td class='columnField'><b>
+									<input class='inputText' type='text' id='inputTextBarangayAddressId' name='inputTextBarangayAddressIdNameParam'
+									placeholder='BARANGAY'
+									form='indexCardId' value='".$myValue."'>
+									</input></b>
+								  </td>";								  
 						}						
 						else if (strpos($cellValue,"POSTAL")!==false) {
 /* //edited by Mike, 20210319							
@@ -1122,12 +1148,20 @@
 								$myValue=$result[0]["postal_address"];
 							}
 
-							echo "<td class='columnField'><b>
+							//edited by Mike, 20210803
+/*							echo "<td class='columnField'><b>
 									<input class='inputText' type='text' id='inputTextPostalAddressId' name='inputTextPostalAddressIdNameParam'
 									placeholder='POSTAL'
 									form='indexCardId' value='".$myValue."' required>
 									</input></b>
 								  </td>";
+*/
+							echo "<td class='columnField'><b>
+									<input class='inputText' type='text' id='inputTextPostalAddressId' name='inputTextPostalAddressIdNameParam'
+									placeholder='POSTAL'
+									form='indexCardId' value='".$myValue."'>
+									</input></b>
+								  </td>";								  
 						}						
 						else if (strpos($cellValue,"PROVINCE/CITY/PH")!==false) {
 /* //edited by Mike, 20210319							
@@ -1143,12 +1177,20 @@
 								$myValue=$result[0]["province_city_ph_address"];
 							}
 
-							echo "<td class='columnField'><b>
+							//edited by Mike, 20210803
+/*							echo "<td class='columnField'><b>
 									<input class='inputText' type='text' id='inputTextProvinceCityPhAddressId' name='inputTextProvinceCityPhAddressIdNameParam'
 									placeholder='PROVINCE/CITY/PH'
 									form='indexCardId' value='".$myValue."' required>
 									</input></b>
 								  </td>";
+*/
+							echo "<td class='columnField'><b>
+									<input class='inputText' type='text' id='inputTextProvinceCityPhAddressId' name='inputTextProvinceCityPhAddressIdNameParam'
+									placeholder='PROVINCE/CITY/PH'
+									form='indexCardId' value='".$myValue."'>
+									</input></b>
+								  </td>";								  
 						}
 /* //removed by Mike, 20210307						
 						//added by Mike, 20210307

@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210720
+  @date updated: 20210803
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -275,11 +275,36 @@
 			</td>
 			<td>
 <?php			
+/* //edited by Mike, 20210803
 				//STO. NIÑO, 1820, MARIKINA CITY
 				echo $result[0]['location_address'];
 				echo ", ".$result[0]['barangay_address'];
 				echo ", ".$result[0]['postal_address'];
 				echo ", ".$result[0]['province_city_ph_address'];				
+*/				
+
+				echo $result[0]['location_address'];				
+
+				if (!empty($result[0]['barangay_address'])) {
+					if (!empty($result[0]['location_address'])) {
+						echo ", ";
+					}
+					echo $result[0]['barangay_address'];
+				}
+
+				if (!empty($result[0]['postal_address'])) {
+					if (!empty($result[0]['barangay_address'])) {
+						echo ", ";
+					}
+					echo $result[0]['postal_address'];					
+				}								
+
+				if (!empty($result[0]['province_city_ph_address'])) {
+					if (!empty($result[0]['postal_address'])) {
+						echo ", ";
+					}
+					echo $result[0]['province_city_ph_address'];					
+				}								
 ?>				
 			</td>
 			<td>
@@ -319,7 +344,9 @@
 			</td>
 			<td>
 <?php		
+				//edited by Mike, 20210803
 				if (empty($result[0]['pwd_senior_id'])) {
+//				if ((empty($result[0]['pwd_senior_id']))or ($result[0]['pwd_senior_id']=="")) {
 					echo "N/A";
 				}
 				else {
