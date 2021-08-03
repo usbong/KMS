@@ -238,7 +238,12 @@ class Browse_Model extends CI_Model
 			$this->db->like('t1.patient_name', $param['nameParam']);
 			$this->db->group_by('t1.patient_id');
 
-			$this->db->limit(5);
+			//edited by Mike, 20210803
+			//TO-DO: -update: instructions if only 1 letter, et cetera
+			//TO-DO: -update: instructions if comma has space before and after it
+//			$this->db->limit(5);
+//			$this->db->limit(10);
+			$this->db->limit(8);
 		
 			$this->db->where('t1.patient_name !=', "CANCELLED");
 			$this->db->where('t1.patient_name !=', "NONE");
