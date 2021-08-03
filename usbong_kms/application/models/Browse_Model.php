@@ -1485,6 +1485,27 @@ class Browse_Model extends CI_Model
 			//edited by Mike, 20200611
 			//$param['transactionId'] = $param['transactionId'] - 1;
 			$param['transactionId'] = (int)$param['transactionId'] - 1;
+			
+			//added by Mike, 20210803
+			//TO-DO: -reverify: this
+			while ($param['transactionId']>=0) {
+				$this->db->select('patient_id');
+				$this->db->where('transaction_id',$param['transactionId']);
+
+				$queryVerifyTransactionId = $this->db->get('transaction');
+				$rowArrayVerifyTransactionId = $queryVerifyTransactionId->result_array();
+				
+				if ((isset($rowArrayVerifyTransactionId)) and (count($rowArrayVerifyTransactionId)!=0)) {
+					if ($rowArrayVerifyTransactionId[0]['patient_id']==$patientId) {
+						break;
+					}
+				}
+				$param['transactionId'] = (int)$param['transactionId'] - 1;
+			}
+			
+			if ($param['transactionId']<0) {
+				break;
+			}
 		}
 		
 		foreach ($outputArray as $dataValue) {
