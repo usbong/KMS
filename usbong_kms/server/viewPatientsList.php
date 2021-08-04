@@ -194,6 +194,7 @@
 
 		  var checkboxId = document.getElementById("checkBoxId"+iRowCount);
 		  var patientNameSpanId = document.getElementById("patientNameSpanId"+iRowCount);
+		  var iCurrGroupPatientNameTotalCount=0;
 		  
 		  //TO-DO: -use array container
 		  var groupPatientName1 = document.getElementById("groupPatientName1");
@@ -232,7 +233,7 @@
 				  //alert("dito"+patientNameGroup1.innerHTML+"end");
 			  }
 		  }
-		  else {
+		  else {			  
 			　　if (groupPatientName1.value ===iRowCount) {
 				currGroupPatientName = groupPatientName1;
 			  }
@@ -255,11 +256,45 @@
 				currGroupPatientName.value="";
 			  }
 		  }
-
-		  if (groupPatientName5.innerHTML.trim()==="") {
+		  
+		  //edited by Mike, 20210804
+		  //note: same patient group list NOT sorted in order of added sequence
+		  if (groupPatientName5.innerHTML.trim()!=="") {
+			iCurrGroupPatientNameTotalCount=iCurrGroupPatientNameTotalCount+1;
 		  }
-		  else {
+		  if (groupPatientName4.innerHTML.trim()!=="") {
+			iCurrGroupPatientNameTotalCount=iCurrGroupPatientNameTotalCount+1;
+		  }
+		  if (groupPatientName3.innerHTML.trim()!=="") {
+			iCurrGroupPatientNameTotalCount=iCurrGroupPatientNameTotalCount+1;
+		  }
+		  if (groupPatientName2.innerHTML.trim()!=="") {
+			iCurrGroupPatientNameTotalCount=iCurrGroupPatientNameTotalCount+1;
+		  }
+		  if (groupPatientName1.innerHTML.trim()!=="") {
+			iCurrGroupPatientNameTotalCount=iCurrGroupPatientNameTotalCount+1;
+		  }
+
+		  if (iCurrGroupPatientNameTotalCount==5) {
 			  alert("SAME PATIENT GROUP MAX REACHED!");
+/*				
+			  //TO-DO: -add: this
+			  //max 12
+			  var iCount=0;
+			  while (iCount<12) {
+				  alert ("dito");
+				var currCheckBoxId = document.getElementById("checkBoxId");
+				
+				if (!currCheckBoxId.checked) {
+					currGroupPatientName.style.display = "block";
+				}
+				else {
+					currGroupPatientName.style.display = "none";
+				}
+				
+				iCount=iCount+1;
+			  }			  			  
+*/
 		  }
 		} 	  
 	  </script>
@@ -277,7 +312,6 @@
 	$mysqli->set_charset("utf8");
 
     echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC"."</b><br/>";
-	echo "<br/>";
 ?>
 	<table class="part1Table">
 	<tr>
@@ -320,7 +354,7 @@
 					echo "</td>";
 
 					//TO-DO: -add: if same patient group MAX reached...
-
+					
 					echo "<td class='column'>";
 						echo "<input type='checkbox' id='checkBoxId".$iRowCount."' value='' onclick='myFunction(".$iRowCount.")' autocomplete='off'>";
 					echo "</td>";
@@ -358,10 +392,28 @@
 						<span id="groupPatientName5" style="display:none"></span>
 					</td>
 				</tr>
+				<tr>
 					<td>
 						<button onclick="myClearFunction()" class="Button-clear" id="clearButtonId">CLEAR</button>
 					</td>
+				</tr>	
+			</table>
+			<br/><br/>
+			<br/><br/>
+			<table class="patientGroupTable">
 				<tr>
+					<td>
+						<button onclick="backListFunction()" class="Button-listBack" id="listBackFirstButtonId">＜＜</button>
+					</td>
+					<td>
+						<button onclick="backListFunction()" class="Button-listBack" id="listBackButtonId">＜</button>
+					</td>
+					<td>
+						<button onclick="nextListFunction()" class="Button-listNext" id="listNextButtonId">＞</button>
+					</td>
+					<td>
+						<button onclick="nextListFunction()" class="Button-listNext" id="listNextLastButtonId">＞＞</button>
+					</td>
 				</tr>	
 			</table>
 		</td>
