@@ -58,7 +58,7 @@
 						{
 							text-align: center;
 						}
-						
+												
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -178,6 +178,26 @@
 						.Button-clear:focus {
 							background-color: #d4be00;
 						}
+						
+						<!-- added by Mike, 20210805 
+						  Reference: https://www.w3schools.com/howto/howto_css_custom_checkbox.asp;
+						  last accessed: 20210805T0530
+						-->
+						input {
+						  position: absolute;
+						  opacity: 0;
+						  cursor: pointer;
+						  height: 0;
+						  width: 0;
+						}
+						
+						input.inputCheckBox
+						{
+						  top: 0;
+						  left: 0;
+						  height: 16px;
+						  width: 16px;							
+						}												
 												
     /**/
     </style>
@@ -326,7 +346,10 @@
 			<tr>
 <?php	
 	//TO-DO: -add: button to go to next batch
-	if ($selectedPatientsListResultArray = $mysqli->query("SELECT patient_name FROM patient LIMIT 12"))	
+	//edited by Mike, 20210805
+//	if ($selectedPatientsListResultArray = $mysqli->query("SELECT patient_name FROM patient LIMIT 12"))	
+	//note: patient_id=0//NONE; patient_id=-1//CANCELLED
+	if ($selectedPatientsListResultArray = $mysqli->query("SELECT patient_name FROM patient WHERE patient_id!=0 AND patient_id!=-1 LIMIT 10"))	
 	{
 		if ($selectedPatientsListResultArray->num_rows > 0) {
 			$iRowCount = 0;
@@ -355,8 +378,8 @@
 
 					//TO-DO: -add: if same patient group MAX reached...
 					
-					echo "<td class='column'>";
-						echo "<input type='checkbox' id='checkBoxId".$iRowCount."' value='' onclick='myFunction(".$iRowCount.")' autocomplete='off'>";
+					echo "<td class='column'>";					
+						echo "<input type='checkbox' class='inputCheckBox' id='checkBoxId".$iRowCount."' value='' onclick='myFunction(".$iRowCount.")' autocomplete='off'>";
 					echo "</td>";
 				
 				$iCount = $iCount + 1;
@@ -423,7 +446,6 @@
 		</table>
 	<br />
 	<div>***NOTHING FOLLOWS***</div>
-	<br />
 	<br />
 	<div class="copyright">
 		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
