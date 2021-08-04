@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210803
+  @date updated: 20210804
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -187,6 +187,12 @@
 							border: 1px dotted #ab9c7d;		
 							text-align: right;
 						}						
+
+						td.columnNotes
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: left
+						}
 
 						td.columnFieldNameAge
 						{
@@ -2485,7 +2491,7 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 
 	<br/>
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
