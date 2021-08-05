@@ -191,12 +191,17 @@
 						  width: 0;
 						}
 						
+						<!-- added by Mike, 20210805
+							TO-DO: -reverify: cause of checkmark in checkbox
+							//does not increase in size;  note: 1358x768; width x height
+						-->
 						input.inputCheckBox
 						{
 						  top: 0;
 						  left: 0;
-						  height: 16px;
-						  width: 16px;							
+						  height: 20px;
+						  width: 20px;							
+						  /*transform: scale(2); //gem? */
 						}												
 												
     /**/
