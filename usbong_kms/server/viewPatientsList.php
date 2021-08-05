@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20210804
-  @date updated: 20210805
+  @date updated: 20210806
 
   Input:
   1) MySQL Database with Patients List at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -331,6 +331,29 @@
 */
 		  }
 		} 	  
+		
+		//added by Mike, 20210806
+		function nextListFunction(iStartCount) {
+//			alert("hallo");
+			iStartCount=iStartCount+1;
+			
+			//viewPatientsList.php/			
+			window.location.href = "?iStart="+iStartCount; //0
+		}		
+
+		//added by Mike, 20210806
+		function backListFunction(iStartCount) {
+//			alert("hallo");
+			iStartCount=iStartCount-1;
+			
+			if (iStartCount<0) {
+				iStartCount=0;
+			}
+			
+			//viewPatientsList.php/			
+			window.location.href = "?iStart="+iStartCount; //0
+		}		
+		
 	  </script>
   <body>
 <?php
@@ -359,11 +382,20 @@
 			<td class='tableHeaderColumn'><b>IDENTIFY</b></td>
 			<tr>
 <?php	
-	//TO-DO: -add: button to go to next batch
+	//added by Mike, 20210806
+	//button to go to next batch
+	$iStartCount=0;
+	if(isset($_GET['iStart'])) {
+//		echo $_GET['iStart'];
+		$iStartCount=$_GET['iStart'];
+	}
+
 	//edited by Mike, 20210805
 //	if ($selectedPatientsListResultArray = $mysqli->query("SELECT patient_name FROM patient LIMIT 12"))	
 	//note: patient_id=0//NONE; patient_id=-1//CANCELLED
-	if ($selectedPatientsListResultArray = $mysqli->query("SELECT patient_name FROM patient WHERE patient_id!=0 AND patient_id!=-1 LIMIT 10"))	
+	//edited by Mike, 20210806
+//	if ($selectedPatientsListResultArray = $mysqli->query("SELECT patient_name FROM patient WHERE patient_id!=0 AND patient_id!=-1 LIMIT 10"))	
+	if ($selectedPatientsListResultArray = $mysqli->query("SELECT patient_name FROM patient WHERE patient_id!=0 AND patient_id!=-1 LIMIT ".$iStartCount.",10"))	
 	{
 		if ($selectedPatientsListResultArray->num_rows > 0) {
 			$iRowCount = 0;
@@ -402,7 +434,18 @@
 			}
 		}
 		else {
+			echo "</table>";
+			echo "<br/>";
+			echo "<br/>";
+			echo "<table>";
+			echo "<tr>
+					<td>";					
+			
 			echo "Found zero (0) result.";
+
+			echo "  </td>
+				  </tr>";					
+
 		}
 	}
 	// show an error if there is an issue with the database query
@@ -443,10 +486,11 @@
 						<button onclick="backListFunction()" class="Button-listBack" id="listBackFirstButtonId">＜＜</button>
 					</td>
 					<td>
-						<button onclick="backListFunction()" class="Button-listBack" id="listBackButtonId">＜</button>
+						<button onclick="backListFunction(<?php echo $iStartCount;?>)" class="Button-listBack" id="listBackButtonId">＜</button>
 					</td>
 					<td>
-						<button onclick="nextListFunction()" class="Button-listNext" id="listNextButtonId">＞</button>
+						<!-- edited by Mike, 20210806 -->
+						<button onclick="nextListFunction(<?php echo $iStartCount;?>)" class="Button-listNext" id="listNextButtonId">＞</button>
 					</td>
 					<td>
 						<button onclick="nextListFunction()" class="Button-listNext" id="listNextLastButtonId">＞＞</button>
