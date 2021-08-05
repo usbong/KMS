@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20210804
-  @date updated: 20210804
+  @date updated: 20210805
 
   Input:
   1) MySQL Database with Patients List at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -297,8 +297,17 @@
 
 		  if (iCurrGroupPatientNameTotalCount==5) {
 			  alert("SAME PATIENT GROUP MAX REACHED!");
-/*				
+
+			  //edited by Mike, 20210805
 			  //TO-DO: -add: this
+			  var iMaxCount=10;
+			  for (var iCount=0; iCount<iMaxCount; iCount++) {
+//				  alert("iCount: "+iCount); //OK
+				  
+				  //TO-DO: -update: this
+
+			  }
+/*				
 			  //max 12
 			  var iCount=0;
 			  while (iCount<12) {
