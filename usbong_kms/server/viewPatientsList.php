@@ -178,23 +178,7 @@
 						.Button-clear:focus {
 							background-color: #d4be00;
 						}
-						
-						<!-- added by Mike, 20210805 
-						  Reference: https://www.w3schools.com/howto/howto_css_custom_checkbox.asp;
-						  last accessed: 20210805T0530
-						-->
-						input {
-						  position: absolute;
-						  opacity: 0;
-						  cursor: pointer;
-						  height: 0;
-						  width: 0;
-						}
-						
-						<!-- added by Mike, 20210805
-							TO-DO: -reverify: cause of checkmark in checkbox
-							//does not increase in size;  note: 1358x768; width x height
-						-->
+
 						input.inputCheckBox
 						{
 						  top: 0;
