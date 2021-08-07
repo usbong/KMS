@@ -1,11 +1,14 @@
 <!--
-  Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+  Copyright 2020~2021 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-  @author: Michael Syson
+
+  @company: USBONG
+  @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210213
+  @date updated: 20210807
+  @website address: www.usbong.ph
 
   Input:
   1) Laboratory Request Form (.csv format) at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -791,7 +794,7 @@
 	<div>***NOTHING FOLLOWS***</div>
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
