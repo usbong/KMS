@@ -3824,6 +3824,23 @@ class Browse_Model extends CI_Model
 		return $rowArray;
 	}
 
+	//added by Mike, 20210808
+	public function getMedicalTechnologistList() {
+		$this->db->select('medical_technologist_id, medical_technologist_name');
+		
+		$query = $this->db->get('medical_technologist');	
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+	
+//		echo $rowArray[0]["medical_technologist_id"]." : ".$rowArray[0]["medical_technologist_name"];
+
+		return $rowArray;
+	}
+
 	//added by Mike, 20210629
 	public function getCashierList() {
 		$this->db->select('cashier_id, cashier_name');
