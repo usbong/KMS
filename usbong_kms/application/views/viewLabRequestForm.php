@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210807
+  @date updated: 20210809
   @website address: www.usbong.ph
 
   Input:
@@ -71,6 +71,10 @@
 							text-align: center;
 						}
 						
+						h3 {
+							margin-bottom: 0px;
+						}
+						
 						table.imageTable
 						{
 							width: 100%;
@@ -94,7 +98,7 @@
 							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
 							border: 1pt solid #00ff00;		
 						}
-
+						
 						td.tableHeaderColumn
 						{
 							background-color: #00ff00; <!--#93d151; lime green-->
@@ -102,6 +106,13 @@
 							text-align: left;
 							font-weight: bold;							
 							width: 20%; <!-- 17%; --> <!-- 84% -->
+						}						
+
+						td.tableResultsColumn
+						{
+							text-align: right;
+							font-weight: bold;							
+							width: 64%;
 						}						
 
 						td.addressAnswerColumn
@@ -374,10 +385,14 @@
 			<h3>DATE: <?php
 					echo strtoupper(date('Y-m-d, l'));
 				 ?>
+				 <br/>
+					<a target='_blank' href='<?php echo site_url('browse/viewLabResultsMiscForm/'.$value['patient_id'])?>' id="viewLabResultsMiscFormId<?php echo $iCount?>">
+						LAB RESULTS
+					</a>				 
 			</h3>
 		</td>
 	  </tr>
-</table>
+	</table>
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
@@ -790,9 +805,6 @@
 	</table>	
 </form>
 
-	<br />		
-	<div>***NOTHING FOLLOWS***</div>
-	<br />
 	<div class="copyright">
 		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
