@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210803
+  @date updated: 20210809
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -282,7 +282,7 @@
 				echo ", ".$result[0]['postal_address'];
 				echo ", ".$result[0]['province_city_ph_address'];				
 */				
-
+/*	//edited by Mike, 20210809
 				echo $result[0]['location_address'];				
 
 				if (!empty($result[0]['barangay_address'])) {
@@ -291,6 +291,9 @@
 					}
 					echo $result[0]['barangay_address'];
 				}
+				else {
+					echo " ";
+				}
 
 				if (!empty($result[0]['postal_address'])) {
 					if (!empty($result[0]['barangay_address'])) {
@@ -298,13 +301,33 @@
 					}
 					echo $result[0]['postal_address'];					
 				}								
+				else {
+					echo " ";
+				}
 
 				if (!empty($result[0]['province_city_ph_address'])) {
 					if (!empty($result[0]['postal_address'])) {
 						echo ", ";
 					}
 					echo $result[0]['province_city_ph_address'];					
-				}								
+				}
+*/
+				echo $result[0]['location_address'];				
+
+				if (!empty($result[0]['location_address'])) {
+					echo ", ";
+				}
+				echo $result[0]['barangay_address'];
+
+				if (!empty($result[0]['barangay_address'])) {
+					echo ", ";
+				}
+				echo $result[0]['postal_address'];					
+
+				if (!empty($result[0]['postal_address'])) {
+					echo ", ";
+				}
+				echo $result[0]['province_city_ph_address'];									
 ?>				
 			</td>
 			<td>
