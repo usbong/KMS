@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20210701
-  @date updated: 20210704
+  @date updated: 20210812
   @website address: http://www.usbong.ph
 
   Input:
@@ -80,7 +80,8 @@
 						{
 							text-align: center;
 							font-size: 12pt;
-							color: rgb(0,0,0); /* black */
+							color: #222222; /* rgb(0,0,0); //black */
+							font-weight: bold;
 						}
 						
 						div.newsletterDate
@@ -378,7 +379,7 @@
 		</td>
 	</table>
 
-
+	<br>
 	<br>	
 	<div class="newsletterTitle">
 		EXPENSES > INCOME PATTERN<br/>
