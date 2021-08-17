@@ -160,18 +160,17 @@ class Browse_Model extends CI_Model
 	public function getNewestPatientDetailsListViaName($param) 
 	{		
 		//added by Mike, 20210817
-		//TO-DO: -add: this set of instructions in add patient function
 		if (strpos($param['nameParam'],",")!==false) {
 			if (strpos($param['nameParam'],", ")!==false) {
 			}
 			else {
 				$param['nameParam'] = str_replace(",", ", ",$param['nameParam']);
 			}
-			
+
 			if (strpos($param['nameParam']," ,")!==false) {
 				$param['nameParam'] = str_replace(" ,", ",",$param['nameParam']);
 			}
-		}
+		}	
 	
 		//we use this at MOSC
 		//added by Mike, 20210212
@@ -3716,10 +3715,26 @@ class Browse_Model extends CI_Model
 			}
 		}
 	}	
-
+	
 	//added by Mike, 20200529
 	public function addPatientName($param) 
-	{		
+	{			
+		//added by Mike, 20210817; removed by Mike, 20210817
+/*		echo ">>".$param['nameParam'];		
+		//trim Command already executed
+		if (strpos($param['nameParam'],",")!==false) {
+			if (strpos($param['nameParam'],", ")!==false) {
+			}
+			else {
+				$param['nameParam'] = str_replace(",", ", ",$param['nameParam']);
+			}
+
+			if (strpos($param['nameParam']," ,")!==false) {
+				$param['nameParam'] = str_replace(" ,", ",",$param['nameParam']);
+			}
+		}		
+*/
+	
 		//added by Mike, 20201214
 		//verify if patient name already exists
 		//TO-DO: -add: notify Unit member if similar patient names already exist
