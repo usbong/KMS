@@ -159,6 +159,20 @@ class Browse_Model extends CI_Model
 
 	public function getNewestPatientDetailsListViaName($param) 
 	{		
+		//added by Mike, 20210817
+		//TO-DO: -add: this set of instructions in add patient function
+		if (strpos($param['nameParam'],",")!==false) {
+			if (strpos($param['nameParam'],", ")!==false) {
+			}
+			else {
+				$param['nameParam'] = str_replace(",", ", ",$param['nameParam']);
+			}
+			
+			if (strpos($param['nameParam']," ,")!==false) {
+				$param['nameParam'] = str_replace(" ,", ",",$param['nameParam']);
+			}
+		}
+	
 		//we use this at MOSC
 		//added by Mike, 20210212
 		//TO-DO: -add: sex, age, etc
