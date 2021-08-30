@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210809
+  @date updated: 20210831
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -240,7 +240,9 @@
 ?>
 	<div class="formTitle">
 		<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
-		<b>ACKNOWLEDGMENT FORM</b>
+		<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id']); ?>'>
+			<b>ACKNOWLEDGMENT RECEIPT</b>
+		</a>
 	</div>
 	<br
 	

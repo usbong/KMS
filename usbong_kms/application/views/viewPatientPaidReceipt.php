@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
+' Copyright 2020~2021 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -7,9 +7,10 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @author: Michael Syson
+' @company: USBONG
+' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20210622
+' @date updated: 20210831
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -30,13 +31,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 
-							/* edited by Mike, 20210622 */
-							/* TO-DO: -add: auto-identify if Tablet PC */
-							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							/*width: 670px*/
-							width: 1000px							
+							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
+							/* Legal Size; Landscape*/							
+							width: 860px; /*860px;*/ /* 802px;*//* 670px */
+							
+							/* //TO-DO: -reverify: this if necessary */
+							/* use zoom 67% (prev) scale*/
+							zoom: 90%; /* at present, command not supported in Mozilla Firefox */				
+							transform: scale(0.90);
+							transform-origin: 0 0;							
                         }
 						
 						div.checkBox
@@ -660,11 +665,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
 -->
-		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $outputTransaction['transaction_id'] ?> "required>
-		
-		<!-- added by Mike, 20200610 -->
-		<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
-
+<?php 	//added by Mike, 20210831; TO-DO: -add: values if page open via Acknowledgment Form
+		if (isset($outputTransaction)) {
+?>			
+			<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $outputTransaction['transaction_id'] ?> "required>
+			
+			<!-- added by Mike, 20200610 -->
+			<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
+<?php
+		}
+?>		
 		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
@@ -807,7 +817,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
