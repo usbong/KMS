@@ -3840,6 +3840,10 @@ class Browse extends CI_Controller { //MY_Controller {
 	{
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		//added by Mike, 20210831
+		//TO-DO: -add: if transaction NOT today, add for today, 
+		//but write in notes the actual transaction date
 		$data['transactionDate'] = date('m/d/Y');
 
 		$data['transactionId'] = $_POST["transactionIdParam"];
