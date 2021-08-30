@@ -3628,6 +3628,81 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewPatientPaidReceipt', $data);
 	}		
+
+	//added by Mike, 20210830
+	//TO-DO: -update: this
+	//-add: execute this function when in Acknowledgment Form, link clicked
+	public function setOfficialReceiptTransactionServiceAndItemPurchase($medicalDoctorId, $patientId)
+	{
+		$data['medicalDoctorId'] = $medicalDoctorId;
+		$data['patientId'] = $patientId;
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+
+/* //removed by Mike, 20210830		
+		$data['outputTransaction'] = $this->Browse_Model->payTransactionItemPurchase($patientId);
+
+		$outputTransactionId = $data['outputTransaction']['transaction_id'];
+
+		$data['outputTransactionId'] = $outputTransactionId;
+		$data['patientId'] = $patientId;
+		//edited by Mike, 20200608
+		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
+		$data['outputTransactionServicePurchase'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
+		if (isset($data['outputTransactionServicePurchase'])) {
+			$data['outputTransaction'] = $data['outputTransactionServicePurchase'];
+		}
+*/
+	
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+						
+		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		
+		//TO-DO: -add: transaction date as input to function
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+
+		//added by Mike, 20200601; removed by Mike, 20210830
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
+		//added by Mike, 20200905
+		//TO-DO: -add: get transaction with combined payments
+		//to identify if computer needs to show MOSC OR textbox field
+		//use med_fee, x_ray_fee, lab_fee
+
+/* //removed by Mike, 20210830
+		//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+*/
+
+		//added by Mike, 20210227
+		//execute these due to only select patients classified as SC, i.e. "Senior Citizens"
+		//-----
+		$this->session->unset_userdata('addedVAT');
+		$data['addedVAT'] = False;		
+		$this->session->unset_userdata('noVAT');
+		$data['noVAT'] = False;		
+		//-----
+
+		//added by Mike, 20210626
+/* /removed by Mike, 20210626		
+		//auto-generate Acknowledgment Form
+//		$data['outputTransaction']
+		echo "<script>
+				window.open('".site_url()."/report/viewAcknowledgmentForm/".$data['outputTransaction']."/".$medicalDoctorId."/".$patientId');
+			  </script>";
+*/			  
+
+		$this->load->view('viewPatientPaidReceipt', $data);
+	}		
+	
+
 	
 	//added by Mike, 20200508; edited by Mike, 20200509
 //	public function confirmItemMedicinePaidReceipt() //$transactionId, $receiptNumber)
