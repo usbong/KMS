@@ -3632,7 +3632,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	//added by Mike, 20210830
 	//TO-DO: -update: this
 	//-add: execute this function when in Acknowledgment Form, link clicked
-	public function setOfficialReceiptTransactionServiceAndItemPurchase($medicalDoctorId, $patientId)
+	public function setOfficialReceiptTransactionServiceAndItemPurchase($medicalDoctorId, $patientId, $transactionId)
 	{
 		$data['medicalDoctorId'] = $medicalDoctorId;
 		$data['patientId'] = $patientId;
@@ -3640,23 +3640,22 @@ class Browse extends CI_Controller { //MY_Controller {
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
-		$data['transactionDate'] = date('m/d/Y');
+		//edited by Mike, 20210901
+//		$data['transactionDate'] = date('m/d/Y');
 		
 		$this->load->model('Browse_Model');
 
-/* //removed by Mike, 20210830		
-		$data['outputTransaction'] = $this->Browse_Model->payTransactionItemPurchase($patientId);
+		//TO-DO: -update: this for cases with multiple transaction id's
+		//example: non-med item purchase as another transaction
+		//after consultation service purchase transaction
+		//edited by Mike, 20210901
+		$data['outputTransaction'] = $this->Browse_Model->getTransactionPurchaseDetails($transactionId);
+		$data['transactionDate'] = $data['outputTransaction']['transaction_date'];
 
-		$outputTransactionId = $data['outputTransaction']['transaction_id'];
+/*		//TO-DO: -update: this; viewPatientPaidReceipt submit action uses only 1 transactionId
+		$data['outputTransactionSet'] = $this->Browse_Model->getTransactionPurchaseDetails($transactionId);
 
-		$data['outputTransactionId'] = $outputTransactionId;
-		$data['patientId'] = $patientId;
-		//edited by Mike, 20200608
-		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
-		$data['outputTransactionServicePurchase'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
-		if (isset($data['outputTransactionServicePurchase'])) {
-			$data['outputTransaction'] = $data['outputTransactionServicePurchase'];
-		}
+		$data['transactionDate'] = $data['outputTransactionSet'][0]['transaction_date'];
 */
 	
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
@@ -3664,22 +3663,7 @@ class Browse extends CI_Controller { //MY_Controller {
 						
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
 		
-		//TO-DO: -add: transaction date as input to function
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
-
-		//added by Mike, 20200601; removed by Mike, 20210830
-//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
-
-		//added by Mike, 20200905
-		//TO-DO: -add: get transaction with combined payments
-		//to identify if computer needs to show MOSC OR textbox field
-		//use med_fee, x_ray_fee, lab_fee
-
-/* //removed by Mike, 20210830
-		//edited by Mike, 202005019
-//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
-		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
-*/
 
 		//added by Mike, 20210227
 		//execute these due to only select patients classified as SC, i.e. "Senior Citizens"
@@ -3689,15 +3673,6 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->session->unset_userdata('noVAT');
 		$data['noVAT'] = False;		
 		//-----
-
-		//added by Mike, 20210626
-/* /removed by Mike, 20210626		
-		//auto-generate Acknowledgment Form
-//		$data['outputTransaction']
-		echo "<script>
-				window.open('".site_url()."/report/viewAcknowledgmentForm/".$data['outputTransaction']."/".$medicalDoctorId."/".$patientId');
-			  </script>";
-*/			  
 
 		$this->load->view('viewPatientPaidReceipt', $data);
 	}		
