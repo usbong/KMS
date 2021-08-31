@@ -3257,6 +3257,34 @@ class Browse_Model extends CI_Model
 		return $rowArray[0];
 	}	
 
+	//added by Mike, 20210901
+	public function getTransactionPurchaseDetails($transactionIdParam) {
+		$this->db->select('transaction_id, transaction_date, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
+
+		$this->db->where('transaction_id', $transactionIdParam);
+
+		$query = $this->db->get('transaction');		
+		$rowArray = $query->result_array();
+
+		return $rowArray[0];		
+
+/*		//added by Mike, 20210901
+		//TO-DO: -update: this
+		//part 2
+		//verify if there exists another combined transaction for the transaction date
+
+		$this->db->select('transaction_id, transaction_date, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
+
+		$this->db->where('transaction_id', $rowArray[0]['transaction_date']);
+		$this->db->where('transaction_quantity!=', 0);
+
+		$query = $this->db->get('transaction');		
+		$rowArrayPart2 = $query->result_array();
+
+		return $rowArrayPart2;		
+*/		
+	}
+
 
 	//added by Mike, 20200411; edited by Mike, 20200821
 	//add new transaction with the total for each item type
@@ -4483,7 +4511,10 @@ class Browse_Model extends CI_Model
 //	public function getPaidPatientDetailsListForTheDayNoItemFee($medicalDoctorId, $patientId) 
 	public function getPaidPatientDetailsListForTheDayNoItemFee($medicalDoctorId, $patientId,$transactionDate) 
 	{			
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		//edited by Mike, 20210901
+//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.transaction_quantity, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
