@@ -240,11 +240,21 @@
 ?>
 	<div class="formTitle">
 		<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
-		<!-- edited by Mike, 20210901; 
-			TO-DO: -update: this due to increased web address length-->
-		<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id']); ?>'>
-			<b>ACKNOWLEDGMENT RECEIPT</b>
-		</a>
+		<!-- edited by Mike, 20210901; -->
+		<?php if (!empty($resultPaid)) {			
+		?>
+			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id']); ?>'>
+				<b>ACKNOWLEDGMENT RECEIPT</b>
+			</a>
+		<?php
+			}
+			else {
+				//TO-DO: -update: this to use button to execute javascript instruction?
+		?>
+				<b>ACKNOWLEDGMENT RECEIPT</b>		
+		<?php
+			}
+		?>
 	</div>
 	<br
 	
