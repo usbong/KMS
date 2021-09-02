@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210901
+  @date updated: 20210902
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -223,7 +223,7 @@
 	//edited by Mike, 20210720
 	//$dateToday = Date('Y-m-d');
 //	$dateToday = $result[0]['transaction_date'];
-//	$dateToday = $resultPaid[0]['transaction_date'];
+//	$dateToday = $value['transaction_date'];
 	
 	//if no paid transaction
 	if ($resultPaid[0]['transaction_date']=="") {
@@ -240,21 +240,11 @@
 ?>
 	<div class="formTitle">
 		<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
-		<!-- edited by Mike, 20210901; -->
-		<?php if (!empty($resultPaid)) {			
-		?>
-			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id']); ?>'>
-				<b>ACKNOWLEDGMENT RECEIPT</b>
-			</a>
-		<?php
-			}
-			else {
-				//TO-DO: -update: this to use button to execute javascript instruction?
-		?>
-				<b>ACKNOWLEDGMENT RECEIPT</b>		
-		<?php
-			}
-		?>
+		<!-- edited by Mike, 20210901; 
+			TO-DO: -update: this due to increased web address length-->
+		<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id']); ?>'>
+			<b>ACKNOWLEDGMENT RECEIPT</b>
+		</a>
 	</div>
 	<br
 	
@@ -423,34 +413,11 @@
 		//edited by Mike, 20210628
 		if (($resultPaid!=null) and (count($resultPaid) > 0)) {					
 			//auto-identify fee, e.g. Consultation+Procedure, X-RAY
+			
+			//added by Mike, 20210902
+			foreach ($resultPaid as $value) {					
 						
-			if ($resultPaid[0]['fee']!=0) {
-				echo "<tr>";
-					echo "<td class='columnFee'>";
-					echo "1";
-					echo "</td>";			
-					echo "<td class='column'>";
-					echo "SET";
-					echo "</td>";			
-					echo "<td class='column'>";
-					echo "PROF FEE: DR. ".$resultPaid[0]['medical_doctor_name'];
-					echo "</td>";	
-					echo "<td class='columnFee'>";
-					//echo $resultPaid[0]['fee'];
-					//edited by Mike, 20210706
-					echo number_format($resultPaid[0]['fee'], 2, '.', ',');
-					echo "</td>";	
-					echo "<td class='columnFee'>";
-					//echo $resultPaid[0]['fee'];
-					//edited by Mike, 20210706
-					echo number_format($resultPaid[0]['fee'], 2, '.', ',');
-					echo "</td>";
-				echo "</tr>";			
-								
-				$totalAmountFee+=$resultPaid[0]['fee'];
-			}
-			else {
-				if ((strpos($resultPaid[0]['notes'],"NC;")!=0)!==false) {
+				if ($value['fee']!=0) {
 					echo "<tr>";
 						echo "<td class='columnFee'>";
 						echo "1";
@@ -459,70 +426,97 @@
 						echo "SET";
 						echo "</td>";			
 						echo "<td class='column'>";
+						echo "PROF FEE: DR. ".$value['medical_doctor_name'];
+						echo "</td>";	
+						echo "<td class='columnFee'>";
+						//echo $value['fee'];
 						//edited by Mike, 20210706
-//						echo "PROFESSIONAL FEE: GRATIS";
-						echo "PROF FEE: DR. ".$resultPaid[0]['medical_doctor_name']."; GRATIS";
+						echo number_format($value['fee'], 2, '.', ',');
 						echo "</td>";	
 						echo "<td class='columnFee'>";
-						echo "0.00";
-						echo "</td>";	
-						echo "<td class='columnFee'>";
-						echo "0.00";
+						//echo $value['fee'];
+						//edited by Mike, 20210706
+						echo number_format($value['fee'], 2, '.', ',');
 						echo "</td>";
 					echo "</tr>";			
-				}				
-			}
-			
-			if ($resultPaid[0]['x_ray_fee']!=0) {
-				echo "<tr>";
-					echo "<td class='columnFee'>";
-					echo "1";
-					echo "</td>";			
-					echo "<td class='column'>";
-					echo "SET";
-					echo "</td>";			
-					echo "<td class='column'>";
-					echo "X-RAY EXAM";
-					echo "</td>";	
-					echo "<td class='columnFee'>";
-					//echo $resultPaid[0]['x_ray_fee'];
-					//edited by Mike, 20210706
-					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', ',');
-					echo "</td>";	
-					echo "<td class='columnFee'>";
-					//echo $resultPaid[0]['x_ray_fee'];
-					//edited by Mike, 20210706
-					echo number_format($resultPaid[0]['x_ray_fee'], 2, '.', ',');
-					echo "</td>";					
-				echo "</tr>";	
+									
+					$totalAmountFee+=$value['fee'];
+				}
+				else {
+					if ((strpos($value['notes'],"NC;")!=0)!==false) {
+						echo "<tr>";
+							echo "<td class='columnFee'>";
+							echo "1";
+							echo "</td>";			
+							echo "<td class='column'>";
+							echo "SET";
+							echo "</td>";			
+							echo "<td class='column'>";
+							//edited by Mike, 20210706
+	//						echo "PROFESSIONAL FEE: GRATIS";
+							echo "PROF FEE: DR. ".$value['medical_doctor_name']."; GRATIS";
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+							echo "0.00";
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+							echo "0.00";
+							echo "</td>";
+						echo "</tr>";			
+					}				
+				}
+				
+				if ($value['x_ray_fee']!=0) {
+					echo "<tr>";
+						echo "<td class='columnFee'>";
+						echo "1";
+						echo "</td>";			
+						echo "<td class='column'>";
+						echo "SET";
+						echo "</td>";			
+						echo "<td class='column'>";
+						echo "X-RAY EXAM";
+						echo "</td>";	
+						echo "<td class='columnFee'>";
+						//echo $value['x_ray_fee'];
+						//edited by Mike, 20210706
+						echo number_format($value['x_ray_fee'], 2, '.', ',');
+						echo "</td>";	
+						echo "<td class='columnFee'>";
+						//echo $value['x_ray_fee'];
+						//edited by Mike, 20210706
+						echo number_format($value['x_ray_fee'], 2, '.', ',');
+						echo "</td>";					
+					echo "</tr>";	
 
-				$totalAmountFee+=$resultPaid[0]['x_ray_fee'];								
-			}
-			
-			if ($resultPaid[0]['lab_fee']!=0) {
-				echo "<tr>";
-					echo "<td class='columnFee'>";
-					echo "1";
-					echo "</td>";			
-					echo "<td class='column'>";
-					echo "SET";
-					echo "</td>";			
-					echo "<td class='column'>";
-					echo "LAB EXAM";
-					echo "</td>";	
-					echo "<td class='columnFee'>";
-					//echo $resultPaid[0]['lab_fee'];
-					//edited by Mike, 20210706
-					echo number_format($resultPaid[0]['lab_fee'], 2, '.', ',');
-					echo "</td>";	
-					echo "<td class='columnFee'>";
-					//echo $resultPaid[0]['lab_fee'];
-					//edited by Mike, 20210706
-					echo number_format($resultPaid[0]['lab_fee'], 2, '.', ',');
-					echo "</td>";
-				echo "</tr>";			
+					$totalAmountFee+=$value['x_ray_fee'];								
+				}
+				
+				if ($value['lab_fee']!=0) {
+					echo "<tr>";
+						echo "<td class='columnFee'>";
+						echo "1";
+						echo "</td>";			
+						echo "<td class='column'>";
+						echo "SET";
+						echo "</td>";			
+						echo "<td class='column'>";
+						echo "LAB EXAM";
+						echo "</td>";	
+						echo "<td class='columnFee'>";
+						//echo $value['lab_fee'];
+						//edited by Mike, 20210706
+						echo number_format($value['lab_fee'], 2, '.', ',');
+						echo "</td>";	
+						echo "<td class='columnFee'>";
+						//echo $value['lab_fee'];
+						//edited by Mike, 20210706
+						echo number_format($value['lab_fee'], 2, '.', ',');
+						echo "</td>";
+					echo "</tr>";			
 
-				$totalAmountFee+=$resultPaid[0]['lab_fee'];								
+					$totalAmountFee+=$value['lab_fee'];								
+				}
 			}
 		}
 ?>		
