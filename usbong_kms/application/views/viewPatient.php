@@ -418,11 +418,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20200329; edited by Mike, 20200806
 //		function myPopupFunction() {				
 		function myPopupFunction(patientId) {	
+/* //removed by Mike, 20210902
 			//added by Mike, 20210424
 			//note: we add this command to prevent multiple button clicks
 			//received by computer server before identifying that a patient transaction
 			//already exists in Cart List from Database
 			document.getElementById("addButtonId").disabled = true;
+*/
 				
 			//edited by Mike, 20200522
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
@@ -458,6 +460,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				alert("Pumili ng Medical Doctor na hindi \"ANY\" o \"SUMMARY\".");
 				return;
 			}
+
+			//added by Mike, 20210902
+			//note: we add this command to prevent multiple button clicks
+			//received by computer server before identifying that a patient transaction
+			//already exists in Cart List from Database
+			document.getElementById("addButtonId").disabled = true;
+
 	
 //			alert("after: " + notes);
 			//added by Mike, 20200523
@@ -576,6 +585,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 		}	
 */
+		//TO-DO: -reverify: this
 		function myPopupFunctionPay(medicalDoctorId,patientId) {				
 			//alert("hallo");
 
@@ -587,10 +597,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				alert("Kailangang may isang (1) pasyente sa bawat Cart List.");
 				return;
 			}
-			
+
+/* //removed by Mike, 20210902			
+			//added by Mike, 20210902
+			//note: Unit member can set another Medical Doctor in the options
+			//after already adding the patient with the set Medical Doctor in the Cart List
+
+//			alert("medicalDoctorId: "+medicalDoctorId);
+
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
 			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
+*/
+
+			
 
 			//added by Mike, 20200523
 //			alert(medicalDoctorId);
