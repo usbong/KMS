@@ -2318,6 +2318,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	}
 	
 	//added by Mike, 20210626; edited by Mike, 20210720
+	//TO-DO: -reuse: parts to auto-generate page to enter Official Receipt numbers
 //	public function viewAcknowledgmentForm($patientId)	
 	public function viewAcknowledgmentForm($patientId, $transactionDate)	
 	{
@@ -2350,7 +2351,10 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, $transactionDate);
 
-//		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, date("m/d/Y"));
+
+//echo $data['resultPaid'][0]['patient_name'];
+//echo $data['resultPaid'][0]['transaction_id'];
+//echo $data['resultPaid'][1]['transaction_id'];
 
 		//added by Mike, 20210314; edited by Mike, 20210720		
 		//$data['resultPaidMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(1, $patientId); //1 = MED ITEM
