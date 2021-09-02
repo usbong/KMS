@@ -4519,7 +4519,9 @@ class Browse_Model extends CI_Model
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
-		$this->db->distinct('t1.patient_name');
+		//edited by Mike, 20210902
+//		$this->db->distinct('t1.patient_name');
+		$this->db->group_by('t2.transaction_id');
 		
 		$this->db->where('t2.transaction_quantity!=',0);
 		$this->db->where('t2.notes!=', 'UNPAID');
@@ -4535,20 +4537,28 @@ class Browse_Model extends CI_Model
 		$query = $this->db->get('patient');
 
 		$rowArray = $query->result_array();
-		
-		if ($rowArray == null) {			
+				
+		if ($rowArray == null) {					
 			return False;
 		}
 		
+//		echo "count: ".count($rowArray);		
+/* //removed by Mike, 20210902	
 		foreach ($rowArray as $key => $rowValue) {
 			if (strpos(strtoupper($rowValue['notes']),"UNPAID")!==false) {
-//				if (($key = array_search($rowValue, $rowArray)) !== false) {
 					unset($rowArray[$key]);
-//				}
-//				unset($rowValue);
+			}
+			
+//			echo $rowValue['fee']."<br/>";
+			
+			if ($rowValue['fee']==0) {
+				unset($rowArray[$key]);
 			}
 		}
-		
+		echo "count: ".count($rowArray);		
+		echo ">>: ".$rowArray['fee'];		
+*/
+				
 		return $rowArray;
 	}		
 
