@@ -470,14 +470,20 @@ class Report_Model extends CI_Model
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
-		$this->db->distinct('t1.patient_name');
+		//removed by Mike, 20210902
+		//$this->db->distinct('t1.patient_name');
 				
 		//added by Mike, 20200324
 		$this->db->where('t2.transaction_date=',date("m/d/Y"));
 //		$this->db->where('t2.transaction_date=',"07/31/2021");
 
 		$this->db->where('t2.x_ray_fee!=',0);
-		$this->db->where('t2.transaction_quantity!=',0);
+		//removed by Mike, 20210902
+//		$this->db->where('t2.transaction_quantity!=',0);
+
+		//added by Mike, 20210902
+		$this->db->group_by('t1.patient_id');
+
 
 //		$this->db->order_by('t2.transaction_id', 'ASC');
 		$this->db->order_by('t2.medical_doctor_id', 'ASC');
