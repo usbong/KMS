@@ -3669,6 +3669,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
+/*		//added by Mike, 20210904; //TO-DO: -reverify: this
+		$data['resultPaidNonMedItem'] = $this->Browse_Model->getCombinedTransactionPaidItemDetailsListForPatientForTheDay(2, $patientId, $data['transactionDate']); //2 = NON-MED ITEM		
+
+		echo "dito".$data['resultPaidNonMedItem'][0]['transaction_id'];
+*/
+
 		//added by Mike, 20210227
 		//execute these due to only select patients classified as SC, i.e. "Senior Citizens"
 		//-----
@@ -3843,10 +3849,21 @@ class Browse extends CI_Controller { //MY_Controller {
 		if (isset($_POST["officialReceiptNumberPASParam"])) {
 			$data['receiptNumberPAS'] = $_POST["officialReceiptNumberPASParam"];			
 		}
-		
+				
 		$this->load->model('Browse_Model');
 		$this->Browse_Model->addTransactionPaidReceipt($data);
 
+/*		//added by Mike, 20210904; //TO-DO: -reverify: this
+		//note: multiple transactions with varying types, e.g. snack, non-med, med,
+		//added as paid on the same date; 
+		//auto-written receipt number output NOT yet OK
+		$data['transactionId'] = $_POST["combinedTransactionIdNonMedItemParam"];
+		
+		echo ">>>".$data['transactionId']."<br/>";
+
+		$this->Browse_Model->addTransactionPaidReceipt($data);
+*/				
+				
 		$this->load->view('searchPatient', $data);		
 	}
 	
