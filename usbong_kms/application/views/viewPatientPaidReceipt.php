@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20210831
+' @date updated: 20210904
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -636,10 +636,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  </tr>			  
 			  <?php
 				}
-					if (isset($outputTransaction)) {						
-						if ($outputTransaction['pas_fee']!=0) {
-//						if ($outputTransaction->pas_fee!==0) {
-
+ //edited by Mike, 20210904				
+					if (isset($outputTransaction)) {								
+//						if ($outputTransaction['pas_fee']!=0) {
+					if (($outputTransaction['pas_fee']!=0) || (isset($resultPaidNonMedItem))) {
 ?>
 				  <tr>
 				    <td>
@@ -656,6 +656,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberPASParam" required>
 					</td>				  
 				  </tr>
+<?php							
+						}
+
+						//added by Mike, 20210904; TO-DO: -reverify: this
+						if (isset($resultPaidNonMedItem)) {
+?>							
+			<input type="hidden" class="receipt-input" placeholder="" name="combinedTransactionIdNonMedItemParam" value="<?php echo $resultPaidNonMedItem[0]['transaction_id'] ?> "required>
+			
 <?php							
 						}
 					}
