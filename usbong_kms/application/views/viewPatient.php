@@ -729,12 +729,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 <?php			
 
+//			echo ">>".$medicalDoctorId;
+
 			if (isset($medicalDoctorId)) {
 			}
 			else {
 				$medicalDoctorId = $result[0]["medical_doctor_id"];
 			}
-
+			
 			echo "<select id='medicalDoctorIdParam'>";			
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
 				  //edited by Mike, 20200523
