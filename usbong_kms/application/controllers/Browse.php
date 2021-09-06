@@ -2214,7 +2214,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 		
+		//added by Mike, 20210906
+//		echo $data['result'][0]['medical_doctor_id'];
+		
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		$data['medicalDoctorId'] = $medicalDoctorId;
+
+//		echo $medicalDoctorId;
 			
 		//TO-DO: -reverify: this action; due to transactions with patient_id=0 is over 10,000
 		//reminder: item transactions also use patient_id 0
@@ -2235,7 +2241,8 @@ class Browse extends CI_Controller { //MY_Controller {
 //		echo ">>".$medicalDoctorId;
 //		echo ">>".$data['resultPaid'][0]['medical_doctor_id'];
 //		$data['result'][0]['medical_doctor_id']=$data['resultPaid'][0]['medical_doctor_id'];				
-		$medicalDoctorId=$data['resultPaid'][0]['medical_doctor_id'];
+		//removed by Mike, 20210906
+//		$medicalDoctorId=$data['resultPaid'][0]['medical_doctor_id'];
 
 		$this->load->view('viewPatient', $data);
 	}
