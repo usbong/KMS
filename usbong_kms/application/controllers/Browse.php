@@ -2231,10 +2231,11 @@ class Browse extends CI_Controller { //MY_Controller {
 			$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 		}
 
-		//added by Mike, 20210724
+		//added by Mike, 20210724; edited by Mike, 20210906
 //		echo ">>".$medicalDoctorId;
 //		echo ">>".$data['resultPaid'][0]['medical_doctor_id'];
-		$data['result'][0]['medical_doctor_id']=$data['resultPaid'][0]['medical_doctor_id'];
+//		$data['result'][0]['medical_doctor_id']=$data['resultPaid'][0]['medical_doctor_id'];				
+		$medicalDoctorId=$data['resultPaid'][0]['medical_doctor_id'];
 
 		$this->load->view('viewPatient', $data);
 	}
@@ -3596,8 +3597,10 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
-						
-		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+			
+		//removed by Mike, 20210904
+		//$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
 		//added by Mike, 20200601
