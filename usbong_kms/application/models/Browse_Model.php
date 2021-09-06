@@ -3966,9 +3966,10 @@ class Browse_Model extends CI_Model
 
 		$this->db->where('t1.patient_id', $nameId);		
 
-		//edited by Mike, 20210723
-		$this->db->group_by('t1.patient_id`', 'DESC');//ASC');
-
+		//edited by Mike, 20210906
+//		$this->db->group_by('t1.patient_id`', 'DESC');//ASC');
+		$this->db->where('t2.medical_doctor_id!=',0);
+		$this->db->limit(1);
 		
 		$query = $this->db->get('patient');
 
