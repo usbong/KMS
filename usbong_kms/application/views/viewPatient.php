@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210906
+' @date updated: 20210907
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -730,11 +730,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php			
 
 //			echo ">>".$medicalDoctorId;
-
-			if (isset($medicalDoctorId)) {
+			//edited by Mike, 20210907
+//			if (isset($medicalDoctorId)) {
+			if (isset($result[0]["medical_doctor_id"])) {
+				$medicalDoctorId = $result[0]["medical_doctor_id"];
 			}
 			else {
-				$medicalDoctorId = $result[0]["medical_doctor_id"];
+				$medicalDoctorId = 0; //set default to ANY
 			}
 			
 			echo "<select id='medicalDoctorIdParam'>";			
