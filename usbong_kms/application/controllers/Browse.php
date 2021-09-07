@@ -2217,7 +2217,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210906
 //		echo $data['result'][0]['medical_doctor_id'];
 		
-		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];		
 		$data['medicalDoctorId'] = $medicalDoctorId;
 
 //		echo $medicalDoctorId;
