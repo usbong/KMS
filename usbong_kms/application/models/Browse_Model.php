@@ -3970,6 +3970,8 @@ class Browse_Model extends CI_Model
 //		$this->db->group_by('t1.patient_id`', 'DESC');//ASC');
 		//removed by Mike, 20210907
 //		$this->db->where('t2.medical_doctor_id!=',0);
+		//added by Mike, 20210907
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
 		$this->db->limit(1);
 		
 		$query = $this->db->get('patient');
