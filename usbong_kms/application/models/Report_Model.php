@@ -1568,8 +1568,8 @@ class Report_Model extends CI_Model
 
 		$this->db->where('t1.item_type_id', $itemTypeId);
 		
-		//added by Mike, 20200909
-		$this->db->where('t1.item_name!=', "MINORSET");
+		//added by Mike, 20200909; removed by Mike, 20210910
+//		$this->db->where('t1.item_name!=', "MINORSET");
 		
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0);
