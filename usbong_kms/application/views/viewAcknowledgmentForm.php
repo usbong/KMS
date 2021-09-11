@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210902
+  @date updated: 20210911
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -201,7 +201,22 @@
 							width: 50%;
 							display: inline-block;
 							text-align: right;
-						}												
+						}		
+
+						button
+						{
+							padding: 0px;
+							background-color: #ffffff;
+							color: #000000;
+							font-size: 19px;
+
+							border: 0px solid;		
+							border-radius: 4px;
+						}
+						
+						button:hover {
+							color: rgb(85,56,153);
+						}						
     /**/
     </style>
     <title>
@@ -210,8 +225,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
     </style>
-  </head>
+  </head>	  
 	  <script>
+/*	  	//removed by Mike, 20210911; added as external .js file; 
+		//src="<?php echo base_url('assets/js/halimbawaScript.js');?>"
+		//added by Mike, 20210911
+		function myPopupFunctionNoPaymentYet() {
+			alert("No payment yet!");
+		}
+*/		
 	  </script>
   <body>
 <?php
@@ -242,9 +264,26 @@
 		<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
 		<!-- edited by Mike, 20210901; 
 			TO-DO: -update: this due to increased web address length-->
-		<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id']); ?>'>
-			<b>ACKNOWLEDGMENT RECEIPT</b>
-		</a>
+<?php //edited by Mike, 20210911	
+		if (isset($resultPaid[0])) {
+?>
+			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id']); ?>'>
+				<b>ACKNOWLEDGMENT RECEIPT</b>
+			</a>
+<?php 	}
+		else {
+			//example: include external .js file
+?>		
+			<script type="text/javascript" src="<?php echo base_url('assets/js/halimbawaScript.js');?>">
+			</script>
+			<button onclick="myPopupFunctionNoPaymentYet()">
+				<b><u>ACKNOWLEDGMENT RECEIPT</u></b>			
+			</button>
+<?php			
+		}
+?>
+		
+		
 	</div>
 	<br
 	
