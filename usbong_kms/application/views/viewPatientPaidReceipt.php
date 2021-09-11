@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20210904
+' @date updated: 20210912
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -680,6 +680,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			<!-- added by Mike, 20200610 -->
 			<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
+			
+			<!-- added by Mike, 20210912 -->
+			<input type="hidden" class="receipt-input" placeholder="" name="transactionDateParam" value="<?php echo $outputTransaction['transaction_date'] ?> "required>
+			
 <?php
 		}
 ?>		
