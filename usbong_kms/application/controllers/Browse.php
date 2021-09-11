@@ -3839,7 +3839,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210831
 		//TO-DO: -add: if transaction NOT today, add for today, 
 		//but write in notes the actual transaction date
-		$data['transactionDate'] = date('m/d/Y');
+		//edited by Mike, 20210912
+//		$data['transactionDate'] = date('m/d/Y');
+		$data['transactionDate'] = $_POST["transactionDateParam"]; //date('m/d/Y');
 
 		$data['transactionId'] = $_POST["transactionIdParam"];
 		$data['transactionQuantity'] = $_POST["transactionQuantityParam"]; //added by Mike, 20200610
@@ -3861,7 +3863,17 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 				
 		$this->load->model('Browse_Model');
-		$this->Browse_Model->addTransactionPaidReceipt($data);
+
+
+		//edited by Mike, 20210912
+//		$this->Browse_Model->addTransactionPaidReceipt($data);
+
+		if (strpos($data['transactionDate'], date('m/d/Y'))!==false) {
+			$this->Browse_Model->addTransactionPaidReceipt($data);
+		}
+		else {
+			$this->Browse_Model->addTransactionPaidReceiptForPreviousDay($data);
+		}
 
 /*		//added by Mike, 20210904; //TO-DO: -reverify: this
 		//note: multiple transactions with varying types, e.g. snack, non-med, med,
