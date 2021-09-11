@@ -1346,6 +1346,79 @@ class Browse_Model extends CI_Model
 		
 		return $rowArray;
 	}	
+
+	//added by Mike, 20210912
+	//add: to receipt auto-created new transaction 
+	public function addTransactionPaidReceiptForPreviousDay($param) 
+	{
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+		
+		//echo "transactionQuantity: ".$param['transactionQuantity'];
+
+		$iCount = 0;
+
+		//part 1
+		$this->db->select('transaction_date, patient_id, fee, x_ray_fee, lab_fee, med_fee, pas_fee, snack_fee, medical_doctor_id, notes');
+		$this->db->where('transaction_id',$param['transactionId']);
+		$query = $this->db->get('transaction');
+		$rowArray = $query->result_array();		
+		
+		//part 2
+		$data = array(
+					'transaction_date' => date('m/d/Y'),
+					'patient_id' => $rowArray[0]['patient_id'],
+					'fee' => $rowArray[0]['fee'],
+					'x_ray_fee' => $rowArray[0]['x_ray_fee'],
+					'lab_fee' => $rowArray[0]['lab_fee'],
+					'med_fee' => $rowArray[0]['med_fee'],
+					'pas_fee' => $rowArray[0]['pas_fee'],
+					'snack_fee' => $rowArray[0]['snack_fee'],
+					'medical_doctor_id' => $rowArray[0]['medical_doctor_id'],
+					 //TO-DO: -update: this to be YYYY-mm-dd format; from mm/dd/YYYY
+					'notes' => $rowArray[0]['notes']."; TRANSACTION ".$rowArray[0]['transaction_date'],
+				);
+		$this->db->insert('transaction', $data);
+		$param['transactionId'] = $this->db->insert_id();
+
+		//part 3.1
+		$param['receiptTypeId'] = 1;
+		$data = array(
+					'receipt_type_id' => $param['receiptTypeId'],
+					'transaction_id' => $param['transactionId'],
+					'receipt_number' => $param['receiptNumberMOSC']
+				);
+		$this->db->insert('receipt', $data);
+//		$param['transactionId'] = $this->db->insert_id();		
+
+		//part 3.2
+		if ($rowArray[0]['pas_fee']!=0) { 
+			//NON-MEDICINE
+			$param['receiptTypeId'] = 2;
+
+			$data = array(
+				'receipt_type_id' => $param['receiptTypeId'],
+				'transaction_id' => $param['transactionId'],
+				'receipt_number' => $param['receiptNumberPAS']
+			);				
+			$this->db->insert('receipt', $data);
+		}
+
+		//part 3.3
+		if ($rowArray[0]['medical_doctor_id']!=1) { 
+			//NON-MEDICINE
+			$param['receiptTypeId'] = 3;
+
+			$data = array(
+				'receipt_type_id' => $param['receiptTypeId'],
+				'transaction_id' => $param['transactionId'],
+				'receipt_number' => $param['receiptNumberMedicalDoctor']
+			);				
+			$this->db->insert('receipt', $data);
+		}
+	}	
 	
 
 	//added by Mike, 20200508; edited by Mike, 20200710
@@ -1361,7 +1434,8 @@ class Browse_Model extends CI_Model
 		
 		//echo "transactionQuantity: ".$param['transactionQuantity'];
 
-		$iCount = 0;
+		$iCount = 0;		
+		
 		//edited by Mike, 20200611
 //		while ($iCount <= $param['transactionQuantity']) {			
 		while ($iCount < $param['transactionQuantity']) {
@@ -3246,7 +3320,9 @@ class Browse_Model extends CI_Model
 //		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, medical_doctor_id, fee_quantity, transaction_quantity');
 		//edited by Mike, 20210122
 //		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity');
-		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
+		//edited by Mike, 20210912
+//		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
+		$this->db->select('transaction_date, transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
 
 		$this->db->where('transaction_id', $outputTransactionId);
 		//added by Mike, 20200821
