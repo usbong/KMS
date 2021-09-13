@@ -3654,7 +3654,9 @@ class Browse_Model extends CI_Model
 //			$this->db->select('med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
 			//edited by Mike, 20210128
 //			$this->db->select('fee, med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
-			$this->db->select('fee, med_fee, pas_fee, snack_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity, notes');
+			//edited by Mike, 20210913
+//			$this->db->select('fee, med_fee, pas_fee, snack_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity, notes');
+			$this->db->select('transaction_date, fee, med_fee, pas_fee, snack_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity, notes');
 
 			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
 
