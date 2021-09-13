@@ -38,3 +38,6 @@ COLUMNS<br/>
 <br/>
 
 TO-DO: -add: computer automation
+
+## Additional Note: Digital version
+https://github.com/usbong/newsletters
