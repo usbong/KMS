@@ -384,7 +384,7 @@
 			file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
 */
 			//TO-DO: -reuse: technique with remaining parts
-			echo ">>>> DITO";
+//			echo ">>>> DITO";
 			
 			$decodedJSONFile = json_decode($outputReportMedicalDoctor);					
 			$decodedJSONFileArray[0][1] = $decodedJSONFile[0];
@@ -443,7 +443,8 @@
 			$responses[] = $jsonResponse;
 			
 			$outputReportXRay = json_encode($responses);
-							
+			
+/*	//removed by Mike, 20210914							
 			echo $outputReportXRay;
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
@@ -458,6 +459,11 @@
 			$file = $fileBasePath."xRay".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportXRay, LOCK_EX);				
+*/			
+			$decodedJSONFile = json_decode($outputReportXRay);					
+			$decodedJSONFileArray[1][1] = $decodedJSONFile[0];
+			
+			echo $decodedJSONFileArray[1][1]->iFeeTotalCount;			
 		}
 		else {
 			echo "There are no X-Ray item transactions for the day.";
@@ -512,6 +518,7 @@
 			
 			$outputReportMedicine = json_encode($responses);
 							
+/*	//removed by Mike, 20210914							
 			echo $outputReportMedicine;
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
@@ -525,6 +532,11 @@
 			$file = $fileBasePath."medicine".$sDateToday.".txt";
 			
 			file_put_contents($file, $outputReportMedicine, LOCK_EX);				
+*/			
+			$decodedJSONFile = json_decode($outputReportMedicine);					
+			$decodedJSONFileArray[2][1] = $decodedJSONFile[0];
+			
+			echo $decodedJSONFileArray[2][1]->iFeeTotalCount;
 		}
 		else {
 			echo "There are no Medicine item transactions for the day.";
@@ -626,7 +638,8 @@
 			$responses[] = $jsonResponse;
 			
 			$outputReportNonMedicine = json_encode($responses);
-							
+			
+/* //removed by Mike, 20210914							
 			echo $outputReportNonMedicine;
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
@@ -641,6 +654,11 @@
 			$file = $fileBasePath."nonMedicine".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportNonMedicine, LOCK_EX);				
+*/
+			$decodedJSONFile = json_decode($outputReportNonMedicine);					
+			$decodedJSONFileArray[3][1] = $decodedJSONFile[0];
+			
+			echo $decodedJSONFileArray[3][1]->iFeeTotalCount;			
 		}
 		else {
 			echo "There are no Non-medicine item transactions for the day.";
@@ -696,6 +714,7 @@
 			
 			$outputReportLab = json_encode($responses);
 							
+/* //removed by Mike, 20210914							
 			echo $outputReportLab;
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
@@ -710,6 +729,11 @@
 			$file = $fileBasePath."lab".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportLab, LOCK_EX);				
+*/
+			$decodedJSONFile = json_decode($outputReportLab);					
+			$decodedJSONFileArray[4][1] = $decodedJSONFile[0];
+			
+			echo $decodedJSONFileArray[4][1]->iFeeTotalCount;					
 		}
 		else {
 			echo "There are no Lab, i.e. Laboratory, item transactions for the day.";
@@ -765,7 +789,8 @@
 			$responses[] = $jsonResponse;
 			
 			$outputReportSnack = json_encode($responses);
-							
+			
+/* //removed by Mike, 20210914							
 			echo $outputReportSnack;
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
@@ -779,6 +804,11 @@
 			$file = $fileBasePath."snack".$sDateToday.".txt";
 			
 			file_put_contents($file, $outputReportSnack, LOCK_EX);				
+*/
+			$decodedJSONFile = json_decode($outputReportSnack);					
+			$decodedJSONFileArray[5][1] = $decodedJSONFile[0];
+			
+			echo $decodedJSONFileArray[5][1]->iFeeTotalCount;			
 		}
 		else {
 			echo "There are no Snack item transactions for the day.";
@@ -797,6 +827,9 @@
 	//get all the medical doctors in the list
 	if ($selectedMedicalDoctorList = $mysqli->query("select medical_doctor_id, medical_doctor_name from medical_doctor where medical_doctor_id>3")) //3 is SUMMARY
 	{
+		//added by Mike, 20210914
+		$iMedicalDoctorDecodedJSONFileCount=0;
+		
 		foreach ($selectedMedicalDoctorList as $listValue) {
 			//added by Mike, 20200713
 			$responses = [];
@@ -1001,7 +1034,8 @@
 					$responses[] = $jsonResponse;
 					
 					$outputReportMedicalDoctor = json_encode($responses);
-									
+					
+/*	//removed by Mike, 20210914									
 					echo $outputReportMedicalDoctor;
 									
 		//				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
@@ -1018,6 +1052,21 @@
 					$file = $fileBasePath.strtoupper(str_replace(" ","",$listValue['medical_doctor_name'])).$sDateToday.".txt";
 
 					file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
+*/					
+					//note: DR. CHASTITY starts count
+//					$iMedicalDoctorDecodedJSONFileCount=0;
+					
+					if (strpos($listValue['medical_doctor_name'],"CHASTITY")!==false) {
+						$iMedicalDoctorDecodedJSONFileCount=7;			
+					}
+					else {
+						$iMedicalDoctorDecodedJSONFileCount++;			
+					}
+					
+					$decodedJSONFile = json_decode($outputReportMedicalDoctor);					
+					$decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1] = $decodedJSONFile[0];
+					
+					echo $decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1]->iFeeTotalCount;
 				}
 				else {
 					echo "There are no ".strtoupper($listValue['medical_doctor_name'])." transactions for the day.";
@@ -1142,9 +1191,10 @@
 			$responses[] = $jsonResponse;
 			
 			$outputReportMedicalDoctor = json_encode($responses);
-							
+
+/*	//removed by Mike, 20210914														
 			echo $outputReportMedicalDoctor;
-							
+
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
 			//removed by Mike, 20200902
@@ -1157,6 +1207,12 @@
 			$file = $fileBasePath."SYSON,PETER".$sDateToday.".txt";
 
 			file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
+*/			
+			$decodedJSONFile = json_decode($outputReportMedicalDoctor);					
+			$decodedJSONFileArray[13][1] = $decodedJSONFile[0];
+			
+			echo $decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1]->iFeeTotalCount;
+
 		}
 		else {
 			echo "There are no SYSON, PETER transactions for the day.";
@@ -1212,7 +1268,8 @@
 			$responses[] = $jsonResponse;
 			
 			$outputReportMedicineAsterisk = json_encode($responses);
-							
+			
+/* //removed by Mike, 20210914							
 			echo $outputReportMedicineAsterisk;
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
@@ -1225,7 +1282,12 @@
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicineAsterisk".$sDateToday.".txt";
 			$file = $fileBasePath."medicineAsterisk".$sDateToday.".txt";
 
-			file_put_contents($file, $outputReportMedicineAsterisk, LOCK_EX);				
+			file_put_contents($file, $outputReportMedicineAsterisk, LOCK_EX);
+*/			
+			$decodedJSONFile = json_decode($outputReportMedicineAsterisk);					
+			$decodedJSONFileArray[14][1] = $decodedJSONFile[0];
+			
+			echo $decodedJSONFileArray[14][1]->iFeeTotalCount;
 		}
 		else {
 			echo "There are no Medicine item (Asterisk), i.e. Glucosamine Sulphate and Calcium with Vitamin D,  transactions for the day.";
@@ -1341,7 +1403,8 @@
 			$responses[] = $jsonResponse;
 			
 			$outputReportVATForNonMedicine = json_encode($responses);
-							
+
+/* //removed by Mike, 20210914							
 			echo $outputReportVATForNonMedicine;
 							
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
@@ -1355,7 +1418,12 @@
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
 			$file = $fileBasePath."VATForNonMedicine".$sDateToday.".txt";
 
-			file_put_contents($file, $outputReportVATForNonMedicine, LOCK_EX);				
+			file_put_contents($file, $outputReportVATForNonMedicine, LOCK_EX);
+*/			
+			$decodedJSONFile = json_decode($outputReportVATForNonMedicine);					
+			$decodedJSONFileArray[15][1] = $decodedJSONFile[0];
+			
+			echo $decodedJSONFileArray[15][1]->iFeeTotalCount;
 		}
 		else {
 			echo "There are no VAT for Non-medicine item transactions for the day.";
@@ -1798,7 +1866,15 @@
 				if (($iRowCount==1)) {// and ($iColumnCount==0)) {
 					//edited by Mike, 20200807
 //					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount!=9)) {
-					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount<9)) {
+					//edited by Mike, 20210914
+//					if (($iColumnCount!=1) and ($iColumnCount!=5) and ($iColumnCount<9)) {
+					if (($iColumnCount>=0) and ($iColumnCount<=4)) {
+
+//						echo $cellValue;
+						if (strpos($cellValue,"NET PF")!==false) {
+							$cellValue = "MOSC<br/>NET PF";
+						}
+
 						//background color green
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
 					}
@@ -1806,8 +1882,9 @@
 						echo "<td class='column'>".$cellValue."</td>";
 					}
 				}
+				//edited by Mike, 20210914
 				//"CASH REGISTER RECEIPT" cells; text
-				else if (($iRowCount>=2) and ($iRowCount<=18) and ($iColumnCount>=4) and ($iColumnCount<=5)) {
+				else if (($iRowCount>=2) and ($iRowCount<=18) and ($iColumnCount>=1) and ($iColumnCount<=1)) {					
 					echo "<td class='column' style='text-align:left'><b>".$cellValue."</b></td>";
 				}
 				else {
@@ -1815,8 +1892,9 @@
 					//edited by Mike, 20200726
 //					$cellValue = utf8_encode($data[$iColumnCount]);
 					if (is_numeric($cellValue)) {
-						//added by Mike, 20200812						
-						if ($iColumnCount==7) { //COUNT
+						//added by Mike, 20200812; edited by Mike, 20210914
+//						if ($iColumnCount==7) { //COUNT
+						if ($iColumnCount==0) { //COUNT
 							//integer value
 						}
 						//added by Mike, 20200813						
@@ -1838,7 +1916,7 @@
 							//output: 60.00
 							$cellValue = number_format($cellValue, 2, '.', '');
 						}																					
-
+/* //removed by Mike, 20210914
 						//edited by Mike, 20200726
 						//echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 						if (($iRowCount==2) and ($iColumnCount==3)) { //ACTUAL TOTAL
@@ -1862,6 +1940,9 @@
 						else {							 
 							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 						}
+*/						
+
+						echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 					}
 					else {
 						//echo "<td class='column'><b>".$cellValue."</b></td>";
