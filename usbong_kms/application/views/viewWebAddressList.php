@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20210729
+  @date updated: 20210915
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -223,6 +223,11 @@
 <h3>2) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay</a>
 
+<!-- added by Mike, 20210915 -->
+<h3>3) <a target="_blank" href="http://192.168.11.10/usbong_kms/server/viewSummaryReportForEndDay.php">View Summary Report for End Day</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/server/viewSummaryReportForEndDay.php">http://192.168.11.10/usbong_kms/server/viewSummaryReportForEndDay.php</a>
+
+
 <h2>IV. PAYSLIPS</h2>
 <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">Payslip SYSON, PEDRO (MOSC)</a><br/>
 <br/>
@@ -331,7 +336,7 @@ http://192.168.11.10/usbong_kms/server/viewXRayPriceList.php<br/>
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y")?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
