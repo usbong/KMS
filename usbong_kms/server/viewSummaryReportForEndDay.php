@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20210914
+  @date updated: 20210915
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -49,8 +49,8 @@
 							width: 860px;/* 802px;*//* 670px */
 							
 							/* use zoom 67% scale*/
-							zoom: 67%; /* at present, command not support in Mozilla Firefox */				
-							transform: scale(0.67);
+							zoom: 80%; /* at present, command not support in Mozilla Firefox */				
+							transform: scale(0.80);
 							transform-origin: 0 0;							
                         }
 						
@@ -241,11 +241,13 @@
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
 
 	{
+/* //removed by Mike, 20210915		
 		//added by Mike, 20200524
 		echo "--<br />";
-
+*/
 		if ($selectedMedicalDoctorResultArray->num_rows > 0) {
-			
+
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200524
 			if ($selectedMedicalDoctorResultArray->num_rows == 1) {
 				echo "SYSON, PEDRO's transaction for the day.<br /><br />";
@@ -253,6 +255,7 @@
 			else {
 				echo "SYSON, PEDRO's transactions for the day.<br /><br />";
 			}
+*/			
 
 //						$row = $selectedResult->fetch_array();
 			//count total
@@ -385,14 +388,17 @@
 */
 			//TO-DO: -reuse: technique with remaining parts
 //			echo ">>>> DITO";
-			
+
 			$decodedJSONFile = json_decode($outputReportMedicalDoctor);					
 			$decodedJSONFileArray[0][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[0][1]->iFeeTotalCount;			
+
+//removed by Mike, 20210915			
+//			echo $decodedJSONFileArray[0][1]->iFeeTotalCount;			
 		}
 		else {
+/* //removed by Mike, 20210915					
 			echo "There are no SYSON, PEDRO transactions for the day.";
+*/
 		}
 	}		
 	// show an error if there is an issue with the database query
@@ -400,19 +406,21 @@
 	{
 			echo "Error: " . $mysqli->error;
 	}																
-
+/* //removed by Mike, 20210915		
 	echo "<br/>";
-
+*/
 	$responses = [];
 	
 
 	//x-ray
 	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and x_ray_fee!='0' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
+/* //removed by Mike, 20210915				
 		//added by Mike, 20200524
 		echo "--<br />";
-
+*/
 		if ($selectedXRayResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200524
 			if ($selectedXRayResultArray->num_rows == 1) {
 				echo "X-Ray transaction for the day.<br /><br />";
@@ -420,6 +428,7 @@
 			else {
 				echo "X-Ray transactions for the day.<br /><br />";
 			}
+*/			
 
 //						$row = $selectedResult->fetch_array();
 			//count total
@@ -462,21 +471,28 @@
 */			
 			$decodedJSONFile = json_decode($outputReportXRay);					
 			$decodedJSONFileArray[1][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[1][1]->iFeeTotalCount;			
+
+//removed by Mike, 20210915
+//			echo $decodedJSONFileArray[1][1]->iFeeTotalCount;			
 		}
 		else {
+/* //removed by Mike, 20210915					
 			echo "There are no X-Ray item transactions for the day.";
+*/
 		}
 	}		
 	// show an error if there is an issue with the database query
 	else
 	{
+/* //removed by Mike, 20210915				
 			echo "Error: " . $mysqli->error;
+*/
 	}																
 
+/* //removed by Mike, 20210915		
 	//added by Mike, 20200522
 	echo "<br/>";
+*/	
 
 	//added by Mike, 20200522
 	$responses = [];
@@ -484,10 +500,13 @@
 
 	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.notes NOT Like '%UNPAID%' and t2.transaction_quantity='0' and t1.item_name!='MINORSET'"))
 	{
+/* //removed by Mike, 20210915				
 		//added by Mike, 20200524
 		echo "--<br />";
+*/		
 
 		if ($selectedMedicineResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200524
 			if ($selectedMedicineResultArray->num_rows == 1) {
 				echo "Medicine transaction for the day.<br /><br />";
@@ -495,6 +514,7 @@
 			else {
 				echo "Medicine transactions for the day.<br /><br />";
 			}
+*/
 
 //						$row = $selectedResult->fetch_array();
 			//count total
@@ -535,16 +555,21 @@
 */			
 			$decodedJSONFile = json_decode($outputReportMedicine);					
 			$decodedJSONFileArray[2][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[2][1]->iFeeTotalCount;
+
+//removed by Mike, 20210915		
+//			echo $decodedJSONFileArray[2][1]->iFeeTotalCount;
 		}
 		else {
+/* //removed by Mike, 20210915		
 			echo "There are no Medicine item transactions for the day.";
+*/			
 		}
 	}	
-	
+
+/* //removed by Mike, 20210915			
 	//added by Mike, 20200522
 	echo "<br/>";
+*/	
 
 	//added by Mike, 20200522
 	$responses = [];
@@ -552,10 +577,13 @@
 	//non-medicine
 	if ($selectedNonMedicineResultArray = $mysqli->query("select distinct t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET'"))
 	{
+/* //removed by Mike, 20210915				
 		//added by Mike, 20200524
 		echo "--<br />";
+*/		
 
 		if ($selectedNonMedicineResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200524
 			if ($selectedNonMedicineResultArray->num_rows == 1) {
 				echo "Non-medicine transaction for the day.<br /><br />";
@@ -563,7 +591,7 @@
 			else {
 				echo "Non-medicine transactions for the day.<br /><br />";
 			}
-
+*/
 
 //						$row = $selectedResult->fetch_array();
 			//count total
@@ -657,11 +685,14 @@
 */
 			$decodedJSONFile = json_decode($outputReportNonMedicine);					
 			$decodedJSONFileArray[3][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[3][1]->iFeeTotalCount;			
+
+//removed by Mike, 20210915						
+//			echo $decodedJSONFileArray[3][1]->iFeeTotalCount;			
 		}
 		else {
+/* //removed by Mike, 20210915					
 			echo "There are no Non-medicine item transactions for the day.";
+*/			
 		}
 	}		
 	// show an error if there is an issue with the database query
@@ -669,9 +700,11 @@
 	{
 			echo "Error: " . $mysqli->error;
 	}																
-	
+
+/* //removed by Mike, 20210915			
 	//added by Mike, 20200523
 	echo "<br/>";
+*/	
 
 	//added by Mike, 20200523
 	$responses = [];
@@ -679,10 +712,13 @@
 	//lab
 	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
+/* //removed by Mike, 20210915				
 		//added by Mike, 20200524
 		echo "--<br />";
+*/		
 
 		if ($selectedLabResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200524
 			if ($selectedLabResultArray->num_rows == 1) {
 				echo "Laboratory transaction for the day.<br /><br />";
@@ -690,6 +726,7 @@
 			else {
 				echo "Laboratory transactions for the day.<br /><br />";
 			}
+*/			
 
 //						$row = $selectedResult->fetch_array();
 			//count total
@@ -732,11 +769,14 @@
 */
 			$decodedJSONFile = json_decode($outputReportLab);					
 			$decodedJSONFileArray[4][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[4][1]->iFeeTotalCount;					
+
+//removed by Mike, 20210915						
+//			echo $decodedJSONFileArray[4][1]->iFeeTotalCount;					
 		}
 		else {
+/* //removed by Mike, 20210915					
 			echo "There are no Lab, i.e. Laboratory, item transactions for the day.";
+*/
 		}
 	}		
 	// show an error if there is an issue with the database query
@@ -745,9 +785,10 @@
 			echo "Error: " . $mysqli->error;
 	}																
 
-
+/* //removed by Mike, 20210915		
 	//added by Mike, 20200614
 	echo "<br/>";
+*/
 
 	//added by Mike, 20201104
 	$responses = [];
@@ -756,10 +797,13 @@
 	//added by Mike, 20201104
 	if ($selectedSnackResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=3 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0'"))
 	{
+/* //removed by Mike, 20210915		
 		//added by Mike, 20200524
 		echo "--<br />";
+*/		
 		//edited by Mike, 20201105
 		if ($selectedSnackResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200524
 			if ($selectedMedicineResultArray->num_rows == 1) {
 				echo "Snack transaction for the day.<br /><br />";
@@ -767,7 +811,7 @@
 			else {
 				echo "Snack transactions for the day.<br /><br />";
 			}
-
+*/
 //						$row = $selectedResult->fetch_array();
 			//count total
 			$iFeeTotalCount = 0;				
@@ -807,17 +851,21 @@
 */
 			$decodedJSONFile = json_decode($outputReportSnack);					
 			$decodedJSONFileArray[5][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[5][1]->iFeeTotalCount;			
+
+//removed by Mike, 20210915						
+//			echo $decodedJSONFileArray[5][1]->iFeeTotalCount;			
 		}
 		else {
+/* //removed by Mike, 20210915					
 			echo "There are no Snack item transactions for the day.";
+*/
 		}
 	}	
 	
+/* //removed by Mike, 20210915			
 	//added by Mike, 20200522
 	echo "<br/>";
-
+*/
 
 	//added by Mike, 20200614
 	$responses = [];
@@ -836,9 +884,11 @@
 
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
 			{
+/* //removed by Mike, 20210915						
 				echo "--<br />";
-
+*/
 				if ($selectedMedicalDoctorResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915							
 					//added by Mike, 20200524
 					if ($selectedMedicalDoctorResultArray->num_rows == 1) {
 						echo strtoupper($listValue['medical_doctor_name'])."'s transaction for the day.<br /><br />";
@@ -846,7 +896,7 @@
 					else {
 						echo strtoupper($listValue['medical_doctor_name'])."'s transactions for the day.<br /><br />";
 					}
-
+*/
 					//count total
 					$iFeeTotalCount = 0;				
 					$iQuantityTotalCount = 0;				
@@ -1065,11 +1115,14 @@
 					
 					$decodedJSONFile = json_decode($outputReportMedicalDoctor);					
 					$decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1] = $decodedJSONFile[0];
-					
-					echo $decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1]->iFeeTotalCount;
+	
+//removed by Mike, 20210915				
+//					echo $decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1]->iFeeTotalCount;
 				}
 				else {
+/* //removed by Mike, 20210915							
 					echo "There are no ".strtoupper($listValue['medical_doctor_name'])." transactions for the day.";
+*/
 				}
 			}		
 			// show an error if there is an issue with the database query
@@ -1077,9 +1130,11 @@
 			{
 					echo "Error: " . $mysqli->error;
 			}
-			
+
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200615
 			echo "<br/>";
+*/			
 		}
 	}
 	// show an error if there is an issue with the database query
@@ -1099,10 +1154,13 @@
 	//medical doctor; SYSON, PETER
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
 	{
+/* //removed by Mike, 20210915				
 		//added by Mike, 20200524
 		echo "--<br />";
+*/		
 
 		if ($selectedMedicalDoctorResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200524
 			if ($selectedMedicalDoctorResultArray->num_rows == 1) {
 				echo "SYSON, PETER's transaction for the day.<br /><br />";
@@ -1110,6 +1168,7 @@
 			else {
 				echo "SYSON, PETER's transactions for the day.<br /><br />";
 			}
+*/			
 
 //						$row = $selectedResult->fetch_array();
 			//count total
@@ -1210,12 +1269,15 @@
 */			
 			$decodedJSONFile = json_decode($outputReportMedicalDoctor);					
 			$decodedJSONFileArray[13][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1]->iFeeTotalCount;
+
+//removed by Mike, 20210915						
+//			echo $decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1]->iFeeTotalCount;
 
 		}
 		else {
+/* //removed by Mike, 20210915					
 			echo "There are no SYSON, PETER transactions for the day.";
+*/
 		}
 	}		
 	// show an error if there is an issue with the database query
@@ -1224,8 +1286,10 @@
 			echo "Error: " . $mysqli->error;
 	}																
 
+/* //removed by Mike, 20210915		
 	//added by Mike, 20200522
 	echo "<br/>";
+*/	
 
 	//added by Mike, 20200522
 	$responses = [];
@@ -1233,10 +1297,13 @@
 	//medicine asterisk, i.e. Glucosamine Sulphate and Calcium with Vitamin D
 	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0'"))
 	{
+/* //removed by Mike, 20210915				
 		//added by Mike, 20200524
 		echo "--<br />";
+*/		
 
 		if ($selectedMedicineAsteriskResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915			
 			//added by Mike, 20200524
 			if ($selectedMedicineResultArray->num_rows == 1) {
 				echo "Medicine (Asterisk), i.e. Glucosamine Sulphate and Calcium with Vitamin D, transaction for the day.<br /><br />";
@@ -1244,6 +1311,7 @@
 			else {
 				echo "Medicine (Asterisk), i.e. Glucosamine Sulphate and Calcium with Vitamin D, transactions for the day.<br /><br />";
 			}
+*/			
 
 //						$row = $selectedResult->fetch_array();
 			//count total
@@ -1286,11 +1354,14 @@
 */			
 			$decodedJSONFile = json_decode($outputReportMedicineAsterisk);					
 			$decodedJSONFileArray[14][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[14][1]->iFeeTotalCount;
+
+//removed by Mike, 20210915						
+//			echo $decodedJSONFileArray[14][1]->iFeeTotalCount;
 		}
 		else {
+/* //removed by Mike, 20210915					
 			echo "There are no Medicine item (Asterisk), i.e. Glucosamine Sulphate and Calcium with Vitamin D,  transactions for the day.";
+*/
 		}
 	}		
 	// show an error if there is an issue with the database query
@@ -1299,19 +1370,23 @@
 			echo "Error: " . $mysqli->error;
 	}																
 
-	
+/* //removed by Mike, 20210915			
 	//added by Mike, 20200708
 	echo "<br/>";
+*/	
 
 	//added by Mike, 20200709	
 	$responses = [];
 
 	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID' and t2.transaction_quantity='0'"))
 	{
+/* //removed by Mike, 20210915				
 		//added by Mike, 20200524
 		echo "--<br />";
+*/		
 
 		if ($selectedNonMedicineResultArray->num_rows > 0) {
+/* //removed by Mike, 20210915					
 			//added by Mike, 20200524
 			if ($selectedNonMedicineResultArray->num_rows == 1) {
 				echo "VAT for Non-medicine transaction for the day.<br /><br />";
@@ -1319,6 +1394,7 @@
 			else {
 				echo "VAT for Non-medicine transactions for the day.<br /><br />";
 			}
+*/			
 
 //						$row = $selectedResult->fetch_array();
 			//count total
@@ -1422,11 +1498,14 @@
 */			
 			$decodedJSONFile = json_decode($outputReportVATForNonMedicine);					
 			$decodedJSONFileArray[15][1] = $decodedJSONFile[0];
-			
-			echo $decodedJSONFileArray[15][1]->iFeeTotalCount;
+	
+//removed by Mike, 20210915				
+//			echo $decodedJSONFileArray[15][1]->iFeeTotalCount;
 		}
 		else {
+/* //removed by Mike, 20210915					
 			echo "There are no VAT for Non-medicine item transactions for the day.";
+*/
 		}
 	}		
 	// show an error if there is an issue with the database query
@@ -1435,28 +1514,34 @@
 			echo "Error: " . $mysqli->error;
 	}																
 
-
+/* //removed by Mike, 20210915		
 	//added by Mike, 20200819
 	//Minorset
 	echo "<br />";
+*/	
 
 	$responses = [];
 
+/* //removed by Mike, 20210915		
 	//added by Mike, 20200524
 	echo "--<br />";
+*/
 
 	//edited by Mike, 20200825
 	if ($iMinorsetQuantityTotalCount == 0) {
+/* //removed by Mike, 20210915		
 		echo "There are no Minorset transactions for the day.<br /><br />";
+*/
 	}
 	else {
+/* //removed by Mike, 20210915				
 		if ($iMinorsetQuantityTotalCount == 1) {
 			echo "Minorset transaction for the day.<br /><br />";
 		}
 		else {
 			echo "Minorset transactions for the day.<br /><br />";
 		}
-		
+*/		
 		$iMinorsetFeeTotalCount = $iMinorsetQuantityTotalCount*500;
 		//write as .txt file
 		$jsonResponse = array(
@@ -1484,9 +1569,9 @@
 */
 		$decodedJSONFile = json_decode($outputReportMinorset);					
 		$decodedJSONFileArray[16][1] = $decodedJSONFile[0];
-		
-		echo $decodedJSONFileArray[16][1]->iFeeTotalCount;
-		
+
+//removed by Mike, 20210915					
+//		echo $decodedJSONFileArray[16][1]->iFeeTotalCount;	
 	}
 	//echo $outputReportMinorset;
 	
@@ -1577,8 +1662,8 @@
 	//TO-DO: -add: count in left portion
 
 //------------------------------------------------
-	
-	echo "<br/>";
+	//removed by Mike, 20210915
+//	echo "<br/>";
 	echo "<table>";
 				
 	//TO-DO: -add: auto-identify and update date format to use YYYY-MM-DD
@@ -1630,46 +1715,56 @@
 				//added by Mike, 20201018
 				$iCount=0;
 				while ($iCount<$decodedJSONFileArrayMaxIndex) {
+/* //removed by Mike, 20210915
 					//$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
-					$file = $fileBasePath.$decodedJSONFileArray[$iCount][0].$sDateToday.".txt";
+					$file = $fileBasePath.$decodedJSONFileArray[$iCount][0].$sDateToday.".txt";										
 
-					if (file_exists($file)) {
+					if (file_exists($file)) {						
 						$inputJSONFile = file_get_contents($file);
-
+*/
+					//added by Mike, 20210915
+					if (isset($decodedJSONFileArray[$iCount][1])) {
 						//PF Column
-						if (($iRowCount==(2+$iCount)) and ($iColumnCount==6)) {
+						if (($iRowCount==(2+$iCount)) and ($iColumnCount==2)) {
 							$cellValue = $decodedJSONFileArray[$iCount][1]->iFeeTotalCount;
 							
 							//added by Mike, 20201021
 							$pfTotal=$pfTotal+$cellValue;
 						}
 						//Count Column
-						else if (($iRowCount==(2+$iCount)) and ($iColumnCount==7)) {
+						else if (($iRowCount==(2+$iCount)) and ($iColumnCount==3)) {
 							$cellValue = $decodedJSONFileArray[$iCount][1]->iQuantityTotalCount;
 						}
 						//MSOC NET PF Column
-						else if (($iRowCount==(2+$iCount)) and ($iColumnCount==8)) {
+						else if (($iRowCount==(2+$iCount)) and ($iColumnCount==4)) {
 							$cellValue = $decodedJSONFileArray[$iCount][1]->iNetFeeTotalCount;
 						}
 					}
-					
+
 					$iCount++;
 				}
 
 				if (isset($decodedJSONFileArray[1][0])) { //X-RAY
 					//PF Column
 					if (($iRowCount==12) and ($iColumnCount==0)) {
-						$cellValue = $decodedJSONFileArray[1][1]->iQuantityTotalCount;
+						//edited by Mike, 20210915
+						if (isset($decodedJSONFileArray[1][1])) {
+							$cellValue = $decodedJSONFileArray[1][1]->iQuantityTotalCount;
+						}
 					}
 				}
 
 				if (isset($decodedJSONFileArray[4][0])) { //LAB
 					//PF Column
 					if (($iRowCount==14) and ($iColumnCount==0)) {
-						$cellValue = $decodedJSONFileArray[1][1]->iQuantityTotalCount;
+						//edited by Mike, 20210915
+						if (isset($decodedJSONFileArray[4][1])) {
+							$cellValue = $decodedJSONFileArray[4][1]->iQuantityTotalCount;
+						}
 					}
 				}
 
+/* //removed by Mike, 20210915; TO-DO: -add: this
 				//NC/NO CHARGE/GRATIS COUNT
 				if (($iRowCount==14) and ($iColumnCount==2)) {
 					$cellValue = $iNoChargeQuantityTotalCount;
@@ -1684,6 +1779,12 @@
 				if (($iRowCount==16) and ($iColumnCount==0)) {
 					$cellValue = $iPrivateQuantityTotalCount;
 				}
+*/				
+				//added by Mike, 20210915
+				if (($iRowCount==18) and ($iColumnCount==2)) {
+					$cellValue = $pfTotal;
+				}
+				
 				
 /*				
 				if (isset($decodedJSONFileSysonPedro)) {
