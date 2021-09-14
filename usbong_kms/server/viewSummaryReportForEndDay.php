@@ -1468,6 +1468,7 @@
 		
 		$outputReportMinorset = json_encode($responses);
 		
+/*	//removed by Mike, 20210914		
 		echo $outputReportMinorset;
 
 		//removed by Mike, 20200902
@@ -1480,6 +1481,12 @@
 		$file = $fileBasePath."Minorset".$sDateToday.".txt";
 
 		file_put_contents($file, $outputReportMinorset, LOCK_EX);				
+*/
+		$decodedJSONFile = json_decode($outputReportMinorset);					
+		$decodedJSONFileArray[16][1] = $decodedJSONFile[0];
+		
+		echo $decodedJSONFileArray[16][1]->iFeeTotalCount;
+		
 	}
 	//echo $outputReportMinorset;
 	
@@ -1611,7 +1618,7 @@
 				//added by Mike, 20200726
 				//$cellValue = $data[$iColumnCount];	
 				$cellValue = utf8_encode($data[$iColumnCount]);
-				
+								
 				//$cellValue = utf8_encode($cellValue);
 				//$cellValue = mysql_real_escape_string($data[$iColumnCount]);
 				
@@ -1862,13 +1869,22 @@
 				//TO-DO: -add: the rest
 				//TO-DO: -update: to use array container and index
 
-	
-				if (($iRowCount==1)) {// and ($iColumnCount==0)) {
+				//added by Mike, 20210914
+				if ($iRowCount==0) {
+					//PETSA
+					if ($iColumnCount==0) {
+						$cellValue=$sDateToday;
+						echo "<td class='column'>PETSA</td>";
+						echo "<td class='column'>".$cellValue."</td>";
+						echo "<td class='column'>".Date('l')."</td>";
+					}
+				}
+				else if (($iRowCount==1)) {// and ($iColumnCount==0)) {
 					//edited by Mike, 20200807
 //					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount!=9)) {
 					//edited by Mike, 20210914
 //					if (($iColumnCount!=1) and ($iColumnCount!=5) and ($iColumnCount<9)) {
-					if (($iColumnCount>=0) and ($iColumnCount<=4)) {
+					if (($iColumnCount>=2) and ($iColumnCount<=4)) {
 
 //						echo $cellValue;
 						if (strpos($cellValue,"NET PF")!==false) {
@@ -1896,6 +1912,11 @@
 //						if ($iColumnCount==7) { //COUNT
 						if ($iColumnCount==0) { //COUNT
 							//integer value
+							//added by Mike, 20210914
+							$cellValue=($iRowCount-1);
+						}
+						//added by Mike, 20210914
+						else if ($iColumnCount==3) { //COUNT
 						}
 						//added by Mike, 20200813						
 						else if ((strpos(utf8_encode($data[$iColumnCount+1]),"#")!==false)) {
@@ -1941,7 +1962,6 @@
 							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 						}
 */						
-
 						echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 					}
 					else {
