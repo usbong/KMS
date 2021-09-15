@@ -1369,11 +1369,14 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20210916
 		if (strpos($rowArray[0]['notes'], "SC;")!==false) {
 		}
-		//TO-DO: -add: auto-verify: if +12% VAT already added;
-		//example: based on item set Price and Actual Fee
+		//added by Mike, 20210916
+		else if (strpos($rowArray[0]['notes'], "PWD;")!==false) {
+		}
+		//note: if NO requested PAS Official Receipt (OR) on transaction date, 
+		//+12% VAT NOT yet added;
 		else {
 			$rowArray[0]['pas_fee'] = $rowArray[0]['pas_fee'] + $rowArray[0]['pas_fee']*0.12;
-		}
+		}	
 		
 		//part 2
 		$data = array(
