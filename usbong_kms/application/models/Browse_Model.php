@@ -1368,6 +1368,10 @@ class Browse_Model extends CI_Model
 		
 		//added by Mike, 20210916
 		if (strpos($rowArray[0]['notes'], "SC;")!==false) {
+		}
+		//TO-DO: -add: auto-verify: if +12% VAT already added;
+		//example: based on item set Price and Actual Fee
+		else {
 			$rowArray[0]['pas_fee'] = $rowArray[0]['pas_fee'] + $rowArray[0]['pas_fee']*0.12;
 		}
 		
