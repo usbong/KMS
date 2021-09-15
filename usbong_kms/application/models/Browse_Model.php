@@ -1366,6 +1366,11 @@ class Browse_Model extends CI_Model
 		$query = $this->db->get('transaction');
 		$rowArray = $query->result_array();		
 		
+		//added by Mike, 20210916
+		if (strpos($rowArray[0]['notes'], "SC;")!==false) {
+			$rowArray[0]['pas_fee'] = $rowArray[0]['pas_fee'] + $rowArray[0]['pas_fee']*0.12;
+		}
+		
 		//part 2
 		$data = array(
 					'transaction_date' => date('m/d/Y'),
