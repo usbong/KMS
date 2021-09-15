@@ -1975,7 +1975,7 @@
 					//PETSA
 					if ($iColumnCount==0) {
 						$cellValue=$sDateToday;
-						echo "<td class='column'>PETSA</td>";
+						echo "<td class='column'><b>PETSA</b></td>";
 						echo "<td class='column'>".$cellValue."</td>";
 						echo "<td class='column'>".Date('l')."</td>";
 					}
