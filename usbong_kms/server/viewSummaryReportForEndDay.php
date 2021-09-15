@@ -377,13 +377,11 @@
 /* //removed by Mike, 20210914			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
 			$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
-
 			file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
 */
 			//TO-DO: -reuse: technique with remaining parts
@@ -460,13 +458,11 @@
 			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
 			$file = $fileBasePath."xRay".$sDateToday.".txt";
-
 			file_put_contents($file, $outputReportXRay, LOCK_EX);				
 */			
 			$decodedJSONFile = json_decode($outputReportXRay);					
@@ -545,7 +541,6 @@
 			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicine".$sDateToday.".txt";
@@ -674,13 +669,11 @@
 			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
 			$file = $fileBasePath."nonMedicine".$sDateToday.".txt";
-
 			file_put_contents($file, $outputReportNonMedicine, LOCK_EX);				
 */
 			$decodedJSONFile = json_decode($outputReportNonMedicine);					
@@ -758,13 +751,11 @@
 			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\lab".$sDateToday.".txt";
 			$file = $fileBasePath."lab".$sDateToday.".txt";
-
 			file_put_contents($file, $outputReportLab, LOCK_EX);				
 */
 			$decodedJSONFile = json_decode($outputReportLab);					
@@ -841,7 +832,6 @@
 			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicine".$sDateToday.".txt";
@@ -1092,7 +1082,6 @@
 					
 					//removed by Mike, 20200902
 					//$sDateToday = date("Y-m-d");
-
 					//update the file location accordingly
 					//edited by Mike, 20200524
 					//note: \\nonMedicine due to \n is new line
@@ -1100,7 +1089,6 @@
 					//$file = $fileBasePath."SYSON,PETER".$sDateToday.".txt";
 					//edited by Mike, 20200614
 					$file = $fileBasePath.strtoupper(str_replace(" ","",$listValue['medical_doctor_name'])).$sDateToday.".txt";
-
 					file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
 */					
 					//note: DR. CHASTITY starts count
@@ -1110,9 +1098,16 @@
 						$iMedicalDoctorDecodedJSONFileCount=7;			
 					}
 					else {
-						$iMedicalDoctorDecodedJSONFileCount++;			
+						//edited by Mike, 20210915
+//						$iMedicalDoctorDecodedJSONFileCount++;			
+						$iMedicalDoctorDecodedJSONFileCount=$listValue['medical_doctor_id']+4;			
+
 					}
+/*					
+					echo "listValue: ".$listValue['medical_doctor_id']."<br/>";
 					
+					echo "iMedicalDoctorDecodedJSONFileCount: ".$iMedicalDoctorDecodedJSONFileCount."<br/>";
+*/					
 					$decodedJSONFile = json_decode($outputReportMedicalDoctor);					
 					$decodedJSONFileArray[$iMedicalDoctorDecodedJSONFileCount][1] = $decodedJSONFile[0];
 	
@@ -1253,18 +1248,15 @@
 
 /*	//removed by Mike, 20210914														
 			echo $outputReportMedicalDoctor;
-
 //				$outputReportMedicine = "FEE:".$iFeeTotalCount."; "."QTY:".$iQuantityTotalCount;
 			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\xRay".$sDateToday.".txt";
 			$file = $fileBasePath."SYSON,PETER".$sDateToday.".txt";
-
 			file_put_contents($file, $outputReportMedicalDoctor, LOCK_EX);				
 */			
 			$decodedJSONFile = json_decode($outputReportMedicalDoctor);					
@@ -1344,12 +1336,10 @@
 			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\medicineAsterisk".$sDateToday.".txt";
 			$file = $fileBasePath."medicineAsterisk".$sDateToday.".txt";
-
 			file_put_contents($file, $outputReportMedicineAsterisk, LOCK_EX);
 */			
 			$decodedJSONFile = json_decode($outputReportMedicineAsterisk);					
@@ -1487,13 +1477,11 @@
 			
 			//removed by Mike, 20200902
 			//$sDateToday = date("Y-m-d");
-
 			//update the file location accordingly
 			//edited by Mike, 20200524
 			//note: \\nonMedicine due to \n is new line
 			//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
 			$file = $fileBasePath."VATForNonMedicine".$sDateToday.".txt";
-
 			file_put_contents($file, $outputReportVATForNonMedicine, LOCK_EX);
 */			
 			$decodedJSONFile = json_decode($outputReportVATForNonMedicine);					
@@ -1555,16 +1543,13 @@
 		
 /*	//removed by Mike, 20210914		
 		echo $outputReportMinorset;
-
 		//removed by Mike, 20200902
 		//$sDateToday = date("Y-m-d");
-
 		//update the file location accordingly
 		//edited by Mike, 20200524
 		//note: \\nonMedicine due to \n is new line
 		//$file = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\nonMedicine".$sDateToday.".txt";
 		$file = $fileBasePath."Minorset".$sDateToday.".txt";
-
 		file_put_contents($file, $outputReportMinorset, LOCK_EX);				
 */
 		$decodedJSONFile = json_decode($outputReportMinorset);					
@@ -1614,7 +1599,6 @@
 /*	//removed by Mike, 20210914
 		//$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
 		$file = $fileBasePath.$decodedJSONFileArray[$iCount][0].$sDateToday.".txt";
-
 		if (file_exists($file)) {
 			$inputJSONFile = file_get_contents($file);
 //			echo $inputJSONFile;
@@ -1622,19 +1606,15 @@
 			//note: output is an array container with 1 value, i.e. JSON string 
 			$decodedJSONFile = json_decode($inputJSONFile);		
 //			echo $decodedJSONFile[0]->iFeeTotalCount;
-
 			$decodedJSONFileArray[$iCount][1] = $decodedJSONFile[0];
 //			echo $decodedJSONFileArray[$iCount][1]->iFeeTotalCount;
-
 			//added by Mike, 20201019
 			if (isset($decodedJSONFileArray[$iCount][1]->iDexaQuantityTotalCount)) {
 				$iDexaQuantityTotalCount=$iDexaQuantityTotalCount+$decodedJSONFileArray[$iCount][1]->iDexaQuantityTotalCount;
 			}
-
 			if (isset($decodedJSONFileArray[$iCount][1]->iPrivateQuantityTotalCount)) {
 				$iPrivateQuantityTotalCount=$iPrivateQuantityTotalCount+$decodedJSONFileArray[$iCount][1]->iPrivateQuantityTotalCount;
 			}
-
 			if (isset($decodedJSONFileArray[$iCount][1]->iNoChargeQuantityTotalCount)) {
 				$iNoChargeQuantityTotalCount=$iNoChargeQuantityTotalCount+$decodedJSONFileArray[$iCount][1]->iNoChargeQuantityTotalCount;
 			}			
@@ -1652,7 +1632,6 @@
 		//note: output is an array container with 1 value, i.e. JSON string 
 		$decodedJSONFileSysonPedro = json_decode($inputJSONFile);		
 		echo $decodedJSONFileSysonPedro[0]->iFeeTotalCount;
-
 		$decodedJSONFileArray[0] = $decodedJSONFileSysonPedro[0];
 		echo $decodedJSONFileArray[0]->iFeeTotalCount;
 	}
@@ -1718,12 +1697,13 @@
 /* //removed by Mike, 20210915
 					//$file = $fileBasePath."SYSON,PEDRO".$sDateToday.".txt";
 					$file = $fileBasePath.$decodedJSONFileArray[$iCount][0].$sDateToday.".txt";										
-
 					if (file_exists($file)) {						
 						$inputJSONFile = file_get_contents($file);
 */
 					//added by Mike, 20210915
 					if (isset($decodedJSONFileArray[$iCount][1])) {
+//						echo "iCount: ".$iCount."<br/>";
+						
 						//PF Column
 						if (($iRowCount==(2+$iCount)) and ($iColumnCount==2)) {
 							$cellValue = $decodedJSONFileArray[$iCount][1]->iFeeTotalCount;
@@ -1769,12 +1749,10 @@
 				if (($iRowCount==14) and ($iColumnCount==2)) {
 					$cellValue = $iNoChargeQuantityTotalCount;
 				}
-
 				//DEXA COUNT
 				if (($iRowCount==15) and ($iColumnCount==0)) {
 					$cellValue = $iDexaQuantityTotalCount;
 				}
-
 				//PRIVATE COUNT
 				if (($iRowCount==16) and ($iColumnCount==0)) {
 					$cellValue = $iPrivateQuantityTotalCount;
@@ -1801,7 +1779,6 @@
 						$cellValue = $decodedJSONFileSysonPedro[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileSysonPeter)) {
 					//PF Column
 					if (($iRowCount==15) and ($iColumnCount==6)) {
@@ -1816,7 +1793,6 @@
 						$cellValue = $decodedJSONFileSysonPeter[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileRejusoChastity)) {
 					//PF Column
 					if (($iRowCount==9) and ($iColumnCount==6)) {
@@ -1831,7 +1807,6 @@
 						$cellValue = $decodedJSONFileRejusoChastity[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileXRay)) {
 					//PF Column
 					if (($iRowCount==3) and ($iColumnCount==6)) {
@@ -1846,7 +1821,6 @@
 						$cellValue = $decodedJSONFileXRay[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileMedicine)) {
 					//PF Column
 					if (($iRowCount==4) and ($iColumnCount==6)) {
@@ -1861,7 +1835,6 @@
 						$cellValue = $decodedJSONFileMedicine[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileNonMedicine)) {
 					//PF Column
 					if (($iRowCount==5) and ($iColumnCount==6)) {
@@ -1876,7 +1849,6 @@
 						$cellValue = $decodedJSONFileNonMedicine[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileLab)) {
 					//PF Column
 					if (($iRowCount==6) and ($iColumnCount==6)) {
@@ -1891,7 +1863,6 @@
 						$cellValue = $decodedJSONFileLab[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileSSS)) {
 					//PF Column
 					if (($iRowCount==7) and ($iColumnCount==6)) {
@@ -1906,7 +1877,6 @@
 						$cellValue = $decodedJSONFileSSS[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileMinor)) {
 					//PF Column
 					if (($iRowCount==7) and ($iColumnCount==6)) {
@@ -1921,7 +1891,6 @@
 						$cellValue = $decodedJSONFileMinor[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFilePhotocopy)) {
 					//PF Column
 					if (($iRowCount==8) and ($iColumnCount==6)) {
@@ -1936,7 +1905,6 @@
 						$cellValue = $decodedJSONFilePhotocopy[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileGlucosamine)) {
 					//PF Column
 					if (($iRowCount==9) and ($iColumnCount==6)) {
@@ -1951,7 +1919,6 @@
 						$cellValue = $decodedJSONFileGlucosamine[0]->iNetFeeTotalCount;
 					}
 				}
-
 				if (isset($decodedJSONFileVAT)) {
 					//PF Column
 					if (($iRowCount==10) and ($iColumnCount==6)) {
