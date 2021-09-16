@@ -1557,7 +1557,8 @@
 		file_put_contents($file, $outputReportMinorset, LOCK_EX);				
 */
 		$decodedJSONFile = json_decode($outputReportMinorset);					
-		$decodedJSONFileArray[16][1] = $decodedJSONFile[0];
+		//edited by Mike, 20210916
+		$decodedJSONFileArray[6][1] = $decodedJSONFile[0];
 
 //removed by Mike, 20210915					
 //		echo $decodedJSONFileArray[16][1]->iFeeTotalCount;	
