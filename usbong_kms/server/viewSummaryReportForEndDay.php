@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20210915
+  @date updated: 20210916
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -133,7 +133,7 @@
     /**/
     </style>
     <title>
-      Summary Report for the Noon Day (MOSC)
+      Summary Report for the End Day (MOSC)
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -144,11 +144,13 @@
   <body>
 <?php
 	date_default_timezone_set('Asia/Hong_Kong');
-	
+
+/* //removed by Mike, 20210916	
 	//edited by Mike, 20200726
 	//$sDateToday = (new DateTime())->format('Y-m-d');
 	$sDateToday = Date('Y-m-d');
-	//$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
+//	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
+*/
 
 	//note: added:additional backslash to be "\\" 
 	//Windows 7 Service Pack 1 32-bit Operating System machine
@@ -224,10 +226,12 @@
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
 	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 
+/* //edited by Mike, 20210916; note: use to set date
 	//added by Mike, 20200902
 	//$sDateToday = date("Y-m-d");
-//	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
-//	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
+	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
+	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
+*/	
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")));
 	
