@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210804
+  @date updated: 20210917
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -1723,7 +1723,7 @@
 						</td>
 
 						<td class="columnName">				
-							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>" target='_blank'>
 								<div class="itemName">
 				<?php
 								echo $value['item_name'];
@@ -2034,7 +2034,7 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 						</td>
 
 						<td class="columnName">				
-							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+							<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>" target='_blank'>
 								<div class="itemName">
 				<?php
 								echo $value['item_name'];
@@ -2350,7 +2350,7 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 						</td>
 
 						<td class="columnName">				
-							<a href='<?php echo site_url('browse/viewItemSnack/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
+							<a href='<?php echo site_url('browse/viewItemSnack/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>" target='_blank'>
 								<div class="itemName">
 				<?php
 								echo $value['item_name'];
