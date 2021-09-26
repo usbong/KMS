@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20210926
+' @date updated: 20210927
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -540,8 +540,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
+	
 	<table class="receiptDetailsTable">
 	  <tr>
+		<td>
+			<h3>TRANSACTION DATE: <?php echo date("Y-m-d",strtotime($transactionDate));?></h3>
+		</td>
 		<td class="receiptDetailsColumn">
 			<h2>
 				Receipt Details
@@ -598,7 +602,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>	
 -->
 
-<!-- added by Mike, 20210926 -->
+	<!-- added by Mike, 20210926; edited by Mike, 20210927 -->
+<!--	
+	<h3>TRANSACTION DATE: <?php echo date("Y-m-d",strtotime($transactionDate));?></h3>
+	<br/>
+-->
 <?php
 	if ($isMultiAdded) {
 ?>		
@@ -655,13 +663,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>			  
 			</table>
 		</div>
+		<br/>
+		<br/>
+		<br/>
+		
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>
+				  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMOSCParam">
+				</td>
+			  </tr>			  
+			  <tr>
+				<td>
+				  <br/>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+<b><span>Official Receipt Number <?php echo "(".$medicalDoctorList[$medicalDoctorId]['medical_doctor_name'].")";?><span class="asterisk">*</span></span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberMedicalDoctorParam">
+				</td>
+			  </tr>			  
+			  <tr>
+				<td>
+				  <br/>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+					<b><span>Official Receipt Number (PAS) <span class="asterisk">*</span></span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberPASParam">
+				</td>				  
+			  </tr>
+			</table>
+		</div>	
 <?php
 	}
+	else {
 ?>
-		<br/>
-		<br/>
-		<br/>
-
 		<div>
 			<table width="100%">
 			  <tr>
@@ -735,6 +788,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  ?>
 			</table>
 		</div>	
+<?php
+	//added by Mike, 20210927
+	}
+?>
+		
 <!--
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
 -->
