@@ -3893,7 +3893,8 @@ class Browse extends CI_Controller { //MY_Controller {
 			//note: use with multiple transactions with varying types, 
 			//e.g. snack, non-med, med, added as paid on the same date; 
 
-			//TO-DO: -add: this
+			//added by Mike, 20210926
+			$this->Browse_Model->addTransactionPaidReceiptOfMultiAddedTransactions($data);
 		}
 		else {
 			if (strpos($data['transactionDate'], date('m/d/Y'))!==false) {
