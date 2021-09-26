@@ -1460,7 +1460,9 @@ class Browse_Model extends CI_Model
 			}
 			
 			$notes = $notes."PAID; ";	
-			$notes = $notes."TRANSACTION ".date('m/d/Y');
+			//edited by Mike, 20210927
+//			$notes = $notes."TRANSACTION ".date('m/d/Y');
+			$notes = $notes."TRANSACTION ".$param['transactionDate'];
 		}
 
 
