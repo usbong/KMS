@@ -3646,7 +3646,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	//added by Mike, 20210830
 	//TO-DO: -update: this
 	//-add: execute this function when in Acknowledgment Form, link clicked
-	public function setOfficialReceiptTransactionServiceAndItemPurchase($medicalDoctorId, $patientId, $transactionId)
+	public function setOfficialReceiptTransactionServiceAndItemPurchase($medicalDoctorId, $patientId, $transactionId, $isMultiAdded)
 	{
 		$data['medicalDoctorId'] = $medicalDoctorId;
 		$data['patientId'] = $patientId;
@@ -3693,6 +3693,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->session->unset_userdata('noVAT');
 		$data['noVAT'] = False;		
 		//-----
+
+		//added by Mike, 20210926
+		$data['isMultiAdded'] = false; //default
+		$data['isMultiAdded'] = $isMultiAdded;
 
 		$this->load->view('viewPatientPaidReceipt', $data);
 	}		
@@ -3836,6 +3840,22 @@ class Browse extends CI_Controller { //MY_Controller {
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
+		//added by Mike, 20210926
+		$data['isMultiAdded'] = 0;
+
+		if (isset($_POST["isMultiAddedParam"])) {
+			$data['isMultiAdded'] = $_POST["isMultiAddedParam"];
+		}
+
+		if ($data['isMultiAdded']==1) {
+			$data['fee'] = $_POST["PFParam"];
+			$data['x_ray_fee'] = $_POST["XrayFeeParam"];
+			$data['lab_fee'] = $_POST["LabFeeParam"]; 
+			$data['med_fee'] = $_POST["MedFeeParam"];
+			$data['non_med_fee'] = $_POST["NonMedFeeParam"];
+			$data['snack_fee'] = $_POST["SnackFeeParam"]; 
+		}
+
 		//added by Mike, 20210831
 		//TO-DO: -add: if transaction NOT today, add for today, 
 		//but write in notes the actual transaction date
@@ -3868,13 +3888,22 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20210912
 //		$this->Browse_Model->addTransactionPaidReceipt($data);
 
-		if (strpos($data['transactionDate'], date('m/d/Y'))!==false) {
-			$this->Browse_Model->addTransactionPaidReceipt($data);
+		//edited by Mike, 20210926
+		if ($data['isMultiAdded']) {
+			//note: use with multiple transactions with varying types, 
+			//e.g. snack, non-med, med, added as paid on the same date; 
+
+			//TO-DO: -add: this
 		}
 		else {
-			$this->Browse_Model->addTransactionPaidReceiptForPreviousDay($data);
+			if (strpos($data['transactionDate'], date('m/d/Y'))!==false) {
+				$this->Browse_Model->addTransactionPaidReceipt($data);
+			}
+			else {
+				$this->Browse_Model->addTransactionPaidReceiptForPreviousDay($data);
+			}
 		}
-
+		
 /*		//added by Mike, 20210904; //TO-DO: -reverify: this
 		//note: multiple transactions with varying types, e.g. snack, non-med, med,
 		//added as paid on the same date; 
