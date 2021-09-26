@@ -1432,6 +1432,112 @@ class Browse_Model extends CI_Model
 		}
 	}	
 	
+	//added by Mike, 20210926
+	public function addTransactionPaidReceiptOfMultiAddedTransactions($param) 
+	{
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+
+//		echo ">>".$param['transactionId'];
+		
+		$this->db->select('patient_id, medical_doctor_id, notes');
+		$this->db->where('transaction_id',$param['transactionId']);
+		$query = $this->db->get('transaction');
+		$rowArray = $query->result_array();
+
+		$notes = "";
+		
+		if (count($rowArray)!=0) {	
+//			echo ">>notes: ".$rowArray[0]['notes'];
+		
+			if (strpos($rowArray[0]['notes'], "SC;")!==false) {
+				$notes = $notes."SC; ";
+			}
+			else if (strpos($rowArray[0]['notes'], "PWD;")!==false) {
+				$notes = $notes."PWD; ";
+			}
+			
+			$notes = $notes."PAID; ";	
+			$notes = $notes."TRANSACTION ".date('m/d/Y');
+		}
+
+
+		$transactionData = array(
+			'transaction_date' => date('m/d/Y'),
+			'patient_id' => $rowArray[0]['patient_id'],
+			'fee' => $param['fee'],
+			'x_ray_fee' => $param['x_ray_fee'],
+			'lab_fee' => $param['lab_fee'],
+			'med_fee' => $param['med_fee'],
+			'pas_fee' => $param['non_med_fee'],
+			'snack_fee' => $param['snack_fee'],
+			'medical_doctor_id' => $rowArray[0]['medical_doctor_id'],
+			'notes' => $notes				
+		);				
+
+		$this->db->insert('transaction', $transactionData);
+		$transactionId = $this->db->insert_id();
+	
+		//we automatically set the transaction with all the fees to be MOSC Receipt
+		//TO-DO: -update: this to verify if there is x_ray_fee and lab_fee
+		if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
+			$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
+
+			$data = array(
+				'receipt_type_id' => $param['receiptTypeId'],
+				'transaction_id' => $transactionId,
+				'receipt_number' => $param['receiptNumberMOSC']
+			);				
+
+			//edited by Mike, 20200710
+			//$this->db->insert('receipt', $data);
+			array_push($outputArray, $data);
+
+			//TO-DO: -reverify: this
+			//added by Mike, 20210302
+			//note: We use another receipt for PAS fees,
+			//i.e. from non-med items,
+			//added by Mike, 20201012; edited by Mike, 20210926
+//			if ($rowArray[0]['pas_fee']!=0) { 
+			if ($param['non_med_fee']!=0) {
+				//NON-MEDICINE
+				$param['receiptNumber'] = $param['receiptNumberPAS'];
+				
+				if ($param['receiptNumber']!=0) {
+					$param['receiptTypeId'] = 2;
+
+					$data = array(
+						'receipt_type_id' => $param['receiptTypeId'],
+						'transaction_id' => $transactionId,
+						'receipt_number' => $param['receiptNumberPAS']
+					);				
+
+					//edited by Mike, 20200710
+					//$this->db->insert('receipt', $data);
+					array_push($outputArray, $data);
+				}
+			}					
+		}
+		else { //not SYSON, PEDRO //if ($data['medicalDoctorId']!=1) { //not SYSON, PEDRO
+			$param['receiptTypeId'] = 3;
+
+			$data = array(
+				'receipt_type_id' => $param['receiptTypeId'],
+				'transaction_id' => $transactionId,
+				'receipt_number' => $param['receiptNumberMedicalDoctor']
+			);				
+
+			//edited by Mike, 20200710
+			//$this->db->insert('receipt', $data);
+			array_push($outputArray, $data);
+		}													
+		
+		foreach ($outputArray as $dataValue) {
+			$this->db->insert('receipt', $dataValue);
+		}		
+	}	
 
 	//added by Mike, 20200508; edited by Mike, 20200710
 	//add: to receipt each transaction 
