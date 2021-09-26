@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20210912
+' @date updated: 20210926
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -597,6 +597,71 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</table>
 		</div>	
 -->
+
+<!-- added by Mike, 20210926 -->
+<?php
+	if ($isMultiAdded) {
+?>		
+	<input type="hidden" class="receipt-input" placeholder="" name="isMultiAddedParam" value="<?php echo $isMultiAdded;?> "required>
+
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>				
+				  <b><span>Professional Fee (PF)</span></b>
+				</td>
+				<td>				
+				  <b><span>X-ray Fee</span></b>
+				</td>
+				<td>				
+				  <b><span>Lab Fee</span></b>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="PFParam">
+				</td>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="XrayFeeParam">
+				</td>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="LabFeeParam">
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <br/>
+				  <b><span>Med Fee</span></b>
+				</td>
+				<td>				
+				  <br/>
+				  <b><span>Non-med Fee</span></b>
+				</td>
+				<td>		
+				  <br/>				
+				  <b><span>Snack Fee</span></b>
+				</td>
+			  </tr>
+			  <tr>				
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="MedFeeParam">
+				</td>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="NonMedFeeParam">
+				</td>
+				<td>
+				  <input type="tel" class="receipt-input" placeholder="" name="SnackFeeParam">
+				</td>
+			  </tr>			  
+			</table>
+		</div>
+<?php
+	}
+?>
+		<br/>
+		<br/>
+		<br/>
+
 		<div>
 			<table width="100%">
 			  <tr>

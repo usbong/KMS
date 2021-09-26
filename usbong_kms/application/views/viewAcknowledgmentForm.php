@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210911
+  @date updated: 20210926
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -267,9 +267,13 @@
 <?php //edited by Mike, 20210911	
 		if (isset($resultPaid[0])) {
 ?>
-			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id']); ?>'>
+			<!-- edited by Mike, 20210926 -->
+			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/0'); ?>'>
 				<b>ACKNOWLEDGMENT RECEIPT</b>
 			</a>
+			<b>[<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/1'); ?>'>
+				+
+			</a>]</b>
 <?php 	}
 		else {
 			//example: include external .js file
