@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210917
+  @date updated: 20210927
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -36,7 +36,7 @@
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
-							width: 860px; /*860px;*/ /* 802px;*//* 670px */
+							width: 900px; /*860px;*/ /* 802px;*//* 670px */
 							
 							/* //TO-DO: -reverify: this if necessary */
 							/* use zoom 67% (prev) scale*/
@@ -152,6 +152,13 @@
 							border: 1px dotted #ab9c7d;		
 							text-align: center;							
 						}						
+
+						td.columnTransactionDate
+						{
+							width: 12%;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;							
+						}		
 
 						/* added by Mike, 20210407 */
 						td.columnTotalFee
@@ -298,11 +305,6 @@
 							display: inline-block;
 							text-align: right;
 						}						
-
-						div.transactionDate
-						{
-							width: 1%;							
-						}
 
 						div.checkBox
 						{
@@ -1457,18 +1459,23 @@
 	?>				
 	
 				  <tr class="row">
-					<td class ="column">				
+					<td class ="columnTransactionDate">				
+<!--
 						<div class="transactionDate">
+-->						
 			<?php
 							//edited by Mike, 20210720
 //							echo str_replace(" ","T",$value['added_datetime_stamp']);
 
-					echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
-
-							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+						echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+							//edited by Mike, 20210927
+//							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+							str_replace(" ","<br/>T",$value['added_datetime_stamp'])."</b>
 						</a>";
 				?>
+<!--
 						</div>								
+-->						
 					</td>
 					<td class ="columnName">				
 						<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
