@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
+' Copyright 2020~2021 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -7,9 +7,10 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @author: Michael Syson
+' @company: USBONG
+' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210624
+' @date updated: 20210928
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -579,6 +580,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 	<table class="receiptDetailsTable">
 	  <tr>
+		<td>
+			<h3>TRANSACTION DATE: <?php echo date("Y-m-d",strtotime($transactionDate));?></h3>
+		</td>
+	  
 		<td class="receiptDetailsColumn">
 			<h2>
 				Receipt Details
@@ -592,6 +597,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--  //edited by Mike, 20200607
 	<form method="post" action="<?php echo site_url('browse/confirmItemMedicinePaidReceipt/1')?>">
 -->
+
+<?php
+	//edited by Mike, 20210928
+	//snack item NOT yet added in Official Receipt
+	$isSnackItem=true;
+
+	if (isset($outputTransaction)) {
+		if (($outputTransaction['med_fee']!=0) or 
+			($outputTransaction['x_ray_fee']!=0) or
+			($outputTransaction['lab_fee']!=0) or
+			($outputTransaction['pas_fee']!=0)) {
+			$isSnackItem=false;
+		}
+	}
+	
+	if ($isSnackItem) {
+		echo "<h4><span style='color:red'>SNACK ITEM NOT YET ADDED IN OFFICIAL RECEIPT</span></h4>";
+		echo "<br/>";
+	}
+	else {
+?>	
 	<!-- 3 = snack -->
 	<form method="post" action="<?php echo site_url('browse/confirmItemPaidReceipt/'.$medicalDoctorId.'/3')?>">
 <!--
@@ -666,6 +692,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//added by Mike, 20200608
 				//we do not show if purchased items are non-medicine and patient is not SYSON, PEDRO's
 //				if ($patientId!=0){
+					
 					if (isset($outputTransaction)) {						
 						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
 			?>
@@ -740,6 +767,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
 
 		<br />
+				
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
 			Submit
@@ -748,6 +776,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 
 <?php
+	//added by Mike, 20210928
+	}
+
+
 //			echo "<br/>";
 
 			echo '<h3>Item Purchased History</h3>';

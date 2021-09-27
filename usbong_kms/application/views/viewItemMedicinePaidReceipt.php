@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
+' Copyright 2020~2021 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -7,9 +7,10 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @author: Michael Syson
+' @company: USBONG
+' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210624
+' @date updated: 20210928
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -577,6 +578,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 	<table class="receiptDetailsTable">
 	  <tr>
+		<td>
+			<h3>TRANSACTION DATE: <?php echo date("Y-m-d",strtotime($transactionDate));?></h3>
+		</td>
+	  
 		<td class="receiptDetailsColumn">
 			<h2>
 				Receipt Details
