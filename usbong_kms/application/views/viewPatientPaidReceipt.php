@@ -608,7 +608,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 -->
 <?php
-	if ($isMultiAdded) {
+	if (isset($isMultiAdded) and ($isMultiAdded)) {
 ?>		
 	<input type="hidden" class="receipt-input" placeholder="" name="isMultiAddedParam" value="<?php echo $isMultiAdded;?> "required>
 
