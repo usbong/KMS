@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210927
+  @date updated: 20210929
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -193,6 +193,13 @@
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right;
+						}						
+
+						td.columnNumberQuantityTotal
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: right;
+							color: #ff8000;	
 						}						
 
 						td.columnNotes
@@ -1636,7 +1643,10 @@
 				  $sCurrentTransactionDate="";
 				  
 				  //added by Mike, 20210412
-				  $dTotalFee = 0;					  
+				  $dTotalFee = 0;	
+				  
+				  //added by Mike, 20210929
+				  $iTotalQuantity = 0;				
 				  				  
 				  //added by Mike, 20210407
 				  $iTotalResultPaidMedItemCount = count($resultPaidMedItem);				  
@@ -1695,7 +1705,11 @@
 						</td>						
 						<td class="column">				
 						</td>
-						<td class="column">				
+						<td class="columnNumberQuantityTotal">		
+							<?php
+								//added by Mike, 20210929
+								echo "<b>".$iTotalQuantity."</b>";
+							?>
 						</td>
 						<td class="column">				
 						</td>
@@ -1715,6 +1729,10 @@
 
 					  //added by Mike, 20210407
 					  $dTotalFee = 0;					  
+
+					  //added by Mike, 20210929
+					  $iTotalQuantity = 0;				
+
 
 				}
 					
@@ -1784,7 +1802,8 @@
 
 								echo $iQuantity;
 								
-//								$iTotalQuantity = $iTotalQuantity + $iQuantity;
+								//added by Mike, 20210929
+								$iTotalQuantity = $iTotalQuantity + $iQuantity;
 							?>
 								</div>
 						</td>
@@ -1835,7 +1854,11 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 						</td>						
 						<td class="column">				
 						</td>
-						<td class="column">				
+						<td class="columnNumberQuantityTotal">				
+							<?php
+								//added by Mike, 20210929
+								echo "<b>".$iTotalQuantity."</b>";
+							?>
 						</td>
 						<td class="column">				
 						</td>
@@ -1954,6 +1977,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 				  //added by Mike, 20210412
 				  $dTotalFee = 0;					  
 
+				  //added by Mike, 20210929
+				  $iTotalQuantity = 0;				
+
 
 				  foreach ($resultPaidNonMedItem as $value) {
 /* //removed by Mike, 20210314					  
@@ -2007,7 +2033,11 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 						</td>						
 						<td class="column">				
 						</td>
-						<td class="column">				
+						<td class="columnNumberQuantityTotal">				
+							<?php
+								//added by Mike, 20210929
+								echo "<b>".$iTotalQuantity."</b>";
+							?>
 						</td>
 						<td class="column">				
 						</td>
@@ -2028,6 +2058,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 
 					  //added by Mike, 20210407
 					  $dTotalFee = 0;					  
+
+					  //added by Mike, 20210929
+					  $iTotalQuantity = 0;
 					}
 					  
 					//removed by Mike, 20210407
@@ -2095,7 +2128,8 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 
 								echo $iQuantity;
 								
-//								$iTotalQuantity = $iTotalQuantity + $iQuantity;
+								//added by Mike, 20210929
+								$iTotalQuantity = $iTotalQuantity + $iQuantity;
 							?>
 								</div>
 						</td>
@@ -2146,7 +2180,11 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 						</td>						
 						<td class="column">				
 						</td>
-						<td class="column">				
+						<td class="columnNumberQuantityTotal">				
+							<?php
+								//added by Mike, 20210929
+								echo "<b>".$iTotalQuantity."</b>";
+							?>
 						</td>
 						<td class="column">				
 						</td>
@@ -2264,6 +2302,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 				  
 				  //added by Mike, 20210412
 				  $dTotalFee = 0;					  
+
+				  //added by Mike, 20210929
+				  $iTotalQuantity = 0;
 				  				  
 				  //added by Mike, 20210407
 				  $iTotalResultPaidSnackItemCount = count($resultPaidSnackItem);				  
@@ -2322,7 +2363,11 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 						</td>						
 						<td class="column">				
 						</td>
-						<td class="column">				
+						<td class="columnNumberQuantityTotal">				
+							<?php
+								//added by Mike, 20210929
+								echo "<b>".$iTotalQuantity."</b>";
+							?>
 						</td>
 						<td class="column">				
 						</td>
@@ -2343,6 +2388,8 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 					  //added by Mike, 20210407
 					  $dTotalFee = 0;					  
 
+					  //added by Mike, 20210929
+					  $iTotalQuantity = 0;
 				}
 					
 					//removed by Mike, 20210407
@@ -2411,7 +2458,8 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 
 								echo $iQuantity;
 								
-//								$iTotalQuantity = $iTotalQuantity + $iQuantity;
+								//added by Mike, 20210929
+								$iTotalQuantity = $iTotalQuantity + $iQuantity;
 							?>
 								</div>
 						</td>
@@ -2462,7 +2510,11 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 						</td>						
 						<td class="column">				
 						</td>
-						<td class="column">				
+						<td class="columnNumberQuantityTotal">				
+							<?php
+								//added by Mike, 20210929
+								echo "<b>".$iTotalQuantity."</b>";
+							?>
 						</td>
 						<td class="column">				
 						</td>
