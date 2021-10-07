@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20210928
+' @date updated: 20211007
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -662,8 +662,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</td>
 			  </tr>			  
 			</table>
+			
+<!-- added by Mike, 20211007; TO-DO: -update: functions in CONTROLLERS and MODELS folders -->							  				  
+			<table>
+			  <tr>
+				<td>				
+				  <br/>
+				  <b><span>Notes</span></b>
+				</td>
+			  </tr>
+			  <tr>				
+				<td>
+				  <input type="text" size="50" class="receipt-input" placeholder="" name="notesParam">
+				</td>
+			  </tr>			  
+			</table>
 		</div>
-		<br/>
+		
 		<br/>
 		<br/>
 		
