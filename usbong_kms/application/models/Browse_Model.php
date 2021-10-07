@@ -1463,6 +1463,13 @@ class Browse_Model extends CI_Model
 			//edited by Mike, 20210927
 //			$notes = $notes."TRANSACTION ".date('m/d/Y');
 			$notes = $notes."TRANSACTION ".$param['transactionDate'];
+			
+			//added by Mike, 20211008
+			//TO-DO: -reverify: this
+			//multi-added for multiple transaction dates
+			if (!empty($param['addedNote'])) {
+				$notes = trim($notes)."; added note: ".$param['addedNote'];
+			}
 		}
 
 
