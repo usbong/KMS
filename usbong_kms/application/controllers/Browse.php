@@ -3854,6 +3854,7 @@ class Browse extends CI_Controller { //MY_Controller {
 			$data['med_fee'] = $_POST["MedFeeParam"];
 			$data['non_med_fee'] = $_POST["NonMedFeeParam"];
 			$data['snack_fee'] = $_POST["SnackFeeParam"]; 
+			$data['addedNote'] = $_POST["AddedNoteParam"]; //added by Mike, 20211008
 		}
 
 		//added by Mike, 20210831
