@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20211008
+' @date updated: 20211010
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -699,6 +699,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  <br/>
 				</td>
 			  </tr>
+			  <!-- edited by Mike, 20211010 -->
+<?php 
+//if DR. PEDRO, no need to add due to uses MOSC Official Receipt
+if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")) {
+}
+else {	
+?>
 			  <tr>
 				<td>
 <b><span>Official Receipt Number <?php echo "(".$medicalDoctorList[$medicalDoctorId]['medical_doctor_name'].")";?><span class="asterisk">*</span></span></b>
@@ -714,6 +721,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  <br/>
 				</td>
 			  </tr>
+<?php
+	}
+?>
 			  <tr>
 				<td>
 					<b><span>Official Receipt Number (PAS) <span class="asterisk">*</span></span></b>
