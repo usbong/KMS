@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20210702
+' @date updated: 20211013
 ' @website address: http://www.usbong.ph
 '
 ' Reference:
@@ -28,7 +28,14 @@ var isFromServerFolder = system.args[2];
 //added by Mike, 20210702
 var isFromKasangkapanFolder = system.args[2];
 
-var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
+//added by Mike, 20211013
+//var myBasePath='http://localhost/usbong_kms/';
+var myBasePath='http://192.168.1.110/usbong_kms/';
+
+//edited by Mike, 20211013
+//var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
+var webAddress = myBasePath+'index.php/REPORT/'; //default
+
 var fileExtension = '';
 
 //added by Mike, 20210225
@@ -45,7 +52,9 @@ if (iPostPositionInFilename !== -1) {
 	filename=fileName.substring(0,iPostPositionInFilename);
 	data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
 
-	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
+	//edited by Mike, 20211013
+//	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
+	webAddress = myBasePath+'index.php/browse/';
 }	
 
 //added by Mike, 20201017
@@ -57,13 +66,19 @@ var noonFolderName = 'noonReport/';
 var dateToday = new Date(); 
 
 if (isFromServerFolder=="-s") {
-	webAddress = 'http://localhost/usbong_kms/server/';
+	//edited by Mike, 20211013
+//	webAddress = 'http://localhost/usbong_kms/server/';
+	webAddress = myBasePath+'server/';
+
 	fileExtension = '.php';
 }
 
 //added by Mike, 20210702
 if (isFromKasangkapanFolder=="-k") {
-	webAddress = 'http://localhost/usbong_kms/kasangkapan/output/';
+	//edited by Mike, 20211013
+//	webAddress = 'http://localhost/usbong_kms/kasangkapan/output/';
+	webAddress = myBasePath+'kasangkapan/output/';
+
 	fileExtension = '.html';
 }
 
