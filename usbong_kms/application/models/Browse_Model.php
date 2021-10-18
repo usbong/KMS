@@ -1491,7 +1491,9 @@ class Browse_Model extends CI_Model
 	
 		//we automatically set the transaction with all the fees to be MOSC Receipt
 		//TO-DO: -update: this to verify if there is x_ray_fee and lab_fee
-		if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
+		//edited by Mike, 20211018
+//		if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
+		if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
 			$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
 
 			$data = array(
