@@ -1,12 +1,12 @@
 <?php
 /*
-  Copyright 2020~2021 Usbong Social Systems, Inc.
+  Copyright 2020 Usbong Social Systems, Inc.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
   @author: Michael Syson
   @date created: 20200521
-  @date updated: 20210323
+  @date updated: 20210104
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -42,10 +42,6 @@
 	//added by Mike, 20200524
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
 	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
-	
-	//added by Mike, 20210323
-	//With Linux Machine, if $fileBasePath does not exist, Computer writes in the same folder where getSalesReportsForTheDay.php is located
-	//the file name includes the value of $fileBasePath
 
 	//added by Mike, 20200902
 	//$sDateToday = date("Y-m-d");
@@ -404,10 +400,7 @@
 	//edited by Mike, 20201120
 //	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET'"))
 //	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET' and t1.item_id!='0'"))
-	
-//edited by Mike, 20210222
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select distinct t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET'"))
-	if ($selectedNonMedicineResultArray = $mysqli->query("select distinct t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET' group by t2.transaction_id"))
+	if ($selectedNonMedicineResultArray = $mysqli->query("select distinct t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -430,9 +423,7 @@
 			foreach ($selectedNonMedicineResultArray as $value) {				
 				//added by Mike, 20200708
 				//identify non-medicine item transaction if with VAT
-				//edited by Mike, 20210222
-//				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
-				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2'"))
+				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
 				{
 					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
 /*						//edited by Mike, 20200916						
@@ -538,9 +529,7 @@
 	//edited by Mike, 20201026
 	//note: in certain cases, pressing delete button deletes transaction with LAB fee and transaction quantity zero
 //	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	//edited by Mike, 20210129
-//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -698,7 +687,24 @@
 /*
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 */
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+			//edited by Mike, 20211022
+			//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+			//TO-DO: -reverify: this; computation error with Dr. Honesto 
+			//NOT yet successfully replicated in development machine
+			//TO-DO: -reverify: Report_Model->getPayslipForTheDayWeb(...)
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id order by transaction_id ASC"))
+				
+/*		//note; added by Mike, 20211022
+		$this->db->not_like('t2.notes',"MED");
+		$this->db->not_like('t2.notes',"ONLY");
+		
+		//added by Mike, 20201106
+		$this->db->not_like('t2.notes',"SSS");
+		$this->db->not_like('t2.notes',"SNACK ONLY");
+
+		$this->db->order_by('t2.transaction_id', 'ASC');
+*/
+			
 			{
 				echo "--<br />";
 
@@ -804,7 +810,7 @@
 
 												//note: if last transaction in database
 												//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);												
-												if ($iTransactionId>=$iTransactionIdMax) {
+												if ($iTransactionId>=$iTransactionIdMax) {							
 													break;
 												}						
 												
@@ -830,15 +836,8 @@
 									while ($iTransactionQuantity <= 0);								
 								//--------------------------------------------------
 								
-								//added by Mike, 20201216; edited by Mike, 20210120
-								//$iTransactionId = $iTransactionId -1;
-								if ($iTransactionId>=$iTransactionIdMax) {
-									$iTransactionId = $iTransactionIdMax;
-								}
-								else {
-									$iTransactionId = $iTransactionId -1;
-								}									
-
+								//added by Mike, 20201216
+								$iTransactionId = $iTransactionId -1;
 
 								//edited by Mike, 20201127
 								//if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
@@ -923,24 +922,10 @@
 
 							//TO-DO: -reverify: this
 							if (strpos($value['notes'],"DEXA")!==false) {
-								//edited by Mike, 20210122
-/*
 								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 								
 								//added by Mike, 20200531
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-*/
-								//max dexa: 2
-								if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
-									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
-									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
-								}
-								else {
-									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
-									
-									//added by Mike, 20200531
-									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-								}
 							}
 							
 							if (strpos($value['notes'],"MINORSET")!==false) {
@@ -1073,39 +1058,10 @@
 						//TO-DO: -reverify: if +DEXA
 						//added by Mike, 20200829
 						if (strpos($value['notes'],"DEXA")!==false) {
-							//edited by Mike, 20210122
-/*
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
 							//added by Mike, 20200531
 							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-*/
-
-							//max dexa: 2
-/* //edited by Mike, 20210313							
-							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
-							}
-							else {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
-
-								//added by Mike, 20200531
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-							}
-*/
-							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
-
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
-							}
-							else {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
-								
-								//added by Mike, 20200531
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-							}							
-
 						}
 						else {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
@@ -1114,25 +1070,10 @@
 					else {
 						//edited by Mike, 20200829
 						if (strpos($value['notes'],"DEXA")!==false) {
-							//edited by Mike, 20210122
-/*
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
 							//added by Mike, 20200531
 							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-*/
-							//max dexa: 2
-							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
-							}
-							else {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
-								
-								//added by Mike, 20200531
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-							}
-
 						}
 						else if (strpos($value['notes'],"NC")!==false) {
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
@@ -1309,64 +1250,48 @@
 				//identify non-medicine item transaction if with VAT
 				//edited by Mike, 20201120
 				//TO-DO: -update: this due to incorret quantity total count
-//edited by Mike, 20210222
-//				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
-				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2'"))
+				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
 //				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' group by t1.receipt_id"))
 				{
-/*
-					echo $value['item_name'];
+/*					echo $value['item_name'];
 					echo "dito".$value['transaction_id']."<br/>";
 */
 					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {						
 						//edited by Mike, 20201223
 						if (strpos($value['notes'],"DISCOUNTED")!==false) {
-							//added by Mike, 20210301							
-							$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
-							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];							
 						}
 						else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
 						}
 						else {
-
-//added by Mike, 20210116
-//note: if PAS OR# not yet added to KMS after transaction, add by hand 12% to all non-med items 
-//ECHO $iFeeTotalCount."<BR/>";
-
 							$iFeeTotalCount = $iFeeTotalCount + ($value['fee'] - ($value['fee']/(1 + 0.12)));
 							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
-
-//added by Mike, 20210116
-//ECHO $iFeeTotalCount."<BR/>";
 
 /*	//removed by Mike, 20210104
 						echo $value['item_name'];
 						echo "dito".$value['transaction_id']."<br/>";
 */
-
 							//Note: fee_quantity can be 6, albeit in cash register, it is 1
 							//This is due to several non-med items are combined into 1 transaction in Cash Register
 							//TO-DO: -update: this
 	//echo "fee_quantity: ".$value['fee_quantity'];
+
+							//added by Mike, 20200812
+							//Reference: https://www.php.net/number_format;
+							//last accessed: 20200812
+							//Rounding Rules
+							//input: 60.00000000000006
+							//output: 60.00
+							//input: 60.005
+							//output: 60.01
+							//input: 60.004
+							//output: 60.00
+							$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
 							
 	/*						//removed by Mike, 20200708
 							$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
 							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
 */
 						}
-						
-						//added by Mike, 20200812; added by Mike, 20210301
-						//Reference: https://www.php.net/number_format;
-						//last accessed: 20200812
-						//Rounding Rules
-						//input: 60.00000000000006
-						//output: 60.00
-						//input: 60.005
-						//output: 60.01
-						//input: 60.004
-						//output: 60.00
-						$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
-						
 					}
 					//removed by Mike, 20200708
 /*					else {
