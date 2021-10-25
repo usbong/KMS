@@ -1506,6 +1506,7 @@ class Browse_Model extends CI_Model
 			//$this->db->insert('receipt', $data);
 			array_push($outputArray, $data);
 
+/* //removed by Mike, 20211025
 			//TO-DO: -reverify: this
 			//added by Mike, 20210302
 			//note: We use another receipt for PAS fees,
@@ -1529,7 +1530,8 @@ class Browse_Model extends CI_Model
 					//$this->db->insert('receipt', $data);
 					array_push($outputArray, $data);
 				}
-			}					
+			}
+*/			
 		}
 		else { //not SYSON, PEDRO //if ($data['medicalDoctorId']!=1) { //not SYSON, PEDRO
 			$param['receiptTypeId'] = 3;
@@ -1543,7 +1545,56 @@ class Browse_Model extends CI_Model
 			//edited by Mike, 20200710
 			//$this->db->insert('receipt', $data);
 			array_push($outputArray, $data);
+			
+			
+			//added by Mike, 20211025
+			//execute this if NOT Dr. PEDRO
+//			if ($param['med_fee']!=0) {
+			//note: snack_fee NOT yet added in Official Receipts
+			if (($param['med_fee']!=0) or ($param['x_ray_fee']!=0) or ($param['lab_fee']!=0)) {				
+				$param['receiptNumber'] = $param['receiptNumberMOSC'];
+				
+				if ($param['receiptNumber']!=0) {
+					$param['receiptTypeId'] = 1;
+
+					$data = array(
+						'receipt_type_id' => $param['receiptTypeId'],
+						'transaction_id' => $transactionId,
+						'receipt_number' => $param['receiptNumberMOSC']
+					);				
+
+					//edited by Mike, 20200710
+					//$this->db->insert('receipt', $data);
+					array_push($outputArray, $data);
+				}
+			}			
 		}													
+
+		//added by Mike, 20211025
+		//note: We use another receipt for PAS fees,
+		//i.e. from non-med items,
+		//added by Mike, 20201012; edited by Mike, 20210926
+//			if ($rowArray[0]['pas_fee']!=0) { 
+		if ($param['non_med_fee']!=0) {
+			//NON-MEDICINE
+			$param['receiptNumber'] = $param['receiptNumberPAS'];
+			
+			if ($param['receiptNumber']!=0) {
+				$param['receiptTypeId'] = 2;
+
+				$data = array(
+					'receipt_type_id' => $param['receiptTypeId'],
+					'transaction_id' => $transactionId,
+					'receipt_number' => $param['receiptNumberPAS']
+				);				
+
+				//edited by Mike, 20200710
+				//$this->db->insert('receipt', $data);
+				array_push($outputArray, $data);
+			}
+		}
+
+
 		
 		foreach ($outputArray as $dataValue) {
 			$this->db->insert('receipt', $dataValue);
