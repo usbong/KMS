@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210926
+  @date updated: 20211027
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -388,6 +388,8 @@
 			</td>
 			<td>
 <?php		
+				//edited by Mike, 20211027
+/*
 				//if (strpos($result[0]['location_address'],"")!==false) {
 				if (empty($result[0]['pwd_senior_id'])) {
 					echo "N/A";
@@ -395,6 +397,24 @@
 				else {
 					echo $result[0]['pwd_senior_id'];
 				}
+*/
+				if (strpos($result[0]['notes'],"SC;")!==false) {
+					echo "SC#";
+					$bIsWithSCPWDCard=true;
+				}
+				else if (strpos($result[0]['notes'],"PWD;")!==false) {
+					echo "PWD#";
+					$bIsWithSCPWDCard=true;
+				}
+				else {
+					if (empty($result[0]['pwd_senior_id'])) {
+						echo "N/A";
+					}
+					else {
+						echo $result[0]['pwd_senior_id'];
+						$bIsWithSCPWDCard=true;
+					}
+				}						
 ?>
 			</td>			
 		</tr>
@@ -414,6 +434,7 @@
 			</td>
 			<td>
 <?php		
+/* //edited by Mike, 20211027
 				//edited by Mike, 20210803
 				if (empty($result[0]['pwd_senior_id'])) {
 //				if ((empty($result[0]['pwd_senior_id']))or ($result[0]['pwd_senior_id']=="")) {
@@ -423,6 +444,22 @@
 //					echo $result[0]['pwd_senior_id'];
 					echo "<br/>__________";
 				}
+*/
+				if (strpos($result[0]['notes'],"SC;")!==false) {
+					echo "<br/>__________";
+				}
+				else if (strpos($result[0]['notes'],"PWD;")!==false) {
+					echo "<br/>__________";
+				}
+				else {
+					if (empty($result[0]['pwd_senior_id'])) {
+						echo "N/A";
+					}
+					else {
+						echo "<br/>__________";
+					}
+				}						
+				
 ?>
 			</td>			
 		</tr>
