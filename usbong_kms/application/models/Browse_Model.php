@@ -311,6 +311,9 @@ class Browse_Model extends CI_Model
 		//			$this->db->where("t1.patient_name LIKE '%".$param['nameParam']."%'");
 					
 					$this->db->where('t1.patient_id', $row['patient_id']);
+
+					//added by Mike, 20211028
+					$this->db->where('t2.medical_doctor_id!=', 0);
 									
 					//added by Mike, 20200427
 					$this->db->where('t1.patient_name !=', "CANCELLED");
@@ -335,7 +338,7 @@ class Browse_Model extends CI_Model
 		
 		//edited by Mike, 20210730
 //		if ($rowArray == null) {	
-		if (!isset($rowArray)) {			
+		if (!isset($rowArray)) {					
 			//added by Mike, 20210726
 			//if exists in patient table
 			//no transaction yet
@@ -382,7 +385,7 @@ class Browse_Model extends CI_Model
 			else {
 				//edited by Mike, 20210726
 				if (isset($row["notes"])) {
-					if ($row["medical_doctor_id"]==0) { //NONE; not patient, "NONE, WALA"
+					if ($row["medical_doctor_id"]==0) { //NONE; not patient, "NONE, WALA"					
 						//edited by Mike, 20210723
 						//continue
 						//edited by Mike, 20210726
@@ -439,7 +442,7 @@ class Browse_Model extends CI_Model
 				}
 */				
 			}
-			else {
+			else {				
 				$patientId = $row["patient_id"];
 				$bIsSamePatientId = false;
 			}
