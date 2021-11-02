@@ -329,7 +329,12 @@ class Browse_Model extends CI_Model
 						
 //					echo "part2: ".$rowArrayPart2[0]['patient_name'];
 					
-					array_push($rowArray, $rowArrayPart2[0]);				
+					//edited by Mike, 20211102
+					//array_push($rowArray, $rowArrayPart2[0]);				
+
+					if (count($rowArrayPart2)>0) {
+						array_push($rowArray, $rowArrayPart2[0]);
+					}					
 				}
 			}			
 		}
