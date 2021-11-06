@@ -10,7 +10,8 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20211010
+' @date updated: 20211106
+' @website address: http://www.usbong.ph
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -742,6 +743,9 @@ else {
 ?>
 		<div>
 			<table width="100%">
+<?php
+			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0)) {
+?>
 			  <tr>
 				<td>
 				  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
@@ -753,6 +757,10 @@ else {
 				</td>
 			  </tr>			  
 			  <?php 
+			  //added by Mike, 20211106
+			}
+			  
+			  
 				//edited by Mike, 20200529
 //			    if (strpos($medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'], "PEDRO")==false) {
 			    if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")==false) {
