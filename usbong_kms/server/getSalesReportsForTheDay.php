@@ -9,8 +9,8 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20211023
-  @website: www.usbong.ph
+  @date updated: 20211108
+  @website address: www.usbong.ph
   
   Input:
   1) Sales reports for the day in the database (DB)
@@ -760,9 +760,8 @@
 
 						if ($value['fee'] !== "0.00") {
 */					
-							//edited by Mike, 20200530
-
-//							echo "patient_id: ".$value['patient_id']." : ";
+							//edited by Mike, 20211108
+//							echo "patient_id: ".$value['patient_id']." <br/>";
 
 
 							$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
