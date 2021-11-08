@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
 ' @date created: 20200306
-' @date updated: 20210624
+' @date updated: 20211108
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -454,7 +454,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							
 								<div class="patientName">
 				<?php
+								//added by Mike, 20211108; removed by Mike, 20211108
+//								echo $value['patient_id']."<br/>";
 //								echo $value['patient_name'];
+
 								echo str_replace("�","Ñ",$value['patient_name']);
 //								echo str_replace("ufffd","Ñ",$value['patient_name']);
 				?>		
