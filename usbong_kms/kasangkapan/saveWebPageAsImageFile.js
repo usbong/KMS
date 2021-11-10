@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20211013
+' @date updated: 20211110
 ' @website address: http://www.usbong.ph
 '
 ' Reference:
@@ -28,14 +28,7 @@ var isFromServerFolder = system.args[2];
 //added by Mike, 20210702
 var isFromKasangkapanFolder = system.args[2];
 
-//added by Mike, 20211013
-//var myBasePath='http://localhost/usbong_kms/';
-var myBasePath='http://192.168.1.110/usbong_kms/';
-
-//edited by Mike, 20211013
-//var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
-var webAddress = myBasePath+'index.php/REPORT/'; //default
-
+var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
 var fileExtension = '';
 
 //added by Mike, 20210225
@@ -52,9 +45,7 @@ if (iPostPositionInFilename !== -1) {
 	filename=fileName.substring(0,iPostPositionInFilename);
 	data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
 
-	//edited by Mike, 20211013
-//	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
-	webAddress = myBasePath+'index.php/browse/';
+	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
 }	
 
 //added by Mike, 20201017
@@ -66,19 +57,13 @@ var noonFolderName = 'noonReport/';
 var dateToday = new Date(); 
 
 if (isFromServerFolder=="-s") {
-	//edited by Mike, 20211013
-//	webAddress = 'http://localhost/usbong_kms/server/';
-	webAddress = myBasePath+'server/';
-
+	webAddress = 'http://localhost/usbong_kms/server/';
 	fileExtension = '.php';
 }
 
 //added by Mike, 20210702
 if (isFromKasangkapanFolder=="-k") {
-	//edited by Mike, 20211013
-//	webAddress = 'http://localhost/usbong_kms/kasangkapan/output/';
-	webAddress = myBasePath+'kasangkapan/output/';
-
+	webAddress = 'http://localhost/usbong_kms/kasangkapan/output/';
 	fileExtension = '.html';
 }
 
@@ -235,8 +220,11 @@ function getDateToISOStringWithTimeStamp() {
 	//added by Mike, 20210316
 	myDateTime.toLocaleString('en-US', { timeZone: 'Asia/Manila' })
 	
-	return myDateTime.getFullYear() +
-		pad(myDateTime.getMonth() + 1) +
+	//edited by Mike, 20211110
+//	console.log("MONTH: " + pad(myDateTime.getMonth() + 1));
+	
+	return myDateTime.getFullYear() + "" +
+		pad(myDateTime.getMonth() + 1) + "" +
 		pad(myDateTime.getDate()) + 'T' +
 		pad(myDateTime.getHours()) +
 		pad(myDateTime.getMinutes());
