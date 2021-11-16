@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20211106
+' @date updated: 20211116
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -744,7 +744,9 @@ else {
 		<div>
 			<table width="100%">
 <?php
-			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0)) {
+			//edited by Mike, 20211116
+//			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0)) {
+			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0) || ($outputTransaction['med_fee']!=0)) {
 ?>
 			  <tr>
 				<td>
