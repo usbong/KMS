@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20211116
+' @date updated: 20211120
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -609,7 +609,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 -->
 <?php
+	//added by Mike, 20211120
+	$bHasOfficialReceipt=false; //reminder: Snack Item has no Official Receipt (OR) yet
+
 	if (isset($isMultiAdded) and ($isMultiAdded)) {
+		$bHasOfficialReceipt=true;	//added by Mike, 20211120
 ?>		
 	<input type="hidden" class="receipt-input" placeholder="" name="isMultiAddedParam" value="<?php echo $isMultiAdded;?> "required>
 
@@ -747,6 +751,9 @@ else {
 			//edited by Mike, 20211116
 //			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0)) {
 			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0) || ($outputTransaction['med_fee']!=0)) {
+				
+				//added by Mike, 20211120
+				$bHasOfficialReceipt=true;
 ?>
 			  <tr>
 				<td>
@@ -766,6 +773,9 @@ else {
 				//edited by Mike, 20200529
 //			    if (strpos($medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'], "PEDRO")==false) {
 			    if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")==false) {
+
+					//added by Mike, 20211120
+					$bHasOfficialReceipt=true;
 			  ?>
 				  <tr>
 				    <td>
@@ -793,6 +803,10 @@ else {
 					if (isset($outputTransaction)) {								
 //						if ($outputTransaction['pas_fee']!=0) {
 					if (($outputTransaction['pas_fee']!=0) || (isset($resultPaidNonMedItem))) {
+
+					//added by Mike, 20211120
+					$bHasOfficialReceipt=true;
+
 ?>
 				  <tr>
 				    <td>
@@ -844,12 +858,23 @@ else {
 			
 <?php
 		}
+
+		//added by Mike, 20211120
+		if ($bHasOfficialReceipt) {
 ?>		
-		<br />
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Submit
-		</button>
+			<br />
+		
+			<!-- Buttons -->
+			<button type="submit" class="Button-login">
+				Submit
+			</button>
+<?php
+		}
+		else {
+			echo "<h4><span style='color:red'>SNACK ITEM NOT YET ADDED IN OFFICIAL RECEIPT</span></h4>";
+//			echo "<br/>";
+		}
+?>
 	</form>
 	<br />
 
