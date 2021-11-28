@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
+' Copyright 2020~2021 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -7,9 +7,10 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @author: Michael Syson
+' @company: USBONG
+' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210622
+' @date updated: 20211128
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -636,10 +637,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//verified: if a patient id already exists in the cart list
 			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
 
+			//added by Mike, 20211128			
+			var isPatientTransactionGratis = document.getElementById("isPatientTransactionGratisParam").value;
+			var dCartFeeTotal = document.getElementById("cartFeeTotalId").value;
+
 			if (!hasPatientInCartList) {
 				alert("Kailangang may isang (1) pasyente sa bawat Cart List.");
 				return;
 			}
+			
+			//added by Mike, 20211128
+			if ((isPatientTransactionGratis==0) && (dCartFeeTotal==0)) {
+				alert("Sapagkat hindi rin No Charge (NC) o Gratis, kailangang may bayaran sa Cart List.");
+				return;					
+			}
+
 /*
 			window.location.href = "<?php echo site_url('browse/payTransactionMedicinePurchase/"+itemId+"');?>";
 */
@@ -1041,6 +1053,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//added by Mike, 202012010
 					$medicalDoctorId = $cartValue['medical_doctor_id'];	
 				}
+
+				//added by Mike, 20211128
+//				echo "cartValueNotes: ".$cartValue['notes']."<br/>";
+				
+				if (strpos($cartValue['notes'],"NC;")!==false) {
+?>
+					<input type="hidden" id="isPatientTransactionGratisParam" value="1">
+<?php
+				}
+				else {
+?>					
+					<input type="hidden" id="isPatientTransactionGratisParam" value="0">
+<?php					
+				}
 		?>				
 		
 					  <tr class="row">
@@ -1239,6 +1265,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  </tr>
 <?php
 				echo "</table>";				
+
+				//added by Mike, 20211128
+//				echo "cartFeeTotal: ".$cartFeeTotal."<br/>";
+?>
+				<input type="hidden" id="cartFeeTotalId" value="<?php echo $cartFeeTotal;?> ">
+<?php
+
 			}
 ?>
 			<!-- added by Mike, 20201103 -->
@@ -1436,7 +1469,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>

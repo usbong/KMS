@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210907
+' @date updated: 20211128
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -592,10 +592,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//added by Mike, 20201103
 			//verified: if a patient id already exists in the cart list
 			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
-	
+
+			//added by Mike, 20211128			
+			var isPatientTransactionGratis = document.getElementById("isPatientTransactionGratisParam").value;
+			var dCartFeeTotal = document.getElementById("cartFeeTotalId").value;
+
 			if (!hasPatientInCartList) {
 				alert("Kailangang may isang (1) pasyente sa bawat Cart List.");
 				return;
+			}
+			
+			//added by Mike, 20211128
+			if ((isPatientTransactionGratis==0) && (dCartFeeTotal==0)) {
+				alert("Sapagkat hindi rin No Charge (NC) o Gratis, kailangang may bayaran sa Cart List.");
+				return;					
 			}
 
 /* //removed by Mike, 20210902			
@@ -1050,7 +1060,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				foreach ($cartListResult as $cartValue) {
 /*	
 				$value = $result[0];
-*/				
+*/	
+				//added by Mike, 20211128
+//				echo "cartValueNotes: ".$cartValue['notes']."<br/>";
+				
+				if (strpos($cartValue['notes'],"NC;")!==false) {
+?>
+					<input type="hidden" id="isPatientTransactionGratisParam" value="1">
+<?php
+				}
+				else {
+?>					
+					<input type="hidden" id="isPatientTransactionGratisParam" value="0">
+<?php					
+				}			
 		?>				
 		
 					  <tr class="row">
@@ -1252,6 +1275,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  </tr>					
 <?php
 				echo "</table>";				
+
+				//added by Mike, 20211128
+//				echo "cartFeeTotal: ".$cartFeeTotal."<br/>";
+?>
+				<input type="hidden" id="cartFeeTotalId" value="<?php echo $cartFeeTotal;?> ">
+<?php
 			}
 ?>
 			<!-- added by Mike, 20200806 -->
