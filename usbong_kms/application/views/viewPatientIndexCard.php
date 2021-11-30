@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20210929
+  @date updated: 20211201
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -505,7 +505,32 @@
 			window.location.href = "<?php echo site_url('browse/deletePatientIndexCard/"+iPatientId+"/"+iIndexCardImageId+"');?>";			
 		}
 		
-		
+		//added by Mike, 20211201
+		function myPopupFunctionDelete(medicalDoctorId,patientId,transactionId) {				
+			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
+			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
+
+			//added by Mike, 20200523
+//			alert(medicalDoctorId);
+/*
+			//this is due to we do not include id number 0, i.e. "ANY", and 3, i.e. "SUMMARY", in the select options
+			//therefore, we need to add a +1 to correctly identify the medical doctor
+			if ((medicalDoctorId==0)) {
+				medicalDoctorId+=1; //to be SYSON, PEDRO
+			}
+			else (medicalDoctorId==2)) {
+				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
+			}
+*/
+
+/*
+			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
+*/			
+			//edited by Mike, 20200411
+			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
+		}	
+
 	  </script>
   <body>
 <?php
@@ -1542,7 +1567,7 @@
 						<?php //edited by Mike, 20200416 
 							if ($value['transaction_date']==date('m/d/Y')) {
 						?>
-						<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+						<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>
 							
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->

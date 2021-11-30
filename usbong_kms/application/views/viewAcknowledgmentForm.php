@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20211027
+  @date updated: 20211201
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -399,12 +399,35 @@
 				}
 */
 				if (strpos($result[0]['notes'],"SC;")!==false) {
+/* //edited by Mike, 20211201
 					echo "SC#";
 					$bIsWithSCPWDCard=true;
+*/
+
+					$bIsWithSCPWDCard=true;
+
+					if (empty($result[0]['pwd_senior_id'])) {
+						echo "SC#";
+					}
+					else {
+						echo $result[0]['pwd_senior_id'];
+						$bIsWithSCPWDCard=true;
+					}
 				}
 				else if (strpos($result[0]['notes'],"PWD;")!==false) {
+/* //edited by Mike, 20211201
 					echo "PWD#";
 					$bIsWithSCPWDCard=true;
+*/
+					$bIsWithSCPWDCard=true;
+
+					if (empty($result[0]['pwd_senior_id'])) {
+						echo "PWD#";
+					}
+					else {
+						echo $result[0]['pwd_senior_id'];
+						$bIsWithSCPWDCard=true;
+					}
 				}
 				else {
 					if (empty($result[0]['pwd_senior_id'])) {
