@@ -1558,11 +1558,24 @@ class Report_Model extends CI_Model
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
 //edited by Mike, 20210222
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number, t3.receipt_type_id');
-
+		
+		//edited by Mike, 20211203
+//		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number, t3.receipt_type_id');
+		if ($itemTypeId==2) { //non-med item
+			$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number, t3.receipt_type_id');
+		}
+		else {
+			$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes');
+		}
+		
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
-		$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
+
+		//edited by Mike, 20211203
+		//reminder: deleting excess JOIN COMMANDS causes noticeable speed-up in execution
+		if ($itemTypeId==2) { //non-med item
+			$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
+		}
 
 		$this->db->distinct('t1.item_name');
 
@@ -1574,11 +1587,14 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0);
 
+		//added by Mike, 20211203
+		$this->db->where('t1.is_hidden=', 0);
+
 //		$this->db->where('t1.item_id', $itemId);
 		//edited by Mike, 20200607
 		//TO-DO: -add: instructions for unit member to quickly set the date
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
-		//$this->db->where('t2.transaction_date', "06/06/2020");//ASC');		
+//		$this->db->where('t2.transaction_date', "12/02/2021");//ASC');		
 
 		$this->db->like('t2.notes', "PAID");
 
@@ -1748,8 +1764,13 @@ class Report_Model extends CI_Model
 
 				$iCurrentItemId=$value['item_id'];
 				
-				//added by Mike, 20200912
-				$iCurrentItemReceiptNumber=$value['receipt_number'];
+				//added by Mike, 20200912; edited by Mike, 20211203
+				//$iCurrentItemReceiptNumber=$value['receipt_number'];
+				$iCurrentItemReceiptNumber="";
+				if ($itemTypeId==2) { //non-med item
+					$iCurrentItemReceiptNumber=$value['receipt_number'];
+				}
+
 				
 				$currentValue = $value;
 		
@@ -1784,10 +1805,24 @@ class Report_Model extends CI_Model
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id');
 		//edited by Mike, 20200916
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t3.receipt_id, t3.receipt_number');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number');
+
+		//edited by Mike, 20211203
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number');
+
+		if ($itemTypeId==2) { //non-med item
+			$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number, t3.receipt_type_id');
+		}
+		else {
+			$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes');
+		}
+
+
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
-		$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
+
+		if ($itemTypeId==2) { //non-med item
+			$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
+		}
 
 		$this->db->distinct('t1.item_name');
 		
@@ -1796,10 +1831,13 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0);
 
+		//added by Mike, 20211203
+		$this->db->where('t1.is_hidden=', 0);
+
 //		$this->db->where('t1.item_id', $itemId);
 		//edited by Mike, 20200607
 		$this->db->where('t2.transaction_date', date("m/d/Y"));//ASC');		
-		//$this->db->where('t2.transaction_date', "06/06/2020");		
+//		$this->db->where('t2.transaction_date', "12/03/2021");		
 
 		$this->db->like('t2.notes', "PAID");
 
@@ -1963,8 +2001,12 @@ class Report_Model extends CI_Model
 
 				$iCurrentItemId=$value['item_id'];
 				
-				//added by Mike, 20200912
-				$iCurrentItemReceiptNumber=$value['receipt_number'];
+				//added by Mike, 20200912; edited by Mike, 20211203
+				//$iCurrentItemReceiptNumber=$value['receipt_number'];
+				$iCurrentItemReceiptNumber="";
+				if ($itemTypeId==2) { //non-med item
+					$iCurrentItemReceiptNumber=$value['receipt_number'];
+				}
 				
 				$currentValue = $value;
 		
