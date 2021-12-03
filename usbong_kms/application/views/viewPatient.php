@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20211128
+' @date updated: 20211203
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -717,7 +717,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<?php 
 		//edited by Mike, 20200518
-		if ($result[0]["medical_doctor_name"]==""){
+		if ((!isset($result[0]["medical_doctor_name"])) || ($result[0]["medical_doctor_name"]=="")) {
 //			echo "<br/>There are no transactions for the day.";
 
 			//default value
