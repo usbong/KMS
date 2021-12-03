@@ -2216,7 +2216,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		//added by Mike, 20210906
 //		echo $data['result'][0]['medical_doctor_id'];
-		
+
+		//removed by Mike, 20211203
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];		
 		$data['medicalDoctorId'] = $medicalDoctorId;
 
@@ -2226,14 +2227,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		//reminder: item transactions also use patient_id 0
 		//reminder: use "NONE, WALA", instead of "NONE" for transactions 
 		//whose patient_id is not certain
-		if ($patientId==0) { //if patient name is "NONE", et cetera
+		if (($patientId==0) || ($patientId==3543)){ //if patient name is "NONE", et cetera
 			$data['resultPaid']=null;
-			$data['cartListResult']=null;			
+			$data['cartListResult']=null;
+			$data['result'][0]['medical_doctor_name'] = "";			
+	//		echo $medicalDoctorId;
 		}
 		else {
 			//TO-DO: -update: function instructions due to $medicalDoctorId not used as input
 			$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
-
 			$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 		}
 
