@@ -4227,20 +4227,43 @@ class Browse_Model extends CI_Model
 
 	public function getDetailsListViaId($nameId) 
 	{		
-		//edited by Mike, 20200541
-		$this->db->select('t1.patient_name, t1.patient_id, t3.medical_doctor_id, t3.medical_doctor_name');
-		$this->db->from('patient as t1');
-		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		//edited by Mike, 20200541; edited again by Mike, 20211203
+		if (($nameId==0) || ($nameId==3543)){ //if patient name is "NONE", et cetera
+			$this->db->select('t1.patient_name, t1.patient_id, t1.medical_doctor_id');
+			$this->db->from('patient as t1');
+		}
+		else {
+			$this->db->select('t1.patient_name, t1.patient_id, t3.medical_doctor_id, t3.medical_doctor_name');
+			$this->db->from('patient as t1');
+			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		}
+		
+		
+		//edited by Mike, 20211203
+//		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
+		if (($nameId==0) || ($nameId==3543)){ //if patient name is "NONE", et cetera
+		}
+		else {
+			$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		}
+		
 		$this->db->where('t1.patient_id', $nameId);		
 
 		//edited by Mike, 20210906
 //		$this->db->group_by('t1.patient_id`', 'DESC');//ASC');
 		//removed by Mike, 20210907
 //		$this->db->where('t2.medical_doctor_id!=',0);
+			
+		//edited by Mike, 20211203
 		//added by Mike, 20210907
-		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+//		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+		if (($nameId==0) || ($nameId==3543)){ //if patient name is "NONE", et cetera
+		}
+		else {
+			$this->db->order_by('t2.added_datetime_stamp`', 'DESC');
+		}	
+		
 		$this->db->limit(1);
 		
 		$query = $this->db->get('patient');
