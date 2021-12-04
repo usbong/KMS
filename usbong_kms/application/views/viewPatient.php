@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20211203
+' @date updated: 20211204
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -716,12 +716,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>
 
 	<?php 
-		//edited by Mike, 20200518
-		if ((!isset($result[0]["medical_doctor_name"])) || ($result[0]["medical_doctor_name"]=="")) {
+		//edited by Mike, 20200518; edited by Mike, 20211204
+//		if ((!isset($result[0]["medical_doctor_name"])) || ($result[0]["medical_doctor_name"]=="")) {
+	
+		if (strpos($result[0]["patient_name"],"NONE")!==false) {
 //			echo "<br/>There are no transactions for the day.";
 
 			//default value
-			$result[0]["medical_doctor_name"] = 1; //SYSON, PEDRO
+			//edited by Mike, 20211204
+//			$result[0]["medical_doctor_name"] = 1; //SYSON, PEDRO
+			$result[0]["medical_doctor_id"] = 1; //SYSON, PEDRO
+
 		}
 
 /*			echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];		
@@ -748,8 +753,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			else {
 				$medicalDoctorId = 0; //set default to ANY
 			}
-			
+																						
 			echo "<select id='medicalDoctorIdParam'>";			
+			
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
 				  //edited by Mike, 20200523
 				  //TO-DO: -update: this
@@ -759,7 +765,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  else {
 */					  
 	//				  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {					  
-					  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
+		
+					  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {	
+				  
 						echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
 					  }			  	  
 	/*
