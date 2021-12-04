@@ -202,11 +202,17 @@ class Browse_Model extends CI_Model
 		if ((strpos(strtoupper($param['nameParam']),"NONE")!==false)
 			or (strpos(strtoupper($param['nameParam']),"WALA")!==false)) {
 								
-			//added by Mike, 20210723
-			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id');
+			//added by Mike, 20210723; edited by Mike, 20211205
+			//execute even if no patient transaction in transactions table yet
+			//objective: speed-up system
+
+//			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id');
+
+			$this->db->select('t1.patient_name, t1.patient_id');
 					
 			$this->db->from('patient as t1');
-			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+			//removed by Mike, 20211205
+//			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 
 			//added by Mike, 2021724
 			//notes: -reverify: add last visit date as column in patient table
@@ -222,17 +228,22 @@ class Browse_Model extends CI_Model
 */			
 			$iPatientNoneWalaId=3543;
 
+/*
+			//removed by Mike, 20211205
 			//execution time fastest
 			$this->db->where('added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.patient_id='.$iPatientNoneWalaId.')',NULL,FALSE);
+*/
 						
 //			$this->db->group_by('t1.patient_id'); //note: faster to execute than added_datetime_stamp
 
 			//removed by Mike, 20210726
 			//"NONE" patient_id=0			
 			$this->db->where('t1.patient_id =', $iPatientNoneWalaId); //3543="NONE, WALA" 					
-			
-			//added by Mike, 20210723
+
+/*			
+			//added by Mike, 20210723; removed by Mike, 20211205
 			$this->db->where('t2.item_id =', 0);			
+*/
 						
 			//$this->db->limit(1); //note: when added, query execution time not noticeably faster
 			
@@ -423,7 +434,11 @@ class Browse_Model extends CI_Model
 				
 				//TO-DO: -reverify: this
 				
-				if (strpos($prevRowOfSamePatient["notes"],"ONLY") !==false) { //ANY
+				//edited by Mike, 20211205
+//				if (strpos($prevRowOfSamePatient["notes"],"ONLY") !==false) { //ANY
+				if ((isset($prevRowOfSamePatient["notes"])) and
+					(strpos($prevRowOfSamePatient["notes"],"ONLY") !==false)) { //ANY
+
 					array_push($outputArray, $row);
 				}
 				else {
