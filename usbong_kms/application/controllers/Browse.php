@@ -165,7 +165,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$machineAddress = $this->session->userdata("client_machine_address");
 
 		$this->load->model('Browse_Model');
-		
+
 		//edited by Mike, 20200602
 		//$data['result'] = $this->Browse_Model->getDetailsListViaName($data);
 		$data['result'] = $this->Browse_Model->getNewestPatientDetailsListViaName($data);
@@ -2230,7 +2230,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		if (($patientId==0) || ($patientId==3543)){ //if patient name is "NONE", et cetera
 			$data['resultPaid']=null;
 			$data['cartListResult']=null;
-			$data['result'][0]['medical_doctor_name'] = "";			
+			//edited by Mike, 20211204
+//			$data['result'][0]['medical_doctor_name'] = "";			
+			$data['result'][0]['medical_doctor_id'] = "1"; //DR. PEDRO			
+
 	//		echo $medicalDoctorId;
 		}
 		else {
