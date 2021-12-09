@@ -361,9 +361,15 @@ class Report_Model extends CI_Model
 			$this->db->group_by('t2.patient_id');
 			$this->db->group_by('t2.notes');
 
+			//added by Mike, 20211209
+			$this->db->where('t2.item_id=',0);
+
 			//added by Mike, 20210218
-			//note: removes multiple transactions (without "ONLYof the same patient
-			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+			//note: removes multiple transactions (without "ONLY of the same patient)
+			//edited by Mike, 20211209
+//			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+			$this->db->where('t2.added_datetime_stamp = (SELECT MIN(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+
 		}
 		//added by Mike, 20210122
 		else {
