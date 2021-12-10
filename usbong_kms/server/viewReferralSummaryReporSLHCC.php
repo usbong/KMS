@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020 Usbong Social Systems, Inc.
+  Copyright 2020~2021 SYSON, MICHAEL B.
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 
@@ -7,9 +7,11 @@
 
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 
-  @author: Michael Syson
+  @company: USBONG
+  @author: SYSON, MICHAEL B.
   @date created: 20201226
-  @date updated: 20201227
+  @date updated: 20211210; from 20201227
+  @website address: http://www.usbong.ph
 
   Input:
   1) Referral Summary Worksheet with counts and amounts in .csv (comma-separated value) file using Tab as the delimiter from Sta. Lucia Health Care Center (SLHCC) Master List Workbook
@@ -180,8 +182,12 @@
 	
 	//$filename="D:\Usbong\SLHCC\Master List\output\WeeklyCollectionReportWorkbook20201221~20201224.csv";	
 
-	$filename="D:\Usbong\SLHCC\Master List\generateDoctorReferralPTTreatmentReportFromMasterList\java\output\ReferralIncentiveSummaryReportOutput.csv";
+	//edited by Mike, 20211210
+//	$filename="D:\Usbong\SLHCC\Master List\generateDoctorReferralPTTreatmentReportFromMasterList\java\output\ReferralIncentiveSummaryReportOutput.csv";
+	//note: double backslash after "C:"
+	$filename="C:\\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\SLHCC\input\ReferralIncentiveSummaryReportOutput.csv";
 
+	//echo $filename;
 
 	echo "<br/>";
 	echo "<table>";
@@ -394,7 +400,7 @@
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
