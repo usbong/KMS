@@ -354,7 +354,9 @@ class Browse_Model extends CI_Model
 
 		//added by Mike, 20211210
 		//if patient has NO transaction in transaction table yet
-		if (count($rowArray)==0) {
+		//edited by Mike, 20211211
+//		if (count($rowArray)==0) {
+		if ((count($rowArray)==0) and (isset($row['patient_id']))) {
 			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id, t3.medical_doctor_name');
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
