@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20211120
+' @date updated: 20211214; from 20211120
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -748,6 +748,11 @@ else {
 		<div>
 			<table width="100%">
 <?php
+		//added by Mike, 20211214
+		//note: TO-DO: -fix: if patient paid non-med transaction first, then med, et cetera, NO MOSC Official Receipt (OR) field
+		//at present, use [+] to add MOSC OR
+		//echo "dito".$outputTransaction['transaction_id'];
+
 			//edited by Mike, 20211116
 //			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0)) {
 			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0) || ($outputTransaction['med_fee']!=0)) {
