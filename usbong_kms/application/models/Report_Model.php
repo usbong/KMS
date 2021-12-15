@@ -366,9 +366,11 @@ class Report_Model extends CI_Model
 
 			//added by Mike, 20210218
 			//note: removes multiple transactions (without "ONLY of the same patient)
-			//edited by Mike, 20211209
-//			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
-			$this->db->where('t2.added_datetime_stamp = (SELECT MIN(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+			//edited by Mike, 20211209; edited again by Mike, 20211215
+			//at present, delete previous of the multiple transactions 
+			//without keyword, "ONLY", e.g. Professional Fee
+//			$this->db->where('t2.added_datetime_stamp = (SELECT MIN(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
+			$this->db->where('t2.added_datetime_stamp = (SELECT MAX(t.added_datetime_stamp) FROM transaction as t WHERE t.transaction_date=t2.transaction_date and t.patient_id=t2.patient_id)',NULL,FALSE);
 
 		}
 		//added by Mike, 20210122
