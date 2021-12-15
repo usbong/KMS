@@ -1,4 +1,4 @@
-phantomjs saveWebPageAsImageFileSLHCC.js viewReferralSummaryReporSLHCC -s
+phantomjs saveWebPageAsImageFileSLHCC.js viewReferralSummaryReportSLHCC -s
 
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
 
