@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020 Usbong Social Systems, Inc.
+  Copyright 2020~2021 SYSON, MICHAEL B.
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 
@@ -7,9 +7,10 @@
 
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 
-  @author: Michael Syson
+  @company: USBONG
+  @author: SYSON, MICHAEL B.
   @date created: 20201227
-  @date updated: 20201227
+  @date updated: 20211226; from 20201227
 
   Input:
   1) Annual Year End Summary Worksheet with counts and amounts in .csv (comma-separated value) file using Tab as the delimiter from Sta. Lucia Health Care Center (SLHCC) Master List Workbook
@@ -249,9 +250,10 @@
 				}
 				//added by Mike, 20201227
 				//note: we add these in sequence
-				else if (strpos($cellValue, "TOTAL:")!==false) {
+				else if (strpos($cellValue, "TOTAL:")!==false) {						
 						//green
-						echo "<td class='column' bgcolor='#FFFF00'><b>".$cellValue."</b></td>";
+						echo "<td class='column' bgcolor='#FFFF00'><b>".$cellValue."</b>
+						</td>";
 				}
 				else if (strpos($cellValue, ":")!==false) {
 						//green
@@ -318,8 +320,7 @@
 						else {
 							$cellValue = number_format($cellValue, 2, '.', ',');
 						}
-*/
-					
+*/					
 						//added by Mike, 20201227
 						//count
 						$cellValue = number_format($cellValue, 0, '', ',');
@@ -341,7 +342,7 @@
 							echo "<td class='column' bgcolor='#FFFF00'><b>".$cellValue."</b></td>";
 						}
 						else {
-*/							
+*/			
 							echo "<td class='column'><b>".$cellValue."</b></td>";
 /*
 						}						
@@ -352,7 +353,7 @@
 			echo '</tr><tr class="row">';
 		  }
 		  echo '</tr>';
-		  
+		  		  
 		  fclose($handle);
 		}
 	}
@@ -364,7 +365,8 @@
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<!-- edited by Mike, 20211226 -->
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
