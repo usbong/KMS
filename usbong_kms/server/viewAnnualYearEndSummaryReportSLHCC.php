@@ -10,7 +10,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20201227
-  @date updated: 20211226; from 20201227
+  @date updated: 20211229
 
   Input:
   1) Annual Year End Summary Worksheet with counts and amounts in .csv (comma-separated value) file using Tab as the delimiter from Sta. Lucia Health Care Center (SLHCC) Master List Workbook
@@ -192,8 +192,12 @@
 	//edited by Mike, 20201231
 	//$filename="D:\Usbong\SLHCC\Master List\generateAnnualYearEndSummaryReportOfAllInputFilesFromMasterList\output\AnnualYearEndSummaryReportOutput.csv";
 	//note: we use \\; otherwise "2020" becomes changed 
-	$filename="D:\\2020\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";
-	
+	//edited by Mike, 20211229
+	//$filename="D:\\2020\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";
+	//edited again by Mike, 20211229
+//	$filename="D:\\2021\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";
+	$filename="D:\\".date("Y")."\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";
+			
 	echo "<br/>";
 	echo "<table>";
 					
