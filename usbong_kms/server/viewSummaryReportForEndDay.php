@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20210916
+  @date updated: 20211229; from 20210916
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -707,7 +707,11 @@
 	$responses = [];
 		
 	//lab
-	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	//edited by Mike, 20211229
+	//TO-DO: -reverify: this
+	//note: combined transaction CAN still be deleted
+//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 /* //removed by Mike, 20210915				
 		//added by Mike, 20200524
