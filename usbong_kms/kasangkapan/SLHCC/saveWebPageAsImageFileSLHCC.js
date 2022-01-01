@@ -9,7 +9,7 @@
 ' @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20210207
+' @date updated: 20220101; from 20210204
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -54,8 +54,16 @@ if (isFromAnnualReportAddSoftwareOutputFolder=="-a") {
 //	webAddress = 'file:///D:/2020/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
 	//edited by Mike, 20210204
 //	webAddress = 'file:///D:/2021/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
+	
+	//edited by Mike, 20220101
+	//webAddress = 'file:///D:/'+dDateToday.getYear()+'/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
+	//webAddress = 'file:///D:/2021/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
 	webAddress = 'file:///D:/'+dDateToday.getYear()+'/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
 
+	if (!webAddress.exists) {
+		webAddress = 'file:///D:/'+(dDateToday.getFullYear()-1)+'/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
+	}
+	
 	fileExtension = '.html';
 }
 
@@ -78,9 +86,7 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	//edited by Mike, 20200725
     //page.render('output/'+fileName+'.png');
 //	page.render('output/'+dDateToday.toISOString()+'/'+fileName+'1.png');
-	//edited by Mike, 20210207
-//	page.render('output/SLHCC/'+dDateToday.toISOString()+'/'+fileName+'1.png');
-	page.render('output/'+dDateToday.toISOString()+'/'+fileName+'1.png');
+	page.render('output/SLHCC/'+dDateToday.toISOString()+'/'+fileName+'1.png');
 
 /*	
     console.log("windowScreenHeight: " + window.screen.height);
