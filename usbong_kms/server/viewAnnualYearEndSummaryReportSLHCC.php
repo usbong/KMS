@@ -1,20 +1,15 @@
 <!--
   Copyright 2020~2021 SYSON, MICHAEL B.
-
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
-
   http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20201227
-  @date updated: 20211229
+  @date updated: 20220101
 
   Input:
   1) Annual Year End Summary Worksheet with counts and amounts in .csv (comma-separated value) file using Tab as the delimiter from Sta. Lucia Health Care Center (SLHCC) Master List Workbook
-
   Output:
   1) Annual Year End  Worksheet that is viewable on a Computer Web Browser  
   
@@ -196,8 +191,15 @@
 	//$filename="D:\\2020\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";
 	//edited again by Mike, 20211229
 //	$filename="D:\\2021\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";
+
 	$filename="D:\\".date("Y")."\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";
-			
+
+	//added by Mike, 20220101
+	if (!file_exists($filename)) {
+		$time = strtotime("-1 year", time());
+		$filename="D:\\".date("Y", $time)."\add-on software\generateAnnualYearEndSummaryReportOfAllInputFiles\add-on software\output\AnnualYearEndSummaryReportOutput.txt";		
+	}
+	
 	echo "<br/>";
 	echo "<table>";
 					
