@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210724
+' @date updated: 20220105; from 20210724
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -462,6 +462,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo '<div>***NOTHING FOLLOWS***';	
 			}
 			else {					
+				//added by Mike, 20220105
+				//note: We auto-remove space before and after ",", i.e. comma
+/*	//removed by Mike, 20220105; note: There exist names with "JR.", et cetera
+				$nameParamToken = explode(",", $nameParam);
+				$nameParam = trim($nameParamToken[0]).", ".trim($nameParamToken[1]);
+*/
+				$nameParam = str_replace(",",", ",$nameParam);
+				$nameParam = str_replace(" ,",",",$nameParam);
+			
 				echo '<div>';					
 				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our patients\' names.';
 				echo '<br/><br/>Recommendation Steps:';
