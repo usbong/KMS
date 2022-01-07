@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20211214; FROM 20211108
+  @date updated: 20220107; FROM 20211214
   @website address: www.usbong.ph
   
   Input:
@@ -916,7 +916,8 @@ echo "hallo<br/>";
 								}
 							}									
 
-							$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
+							//removed by Mike, 20220107
+							//$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
 							
 
 //removed by Mike, 20201019							
@@ -970,6 +971,43 @@ echo "hallo<br/>";
 */								
 //removed by Mike, 20201019
 //							}
+							else {
+								//added by Mike, 20220107
+								if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+									//echo $value['notes'];
+	/*										
+									if (strpos($value['notes'],"MOSC OR")!==false) {
+										if ($receiptArrayRowValue['receipt_number']!=0) {
+											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+										}										
+									}
+	*/
+									if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$value['transaction_id']."'")) {
+										$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
+										
+										//echo "dito: ".$value['transaction_id'];
+										
+										if($receiptArrayRowValue) {
+											//edited by Mike, 20220107
+											//reminder: DR. HONESTO uses MOSC OR; set to zero if as DR. HONESTO OR
+	//										if ($receiptArrayRowValue['receipt_number']!=0) {
+											if ($receiptArrayRowValue['receipt_number']==0) {
+												$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+											}
+										}
+										// free result set
+										mysqli_free_result($receiptArray);											
+									}
+									// show an error if there is an issue with the database query
+									else
+									{
+										echo "Error: " . $mysqli->error;
+									}									
+								}
+							}
+
+							$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
+							
 
 							//TO-DO: -reverify: this
 							if (strpos($value['notes'],"DEXA")!==false) {
