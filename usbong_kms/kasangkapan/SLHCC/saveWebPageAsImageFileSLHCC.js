@@ -1,15 +1,15 @@
 /*
-' Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+' Copyright 2020~2022 SYSON, MICHAEL B.
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
 ' http://www.apache.org/licenses/LICENSE-2.0
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
+' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20220101; from 20210204
+' @date updated: 20220109; from 20220101
 '
 ' Reference:
 ' 1) https://phantomjs.org/; last accessed: 20200724
@@ -52,12 +52,11 @@ if (isFromServerFolder=="-s") {
 if (isFromAnnualReportAddSoftwareOutputFolder=="-a") {
 //edited by Mike, 20210202
 //	webAddress = 'file:///D:/2020/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
+
 	//edited by Mike, 20210204
+	//noted by Mike, 20220109; set Year here if NOT current Year
 //	webAddress = 'file:///D:/2021/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
-	
-	//edited by Mike, 20220101
-	//webAddress = 'file:///D:/'+dDateToday.getYear()+'/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
-	//webAddress = 'file:///D:/2021/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
+
 	webAddress = 'file:///D:/'+dDateToday.getYear()+'/add-on%20software/generateAnnualYearEndSummaryReportOfAllInputFiles/output/';
 
 	if (!webAddress.exists) {
@@ -145,6 +144,5 @@ if (Date.prototype.toISOString) {
         return this.getFullYear() + "" +
             pad(this.getMonth() + 1) + "" +
             pad(this.getDate());			
-
     }
 }
