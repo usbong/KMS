@@ -37,6 +37,7 @@ This is set to <b>OFF</b> as default;<br/>
 --> In addition, because the CCTV Cameras are also connected to the Computer Network, instead of supposedly providing security surveillance of household vehicles, they become source of information to the Teroristang Komunista group.<br/>
 --> <b>Recommended Action:</b> reverify: telephone conversation recording technique in the Year 2004 National Elections<br/>
 --> With the Teroristang Komunista group having access to the Telephone network, election fraud becomes another path to get quick money.<br/>
---> <b>Reminder:</b> Kahit HINDI panahon ng eleksyon, nangangapanya ang mga iyan!<br/>
+--> <b>Reminder#1:</b> Kahit HINDI panahon ng pangangampanya sa eleksyon, nangangapanya ang mga iyan!<br/>
+--> <b>Reminder#2:</b> Kahit TAPOS na ang eleksyon, nangangapanya pa rin!<br/>
 --> <b>notified:</b> Barangay Santo Niño regarding such action in the year 2018 Barangay Elections<br/>
 
