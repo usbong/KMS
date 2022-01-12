@@ -34,10 +34,9 @@ This is set to <b>OFF</b> as default;<br/>
 --> verified: GLOBE Postpaid SIM card of target person is misused to execute unauthorized actions;<br/>
 --> <b>Example:</b> Access to the Telephone mic and speaker to steal passwords to Household Computer Network and devices.<br/>
 --> <b>Reminder:</b> Technologies, e.g. Java Virtual Machine, were added since the year 2004 and earlier to increase security against this wiretapping technique being misused on mobile telephones<br/>
---> CCTV Cameras that supposedly provide security surveillance of vehicles become information to the Teroristang Komunista group.<br/>
---> The CCTV Cameras are also connected to the Computer Network.<br/>
+--> In addition, because the CCTV Cameras are also connected to the Computer Network, instead of supposedly providing security surveillance of household vehicles, they become source of information to the Teroristang Komunista group.<br/>
 --> <b>Recommended Action:</b> reverify: telephone conversation recording technique in the Year 2004 National Elections<br/>
---> With the Teroristang Komunista group having access to the Telephone network, election fraud becomes another path to get quick money<br/>
+--> With the Teroristang Komunista group having access to the Telephone network, election fraud becomes another path to get quick money.<br/>
 --> <b>Reminder:</b> Kahit HINDI panahon ng eleksyon, nangangapanya ang mga iyan!<br/>
 --> <b>notified:</b> Barangay Santo Niño regarding such action in the year 2018 Barangay Elections<br/>
 
