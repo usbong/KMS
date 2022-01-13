@@ -33,7 +33,12 @@ This is set to <b>OFF</b> as default;<br/>
 <br/>
 <b>Reminder#3:</b> Those with access to the <b>network</b> can monitor data transfers via tools, e.g. Wireshark;<br/>
 --> Without additional security verification, account passwords even with HTTPS can be stolen.<br/> 
---> The Teroristang Komunista/Manloloko/Carnapper/Budol-budol/Cybercrimininal group executes unauthorized access to the network.<br/>
+--> <b>Example Additional Security Verification:</b><br/> 
+--> Email notification of NOT yet registered machine accessing the account<br/>
+--> Auto-generated Personal Identification Number (PIN) sent to person's mobile telephone to be entered to successfully access account
+
+## Teroristang Komunista/Manloloko/Carnapper/Budol-budol/Cybercrimininal group
+--> The Teroristang Komunista group executes unauthorized access to the network.<br/>
 --> Access to Telephone network becomes KEY;<br/> 
 --> verified: GLOBE Postpaid SIM card of target person is misused to execute unauthorized actions;<br/>
 --> <b>Example:</b> Access to the Telephone mic and speaker to steal passwords to Household Computer Network and devices.<br/>
