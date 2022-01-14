@@ -39,9 +39,15 @@ This is set to <b>OFF</b> as default;<br/>
 
 ## Teroristang Komunista/Manloloko/Carnapper/Budol-budol/Cybercrimininal group
 --> The Teroristang Komunista group executes unauthorized access to the network.<br/>
---> Access to Telephone network becomes KEY;<br/> 
+--> Access to Telephone network becomes KEY;<br/>
+<br/>
+--> <b>Recommended Readings:</b><br/>
+--> 1) https://us.norton.com/internetsecurity-mobile-sim-swap-fraud.html; last accessed: 20220114<br/>
+--> 2) https://www.globe.com.ph/help/sim-swap-scam.html#gref; last accessed: 20220114<br/>
+<br/>
 --> verified: GLOBE Postpaid SIM card of target person is misused to execute unauthorized actions;<br/>
---> <b>Example:</b> Access to the Telephone mic and speaker to steal passwords to Household Computer Network and devices.<br/>
+--> <b>Example:</b> Access to target person's Telephone mic and speaker via SIM-hijacking to further steal passwords to Household Computer Network and devices.<br/>
+<br/>
 --> <b>Reminder:</b> Technologies, e.g. <b>Java Virtual Machine (JVM)</b>, were added since the year 2004 and earlier to increase security against this wiretapping technique being misused on mobile telephones.<br/>
 --> However, while new applications developed for use with <b>JVM</b> were set to access only select telephone functions, the Telephone Network that connected telephones and their mics and speakers was still open for misuse by Teroristang Komunista group to execute wiretapping techniques.<br/>
 --> In addition, because the CCTV Cameras are also connected to the Computer Network, instead of supposedly providing security surveillance of household vehicles, they become source of information to the Teroristang Komunista group.<br/>
