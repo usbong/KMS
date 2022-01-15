@@ -128,6 +128,54 @@ class Report_Model extends CI_Model
 		
 		return $this->db->insert_id();		
 	}	
+	
+	//added by Mike, 20220115
+	public function insertReportAudio($param)
+	{			
+		date_default_timezone_set('Asia/Hong_Kong');
+		//edited by Mike, 20200722
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$addedDateTimeStamp = (new DateTime())->format('Y-m-d H:i:s'); //date('Y-m-d H:i:s');
+		$addedDateTimeStamp = date('Y-m-d H:i:s');
+
+/*
+		//added by Mike, 20190722; edited by Mike, 20191025
+//		$row = $this->doesReportTypeExistViaReportTypeName($param);
+//		$row = $this->getReportTypeExistViaReportTypeName($param);
+		$reportTypeId = $this->getReportTypeIdViaReportTypeName($param);
+		if ($reportTypeId == False) {			
+			return False; //edited by Mike, 20190722
+		}
+*/
+
+		//added by Mike, 20210316
+		if (!isset($param["patientId"])) {
+			$param["patientId"]=0;
+		}
+
+		//added by Mike, 20210317
+		if ((!isset($param["transactionId"])) or ($param["transactionId"]==0)){
+			$param["transactionId"]=-1;
+		}
+
+
+		$data = array(
+
+					'audio_filename' => $param['outputFileLocation'],
+					'transaction_id' => $param["transactionId"], //1
+
+					//added by Mike, 20210316
+					'patient_id' => $param["patientId"], //1
+
+//					'added_datetime_stamp' => $addedDateTimeStamp
+					
+				);
+		
+		$this->db->insert('audio', $data);
+		
+		return $this->db->insert_id();		
+	}	
+
 
 	//added by Mike, 20191025
 	public function insertReportFromEachLocation($param)
