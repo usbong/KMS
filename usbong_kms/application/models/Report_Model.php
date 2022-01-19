@@ -586,18 +586,24 @@ class Report_Model extends CI_Model
 		return $rowArray;
 	}
 	
-	//added by Mike, 20200908
+	//added by Mike, 20200908; edited by Mike, 20220119
 	public function getReceiptNumber($transactionId) {
 //		echo $transactionId."<br/>";
 		
 		$this->db->select('receipt_type_id, receipt_number');
 
 		$this->db->where('transaction_id=',$transactionId);		
+		
+		//added by Mike, 20220119
+		//note: This is due to entered value may be zero 
+		//with Dr. Honesto who uses MOSC Official Receipt
+		$this->db->where('receipt_number!=',0);
+
 		$query = $this->db->get('receipt');
 	
 		$rowArray = $query->result_array();
 		
-		if ($rowArray == null) {			
+		if ($rowArray == null) {					
 			return False;
 		}
 		
