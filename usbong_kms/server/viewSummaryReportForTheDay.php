@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20210913
+  @date updated: 20220128; from 20210913
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -103,6 +103,13 @@
 							text-align: center;
 						}						
 
+						td.columnBorderBottomNotDoubleLine
+						{
+							border: 1px dotted #ab9c7d;		
+							border-bottom: 4px solid black;
+							text-align: center;
+						}						
+
 						td.columnBorderBottomDotted
 						{
 							border: 1px dotted #ab9c7d;		
@@ -115,6 +122,14 @@
 							border: 1px dotted #ab9c7d;		
 							border-top: 2px solid black;
 							border-bottom: 4px double black;
+							text-align: center;
+						}						
+
+						td.columnBorderTopBottomNotDoubleLine
+						{
+							border: 1px dotted #ab9c7d;		
+							border-top: 2px solid black;
+							border-bottom: 4px solid black;
 							text-align: center;
 						}						
 						
@@ -148,7 +163,7 @@
 	//edited by Mike, 20200726
 	//$dateToday = (new DateTime())->format('Y-m-d');
 	$dateToday = Date('Y-m-d');
-	//$dateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
+//	$dateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
 
 	//TO-DO: -update: file location
 //	$filename="C:/Usbong/Patients".$dateToday.".txt";	
@@ -159,7 +174,9 @@
 	//edited by Mike, 202000726
 	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay2020-07-25Final.csv";
 	//$filename="D:\Usbong\MOSC\Forms\Information Desk\output\cashier\moscReportForTheDay".$dateToday."Final.csv";
+
 	$filename="G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\moscReportForTheDay".$dateToday."Final.csv";
+//$filename="G:\Usbong\MOSC\Forms\Information Desk\output\informationDesk\cashier\moscReportForTheDay2021-10-06Final.csv";
 
 	echo "<br/>";
 	echo "<table>";
@@ -220,7 +237,9 @@
 					}
 				}
 				//"CASH REGISTER RECEIPT" cells; text
-				else if (($iRowCount>=2) and ($iRowCount<=18) and ($iColumnCount>=4) and ($iColumnCount<=5)) {
+				//edited by Mike, 20220128
+//				else if (($iRowCount>=2) and ($iRowCount<=18) and ($iColumnCount>=4) and ($iColumnCount<=5)) {
+				else if (($iRowCount>=2) and ($iRowCount<=20) and ($iColumnCount>=4) and ($iColumnCount<=5)) {
 					echo "<td class='column' style='text-align:left'><b>".$cellValue."</b></td>";
 				}
 				else {
@@ -265,8 +284,19 @@
 						}						
 						//CASH REGISTER TOTAL
 						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="TOTAL")) {
-								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+								//edited by Mike, 20220128
+//								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
+								echo "<td class='columnBorderTopBottomNotDoubleLine' style='text-align:right'>".$cellValue."</td>";
+//								echo "<td class='columnBorderBottomNotDoubleLine' style='text-align:right'>".$cellValue."</td>";
 						}
+						//added by Mike, 20220128
+						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="DIRECT PAYMENT")) {
+								echo "<td class='columnBorderBottomNotDoubleLine' style='text-align:right'>".$cellValue."</td>";
+						}						
+						//added by Mike, 20220128						
+						else if ($iRowCount==20) {
+							echo "<td class='columnBorderBottom' style='text-align:right'>".$cellValue."</td>";																
+						}						
 						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="GRAND TOTAL")) {
 								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
 						}
