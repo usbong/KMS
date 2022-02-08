@@ -64,8 +64,15 @@ DONE!<br/>
 --> No need to put check mark in checkbox of "Wait for system tray"<br/>
 --> 3.4) Click: "OK"<br/>
 --> 3.5) Click: "Close"<br/>
---> DONE!
+--> DONE!<br/>
 
+4) Error: "A port address conflict has been detected. LAN Messenger will close now"<br/>
+--> verified: with Windows7 Machine<br/>
+--> Solution: in CMD Prompt Window, enter this <b>COMMAND</b> in the <b>lmc.exe</b> directory:<br/>
+--> <b>lmc.exe /noconfig</b><br/>
+--> DONE!<br/>
+   --> <b>Reference:</b> https://unix.stackexchange.com/questions/405926/a-port-address-conflict-has-been-detected-lan-messenger-will-close-now; last accessed: 20220208
+   
 ## IV. System Integration @Partner Clinic and Peripheral Units
 To eliminate excess steps and inefficient time usage, the Marikina Orthopedic Specialty Clinic (MOSC) requested Usbong's services to automate routine, monotonous tasks and share with unit members know-how on computers.<br/><br/>
 https://www.usbong.ph/excel/
