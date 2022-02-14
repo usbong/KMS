@@ -23,7 +23,7 @@ https://www.apachefriends.org/index.html
 <b>Technologies:</b> Apache Web Server, MySQL, PHP, phpMyAdmin
 
 ## Open Source Software License
-Copyright 2019~2021 SYSON, MICHAEL B.
+Copyright 2019~2022 SYSON, MICHAEL B.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
