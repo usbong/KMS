@@ -1,5 +1,5 @@
 <!--
-' Copyright 2019~2020 Usbong Social Systems, Inc.
+' Copyright 2019~2022 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -9,7 +9,7 @@
 '
 ' @author: Michael Syson
   @date created: 20191120
-  @date updated: 20210501
+  @date updated: 20220216; from 20210501
   
   Given:
   1) Image with the details of the report
@@ -135,7 +135,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 ?>
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>	
   </body>
 </html>
