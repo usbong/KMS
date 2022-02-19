@@ -226,7 +226,13 @@ class Browse_Model extends CI_Model
 /*			$this->db->order_by('t2.added_datetime_stamp', 'DESC');
 			$this->db->limit(1);
 */			
-			$iPatientNoneWalaId=3543;
+
+			//edited by Mike, 20220219
+			//noticeable delay in execution with 3543,
+			//with @patientId used in transactions: 1053 total, Query took 0.0800 seconds.
+			//note: 11682 : "NONE, WALA v2";
+			//$iPatientNoneWalaId=3543;
+			$iPatientNoneWalaId=11682;
 
 /*
 			//removed by Mike, 20211205
