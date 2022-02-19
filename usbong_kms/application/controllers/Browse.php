@@ -2227,7 +2227,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		//reminder: item transactions also use patient_id 0
 		//reminder: use "NONE, WALA", instead of "NONE" for transactions 
 		//whose patient_id is not certain
-		if (($patientId==0) || ($patientId==3543)){ //if patient name is "NONE", et cetera
+		//edited by Mike, 20220219
+//		if (($patientId==0) || ($patientId==3543)){ //if patient name is "NONE", et cetera
+		if (($patientId==0) || ($patientId==3543) || ($patientId==11682)){ //if patient name is "NONE", et cetera; 11682 "NONE, WALA v2";
+		//noticeable delay in execution with 3543,
+		//with @patientId used in transactions: 1053 total, Query took 0.0800 seconds.
+
+//echo "hallo".$patientId;
+
 			$data['resultPaid']=null;
 			$data['cartListResult']=null;
 			//edited by Mike, 20211204
