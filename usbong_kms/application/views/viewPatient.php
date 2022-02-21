@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 SYSON, MICHAEL B.
+' Copyright 2020~2022 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20211204
+' @date updated: 20220222; from 20211204
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -597,6 +597,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var isPatientTransactionGratis = document.getElementById("isPatientTransactionGratisParam").value;
 			var dCartFeeTotal = document.getElementById("cartFeeTotalId").value;
 
+			//added by Mike, 20220222
+			var iCartValueMedicalDoctorId = document.getElementById("cartValueMedicalDoctorIdParam").value;
+			var iCartValuePatientId = document.getElementById("cartValuePatientIdParam").value;
+
 			if (!hasPatientInCartList) {
 				alert("Kailangang may isang (1) pasyente sa bawat Cart List.");
 				return;
@@ -633,9 +637,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			else (medicalDoctorId==2)) {
 				medicalDoctorId+=2; //to be REJUSO, CHASTITY AMOR
 			}
-*/
+*/			
+			//edited by Mike, 20220222
+			//window.location.href = "<?php echo site_url('browse/payTransactionServiceAndItemPurchase/"+medicalDoctorId+"/"+patientId+"');?>";
 
-			window.location.href = "<?php echo site_url('browse/payTransactionServiceAndItemPurchase/"+medicalDoctorId+"/"+patientId+"');?>";
+			window.location.href = "<?php echo site_url('browse/payTransactionServiceAndItemPurchase/"+iCartValueMedicalDoctorId+"/"+iCartValuePatientId+"');?>";			
 		}	
 
 	  </script>
@@ -1118,7 +1124,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//TO-DO: -update: this
 									//echo $cartValue['patient_name'];
 									echo str_replace("ï¿½","Ã‘",$cartValue['patient_name']);
-									
+//edited by Mike, 20220222				
+?>
+<input type="hidden" id="cartValueMedicalDoctorIdParam" value="<?php echo $cartValue['medical_doctor_id'];?>">
+<input type="hidden" id="cartValuePatientIdParam" value="<?php echo $cartValue['patient_id'];?>">
+<?php	
 									$hasPatientInCartListParamValue = True;
 								}
 								else {
