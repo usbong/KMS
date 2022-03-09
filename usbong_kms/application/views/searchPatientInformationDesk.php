@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 SYSON, MICHAEL B.
+' Copyright 2020~2022 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210730
+' @date updated: 20220309; from 20210730
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -439,7 +439,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo $value['transaction_date'];
 								echo DATE("Y-m-d", strtotime($value['transaction_date']));
 */
-								if ($value['transaction_date']==0) {
+								//added by Mike, 20220309
+								if (!isset($value['transaction_date'])) {
+									echo "N/A";
+								}
+								else if ($value['transaction_date']==0) {
 									echo DATE("Y-m-d");
 								}
 								else {
@@ -583,7 +587,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
