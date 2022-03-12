@@ -1692,7 +1692,9 @@ class Browse_Model extends CI_Model
 
 			//edited by Mike, 20210302
 //			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee');
-			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee, t1.item_id');
+			//edited by Mike, 20220312
+//			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee, t1.item_id');
+			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee, t1.item_id, t1.x_ray_fee, t1.lab_fee');
 
 			$this->db->from('transaction as t1');
 			$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -1713,8 +1715,16 @@ class Browse_Model extends CI_Model
 				//identify if patient transaction	
 				if ($rowArray[0]['item_id']==0){
 					//we automatically set the transaction with all the fees to be MOSC Receipt
-					//TO-DO: -update: this to verify if there is x_ray_fee and lab_fee
-					if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
+					
+
+					//edited by Mike, 20220312
+					//TO-DO: fix: add combined transaction IF item, item, delete, patient, combined sequence
+
+//					if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
+					if (($param['medicalDoctorId']==1) or ($iCount==0) or
+						 ($rowArray[0]['x_ray_fee']!=0) or ($rowArray[0]['lab_fee']!=0) or
+						 ($rowArray[0]['med_fee']!=0)) { //SYSON, PEDRO
+
 						$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
 
 						$data = array(
