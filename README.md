@@ -97,4 +97,9 @@ DONE!<br/>
    
 ## IV. System Integration @Partner Clinic and Peripheral Units
 To eliminate excess steps and inefficient time usage, the Marikina Orthopedic Specialty Clinic (MOSC) requested Usbong's services to automate routine, monotonous tasks and share with unit members know-how on computers.<br/><br/>
-https://www.usbong.ph/excel/
+https://www.usbong.ph/excel/<br/>
+<br/>
+<img src="https://github.com/usbong/KMS/blob/master/Notes/res/exampleTabletPCSoftwareHardwareWithMedItemBoxTechnique20220314T1158.jpg" width="60%"><br/>
+<b>Example Tablet Personal Computer (PC)<br/> 
+Software+Hardware with MED Item Box Technique
+</b>
