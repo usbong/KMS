@@ -43,7 +43,12 @@ https://www.apachefriends.org/index.html
 --> Search and Replace keyphrase: <b>"192.168.11.62"</b> with <b>"localhost"</b><br/>
 --> Note: Set <b>"localhost"</b> to the computer's network Internet Protocol (IP) Address<br/>
 <br/>
-Done!
+DONE!<br/>
+<br/>
+<b>Reference:</b> https://stackoverflow.com/questions/7577490/phpmyadmin-wrong-permissions-on-configuration-file-should-not-be-world-writabl;<br/>
+last accessed: 20220314<br/>
+answer by: Y. Joy Ch. Singha, 20180521T0816<br/>
+edited by: bad_coder, 20210724T1636<br/>
 
 ## Open Source Software License
 Copyright 2019~2022 SYSON, MICHAEL B.
@@ -93,7 +98,7 @@ DONE!<br/>
 --> Solution: in CMD Prompt Window, enter this <b>COMMAND</b> in the <b>lmc.exe</b> directory:<br/>
 --> <b>lmc.exe /noconfig</b><br/>
 --> DONE!<br/>
-   --> <b>Reference:</b> https://unix.stackexchange.com/questions/405926/a-port-address-conflict-has-been-detected-lan-messenger-will-close-now; last accessed: 20220208
+--> <b>Reference:</b> https://unix.stackexchange.com/questions/405926/a-port-address-conflict-has-been-detected-lan-messenger-will-close-now; last accessed: 20220208
    
 ## IV. System Integration @Partner Clinic and Peripheral Units
 To eliminate excess steps and inefficient time usage, the Marikina Orthopedic Specialty Clinic (MOSC) requested Usbong's services to automate routine, monotonous tasks and share with unit members know-how on computers.<br/><br/>
