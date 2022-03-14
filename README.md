@@ -35,7 +35,7 @@ https://www.apachefriends.org/index.html
 7) Enter the following website address in Computer Web Browser:<br/>
 <b>http://localhost/phpmyadmin/</b><br/>
 8) Left Panel -> New -> Create database; with database name: <b>usbong_kms</b><br/>
-9) Top Panel -> Import -> Browser button<br/>
+9) Top Panel -> Import -> Browse button<br/>
 --> Example input database file: <b>KMS-master/DB/SQLCommands/usbong_kmsCreateDBTableStructureV20211219T0602.sql</b><br/>
 10) Enter the following website address in Computer Web Browser<br/>
 <b>localhost/usbong_kms/index.php/report/viewWebAddressList</b><br/>
