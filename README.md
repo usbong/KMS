@@ -22,6 +22,29 @@ https://www.apachefriends.org/index.html
 
 <b>Technologies:</b> Apache Web Server, MySQL, PHP, phpMyAdmin
 
+### Installation Notes
+1) Download XAMPP file from https://www.apachefriends.org/download.html;<br/>
+--> Example: <b>XAMPP for Linux 7.4.27</b><br/>
+2) Download ZIP folder via CODE button on https://github.com/usbong/KMS<br/>
+3) Extract ZIP folder; Output: <b>"KMS-master"</b><br/>
+4) Copy <b>"KMS-master"</b> folder; Paste to <b>/opt/lampp/htdocs/</b><br/>
+5) Rename <b>"KMS-master"</b> folder to <b>"usbong_kms"</b><br/>
+6) Enter the following COMMANDs in Terminal Window:<br/>
+<b>sudo chmod 755 /opt/lampp/phpmyadmin/config.inc.php</b><br/>
+<b>sudo ./xampp start</b><br/>
+7) Enter the following website address in Computer Web Browser:<br/>
+<b>http://localhost/phpmyadmin/</b><br/>
+8) Left Panel -> New -> Create database; with database name: <b>usbong_kms</b><br/>
+9) Top Panel -> Import -> Browser button<br/>
+--> Example input database file: <b>KMS-master/DB/SQLCommands/usbong_kmsCreateDBTableStructureV20211219T0602.sql</b><br/>
+10) Enter the following website address in Computer Web Browser<br/>
+<b>localhost/usbong_kms/index.php/report/viewWebAddressList</b><br/>
+11) Update: <b>"/opt/lampp/htdocs/usbong_kms/application/views/viewWebAddressList.php"</b><br/>
+--> Search and Replace keyphrase: <b>"192.168.11.62"</b> with <b>"localhost"</b><br/>
+--> Note: Set <b>"localhost"</b> to the computer's network Internet Protocol (IP) Address<br/>
+<br/>
+Done!
+
 ## Open Source Software License
 Copyright 2019~2022 SYSON, MICHAEL B.
 
@@ -42,7 +65,6 @@ Action: [Download](https://sourceforge.net/projects/lanmsngr/)
 
 ### 2) Auto-screen Capture Photograph Image
 [PhantomJS Tool (Official Website)](https://phantomjs.org/) <br/>
-
 
 #### Notes
 1) LAN = Local Area Network<br/>
