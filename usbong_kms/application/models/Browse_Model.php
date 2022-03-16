@@ -4870,6 +4870,7 @@ class Browse_Model extends CI_Model
 
 		//edited by Mike, 20210902
 //		$this->db->distinct('t1.patient_name');
+		//removed by Mike, 20220316
 		$this->db->group_by('t2.transaction_id');
 		
 		$this->db->where('t2.transaction_quantity!=',0);
@@ -4878,7 +4879,11 @@ class Browse_Model extends CI_Model
 
 		//removed by Mike, 20210720
 //		$this->db->not_like('t2.notes', "ONLY");
+
+		//added by Mike, 20220316
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');		
 		
+				
 		//edited by Mike, 20210720
 //		$this->db->where('t2.transaction_date',date("m/d/Y"));
 		$this->db->where('t2.transaction_date',date("m/d/Y", strtotime($transactionDate)));
