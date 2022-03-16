@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2021 SYSON, MICHAEL B.
+  Copyright 2020~2022 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20211201
+  @date updated: 20220317; from 20211201
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -151,6 +151,13 @@
 						{
 							border: 1px dotted #000000;		
 							text-align: center;
+						}						
+
+						td.columnItemHeaderList
+						{
+							border: 1px dotted #000000;		
+							text-align: left;
+							font-weight: bold;
 						}						
 
 						td.columnFee
@@ -671,11 +678,30 @@
 
 		<!-- non-med item transaction -->
 <?php		
+		//TO-DO: -reverify: this
+		//added by Mike, 20220317
+		$dTotalNonMedFee=0;
+
 		//edited by Mike, 20210628
 		if (($resultPaidNonMedItem!=null) and (count($resultPaidNonMedItem) > 0)) {			
 			if ((isset($resultPaidNonMedItem)) and ($resultPaidNonMedItem!=False)) {
 //				$resultCount = count($resultPaidMedItem);			
-			
+
+				//added by Mike, 20220317
+				echo "<tr>";
+					echo "<td class='columnFee'>";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "</td>";			
+					echo "<td class='columnItemHeaderList'>";
+					echo "NON-MED ITEM LIST";
+					echo "</td>";
+					echo "<td class='columnFee'>";
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					echo "</td>";
+				echo "</tr>";		
+									
 				foreach ($resultPaidNonMedItem as $value) {					
 					if ($value['fee']!=0) {
 						echo "<tr>";
@@ -706,9 +732,37 @@
 							echo "</td>";
 						echo "</tr>";			
 
+						//added by Mike, 20220317
+						$dTotalNonMedFee+=$value['fee'];
+
 						$totalAmountFee+=$value['fee'];
 					}
 				}
+				
+				//added by Mike, 20220317
+				echo "<tr>";
+					echo "<td class='columnFee'>";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "</td>";			
+					echo "<td class='columnItemHeaderList'>";
+
+					$dTotalNonMedFeeWithDiscount=$dTotalNonMedFee*0.12;
+
+					if ((strpos($result[0]['notes'],"SC;")!==false) or
+						((strpos($result[0]['notes'],"PWD;")!==false))) {
+						echo "TOTAL (discounted: ".number_format($dTotalNonMedFeeWithDiscount, 2, '.', ',').")";
+					}
+					else {
+						echo "TOTAL";
+					}
+					echo "</td>";
+					echo "<td class='columnFee'>";
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					echo "<b>".number_format($dTotalNonMedFee, 2, '.', ',')."</b>";
+					echo "</td>";
+				echo "</tr>";										
 			}
 		}
 ?>		
