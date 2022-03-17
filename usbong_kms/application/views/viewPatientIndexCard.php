@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2021 SYSON, MICHAEL B.
+  Copyright 2020~2022 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20211201
+  @date updated: 20220317; from 20211201
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -556,9 +556,13 @@
 //edited by Mike, 20210209
 //	$filename="D:\\Usbong\\LABORATORY\\templates\\MOSCLabRequestForm.csv";
 	  
-//edited by Mike, 20210320; edited again by Mike, 20210408
+//edited by Mike, 20210320; edited again by Mike, 20220317; from 20210408
 	$filename="C:\\xampp\\htdocs\\usbong_kms\\usbongTemplates\\MOSCIndexCard.csv";
 //	$filename="/opt/lampp/htdocs/usbong_kms/usbongTemplates/MOSCIndexCard.csv";
+	  
+	if (!file_exists($filename)) {
+		$filename="/opt/lampp/htdocs/usbong_kms/usbongTemplates/MOSCIndexCard.csv";
+	}  
 	  
 	//added by Mike, 20210208
 	$iCheckboxCount=0;
@@ -1404,8 +1408,14 @@
 		//added by Mike, 20210701
 		echo '<h3>Patient Purchased Service History</h3>';
 
-		//added by Mike, 20210707
-		$value = $resultPaid[0];
+		
+ 		//added by Mike, 20210707; edited by Mike, 202203017
+ 		//severity notice with Linux machine: "Trying to access array offset on value of type bool"
+//		$value = $resultPaid[0];
+		$value = null;
+		if (isset($resultPaid[0])) {
+			$value = $resultPaid[0];
+		}		
 
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
 			echo '<div>';					
