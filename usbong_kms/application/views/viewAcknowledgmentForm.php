@@ -255,7 +255,10 @@
 //	$dateToday = $value['transaction_date'];
 	
 	//if no paid transaction
-	if ($resultPaid[0]['transaction_date']=="") {
+	//edited by Mike, 20220317
+ 	//severity notice with Linux machine: "Trying to access array offset on value of type bool"
+//	if ($resultPaid[0]['transaction_date']=="") {
+	if (!isset($resultPaid[0]) or ($resultPaid[0]['transaction_date']=="")) {
 		$dateToday = date('Y-m-d');
 	}
 	else {

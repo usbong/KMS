@@ -1409,7 +1409,7 @@
 		echo '<h3>Patient Purchased Service History</h3>';
 
 		
- 		//added by Mike, 20210707; edited by Mike, 202203017
+ 		//added by Mike, 20210707; edited by Mike, 20220317
  		//severity notice with Linux machine: "Trying to access array offset on value of type bool"
 //		$value = $resultPaid[0];
 		$value = null;
