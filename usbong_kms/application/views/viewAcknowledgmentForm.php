@@ -520,6 +520,14 @@
 		<!-- PART 2: ANSWER -->
 		<!-- patient transaction -->
 <?php		
+		//added by Mike, 20220317
+		$dTotalMDXrayFee=0;
+		$dTotalLabFee=0;
+		$dTotalMedItemFee=0;
+		
+		//DR. HONESTO
+		$sWithDrHonesto="";
+
 		//edited by Mike, 20210628
 		if (($resultPaid!=null) and (count($resultPaid) > 0)) {					
 			//auto-identify fee, e.g. Consultation+Procedure, X-RAY
@@ -549,6 +557,18 @@
 						echo number_format($value['fee'], 2, '.', ',');
 						echo "</td>";
 					echo "</tr>";			
+					
+					//added by Mike, 20220317
+					//DR. PEDRO OR DR. HONESTO
+					if (($value['medical_doctor_id']==1) or
+						($value['medical_doctor_id']==6)) {
+
+						$dTotalMDXrayFee+=$value['fee'];
+
+						if ($value['medical_doctor_id']==6) {
+							$sWithDrHonesto=" (WITH DR. HONESTO)";						
+						}
+					}
 									
 					$totalAmountFee+=$value['fee'];
 				}
@@ -599,6 +619,9 @@
 						echo "</td>";					
 					echo "</tr>";	
 
+					//added by Mike, 20220317
+					$dTotalMDXrayFee+=$value['x_ray_fee'];
+
 					$totalAmountFee+=$value['x_ray_fee'];								
 				}
 				
@@ -624,6 +647,9 @@
 						echo number_format($value['lab_fee'], 2, '.', ',');
 						echo "</td>";
 					echo "</tr>";			
+
+					//added by Mike, 20220317
+					$dTotalLabFee+=$value['lab_fee'];
 
 					$totalAmountFee+=$value['lab_fee'];								
 				}
@@ -669,11 +695,46 @@
 							echo "</td>";
 						echo "</tr>";			
 
+						//added by Mike, 20220317
+						$dTotalMedItemFee+=$value['fee'];
+						
 						$totalAmountFee+=$value['fee'];
 					}
 				}
 			}
 		}
+		
+		//added by Mike, 20220317
+				echo "<tr>";
+					echo "<td class='columnFee'>";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "</td>";			
+					echo "<td class='columnItemHeaderList'>";
+
+					//echo $dTotalMDXrayFee."<br/>";
+
+					$dTotalMDXrayFeeWithDiscount=($dTotalMDXrayFee/(1-0.20))*0.20;
+
+					if ((strpos($result[0]['notes'],"SC;")!==false) or
+						((strpos($result[0]['notes'],"PWD;")!==false))) {
+						
+						//added by Mike, 20220317
+						//note: "WITH DR. HONESTO" TEXT NOT ANYMORE DISPLAYED
+						
+						echo "MOSC RECEIPT TOTAL (discounted: ".number_format($dTotalMDXrayFeeWithDiscount, 2, '.', ',').")";
+					}
+					else {
+						echo "MOSC RECEIPT TOTAL".$sWithDrHonesto;
+					}
+					echo "</td>";
+					echo "<td class='columnFee'>";
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					echo "<b>".number_format($dTotalMDXrayFee+$dTotalLabFee+$dTotalMedItemFee, 2, '.', ',')."</b>";
+					echo "</td>";
+				echo "</tr>";	
+		
 ?>		
 
 		<!-- non-med item transaction -->
@@ -686,7 +747,7 @@
 		if (($resultPaidNonMedItem!=null) and (count($resultPaidNonMedItem) > 0)) {			
 			if ((isset($resultPaidNonMedItem)) and ($resultPaidNonMedItem!=False)) {
 //				$resultCount = count($resultPaidMedItem);			
-
+/*
 				//added by Mike, 20220317
 				echo "<tr>";
 					echo "<td class='columnFee'>";
@@ -701,7 +762,7 @@
 					echo "<td class='columnFee'>";
 					echo "</td>";
 				echo "</tr>";		
-									
+*/									
 				foreach ($resultPaidNonMedItem as $value) {					
 					if ($value['fee']!=0) {
 						echo "<tr>";
@@ -751,10 +812,10 @@
 
 					if ((strpos($result[0]['notes'],"SC;")!==false) or
 						((strpos($result[0]['notes'],"PWD;")!==false))) {
-						echo "TOTAL (discounted: ".number_format($dTotalNonMedFeeWithDiscount, 2, '.', ',').")";
+						echo "PAS RECEIPT TOTAL (discounted: ".number_format($dTotalNonMedFeeWithDiscount, 2, '.', ',').")";
 					}
 					else {
-						echo "TOTAL";
+						echo "PAS RECEIPT TOTAL";
 					}
 					echo "</td>";
 					echo "<td class='columnFee'>";
@@ -902,8 +963,9 @@
 			<td class="columnFee">
 			</td>
 			<td class="column">
-			</td>
-			<td class="column">
+			</td>			
+			<td class='columnItemHeaderList'>
+				GRAND TOTAL:
 			</td>
 			<td class="columnFee">
 			</td>
