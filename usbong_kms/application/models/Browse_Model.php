@@ -5061,6 +5061,22 @@ class Browse_Model extends CI_Model
 			return False;
 		}
 		
+		//added by Mike, 20220317
+		if ($itemTypeId==2) { //NON-MED
+//			echo $rowArray[0]['transaction_id'];
+			
+			$this->db->select('t1.receipt_number, t1.receipt_id');
+			$this->db->from('receipt as t1');
+			$this->db->where('t1.transaction_id',$rowArray[0]['transaction_id']);
+			$query = $this->db->get('receipt');
+
+			$receiptTransactionRowArray = $query->result_array();
+					
+			if (isset($receiptTransactionRowArray[0])) {			
+				$rowArray[0]['receipt_id']=$receiptTransactionRowArray[0]['receipt_id'];
+			}		
+		}
+		
 		return $rowArray;
 	}		
 
