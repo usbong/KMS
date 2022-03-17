@@ -572,16 +572,58 @@
 						}
 					}
 
-					//note: 800 -> 600; gives over 20% discount for SC classification;
-					//but NOT for all PWD classifications
-					if ((strpos($result[0]['notes'],"SC;")!==false) or
-						((strpos($result[0]['notes'],"PWD;")!==false))) {
 
-						if ($value['fee']==600) {
-							$dTotalMDDiscountedFeePlus+=40;
-							$dTotalMDDiscountedFeePlus+=10; //added due to 800 -> 600 in MD Fee
-						}
+				//added by Mike, 20220317
+				$dTotalMDFee=$value['fee'];
+				$dTotalMDFeeWithDiscount=($dTotalMDFee/(1-0.20))*0.20;
+
+				if (!isset($dTotalMDXrayFeeWithDiscount)) {
+					$dTotalMDXrayFeeWithDiscount=0;
+				}
+
+				//note: 800 -> 600; gives over 20% discount for SC classification;
+				//but NOT for all PWD classifications
+				if ((strpos($result[0]['notes'],"SC;")!==false) or
+					((strpos($result[0]['notes'],"PWD;")!==false))) {
+
+					if ($value['fee']==600) {
+						$dTotalMDDiscountedFeePlus+=40;
+						$dTotalMDDiscountedFeePlus+=10; //added due to 800 -> 600 in MD Fee
 					}
+				}
+
+
+
+				if (($result[0]['medical_doctor_id']==1) or
+					($result[0]['medical_doctor_id']==6)) {
+					$dTotalMDXrayFeeWithDiscount+=$dTotalMDDiscountedFeePlus;
+				}				
+				//note: add MD RECEIPT TOTAL only IF NOT DR. PEDRO OR DR. HONESTO				
+				else {
+					echo "<tr>";
+						echo "<td class='columnFee'>";
+						echo "</td>";			
+						echo "<td class='column'>";
+						echo "</td>";			
+						echo "<td class='columnItemHeaderList'>";
+	
+						if ((strpos($result[0]['notes'],"SC;")!==false) or
+							((strpos($result[0]['notes'],"PWD;")!==false))) {
+							echo "MD RECEIPT TOTAL (discounted: ".number_format($dTotalMDFeeWithDiscount+$dTotalMDDiscountedFeePlus, 2, '.', ',').")";
+						}
+						else {
+							echo "MD RECEIPT TOTAL";
+						}
+	
+						echo "</td>";
+						echo "<td class='columnFee'>";
+						echo "</td>";	
+						echo "<td class='columnFee'>";
+						echo "<b>".number_format($dTotalMDFee, 2, '.', ',')."</b>";
+						echo "</td>";
+					echo "</tr>";		
+				}
+
 
 									
 					$totalAmountFee+=$value['fee'];
