@@ -861,7 +861,9 @@
 						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PATIENT NAME")) {						
 						$cellValue="<a href='".site_url('browse/viewPatient/'.$value['patient_id'])."' id='viewPatientId'>
 							<div class='patientName'>".
-								str_replace('ï¿½','Ã‘',$value['patient_name'])."
+								//edited by Mike, 20220317
+								//str_replace('ï¿½','Ã‘',$value['patient_name'])."
+								str_replace("�","Ñ",$value['patient_name'])."
 							</div>								
 						</a>";
 ?>
@@ -1525,8 +1527,9 @@
 			<?php
 							//TO-DO: -update: this
 							//echo $value['patient_name'];
-							echo str_replace("ï¿½","Ã‘",$value['patient_name']);
-
+							//edited by Mike, 20220317
+//							echo str_replace("ï¿½","Ã‘",$value['patient_name']);							
+							echo str_replace("�","Ñ",$value['patient_name']);
 			?>		
 							</div>								
 						</a>							

@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220222; from 20211204
+' @date updated: 20220317; from 20220222
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -891,7 +891,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php
 								//TO-DO: -update: this
 								//echo $value['patient_name'];
-								echo str_replace("ï¿½","Ã‘",$value['patient_name']);
+								//edited by Mike, 20220317
+//								echo str_replace("ï¿½","Ã‘",$value['patient_name']);							
+								echo str_replace("�","Ñ",$value['patient_name']);
 				?>		
 								</div>								
 							</a>

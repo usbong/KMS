@@ -310,7 +310,9 @@
 			<td>
 <?php			
 				//BERGSTEIN, AKI
-				echo $result[0]['patient_name'];
+				//edited by Mike, 20220317
+//				echo $result[0]['patient_name'];
+				echo str_replace("�","Ñ",$result[0]['patient_name']);
 ?>				
 			</td>
 			<td>
