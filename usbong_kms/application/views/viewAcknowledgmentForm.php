@@ -882,13 +882,26 @@
 						echo "PAS RECEIPT TOTAL (discounted: ".number_format($dTotalNonMedFeeWithDiscount, 2, '.', ',').")";
 					}
 					else {
-						echo "PAS RECEIPT TOTAL";
+						//edited by Mike, 20220317
+						//echo "PAS RECEIPT TOTAL";
+
+						if (isset($resultPaidNonMedItem[0]['receipt_id'])) {
+							
+							$dTotalNonMedVATFee=$dTotalNonMedFee-$dTotalNonMedFee/(1+0.12);
+							
+							echo "PAS RECEIPT TOTAL (WITH 12% VAT: @".number_format($dTotalNonMedVATFee, 2, '.', ',').")";
+						}
+						else {
+							echo "PAS RECEIPT TOTAL";
+						}
 					}
 					echo "</td>";
 					echo "<td class='columnFee'>";
 					echo "</td>";	
 					echo "<td class='columnFee'>";
+					//edited by Mike, 20220317
 					echo "<b>".number_format($dTotalNonMedFee, 2, '.', ',')."</b>";
+					//echo "<b>".number_format($dTotalNonMedFee+$dTotalNonMedFeeWithVAT, 2, '.', ',')."</b>";
 					echo "</td>";
 				echo "</tr>";										
 			}
