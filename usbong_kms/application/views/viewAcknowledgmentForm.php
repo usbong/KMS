@@ -338,7 +338,6 @@
 */				
 /*	//edited by Mike, 20210809
 				echo $result[0]['location_address'];				
-
 				if (!empty($result[0]['barangay_address'])) {
 					if (!empty($result[0]['location_address'])) {
 						echo ", ";
@@ -348,7 +347,6 @@
 				else {
 					echo " ";
 				}
-
 				if (!empty($result[0]['postal_address'])) {
 					if (!empty($result[0]['barangay_address'])) {
 						echo ", ";
@@ -358,7 +356,6 @@
 				else {
 					echo " ";
 				}
-
 				if (!empty($result[0]['province_city_ph_address'])) {
 					if (!empty($result[0]['postal_address'])) {
 						echo ", ";
@@ -524,6 +521,7 @@
 		$dTotalMDXrayFee=0;
 		$dTotalLabFee=0;
 		$dTotalMedItemFee=0;
+		$dTotalMDDiscountedFeePlus=0;
 		
 		//DR. HONESTO
 		$sWithDrHonesto="";
@@ -562,13 +560,26 @@
 					//DR. PEDRO OR DR. HONESTO
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6)) {
-
+						
+						//edited by Mike, 20220317
 						$dTotalMDXrayFee+=$value['fee'];
 
 						if ($value['medical_doctor_id']==6) {
 							$sWithDrHonesto=" (WITH DR. HONESTO)";						
 						}
 					}
+
+					//note: 800 -> 600; gives over 20% discount for SC classification;
+					//but NOT for all PWD classifications
+					if ((strpos($result[0]['notes'],"SC;")!==false) or
+						((strpos($result[0]['notes'],"PWD;")!==false))) {
+
+						if ($value['fee']==600) {
+							$dTotalMDDiscountedFeePlus+=40;
+							$dTotalMDDiscountedFeePlus+=10; //added due to 800 -> 600 in MD Fee
+						}
+					}
+
 									
 					$totalAmountFee+=$value['fee'];
 				}
@@ -712,10 +723,19 @@
 					echo "</td>";			
 					echo "<td class='columnItemHeaderList'>";
 
-					//echo $dTotalMDXrayFee."<br/>";
-
 					$dTotalMDXrayFeeWithDiscount=($dTotalMDXrayFee/(1-0.20))*0.20;
 
+/*
+					//note: 800 -> 600; gives over 20% discount for SC classification;
+					if (strpos($result[0]['notes'],"SC;")!==false) {
+*/
+					//added by Mike, 20220317
+					//DR. PEDRO OR DR. HONESTO
+					if (($result[0]['medical_doctor_id']==1) or
+						($result[0]['medical_doctor_id']==6)) {
+						$dTotalMDXrayFeeWithDiscount+=$dTotalMDDiscountedFeePlus;
+					}
+					
 					if ((strpos($result[0]['notes'],"SC;")!==false) or
 						((strpos($result[0]['notes'],"PWD;")!==false))) {
 						
@@ -892,7 +912,6 @@
 				1500
 			</td>
 		</tr>
-
 		<tr>
 			<td class="columnFee">
 			</td>
@@ -906,7 +925,6 @@
 			<td class="columnFee">
 			</td>
 		</tr>
-
 		<tr>
 			<td class="columnFee">
 				1
@@ -924,7 +942,6 @@
 				400
 			</td>
 		</tr>
-
 		<tr>
 			<td class="columnFee">
 				1
@@ -942,7 +959,6 @@
 				250
 			</td>
 		</tr>
-
 		<tr>
 			<td class="columnFee">
 			</td>
