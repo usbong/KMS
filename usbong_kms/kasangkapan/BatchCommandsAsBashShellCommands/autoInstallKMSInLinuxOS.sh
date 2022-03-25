@@ -49,6 +49,22 @@ mkdir $myDirectory
 # added by Mike, 20220325
 mkdir $myDirectory"/noonReport/"
 
+# added by Mike, 20220325
+mkdir "/home/unit_member/MOSC/output/"
+mkdir "/home/unit_member/MOSC/output/informationDesk/"
+mkdir "/home/unit_member/MOSC/output/informationDesk/cashier/"
+# reminder:
+#7 - Full (Read, Write & Execute)
+#6 - read and write
+#5 - read and execute
+#4 - read only
+#3 - write and execute
+#2 - write only
+#1 - execute only
+#0 - none 
+#owner, group, user
+chmod 777 "/home/unit_member/MOSC/output/informationDesk/cashier/"
+
 if [ ! -f ./phantomjs ]; then
 	echo "phantomjs does NOT yet exist in this directory."
 	#part 1 download file
