@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20220107; FROM 20211214
+  @date updated: 20220325; FROM 20220107
   @website address: www.usbong.ph
   
   Input:
@@ -45,9 +45,9 @@
 	//added by Mike, 20200524
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
 	//added by Mike, 20220325
-	//TO-DO: store: location in another file that is auto-generated during installation
-	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
-//	$fileBasePath = "/home/unit_member/MOSC/output/informationDesk/cashier/";
+	//TO-DO: store: fileBasePath location in another file that is auto-generated during installation
+//	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	$fileBasePath = "/home/unit_member/MOSC/output/informationDesk/cashier/";
 		
 	//added by Mike, 20210323
 	//With Linux Machine, if $fileBasePath does not exist, Computer writes in the same folder where getSalesReportsForTheDay.php is located
