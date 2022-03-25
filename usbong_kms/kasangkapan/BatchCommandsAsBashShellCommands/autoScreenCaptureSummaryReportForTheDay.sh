@@ -2,7 +2,7 @@
 
 # @echo off
 #
-# Copyright 2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+# Copyright 2021~2022 USBONG
 # 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 #
@@ -10,10 +10,11 @@
 #
 # Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 #
-# @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
+# @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20210322
-# @date updated: 20210322
+# @date updated: 20220325; from 20210322
+# @website address: http://www.usbong.ph
 #
 # References:
 # 1) https://phantomjs.org/; last accessed: 20200724
@@ -33,6 +34,7 @@
 #myDate=$(date '+%Y-%m-%d %H:%M:%S')
 myDate=$(date '+%Y%m%d')
 
-# edited by Mike, 20210322
+#edited by Mike, 20210322
 # explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
-xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/output/"$myDate
+#edited by Mike, 20220325
+xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/BatchCommandsAsBashShellCommands/output/"$myDate
