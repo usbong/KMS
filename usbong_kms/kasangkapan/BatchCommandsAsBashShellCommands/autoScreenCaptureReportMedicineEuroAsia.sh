@@ -13,12 +13,13 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20210225
-# @date updated: 20220324; from 20210321
+# @date updated: 20220325; from 20220324
 # @website address: http://www.usbong.ph
 #
 # References:
-# 1) https://phantomjs.org/; last accessed: 20200724
-# 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
+# 1) https://phantomjs.org/; last accessed: 20220325; from 20200724
+# --> downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
+# --> https://phantomjs.org/download.html; last accessed: 20220325
 #
 # Notes:
 # 1) verified: with Linux Machine, i.e. LUBUNTU (version LTS 20.04)
@@ -40,6 +41,12 @@ myDate=$(date '+%Y%m%d')
 # removed by Mike, 20210225
 # echo %myDateDay%
 
+# added by Mike, 20220325
+myDirectory="/opt/lampp/htdocs/usbong_kms/kasangkapan/BatchCommandsAsBashShellCommands/output/"
+mkdir $myDirectory
+myDirectory=$myDirectory$myDate"/"
+mkdir $myDirectory
+
 # edited by Mike, 20210225
 # phantomjs saveWebPageAsImageFile.js "confirmMedicine" 
 # edited by Mike, 20210320
@@ -53,12 +60,6 @@ myDate=$(date '+%Y%m%d')
 
 # edited by Mike, 20210320
 #explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
-
-# added by Mike, 20220324
-myDirectory="/opt/lampp/htdocs/usbong_kms/kasangkapan/BatchCommandsAsBashShellCommands/output/"
-mkdir myDirectory
-myDirectory=$myDirectory$myDate"/"
-mkdir $myDirectory
 
 #edited by Mike, 20220324
 #xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/output/"$myDate
