@@ -55,12 +55,14 @@ if [ ! -f ./phantomjs ]; then
 	#reference: https://askubuntu.com/questions/25347/what-command-do-i-need-to-unzip-extract-a-tar-gz-file;
 	#last accessed: 20223025
 	#removed "z" in "-xvzf" to be "-xvf"
-	#TO-DO: -add: auto-identify file version, e.g.  2.1.1
-	tar -xvf phantomjs-2.1.1-linux-x86_64.tar.bz2
-	cp ./phantomjs-2.1.1-linux-x86_64/bin/phantomjs ./
+	#edited by Mike, 20220325
+	#auto-identify file version, e.g.  2.1.1
+	#tar -xvf phantomjs-2.1.1-linux-x86_64.tar.bz2
+	#cp ./phantomjs-2.1.1-linux-x86_64/bin/phantomjs ./
+	tar -xvf phantomjs-*-linux-x86_64.tar.bz2
+	cp ./phantomjs-*-linux-x86_64/bin/phantomjs ./
 	
-	#TO-DO: -add: auto-delete excess files;
-	
+	#TO-DO: -add: auto-delete excess files;	
 else
 	echo "phantomjs already exists in this directory."
 fi
