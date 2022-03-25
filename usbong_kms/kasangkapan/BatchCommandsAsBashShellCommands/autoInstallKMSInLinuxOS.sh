@@ -46,6 +46,9 @@ mkdir $myDirectory
 myDirectory=$myDirectory$myDate"/"
 mkdir $myDirectory
 
+# added by Mike, 20220325
+mkdir $myDirectory"/noonReport/"
+
 if [ ! -f ./phantomjs ]; then
 	echo "phantomjs does NOT yet exist in this directory."
 	#part 1 download file
