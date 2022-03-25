@@ -44,8 +44,11 @@
 
 	//added by Mike, 20200524
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
+	//added by Mike, 20220325
+	//TO-DO: store: location in another file that is auto-generated during installation
 	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
-	
+//	$fileBasePath = "/home/unit_member/MOSC/output/informationDesk/cashier/";
+		
 	//added by Mike, 20210323
 	//With Linux Machine, if $fileBasePath does not exist, Computer writes in the same folder where getSalesReportsForTheDay.php is located
 	//the file name includes the value of $fileBasePath
