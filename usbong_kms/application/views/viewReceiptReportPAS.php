@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 SYSON, MICHAEL B.
+' Copyright 2020~2022 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,9 +10,8 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200420
-' @date updated: 20210702
-' @website address: http://www.usbong.php
-'
+' @date updated: 20220325; from 20210702
+' @website address: http://www.usbong.ph
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -313,8 +312,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div><b>TODAY: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<?php 
-		//TO-DO: -update: this
-		if ($result[0]["medical_doctor_name"]==""){
+		/* edited by Mike, 20220325; from 20200929;
+			Error: "Trying to access array offset on value of type bool"
+			in Linux Machine
+	 	*/
+		//if ($result[0]["medical_doctor_name"]==""){
+		if ((!isset($result[0]["medical_doctor_name"])) or ($result[0]["medical_doctor_name"]=="")) {
 			echo "<br/>There are no transactions for the day.";
 		}
 		else {
