@@ -2,7 +2,7 @@
 
 # @echo off
 #
-# Copyright 2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+# Copyright 2021~2022 SYSON, MICHAEL B.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 #
@@ -10,10 +10,11 @@
 #
 # Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 #
-# @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
+# @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20210322
-# @date updated: 20210322
+# @date updated: 20220326; from 20210322
+# @website address: http://www.usbong.ph
 #
 # References:
 # 1) https://phantomjs.org/; last accessed: 20200724
@@ -26,6 +27,9 @@
 # --> example: /opt/lampp/htdocs/usbong_kms/kasangkapan
 # 4) update: input/kasangkapanConfig.txt to set computer server address
 # --> default: http://localhost
+
+#added by Mike, 20220326
+myDirectory="/opt/lampp/htdocs/usbong_kms/kasangkapan/BatchCommandsAsBashShellCommands/output/"
 
 # edited by Mike, 20210320
 # set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
@@ -41,8 +45,14 @@ echo $myDateDay
 
 #cat ./input/kasangkapanConfig.txt
 #note: python -c 'print "hallo"'
+#edited by Mike, 20220326
+#note: python -c 'print("hallo")'
+
 if [ -e ./input/kasangkapanConfig.txt ]; then
-	myComputerServerAddress=$(cat ./input/kasangkapanConfig.txt | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["computerServerAddress"]')
+#edited by Mike, 20220326
+#	myComputerServerAddress=$(cat ./input/kasangkapanConfig.txt | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["computerServerAddress"]')
+	myComputerServerAddress=$(cat ./input/kasangkapanConfig.txt | python3 -c 'import json,sys;obj=json.load(sys.stdin);print(obj["computerServerAddress"])')
+
 else 
 	echo "Computer: \"./input/kasangkapanConfig.txt\" does not exist.";
 	echo "Computer: We use as default computer server address: \"http://localhost\".";
@@ -86,5 +96,6 @@ fi
 ./phantomjs saveWebPageAsImageFile.js viewReportPatientQueue $myComputerServerAddress
 
 #explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
-xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/output/"$myDate
-
+#edited by Mike, 20220326
+#xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/output/"$myDate
+xdg-open $myDirectory$myDate

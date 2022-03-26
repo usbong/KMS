@@ -16,7 +16,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220325
-# @date updated: 20220325
+# @date updated: 20220326; from 20220325
 # @website address: http://www.usbong.ph
 #
 # References:
@@ -85,5 +85,8 @@ if [ ! -f ./phantomjs ]; then
 else
 	echo "phantomjs already exists in this directory."
 fi
+
+#added by Mike, 20220326
+sudo apt-get install python3
 
 #TO-DO: -update: this
