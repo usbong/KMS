@@ -53,6 +53,11 @@ mkdir $myDirectory"/noonReport/"
 mkdir "/home/unit_member/MOSC/output/"
 mkdir "/home/unit_member/MOSC/output/informationDesk/"
 mkdir "/home/unit_member/MOSC/output/informationDesk/cashier/"
+
+# Reference: https://askubuntu.com/questions/158735/how-to-set-permissions-so-that-i-can-read-and-write-to-another-partition;
+# last accessed: 20220326
+# answer by: Luis Alvarado, 20120702; edited 20120702
+
 # reminder:
 #7 - Full (Read, Write & Execute)
 #6 - read and write
@@ -64,6 +69,10 @@ mkdir "/home/unit_member/MOSC/output/informationDesk/cashier/"
 #0 - none 
 #owner, group, user
 chmod 777 "/home/unit_member/MOSC/output/informationDesk/cashier/"
+
+# added by Mike, 20220326
+mkdir "/home/unit_member/MOSC/DB/"
+sudo chmod 644 "/opt/lampp/etc/my.cnf"
 
 if [ ! -f ./phantomjs ]; then
 	echo "phantomjs does NOT yet exist in this directory."
