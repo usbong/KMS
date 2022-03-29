@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
+' Copyright 2020~2022 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -7,9 +7,11 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @author: Michael Syson
+' @company: USBONG
+' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210110
+' @date updated: 20220329; from 20210110
+' @website address: http:/www.usbong.ph
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -259,7 +261,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<?php 
-		if ($result[0]["medical_doctor_name"]==""){
+		//edited byMike, 20220329
+//		if ($result[0]["medical_doctor_name"]==""){
+		if (!isset($result[0]["medical_doctor_name"]) or ($result[0]["medical_doctor_name"]=="")) {
 			echo "<br/>There are no transactions for the day.";
 		}
 		else {
@@ -554,7 +558,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
