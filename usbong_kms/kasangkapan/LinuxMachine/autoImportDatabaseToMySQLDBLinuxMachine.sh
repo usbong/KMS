@@ -14,14 +14,22 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220328
+# @last modified: 20220329; from 20220328
 # @website address: http://www.usbong.ph
 #
+# Reference: www.stackoverflow.com
+#
+
+cd /home/unit_member/Desktop/
+./startXAMPPCommandInLinuxPC.sh 
 
 cd /opt/lampp/bin/
 
-#TO-DO: -add: auto-DROP DB: usbong_kms
-#TO-DO: -add: auto-add new DB: usbong_kms
+#auto-DROP DB: usbong_kms; force DB drop without need for additional re-verification
+./mysqladmin -uroot drop -f usbong_kms 
+
+#auto-add new DB: usbong_kms
+./mysql -uroot -e "create database usbong_kms"
 
 # store in temporary container the newest .sql file;
 #reminder: -t : sort by time from newest at top; -n1 : first entry
