@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220329; from 20220328
+# @last modified: 20220330; from 20220329
 # @website address: http://www.usbong.ph
 #
 # Reference: www.stackoverflow.com
@@ -23,12 +23,26 @@
 cd /home/unit_member/Desktop/
 ./startXAMPPCommandInLinuxPC.sh 
 
+# re-execute to verify if already running:
+#XAMPP: Starting Apache...already running.
+#XAMPP: Starting MySQL...already running.
+#XAMPP: Starting ProFTPD...already running.
+echo "re-verifying XAMPP if already running..."
+while ./startXAMPPCommandInLinuxPC.sh | grep "...ok"; do
+	./startXAMPPCommandInLinuxPC.sh
+done
+
+echo "--"
+echo "XAMPP already running."
+
+
 cd /opt/lampp/bin/
 
 #auto-DROP DB: usbong_kms; force DB drop without need for additional re-verification
 ./mysqladmin -uroot drop -f usbong_kms 
 
 #auto-add new DB: usbong_kms
+echo "Adding database: usbong_kms"
 ./mysql -uroot -e "create database usbong_kms"
 
 # store in temporary container the newest .sql file;
@@ -38,4 +52,5 @@ inputMySQLFile=$(ls -t /home/unit_member/Documents/halimbawa/DB | head -n1)
 #./mysql -uroot usbong_kms < /home/unit_member/Documents/halimbawa/DB/usbong_kmsV20220328T0845.sql
 #TO-DO: -update: username and password; -uusername -ppassword
 ./mysql -uroot usbong_kms < /home/unit_member/Documents/halimbawa/DB/$inputMySQLFile
+
 
