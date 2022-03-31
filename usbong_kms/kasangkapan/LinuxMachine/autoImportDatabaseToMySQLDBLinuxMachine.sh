@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220330; from 20220329
+# @last modified: 20220331; from 20220330
 # @website address: http://www.usbong.ph
 #
 # Reference: www.stackoverflow.com
@@ -35,6 +35,10 @@ done
 echo "--"
 echo "XAMPP already running."
 
+#added by Mike, 20220331
+#note: re-verify: mount error(16): Device or resource busy
+#current solution: execute: "accessDatabaseStorageInWindowsPCFromLinuxPC.sh" first before "autoImportDatabaseToMySQLDBLinuxMachine.sh"
+./accessDatabaseStorageInWindowsPCFromLinuxPC.sh
 
 cd /opt/lampp/bin/
 
