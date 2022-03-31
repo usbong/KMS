@@ -10,7 +10,7 @@
 #  @company: USBONG
 #  @author: SYSON, MICHAEL B.
 #  @date created: 2020
-#  @date updated: 20220326; from 20220325
+#  @date updated: 20220331; from 20220326
 #  @website address: http://www.usbong.ph
 #
 
@@ -20,5 +20,5 @@ libreoffice /home/unit_member/MOSC/moscReportForTheDayLibreOfficeCalcLinuxMachin
 #edited by Mike, 20220326
 # cd "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\
 # "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\autoScreenCaptureReports.bat"
-cd "/opt/lampp/htdocs/usbong_kms/kasangkapan/BatchCommandsAsBashShellCommands/"
+cd "/opt/lampp/htdocs/usbong_kms/kasangkapan/LinuxMachine/"
 ./autoScreenCaptureReports.sh

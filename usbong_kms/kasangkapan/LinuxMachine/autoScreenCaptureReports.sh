@@ -13,7 +13,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20210322
-# @date updated: 20220326; from 20210322
+# @date updated: 20220331; from 20220326
 # @website address: http://www.usbong.ph
 #
 # References:
@@ -29,7 +29,7 @@
 # --> default: http://localhost
 
 #added by Mike, 20220326
-myDirectory="/opt/lampp/htdocs/usbong_kms/kasangkapan/BatchCommandsAsBashShellCommands/output/"
+myDirectory="/opt/lampp/htdocs/usbong_kms/kasangkapan/LinuxMachine/output/"
 
 # edited by Mike, 20210320
 # set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
