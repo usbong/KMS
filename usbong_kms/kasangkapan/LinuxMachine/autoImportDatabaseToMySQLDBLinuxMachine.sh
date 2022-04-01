@@ -31,11 +31,12 @@ echo "re-verifying XAMPP if already running..."
 #edited by Mike, 20220401
 #while ./startXAMPPCommandInLinuxPC.sh | grep "...ok"; do
 while ./startXAMPPCommandInLinuxPC.sh | grep "...not running."; do
-
-	./startXAMPPCommandInLinuxPC.sh
-
+	
+	#removed by Mike, 20220401
+	#./startXAMPPCommandInLinuxPC.sh
+	
 	#added by Mike, 20220401
-	sleep 3 # wait 1 second
+	sleep 3 # wait 3 seconds
 done
 
 echo "--"
@@ -44,7 +45,16 @@ echo "XAMPP already running."
 #added by Mike, 20220331
 #note: re-verify: mount error(16): Device or resource busy
 #current solution: execute: "accessDatabaseStorageInWindowsPCFromLinuxPC.sh" first before "autoImportDatabaseToMySQLDBLinuxMachine.sh"
-./accessDatabaseStorageInWindowsPCFromLinuxPC.sh
+./accessDatabaseStorageInWindowsPCFromLinuxPC.sh > ./tempOutput.txt
+
+#edited by Mike, 20220401
+#while ! cat ./tempOutput.txt | grep "sending incremental file list"; do
+while ! cat ./tempOutput.txt | grep "destination"; do
+	sleep 3 # wait 1 second
+	./accessDatabaseStorageInWindowsPCFromLinuxPC.sh > ./tempOutput.txt
+done
+
+rm ./tempOutput.txt
 
 cd /opt/lampp/bin/
 
