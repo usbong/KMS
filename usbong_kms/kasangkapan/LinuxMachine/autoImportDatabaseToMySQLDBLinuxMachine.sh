@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220331; from 20220330
+# @last modified: 20220401; from 20220331
 # @website address: http://www.usbong.ph
 #
 # Reference: www.stackoverflow.com
@@ -28,8 +28,14 @@ cd /home/unit_member/Desktop/
 #XAMPP: Starting MySQL...already running.
 #XAMPP: Starting ProFTPD...already running.
 echo "re-verifying XAMPP if already running..."
-while ./startXAMPPCommandInLinuxPC.sh | grep "...ok"; do
+#edited by Mike, 20220401
+#while ./startXAMPPCommandInLinuxPC.sh | grep "...ok"; do
+while ./startXAMPPCommandInLinuxPC.sh | grep "...not running."; do
+
 	./startXAMPPCommandInLinuxPC.sh
+
+	#added by Mike, 20220401
+	sleep 3 # wait 1 second
 done
 
 echo "--"
