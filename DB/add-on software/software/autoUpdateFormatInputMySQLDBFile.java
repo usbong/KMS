@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 2018
- * @last updated: 20220405; from 20220404
+ * @last updated: 20220406; from 20220405
  * @website address: http://www.usbong.ph
  *
  */
@@ -64,7 +64,19 @@ public class autoUpdateFormatInputMySQLDBFile {
 //		File mySQLDBInputFile = new File("input/"+"usbong_kmsV*"+".sql");
 		File mySQLDBInputFile = new File(args[0]);
 
-		PrintWriter outputWriter = new PrintWriter("output/"+args[0].replace("input/","").replace(".sql","Updated.sql"), "UTF-8");					
+		//edited by Mike, 20220406
+		//PrintWriter outputWriter = new PrintWriter("output/"+args[0].replace("input/","").replace(".sql","Updated.sql"), "UTF-8");
+		String sOutputFilename;
+		//Windows Machine OR Linux Machine?
+		if (System.getProperty("os.name").contains("Windows")) { //IF Windows
+			sOutputFilename = "output/"+args[0].replace("input\\","").replace(".sql","Updated.sql");
+		}
+		else {
+			sOutputFilename = "output/"+args[0].replace("input/","").replace(".sql","Updated.sql");
+		}
+				
+		PrintWriter outputWriter = new PrintWriter(sOutputFilename, "UTF-8");
+
 		Scanner sc = new Scanner(new FileInputStream(mySQLDBInputFile));				
 	
 		String sInputValue;
