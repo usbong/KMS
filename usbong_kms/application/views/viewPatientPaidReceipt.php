@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 2022320; from 2022317
+' @date updated: 20220407; from 20220320
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -876,7 +876,14 @@ else {
 <?php
 		}
 		else {
-			echo "<h4><span style='color:red'>SNACK ITEM NOT YET ADDED IN OFFICIAL RECEIPT</span></h4>";
+			//edited by Mike, 20220407
+			//echo "hallo: ".$outputTransaction['notes'];
+			if (strpos($outputTransaction['notes'], "NC;")!==false) {
+				echo "<h4><span style='color:red'>NO CHARGE (NC), I.E. GRATIS</span></h4>";
+			}
+			else {
+				echo "<h4><span style='color:red'>SNACK ITEM NOT YET ADDED IN OFFICIAL RECEIPT</span></h4>";
+			}
 //			echo "<br/>";
 		}
 ?>
