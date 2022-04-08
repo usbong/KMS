@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 2018
- * @last updated: 20220406; from 20220405
+ * @last updated: 20220408; from 20220406
  * @website address: http://www.usbong.ph
  *
  */
@@ -56,6 +56,9 @@ import java.text.SimpleDateFormat;
 
 public class autoUpdateFormatInputMySQLDBFile {	
 	private static boolean inDebugMode = true;
+
+	//TO-DO: -update: this to auto-read from input configuration file
+	private static String sOutputFilenameInDBDirectory = "G:\\Usbong MOSC\\Everyone\\Information Desk\\DB";
 	
 	public static void main ( String[] args ) throws Exception
 	{					
@@ -69,13 +72,15 @@ public class autoUpdateFormatInputMySQLDBFile {
 		String sOutputFilename;
 		//Windows Machine OR Linux Machine?
 		if (System.getProperty("os.name").contains("Windows")) { //IF Windows
-			sOutputFilename = "output/"+args[0].replace("input\\","").replace(".sql","Updated.sql");
+			//sOutputFilename = "output/"+args[0].replace("input\\","").replace(".sql","Updated.sql");
+			sOutputFilename = sOutputFilenameInDBDirectory+"/"+args[0].replace("input\\","").replace(".sql","Updated.sql");
 		}
 		else {
-			sOutputFilename = "output/"+args[0].replace("input/","").replace(".sql","Updated.sql");
+			//sOutputFilename = "output/"+args[0].replace("input/","").replace(".sql","Updated.sql");
+			sOutputFilename = sOutputFilenameInDBDirectory+"/"+args[0].replace("input/","").replace(".sql","Updated.sql");
 		}
 				
-		PrintWriter outputWriter = new PrintWriter(sOutputFilename, "UTF-8");
+		PrintWriter outputWriter = new PrintWriter(sOutputFilename, "UTF-8");		
 
 		Scanner sc = new Scanner(new FileInputStream(mySQLDBInputFile));				
 	
