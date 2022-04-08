@@ -1,3 +1,4 @@
+@echo OFF
 REM
 REM Copyright 2020~2022 USBONG
 REM 
@@ -10,7 +11,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20220406
-REM @date updated: 20220406; from 20220406
+REM @date updated: 20220408; from 20220407
 REM website address: http://www.usbong.ph
 REM
 REM Example input file: usbong_kmsV20220405T0834.sql
@@ -19,3 +20,5 @@ REM where: 20220405: YYYYMM
 REM java -cp ./software: autoUpdateFormatInputMySQLDBFile input/*.sql
 REM Windows Machine
 java -cp ./software; autoUpdateFormatInputMySQLDBFile input/*.sql
+
+exit
