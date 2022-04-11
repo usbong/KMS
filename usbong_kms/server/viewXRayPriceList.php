@@ -161,7 +161,9 @@
 	echo "<br/>";
 	//edited by Mike, 20210105
 //    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2020-09-01)"."</u></b><br/>";
-    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2021-01-01)"."</u></b><br/>";
+	//edited by Mike, 20220411
+//    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2021-01-01)"."</u></b><br/>";
+    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2022-02-01)"."</u></b><br/>";
 
 	echo "<br/>";
 	echo "<table>";
