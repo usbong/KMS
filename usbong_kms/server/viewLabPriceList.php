@@ -1,20 +1,21 @@
 <!--
-  Copyright 2020~2022 SYSON, MICHAEL B.
+  Copyright 2022~2022 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-
+  
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
   @date updated: 20220411; from 20210105
+  
   Input:
-  1) MySQL Database with X-Ray Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
+  1) MySQL Database with Lab Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
   Output:
-  1) X-Ray Price List that is viewable on a Computer Web Browser  
+  1) Lab Price List that is viewable on a Computer Web Browser  
   
   Computer Web Browser Address (Example):
-  1) http://localhost/usbong_kms/server/viewXRayPriceList.php   
+  1) http://localhost/usbong_kms/server/viewLabPriceList.php   
 -->
 <?php
 //defined('BASEPATH') OR exit('No direct script access allowed');
@@ -136,7 +137,7 @@
     /**/
     </style>
     <title>
-      X-Ray Price List (MOSC)
+      LAB Price List (MOSC)
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -161,7 +162,7 @@
 	echo "<br/>";
 	//edited by Mike, 20210105
 //    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2020-09-01)"."</u></b><br/>";
-    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2021-01-01)"."</u></b><br/>";
+    echo "<b><u>LAB PRICE LIST (EFFECTIVE: 2021-01-01)"."</u></b><br/>";
 
 	echo "<br/>";
 	echo "<table>";
@@ -175,22 +176,24 @@
 ?>	
 	<tr>
 	<td class='tableHeaderColumn'><b>COUNT</b></td>
-	<td class='tableHeaderColumn'><b>BODY LOCATION</b></td>
-	<td class='tableHeaderColumn'><b>TYPE</b></td>
+	<td class='tableHeaderColumn'><b>NAME</b></td>
 	<td class='tableHeaderColumn'><b>PRICE</b></td>
+<!--
 	<td class='tableHeaderColumn'><b>SC/PWD<br/>PRICE</b></td>
+-->
 	<tr>
 <?php	
 	//edited by Mike, 20200823
-	if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id and c.added_datetime_stamp = (select max(c2.added_datetime_stamp) from x_ray_service as c2 where c.x_ray_body_location_id=c2.x_ray_body_location_id and c.x_ray_type_id=c2.x_ray_type_id)"))	
+	if ($selectedLabPriceListResultArray = $mysqli->query("select lab_service_item_name, lab_service_price from lab_service_item where added_datetime_stamp = (select max(added_datetime_stamp))")) 
 	{
-		if ($selectedXRayPriceListResultArray->num_rows > 0) {
+		if ($selectedLabPriceListResultArray->num_rows > 0) {
 			//added by Mike, 20200820
 			$iRowCount = 0;
 
-			foreach ($selectedXRayPriceListResultArray as $valueArray) {
+			foreach ($selectedLabPriceListResultArray as $valueArray) {
 				//added by Mike, 20200820
-				$bodyLocationValue = "";
+//				$bodyLocationValue = ""; //removed by Mike, 20220411
+
 				$iCount = 0;
 				$isAlreadyDiscounted = false;
 								
@@ -208,10 +211,11 @@
 				echo "<td class='column'>";
 					echo $iRowCount;
 				echo "</td>";
-				
+
 				foreach ($valueArray as $value) {
 					echo "<td class='column'>";
 
+/* //removed by Mike, 20220411				
 						//added by Mike, 20200820
 						if ($bodyLocationValue=="") {
 							$bodyLocationValue = $value;
@@ -226,7 +230,8 @@
 								$isAlreadyDiscounted = true;
 							}
 						}
-						
+*/						
+/*
 						//echo strtoupper($value);
 						//Body Location: LUMBO-SACRAL TO LOWER THORACIC
 						if (strpos($value,"to")!==false) {
@@ -236,13 +241,17 @@
 						else {
 							echo strtoupper($value);
 						}
+*/					
+
+						echo strtoupper($value);
 							
 					echo "</td>";					
-					
+
 					//added by Mike, 20200820
 					$iCount = $iCount + 1;
 				}				
-				
+
+/*
 				//note: the last $value is x_ray_price
 				echo "<td class='column'>";
 					$scPwdPrice = $value - $value*0.20;
@@ -261,6 +270,7 @@
 
 					echo $scPwdPrice;
 				echo "</td>";					
+*/				
 				
 				echo "</tr>";
 			}
