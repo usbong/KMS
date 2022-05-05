@@ -41,3 +41,14 @@ TO-DO: -add: computer automation
 
 ## Additional Note: Digital version
 https://github.com/usbong/newsletters
+
+### DIGITAL NEWSLETTER TO PRINT-READY VERSION
+2022-05-05T17:20~17:42: ELAPSED TIME: 22MINS
+
+### PRINTING
+2022-05-05T17:42~17:57: ELAPSED TIME: 15MINS
+
+### GRAND TOTAL ELAPSED TIME: 37MINS
+
+### Reference: 2022-04 NEWSLETTER
+
