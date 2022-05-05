@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200420
-' @date updated: 20220326; from 20210702
+' @date updated: 20220505; from 20220326
 ' @website address: http://www.usbong.ph
 '
 -->
@@ -318,7 +318,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//error in Linux machine: "Trying to access array offset on value of type bool";
 		//"Trying to access array offset on value of type null"
 //		if ($result[0]["medical_doctor_name"]==""){
-		if ((isset($result)) or ($result[0]["medical_doctor_name"]=="")) {
+		//edited by Mike, 20220505
+//		if ((isset($result)) or ($result[0]["medical_doctor_name"]=="")) {
+		//if ($result[0]["medical_doctor_name"]==""){
+		if ((!isset($result[0]["medical_doctor_name"])) or ($result[0]["medical_doctor_name"]=="")) {
+
 			echo "<br/>There are no transactions for the day.";
 		}
 		else {
