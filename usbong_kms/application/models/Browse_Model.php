@@ -984,6 +984,9 @@ class Browse_Model extends CI_Model
 
 		$this->db->where('t1.item_type_id', 1); //1 = Medicine
 
+		//added by Mike, 20220514
+		$this->db->where('t1.is_hidden', 0); //1 = hidden
+
 		$this->db->like('t1.item_name', $param['nameParam']);
 		
 		//added by Mike, 20200607
