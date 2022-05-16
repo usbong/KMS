@@ -257,6 +257,28 @@ class Browse_Model extends CI_Model
 			$query = $this->db->get('patient');
 			$rowArray = $query->result_array();			
 		}
+		//added by Mike, 20220516
+		if ((strpos(strtoupper($param['nameParam']),"CANCEL")!==false)) {
+								
+			//added by Mike, 20210723; edited by Mike, 20211205
+			//execute even if no patient transaction in transactions table yet
+			//objective: speed-up system
+
+			$this->db->select('t1.patient_name, t1.patient_id');
+					
+			$this->db->from('patient as t1');
+			$iPatientCancelledId=-1; //CANCELLED
+
+			$this->db->limit(1);
+
+			//removed by Mike, 20210726
+			//"NONE" patient_id=0			
+			$this->db->where('t1.patient_id =', $iPatientCancelledId); //-1="CANCELLED" 					
+			
+			//added by Mike, 20210731
+			$query = $this->db->get('patient');
+			$rowArray = $query->result_array();			
+		}
 		else {
 			//added by Mike, 20210723; edited by Mike, 20210730
 			//part 1
@@ -422,7 +444,7 @@ class Browse_Model extends CI_Model
 			//to have a set medical_doctor_id
 			//backward compatible
 			//TO-DO: -reverify: this
-			if ($row["patient_id"]==0) {
+			if ($row["patient_id"]==0) {				
 			}
 			else {
 				//edited by Mike, 20210726
@@ -447,8 +469,8 @@ class Browse_Model extends CI_Model
 				}
 			}
 						
+						
 			if ($patientId==$row["patient_id"]) {				
-
 				//added by Mike, 20210723
 				if ($bIsSamePatientId) {
 					continue;
@@ -462,7 +484,12 @@ class Browse_Model extends CI_Model
 				
 				//edited by Mike, 20211205
 //				if (strpos($prevRowOfSamePatient["notes"],"ONLY") !==false) { //ANY
-				if ((isset($prevRowOfSamePatient["notes"])) and
+				
+				//edited by Mike, 20220516
+				if ($row["patient_id"]=="-1") {	
+					array_push($outputArray, $row);
+				}		
+				else if ((isset($prevRowOfSamePatient["notes"])) and
 					(strpos($prevRowOfSamePatient["notes"],"ONLY") !==false)) { //ANY
 
 					array_push($outputArray, $row);
