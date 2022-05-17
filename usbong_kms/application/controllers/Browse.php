@@ -2245,7 +2245,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 		else {
 			//TO-DO: -update: function instructions due to $medicalDoctorId not used as input
-			$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+			//removed by Mike, 20220517
+			//objective: speed-up system
+//			$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+
 			$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 		}
 
