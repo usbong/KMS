@@ -1307,6 +1307,183 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<input type="hidden" id="hasPatientInCartListParam" value="<?php echo $hasPatientInCartListParamValue;?>">
 
 <?php
+/*			
+			echo "<br/>";
+*/
+			echo '<h3>Patient Purchased Service History</h3>';
+
+/*	//removed by Mike, 20210723
+			if ((!isset($value)) or ($value['transaction_date']=="")) {				
+				echo '<div>';					
+				echo 'There are no transactions.';
+				echo '</div>';					
+			}
+			else {
+*/				
+				//edited by Mike, 20200406
+				$resultCount = 0;
+
+				if ((isset($resultPaid)) and ($resultPaid!=False)) {
+					$resultCount = count($resultPaid);
+				}
+	
+				//item purchase history			
+				if ($resultCount==0) {				
+					echo '<div>';					
+					echo 'There are no transactions.';
+					echo '</div>';					
+				}
+				else {
+	//				$resultCount = count($resultPaid);
+					if ($resultCount==1) {
+						echo '<div>Showing <b>'.count($resultPaid).'</b> result found.</div>';
+					}
+					else {
+						echo '<div>Showing <b>'.count($resultPaid).'</b> results found.</div>';			
+					}			
+					echo '<br/>';
+					
+					echo "<table class='search-result'>";
+					
+					//add: table headers
+					//added by Mike, 20200806
+?>				
+					  <tr class="row">
+						<td class ="columnTableHeader">				
+				<?php
+							echo "ADDED DATETIME";
+				?>		
+						</td>
+
+						<td class ="columnTableHeader">				
+				<?php
+							echo "PATIENT NAME";
+				?>		
+						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "PF";
+							?>
+						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "X-RAY";
+							?>
+						</td>
+						<td class ="columnTableHeaderFee">				
+							<?php
+								echo "LAB";
+							?>
+						</td>
+						<td class ="columnTableHeaderNotes">				
+							<?php
+								echo "CLASSIFICATION<br/>& NOTES";
+							?>
+						</td>
+
+						<td class ="columnTableHeaderNotes">				
+							<?php
+								echo "TOTAL";
+							?>
+						</td>
+					  </tr>
+			<?php
+
+
+					$iCount = 1;
+					foreach ($resultPaid as $value) {
+	/*	
+					$value = $result[0];
+	*/				
+			?>				
+			
+						  <tr class="row">
+							<td class ="column">				
+								<div class="transactionDate">
+					<?php
+							//edited by Mike, 20210721
+							//TO-DO: -add: official receipt number, et cetera if exist
+
+//							echo str_replace(" ","T",$value['added_datetime_stamp']);
+
+					echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+
+							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+						</a>";
+				?>
+								</div>								
+							</td>
+							<td class ="column">				
+								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+									<div class="patientName">
+					<?php
+									//TO-DO: -update: this
+									//echo $value['patient_name'];
+									echo str_replace("ï¿½","Ã‘",$value['patient_name']);
+	
+					?>		
+									</div>								
+								</a>							
+							</td>							
+							<td class ="columnFee">				
+								<?php
+									echo $value['fee'];
+								?>
+							</td>
+							<td class ="columnFee">				
+								<?php
+									echo $value['x_ray_fee'];
+								?>
+							</td>
+							<td class ="columnFee">				
+								<?php
+									echo $value['lab_fee'];
+								?>
+							</td>
+							<td class ="columnNotes">				
+								<?php
+									//edited by Mike, 20200518
+									//echo $value['notes'];
+									
+									if ($value['notes']=="") {
+										echo "NONE";
+									}
+									else {
+										echo $value['notes'];
+									}
+								?>
+							</td>
+							<!-- added by Mike, 20200518 -->
+							<td class ="columnFee">				
+								<?php
+									$totalFee = $value['fee'] + $value['x_ray_fee'] + $value['lab_fee'];
+									//echo $totalFee;
+
+									echo number_format($totalFee, 2, '.', '');
+								?>
+							</td>
+							<td>								
+								<?php //edited by Mike, 20200416 
+									if ($value['transaction_date']==date('m/d/Y')) {
+								?>
+								<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+									
+	<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
+	-->
+								<?php 
+									}
+								?>
+							</td>						
+						  </tr>
+			<?php				
+						$iCount++;		
+	//					echo "<br/>";
+					}				
+					echo "</table>";				
+				}				
+/*	//removed by Mike, 20210723
+			}
+*/			
 		}
 	?>
 	<br />
