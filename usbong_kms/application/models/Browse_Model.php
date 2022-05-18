@@ -191,6 +191,9 @@ class Browse_Model extends CI_Model
 
 		//TO-DO: -reverify: this
 
+		//added by Mike, 20220518
+		$iPatientNoneWalaId=11682;
+
 /*		//removed by Mike, 20210723
 		//added by Mike, 20210721
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes');
@@ -232,7 +235,9 @@ class Browse_Model extends CI_Model
 			//with @patientId used in transactions: 1053 total, Query took 0.0800 seconds.
 			//note: 11682 : "NONE, WALA v2";
 			//$iPatientNoneWalaId=3543;
-			$iPatientNoneWalaId=11682;
+			
+			//removed by Mike, 20220518
+			//$iPatientNoneWalaId=11682;
 
 /*
 			//removed by Mike, 20211205
@@ -257,8 +262,8 @@ class Browse_Model extends CI_Model
 			$query = $this->db->get('patient');
 			$rowArray = $query->result_array();			
 		}
-		//added by Mike, 20220516
-		if ((strpos(strtoupper($param['nameParam']),"CANCEL")!==false)) {
+		//added by Mike, 20220516; edited by Mike, 20220518
+		else if ((strpos(strtoupper($param['nameParam']),"CANCEL")!==false)) {
 								
 			//added by Mike, 20210723; edited by Mike, 20211205
 			//execute even if no patient transaction in transactions table yet
