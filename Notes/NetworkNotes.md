@@ -28,5 +28,8 @@ Connection to Computer network can be established via among others:
 --> where: NO additional PASSWORD to receive access required;<br/>
 --> PASSWORD, BLOCKED settings can be added via ROUTER 
 
+<img src="https://github.com/usbong/newsletters/blob/main/usbong_newsletters/assets/images/newsletter/202203/usedNetworkRouterWithConnectedComputersViaRJ45WireCables20220225T1524.jpg" width="60%">
+
 #### 2) Wireless connection to ROUTER; Access PASSWORD required;
+--> PASSWORD, BLOCKED settings can be added via ROUTER 
 
