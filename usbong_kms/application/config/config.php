@@ -30,7 +30,11 @@ date_default_timezone_set('Asia/Hong_Kong');
 //edited by Mike, 20200306
 //$config['base_url'] = 'http://localhost:80/usbong_kms/'; //'';
 //$config['base_url'] = 'http://192.168.1.100:80/usbong_kms/'; //'';
-$config['base_url'] = 'http://localhost/usbong_kms/';
+
+//edited by Mike, 20220519; TO-DO: -add: auto-update computer server machine IP address
+//$config['base_url'] = 'http://localhost/usbong_kms/';
+//$config['base_url'] = 'http://192.168.11.39:80/usbong_kms/'; 
+$config['base_url'] = 'http://192.168.11.61:80/usbong_kms/'; 
 
 /*
 |--------------------------------------------------------------------------
