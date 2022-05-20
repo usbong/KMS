@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220517; from 20220317
+' @date updated: 20220520; from 20220517
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -763,6 +763,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			echo "<select id='medicalDoctorIdParam'>";			
 			
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
+				  //added by Mike, 20220520
+				  //note: "SUMMARY" ID NOW SET TO BE LAST IN MEDICAL DOCTOR TABLE LIST
+				  if (strpos($medicalDoctorValue["medical_doctor_name"],"SUMMARY")!==false) {				  
+					continue;
+				  }
+
+
 				  //edited by Mike, 20200523
 				  //TO-DO: -update: this
 /*				  
