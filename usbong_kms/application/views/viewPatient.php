@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220520; from 20220517
+' @date updated: 20220521; from 20220520
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -606,10 +606,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				return;
 			}
 			
-			//added by Mike, 20211128
-			if ((isPatientTransactionGratis==0) && (dCartFeeTotal==0)) {
-				alert("Sapagkat hindi rin No Charge (NC) o Gratis, kailangang may bayaran sa Cart List.");
-				return;					
+			//added by Mike, 20211128; edited by Mike, 20220521
+			if (patientId!=-1) { //-1 : CANCELLED patient id
+				if ((isPatientTransactionGratis==0) && (dCartFeeTotal==0)) {
+					alert("Sapagkat hindi rin No Charge (NC) o Gratis, kailangang may bayaran sa Cart List.");
+					return;					
+				}
 			}
 
 /* //removed by Mike, 20210902			
