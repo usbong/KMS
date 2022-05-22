@@ -31,7 +31,7 @@ https://www.apachefriends.org/index.html
 5) Rename <b>"KMS-master"</b> folder to <b>"usbong_kms"</b><br/>
 6) Enter the following COMMANDs in Terminal Window:<br/>
 <b>sudo chmod 755 /opt/lampp/phpmyadmin/config.inc.php</b><br/>
-<b>sudo ./xampp start</b><br/>
+<b>sudo /opt/lampp/xampp start</b><br/>
 7) Enter the following website address in Computer Web Browser:<br/>
 <b>http://localhost/phpmyadmin/</b><br/>
 8) Left Panel -> New -> Create database; with database name: <b>usbong_kms</b><br/>
