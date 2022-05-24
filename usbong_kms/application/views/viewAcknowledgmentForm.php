@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20220317; from 20211201
+  @date updated: 20220524; from 20220317
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -547,7 +547,9 @@
 						echo "SET";
 						echo "</td>";			
 						echo "<td class='column'>";
-						echo "PROF FEE: DR. ".$value['medical_doctor_name'];
+						//edited by Mike, 20220524
+//						echo "PROF FEE: DR. ".$value['medical_doctor_name'];
+						echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."</b>";
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						//echo $value['fee'];
@@ -556,8 +558,9 @@
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						//echo $value['fee'];
-						//edited by Mike, 20210706
-						echo number_format($value['fee'], 2, '.', ',');
+						//edited by Mike, 20220524; from 20210706
+//						echo number_format($value['fee'], 2, '.', ',');
+						echo "<b>".number_format($value['fee'], 2, '.', ',')."</b>";
 						echo "</td>";
 					echo "</tr>";			
 					
@@ -663,7 +666,9 @@
 						echo "SET";
 						echo "</td>";			
 						echo "<td class='column'>";
-						echo "X-RAY EXAM";
+						//edited by Mike, 20220524
+//						echo "X-RAY EXAM";
+						echo "<b>X-RAY EXAM</b>";
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						//echo $value['x_ray_fee'];
@@ -672,10 +677,11 @@
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						//echo $value['x_ray_fee'];
-						//edited by Mike, 20210706
-						echo number_format($value['x_ray_fee'], 2, '.', ',');
+						//edited by Mike, 20220524; from 20210706
+//						echo number_format($value['x_ray_fee'], 2, '.', ',');
+						echo "<b>".number_format($value['x_ray_fee'], 2, '.', ',')."</b>";
 						echo "</td>";					
-					echo "</tr>";	
+					echo "</tr>";
 
 					//added by Mike, 20220317
 					$dTotalMDXrayFee+=$value['x_ray_fee'];
@@ -692,7 +698,9 @@
 						echo "SET";
 						echo "</td>";			
 						echo "<td class='column'>";
-						echo "LAB EXAM";
+						//edited by Mike, 20220524
+//						echo "LAB EXAM";
+						echo "<b>LAB EXAM</b>";
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						//echo $value['lab_fee'];
@@ -701,8 +709,9 @@
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						//echo $value['lab_fee'];
-						//edited by Mike, 20210706
-						echo number_format($value['lab_fee'], 2, '.', ',');
+						//edited by Mike, 20220524; from 20210706
+						//echo number_format($value['lab_fee'], 2, '.', ',');
+						echo "<b>".number_format($value['lab_fee'], 2, '.', ',')."</b>";
 						echo "</td>";
 					echo "</tr>";			
 
@@ -759,6 +768,33 @@
 						$totalAmountFee+=$value['fee'];
 					}
 				}
+				
+				
+
+
+
+				//added by Mike, 20220524
+				echo "<tr>";
+					echo "<td class='columnFee'>";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "</td>";			
+					echo "<td class='columnItemHeaderList'>";
+					if ($dTotalMedItemFee!==0) {												
+						echo "MOSC MED ITEM ONLY TOTAL: ";
+					}
+					echo "</td>";
+					echo "<td class='columnFee'>";
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					echo "<b>".number_format($dTotalMedItemFee, 2, '.', ',')."</b>";
+					echo "</td>";
+				echo "</tr>";	
+		
+		
+				
+				
+				
 			}
 		}
 		
