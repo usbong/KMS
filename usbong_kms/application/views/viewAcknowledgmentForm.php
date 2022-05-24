@@ -779,9 +779,13 @@
 					echo "</td>";			
 					echo "<td class='column'>";
 					echo "</td>";			
-					echo "<td class='columnItemHeaderList'>";
-					if ($dTotalMedItemFee!==0) {												
-						echo "MOSC MED ITEM ONLY TOTAL: ";
+					//edited by Mike, 20220524
+					//echo "<td class='columnItemHeaderList'>";
+					echo "<td class='column'>";
+					if ($dTotalMedItemFee!==0) {				
+						//edited by Mike, 20220524
+//						echo "MOSC MED ITEM ONLY TOTAL: ";
+						echo "<b>MOSC MED ITEM ONLY TOTAL: </b>";
 					}
 					echo "</td>";
 					echo "<td class='columnFee'>";
