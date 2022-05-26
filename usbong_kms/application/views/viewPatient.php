@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220521; from 20220520
+' @date updated: 20220526; from 20220521
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -709,7 +709,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- edited by Mike, 20210320
 					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'])?>' id="viewPatientIndexCard">
 -->					
-					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
+<!-- edited by Mike, 20220526
+-->
+					<a target='_blank' href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
 					
 						<div class="patientName">
 		<?php
