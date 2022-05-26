@@ -2380,6 +2380,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210320
 		$data['bFoldImageListValue'] = $bFoldImageListValue;
 
+		//added by Mike, 20220526
+		if (!isset($data['result'][0]["medical_doctor_id"])) {
+			redirect('browse/searchPatient');
+		}
+
 		$this->load->view('viewPatientIndexCard', $data);
 	}
 	
