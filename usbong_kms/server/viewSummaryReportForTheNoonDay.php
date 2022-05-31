@@ -1,11 +1,15 @@
 <!--
-  Copyright 2020~2021 USBONG SOCIAL SYSTEMS, INC. (USBONG)
+  Copyright 2020~2022 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
-  @author: Michael Syson
+
+  @company: USBONG
+  @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20210208
+  @date updated: 20220531; from 20210208
+  @website address: http://www.usbong.ph
+
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
   Output:
@@ -361,6 +365,15 @@
 					}
 					
 					$iCount++;
+				}
+				
+				//added by Mike, 20220531
+				if (!isset($decodedJSONFileArray[1][1]->iQuantityTotalCount)) {
+					//reference: https://stackoverflow.com/questions/8900701/creating-default-object-from-empty-value-in-php;
+					//last accessed: 20220531
+					//answer by: pirs, 20160117T1825; edited 20200112T1056
+					//"Creating default object from empty value in PHP?"
+					$decodedJSONFileArray[1][1] = (object)array("iQuantityTotalCount"=>0);
 				}
 
 				if (isset($decodedJSONFileArray[1][0])) { //X-RAY
