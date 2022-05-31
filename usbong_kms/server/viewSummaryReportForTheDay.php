@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2021 SYSON, MICHAEL B.
+  Copyright 2020~2022 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20220128; from 20210913
+  @date updated: 20220531; from 20220128
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -216,6 +216,9 @@
 				//added by Mike, 20200726
 				//$cellValue = $data[$iColumnCount];	
 				$cellValue = utf8_encode($data[$iColumnCount]);
+				
+				//added by Mike, 20220531
+				$cellValue=strtoupper($cellValue);
 				
 				//$cellValue = utf8_encode($cellValue);
 				//$cellValue = mysql_real_escape_string($data[$iColumnCount]);
