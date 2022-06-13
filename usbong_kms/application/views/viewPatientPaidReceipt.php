@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20220407; from 20220320
+' @date updated: 20220613; from 20220603
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -755,7 +755,10 @@ else {
 
 			//edited by Mike, 20211116
 //			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0)) {
-			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0) || ($outputTransaction['med_fee']!=0)) {
+			//edited by Mike, 20220603
+//			if (($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0) || ($outputTransaction['med_fee']!=0)) {
+			//note: patient_id=-1; //cancelled
+			if (($patientId==-1) || ($outputTransaction['fee']!=0) || ($outputTransaction['x_ray_fee']!=0) || ($outputTransaction['lab_fee']!=0) || ($outputTransaction['med_fee']!=0)) {
 				
 				//added by Mike, 20211120
 				$bHasOfficialReceipt=true;
@@ -946,7 +949,7 @@ else {
 							//echo $value['added_datetime_stamp'];
 //							echo str_replace(" ","T",$value['added_datetime_stamp']);
 
-						echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+							echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
 
 //							str_replace(" ","<br/>T",$value['added_datetime_stamp'])."</b>
 							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
@@ -955,8 +958,9 @@ else {
 					?>		
 								</div>								
 							</td>
-							<td class ="column">				
-								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+							<td class ="column">	
+								<!-- edited by Mike, 20220613 -->
+								<a target='_blank' href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
 									<div class="patientName">
 					<?php
 									//TO-DO: -update: this

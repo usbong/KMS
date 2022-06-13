@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200420
-' @date updated: 20220325; from 20210702
+' @date updated: 20220613; from 20220325
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -168,6 +168,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-weight: bold;
 						}
 
+						a
+						{
+							color: rgb(0,0,0); /* black */
+							text-decoration: none;
+						}
     /**/
     </style>
     <title>
@@ -479,14 +484,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--						
 							<a href="#" id="patientNameId<?php echo $iCount?>" onclick="copyText(<?php echo $iCount?>)">
 -->							
+
+								<!-- edited by Mike, 20220613 -->
+<!--
 								<div class="patientName">
 				<?php
+/*	//edited by Mike, 20220613				
 //								echo $value['patient_name'];
 								echo str_replace("�","Ñ",$value['patient_name']);
 //								echo str_replace("ufffd","Ñ",$value['patient_name']);
+*/
 				?>		
 								</div>								
-<!--							</a>-->
+-->
+									<a target='_blank' href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+										<div class="patientName">
+						<?php
+										//echo $value['patient_name'];
+										echo str_replace("�","Ñ",$value['patient_name']);
+						?>		
+										</div>								
+									</a>			
+
 						</td>
 						<td class ="column">				
 								<div id="classificationId<?php echo $iCount?>">
