@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220526; from 20220521
+' @date updated: 20220616; from 20220526
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -454,9 +454,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//added by Mike, 20200526
 			notes = notes.toUpperCase();
 
-			//added by Mike, 20201103
-			//0 = ANY; SUMMARY = 3
-			if ((medicalDoctorId==0) || (medicalDoctorId==3)) {
+			//added by Mike, 20201103; edited by Mike, 20220616
+			//0 = ANY; SUMMARY != 3, changed to DR> JHONSEL
+//			if ((medicalDoctorId==0) || (medicalDoctorId==3)) {
+			if (medicalDoctorId==0) {
 				alert("Pumili ng Medical Doctor na hindi \"ANY\" o \"SUMMARY\".");
 				return;
 			}
