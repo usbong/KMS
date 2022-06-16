@@ -1,5 +1,6 @@
 /*
-' Copyright 2020~2022 SYSON, MICHAEL B.
+'
+' Copyright 2020~2021 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20220111; from 20201001
+' @date updated: 20220616; from 20211110
 ' @website address: http://www.usbong.ph
 '
 ' Reference:
@@ -22,39 +23,84 @@
 var system = require('system');
 var fileName = system.args[1];
 
-//added by Mike, 20220111
-var baseWebAddress = system.args[3];
-
-if (baseWebAddress==null) {
-	baseWebAddress='localhost';
-}
-
 //added by Mike, 20200726
 var isFromServerFolder = system.args[2];
-//edited by Mike, 20220111
-//var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
-var webAddress = 'http://'+baseWebAddress+'/usbong_kms/index.php/REPORT/'; //default
+//added by Mike, 20210702
+var isFromKasangkapanFolder = system.args[2];
 
+var webAddress = 'http://localhost/usbong_kms/index.php/REPORT/'; //default
 var fileExtension = '';
+
+//added by Mike, 20210225
+var iPostPositionInFilename=fileName.indexOf("/_post")
+var data=""
+
+if (iPostPositionInFilename !== -1) {
+	//Reference: https://stackoverflow.com/questions/1989009/javascript-substring;
+	//answer by: Chirag, 20130411T0835
+	//notes: 
+	//syntax: string.substring(start [, stop])
+	//syntax: string.substr(start [, length])
+
+	filename=fileName.substring(0,iPostPositionInFilename);
+
+/*
+	//added by Mike, 20220607
+//	if (filename.includes("confirm")) {
+	if (filename.indexOf("confirm") !== -1){ // true
+//		filename=fileName.substring(0,iPostPositionInFilename);
+		filename.substring(0, "Medicine");
+	}
+*/
+	data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
+
+	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
+}	
+
+//added by Mike, 20201017
+var isNoonReport = system.args[3];
+var noonFolderName = 'noonReport/';
 
 //added by Mike, 20200725
 //var dateToday = "20200727";//new Date(); 
 var dateToday = new Date(); 
 
 if (isFromServerFolder=="-s") {
-	//edited by Mike, 20220111
-	//webAddress = 'http://localhost/usbong_kms/server/';
-	webAddress = 'http://'+baseWebAddress+'/usbong_kms/server/';
-
+	webAddress = 'http://localhost/usbong_kms/server/';
 	fileExtension = '.php';
+}
+
+//added by Mike, 20210702
+if (isFromKasangkapanFolder=="-k") {
+	webAddress = 'http://localhost/usbong_kms/kasangkapan/output/';
+	fileExtension = '.html';
+}
+
+
+//added by Mike, 20201017
+if (isNoonReport=="-noon") {
+}
+else {
+	noonFolderName='';
 }
 
 console.log("Filename: " + fileName);
 
 var page = require('webpage').create();
+
+//added by Mike, 20210225; removed by Mike, 20210225
+//var data='nameParam=zerodol';
+
 //edited by Mike, 20200726
 //page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(status) {
-page.open(webAddress+fileName+fileExtension, function(status) {
+
+//edited by Mike, 20210225; edited again by Mike, 20220616
+//TO-DO: -reverify: input, e.g. to be searched item keyphrase, with space
+page.open(webAddress+fileName+fileExtension, 'post', data, function(status) {
+//page.open(webAddress+fileName+encodeURIComponent(fileExtension), 'post', data, function(status) {  
+//  console.log("ENCODE URI: " + encodeURIComponent(webAddress+fileName+fileExtension));
+//  console.log("ENCODE URI: " + webAddress+fileName+encodeURIComponent(fileExtension));
+
   console.log("Status: " + status);
   
   if(status === "success") {
@@ -67,8 +113,27 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	
 	//edited by Mike, 20200725
     //page.render('output/'+fileName+'.png');
-	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+	//edited by Mike, 20201017
+//	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
 //	page.render('output/20200727/'+fileName+'1.png');
+
+	if (noonFolderName=="") {
+		//edited by Mike, 20210309
+		//page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+		//with POST data, e.g. for use with med item reports to pharmaceutical companies
+		if (data != "") { //has post data
+			page.render('output/'+dateToday.toISOString()+'/'+fileName+'V'+getDateToISOStringWithTimeStamp()+'.png');
+//			page.render('output/'+dateToday.toISOString()+'/'+fileName+'V.png');
+		}
+		else {
+			page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+		}		
+	}
+	else {
+		//edited by Mike, 20201018
+//		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport1.png');
+		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report1.png');
+	}
 
 /*	
     console.log("windowScreenHeight: " + window.screen.height);
@@ -83,8 +148,33 @@ page.open(webAddress+fileName+fileExtension, function(status) {
 	  page.evaluate(function(currentDocumentBodyHeight) {
 			window.document.body.scrollTop = currentDocumentBodyHeight;	    
 	  });
+	  
+	  //edited by Mike, 20201017
+	  //page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+	  //page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+iCount+'.png');
 
-	  page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+	  if (noonFolderName=="") {
+
+		//edited by Mike, 20210309
+		//page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+		//with POST data, e.g. for use with med item reports to pharmaceutical companies
+		if (data != "") { //has post data
+			page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'V'+getDateToISOStringWithTimeStamp()+'.png');
+		}
+		else {
+			page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+		}		
+
+
+	  }
+	  else {
+		  //edited by Mike, 20201018
+//		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport'+iCount+'.png');
+		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report'+iCount+'.png');
+
+	  }
+
+
 //	  page.render('output/20200727/'+fileName+iCount+'.png');
 	
 	  currentDocumentBodyHeight = currentDocumentBodyHeight - windowScreenHeight;
@@ -130,6 +220,27 @@ if (Date.prototype.toISOString) {
        return this.getFullYear()+""+
 			pad(this.getMonth()+1)+""+
             pad(this.getDate());
+	}
 
-    }
+}
+
+//added by Mike, 20210309
+function getDateToISOStringWithTimeStamp() {
+	function pad(n) { return n < 10 ? '0' + n : n; }
+	
+	myDateTime = new Date();
+	
+	//added by Mike, 20210316
+	myDateTime.toLocaleString('en-US', { timeZone: 'Asia/Manila' })
+	
+	//edited by Mike, 20211110
+//	console.log("MONTH: " + pad(myDateTime.getMonth() + 1));
+	
+	return myDateTime.getFullYear() + "" +
+		pad(myDateTime.getMonth() + 1) + "" +
+		pad(myDateTime.getDate()) + 'T' +
+		pad(myDateTime.getHours()) +
+		pad(myDateTime.getMinutes());
+
+//	return "hallo";
 }
