@@ -11,7 +11,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20210225
-REM @date updated: 20220616; from 20220315
+REM @date updated: 20220617; from 20220616
 REM
 REM Reference:
 REM 1) https://phantomjs.org/; last accessed: 20200724
@@ -27,8 +27,8 @@ REM echo %myDateDay%
 REM edited by Mike, 20210225
 REM phantomjs saveWebPageAsImageFile.js "confirmMedicine" 
 REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postdiclogen" 
-REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postcelcoxx) 400" 
-phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postcelcoxx" 
+REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postcelcoxx" 
+phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postcelcoxx" ") 400"
 phantomjs saveWebPageAsImageFile.js "confirmMedicine/_poststarcox"
 phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postgabica" 
 phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postgabix"

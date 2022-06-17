@@ -1,6 +1,6 @@
 /*
 '
-' Copyright 2020~2021 SYSON, MICHAEL B.
+' Copyright 2020~2022 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -52,7 +52,20 @@ if (iPostPositionInFilename !== -1) {
 		filename.substring(0, "Medicine");
 	}
 */
-	data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
+
+	//edited by Mike, 20220617 system.args[2];
+	//data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
+	data=system.args[2];
+
+//console.log(">>>>>>data: " + data);
+
+	if (data==null) { //input: null
+		data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length);
+	}
+	else {
+		data='nameParam='+fileName.substring(iPostPositionInFilename+"/_post".length)+data;
+//console.log(">>>>>>LOOB: " + data);
+	}
 
 	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
 }	
@@ -90,6 +103,9 @@ var page = require('webpage').create();
 
 //added by Mike, 20210225; removed by Mike, 20210225
 //var data='nameParam=zerodol';
+//removed by Mike, 20220617
+//var data='nameParam=celcoxx) 400';
+
 
 //edited by Mike, 20200726
 //page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(status) {
