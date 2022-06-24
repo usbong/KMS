@@ -171,7 +171,14 @@ class Browse_Model extends CI_Model
 				$param['nameParam'] = str_replace(" ,", ",",$param['nameParam']);
 			}
 		}	
-	
+/*		
+		//added by Mike, 20220601
+		$param['nameParam']=str_replace(strtoupper($param['nameParam']), "JR.","");
+		echo $param['nameParam'];
+		if (strlen($param['nameParam'])==0) {
+			return;
+		}		
+*/	
 		//we use this at MOSC
 		//added by Mike, 20210212
 		//TO-DO: -add: sex, age, etc
@@ -192,7 +199,9 @@ class Browse_Model extends CI_Model
 		//TO-DO: -reverify: this
 
 		//added by Mike, 20220518
-		$iPatientNoneWalaId=11682;
+		//edited by Mike, 20220624
+		//$iPatientNoneWalaId=11682;
+		$iPatientNoneWalaId=14177;
 
 /*		//removed by Mike, 20210723
 		//added by Mike, 20210721
