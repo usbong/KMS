@@ -2285,7 +2285,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		//whose patient_id is not certain
 		//edited by Mike, 20220219
 //		if (($patientId==0) || ($patientId==3543)){ //if patient name is "NONE", et cetera
-		if (($patientId==0) || ($patientId==3543) || ($patientId==11682)){ //if patient name is "NONE", et cetera; 11682 "NONE, WALA v2";
+		//edited by Mike, 20220624
+		//NONE v2; already noticeable DELAY with TOTAL 659 count in TRANSACTIONS table (with 91,478 count)
+		//TO-DO: -update: this
+//		if (($patientId==0) || ($patientId==3543) || ($patientId==11682)){ //if patient name is "NONE", et cetera; 11682 "NONE, WALA v2";
+//		if (($patientId==0) || ($patientId==3543) || ($patientId==11682)){ //if patient name is "NONE", et cetera; 11682 "NONE, WALA v2";
+		if (($patientId==0) || ($patientId==3543) || //if patient name is "NONE", et cetera; 
+		    ($patientId==11682) || ($patientId==14177)){ //11682 "NONE, WALA v2"; 14177 "NONE, WALA v3"
 		//noticeable delay in execution with 3543,
 		//with @patientId used in transactions: 1053 total, Query took 0.0800 seconds.
 
