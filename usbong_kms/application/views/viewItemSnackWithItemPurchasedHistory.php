@@ -62,12 +62,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}
 
-						div.itemPurchasedHistory
-						{
-							font-weight: bold;
-							text-align: right;
-						}							
-
 						div.tableHeader
 						{
 							font-weight: bold;
@@ -723,15 +717,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 	<br/>
 	<br/>
-		
-		<a href='<?php echo site_url('browse/viewItemSnackWithItemPurchasedHistory/'.$itemId)?>' id="viewItemPurchasedHistory">
-			<div class="itemPurchasedHistory">
-<?php
-			echo "ITEM PURCHASED HISTORY"
-?>		
-			</div>								
-		</a>
-		
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
