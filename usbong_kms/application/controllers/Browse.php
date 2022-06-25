@@ -2558,8 +2558,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewItemNonMedicine', $data);
 	}
 
-	//added by Mike, 20201104
-	public function viewItemSnack($itemId)
+	//added by Mike, 20201104; edited by Mike, 20220625
+	public function viewItemSnackWithItemPurchasedHistory($itemId)
 	{
 //		$data['nameParam'] = $_POST[nameParam];
 		
@@ -2610,6 +2610,60 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewItemSnack', $data);
 	}
 
+
+	//added by Mike, 20201104
+	public function viewItemSnack($itemId)
+	{
+//		$data['nameParam'] = $_POST[nameParam];
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+
+		$itemTypeId = 3; //3 = snack//1 = Medicine
+		$data['itemTypeId'] = $itemTypeId; //added by Mike, 20200615
+
+		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		
+		//added by Mike, 20200406; removed by Mike, 20220625
+		//TO-DO: -update: computer instructions to speed-up this up in viewItemSnackWithItemPurchasedHistory(...)
+		//$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+
+		//added by Mike, 20200601; removed by Mike, 20200602
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
+			//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+			
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+
+		//added by Mike, 20200501; edited by Mike, 20200604
+		$data['itemTypeId'] = $itemTypeId;
+		$data['itemId'] = $itemId;
+		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
+		
+		//edited by Mike, 20210110
+		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);
+		$data['resultItem'] = $this->getResultItemQuantity($data);
+		
+		//edited by Mike, 20200608
+		//$data['itemName'] = $data['resultItem'][0]['item_name'];
+		$data['itemName'] = $data['result'][0]['item_name'];
+		
+
+/*		
+		foreach ($data['resultItem'] as $value) {
+			echo "dito".$value['resultQuantityInStockNow']."<br/>";
+			echo "dito".$value['quantity_in_stock']."<br/>";
+		}
+*/
+		$this->load->view('viewItemSnack', $data);
+	}
+	
 	//added by Mike, 20200411; edited by Mike, 20200615
 	public function viewItemNonMedicinePrev($itemId)
 	{
