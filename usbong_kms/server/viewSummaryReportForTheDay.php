@@ -7,7 +7,8 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20220531; from 20220128
+  @date updated: 20220701; from 20220531
+  @website address: http://www.usbong.ph
 
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -231,7 +232,9 @@
 				if (($iRowCount==1)) {// and ($iColumnCount==0)) {
 					//edited by Mike, 20200807
 //					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount!=9)) {
-					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount<9)) {
+					//edited by Mike, 20220701					
+//					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount<9)) {
+					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount<15)) {
 						//background color green
 						echo "<td class='column' bgcolor='#00FF00'><b>".$cellValue."</b></td>";
 					}
