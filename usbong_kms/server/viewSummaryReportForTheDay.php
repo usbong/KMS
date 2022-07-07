@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20220701; from 20220531
+  @date updated: 20220707; from 20220701
   @website address: http://www.usbong.ph
 
   Input:
@@ -306,6 +306,10 @@
 						else if (($iColumnCount-1>=0) and ((utf8_encode($data[$iColumnCount-1]))=="GRAND TOTAL")) {
 								echo "<td class='columnBorderTopBottom' style='text-align:right'>".$cellValue."</td>";
 						}
+						//edited by Mike, 20220707
+						else if ($iColumnCount==12) {
+								echo "<td class='column' style='text-align:right; color:red; font-weight:bold'>".$cellValue."</td>";
+						}						
 						else {							 
 							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 						}
