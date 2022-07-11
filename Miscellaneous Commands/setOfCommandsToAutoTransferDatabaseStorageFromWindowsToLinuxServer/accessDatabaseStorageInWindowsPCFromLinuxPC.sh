@@ -13,7 +13,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20201001
-# @last modified: 20220114; from 20201001
+# @last modified: 20220711; from 20220114
 # @website address: http://www.usbong.ph
 #
 # References:
@@ -31,7 +31,12 @@
 # 1) Verify that cifs-utils, is installed
 # --> We use the mount.cifs Linux command
 # --> CIFS = Common Internet File System
-# --> Command: sudo aptitude install cifs-utils
+# 
+# --> Command#1: sudo apt-get update
+# --> Command#2: sudo apt-get install aptitude
+# --> Command#3: sudo aptitude install cifs-utils
+#
+# --> Reference: https://askubuntu.com/questions/525243/why-do-i-get-wrong-fs-type-bad-option-bad-superblock-error; last accessed: 20220711
 #
 # 2) Unmount command: umount -l $destination
 #--> where: l=lazy, i.e. unmount filesystem now even if busy
