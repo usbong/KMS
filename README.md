@@ -43,6 +43,9 @@ https://www.apachefriends.org/index.html
 --> Search and Replace keyphrase: <b>"192.168.11.62"</b> with <b>"localhost"</b><br/>
 --> Note: Set <b>"localhost"</b> to the computer's network Internet Protocol (IP) Address<br/>
 <br/>
+<b>Example Computer Server Web Address:</b><br/> 
+http://192.168.1.110/usbong_kms/index.php/report/viewWebAddressList<br/>
+<br/>
 DONE!<br/>
 <br/>
 <b>Reference:</b> https://stackoverflow.com/questions/7577490/phpmyadmin-wrong-permissions-on-configuration-file-should-not-be-world-writabl;<br/>
