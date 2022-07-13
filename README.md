@@ -39,13 +39,24 @@ https://www.apachefriends.org/index.html
 --> Example input database file: <b>KMS-master/DB/SQLCommands/usbong_kmsCreateDBTableStructureV20211219T0602.sql</b><br/>
 10) Enter the following website address in Computer Web Browser<br/>
 <b>localhost/usbong_kms/index.php/report/viewWebAddressList</b><br/>
+
 11) Update: <b>"/opt/lampp/htdocs/usbong_kms/application/views/viewWebAddressList.php"</b><br/>
 --> Search and Replace keyphrase: <b>"192.168.11.62"</b> with <b>"localhost"</b><br/>
---> Note: Set <b>"localhost"</b> to the computer's network Internet Protocol (IP) Address<br/>
-<br/>
+--> 11.1): Set <b>"localhost"</b> to be the computer's network Internet Protocol (IP) Address<br/>
 <b>Example Computer Server Web Address:</b><br/> 
 http://192.168.1.110/usbong_kms/index.php/report/viewWebAddressList<br/>
-<br/>
+where: 192.168.1.110 : Computer Server's network IP Address<br/>  
+
+12) Update: <b>"/opt/lampp/htdocs/usbong_kms/application/config/config.php"</b><br/>
+Set `base_url` to be Computer Server's network IP address <br/>
+> $config['base_url'] = 'http://localhost:80/usbong_kms/'; 
+
+<b>Example Computer Server Web Address:</b><br/> 
+
+> $config['base_url'] = 'http://192.168.1.110:80/usbong_kms/'; <br/>
+
+where: 192.168.1.110 : Computer Server's network IP Address<br/>  
+
 DONE!<br/>
 <br/>
 <b>Reference:</b> https://stackoverflow.com/questions/7577490/phpmyadmin-wrong-permissions-on-configuration-file-should-not-be-world-writabl;<br/>
