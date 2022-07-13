@@ -1,6 +1,13 @@
 # Notes: Speed-up Knowledge Management System (KMS) Part 4
 ## 1) PROBLEM:
-> Fatal Error: Allowed Memory Size of 134217728 Bytes Exhausted (CodeIgniter + XML-RPC)
+> Fatal error: Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in ...
+
+#### NOTES: 
+1) PHP Hypertext Preprocessor (PHP) + CodeIgniter Framework<br/>
+2) <b>TRANSACTIONS COUNT:</b> 93,737<br/>
+3) (134217728 byte / 1) * (1 KB / 1000 byte) * (1 MB / 1000 KB) = `134.217728 MB` <br/>
+--> 134217728 / 1000 / 1000 = `134.217728 MB` <br/>
+--> <b>Additional Reference:</b> GOOGLE SEARCH ENGINE
 
 ## SOLUTION:
 update: `php.ini` configuration file in XAMPP Control Settings<br/>
