@@ -26,6 +26,7 @@ https://www.apachefriends.org/index.html
 1) Download and open (as Administrator/SuperUser) to install XAMPP file from https://www.apachefriends.org/download.html;<br/>
 --> Example: <b>XAMPP for Linux 7.4.27</b><br/>
 2) Download ZIP folder via CODE button on https://github.com/usbong/KMS<br/>
+--> use: [GIT Commands](https://github.com/usbong/tugon/blob/main/notes/githubCommandsNotes.md) for slow/zero access to Web Browser
 3) Extract ZIP folder; Output: <b>"KMS-master"</b><br/>
 4) Copy <b>"KMS-master"</b> folder; Paste to <b>/opt/lampp/htdocs/</b><br/>
 5) Rename <b>"KMS-master"</b> folder to <b>"usbong_kms"</b><br/>
