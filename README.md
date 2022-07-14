@@ -40,22 +40,20 @@ https://www.apachefriends.org/index.html
 10) Enter the following website address in Computer Web Browser<br/>
 <b>localhost/usbong_kms/index.php/report/viewWebAddressList</b><br/>
 
-11) Update: <b>"/opt/lampp/htdocs/usbong_kms/application/views/viewWebAddressList.php"</b><br/>
---> Search and Replace keyphrase: <b>"192.168.11.62"</b> with <b>"localhost"</b><br/>
---> 11.1): Set <b>"localhost"</b> to be the computer's network Internet Protocol (IP) Address<br/>
-<b>Example Computer Server Web Address:</b><br/> 
-http://192.168.1.110/usbong_kms/index.php/report/viewWebAddressList<br/>
-where: 192.168.1.110 : Computer Server's network IP Address<br/>  
+#### Addtional Notes: Computer Server's Internet Protocol (IP) Address
+<b>Example:</b> 192.168.1.110<br/>  
 
-12) Update: <b>"/opt/lampp/htdocs/usbong_kms/application/config/config.php"</b><br/>
-Set `base_url` to be Computer Server's network IP address <br/>
+1) Update: <b>"/opt/lampp/htdocs/usbong_kms/application/views/viewWebAddressList.php"</b><br/>
+--> Search and Replace keyphrase: default <b>"192.168.11.62"</b> with <b>"localhost"</b><br/>
+--> 1.1): Set <b>"localhost"</b> to be the <b>Computer Server's network IP Address</b><br/>
+<b>Example:</b> http://192.168.1.110/usbong_kms/index.php/report/viewWebAddressList<br/>
+
+2) Update: <b>"/opt/lampp/htdocs/usbong_kms/application/config/config.php"</b><br/>
+Set `base_url` to be the <b>Computer Server's network IP address</b><br/>
+
 > $config['base_url'] = 'http://localhost:80/usbong_kms/'; 
 
-<b>Example Computer Server Web Address:</b><br/> 
-
 > $config['base_url'] = 'http://192.168.1.110:80/usbong_kms/'; <br/>
-
-where: 192.168.1.110 : Computer Server's network IP Address<br/>  
 
 DONE!<br/>
 <br/>
