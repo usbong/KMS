@@ -1,6 +1,9 @@
 # Knowledge Management System (KMS)
 
 ## I. Screenshots
+
+### 0) [Example Work Output Videos](http://store.usbong.ph/server/videos/viewKMS.php)
+
 ### 1) Information Desk
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/viewReportPatientQueue1.png" width="60%">
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/informationDeskAddNewPatientMikhail.png" width="80%">
