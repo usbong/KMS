@@ -5,7 +5,7 @@
 > Error Number: 1055
 > Expression #3 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'usbong_kms.t2.transaction_id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
 
-### Answer:
+### Answer (Part 1):
 
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/Database/usbongKMSDBSqlGlobalModeV20220716.jpg" width="80%">
 
@@ -16,6 +16,29 @@ https://stackoverflow.com/questions/23921117/disable-only-full-group-by;<br/>
 last accessed: 20220716<br/>
 answer by: Eyo Okon Eyo, 20160316T1111<br/>
 comment by: nawfal, 20160521T0347
+
+### Answer (Part 2):
+
+2.1) Add the following COMMAND in `/etc/mysql/mysql.conf.d/mysqld.cnf` for the Computer Server to remember without reminder
+
+#### note `mysqld.cnf` with the `d` after `mysql`
+
+> The MySQL database server configuration file. <br/>
+
+<br/>
+
+> [mysql]<br/>
+> sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+
+2.2) Execute the following COMMAND in Terminal Window:
+
+> sudo service mysql restart
+
+### Reference:
+https://stackoverflow.com/questions/23921117/disable-only-full-group-by;<br/>
+last accessed: 20220717<br/>
+answer by: breq, 20160516T0713<br/>
+comment by: tristanbailey, 20210115T1447
 
 ## Problem#2) Auto-import SQL Commands to build DB Output: "The BLOB, TEXT, GEOMETRY, and JSON data types cannot be assigned a default value."
 
