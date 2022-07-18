@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220715; from 20220713
+# @last modified: 20220718; from 20220715
 # @website address: http://www.usbong.ph
 #
 # Additional Notes:
@@ -22,61 +22,26 @@
 #    Directory location; 
 #    Database Name; username
 #
-# 2) variation in execution due to NOT using xampp/lampp;
+# 2) variation in execution due to NOT using lampp;
 # --> In its stead: sudo apt-get install mysql-server;
 # --> sudo apt-get install apache2;
-
-# note: variation in execution due to NOT using xampp/lampp;
-# TO-DO: -reverify: this
-
-
 #
+# 3) execute: sudo ./autoImportDatabaseToMySQLDBLinuxMachineg.sh 
 # Reference: www.stackoverflow.com
 #
 
-cd /home/unit_member/Desktop/
-./startXAMPPCommandInLinuxPC.sh 
+#edited by Mike, 20220718
+#cd /home/unit_member/Desktop/
+#./startXAMPPCommandInLinuxPC.sh 
 
-# added by Mike, 20220713
-# note: still requires multiple execution of this BASH SHELL COMMANDS LIST due to DELAY during START
+#note: non-XAMPP Computer Server
+echo "sudo service apache2 start"
+sudo service apache2 start
 
-# re-execute to verify if already running:
-#XAMPP: Starting Apache...already running.
-#XAMPP: Starting MySQL...already running.
-#XAMPP: Starting ProFTPD...already running.
-echo "re-verifying XAMPP if already running..."
-#edited by Mike, 20220401
-#while ./startXAMPPCommandInLinuxPC.sh | grep "...ok"; do
-while ./startXAMPPCommandInLinuxPC.sh | grep "...not running."; do
-	
-	#removed by Mike, 20220401
-	#./startXAMPPCommandInLinuxPC.sh
-	
-	#added by Mike, 20220401
-	sleep 3 # wait 3 seconds
-done
+echo "sudo service mysql start"
+sudo service mysql start
 
 echo "--"
-echo "XAMPP already running."
-
-#added by Mike, 20220331
-#note: re-verify: mount error(16): Device or resource busy
-#current solution: execute: "accessDatabaseStorageInWindowsPCFromLinuxPC.sh" first before "autoImportDatabaseToMySQLDBLinuxMachine.sh"
-#./accessDatabaseStorageInWindowsPCFromLinuxPC.sh > ./tempOutput.txt
-
-#edited by Mike, 20220401
-#while ! cat ./tempOutput.txt | grep "sending incremental file list"; do
-#edited by Mike, 20220402
-#while ! cat ./tempOutput.txt | grep "destination"; do
-#while ! cat ./tempOutput.txt | grep "speedup"; do
-#	sleep 10 # wait 1 second
-#	sudo ./accessDatabaseStorageInWindowsPCFromLinuxPC.sh > ./tempOutput.txt
-#done
-
-#rm ./tempOutput.txt
-
-#edited by Mike, 20220715
-# cd /opt/lampp/bin/
 
 #auto-DROP DB: usbong_kms; force DB drop without need for additional re-verification
 #edited by Mike, 20220715
@@ -100,5 +65,3 @@ inputMySQLFile=$(ls -t /home/unit_member/Documents/halimbawa/DB/*.sql | head -n1
 #edited by Mike, 20220715
 #./mysql -uroot usbong_kms < /home/unit_member/Documents/halimbawa/DB/$inputMySQLFile
 mysql -uroot usbong_kms < $inputMySQLFile
-
-
