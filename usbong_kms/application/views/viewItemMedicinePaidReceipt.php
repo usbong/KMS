@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 SYSON, MICHAEL B.
+' Copyright 2020~2022 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,8 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20210928
+' @date updated: 20220719; from 20210928
+' @website: http://www.usbong.ph
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -845,10 +846,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 								<div class="transactionDate">
 					<?php
-									//edited by Mike, 20200507
+/*
+									//edited by Mike, 20220719; from 20200507;
 									//echo $value['transaction_date'];
 									//echo $value['added_datetime_stamp'];
 									echo str_replace(" ","T",$value['added_datetime_stamp']);
+*/
+
+						echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+						</a>";
+
 					?>		
 								</div>								
 							</td>
