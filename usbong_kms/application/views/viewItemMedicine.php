@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 SYSON, MICHAEL B.
+' Copyright 2020~2022 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220518; from 20211128
+' @date updated: 20220720; from 20220518
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -727,7 +727,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 	<br/>
 	<br/>
-		<a href='<?php echo site_url('browse/viewItemMedicineWithItemPurchasedHistory/'.$itemId)?>' id="viewItemPurchasedHistory">
+		<a target='_blank' href='<?php echo site_url('browse/viewItemMedicineWithItemPurchasedHistory/'.$itemId)?>' id="viewItemPurchasedHistory">
 			<div class="itemPurchasedHistory">
 <?php
 			echo "ITEM PURCHASED HISTORY"

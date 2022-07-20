@@ -802,7 +802,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
-		<a target='_blank' href='<?php echo site_url('browse/viewItemNonMedicineWithItemPurchasedHistory/'.$itemId)?>' id="viewItemPurchasedHistory">
+		<a href='<?php echo site_url('browse/viewItemNonMedicineWithItemPurchasedHistory/'.$itemId)?>' id="viewItemPurchasedHistory">
 			<div class="itemPurchasedHistory">
 <?php
 			echo "ITEM PURCHASED HISTORY"
