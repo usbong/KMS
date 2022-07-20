@@ -2517,8 +2517,8 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 				
-		//added by Mike, 20200406
-		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+		//added by Mike, 20200406; removed by Mike, 20220720
+//		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
 		//added by Mike, 20200601; removed by Mike, 20200602
 //		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
@@ -2557,6 +2557,103 @@ class Browse extends CI_Controller { //MY_Controller {
 */
 		$this->load->view('viewItemNonMedicine', $data);
 	}
+
+	//added by Mike, 20200411; edited by Mike, 20200615
+	//edited by Mike, 20201027
+//	public function viewItemNonMedicine($itemId)
+	public function viewItemNonMedicineWithItemPurchasedHistory($param)
+	{		
+//		$data['nameParam'] = $_POST[nameParam];
+
+		//added by Mike, 20201027
+		if (isset($param['itemId'])) {
+			$itemId=$param['itemId'];
+			$data['addedVAT']=$param['addedVAT']; //TRUE
+		}
+		else {
+			$itemId=$param;			
+		}
+		
+		//added by Mike, 20201115
+		if (isset($_SESSION["addedVAT"])) {
+			$data['addedVAT']=$_SESSION["addedVAT"]; //TRUE			
+		}
+	
+		//edited by Mike, 20201027
+		$data['noVAT'] = false;		
+		//removed by Mike, 20201115
+//		$this->session->set_userdata('noVAT', False);
+
+//		if (isset($param['noVAT'])) {
+		if (isset($param['outputTransaction']) and ($param['outputTransaction']=="noVAT")) {
+//			$data['noVAT']=$param['noVAT'];	
+			$data['noVAT']=$param['outputTransaction'];				
+			
+			//added by Mike, 20201115
+			$data['noVAT'] = True;
+			$this->session->set_userdata('noVAT', True);
+		}
+		//added by Mike, 20201115
+		else {
+			if (isset($_SESSION["noVAT"]) and ($_SESSION["noVAT"]==True)) {
+				$data['noVAT'] = True;		
+				$this->session->set_userdata('noVAT', True);
+			}			
+		}
+				
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+
+		//$itemTypeId = 1; //1 = Medicine
+		//edited by Mike, 20200615
+		$itemTypeId = 2; //2 = Non-medicine
+		$data['itemTypeId'] = $itemTypeId;
+	
+		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+				
+		//added by Mike, 20200406
+		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+
+		//added by Mike, 20200601; removed by Mike, 20200602
+//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+
+			//edited by Mike, 202005019
+//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+						
+		//added by Mike, 20200406; edited by Mike, 20200407
+		//edited by Mike, 20210110
+//		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+//		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($data['result']);
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($data);
+
+		//added by Mike, 20200501; edited by Mike, 20200604
+		$data['itemTypeId'] = $itemTypeId;
+		$data['itemId'] = $itemId;
+		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
+		
+		
+		//edited by Mike, 20210110
+		//$data['resultItem'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);
+		
+		$data['resultItem'] = $this->getResultItemQuantity($data);
+		
+		//edited by Mike, 20200608
+		//$data['itemName'] = $data['resultItem'][0]['item_name'];
+		$data['itemName'] = $data['result'][0]['item_name'];	
+
+/*		
+		foreach ($data['resultItem'] as $value) {
+			echo "dito".$value['resultQuantityInStockNow']."<br/>";
+			echo "dito".$value['quantity_in_stock']."<br/>";
+		}
+*/
+		$this->load->view('viewItemNonMedicineWithItemPurchasedHistory', $data);
+	}
+
 
 	//added by Mike, 20201104; edited by Mike, 20220625
 	public function viewItemSnackWithItemPurchasedHistory($itemId)
