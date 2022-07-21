@@ -4094,7 +4094,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		//TO-DO: -add: if transaction NOT today, add for today, 
 		//but write in notes the actual transaction date
 		//edited by Mike, 20210912
-//		$data['transactionDate'] = date('m/d/Y');
+//		$data['transactionDate'] = date('m/d/Y');		
+		//edited by Mike, 20220721
+		//$data['transactionDate'] = $_POST["transactionDateParam"]; //date('m/d/Y');
+		if (!isset($_POST["transactionDateParam"])) {
+			redirect('browse/searchPatient');			
+		}
+
 		$data['transactionDate'] = $_POST["transactionDateParam"]; //date('m/d/Y');
 
 		$data['transactionId'] = $_POST["transactionIdParam"];
