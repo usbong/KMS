@@ -378,6 +378,9 @@ class Browse extends CI_Controller { //MY_Controller {
 			redirect('browse/searchPatient');			
 		}
 
+		//added by Mike, 20220722
+		$data['patientIdNameParam'] = $_POST['patientIdNameParam'];
+
 
 		//TO-DO: -add: patient birthday to auto-compute age
 		//note: the following are required parameters
