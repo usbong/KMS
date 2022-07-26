@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220713; from 20220401
+# @last modified: 20220726; from 20220725
 # @website address: http://www.usbong.ph
 #
 # Additional Note:
@@ -43,9 +43,17 @@ while ./startXAMPPCommandInLinuxPC.sh | grep "...not running."; do
 	#removed by Mike, 20220401
 	#./startXAMPPCommandInLinuxPC.sh
 	
-	#added by Mike, 20220401
-	sleep 3 # wait 3 seconds
+	#added by Mike, 20220401l edited by Mike, 20220725
+	#sleep 3 # wait 3 seconds
+	sleep 6 # wait 6 seconds
+
 done
+
+#added by Mike, 20220726
+while ./startXAMPPCommandInLinuxPC.sh | grep "...ok"; do	
+	sleep 6 # wait 6 seconds
+done
+
 
 echo "--"
 echo "XAMPP already running."
