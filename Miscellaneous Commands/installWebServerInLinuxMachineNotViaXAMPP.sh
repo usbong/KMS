@@ -17,12 +17,22 @@
 # @last modified: 20220727; from 20220725
 # @website address: http://www.usbong.ph
 #
-# Additional Note:
+# Additional Notes:
 # 1) observed: to have error starting MySQL in XAMPP on Linux Ubuntu Machine
 # --> version: xampp-linux-x64-7.4.29-1-installer.run
 # --> adds: previously, NO such error when executing START 
 #
+# 2) reminder: "MySQL Error: : 'Access denied for user 'root'@'localhost'"
+# --> Excute: sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+# --> add: "skip-grant-tables"
+# --> sudo service mysql restart
+#
+# --> Reference: https://stackoverflow.com/questions/41645309/mysql-error-access-denied-for-user-rootlocalhost;
+# last accessed: 20220727
+# answer by: PYK, 20220301T0507; edited 20220311T1730
 
 sudo apt-get install apache2
 sudo apt-get install mysql-server
-sudo apt-get install php
+#edited by Mike, 20220727
+#sudo apt-get install php
+sudo apt-get install php7.*-mysqli
