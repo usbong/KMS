@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220725; from 20220713
+# @last modified: 20220727; from 20220725
 # @website address: http://www.usbong.ph
 #
 # Additional Note:
@@ -25,3 +25,4 @@
 
 sudo apt-get install apache2
 sudo apt-get install mysql-server
+sudo apt-get install php
