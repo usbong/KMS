@@ -51,3 +51,23 @@ reminder: DEFAULT value in `text` NOT accepted in Linux UBUNTU Machine as non-XA
 https://stackoverflow.com/questions/16141727/change-text-column-default-from-null-to-empty-string;<br/>
 last accessed: 20220716<br/>
 answer by: Salman A, 20130422T0809<br/>
+
+## Problem#3) "MySQL Error: : 'Access denied for user 'root'@'localhost'"
+
+### Answer:
+Execute the following COMMANDS in Terminal Window:<br/> 
+<br/>
+<b>sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf</b><br/>
+<b>add: the following text</b>
+
+> [mysqld]<br/>
+> skip-grant-tables
+
+<b>sudo service mysql restart</b>
+
+### Reference:
+https://stackoverflow.com/questions/41645309/mysql-error-access-denied-for-user-rootlocalhost;
+last accessed: 20220727
+answer by: PYK, 20220301T0507; edited 20220311T1730
+
+
