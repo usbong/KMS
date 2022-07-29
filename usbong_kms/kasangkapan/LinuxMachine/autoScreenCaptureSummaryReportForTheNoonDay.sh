@@ -13,13 +13,14 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20210322
-# @date updated: 20220325; from 20210322
+# @date updated: 20220729; from 20220325
 # @website address: http://www.usbong.ph
 #
 # Reference:
 # 1) https://phantomjs.org/; last accessed: 20200724
 # 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
 #
+# reminder: update: file locations
 
 ./phantomjs saveWebPageAsImageFile.js getSalesReportsForTheDay -s -noon
 ./phantomjs saveWebPageAsImageFile.js viewSummaryReportForTheDay -s -noon
@@ -37,5 +38,6 @@ myDate=$(date '+%Y%m%d')
 #explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
 
 #explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%"\noonReport\"
-#edited by Mike, 20220325
-xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/BatchCommandsAsBashShellCommands/output/"$myDate"/noonReport/"
+#edited by Mike, 20220325; edited again by Mike, 20220729
+#xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/BatchCommandsAsBashShellCommands/output/"$myDate"/noonReport/"
+xdg-open "/opt/lampp/htdocs/usbong_kms/kasangkapan/LinuxMachine/output/"$myDate"/noonReport/"
