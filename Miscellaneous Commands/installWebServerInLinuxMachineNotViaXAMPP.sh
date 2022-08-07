@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220727; from 20220725
+# @last modified: 20220807; from 20220727
 # @website address: http://www.usbong.ph
 #
 # Additional Notes:
@@ -31,8 +31,17 @@
 # last accessed: 20220727
 # answer by: PYK, 20220301T0507; edited 20220311T1730
 
+#added by Mike, 20220807
+sudo apt-get update
+
 sudo apt-get install apache2
 sudo apt-get install mysql-server
 #edited by Mike, 20220727
 #sudo apt-get install php
 sudo apt-get install php7.*-mysqli
+
+#added by Mike, 20220807
+sudo apt-get install php7.*-cli
+#note: update apache2 configuration to include PHP;
+#actions starts PHP with service apache2 start COMMAND
+sudo apt-get install libapache2-mod-php7.0.
