@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200420
-' @date updated: 20220613; from 20220505
+' @date updated: 20220808; from 20220613
 ' @website address: http://www.usbong.ph
 '
 -->
@@ -615,7 +615,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//added by Mike, 20200420; edited by Mike, 20200724
 //								$fFee = $value['fee'];
 //								if ((strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) or ($value['medical_doctor_id']==0)) {
-								if ((strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) or (strpos(strtoupper($value['medical_doctor_name']),"HONESTO")) or ($value['medical_doctor_id']==0)) {
+								//edited by Mike, 20220808
+//								if ((strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) or (strpos(strtoupper($value['medical_doctor_name']),"HONESTO")) or ($value['medical_doctor_id']==0)) {
+								if ((strpos(strtoupper($value['medical_doctor_name']),"PEDRO")) or (strpos(strtoupper($value['medical_doctor_name']),"HONESTO")) or (strpos(strtoupper($value['medical_doctor_name']),"CHASTITY")) or ($value['medical_doctor_id']==0)) {
 									$fFee = $value['fee'];
 								}
 								else {
