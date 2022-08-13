@@ -94,7 +94,7 @@
 						td.tableHeaderColumn
 						{
 							border: 1pt solid black;		
-							background-color: #00ff00; /* #93d151; lime green; */
+							/*background-color: #00ff00;*/ /* #93d151; lime green; */
 							text-align: center;
 							font-weight: bold;		
 						}						
