@@ -171,6 +171,7 @@
 	  <script>
 	  </script>
   <body>	  
+	
 <?php
 	date_default_timezone_set('Asia/Hong_Kong');
 	
@@ -186,7 +187,13 @@
     echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC"."</b><br/>";
 	echo "<br/>";
     echo "<b>NON-MED ITEM INVENTORY LIST"."</b><br/>";
-	echo "<br/>";
+?>
+
+	<div><b>TODAY: </b><?php echo strtoupper(date("Y-m-d, l"));?>
+	</div>
+	<br/>
+
+<?php
 	echo "<table>";
 /*
 	echo "<tr>";
