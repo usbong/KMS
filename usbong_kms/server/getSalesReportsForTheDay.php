@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2020~2021 SYSON, MICHAEL B.
+  Copyright 2020~2022 SYSON, MICHAEL B.
   
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20220325; FROM 20220107
+  @date updated: 20220815; from 20220701
   @website address: www.usbong.ph
   
   Input:
@@ -44,11 +44,8 @@
 
 	//added by Mike, 20200524
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-	//added by Mike, 20220325
-	//TO-DO: store: fileBasePath location in another file that is auto-generated during installation
-//	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
-	$fileBasePath = "/home/unit_member/MOSC/output/informationDesk/cashier/";
-		
+	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	
 	//added by Mike, 20210323
 	//With Linux Machine, if $fileBasePath does not exist, Computer writes in the same folder where getSalesReportsForTheDay.php is located
 	//the file name includes the value of $fileBasePath
@@ -58,7 +55,7 @@
 /*	
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
-*/
+*/	
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")));
 	
@@ -792,8 +789,12 @@
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 								$myNetFeeValue = $value['fee']*0.70;
 							}								
+							
+							//edited by Mike, 20220815
+//							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+							if ((strpos($listValue['medical_doctor_name'],"HONESTO")!==false) or
+								(strpos($listValue['medical_doctor_name'],"CHASTITY")!==false)) {
 
-							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
 //										echo $value['notes'];
 //										echo $value['transaction_id'];
 								//TO-DO: -update: this
@@ -976,8 +977,12 @@ echo "hallo<br/>";
 //							}
 							else {
 								//added by Mike, 20220107
-								if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
-									//echo $value['notes'];
+								//edited by Mike, 20220815
+	//							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+								if ((strpos($listValue['medical_doctor_name'],"HONESTO")!==false) or
+									(strpos($listValue['medical_doctor_name'],"CHASTITY")!==false)) {
+	
+	//echo $value['notes'];
 	/*										
 									if (strpos($value['notes'],"MOSC OR")!==false) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
@@ -991,8 +996,8 @@ echo "hallo<br/>";
 										//echo "dito: ".$value['transaction_id'];
 										
 										if($receiptArrayRowValue) {
-											//edited by Mike, 20220107
-											//reminder: DR. HONESTO uses MOSC OR; set to zero if as DR. HONESTO OR
+											//edited by Mike, 20220815; from 20220107
+											//reminder: DR. HONESTO and DR. CHASTITZ use MOSC OR; set to zero if as DR. HONESTO or DR. CHASTITY OR
 	//										if ($receiptArrayRowValue['receipt_number']!=0) {
 											if ($receiptArrayRowValue['receipt_number']==0) {
 												$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
