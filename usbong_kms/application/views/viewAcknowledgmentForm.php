@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20220524; from 20220317
+  @date updated: 20220822; from 20220524
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -223,7 +223,14 @@
 						
 						button:hover {
 							color: rgb(85,56,153);
-						}						
+						}					
+						
+						a.rowLink
+						{
+							color: rgb(0,0,0); /* black */
+							text-decoration: none;
+						}
+							
     /**/
     </style>
     <title>
@@ -309,10 +316,20 @@
 			</td>
 			<td>
 <?php			
+//edited by Mike, 20220822							
+/*
 				//BERGSTEIN, AKI
 				//edited by Mike, 20220317
 //				echo $result[0]['patient_name'];
 				echo str_replace("�","Ñ",$result[0]['patient_name']);
+*/							
+	
+														
+echo "<a class='rowLink' target='_blank' href='".site_url('browse/viewPatient/'.$result[0]['patient_id'])."'>";
+							echo str_replace("�","Ñ",$result[0]['patient_name']);
+echo "</a>";
+							
+
 ?>				
 			</td>
 			<td>
@@ -747,9 +764,22 @@
 							}
 
 							echo "</td>";			
+							
+//edited by Mike, 20220822							
+/*
 							echo "<td class='column'>";
 							echo strtoupper($value['item_name']);
 							echo "</td>";
+*/							
+	
+							echo "<td class='column'>";
+														
+echo "<a class='rowLink' target='_blank' href='".site_url('browse/viewItemMedicine/'.$value['item_id'])."'>";
+							echo strtoupper($value['item_name']);
+echo "</a>";
+							echo "</td>";
+													
+							
 							echo "<td class='columnFee'>";
 //							echo $value['fee']/$value['fee_quantity'];
 							//edited by Mike, 20210706
@@ -885,10 +915,23 @@
 								echo "PCS";
 							}
 
-							echo "</td>";			
+							echo "</td>";										
+
+//edited by Mike, 20220822							
+/*
 							echo "<td class='column'>";
 							echo strtoupper($value['item_name']);
 							echo "</td>";
+*/							
+	
+							echo "<td class='column'>";
+														
+echo "<a class='rowLink' target='_blank' href='".site_url('browse/viewItemNonMedicine/'.$value['item_id'])."'>";
+							echo strtoupper($value['item_name']);
+echo "</a>";
+							echo "</td>";
+														
+							
 							echo "<td class='columnFee'>";
 //							echo $value['fee']/$value['fee_quantity'];
 							echo number_format($value['fee']/$value['fee_quantity'], 2, '.', '');
