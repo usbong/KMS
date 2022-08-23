@@ -9,11 +9,12 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20220815; from 20220701
+  @date updated: 20220823; from 20220815
   @website address: www.usbong.ph
   
   Input:
   1) Sales reports for the day in the database (DB)
+  
   Output:
   1) Automatically connect to the DB and get the sales reports for the day from the DB
   --> Afterwards, write the reports as .txt text in the computer server's set location
@@ -42,13 +43,30 @@
 */	
 	date_default_timezone_set('Asia/Hong_Kong');
 
+	//edited by Mike, 20220823
+	//note: update: base directory location
+	//identify if WINDOWS file directory system 		
+	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+						
+//	echo $fileBasePath;
+	
+	if (strpos(dirname(__FILE__), ':\\') !== false) { //WINDOWS file directory system
+	}
+	else {
+		$fileBasePath = "/home/unit_member/MOSC/output/informationDesk/cashier/";
+	}
+							
+	
+/*	
 	//added by Mike, 20200524
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	//edited by Mike, 20220823
+//	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 	
 	//added by Mike, 20210323
-	//With Linux Machine, if $fileBasePath does not exist, Computer writes in the same folder where getSalesReportsForTheDay.php is located
-	//the file name includes the value of $fileBasePath
+	$fileBasePath = "/home/unit_member/MOSC/output/informationDesk/cashier/";
+*/
+
 
 	//added by Mike, 20200902
 	//$sDateToday = date("Y-m-d");
