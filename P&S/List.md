@@ -82,7 +82,7 @@ CAUSE to be due to system upgrade, where: installation of `mysql-server-8.0` is 
 
 ### Answer:
 
-Execute the following COMMANDS in Terminal Window:<br/> 
+Execute the following COMMANDS in Terminal Window (of Computer Server):<br/> 
 <br/>
 <b>
 sudo mysqld_safe --skip-grant-tables --skip-networking &<br/>
