@@ -78,7 +78,7 @@ answer by: PYK, 20220301T0507; edited 20220311T1730
 
 ### Additional Note:
 
-CAUSE to be due to system upgrade, where: installation of mysql-server-8.0 is NOT YET COMPLETE
+CAUSE to be due to system upgrade, where: installation of `mysql-server-8.0` is NOT YET COMPLETE
 
 ### Answer:
 
