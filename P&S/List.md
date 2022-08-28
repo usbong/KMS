@@ -70,4 +70,34 @@ https://stackoverflow.com/questions/41645309/mysql-error-access-denied-for-user-
 last accessed: 20220727
 answer by: PYK, 20220301T0507; edited 20220311T1730
 
+## Problem#4) Cannot anymore log into mysql even with CORRECT username and password
 
+### Example:
+
+"MySQL Error: : 'Access denied for user 'root'@'localhost'"
+
+### Additional Note:
+
+CAUSE to be due to system upgrade, where: installation of mysql-server-8.0 is NOT YET COMPLETE
+
+### Answer:
+
+Execute the following COMMANDS in Terminal Window:<br/> 
+<br/>
+<b>
+sudo mysqld_safe --skip-grant-tables --skip-networking &<br/>
+sudo mysql -uroot<br/>
+</b>
+
+#### //------------------------------
+#### @MySQL Monitor
+#### //------------------------------
+
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
+quit;
+
+### Reference:
+https://askubuntu.com/questions/1131286/problem-in-accessing-to-mysql;
+last accessed: 20220828
+answer by: FloT, 20190404T2042
