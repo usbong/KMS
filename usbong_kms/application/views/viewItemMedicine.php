@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220720; from 20220518
+' @date updated: 20220914; from 20220720
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -988,8 +988,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										else {
 											return false;										
 										}
-									}" required>						
+									}" required>	
+<!--
 							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase" id="buyButtonId">BUY</button>									
+-->				
+							<?php //edited by Mike, 20220914
+								if ($is_hidden==1) {
+									//TO-DO: -add: link to updated item page
+									echo "<b>UPDATED ITEM AVAILABLE</b>";
+								}
+								else {
+?>
+							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase" id="buyButtonId">BUY</button>									
+<?php
+								}
+?>							
+							
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
 						</td>						
