@@ -1370,7 +1370,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);
 
+		//echo $data['resultItem'][0]['is_hidden'];
+		$data['is_hidden'] = $data['resultItem'][0]['is_hidden'];
+
 		$data['resultItem'] = $this->getResultItemQuantity($data);		
+
 		
 		//edited by Mike, 20200608
 		//$data['itemName'] = $data['resultItem'][0]['item_name'];
