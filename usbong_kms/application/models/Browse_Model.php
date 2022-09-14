@@ -921,7 +921,9 @@ class Browse_Model extends CI_Model
 	
 		//edited by Mike, 20210110
 		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+		//edited by Mike, 20220914
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date');
 
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -962,15 +964,17 @@ class Browse_Model extends CI_Model
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
 		
-		if ($rowArray == null) {			
+		if ($rowArray == null) {					
 			return False; //edited by Mike, 20190722
 		}
 		
 //		echo report_id: .$rowArray[0]['report_id'];
+		//echo "item is hidden: ".$rowArray[0]['is_hidden'];
 		
 /*		return $row->report_description;
 */
 //		return $rowArray[0]['report_description'];
+
 		
 		return $rowArray;
 	}	
