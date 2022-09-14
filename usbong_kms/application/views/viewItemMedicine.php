@@ -993,7 +993,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase" id="buyButtonId">BUY</button>									
 -->				
 							<?php //edited by Mike, 20220914
-								if ($is_hidden==1) {
+								if (isset(($is_hidden)) && ($is_hidden==1)) {
 									//TO-DO: -add: link to updated item page
 									echo "<b>UPDATED ITEM AVAILABLE</b>";
 								}
