@@ -15,7 +15,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20201001
-# @last modified: 20220114; from 20201014
+# @last modified: 20220926; from 20220316
 # @website address: http://www.usbong.ph
 #
 # Notes:
@@ -45,5 +45,10 @@
 # 2) Unmount command: umount -l $destination
 #--> where: l=lazy, i.e. unmount filesystem now even if busy
 
-./accessDatabaseStorageInWindowsPCFromLinuxPC.sh
-./saveDatabaseStorageCommandInLinuxPC.sh
+cd /home/unit_member/Desktop/
+
+sudo ./accessDatabaseStorageInWindowsPCFromLinuxPC.sh
+sudo ./saveDatabaseStorageCommandInLinuxPC.sh
+
+#added by Mike, 20220926
+sudo ./autoImportDatabaseToMySQLDBLinuxMachine.sh
