@@ -50,5 +50,9 @@ cd /home/unit_member/Desktop/
 sudo ./accessDatabaseStorageInWindowsPCFromLinuxPC.sh
 sudo ./saveDatabaseStorageCommandInLinuxPC.sh
 
-#added by Mike, 20220926
-sudo ./autoImportDatabaseToMySQLDBLinuxMachine.sh
+#added by Mike, 20220926; edited by Mike, 20220926
+if [ -f ./autoImportDatabaseToMySQLDBLinuxMachine.sh ]; then
+  sudo ./autoImportDatabaseToMySQLDBLinuxMachine.sh
+else 
+  sudo ./autoImportDatabaseToMySQLDBLinuxMachineNotViaXAMPP.sh
+fi
