@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220616; from 20220526
+' @date updated: 20220930; from 20220616
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -975,23 +975,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class="column">
 							<select id="classificationParam" class="Classification-select">
 <?php
-							  if (isset($resultPaid[0]["notes"])) {
+								//edited by Mike, 20220930
+//							  if (isset($resultPaid[0]["notes"])) {
+							  if (isset($result[0]["notes"])) {
 								  //edited by Mike, 20210219
 								  //added by Mike, 20210313
 								  //note: keyword "DISCOUNTED"
-								  if (strpos($resultPaid[0]["notes"],"DISCOUNTED")!==false) {
+
+								  //edited by Mike, 20220930
+//								  if (strpos($resultPaid[0]["notes"],"DISCOUNTED")!==false) {
+								  if (strpos($result[0]["notes"],"DISCOUNTED")!==false) {
 									echo "<option value='0'>WI</option>";
 									echo "<option value='1'>SC</option>";
 									echo "<option value='2'>PWD</option>";
 								  }
 //edited by Mike, 20210313
 //								  if (strpos($resultPaid[0]["notes"],"SC")!==false) {
-								  else if (strpos($resultPaid[0]["notes"],"SC")!==false) {
+								  //edited by Mike, 20220930
+//								  else if (strpos($resultPaid[0]["notes"],"SC")!==false) {
+								  else if (strpos($result[0]["notes"],"SC")!==false) {
 									echo "<option value='0'>WI</option>";
 									echo "<option value='1' selected='selected'>SC</option>";
 									echo "<option value='2'>PWD</option>";
 								  }
-								  else if (strpos($resultPaid[0]["notes"],"PWD")!==false) {
+								  //edited by Mike, 20220930
+//								  else if (strpos($resultPaid[0]["notes"],"PWD")!==false) {
+								  else if (strpos($result[0]["notes"],"PWD")!==false) {
 									echo "<option value='0'>WI</option>";
 									echo "<option value='1'>SC</option>";
 									echo "<option value='2' selected='selected'>PWD</option>";
