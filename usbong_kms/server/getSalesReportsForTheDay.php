@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20220823; from 20220815
+  @date updated: 20221003; from 20220823
   @website address: www.usbong.ph
   
   Input:
@@ -68,14 +68,18 @@
 */
 
 
-	//added by Mike, 20200902
+	//added by Mike, 20200902; edited by Mike, 20221003
 	//$sDateToday = date("Y-m-d");
 /*	
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
 */	
+/*
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")));
+*/
+	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-2 Day"));
+	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-2 Day"));
 	
 	//added by Mike, 20200524
 	$responses = [];
@@ -778,8 +782,6 @@
 		//				if (strpos($value['item_name'], "*") === false) {
 						//removed by Mike, 20200712
 /*	
-
-
 						if ($value['fee'] !== "0.00") {
 */					
 							//edited by Mike, 20211108
@@ -858,19 +860,15 @@
 //echo ">>><br/>";											
 											if ($rowTransactionQuantityArray->num_rows > 0) {												
 												$iTransactionId = $iTransactionId + 1;
-
 echo "hallo<br/>";
-
 												//echo "iTransactionId: ".$iTransactionId;
 												
 												//this is due to the transaction count can skip
 												$iTransactionQuantity = -1;
-
 												if (isset($rowTransactionQuantityArray)) {
 //													$iTransactionQuantity = $rowTransactionQuantityArray->transaction_quantity;
 													$iTransactionQuantity = mysqli_fetch_array($rowTransactionQuantityArray)[0];
 												}
-
 												//note: if last transaction in database
 												//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);												
 												if ($iTransactionId>=$iTransactionIdMax) {
@@ -883,16 +881,13 @@ echo "hallo<br/>";
 											}
 											//added by Mike, 20201217
 											else {
-
 												//added by Mike, 20211023
 	echo "DITO<br/>";
-
 												//if next transaction was deleted; 
 												//verify previous transaction's quantity if NOT zero
 												//i.e. combined transaction
 												break;
 //												$iTransactionId=$iTransactionId+1;
-
 											}
 										}
 										// show an error if there is an issue with the database query
