@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220627; from 20220518
+' @date updated: 20221006; from 20220627
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1332,6 +1332,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="columnTableHeaderHistory">				
 				<?php
+							echo "TRANSACTION DATE";
+				?>		
+						</td>
+
+						<td class ="columnTableHeaderHistory">				
+				<?php
 							echo "ADDED DATETIME";
 				?>		
 						</td>
@@ -1379,6 +1385,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			?>				
 			
 						  <tr class="row">
+
+							<td class ="columnTableHeaderDateHistory">				
+								<div class="transactionDate">
+					<?php
+									//added by Mike, 20221006
+									//echo str_replace(" ","T",$value['transaction_date']);
+									
+									//$transaction_date="10/05/2022";
+									
+									$sYear = substr($value['transaction_date'],6); //year
+									$sMonth = substr($value['transaction_date'],0,2); //year
+									$sDay = substr($value['transaction_date'],3,2); //day
+									
+									echo $sYear."-".$sMonth."-".$sDay;
+
+//									echo str_replace(" ","<br/>T",$value['added_datetime_stamp']);
+					?>		
+								</div>								
+							</td>
+							
 							<td class ="columnTableHeaderDateHistory">				
 								<div class="transactionDate">
 					<?php
