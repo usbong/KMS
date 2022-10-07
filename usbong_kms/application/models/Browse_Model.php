@@ -201,7 +201,11 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20220518
 		//edited by Mike, 20220624
 		//$iPatientNoneWalaId=11682;
-		$iPatientNoneWalaId=14177;
+		//edited by Mike, 20221007
+		//TO-DO: -update: this to be automatic
+		//$iPatientNoneWalaId=14177;
+		$iPatientNoneWalaId=16186;
+
 
 /*		//removed by Mike, 20210723
 		//added by Mike, 20210721
