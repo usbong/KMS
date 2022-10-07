@@ -2303,8 +2303,18 @@ class Browse extends CI_Controller { //MY_Controller {
 		//TO-DO: -update: this
 //		if (($patientId==0) || ($patientId==3543) || ($patientId==11682)){ //if patient name is "NONE", et cetera; 11682 "NONE, WALA v2";
 //		if (($patientId==0) || ($patientId==3543) || ($patientId==11682)){ //if patient name is "NONE", et cetera; 11682 "NONE, WALA v2";
-		if (($patientId==0) || ($patientId==3543) || //if patient name is "NONE", et cetera; 
+
+		//edited by Mike, 20221007
+		/*
+			if (($patientId==0) || ($patientId==3543) || //if patient name is "NONE", et cetera; 
 		    ($patientId==11682) || ($patientId==14177)){ //11682 "NONE, WALA v2"; 14177 "NONE, WALA v3"
+		*/
+		//noticeable DELAY in execution: "NONE, WALA v3"
+		//531 TOTAL IN TRANSACTIONS DB TABLE
+			if (($patientId==0) || ($patientId==3543) || //if patient name is "NONE", et cetera; 
+		    ($patientId==11682) || ($patientId==14177) ||  //11682 "NONE, WALA v2"; 14177 "NONE, WALA v3"
+			($patientId==16186)){ //"NONE, WALA v4"
+			
 		//noticeable delay in execution with 3543,
 		//with @patientId used in transactions: 1053 total, Query took 0.0800 seconds.
 
