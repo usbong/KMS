@@ -2310,7 +2310,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		    ($patientId==11682) || ($patientId==14177)){ //11682 "NONE, WALA v2"; 14177 "NONE, WALA v3"
 		*/
 		//noticeable DELAY in execution: "NONE, WALA v3"
-		//531 TOTAL IN TRANSACTIONS DB TABLE
+		//531 TOTAL IN TRANSACTIONS DB TABLE (with 85566 transactions)
 			if (($patientId==0) || ($patientId==3543) || //if patient name is "NONE", et cetera; 
 		    ($patientId==11682) || ($patientId==14177) ||  //11682 "NONE, WALA v2"; 14177 "NONE, WALA v3"
 			($patientId==16186)){ //"NONE, WALA v4"
