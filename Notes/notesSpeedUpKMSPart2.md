@@ -17,3 +17,15 @@ added: <b>patientId#11682:</b> (name: <b>"NONE, WALA v2"</b>)
 //2.2) Showing rows 0 - 8 <b>(9 total, Query took 0.0020 seconds.)</b><br/>
 //2.3) Showing rows 0 - 8 <b>(9 total, Query took 0.0025 seconds.)</b><br/>
 
+## ADDITIONAL EXAMPLE:
+ITEM ID#: 1<br/>
+TRANSACTIONS COUNT: 1440 of 85504<br/>
+<br/>
+--> observed: noticeable TIME used for execution to finish <br/>
+--> where: execution instructions include multiple JOIN COMMANDS of database tables<br/>
+--> example: viewItemMedicineWithItemPurchasedHistory page<br/>
+--> adds: noticeable VALUE of page that has already finished loading;<br/>
+<br/>
+ACTION: add: new item with "v2" keyphrase to have new ID#<br/>
+--> where: "2" in "v2" is COUNT;<br/>
+--> example: "item v2"<br/>
