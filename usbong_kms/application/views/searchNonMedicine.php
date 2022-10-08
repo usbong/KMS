@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220721; from 20210126
+' @date updated: 20221008; from 20220721
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -315,7 +315,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
 				}
 				else {
-					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
+					//edited by Mike, 20221008
+					//echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
+
+					$iCount = 0;
+					$updateResult = [];
+					foreach ($result as $value) {
+						if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
+						}
+						else if ($value['quantity_in_stock']=="") {
+						}
+						else {
+							if ($value['resultQuantityInStockNow']==0) {
+								$iCount++;
+								continue;
+							}
+						}
+						
+						array_push($updateResult,$value);
+					}
+					echo '<div>Showing <b>'.(count($result)-$iCount).'</b> results found.</div>';
 				}			
 
 				echo "<br/>";
@@ -349,7 +368,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  </tr>
 <?php				
 				$iCount = 1;
-				foreach ($result as $value) {
+				//edited by Mike, 20221008
+				//foreach ($result as $value) {
+				foreach ($updateResult as $value) {
 					//added by Mike, 20210126
 					//TO-DO: -update: in Browse.php, confirmNonMedicine(...)
 					//sort in reverse $outputArray
@@ -358,6 +379,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					if ($value['resultQuantityInStockNow']==0) {
 //						continue;
 					}
+
+/*	//removed by Mike, 20221008
+					//added by Mike, 20221008
+					if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
+					}
+					else if ($value['quantity_in_stock']=="") {
+					}
+					else {
+						if ($value['resultQuantityInStockNow']==0) {
+							continue;
+						}
+					}
+*/
 
 		?>				
 		
@@ -382,11 +416,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
 									echo 9999;
 								}
-/*								//edited by Mike, 20200615
-								else {
-									echo $value['quantity_in_stock'];
-								}
-*/								
 								else if ($value['quantity_in_stock']=="") {
 									//edited by Mike, 20200615
 									//echo 9999;
@@ -394,9 +423,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 								else {
 //									echo $value['quantity_in_stock'];
+									//edited by Mike, 20221008
 									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];										
+/*	//removed by Mike, 20221008									
+									if ($value['resultQuantityInStockNow']==0) {
+										continue;
+									}
+									else {
+										echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];										
+									}
+*/									
 								}
-
 							?>
 								</div>
 						</td>
@@ -446,8 +483,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}			
 		}
 	?>
-	<br />
-	<br />
 	<br />
 	<br />
 	<div class="copyright">
