@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20221008; from 20220721
+' @date updated: 20221013; from 20221008
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -311,10 +311,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */			
 
 				$resultCount = count($result);
+/* //edited by Mike, 20221013
 				if ($resultCount==1) {
 					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
 				}
 				else {
+*/					
 					//edited by Mike, 20221008
 					//echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
 
@@ -334,8 +336,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						array_push($updateResult,$value);
 					}
-					echo '<div>Showing <b>'.(count($result)-$iCount).'</b> results found.</div>';
+					//edited by Mike, 20221013
+					//echo '<div>Showing <b>'.(count($result)-$iCount).'</b> results found.</div>';				
+
+					$updatedResultCount = count($updateResult);
+
+					if ($updatedResultCount==1) {
+						echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+					}
+					else if ($updatedResultCount<=0) {
+						echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+					}
+					else {
+						echo '<div>Showing <b>'.($updatedResultCount-$iCount).'</b> results found.</div>';				
+					}
+
+/* //edited by Mike, 20221013
 				}			
+*/
 
 				echo "<br/>";
 				echo "<table class='search-result'>";
@@ -368,6 +386,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  </tr>
 <?php				
 				$iCount = 1;
+				
+				//added by Mike, 20221013
+				if (!isset($updateResult)) {
+					$updateResult=[];
+				}
+				
 				//edited by Mike, 20221008
 				//foreach ($result as $value) {
 				foreach ($updateResult as $value) {
