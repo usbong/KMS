@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20221006; from 20220627
+' @date updated: 20221013; from 20221006
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1408,12 +1408,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="columnTableHeaderDateHistory">				
 								<div class="transactionDate">
 					<?php
+									//added by Mike, 20221013
+									echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>";
+										
 									//edited by Mike, 20200507
 									//echo $value['transaction_date'];
 									//echo $value['added_datetime_stamp'];
 									//edited by Mike, 20210619
 									echo str_replace(" ","T",$value['added_datetime_stamp']);
 //									echo str_replace(" ","<br/>T",$value['added_datetime_stamp']);
+										
+									//added by Mike, 20221013
+									echo "</a>";					
 					?>		
 								</div>								
 							</td>
