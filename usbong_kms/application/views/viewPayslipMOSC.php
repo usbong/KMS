@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220808; from 20220329
+' @date updated: 20221014; from 20220808
 ' @website address: http:/www.usbong.ph
 -->
 <?php
@@ -371,7 +371,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 
 						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+							<a target="_blank" href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
 							
 								<div class="patientName">
 				<?php
