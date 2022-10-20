@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20221013; from 20221008
+' @date updated: 20221020; from 20221013
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -342,13 +342,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$updatedResultCount = count($updateResult);
 
 					if ($updatedResultCount==1) {
-						echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+						//edited by Mike, 20221020
+//						echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+						echo '<div>Showing <b>1</b> result found.</div>';
 					}
 					else if ($updatedResultCount<=0) {
-						echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+						//edited by Mike, 20221020
+						//echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+						echo '<div>Showing <b>0</b> result found.</div>';
 					}
 					else {
-						echo '<div>Showing <b>'.($updatedResultCount-$iCount).'</b> results found.</div>';				
+						//edited by Mike, 20221020
+						//TO-DO: -reverify: this
+//						echo '<div>Showing <b>'.($updatedResultCount-$iCount).'</b> results found.</div>';				
+						echo '<div>Showing <b>'.($updatedResultCount).'</b> results found.</div>';				
 					}
 
 /* //edited by Mike, 20221013
