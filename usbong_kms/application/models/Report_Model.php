@@ -664,7 +664,10 @@ class Report_Model extends CI_Model
 		//no need to add % when using CodeIgniter 3's not_like(...) command
 		//edited by Mike, 20201106
 //		$this->db->not_like('t2.notes',"MED ONLY");		
-		$this->db->not_like('t2.notes',"MED");
+		//removed by Mike, 20221021;
+		//reminder: there exists "MED CERT";
+		//TO-DO: -verify: OUTPUT
+		//$this->db->not_like('t2.notes',"MED");		
 		$this->db->not_like('t2.notes',"ONLY");
 		
 		//added by Mike, 20201106
