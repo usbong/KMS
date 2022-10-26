@@ -13,4 +13,5 @@ TOTAL FILE SIZE: <b>383MB</b> (<b>394MB</b>, SIZE on DISK)<br/>
 
 ## SOLUTION:
 
-put: in a NEW sub-folder
+put: in a NEW sub-folder<br/>
+--> adds: no need to view the transferred IMAGE FILES daily
