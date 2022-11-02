@@ -4826,7 +4826,7 @@ class Browse_Model extends CI_Model
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
-
+		
 		$this->db->distinct('t1.patient_name');
 		
 		//edited by Mike, 20200606
@@ -4848,6 +4848,9 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20210723
 		$this->db->where('t3.medical_doctor_id!=',0);
 
+		//added by Mike, 20221102
+		$this->db->where('t2.notes!=',"IN-QUEUE; PAID");
+
 
 		//removed by Mike, 20200611
 /*
@@ -4861,6 +4864,7 @@ class Browse_Model extends CI_Model
 		//edited by Mike, 20200519
 		//TO-DO: -update: this
 		$this->db->where('t2.notes!=', 'UNPAID');
+
 /*		$this->db->like('t2.notes', 'PAID');
 		$this->db->or_like('t2.notes', '; PAID');
 */
