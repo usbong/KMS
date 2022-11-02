@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20220317; from 20211201
+  @date updated: 20221102; from 20221013
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -681,8 +681,8 @@
 
 			if (isset($medicalDoctorId)) {
 			}
-			else {
-				$medicalDoctorId = $result[0]["medical_doctor_id"];
+			else {				
+				$medicalDoctorId = $result[0]["medical_doctor_id"];				
 			}
 			
 			//edited by Mike, 20210318
@@ -1763,7 +1763,14 @@
 					  echo "<tr class='row'>";
 					  echo "<td class='column'>";
 
-					  echo date('Y-m-d', strtotime($value['transaction_date']));
+					  //edited by Mike, 20221102
+					  //echo date('Y-m-d', strtotime($value['transaction_date']));
+
+						echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$patientId.'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+							//edited by Mike, 20210927
+//							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+							date('Y-m-d', strtotime($value['transaction_date']))."</b>
+						</a>";
 
 					  //added by Mike, 20210407
 					  $dTotalFee = 0;					  
@@ -2092,7 +2099,14 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 					  echo "<tr class='row'>";
 					  echo "<td class='column'>";
 
-					  echo date('Y-m-d', strtotime($value['transaction_date']));
+					  //edited by Mike, 20221102
+					  //echo date('Y-m-d', strtotime($value['transaction_date']));
+
+						echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$patientId.'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+							//edited by Mike, 20210927
+	//							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+							date('Y-m-d', strtotime($value['transaction_date']))."</b>
+						</a>";
 
 					  //added by Mike, 20210407
 					  $dTotalFee = 0;					  
@@ -2421,7 +2435,15 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 					  echo "<tr class='row'>";
 					  echo "<td class='column'>";
 
-					  echo date('Y-m-d', strtotime($value['transaction_date']));
+					  //edited by Mike, 20221102
+					  //echo date('Y-m-d', strtotime($value['transaction_date']));
+
+						echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$patientId.'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+							//edited by Mike, 20210927
+	//							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+							date('Y-m-d', strtotime($value['transaction_date']))."</b>
+						</a>";
+
 
 					  //added by Mike, 20210407
 					  $dTotalFee = 0;					  
