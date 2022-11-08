@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20221003; from 20220823
+  @date updated: 20221108; from 20221107
   @website address: www.usbong.ph
   
   Input:
@@ -1013,9 +1013,13 @@ echo "hallo<br/>";
 											//edited by Mike, 20220815; from 20220107
 											//reminder: DR. HONESTO and DR. CHASTITZ use MOSC OR; set to zero if as DR. HONESTO or DR. CHASTITY OR
 	//										if ($receiptArrayRowValue['receipt_number']!=0) {
-											if ($receiptArrayRowValue['receipt_number']==0) {
+											//edited by Mike, 20221107
+											//if ($receiptArrayRowValue['receipt_number']==0) {
 												$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
-											}
+											//}
+											
+											//removed by Mike, 20221108
+											//echo $myNetFeeValue."<br/>";
 										}
 										// free result set
 										mysqli_free_result($receiptArray);											
@@ -1028,7 +1032,7 @@ echo "hallo<br/>";
 								}
 							}
 
-							$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
+							$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
 							
 
 							//TO-DO: -reverify: this
