@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20221014; from 20220808
+' @date updated: 20221108; from 20221014
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -631,6 +631,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
 										$dDeductDueToMOSCOR = $value['fee']*.12;
+										
+										//added by Mike, 20221108; from 20221107
+										//TO-DO: -reverify: this
+/*
+										echo "dito: ".$value['patient_id']."<br/>";									
+										//.echo "dito: ".$value['patient_name']."<br/>";
+										echo "dito: ".$value['receipt_number']."<br/>";
+*/
 										
 										$iNetPF = $iNetPF - $dDeductDueToMOSCOR; //$value['fee']*.12;
 	
