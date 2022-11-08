@@ -677,6 +677,11 @@ class Report extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200910
 		//identify newest transactionId
 		$this->db->select_max('transaction_id');
+		
+		//added by Mike, 20221108
+		//TO-DO: -reverify: this
+		$this->db->where('patient_id',$data["result"][0]["patient_id"]);
+		
 		$query = $this->db->get('transaction');
 		$row = $query->row();
 		
@@ -710,6 +715,11 @@ class Report extends CI_Controller { //MY_Controller {
 
 						$this->db->select('transaction_quantity');
 						$this->db->where('transaction_id',$iTransactionId);
+
+						//added by Mike, 20221108
+						//TO-DO: -reverify: this
+						$this->db->where('patient_id',$value["patient_id"]);
+
 						$query = $this->db->get('transaction');
 						$row = $query->row();
 
