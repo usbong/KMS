@@ -683,8 +683,11 @@ class Report_Model extends CI_Model
 
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
+	
+		//added by Mike, 20221108
+		//echo "dito: ".$rowArray[0]["patient_id"];	
 		
-		if ($rowArray == null) {			
+		if ($rowArray == null) {		
 			return False; //edited by Mike, 20190722
 		}
 		
