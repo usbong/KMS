@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220908; from 20210222
+' @date updated: 20221109; from 20220908
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -523,6 +523,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$fFee = 0;
 								//added by Mike, 20200926
 								$dAddedVATAmount = $value['vat_amount_paid'];
+
+								//echo "transactionId: ".$value['transaction_id']."<br/>";
 
 								if ($value['receipt_id']==0) {
 									$fFee = $value['fee'];
