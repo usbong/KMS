@@ -690,7 +690,7 @@ class Report extends CI_Controller { //MY_Controller {
 		//added by Mike, 20201007
 		$iTransactionQuantity = 0;
 		
-//		echo "max".$iTransactionIdMax;
+		//echo "max".$iTransactionIdMax;
 
 		//edited by Mike, 20220808
 //		if (strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) {
@@ -722,6 +722,14 @@ class Report extends CI_Controller { //MY_Controller {
 
 						$query = $this->db->get('transaction');
 						$row = $query->row();
+
+						//added by Mike, 20221109
+						//TO-DO: -reverify: this
+						//note: transactionId is the combined transaction
+						//of MD's first patient for the day
+						if ($iTransactionId==$iTransactionIdMax) {							
+							break;
+						}	
 
 						$iTransactionId = $iTransactionId + 1;
 						
