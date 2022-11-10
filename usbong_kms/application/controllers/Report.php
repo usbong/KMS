@@ -605,13 +605,14 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('viewPayslip', $data);
 	}
 
+/* //removed by Mike, 20221110
 	//added by Mike, 20200322; edited by Mike, 20200408
 	public function viewPayslipFor($medicalDoctorName)
 	{		
-/*	
-		$this->load->model('Browse_Model');
-		$data["medicalDoctorName"] = $this->Report_Model->getMedicalDoctorIdViaName	 //medical doctor keyword in report filename
-*/
+	
+////		$this->load->model('Browse_Model');
+////		$data["medicalDoctorName"] = $this->Report_Model->getMedicalDoctorIdViaName	 //medical doctor keyword in report filename
+
 				
 		$this->load->model('Report_Model');
 
@@ -629,6 +630,7 @@ class Report extends CI_Controller { //MY_Controller {
 			$this->load->view('viewPayslip', $data);
 		}
 	}
+*/
 
 	//added by Mike, 20200518; edited by Mike, 20200704
 	public function viewPayslipWebFor($medicalDoctorName)
@@ -677,10 +679,12 @@ class Report extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200910
 		//identify newest transactionId
 		$this->db->select_max('transaction_id');
-		
+
+/*	//removed by Mike, 20221110		
 		//added by Mike, 20221108
 		//TO-DO: -reverify: this
 		$this->db->where('patient_id',$data["result"][0]["patient_id"]);
+*/
 		
 		$query = $this->db->get('transaction');
 		$row = $query->row();
@@ -689,8 +693,9 @@ class Report extends CI_Controller { //MY_Controller {
 		
 		//added by Mike, 20201007
 		$iTransactionQuantity = 0;
-		
-		//echo "max".$iTransactionIdMax;
+	
+		//removed by Mike, 20221110
+//		echo "max".$iTransactionIdMax."<br/>";
 
 		//edited by Mike, 20220808
 //		if (strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) {
@@ -723,6 +728,7 @@ class Report extends CI_Controller { //MY_Controller {
 						$query = $this->db->get('transaction');
 						$row = $query->row();
 
+/* //removed by Mike, 20221110
 						//added by Mike, 20221109
 						//TO-DO: -reverify: this
 						//note: transactionId is the combined transaction
@@ -730,6 +736,7 @@ class Report extends CI_Controller { //MY_Controller {
 						if ($iTransactionId==$iTransactionIdMax) {							
 							break;
 						}	
+*/
 
 						$iTransactionId = $iTransactionId + 1;
 						
@@ -746,7 +753,8 @@ class Report extends CI_Controller { //MY_Controller {
 					}
 					while ($iTransactionQuantity <= 0);
 
-//						echo $iTransactionId."<br/>";
+//					echo $iTransactionId."<br/><br/>";
+
 					//edited by Mike, 20201127
 //					$iTransactionId = $iTransactionId -1;
 					//note: if last transaction in database
@@ -756,6 +764,9 @@ class Report extends CI_Controller { //MY_Controller {
 					else {
 						$iTransactionId = $iTransactionId -1;
 					}
+
+					//removed by Mike, 20221110
+					//echo $iTransactionId."<br/><br/>";
 
 					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($iTransactionId);
 				}
