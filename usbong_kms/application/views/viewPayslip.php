@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20221108; from 20221014
+' @date updated: 20221110; from 20221108
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -627,14 +627,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 								if ((strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) or
 									(strpos(strtoupper($value['medical_doctor_name']), "CHASTITY")!==false)) {
-
+/*	//removed by Mike, 20221110
+echo "<br/>";
+echo $value['transaction_id']."<br/>";
+//echo $value['patient_name']."<br/>";
+//echo $value['receipt_number']."<br/>";
+*/
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
 										$dDeductDueToMOSCOR = $value['fee']*.12;
 										
 										//added by Mike, 20221108; from 20221107
 										//TO-DO: -reverify: this
-/*
+/*	//removed by Mike, 20221110
 										echo "dito: ".$value['patient_id']."<br/>";									
 										//.echo "dito: ".$value['patient_name']."<br/>";
 										echo "dito: ".$value['receipt_number']."<br/>";
