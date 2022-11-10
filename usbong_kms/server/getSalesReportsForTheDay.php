@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20221108; from 20221107
+  @date updated: 20221110; from 20221108
   @website address: www.usbong.ph
   
   Input:
@@ -78,6 +78,10 @@
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")));
 
+/*
+	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
+	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
+*/
 /*
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-2 Day"));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-2 Day"));
