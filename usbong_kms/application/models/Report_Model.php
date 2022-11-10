@@ -645,8 +645,10 @@ class Report_Model extends CI_Model
 		//added by Mike, 20200324; edited by Mike, 20200607
 		//TO-DO: -add: instructions for unit member to quickly set date
 
+		//edited by Mike, 20221110
 		$this->db->where('t2.transaction_date=',date("m/d/Y"));	
 //		$this->db->where('t2.transaction_date=',"09/28/2020");
+//		$this->db->where('t2.transaction_date=',"11/09/2022");
 
 		//added by Mike, 20200601
 		//$this->db->where('t2.fee!=',0);
