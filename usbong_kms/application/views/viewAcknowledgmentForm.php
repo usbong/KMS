@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20220822; from 20220524
+  @date updated: 20221111; from 20220822
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -545,8 +545,8 @@ echo "</a>";
 		$dTotalMedItemFee=0;
 		$dTotalMDDiscountedFeePlus=0;
 		
-		//DR. HONESTO
-		$sWithDrHonesto="";
+		//DR. HONESTO OR DR. CHASTITY
+		$sWithDrHonestoOrDrChastity="";
 
 		//edited by Mike, 20210628
 		if (($resultPaid!=null) and (count($resultPaid) > 0)) {					
@@ -582,15 +582,23 @@ echo "</a>";
 					echo "</tr>";			
 					
 					//added by Mike, 20220317
-					//DR. PEDRO OR DR. HONESTO
+					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
+/* //edited by Mike, 20221111					
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6)) {
-						
+*/						
+					if (($value['medical_doctor_id']==1) or
+						($value['medical_doctor_id']==6) or
+						($value['medical_doctor_id']==4)) {
+
 						//edited by Mike, 20220317
 						$dTotalMDXrayFee+=$value['fee'];
 
 						if ($value['medical_doctor_id']==6) {
-							$sWithDrHonesto=" (WITH DR. HONESTO)";						
+							$sWithDrHonestoOrDrChastity=" (WITH DR. HONESTO)";						
+						}
+						else if ($value['medical_doctor_id']==4) {
+							$sWithDrHonestoOrDrChastity=" (WITH DR. CHASTITY)";						
 						}
 					}
 
@@ -615,12 +623,14 @@ echo "</a>";
 				}
 
 
-
+				//edited by Mike, 20221111
 				if (($result[0]['medical_doctor_id']==1) or
-					($result[0]['medical_doctor_id']==6)) {
+					($result[0]['medical_doctor_id']==6) or
+					($result[0]['medical_doctor_id']==4)) {
+
 					$dTotalMDXrayFeeWithDiscount+=$dTotalMDDiscountedFeePlus;
 				}				
-				//note: add MD RECEIPT TOTAL only IF NOT DR. PEDRO OR DR. HONESTO				
+				//note: add MD RECEIPT TOTAL only IF NOT DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
 				else {
 					echo "<tr>";
 						echo "<td class='columnFee'>";
@@ -846,10 +856,11 @@ echo "</a>";
 					//note: 800 -> 600; gives over 20% discount for SC classification;
 					if (strpos($result[0]['notes'],"SC;")!==false) {
 */
-					//added by Mike, 20220317
-					//DR. PEDRO OR DR. HONESTO
+					//added by Mike, 20221111; from 20220317
+					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
 					if (($result[0]['medical_doctor_id']==1) or
-						($result[0]['medical_doctor_id']==6)) {
+						($result[0]['medical_doctor_id']==6) or
+						($result[0]['medical_doctor_id']==4)) {
 						$dTotalMDXrayFeeWithDiscount+=$dTotalMDDiscountedFeePlus;
 					}
 					
@@ -862,7 +873,7 @@ echo "</a>";
 						echo "MOSC RECEIPT TOTAL (discounted: ".number_format($dTotalMDXrayFeeWithDiscount, 2, '.', ',').")";
 					}
 					else {
-						echo "MOSC RECEIPT TOTAL".$sWithDrHonesto;
+						echo "MOSC RECEIPT TOTAL".$sWithDrHonestoOrDrChastity;
 					}
 					echo "</td>";
 					echo "<td class='columnFee'>";
