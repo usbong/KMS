@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200420
-' @date updated: 20220613; from 20220325
+' @date updated: 20221129; from 20220613
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -305,8 +305,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  }
 				  else {
 				?>
+<!-- edited by Mike, 20221129
 					DATE: 2020-<?php echo $monthNum;?>
-	<!--				DATE: <?php echo strtoupper(date("Y-m"));?> -->
+-->
+					DATE: <?php echo strtoupper(date("Y-m"));?> 
 				<?php
 				  }
 				?>

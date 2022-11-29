@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200420
-' @date updated: 20220808; from 20220613
+' @date updated: 20221129; from 20220808
 ' @website address: http://www.usbong.ph
 '
 -->
@@ -308,8 +308,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  }
 				  else {
 				?>
+<!-- edited by Mike, 20221129
 					DATE: 2020-<?php echo $monthNum;?>
-	<!--				DATE: <?php echo strtoupper(date("Y-m"));?> -->
+-->
+					DATE: <?php echo strtoupper(date("Y-m"));?> 
 				<?php
 				  }
 				?>
@@ -772,7 +774,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												$fLess20PercentDiscount += 200; //we give more than 20% discount
 										   }
 										   else {
-											   $fLess20PercentDiscount += $fFee*0.20;
+											   //edited by Mike, 20221129
+											   //note: in right-most column, on PWD•SC LESS 20%+;
+											   //$fLess20PercentDiscount += $fFee*0.20;
+											   //$fAmountNoLess20PercentDiscount += $fFee / (1 - 0.20);
+											   $fLess20PercentDiscount += (($fFee/(1-0.20))-($fFee));
 										   }
 
 										   //we do fee computation in the next column	
