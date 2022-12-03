@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20220616; from 20211110
+' @date updated: 20221203; from 20220816
 ' @website address: http://www.usbong.ph
 '
 ' Reference:
@@ -133,22 +133,36 @@ page.open(webAddress+fileName+fileExtension, 'post', data, function(status) {
 //	page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
 //	page.render('output/20200727/'+fileName+'1.png');
 
-	if (noonFolderName=="") {
+
+	//added by Mike, 20221203
+	var iReceiptKeyphrasePositionInFilename=fileName.toLowerCase().indexOf("receipt");
+	var sReceiptFolder="";
+	if (iReceiptKeyphrasePositionInFilename !== -1) {
+		sReceiptFolder="receipts/"
+	}	
+
+	if (noonFolderName=="") {		
 		//edited by Mike, 20210309
 		//page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
 		//with POST data, e.g. for use with med item reports to pharmaceutical companies
 		if (data != "") { //has post data
-			page.render('output/'+dateToday.toISOString()+'/'+fileName+'V'+getDateToISOStringWithTimeStamp()+'.png');
 //			page.render('output/'+dateToday.toISOString()+'/'+fileName+'V.png');
+			//edited by Mike, 20221203
+			//page.render('output/'+dateToday.toISOString()+'/'+fileName+'V'+getDateToISOStringWithTimeStamp()+'.png');
+			page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+'V'+getDateToISOStringWithTimeStamp()+'.png');
 		}
 		else {
-			page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+			//edited by Mike, 20221202
+			//page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
+			page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+'1.png');
 		}		
 	}
 	else {
 		//edited by Mike, 20201018
 //		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport1.png');
-		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report1.png');
+		//edited by Mike, 20221203
+//		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report1.png');
+		page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+noonFolderName+fileName+'Report1.png');
 	}
 
 /*	
@@ -175,19 +189,22 @@ page.open(webAddress+fileName+fileExtension, 'post', data, function(status) {
 		//page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
 		//with POST data, e.g. for use with med item reports to pharmaceutical companies
 		if (data != "") { //has post data
-			page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'V'+getDateToISOStringWithTimeStamp()+'.png');
+			//edited by Mike, 20221203
+			//page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'V'+getDateToISOStringWithTimeStamp()+'.png');
+			page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+iCount+'V'+getDateToISOStringWithTimeStamp()+'.png');
 		}
 		else {
-			page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
-		}		
-
-
+			//edited by Mike, 20221203
+			//page.render('output/'+dateToday.toISOString()+'/'+fileName+iCount+'.png');
+			page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+iCount+'.png');
+		}
 	  }
 	  else {
 		  //edited by Mike, 20201018
 //		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'NoonReport'+iCount+'.png');
-		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report'+iCount+'.png');
-
+		//edited by Mike, 20221203
+		//page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+fileName+'Report'+iCount+'.png');
+		page.render('output/'+dateToday.toISOString()+'/'+noonFolderName+sReceiptFolder+fileName+'Report'+iCount+'.png');
 	  }
 
 
