@@ -22,5 +22,25 @@ TOTAL WILL BE MISSING 40<br/>
 --> keyphrase: holes for abuse in the system<br/>
 <br/>
 --> adds: continuous occurence of incident causes need to identify CORRECT ACTION to fix the problem<br/>
+
+### ADDITIONAL NOTES:
+1) <b>excess</b> CHANGE given to paying patient for item causes MISSING in ACTUAL TOTAL;<br/>
+--> Example: <b>300PHP</b> (200BILL + 100BILL), instead of 200PHP (100BILL *2)
+
+2) <b>missing</b> CHANGE given to paying patient for item causes EXCESS in ACTUAL TOTAL;<br/>
+--> Example: <b>200PHP</b> (100BILL *2), instead of 300PHP (100BILL + 200BILL)
+
+REMINDER: DECEIT becomes increasingly effective with 2 persons, instead of only 1<br/>
+--> adds: however, increase of members classified as non-contributing<br/> 
+--> causes: increase in need for DECEIT,<br/>
+--> due to : NEED of QUICK MONEY;<br/>
+--> keyphrase: REPEATING CRIMINAL ACTIONS, noticeable pattern, FRAUD detected;<br/>
+<br/>
+--> reminder: ONLINE BANKING; When MONEY COUNT becomes NOT SECURE,<br/>
+--> via: UNAUTHORIZED ACCESS, continuous, repeating CRIMINAL ACTION,<br/>
+--> e.g. viewing of MONEY COUNT supposedly classified to be SECURE,<br/>
+--> causes: DEATH of CRIMINAL MEMBERS;<br/>
+--> due to: <b>VALUE of SECURITY of MONEY COUNT</b> has become <b>ZERO</b>;<br/>
+<br/>
 <br/>
 TO-DO: -add: more of such observations   
