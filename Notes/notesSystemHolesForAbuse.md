@@ -24,13 +24,14 @@ TOTAL WILL BE MISSING 40<br/>
 --> adds: continuous occurence of incident causes need to identify CORRECT ACTION to fix the problem<br/>
 
 ### ADDITIONAL NOTES:
-1) <b>excess</b> CHANGE given to paying patient for item causes MISSING in ACTUAL TOTAL;<br/>
+1) <b>excess CHANGE</b> given to paying patient for item causes <b>MISSING in ACTUAL TOTAL</b>;<br/>
 --> Example: <b>300PHP</b> (200BILL + 100BILL), instead of 200PHP (100BILL *2)
 
-2) <b>missing</b> CHANGE given to paying patient for item causes EXCESS in ACTUAL TOTAL;<br/>
+2) <b>missing CHANGE</b> given to paying patient for item causes <b>EXCESS in ACTUAL TOTAL</b>;<br/>
 --> Example: <b>200PHP</b> (100BILL *2), instead of 300PHP (100BILL + 200BILL)
 
-REMINDER: DECEIT becomes increasingly effective with 2 persons, instead of only 1<br/>
+### REMINDER:
+DECEIT becomes increasingly effective with 2 persons, instead of only 1<br/>
 --> adds: however, increase of members classified as non-contributing<br/> 
 --> causes: increase in need for DECEIT,<br/>
 --> due to : NEED of QUICK MONEY;<br/>
