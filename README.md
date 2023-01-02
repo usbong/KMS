@@ -20,7 +20,14 @@
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/exampleAcknowledgmentFormTrimmed.png" width="60%">
 
 ## II. Add-on Software Requirements
-### XAMPP
+
+### A. NON-XAMPP, Linux Machine
+
+[Auto-install Web Server in Linux Machine](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/installWebServerInLinuxMachineNotViaXAMPP.sh)
+
+TO-DO: -update: this
+
+### B. XAMPP
 https://www.apachefriends.org/index.html
 
 <b>Technologies:</b> Apache Web Server, MySQL, PHP, phpMyAdmin
