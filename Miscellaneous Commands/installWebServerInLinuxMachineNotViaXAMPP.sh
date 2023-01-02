@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20220807; from 20220727
+# @last modified: 20230102; from 20220807
 # @website address: http://www.usbong.ph
 #
 # Additional Notes:
@@ -45,3 +45,28 @@ sudo apt-get install php7.*-cli
 #note: update apache2 configuration to include PHP;
 #actions starts PHP with service apache2 start COMMAND
 sudo apt-get install libapache2-mod-php7.0.
+
+#added by Mike, 20221230
+#------------------------------
+#Part 1
+sudo apt-get install phpmyadmin
+
+# MySQL application password for phpmyadmin: mySql1243
+# --> where: username = phpmyadmin
+
+#Part 2 & 3
+#Reference: https://help.ubuntu.com/community/phpMyAdmin;
+#last accessed: 20221230
+
+#Part 2
+#To set up under Apache all you need to do is include the following line in /etc/apache2/apache2.conf. 
+#edited by Mike, 20230102
+#Note: remove the hash mark, i.e #, before "Include
+#Include /etc/phpmyadmin/apache.conf
+sudo vi /etc/apache2/apache2.conf
+
+#Part 3
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+sudo a2enconf phpmyadmin
+sudo /etc/init.d/apache2 reload
+#------------------------------
