@@ -94,7 +94,7 @@ sudo mysql -uroot<br/>
 #### //------------------------------
 
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
+GRANT ALL PRIVILEGES ON \*.\* TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
 quit;
 
 ### Reference:
@@ -131,4 +131,30 @@ https://stackoverflow.com/questions/50690076/phpmyadmin-error-incorrect-format-p
 last accessed: 20230103<br/>
 answer by: FloT, 20180607T1658<br/>
 edited by: shireef khatab, 20200529T1240
+
+
+## Problem#6) Cannot create new database due to "No Privileges"
+
+### Answer:
+
+<b>
+sudo mysqld_safe --skip-grant-tables --skip-networking &<br/>
+sudo mysql -uroot<br/>
+<br/>
+  
+//------------------------------<br/>
+@MySQL Monitor<br/>
+//------------------------------<br/>
+<br/>
+flush privileges<br/>
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
+GRANT ALL PRIVILEGES ON \*.\* TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
+quit;
+</b>
+
+#### Reminders
+
+1) execute the COMMANDS in Terminal Window (of Computer Server)
+2) execute: <b>flush privileges</b> to execute next COMMANDS;<br/>
+--> due to: IF NOT, <b>--skip-grant-tables</b> shall prevent their execution
 
