@@ -95,7 +95,7 @@ sudo mysql -uroot<br/>
 
 <b>
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
-GRANT ALL PRIVILEGES ON \*.\* TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
+GRANT ALL PRIVILEGES ON &ast;.&ast; TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
 quit;
 </b>
   
@@ -140,6 +140,11 @@ edited by: shireef khatab, 20200529T1240
 
 <img src="https://github.com/usbong/KMS/blob/master/P%26S/res/phpMyAdminNoPrivilegesErrorV20230103T1256.jpg" width="80%">
 
+### Additional Note:
+
+Entered as user, `root`, in Log in page;<br/>
+--> `root` already has `Y` to signify `YES` on all privileges based on `mysql` DB 
+
 
 ### Answer:
 
@@ -155,7 +160,7 @@ sudo mysql -uroot<br/>
 <b>
 flush privileges<br/>
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
-GRANT ALL PRIVILEGES ON \*.\* TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
+GRANT ALL PRIVILEGES ON &ast;.&ast; TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
 quit;
 </b>
 
