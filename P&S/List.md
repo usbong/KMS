@@ -93,10 +93,12 @@ sudo mysql -uroot<br/>
 #### @MySQL Monitor
 #### //------------------------------
 
+<b>
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
 GRANT ALL PRIVILEGES ON \*.\* TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
 quit;
-
+</b>
+  
 ### Reference:
 https://askubuntu.com/questions/1131286/problem-in-accessing-to-mysql;
 last accessed: 20220828
@@ -135,17 +137,22 @@ edited by: shireef khatab, 20200529T1240
 
 ## Problem#6) Cannot create new database due to "No Privileges"
 
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/phpMyAdminNoPrivilegesErrorV20230103T1256.jpg" width="80%">
+
+
 ### Answer:
 
 <b>
 sudo mysqld_safe --skip-grant-tables --skip-networking &<br/>
 sudo mysql -uroot<br/>
-<br/>
-  
-//------------------------------<br/>
-@MySQL Monitor<br/>
-//------------------------------<br/>
-<br/>
+</b>  
+
+#### //------------------------------
+#### @MySQL Monitor
+#### //------------------------------
+
+<b>
 flush privileges<br/>
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
 GRANT ALL PRIVILEGES ON \*.\* TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
