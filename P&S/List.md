@@ -58,7 +58,8 @@ answer by: Salman A, 20130422T0809<br/>
 Execute the following COMMANDS in Terminal Window:<br/> 
 <br/>
 <b>sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf</b><br/>
-<b>add: the following text</b>
+<br/>
+add: the following <b>skip-grant-tables</b> text
 
 > [mysqld]<br/>
 > skip-grant-tables
@@ -146,7 +147,7 @@ Entered as user, `root`, in Log in page;<br/>
 --> `root` already has `Y` to signify `YES` on all privileges based on `mysql` DB 
 
 
-### Answer:
+### Answer (Part1):
 
 <b>
 sudo mysqld_safe --skip-grant-tables --skip-networking &<br/>
@@ -170,3 +171,19 @@ quit;
 2) execute: <b>flush privileges</b> to execute next COMMANDS;<br/>
 --> due to: IF NOT, <b>--skip-grant-tables</b> shall prevent their execution
 
+### Answer (Part2):
+
+Execute the following COMMANDS in Terminal Window:<br/> 
+<br/>
+<b>sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf</b><br/>
+<br/>
+remove: the following <b>skip-grant-tables</b> text via the comment mark, "<b>#</b>"
+
+> [mysqld]<br/>
+> #skip-grant-tables
+
+<b>sudo service mysql restart</b>
+
+#### Reminder
+
+1) mysql user `admin` should already have password, e.g. `admin`, to enter via [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
