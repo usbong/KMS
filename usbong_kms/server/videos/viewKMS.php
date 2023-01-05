@@ -1,5 +1,5 @@
 <!--
-  Copyright 2021~2022 SYSON, MICHAEL B.
+  Copyright 2021~2023 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20220102
-  @date updated: 20220715; from 20220615
+  @date updated: 20230105; from 20220715
   @website address: http://www.usbong.ph
     
   Input:
@@ -529,8 +529,21 @@
 	
 		
 	</div>
+
+<br/>
+		<br/>
+
+		<b><a class="webServiceLink" href="https://www.usbong.ph/excel" target="_blank">COMPUTER HARDWARE</a>: Example Work Output</b> <br/>
+		<video width="416" height="312" controls>
+		  <source src="assets/images/videos/lowElectricityInCMOSBattery20230104T1504.mp4" type="video/mp4">
+		  Your browser does not support the video tag.
+		</video><br/>	
+	
+		
+	</div>
 	<br>	
 	<br/>
+
 	
 	<div class="copyright">
 		<span>
