@@ -14,7 +14,7 @@ notes: "DISCOUNTE" occurred and have not yet been corrected 8 times; <br/>
 
 Add the following COMMAND in the COMPUTER INSTRUCTIONS,<br/>
 --> to CORRECT the INCORRECT SPELLING via the `str_replace` function<br/>
---> t signify: String Replace
+--> to signify: String Replace
 
 > $notes = str_replace("DISCOUNTE","DISCOUNTED",$notes);
 		
