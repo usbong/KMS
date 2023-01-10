@@ -2832,6 +2832,17 @@ class Browse extends CI_Controller { //MY_Controller {
 		$notes = str_replace("U003B", ";", $notes); //semicolon
 		$notes = str_replace("U002C", ",", $notes); //comma
 		$notes = urldecode($notes); //%20 = space, etc		
+		
+		//added by Mike, 20230110
+		//echo $notes;
+		//notes: "DISCOUNTE" occurred and have not yet been corrected 8 times; oldest to be @2021-01-21; DB began: 2020-03-24
+		//adds: "DISCOUNT" did not exist;
+		//adds: technique exists to auto-update spelling error
+		//example: via Levenshtein Distance;
+		//reference: https://github.com/usbong/SLHCC/blob/e93bda14d0b3f63e6d7eab28f734d228d4d09137/Master%20List/generateDoctorReferralPTTreatmentReportFromMasterList/java/linux/software/generateDoctorReferralPTTreatmentSummaryReportOfTheTotalOfAllInputFilesFromMasterList.java;
+		//last accessed: 20230110
+		$notes = str_replace("DISCOUNTE","DISCOUNTED",$notes);
+			
 		$data['notes'] = $notes."; "."UNPAID";
 		
 		date_default_timezone_set('Asia/Hong_Kong');
