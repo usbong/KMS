@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2022 SYSON, MICHAEL B.
+  Copyright 2020~2023 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20221207; from 20221111
+  @date updated: 20230110; from 20221207
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -587,17 +587,17 @@ echo "</a>";
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6)) {
 */						
-/*	//edited by Mike, 20221207
+					//edited by Mike, 20230110; from 20221207
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6) or
 						($value['medical_doctor_id']==4)) {
-*/
+/*
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6) or
 						($value['medical_doctor_id']==4) or
 						($value['medical_doctor_id']==2) //drPeter 						
 						) {
-
+*/
 						//edited by Mike, 20220317
 						$dTotalMDXrayFee+=$value['fee'];
 
@@ -607,9 +607,11 @@ echo "</a>";
 						else if ($value['medical_doctor_id']==4) {
 							$sWithDoctorWhoUsesMOSCOfficialReceipt=" (WITH DR. CHASTITY)";						
 						}
+/*	//removed by Mike, 20230110
 						else if ($value['medical_doctor_id']==2) {
 							$sWithDoctorWhoUsesMOSCOfficialReceipt=" (WITH DR. PETER)";
 						}
+*/						
 					}
 
 
@@ -632,12 +634,13 @@ echo "</a>";
 					}
 				}
 
-/*	//edited by Mike, 20221207
+	//edited by Mike, 20230110; from 20221207
 				//edited by Mike, 20221111
 				if (($result[0]['medical_doctor_id']==1) or
 					($result[0]['medical_doctor_id']==6) or
 					($result[0]['medical_doctor_id']==4)) {
-*/
+
+/*
 				if (($result[0]['medical_doctor_id']==1) or
 					($result[0]['medical_doctor_id']==6) or
 					($result[0]['medical_doctor_id']==4) or
@@ -647,6 +650,8 @@ echo "</a>";
 				}				
 				//note: add MD RECEIPT TOTAL only IF NOT DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
 				//adds: OR DR PETER
+*/
+				}
 				else {
 					echo "<tr>";
 						echo "<td class='columnFee'>";
@@ -872,13 +877,13 @@ echo "</a>";
 					//note: 800 -> 600; gives over 20% discount for SC classification;
 					if (strpos($result[0]['notes'],"SC;")!==false) {
 */
-/* //edited by Mike, 20221207
+					//edited by Mike, 20230110; from 20221207
 					//added by Mike, 20221111; from 20220317
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
 					if (($result[0]['medical_doctor_id']==1) or
 						($result[0]['medical_doctor_id']==6) or
 						($result[0]['medical_doctor_id']==4)) {
-*/
+/*
 					//added by Mike, 20221111; from 20220317
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
 					//OR DR. PETER
@@ -887,7 +892,7 @@ echo "</a>";
 						($result[0]['medical_doctor_id']==4) or
 						($result[0]['medical_doctor_id']==2)						
 						) {
-						$dTotalMDXrayFeeWithDiscount+=$dTotalMDDiscountedFeePlus;
+*/						$dTotalMDXrayFeeWithDiscount+=$dTotalMDDiscountedFeePlus;
 					}
 					
 					if ((strpos($result[0]['notes'],"SC;")!==false) or
