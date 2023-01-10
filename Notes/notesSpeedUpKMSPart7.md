@@ -30,14 +30,15 @@ last accessed: 20230110
 ### Additional Related Notes
 > DB began: 2020-03-24
 
-### HISTORY of ACTIONS:
+### HISTORY of ACTIONS (AUTOMATION):
+
 1) started: with using current system at the time;<br/>
 --> via pen & paper workbooks @INFO DESK UNIT<br/>
 --> PATIENT COUNTS<br/>
 --> Computer COUNT: 1<br/>
 --> OS: Windows7
 
-2) connected: INFO DESK Unit and CASHIER UNIT,<br/>
+2) connected: INFO DESK UNIT and CASHIER UNIT,<br/>
 --> via Microsoft Excel, LibreOffice Calc, NETWORK<br/>
 --> PATIENT COUNTS<br/>
 --> Computer COUNT: 2<br/>
