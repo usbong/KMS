@@ -42,17 +42,21 @@ last accessed: 20230110
 --> via Microsoft Excel, LibreOffice Calc, NETWORK<br/>
 --> PATIENT COUNTS<br/>
 --> Computer COUNT: 2<br/>
---> OS: Windows7
+--> OS: Windows7<br/>
+--> Cash Register COUNT: 1
 
 3) added: TABLET PC's <br/>
 --> Apache Web Server, MySQL DB<br/>
 --> PATIENT COUNTS; ITEM COUNTS<br/>
 --> Computer COUNT: 2+<br/>
---> OS: Windows7, Android, macOS (iPAD)
+--> OS: Windows7, Android, macOS (iPAD)<br/>
+--> Cash Register COUNT: 1
 
 4) increased: additional PC's <br/>
 --> Printed Reports;<br/>
 --> BACK-UP of DB<br/>
 --> Computer COUNT: 2+<br/>
---> OS: Windows7, Linux (LUBUNTU), Android, macOS (iPAD)
+--> OS: Windows7, Linux (LUBUNTU), Android, macOS (iPAD)<br/>
+--> Cash Register COUNT: 1
+
 
