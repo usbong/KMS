@@ -1648,6 +1648,20 @@ class Report extends CI_Controller { //MY_Controller {
 /*		$_SESSION["client_ip_address"] = $ipAddress;
 		$_SESSION["client_machine_address"] = $machineAddress;
 */
+		//added by Mike, 20230124
+		//$ipAddress = $_SERVER['REMOTE_ADDR'];		
+		$ipAddressServer=$_SERVER['SERVER_ADDR'];
+		
+		//TO-DO: -verify: this
+		
+		if(!isset($_SESSION)){
+			if ($ipAddress==$ipAddressServer) {
+				echo "<script>
+						window.open('".base_url()."/server/autoSetSelectMySQLGlobalVariables.php');
+					  </script>";
+			}
+		}
+
 		$newdata = array(
 			'client_ip_address'  => $ipAddress,
 			'client_machine_address'     => $machineAddress
@@ -1659,7 +1673,13 @@ class Report extends CI_Controller { //MY_Controller {
 //		echo $_SESSION["client_machine_address"];
 		
 		//TO-DO: -use: stored session values
-		//TO-DO: -reverify: this		
+		//TO-DO: -reverify: this
+
+
+			  
+		//added by Mike, 20230123
+		//note: no noticeable speed-up in execution
+		//$this->db->cache_on();
 	
 		$this->load->view('viewWebAddressList');
 	}	
