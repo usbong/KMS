@@ -1652,16 +1652,37 @@ class Report extends CI_Controller { //MY_Controller {
 		//$ipAddress = $_SERVER['REMOTE_ADDR'];		
 		$ipAddressServer=$_SERVER['SERVER_ADDR'];
 		
-		//TO-DO: -verify: this
+		//edited by Mike, 20230125
+		//reminders:
+		//MYSQL COMMAND#1: SHOW VARIABLES LIKE 'query_cache_type';
+		//MYSQL COMMAND#2: SET GLOBAL query_cache_type=1; //ON
 		
-		if(!isset($_SESSION)){
+		//TO-DO: -verify: this
+
+//		echo $_SESSION['currentDateTimeStampServer'];
+				
+		//edited by Mike, 20230125
+		//if(!isset($_SESSION)){
+		if(!isset($_SESSION["currentDateTimeStampServer"])){
+			$_SESSION["currentDateTimeStampServer"]="";
+		}
+
+		//echo $_SESSION['currentDateTimeStampServer'];
+
+		//edited by Mike, 20230125
+//		if ($_SESSION['currentDateTimeStampServer'] != date('Y-m-d H:i:s')) {	
+		if ($_SESSION['currentDateTimeStampServer'] != date('Y-m-d')) {			
 			if ($ipAddress==$ipAddressServer) {
 				echo "<script>
 						window.open('".base_url()."/server/autoSetSelectMySQLGlobalVariables.php');
 					  </script>";
+				
+				//edited by Mike, 20230125
+//				$_SESSION['currentDateTimeStampServer'] = date('Y-m-d H:i:s');
+				$_SESSION['currentDateTimeStampServer'] = date('Y-m-d');
 			}
 		}
-
+		
 		$newdata = array(
 			'client_ip_address'  => $ipAddress,
 			'client_machine_address'     => $machineAddress
