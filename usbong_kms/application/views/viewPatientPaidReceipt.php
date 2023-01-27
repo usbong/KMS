@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020~2023 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20220719; from 20220613
+' @date updated: 20230127; from 20220719
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -931,6 +931,11 @@ else {
 					echo '<br/>';
 					
 					echo "<table class='search-result'>";
+
+					//added by Mike, 20230127
+					//note: show only the added transaction;
+					//objective: system speed-up
+					//TO-DO: -reverify: this; apply: in rest of KMS system
 					
 					//add: table headers
 					$iCount = 1;
@@ -938,6 +943,12 @@ else {
 	/*	
 					$value = $result[0];
 	*/				
+/*
+					//added by Mike, 20230127
+					$value['patient_id']=$patientId;
+					$value['transaction_date']=$transactionDate;
+*/					
+	
 			?>				
 			
 						  <tr class="row">
@@ -948,11 +959,17 @@ else {
 							//echo $value['transaction_date'];
 							//echo $value['added_datetime_stamp'];
 //							echo str_replace(" ","T",$value['added_datetime_stamp']);
-
+/* //edited by Mike, 20230127
 							echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+*/
+							echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$patientId.'/'.date("m-d-Y",strtotime($transactionDate)))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
 
 //							str_replace(" ","<br/>T",$value['added_datetime_stamp'])."</b>
+/*	//edited by Mike, 20230127
 							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+*/
+							str_replace(" ","T",$addedDatetimeStamp)."</b>
+							
 						</a>";
 						
 					?>		
@@ -960,12 +977,21 @@ else {
 							</td>
 							<td class ="column">	
 								<!-- edited by Mike, 20220613 -->
-								<a target='_blank' href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+								<a target='_blank' href='<?php 
+/* //edited by Mike, 20230127								
+								echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
+*/								
+								echo site_url('browse/viewPatient/'.$patientId)?>' id="viewPatientId<?php echo $iCount?>">
+
 									<div class="patientName">
 					<?php
 									//TO-DO: -update: this
 									//echo $value['patient_name'];
+/* //edited by Mike, 20230127
 									echo str_replace("�","Ñ",$value['patient_name']);
+*/
+									echo str_replace("�","Ñ",$result[0]['patient_name']);
+
 					?>		
 									</div>								
 								</a>							
@@ -1012,7 +1038,13 @@ else {
 								<?php //edited by Mike, 20200416 
 									if ($value['transaction_date']==date('m/d/Y')) {
 								?>
-								<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
+								<button onclick="myPopupFunctionDelete(<?php 
+/*								//edited by Mike, 20230127
+								echo $value['medical_doctor_id'].",".$value['patient_id'].",".$value['transaction_id'];
+*/								
+								echo $value['medical_doctor_id'].",".$patientId.",".$outputTransactionId;
+								
+								?>)" class="Button-delete">DELETE</button>									
 	<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 	-->
 								<?php 
