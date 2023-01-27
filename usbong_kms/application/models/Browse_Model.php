@@ -204,7 +204,9 @@ class Browse_Model extends CI_Model
 		//edited by Mike, 20221007
 		//TO-DO: -update: this to be automatic
 		//$iPatientNoneWalaId=14177;
-		$iPatientNoneWalaId=16186;
+		//edited by Mike, 20230119
+		//$iPatientNoneWalaId=16186;
+		$iPatientNoneWalaId=17904;
 
 
 /*		//removed by Mike, 20210723
@@ -3616,7 +3618,11 @@ class Browse_Model extends CI_Model
 //		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity');
 		//edited by Mike, 20210912
 //		$this->db->select('transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
+//edited by Mike, 20230127
+/*
 		$this->db->select('transaction_date, transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
+*/
+		$this->db->select('transaction_date, transaction_id, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes, added_datetime_stamp, patient_id');
 
 		$this->db->where('transaction_id', $outputTransactionId);
 		//added by Mike, 20200821
@@ -3806,8 +3812,11 @@ class Browse_Model extends CI_Model
 //		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id');
 		//edited by Mike, 20210127
 //		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id, item_id');
+/* //edited by Mike, 20230127
 		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id, item_id, med_fee, pas_fee, snack_fee');
-        
+*/
+		$this->db->select('notes, transaction_id, fee, fee_quantity, x_ray_fee, lab_fee, medical_doctor_id, patient_id, item_id, med_fee, pas_fee, snack_fee, added_datetime_stamp');
+		
 		$this->db->like('notes',"UNPAID");
 		
 		$this->db->where('transaction_date', date('m/d/Y'));
@@ -3841,7 +3850,7 @@ class Browse_Model extends CI_Model
 				
 		//edited by Mike, 20210128		
 //		foreach ($rowArray as $rowValue) {
-		foreach ($rowArray as &$rowValue) {
+		foreach ($rowArray as &$rowValue) {			
 			//added by Mike, 20210128
 			if (strpos($rowValue['notes'],"IN-QUEUE")!==false) {
 			}
@@ -3950,7 +3959,11 @@ class Browse_Model extends CI_Model
 //			$this->db->select('fee, med_fee, pas_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity');
 			//edited by Mike, 20210913
 //			$this->db->select('fee, med_fee, pas_fee, snack_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity, notes');
+			//edited by Mike, 20230127
+/*			
 			$this->db->select('transaction_date, fee, med_fee, pas_fee, snack_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity, notes');
+*/
+			$this->db->select('transaction_date, fee, med_fee, pas_fee, snack_fee, x_ray_fee, lab_fee, transaction_id, medical_doctor_id, transaction_quantity, notes, patient_id, added_datetime_stamp');
 
 			$this->db->where('transaction_id', $param['outputTransactionId']); //$outputTransactionId);
 
