@@ -3637,7 +3637,10 @@ class Browse_Model extends CI_Model
 
 	//added by Mike, 20210901
 	public function getTransactionPurchaseDetails($transactionIdParam) {
+/* //edited by Mike, 20230127		
 		$this->db->select('transaction_id, transaction_date, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes');
+*/
+		$this->db->select('transaction_id, transaction_date, fee, x_ray_fee, lab_fee, pas_fee, med_fee, snack_fee, medical_doctor_id, fee_quantity, transaction_quantity, notes, added_datetime_stamp');
 
 		$this->db->where('transaction_id', $transactionIdParam);
 
