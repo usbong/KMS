@@ -254,3 +254,19 @@ quit;
 
 [installWebServerInLinuxMachineNotViaXAMPP.sh](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/installWebServerInLinuxMachineNotViaXAMPP.sh)
 
+
+## Problem#9) Which folder to put the `usbong_kms` folder? 
+
+### Additional Notes:
+
+1) Downloaded ZIP file: [KMS-master/usbong_kms](https://github.com/usbong/KMS)
+
+2) Linux Ubuntu (LTS 20.04)
+
+### Answer:
+
+1) Put in `/var/www/html`<br/>
+--> set `html` folder to have in Access Control, <b>"View and modify folder content"</b> for <b>Owner</b>, <b>Group</b>, <b>Other</b>;<br/>
+--> COMMAND: <b>sudo chmod 777 `/html`</b>;<br/>
+--> reminder: set permission based on use, e.g production, development; 
+
