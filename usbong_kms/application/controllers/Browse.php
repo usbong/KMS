@@ -2313,7 +2313,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		//531 TOTAL IN TRANSACTIONS DB TABLE (with 85566 transactions)
 			if (($patientId==0) || ($patientId==3543) || //if patient name is "NONE", et cetera; 
 		    ($patientId==11682) || ($patientId==14177) ||  //11682 "NONE, WALA v2"; 14177 "NONE, WALA v3"
-			($patientId==16186)){ //"NONE, WALA v4"
+			//edited by Mike, 20230119
+//			($patientId==16186)){ //"NONE, WALA v4"
+			//"NONE, WALA v4" or v5
+			($patientId==16186) || ($patientId==17904)){ 
 			
 		//noticeable delay in execution with 3543,
 		//with @patientId used in transactions: 1053 total, Query took 0.0800 seconds.
@@ -3877,20 +3880,32 @@ class Browse extends CI_Controller { //MY_Controller {
 			
 		//removed by Mike, 20210904
 		//$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
+
+		//edited by Mike, 20230127
+		//$data['resultPaid'] = $data['outputTransaction'];
+		$data['resultPaid']=[];
+		array_push($data['resultPaid'], $data['outputTransaction']);
 		
+		$data['addedDatetimeStamp'] = $data['outputTransaction']['added_datetime_stamp'];
+		
+/* //removed by Mike, 20230127		
+//TO-DO: -add: paid for the day only
+
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
 		//added by Mike, 20200601
 		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
-
+*/
 		//added by Mike, 20200905
 		//TO-DO: -add: get transaction with combined payments
 		//to identify if computer needs to show MOSC OR textbox field
 		//use med_fee, x_ray_fee, lab_fee
 
+/* //removed by Mike, 20230127
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+*/
 
 		//added by Mike, 20210227
 		//execute these due to only select patients classified as SC, i.e. "Senior Citizens"
