@@ -159,7 +159,7 @@ sudo mysql -uroot<br/>
 #### //------------------------------
 
 <b>
-flush privileges<br/>
+flush privileges;<br/>
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
 GRANT ALL PRIVILEGES ON &ast;.&ast; TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
 quit;
@@ -187,3 +187,46 @@ remove: the following <b>skip-grant-tables</b> text via the comment mark, "<b>#<
 #### Reminder
 
 1) mysql user `admin` should already have password, e.g. `admin`, to enter via [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
+
+
+
+## Problem#7) Cannot enter http://localhost/phpmyadmin/ due to "Login without a password is forbidden..."
+
+### Additional Note:
+
+1) created mysql user `admin`
+
+### Answer (Part1):
+
+<b>
+sudo mysqld_safe --skip-grant-tables --skip-networking &<br/>
+sudo mysql -uroot<br/>
+</b>  
+
+
+#### //------------------------------
+#### @MySQL Monitor
+#### //------------------------------
+
+<b>
+flush privileges;<br/>
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';<br/>
+GRANT ALL PRIVILEGES ON &ast;.&ast; TO 'admin'@'localhost' WITH GRANT OPTION;<br/>
+</b>
+  
+### Answer (Part2):
+
+#### //------------------------------
+#### @MySQL Monitor
+#### //------------------------------
+
+<b>
+SET PASSWORD FOR 'admin'@'localhost' = 'adminPassword';<br/>
+quit;
+</b>
+
+#### Reminders
+
+1) execute the COMMANDS in Terminal Window (of Computer Server)
+2) execute: <b>flush privileges</b> to execute next COMMANDS;<br/>
+--> due to: IF NOT, <b>--skip-grant-tables</b> shall prevent their execution
