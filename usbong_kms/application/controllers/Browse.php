@@ -3961,9 +3961,20 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 						
 		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
-		
-		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
+		//edited by Mike, 20230127
+/*		
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+*/
+		//$data['resultPaid'] = $data['outputTransaction'];
+		$data['resultPaid']=[];
+		array_push($data['resultPaid'], $data['outputTransaction']);
+		
+		$data['addedDatetimeStamp'] = $data['outputTransaction']['added_datetime_stamp'];
+
+		$data['outputTransactionId'] =$data['outputTransaction']['transaction_id'];
+
+		
 /*		//added by Mike, 20210904; //TO-DO: -reverify: this
 		$data['resultPaidNonMedItem'] = $this->Browse_Model->getCombinedTransactionPaidItemDetailsListForPatientForTheDay(2, $patientId, $data['transactionDate']); //2 = NON-MED ITEM		
 
