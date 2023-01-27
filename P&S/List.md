@@ -230,3 +230,27 @@ quit;
 1) execute the COMMANDS in Terminal Window (of Computer Server)
 2) execute: <b>flush privileges</b> to execute next COMMANDS;<br/>
 --> due to: IF NOT, <b>--skip-grant-tables</b> shall prevent their execution
+
+
+## Problem#8) "ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/opt/lampp/var/mysql/mysql.sock' (2)"
+
+> ./mysqladmin: connect to server at 'localhost' failed<br/>
+> error: 'Can't connect to local MySQL server through socket '/opt/lampp/var/mysql/mysql.sock' (2)'<br/>
+> Check that mysqld is running and that the socket: '/opt/lampp/var/mysql/mysql.sock' exists!<br/>
+> Adding database: usbong_kms<br/>
+> ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/opt/lampp/var/mysql/mysql.sock' (2)<br/>
+> ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/opt/lampp/var/mysql/mysql.sock' (2)
+
+### Additional Notes:
+
+1) Executed: <b>sudo apt-get upgrade</b><br/>
+--> current MYSQL version: 8
+
+2) Linux Ubuntu (LTS 20.04)
+
+### Answer:
+
+1) Use: non-XAMPP (LAMPP) instructions;
+
+[installWebServerInLinuxMachineNotViaXAMPP.sh](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/installWebServerInLinuxMachineNotViaXAMPP.sh)
+
