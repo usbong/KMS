@@ -2733,7 +2733,10 @@ class Browse extends CI_Controller { //MY_Controller {
 			echo "dito".$value['quantity_in_stock']."<br/>";
 		}
 */
-		$this->load->view('viewItemSnack', $data);
+
+		//edited by Mike, 20230128
+		//$this->load->view('viewItemSnack', $data);
+		$this->load->view('viewItemSnackWithItemPurchasedHistory', $data);
 	}
 
 
@@ -2771,10 +2774,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemId'] = $itemId;
 		//$data['itemName'] = $data['resultQuantityInStockNow']['item_name'];
 		
+/* //removed by Mike, 20230128		
 		//edited by Mike, 20210110
 		//$data['resultItem'] = $this->Browse_Model->getMedicineDetailsListViaId($data);
 		$data['resultItem'] = $this->Browse_Model->getItemDetailsListViaId($data);
 		$data['resultItem'] = $this->getResultItemQuantity($data);
+*/
 		
 		//edited by Mike, 20200608
 		//$data['itemName'] = $data['resultItem'][0]['item_name'];
