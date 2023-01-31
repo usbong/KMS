@@ -506,17 +506,28 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	//edited by Mike, 20200615
 	public function confirmNonMedicine()
-	{		
-		$data['nameParam'] = $_POST['nameParam'];
+	{				
+		//edited by Mike, 20230131	
+		//TO-DO: -add: show only a smaller set if letter count is only 1
+
+//		$data['nameParam'] = $_POST['nameParam'];
+		if (!isset($_POST['nameParam'])) {
+			//added by Mike, 20200328
+			redirect('browse/searchNonMedicine');
+		}
+		else {
+			$data['nameParam'] = $_POST['nameParam'];
+		}
 
 		//added by Mike, 20200912
 		$data['nameParam'] = trim($data['nameParam']);
-		
+
+/* //removed by Mike, 20230131		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
 			redirect('browse/searchNonMedicine');
 		}
-		
+*/		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
