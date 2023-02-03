@@ -114,7 +114,7 @@ answer by: FloT, 20190404T2042
 
 .mysql DB File Size @<b>20.4MB</b> of SQL code (computer instructions)
 
-### Answer:
+### Answer (LINUX UBUNTU (LUBUNTU20.04LTS)):
 
 1) Execute the following COMMAND in Terminal Window (of Computer Server):<br/> 
 <b>sudo vi php.ini</b>
@@ -134,6 +134,29 @@ https://stackoverflow.com/questions/50690076/phpmyadmin-error-incorrect-format-p
 last accessed: 20230103<br/>
 answer by: FloT, 20180607T1658<br/>
 edited by: shireef khatab, 20200529T1240
+
+### Answer (Windows7):
+
+1) Open `C:\xampp\xampp-control.exe` -> Config -> PHP (php.ini)
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/xamppWin7PhpDotIniV20230203T1509.png" width="80%">
+
+2) Edit to update the following to be <b>64M</b>
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/xamppWin7PhpDotIniEditFileV20230203T1510.png" width="50%">
+
+> upload_max_filesize=<b>2M</b>
+
+upload_max_filesize=<b>64M</b>
+
+> post_max_size=<b>8M</b>
+
+post_max_size=<b>64M</b>
+
+### Reference:
+https://stackoverflow.com/questions/38384111/xampp-how-to-increase-upload-max-filesize;<br/>
+last accessed: 20230203<br/>
+answer by: Tonny Gidraph, 20180823T1837
 
 
 ## Problem#6) Cannot create new database due to "No Privileges"
