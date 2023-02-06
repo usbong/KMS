@@ -12,7 +12,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20201001
-REM @last modified: 20230204
+REM @last modified: 20230206; from 20230204
 REM @website address: http://www.usbong.ph
 REM
 
@@ -58,7 +58,10 @@ pushd %source%
 
 REM no need to copy files with the same datetime stamp
 REM TO-DO: -update: this
-xcopy /d "\DB\usbong_kmsV20230204*" %destination%
+REM xcopy /d "\DB\usbong_kmsV20230204*" %destination%
+xcopy /d "\DB\usbong_kmsV202302*" %destination%
 
 REM unmount
 popd "%~dp0"
+
+autoImportDatabaseToMySQLDBWindowsMachine.bat
