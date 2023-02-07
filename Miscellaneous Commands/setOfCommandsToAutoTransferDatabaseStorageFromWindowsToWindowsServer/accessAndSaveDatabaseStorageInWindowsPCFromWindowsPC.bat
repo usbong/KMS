@@ -12,9 +12,22 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20201001
-REM @last modified: 20230206; from 20230204
+REM @last modified: 20230207; from 20230206
 REM @website address: http://www.usbong.ph
 REM
+
+REM added by Mike, 20230207
+set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
+set myTime=%time:~0,2%%time:~3,2%
+
+REM echo %myTime%
+REM echo %myDate%
+
+
+REM note: no add the day of previous Month at start day of new Month
+REM echo %date:~10,4%(%date:~4,2%-1)
+set myInputMonth=%date:~10,4%%date:~4,2%
+REM echo %myInputMonth%
 
 REM access destination folder
 rem sudo mkdir /mnt/myMOSC-AccountingFolder/
@@ -59,7 +72,10 @@ pushd %source%
 REM no need to copy files with the same datetime stamp
 REM TO-DO: -update: this
 REM xcopy /d "\DB\usbong_kmsV20230204*" %destination%
-xcopy /d "\DB\usbong_kmsV202302*" %destination%
+REM edited by Mike, 20230207
+REM xcopy /d "\DB\usbong_kmsV202302*" %destination%
+
+xcopy /d "\DB\usbong_kmsV%myInputMonth%*" %destination%
 
 REM unmount
 popd "%~dp0"
