@@ -1,5 +1,5 @@
 /*
- * Copyright 2018~2021 Usbong Social Systems, Inc.
+ * Copyright 2018~2023 SYSON, MICHAEL B.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,10 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
+ * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20201023
- * @last updated: 20210510
+ * @last updated: 20230215; from 20210510
+ * @website address: http://www.usbong.ph
  *
  */
  
@@ -2428,7 +2429,8 @@ System.out.println("iYearKey: " + iYearKey + "; iDateValuesArrayIntCount: " + iD
 					inputFilename = args[0].replaceAll(".txt","");
 
 				//System.out.println(">>"+inputFilename);				
-				System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
+//removed by Mike, 20210602
+//				System.out.println(medicalDoctorsList[i]+dateFormat.format(myDate)+".txt");
 
 					//edited by Mike, 20201024
 					inputFilename=inputFilename+medicalDoctorsList[i]+dateFormat.format(myDate)+".txt";	  
@@ -2934,7 +2936,7 @@ System.out.println("iYearKey: " + iYearKey + "; iDateValuesArrayIntCount: " + iD
 							case CONSULTATION_FILE_TYPE:
 								transactionCount = consultationMonthlyStatisticsContainer.get(yearKey)[monthRowIndex];	
 //added by Mike, 20210502								
-//System.out.println("yearKey:" + yearKey + ";monthIndex: "+monthRowIndex+"; transactionCount: "+transactionCount);								
+System.out.println("yearKey:" + yearKey + ";monthIndex: "+monthRowIndex+"; transactionCount: "+transactionCount);								
 								break;
 							default:// PROCEDURE_FILE_TYPE:
 								transactionCount = procedureMonthlyStatisticsContainer.get(yearKey)[monthRowIndex];	
