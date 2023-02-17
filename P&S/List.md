@@ -293,3 +293,16 @@ quit;
 --> COMMAND: <b>sudo chmod 777 `/html`</b>;<br/>
 --> reminder: set permission based on use, e.g production, development; 
 
+
+## Problem#10) Database Error: "Message: mysqli::real_connect(): (HY000/2002): No connection could be made because the target machine actively refused it."? 
+
+### Additional Notes:
+
+1) XAMPP auto-starts: Apache and MySQL;<br/>
+--> adds: had attempted to quickly open FIREFOX BROWSER;<br/>
+--> observed: LAN Messenger (NETWORK) ICON had not yet been displayed
+
+### Answer:
+
+1) Open XAMPP CONTROL PANEL  (xampp-control.exe);<br/>
+--> Click "Start" button to start MySQL; 
