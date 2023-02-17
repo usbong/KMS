@@ -310,3 +310,10 @@ quit;
 --> Click "Start" button to start MySQL; 
 
 <img src="https://github.com/usbong/KMS/blob/master/P%26S/res/xamppControlPanelStartMySQLToFixDBErrorV20230217T0857.png" width="80%">
+
+### Additional Notes:
+
+1) observed: PROBLEM#10 to have previously occurred;<br/>
+--> where: SOLUTION quickly identified;<br/>
+--> adds: however, repeated incidents cause writing of NOTES<br/>
+--> on the ACTION to quickly solve problem<br/>
