@@ -296,6 +296,8 @@ quit;
 
 ## Problem#10) Database Error: "Message: mysqli::real_connect(): (HY000/2002): No connection could be made because the target machine actively refused it."? 
 
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/xamppAutoStartUpDBErrorMySQLNotStartedV20230217T0848.png" width="80%">
+
 ### Additional Notes:
 
 1) XAMPP auto-starts: Apache and MySQL;<br/>
@@ -306,3 +308,5 @@ quit;
 
 1) Open XAMPP CONTROL PANEL  (xampp-control.exe);<br/>
 --> Click "Start" button to start MySQL; 
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/xamppControlPanelStartMySQLToFixDBErrorV20230217T0857.png" width="80%">
