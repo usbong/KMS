@@ -5,10 +5,18 @@
 ### 0) [Example Work Output Videos](http://store.usbong.ph/server/videos/viewKMS.php)
 
 ### 1) Information Desk
+
+<b>Example Web Address: http://192.168.1.110:80/usbong_kms/index.php/report/viewReportPatientQueue
+</b>
+
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/viewReportPatientQueue1.png" width="60%">
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/informationDeskAddNewPatientMikhail.png" width="80%">
 
 ### 2) Cashier/Accounting
+
+<b>Example Web Address: http://192.168.1.110:80/usbong_kms/index.php/report/viewWebAddressList
+</b>
+
 #### <b>a) Search</b>
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierSearchPatient.png" width="80%">
 <img src="https://github.com/usbong/KMS/blob/master/Screenshots/cashierSearchNonMedicine.png" width="80%">
@@ -74,7 +82,7 @@ answer by: Y. Joy Ch. Singha, 20180521T0816<br/>
 edited by: bad_coder, 20210724T1636<br/>
 
 ## Open Source Software License
-Copyright 2019~2022 SYSON, MICHAEL B.
+Copyright 2019~2023 SYSON, MICHAEL B.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
