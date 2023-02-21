@@ -737,12 +737,20 @@ class Browse_Model extends CI_Model
 	{
 		//edited by Mike, 20210110
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+		//edited by Mike, 20230221
+/*
+		$this->db->select('t1.item_name, t1.item_pr
+ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+*/
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date');
 
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
 
 		$this->db->group_by('t2.inventory_id');
+
+		//added by Mike, 20230221
+		$this->db->where('t1.is_hidden', 0); //1 = hidden
 		
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0); //0 = NONE
