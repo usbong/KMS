@@ -4,8 +4,8 @@ TO-DO: -update: the following:
 --> PATIENT VERSION;
 --> V2 IF AT 1000+ (?)...
 
-2) confirmSnack
---> HIDDEN; NO NEED TO DISPLAY
+2) ~~confirmSnack
+--> HIDDEN; NO NEED TO DISPLAY~~
 
 3) ~~viewPayslip
 --> remove: DR GRACIA~~
