@@ -7,5 +7,5 @@ TO-DO: -update: the following:
 2) confirmSnack
 --> HIDDEN; NO NEED TO DISPLAY
 
-3) viewPayslip
---> remove: DR GRACIA
+3) ~~viewPayslip
+--> remove: DR GRACIA~~
