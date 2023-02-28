@@ -5640,7 +5640,10 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		//TO-DO: -update: the total item sold list every start of the day
 //		$this->db->where('t2.transaction_date =', "12/02/2020");
 //		echo strtoupper(date("m/d/Y"));
-		$this->db->where('t2.transaction_date =', strtoupper(date("m/d/Y")));
+		
+		//edited by Mike, 20230228
+//		$this->db->where('t2.transaction_date =', strtoupper(date("m/d/Y")));
+		$this->db->where('t2.transaction_date =', date("m/d/Y"));
 
 		$query = $this->db->get('item');
 
