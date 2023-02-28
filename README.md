@@ -2,9 +2,13 @@
 
 <b>DEMO version:</b> http://store.usbong.ph/report/viewWebAddressList<br/>
 <br/>
-<b>EXAMPLE#1 STEPS:</b> 1) Click "Search Patient" link -> 2) Enter Patient, "bergstein, aki"<br/>
-<br/>
-<b>EXAMPLE#2 STEPS:</b> 1) Click "Search Medicine" link -> 2) Enter Item, "ace"
+<b>EXAMPLE#1 STEPS:</b> 
+1) Click "Search Patient" link<br/>
+2) Enter Patient: "bergstein, aki"<br/>
+
+<b>EXAMPLE#2 STEPS:</b>
+1) Click "Search Medicine" link<br/>
+2) Enter Item: "ace"
 
 
 ## I. Screenshots
