@@ -3196,10 +3196,22 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		//edited by Mike, 202005019
 //		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20230228
+		//note: getServiceAndItemDetailsListViaNotesUnpaid OK,
+		//--> due to:$this->db->where('t2.transaction_date', date('m/d/Y'));
+		
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+
+		//added by Mike, 20230228
+		//note: getItemAvailableQuantityInStock OK,
+		//--> due to: $this->db->where('t2.transaction_date =', strtoupper(date("m/d/Y")));
 
 		//added by Mike, 20200406; edited by Mike, 20200407
 		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+		
+		//TO-DO: -reverify: remaining DB COMMANDS,
+		//--> that cause noticeable DELAY in execution
 		
 		//TO-DO: -update this
 		//$this->load->view('viewItemNonMedicine', $data);
@@ -3809,9 +3821,22 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 		//--	
 
+//edited by Mike, 20230201
+
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
 
+/* //TO-DO: -update: this
+$data['outputTransaction']['item_price'] = $data['result'][0]['item_price'];
+$data['outputTransaction']['item_name'] = $data['result'][0]['item_name'];
+$data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
+
+		//$data['resultPaid'] = $data['outputTransaction'];
+		$data['resultPaid']=[];
+		array_push($data['resultPaid'], $data['outputTransaction']);
+		
+		$data['addedDatetimeStamp'] = $data['outputTransaction']['added_datetime_stamp'];
+*/		
 		//added by Mike, 20200601; removed by Mike, 20200602
 //		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 
