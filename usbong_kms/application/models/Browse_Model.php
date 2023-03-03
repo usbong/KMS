@@ -5348,8 +5348,16 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+		//added by Mike, 20230303
+		//TO-DO: -verify: IF excess JOIN COMMAND to be removable
+		//notes: use of $cartValue['patient_id'],
+		//$cartValue['patient_name']
+		//--> in viewItemMedicine.php, et cetera
+
 		//removed by Mike, 20210110; added again by Mike, 20210110
 		$this->db->join('patient as t3', 't2.patient_id = t3.patient_id', 'LEFT');
+
 		//added by Mike, 20210110
 //		$this->db->where('t2.patient_id!=', 0);
 
@@ -5632,6 +5640,10 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		//edited by Mike, 20210110
 //		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t1.item_id', $itemValue['item_id']);
+
+		//added by Mike, 20230303
+		$this->db->where('t1.is_hidden', 0); //not hidden
+
 
 		//edited by Mike, 20200625
 		//note: we include transactions in the cart list, albeit unpaid
