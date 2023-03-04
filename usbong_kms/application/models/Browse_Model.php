@@ -5342,8 +5342,13 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 /*		
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t3.patient_name, t3.patient_id');
 */
+		//edited by Mike, 20230304
 		//edited by Mike, 20210110
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.medical_doctor_id, t3.patient_name, t3.patient_id');
+
+/*
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.medical_doctor_id, t2.patient_id');
+*/		
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.medical_doctor_id, t2.patient_id');
 
 		$this->db->from('item as t1');
@@ -5355,6 +5360,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//$cartValue['patient_name']
 		//--> in viewItemMedicine.php, et cetera
 
+		//removed by Mike, 20230304; added again by Mike, 20230304
+		//due to: need to get the patient name via patientID;
+		//--> output: another access to DB, even if not via JOIN COMMAND;
 		//removed by Mike, 20210110; added again by Mike, 20210110
 		$this->db->join('patient as t3', 't2.patient_id = t3.patient_id', 'LEFT');
 
