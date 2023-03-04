@@ -2900,7 +2900,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 202005019;
 		//TO-DO: reverify: use $patientId instead of join command
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
-		
+
+/*		//removed by Mike, 20230304
+		//added by Mike, 20230304
+		$data['cartListResult'][0]['patientId'] = $this->Browse_Model->getDetailsListViaId($patientId);	
+		////$data['cartListResult'][0]['patientId']
+*/	
 		//edited by Mike, 20200519
 		$this->load->view('viewPatient', $data);
 /*		
@@ -3202,6 +3207,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//--> due to:$this->db->where('t2.transaction_date', date('m/d/Y'));
 		
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+
+/*		//removed by Mike, 20230304
+		//added by Mike, 20230304
+		$data['cartListResult'][0]['patientId'] = $this->Browse_Model->getDetailsListViaId($data['cartListResult'][0]['patientId']);
+*/
 
 		//added by Mike, 20230228
 		//note: getItemAvailableQuantityInStock OK,
