@@ -2892,11 +2892,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 
+/* //removed by Mike, 20230309
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
 		//added by Mike, 20200601
 		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
-
+*/
 		//added by Mike, 202005019;
 		//TO-DO: reverify: use $patientId instead of join command
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
@@ -3193,8 +3194,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 
+/* //removed by Mike, 20230309
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+*/
 
 		//added by Mike, 20200601; removed by Mike, 20200602
 //		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
@@ -3320,10 +3323,13 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+
+/* //removed by Mike, 20230309		
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
 		//added by Mike, 20200601
 		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+*/
 
 		//added by Mike, 202005019
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
@@ -3394,8 +3400,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId,$itemId);
 
+/* //removed by Mike, 20230309
 		//added by Mike, 20200406
 		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
+*/
 
 		//added by Mike, 20200601; removed by Mike, 20200602
 //		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
