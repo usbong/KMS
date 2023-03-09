@@ -3209,6 +3209,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//note: getServiceAndItemDetailsListViaNotesUnpaid OK,
 		//--> due to:$this->db->where('t2.transaction_date', date('m/d/Y'));
 		
+		//added by Mike, 20230309
+		//TO-DO: -verify: adding patient table to get patient name via JOIN COMMAND only IF  patient has already been added in the CART
+		//objective: system speed-up,
+		//via eliminate excess JOIN COMMANDS
+		
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 /*		//removed by Mike, 20230304
