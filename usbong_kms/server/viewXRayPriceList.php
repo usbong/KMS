@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230124; from 20220411
+  @date updated: 20230309; from 20230301
 
   Input:
   1) MySQL Database with X-Ray Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -175,7 +175,10 @@ if ($result = $mysqli -> query("SET GLOBAL query_cache_type=1 ")) {
 //    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2020-09-01)"."</u></b><br/>";
 	//edited by Mike, 20220411
 //    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2021-01-01)"."</u></b><br/>";
+/* //edited by Mike, 20230309
     echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2022-02-01)"."</u></b><br/>";
+*/
+    echo "<b><u>X-RAY PRICE LIST (EFFECTIVE: 2023-03-01)"."</u></b><br/>";
 
 	echo "<br/>";
 	echo "<table>";
@@ -195,9 +198,40 @@ if ($result = $mysqli -> query("SET GLOBAL query_cache_type=1 ")) {
 	<td class='tableHeaderColumn'><b>SC/PWD<br/>PRICE</b></td>
 	<tr>
 <?php	
-	//edited by Mike, 20200823
+	//edited by Mike, 20230301; from 20200823
+	//note: select body_location et cetera exist but not used anymore
+/*	
+	//edited by Mike, 20230309	
 	if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id and c.added_datetime_stamp = (select max(c2.added_datetime_stamp) from x_ray_service as c2 where c.x_ray_body_location_id=c2.x_ray_body_location_id and c.x_ray_type_id=c2.x_ray_type_id)"))	
+	{		
+*/
+
+//	$dateTimeStamp = date('Y/m/d H:i:s');
+/*	
+	SELECT * FROM `x_ray_service` WHERE `added_datetime_stamp`=('2023-03-01 15:51:47');
+
+	//Reference: https://stackoverflow.com/questions/40945708/mysql-use-wildcard-in-request-involving-timestamp;
+	//last accessed: 20230309
+	//answer by: Bernd Buffen, 20161203T0826
+
+	SELECT * FROM `x_ray_service` WHERE `added_datetime_stamp` LIKE ('2023-03-01%');
+
+	//'".$dateTimeStamp."'
+*/	
+	//note: MYSQL COMMAND accepts ALL inserted rows for the day
+	$dateTimeStamp="2023-03-09%";
+/*
+	if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id and c.added_datetime_stamp LIKE '2023-03-09%'"))	
 	{
+*/
+	if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id and c.added_datetime_stamp LIKE '".$dateTimeStamp."'"))	
+	{		
+
+
+/*
+	if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id and c.added_datetime_stamp=(select max(added_datetime_stamp) from x_ray_service)"))	//as c2 where c.x_ray_body_location_id=c2.x_ray_body_location_id and c.x_ray_type_id=c2.x_ray_type_id)
+	{
+*/
 		if ($selectedXRayPriceListResultArray->num_rows > 0) {
 			//added by Mike, 20200820
 			$iRowCount = 0;
