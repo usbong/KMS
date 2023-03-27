@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020~2023 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220930; from 20220616
+' @date updated: 20230327; from 20220930
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -773,6 +773,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  if (strpos($medicalDoctorValue["medical_doctor_name"],"SUMMARY")!==false) {				  
 					continue;
 				  }
+
+				  //added by Mike, 20230327
+				  //note: "BALCE, GRACIA CIELO" ID NOW SET TO BE LAST before "SUMMARY" IN MEDICAL DOCTOR TABLE LIST
+				  if (strpos($medicalDoctorValue["medical_doctor_name"],"BALCE, GRACIA CIELO")!==false) {				  
+					continue;
+				  }
+
+				  //TO-DO: remove: in list, ESPINOSA, JHONSEL (ID#3); note: select OPTIONS count
 
 
 				  //edited by Mike, 20200523
