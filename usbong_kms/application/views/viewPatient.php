@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230327; from 20220930
+' @date updated: 20230328; from 20230327
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -780,8 +780,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					continue;
 				  }
 
-				  //TO-DO: remove: in list, ESPINOSA, JHONSEL (ID#3); note: select OPTIONS count
-
+/*				
+				  //added: by Mike, 20230328; remove: in list, ESPINOSA, JHONSEL (ID#3); note: select OPTIONS count;
+				  //note: select options count when page is loaded
+				  if (strpos($medicalDoctorValue["medical_doctor_name"],"ESPINOSA, JHONSEL")!==false) {				  
+					continue;
+				  }
+*/
 
 				  //edited by Mike, 20200523
 				  //TO-DO: -update: this
