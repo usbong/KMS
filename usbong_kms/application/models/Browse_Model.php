@@ -4145,6 +4145,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	//added by Mike, 20200529
 	public function addPatientName($param) 
 	{			
+		//added by Mike, 20230328
+		$param['nameParam'] = trim($param['patientLastNameParam']).", ".trim($param['patientFirstNameParam']);
+		$param['nameParam'] = strtoupper($param['nameParam']);		
+	
 		//added by Mike, 20210817; removed by Mike, 20210817
 /*		echo ">>".$param['nameParam'];		
 		//trim Command already executed
