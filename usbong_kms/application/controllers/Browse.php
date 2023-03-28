@@ -3073,8 +3073,13 @@ class Browse extends CI_Controller { //MY_Controller {
 			redirect('browse/searchMedicine');
 		}
 
+/* //edited by Mike, 20230328
 		//edited by Mike, 20210813
 		$data['nameParam'] = trim($data['patientLastNameParam']).", ".trim($data['patientFirstNameParam']);
+		$data['nameParam'] = strtoupper($data['nameParam']);
+*/
+		//notes: update inside BROWSE_MODEL.php
+		$data['nameParam'] = $data['patientLastNameParam'].", ".$data['patientFirstNameParam'];
 		$data['nameParam'] = strtoupper($data['nameParam']);
 						
 		date_default_timezone_set('Asia/Hong_Kong');
