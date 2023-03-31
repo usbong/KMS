@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230328; from 20230327
+' @date updated: 20230331; from 20230328
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -457,8 +457,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//added by Mike, 20201103; edited by Mike, 20220616
 			//0 = ANY; SUMMARY != 3, changed to DR> JHONSEL
 //			if ((medicalDoctorId==0) || (medicalDoctorId==3)) {
-			if (medicalDoctorId==0) {
-				alert("Pumili ng Medical Doctor na hindi \"ANY\" o \"SUMMARY\".");
+			if (medicalDoctorId==0) {				
+//				alert("Pumili ng Medical Doctor na hindi \"ANY\" o \"SUMMARY\".");
+				alert("Pumili ng Medical Doctor na hindi \"ANY\".");
+
+				return;
+			}
+			
+			//added by Mike, 20230331
+			if (medicalDoctorId==3) {
+				alert("Pumili ng Medical Doctor na hindi \"--\".");
 				return;
 			}
 
@@ -778,6 +786,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  //note: "BALCE, GRACIA CIELO" ID NOW SET TO BE LAST before "SUMMARY" IN MEDICAL DOCTOR TABLE LIST
 				  if (strpos($medicalDoctorValue["medical_doctor_name"],"BALCE, GRACIA CIELO")!==false) {				  
 					continue;
+				  }
+				  
+				  //added by Mike, 20230331
+				  if (strpos($medicalDoctorValue["medical_doctor_name"],"ESPINOSA, JHONSEL")!==false) {				
+
+					$medicalDoctorValue["medical_doctor_name"]="--";
+				  
+					//continue;
 				  }
 
 /*				

@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230328; from 20230327
+  @date updated: 20230331; from 20230328
   @website address: http://www.usbong.ph
   
   //TO-DO: update: indent in instructions
@@ -451,6 +451,13 @@
 				return;
 			}
 
+			//added by Mike, 20230331
+			if (medicalDoctorId==3) {
+				alert("Pumili ng Medical Doctor na hindi \"--\".");
+				return;
+			}
+
+
 //			alert("sexId"+sexId);
 //			alert("ageUnitId"+ageUnitId);
 
@@ -701,6 +708,14 @@
 					continue;
 				  }
 
+				  //added by Mike, 20230331
+				  if (strpos($medicalDoctorValue["medical_doctor_name"],"ESPINOSA, JHONSEL")!==false) {				
+
+					$medicalDoctorValue["medical_doctor_name"]="--";
+				  
+					//continue;
+				  }
+				  
 /*				
 				  //added: by Mike, 20230328; remove: in list, ESPINOSA, JHONSEL (ID#3); note: select OPTIONS count;
 				  //note: select options count when page is loaded
