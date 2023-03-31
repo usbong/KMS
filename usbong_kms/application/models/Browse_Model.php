@@ -4356,10 +4356,24 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $rowArray;
 	}	
 
+	//edited by Mike, 20230331
+	//notes: branching pipes? via IF-ELSE;
+	//TO-DO: -update: manually entering $nameId of "NONE"
+	//TO-DO: -execute: speed-up for non-"NONE" patients;
+	//--> example: new transaction
 	public function getDetailsListViaId($nameId) 
 	{		
-		//edited by Mike, 20200541; edited again by Mike, 20211203
+		//edited by Mike, 20200541; edited again by Mike, 20211203; edited by Mike, 20230331
+/*		
 		if (($nameId==0) || ($nameId==3543)){ //if patient name is "NONE", et cetera
+*/		
+		if (($nameId==0) || ($nameId==3543) || //if patient name is "NONE", et cetera; 
+		    ($nameId==11682) || ($nameId==14177) ||  //11682 "NONE, WALA v2"; 14177 "NONE, WALA v3"
+			//edited by Mike, 20230119
+//			($patientId==16186)){ //"NONE, WALA v4"
+			//"NONE, WALA v4" or v5
+			($nameId==16186) || ($nameId==17904)){
+			
 			$this->db->select('t1.patient_name, t1.patient_id, t1.medical_doctor_id');
 			$this->db->from('patient as t1');
 		}
@@ -4370,6 +4384,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+
+/* //removed by Mike, 20230331
 		}
 		
 		
@@ -4379,7 +4395,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		if (($nameId==0) || ($nameId==3543)){ //if patient name is "NONE", et cetera
 		}
 		else {
+*/			
 			$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+			
+			//added by Mike, 20230331
+			$this->db->order_by('t2.added_datetime_stamp`', 'DESC');
 		}
 		
 		$this->db->where('t1.patient_id', $nameId);		
@@ -4392,12 +4412,14 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//edited by Mike, 20211203
 		//added by Mike, 20210907
 //		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+
+/* //removed by Mike, 20230331
 		if (($nameId==0) || ($nameId==3543)){ //if patient name is "NONE", et cetera
 		}
 		else {
 			$this->db->order_by('t2.added_datetime_stamp`', 'DESC');
 		}	
-		
+*/		
 		$this->db->limit(1);
 		
 		$query = $this->db->get('patient');
