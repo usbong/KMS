@@ -3916,6 +3916,12 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 		
 		$this->load->model('Browse_Model');
 
+		//added by Mike, 20230406
+		$data['patientIdParam'] = $data['patientId'];
+		$data['selectMedicalDoctorIdParam'] = $data['medicalDoctorId'];
+		$this->Browse_Model->updateIndexCardFormLite($data);
+
+
 		//edited by Mike, 20200605
 		//$this->Browse_Model->payTransactionItemPurchase();
 		//$this->Browse_Model->payTransactionServiceAndItemPurchase();
