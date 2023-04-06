@@ -5985,5 +5985,17 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		$this->db->where('patient_id',$param['patientIdNameParam']);
 		$this->db->update('patient', $data);
 	}	
+	
+	
+	//added by Mike, 20230406
+	//medical doctor only
+	public function updateIndexCardFormLite($param) {
+		$data = array(
+			'medical_doctor_id' => $param['selectMedicalDoctorIdParam'],
+		);
+
+		$this->db->where('patient_id',$param['patientIdParam']);
+		$this->db->update('patient', $data);
+	}		
 }
 ?>
