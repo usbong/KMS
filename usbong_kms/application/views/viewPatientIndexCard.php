@@ -7,8 +7,11 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230331; from 20230328
+  @date updated: 20230406; from 20230331
   @website address: http://www.usbong.ph
+
+  //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
+  //notes: earlier transaction tables are named based on Year, 2020
   
   //TO-DO: update: indent in instructions
 -->
@@ -1325,8 +1328,18 @@
 	<br />
 -->
 
+<?php
+  //added by Mike, 20230406
+  $searchHistoryRangeTime = strtotime("-2 year", time());
+  $searchHistoryRangeDate = date("Y", $searchHistoryRangeTime);  
+?>
+
 <!-- added by Mike, 20210316 -->
-		<h3>Patient Index Card History</h3>				
+<!--
+		<h3>Patient Index Card History [<?php echo date("Y")."~".$searchHistoryRangeDate;?>] MORE</h3>				
+-->
+		<h3>Patient Index Card History [<?php echo date("Y")."~".$searchHistoryRangeDate;?>] +</h3>				
+
 <?php
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
 			echo '<div>';					
@@ -1442,9 +1455,10 @@
 		<br/>
 		
 <?php
-		//added by Mike, 20210701
-		echo '<h3>Patient Purchased Service History</h3>';
-
+		//added by Mike, 20210701; edited by Mike, 20230406
+		//echo '<h3>Patient Purchased Service History</h3>';
+		//echo '<h3>Patient Purchased Service History ['.date("Y").'~'.$searchHistoryRangeDate.'] MORE</h3>';
+		echo '<h3>Patient Purchased Service History ['.date("Y").'~'.$searchHistoryRangeDate.'] +</h3>';
 		
  		//added by Mike, 20210707; edited by Mike, 20220317
  		//severity notice with Linux machine: "Trying to access array offset on value of type bool"
@@ -1634,8 +1648,11 @@
 		}
 	}
 
-		echo '<h3>Patient Purchased Medicine Item History</h3>';
-
+		//edited by Mike, 20230406
+		//echo '<h3>Patient Purchased Medicine Item History</h3>';
+		//echo '<h3>Patient Purchased Medicine Item History ['.date("Y").'~'.$searchHistoryRangeDate.'] MORE</h3>';
+		echo '<h3>Patient Purchased Medicine Item History ['.date("Y").'~'.$searchHistoryRangeDate.'] +</h3>';
+				
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
 			echo '<div>';					
 			echo 'There are no transactions.';
@@ -1971,7 +1988,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 
 		}
 		
-		echo '<h3>Patient Purchased Non-medicine Item History</h3>';
+		//edited by Mike, 20230406
+		//echo '<h3>Patient Purchased Non-medicine Item History</h3>';
+		echo '<h3>Patient Purchased Non-medicine Item History ['.date("Y").'~'.$searchHistoryRangeDate.'] +</h3>';
 
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
 			echo '<div>';					
@@ -2306,7 +2325,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 <?php	
 		//added by Mike, 20210514
 
-		echo '<h3>Patient Purchased Snack Item History</h3>';
+		//edited by Mike, 20230406
+		//echo '<h3>Patient Purchased Snack Item History</h3>';
+		echo '<h3>Patient Purchased Snack Item History ['.date("Y").'~'.$searchHistoryRangeDate.'] +</h3>';
 
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
 			echo '<div>';					
