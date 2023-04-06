@@ -10,16 +10,17 @@
   @date updated: 20230406; from 20220815
 
   Input:
-  1) MySQL Database with MED INVENTORY LIST at the Marikina Orthopedic Specialty Clinic (MOSC)
+  1) MySQL Database with PATIENT LIST at the Marikina Orthopedic Specialty Clinic (MOSC)
 
   Output:
-  1) MED INVENTORY LIST that is viewable on a Computer Web Browser  
+  1) PATIENT LIST that is viewable on a Computer Web Browser  
   
   Computer Web Browser Address (Example):
-  1) http://localhost/usbong_kms/server/viewMedInventoryList.php   
+  1) http://localhost/usbong_kms/server/viewPatientLastVisitList.php   
   
   Reference:
-  1) X-RAY Price List that is viewable on a Computer Web Browser  
+  1) MED INVENTORY List that is viewable on a Computer Web Browser  
+  2) X-RAY Price List that is viewable on a Computer Web Browser  
   
 -->
 <?php
@@ -162,7 +163,7 @@
     /**/
     </style>
     <title>
-      NON-MED ITEM INVENTORY LIST (MOSC)
+      PATIENT LAST VISIT LIST (MOSC)
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
@@ -186,7 +187,7 @@
 
     echo "<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC"."</b><br/>";
 	echo "<br/>";
-    echo "<b>NON-MED ITEM INVENTORY LIST"."</b><br/>";
+    echo "<b>PATIENT LAST VISIT LIST"."</b><br/>";
 ?>
 
 	<div><b>TODAY: </b><?php echo strtoupper(date("Y-m-d, l"));?>
@@ -207,151 +208,115 @@
 	<td class='tableHeaderColumn'><b>COUNT</b></td>
 	<td class='tableHeaderColumn'><b>ID#</b></td>
 	<td class='tableHeaderColumn'><b>NAME</b></td>
-	<td class='tableHeaderColumn'><b>PRICE</b></td>
-	<td class='tableHeaderColumn'><b>SOLD COUNT</b></td>
-	<td class='tableHeaderColumn'><b>QTY COUNT</b></td>
-	<td class='tableHeaderColumn'><b>REMAINING COUNT</b></td>
-	<tr>
+	<td class='tableHeaderColumn'><b>MD NAME</b></td>
+	<td class='tableHeaderColumn'><b>LAST VISIT</b></td>
+	</tr>
+
 <?php	
 	//edited by Mike, 20220813; from 20200823	
 //	if ($selectedXRayPriceListResultArray = $mysqli->query("select a.x_ray_body_location_name 'Body Location', b.x_ray_type_name 'Type', c.x_ray_price 'Price' from x_ray_body_location a, x_ray_type b, x_ray_service c where c.x_ray_body_location_id = a.x_ray_body_location_id and c.x_ray_type_id = b.x_ray_type_id and c.added_datetime_stamp = (select max(c2.added_datetime_stamp) from x_ray_service as c2 where c.x_ray_body_location_id=c2.x_ray_body_location_id and c.x_ray_type_id=c2.x_ray_type_id)"))	
 
 	//non-med item list
-//	if ($selectedItemListResultArray = $mysqli->query("select a.item_id 'ID#', a.item_name 'NAME',a.item_price 'PRICE', a.item_total_sold 'SOLD COUNT', b.quantity_in_stock 'QTY COUNT' from item a, inventory b where a.item_id = b.item_id and a.item_type_id=2 and a.is_hidden=0 order by a.item_name ASC"))	
+//	if ($selectedPatientLastVisitListResultArray = $mysqli->query("select a.item_id 'ID#', a.item_name 'NAME',a.item_price 'PRICE', a.item_total_sold 'SOLD COUNT', b.quantity_in_stock 'QTY COUNT' from item a, inventory b where a.item_id = b.item_id and a.item_type_id=2 and a.is_hidden=0 order by a.item_name ASC"))	
 	
 	//med item list
-	if ($selectedItemListResultArray = $mysqli->query("select a.item_id 'ID#', a.item_name 'NAME',a.item_price 'PRICE', a.item_total_sold 'SOLD COUNT', b.quantity_in_stock 'QTY COUNT' from item a, inventory b where a.item_id = b.item_id and a.item_type_id=1 and a.is_hidden=0 and a.item_id!=0 order by a.item_name ASC"))	
+	//edited by Mike, 20230406
+//	if ($selectedPatientLastVisitListResultArray = $mysqli->query("select a.item_id 'ID#', a.item_name 'NAME',a.item_price 'PRICE', a.item_total_sold 'SOLD COUNT', b.quantity_in_stock 'QTY COUNT' from item a, inventory b where a.item_id = b.item_id and a.item_type_id=1 and a.is_hidden=0 and a.item_id!=0 order by a.item_name ASC"))	
 
+	//and max(b.transaction_date)
+	//where a.patient_id = b.patient_id
+//	if ($selectedPatientLastVisitListResultArray = $mysqli->query("select a.patient_id 'ID#', a.patient_name 'NAME', a.medical_doctor_id 'MD', a.last_visit_date 'LAST VISIT' from patient a, transaction b where a.patient_id = b.patient_id group by a.patient_name order by a.patient_name ASC LIMIT 20"))
+//	if ($selectedPatientLastVisitListResultArray = $mysqli->query("select a.patient_id 'ID#', a.patient_name 'NAME', a.medical_doctor_id 'MD', a.last_visit_date 'LAST VISIT' from patient a, transaction b where a.patient_id = b.patient_id group by a.patient_name order by a.patient_id ASC LIMIT 20"))
+//	if ($selectedPatientLastVisitListResultArray = $mysqli->query("select a.patient_id 'ID#', a.patient_name 'NAME', a.medical_doctor_id 'MD', a.last_visit_date 'LAST VISIT' from patient a, transaction b where a.patient_id = b.patient_id group by a.patient_name order by b.transaction_id ASC LIMIT 20"))
+	
+	//LAST VISIT based on transaction table
+//	if ($selectedPatientLastVisitListResultArray = $mysqli->query("select a.patient_id 'ID#', a.patient_name 'NAME', a.medical_doctor_id 'MD', a.last_visit_date 'LAST VISIT' from patient a, transaction b where a.patient_id = b.patient_id order by a.patient_id ASC")) // LIMIT 100
+	if ($selectedPatientLastVisitListResultArray = $mysqli->query("select a.patient_id 'ID#', a.patient_name 'NAME', a.medical_doctor_id 'MD', b.transaction_date 'LAST VISIT' from patient a, transaction b where a.patient_id = b.patient_id order by a.patient_id ASC")) // LIMIT 100
 	{
-		if ($selectedItemListResultArray ->num_rows > 0) {
+		if ($selectedPatientLastVisitListResultArray->num_rows > 0) {
 			//added by Mike, 20200820
 			$iRowCount = 0;
-
-			$iCurrentItemId=-1;
-			$iQtyCount=0;
+			$iCurrentItemId=-1; //cancelled not included
 			$bIsNewItemId=false;
+
 			$arrayNewValue=[];
 
-			foreach ($selectedItemListResultArray as $valueArray) {
-				//added by Mike, 20200820
-				$bodyLocationValue = "";
+			foreach ($selectedPatientLastVisitListResultArray as $valueArray) {
 				$iCount = 0;
-				$isAlreadyDiscounted = false;
-  								
-				foreach ($valueArray as $value) {
-						//added by Mike, 20220813
-						//echo "<td class='column'>";
+
+				//echo count($valueArray);
+
+//				foreach ($valueArray as $value) {
 
 
-						if ($iCount==0) { //ID# COLUMN
-/*	
-						echo $valueArray['ID#']."<br/>";
-						echo $iCurrentItemId."<br/>";
-*/						
+							//echo $valueArray['ID#']."<br/>";
+
 							if ($iCurrentItemId==$valueArray['ID#']) {
 								$bIsNewItemId=false;							
-								$iQtyCount+=$valueArray['QTY COUNT'];								
-
-//								echo "DITO";
+								continue;
+///								echo "DITO";
 							}
 							else {
 								$iCurrentItemId=$valueArray['ID#'];
 								$bIsNewItemId=true;							
-								$iCountNewValueColumn=0;
-								
-
-				if ($iRowCount==0) {
-					$iRowCount++;
-					continue;
-				}
-								
-								
-				//edited by Mike, 20200820
-				//echo "<tr>";
-			    if ($iRowCount % 2 == 0) { //even number
-				  echo '<tr class="rowEvenNumber">';
-			    }
-			    else {
-				  echo '<tr class="row">';
-			    }				
-
-								
-				echo "<td class='column'>";
-					echo $iRowCount;
-				echo "</td>";								
-								
-
-				$iRowCount = $iRowCount + 1;
-
-								foreach ($arrayNewValue as $newValue) {
-								
-								    if ($iCountNewValueColumn==4) { //QTY COUNT
-										break;	
-								    }
-								    else {
-										if ($iCountNewValueColumn==1) { //NAME COLUMN
-											echo "<td class='columnName'>";			
-												echo strtoupper($newValue);								
-											echo "</td>";
-										}
-										else {
-											echo "<td class='column'>";
-												echo strtoupper($newValue);								
-											echo "</td>";		
-										}								    
-								    
-/*
-										echo "<td class='column'>";
-											echo strtoupper($newValue);								
-										echo "</td>";		
-*/
-								    }
-									
-									$iCountNewValueColumn++;	
-								}
-
-								echo "<td class='column'>";
-									//edited by Mike, 20220813
-									//echo $iQtyCount;			
-									
-									if ($iQtyCount<0) {
-										echo "N/A";
-									}
-									else {
-										echo $iQtyCount;
-									}														
-								echo "</td>";		
-
-								//remaining count								
-								echo "<td class='column'>";
-									$iRemainingCount = $iQtyCount-$arrayNewValue['SOLD COUNT'];								
-									
-									if ($iRemainingCount<0) {
-										echo "N/A";
-									}
-									else {
-										echo $iRemainingCount;
-									}														
-
-								echo "</td>";		
-
-
-
-								$iQtyCount=$valueArray['QTY COUNT'];								
-
+								//echo "BAGO";
 							}
-						}
+				
+					//edited by Mike, 20200820
+					//echo "<tr>";
+					if ($iRowCount % 2 == 0) { //even number
+					  echo '<tr class="rowEvenNumber">';
+					}
+					else {
+					  echo '<tr class="row">';
+					}				
 
+//					echo $valueArray['ID#']."<br/>";
+//						echo $iCurrentItemId."<br/>";
+						
+/*
+					if ($iRowCount==0) {
+						$iRowCount++;
+						continue;
+					}
+*/				
+					echo "<td class='column'>";
+						echo $iRowCount;
+					echo "</td>";								
+									
 
-					$arrayNewValue=$valueArray;
+					$iRowCount = $iRowCount + 1;
+
+					echo "<td class='column'>";
+						echo $valueArray['ID#'];
+					echo "</td>";								
+
+					//notes: wrote the following as so due to be clearer,
+					//than immediately with multiple for/while loops;
+					//TO-DO: -update: this
+					echo "<td class='columnName'>";			
+						echo strtoupper($valueArray['NAME']);								
+					echo "</td>";
+					echo "<td class='columnName'>";			
+						echo strtoupper($valueArray['MD']);								
+					echo "</td>";
+					echo "<td class='columnName'>";			
+						echo strtoupper($valueArray['LAST VISIT']);								
+					echo "</td>";
+								    
+//				}
+			}
+
+			//$arrayNewValue=$valueArray;
 
 							
 					//added by Mike, 20200820
 					$iCount = $iCount + 1;
-				}				
+
+//					}				
 
 				echo "</tr>";
-			}
+//			}
 		}
 		else {
 			echo "Found zero (0) result.";
