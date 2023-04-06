@@ -405,10 +405,16 @@ class Browse_Model extends CI_Model
 		//edited by Mike, 20211211
 //		if (count($rowArray)==0) {
 		if ((count($rowArray)==0) and (isset($row['patient_id']))) {
-			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id, t3.medical_doctor_name');
+			//edited by Mike, 20230406
+			//$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t2.medical_doctor_id, t3.medical_doctor_name');
+			$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.notes, t1.medical_doctor_id, t3.medical_doctor_name');
+
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-			$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+			//edited by Mike, 20230406
+			//$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+			$this->db->join('medical_doctor as t3', 't1.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
 			$this->db->where('t1.patient_id', $row['patient_id']);
 
 			$query = $this->db->get('patient');
@@ -4441,12 +4447,15 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 //		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
 		//edited by Mike, 20210319
 //		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t2.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit');
-
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t2.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
+		//edited by Mike, 20230406
+//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t2.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
+		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-		$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		//edited by Mike, 20230406
+		//$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		$this->db->join('medical_doctor as t3', 't1.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
 //		$this->db->distinct('t1.patient_name');
 //		$this->db->like('t1.patient_name', $param['nameParam']);
