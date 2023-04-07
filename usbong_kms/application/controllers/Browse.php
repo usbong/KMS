@@ -3329,6 +3329,15 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 //		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
 
+
+		//added by Mike, 20230408
+		$data['transactionDate'] = $data['transactionDate']."DEL";
+
+		$data['patientIdParam'] = $data['patientId'];
+		//TO-DO: -update: medicalDoctorId; due to transaction deleted;
+		$data['selectMedicalDoctorIdParam'] = $data['medicalDoctorId'];
+		$this->Browse_Model->updateIndexCardFormLite($data);
+
 		$this->Browse_Model->deleteTransactionServicePurchase($data);
 
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
@@ -3341,7 +3350,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
 */
 
-		//added by Mike, 202005019
+		//added by Mike, 202005[19]
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
 /*		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
