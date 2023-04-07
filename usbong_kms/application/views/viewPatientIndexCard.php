@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230406; from 20230331
+  @date updated: 20230407; from 20230406
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -1332,6 +1332,12 @@
   //added by Mike, 20230406
   $searchHistoryRangeTime = strtotime("-2 year", time());
   $searchHistoryRangeDate = date("Y", $searchHistoryRangeTime);  
+
+  //edited by Mike, 20230407
+//$sDateToday = Date('Y-m-d, l', strtotime($value['last_visit_date']));
+  $sDateToday = Date('Y-m-d', strtotime($value['last_visit_date']));
+  
+  echo "<b>LAST VISIT:</b> ".$sDateToday;
 ?>
 
 <!-- added by Mike, 20210316 -->
