@@ -1,5 +1,7 @@
 # Knowledge Management System (KMS)
 
+<b>SOURCE also available here:</b> http://store.usbong.ph/source/KMS/<br/>
+<br/>
 <b>DEMO version:</b> http://store.usbong.ph/report/viewWebAddressList<br/>
 <br/>
 <b>EXAMPLE#1 STEPS:</b> 
