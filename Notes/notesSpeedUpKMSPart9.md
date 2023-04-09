@@ -38,6 +38,9 @@ ELAPSED TIME: 4 seconds (PREVIOUSLY)
 ORIGINAL: Showing rows 0 - 24 (121531 total, Query took 0.0200 seconds.)<br/>
 COPIED OUTPUT: Showing rows 0 - 24 (122368 total, Query took 0.4200 seconds.)
 
+ANSWER: Use another COMMAND to get the exact count; 
+Reference: https://github.com/usbong/KMS/issues/17
+
 2) listening: to the following:<br/>
 2.1) USBONG SOUND ROBOTO<br/>
 2.2) Harada's Bar: Interview with the Heroes...; Pakistan (鉄拳7), Taiwan (SFV), Japan (GuiltyGearStrive)
