@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230409; from 20230408
+  @date updated: 20230410; from 20230409
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -1343,7 +1343,14 @@
 //  if (trim($sDateToday)=="") {
   //edited by Mike, 20230409
   if (trim($value['last_visited_date'])=="") {
-	$sDateToday="NEW";
+	//edited by Mike, 20230410
+	//$sDateToday="NEW";
+	if (isset($value['transaction_date'])) {
+		$sDateToday= Date('Y-m-d', strtotime($value['transaction_date']));
+	}
+	else {
+		$sDateToday="NEW";
+	}
   }
   //note: last_visit_date auto-updated @ start, et cetera
   //Windows Task Scheduler; Triggers, Actions, Conditions; STARCRAFT; SAP
