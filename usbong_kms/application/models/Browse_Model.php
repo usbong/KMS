@@ -566,7 +566,9 @@ class Browse_Model extends CI_Model
 	public function getNewestPatientDetailsListViaId($param) 
 	{		
 		//we use this at MOSC
-		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
+		//edited by Mike, 20230410
+		//$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t3.medical_doctor_id');
+		$this->db->select("t1.patient_name, t1.patient_id, t1.age, t1.last_visited_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t3.medical_doctor_name, t1.medical_doctor_id, t2.medical_doctor_id 'TranMDID'");
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -4452,8 +4454,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		//edited by Mike, 20230407
 		//$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
-		$this->db->select('t1.patient_name, t1.patient_id, t1.last_visit_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
-
+		//edited by Mike, 20230410; from 20230409
+		//$this->db->select('t1.patient_name, t1.patient_id, t1.last_visit_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
+		$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t2.medical_doctor_id 'TranMDID', t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address");
+				
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		//edited by Mike, 20230406
@@ -4464,6 +4468,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 //		$this->db->like('t1.patient_name', $param['nameParam']);
 		$this->db->where('t1.patient_id', $nameId);		
 
+		//added by Mike, 20230410
+		//$this->db->not_like('t2.notes', 'IN-QUEUE');
+		$this->db->where('t2.transaction_type_name=', 'CASH');		
+		
 		//added by Mike, 20200523
 //		$this->db->order_by('t2.transaction_date`', 'DESC');//ASC');
 		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
@@ -4477,7 +4485,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
 		
-		if ($rowArray == null) {			
+		if ($rowArray == null) {					
 			return False; //edited by Mike, 20190722
 		}
 		
@@ -5946,6 +5954,146 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		//------------------------------------
 	}
 
+	//added by Mike, 20230408
+	public function updatePatientDataBasedOnLastVisit() {		
+
+		//identify newest transactionId
+		$this->db->select_max('patient_id');
+		$query = $this->db->get('patient');
+		$row = $query->row();
+		$iPatientIdMax = $row->patient_id;
+
+		$patientId=0;
+
+		echo "Max Patient ID: ".$iPatientIdMax."<br/>"; //example: 18788; 18198 (removed gaps)
+		
+		//$iPatientIdMax=100;
+		
+		while ($patientId<$iPatientIdMax) {
+//break;						
+//			$iTotalQuantitySold=0;
+
+/*			echo "item_id: ".$itemId.";";
+*/
+			
+			//$this->db->select('t1.item_price, t2.fee');
+			//edited by Mike, 20230408; from 20200901
+			//t1.patient_name, 
+//			$this->db->select('t1.medical_doctor_id, t2.transaction_date');
+//			$this->db->select('t1.medical_doctor_id');
+			
+			//TO-DO: -update: this; not the newest transaction based on datetime stamp;
+			
+			$this->db->select('t1.medical_doctor_id, t2.transaction_date, t2.transaction_id');
+
+			$this->db->from('patient as t1');
+
+/*
+	//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
+			$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
+*/
+			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+
+			$this->db->where('t1.patient_id', $patientId);
+
+			//edited by Mike, 20200625
+			//note: we include transactions in the cart list, albeit unpaid
+			//$this->db->where('t2.notes', "PAID");
+
+/*
+			$this->db->like('t2.notes', "PAID");
+
+			//added by Mike, 20230408
+			$this->db->where('t2.transaction_quantity!=', 0);
+*/
+/*			
+			//edited by Mike, 20210114
+//			$this->db->where('t2.transaction_date >=', "04/06/2020"); //i.e., MONDAY
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') >=","2020-04-06");
+
+
+			//added by Mike, 20201215; edited by Mike, 20210114
+//			$this->db->where('t2.transaction_date <', date("m/d/Y")); //i.e., date today
+//			$this->db->where('t2.transaction_date <', "01/13/2021"); //i.e., date today
+			//note: STR_TO_DATE output format: YYYY-mm-dd
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y-m-d"));
+*/
+
+			//added by Mike, 20230408
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') >=","2020-04-06");
+			//$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <","2020-04-31");//date("Y-m-d"));
+			//$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <=","2020-04-06");//date("Y-m-d"));
+
+			//OK			
+			//$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <=","2020-04-07");//date("Y-m-d"));
+			//OK; observed: at times, NOT OK; ACTION after CATCH?
+			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <=","2020-04-12");//date("Y-m-d"));
+			//NOT OK
+			//$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <=","2020-04-13");//date("Y-m-d"));
+			
+			$query = $this->db->get('patient');
+
+			//added by Mike, 20230408
+			//$this->db->order_by('t2.added_datetime_stamp', 'DESC');
+			$this->db->limit(1);//8);
+			
+	//		$row = $query->row();		
+			//edited by Mike, 20230408
+			//$rowArray = $query->result_array();
+			//$rowOutput = $query->row();
+			$rowArray = $query->result_array();
+			
+/*
+			echo "count: ".count($rowArray);
+			echo "transaction_id: ";
+*/
+			if ($rowArray == null) {
+				$patientId=$patientId+1;
+				continue;
+			}
+			
+/*			
+			echo "<br/>".$value['item_name']." : ";
+			echo $iTotalQuantitySold." : ";
+*/
+			//UPDATE item SET item_total_sold=2 WHERE item_id=1			
+			//edited by Mike, 20230408
+			//echo "UPDATE item SET item_total_sold=".$iTotalQuantitySold." WHERE item_id=".$itemId.";<br/>";
+			
+			//edited by Mike, 20230408
+			//echo "UPDATE patient SET medical_doctor_id=".$iMedicalDoctorId." WHERE patient_id=".$patientId.";<br/>";
+//			echo "UPDATE patient SET medical_doctor_id=".$rowOutput['medical_doctor_id'].", last_visit_date=".$rowOutput['transaction_date']." WHERE patient_id=".$patientId.";<br/>";
+	
+/*	
+			//added by Mike, 20201216
+			//auto-insert in computer database
+			$data = array(
+						'medical_doctor_id' => $rowOutput['medical_doctor_id'],
+						'last_visit_date' => $rowOutput['transaction_date']
+						);
+			$this->db->where('patient_id',$patientId);
+			$this->db->update('patient', $data);		
+*/
+
+			//echo "count: ".count($rowOutput)."<br/><br/>";
+						
+			//added by Mike, 20230409
+			if (trim($rowArray[0]['medical_doctor_id'])=="") {
+				$rowArray[0]['medical_doctor_id']="BLANK";
+			}
+						
+			echo "patient_id: ".$patientId."; "; //<br/><br/>
+			echo "medical_doctor_id: ".$rowArray[0]['medical_doctor_id']."; ";			
+//			echo "last_visited: ".$rowOutput[0]['transaction_date'].";<br/><br/>";
+			echo "last_visited: ".$rowArray[0]['transaction_date']."; ";
+			echo "transaction_id: ".$rowArray[0]['transaction_id'].";<br/><br/>";
+			
+			$patientId=$patientId+1;
+		}		
+		//------------------------------------
+	}
+	
+	
 	//added by Mike, 20210319
 	public function updateIndexCardForm($param) {
 		//TO-DO: -add: these in patient table structure
@@ -6004,7 +6152,8 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	public function updateIndexCardFormLite($param) {
 		$data = array(
 			'medical_doctor_id' => $param['selectMedicalDoctorIdParam'],
-			'last_visit_date' => $param['transactionDate'],
+			//edited by Mike, 20230409
+			'last_visited_date' => $param['transactionDate'],
 		);
 
 		$this->db->where('patient_id',$param['patientIdParam']);
