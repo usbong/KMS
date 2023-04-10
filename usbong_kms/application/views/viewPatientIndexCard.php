@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230408; from 20230407
+  @date updated: 20230409; from 20230408
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -1341,19 +1341,21 @@
     
   //added by Mike, 20230408
 //  if (trim($sDateToday)=="") {
-  if (trim($value['last_visit_date'])=="") {
+  //edited by Mike, 20230409
+  if (trim($value['last_visited_date'])=="") {
 	$sDateToday="NEW";
   }
   //note: last_visit_date auto-updated @ start, et cetera
   //Windows Task Scheduler; Triggers, Actions, Conditions; STARCRAFT; SAP
-  else if (strpos($value['last_visit_date'],"DEL")!==false) {				  
-	$sDateToday = $value['last_visit_date'];
+  //edited by Mike, 20230409
+  else if (strpos($value['last_visited_date'],"DEL")!==false) {				  
+	$sDateToday = $value['last_visited_date'];
   }
   else {
-	$sDateToday = Date('Y-m-d', strtotime($value['last_visit_date']));
+	$sDateToday = Date('Y-m-d', strtotime($value['last_visited_date']));
   }
   
-  echo "<b>LAST VISIT:</b> ".$sDateToday;
+  echo "<b>LAST VISITED:</b> ".$sDateToday;
 
 ?>
 

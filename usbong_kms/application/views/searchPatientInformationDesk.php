@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020~2023 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220309; from 20210730
+' @date updated: 20230409; from 20220309
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -467,6 +467,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//edited by Mike, 20200530
 //								if ($value['medical_doctor_name']=="") {
 
+								//added by Mike, 20230409
+								//IF patient exists in patient table but not in transaction table,
+								//may have visited clinic at earlier year, e.g. 2020; where: now is 2023
 								if ($value['medical_doctor_id']==0) { //ANY
 									echo "NEW; NONE YET";
 								}
