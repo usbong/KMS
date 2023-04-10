@@ -2426,11 +2426,27 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210320
 		$data['bFoldImageListValue'] = $bFoldImageListValue;
 
+/*
+		echo "HALLO: ".$data['result'][0]["medical_doctor_id"]."<br/><br/>";
+		echo "transactionID: ".$data['result'][0]["transaction_id"]."<br/><br/>";
+		echo "TranMDID: ".$data['result'][0]["TranMDID"]."<br/><br/>";
+*/
+		//added by Mike, 20230410
+		$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
+
+		//echo "HALLO: ".$data['result'][0]["patient_id"]."<br/><br/>";
+		
+		//edited by Mike, 20230410; 20230410
 		//added by Mike, 20220526
 		if (!isset($data['result'][0]["medical_doctor_id"])) {
-			redirect('browse/searchPatient');
+			//redirect('browse/searchPatient');
+			$data['idParam']=$patientId;
+			$data['result']=$this->Browse_Model->getNewestPatientDetailsListViaId($data);
+			
+			//note: no transaction, so entered this branch;
+			//echo "HALLO".$data['result'][0]["TranMDID"];
 		}
-
+		
 		$this->load->view('viewPatientIndexCard', $data);
 	}
 	
@@ -4427,6 +4443,15 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 		$this->Browse_Model->updateTotalQuantitySoldPerItem();		
 		echo "***NOTHING FOLLOWS***";		
 	}
+
+	//added by Mike, 20230408
+	public function updatePatientDataBasedOnLastVisit()
+	{
+		$this->load->model('Browse_Model');
+		$this->Browse_Model->updatePatientDataBasedOnLastVisit();		
+		echo "***NOTHING FOLLOWS***";		
+	}
+
 	
 	//added by Mike, 20210206; edited by Mike, 20210209
 //	public function viewLabRequestForm()
