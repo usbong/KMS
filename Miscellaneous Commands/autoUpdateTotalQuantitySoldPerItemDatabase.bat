@@ -10,7 +10,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20201216T09:06
-REM @date updated: 20230408; from 20201216
+REM @date updated: 20230410; from 20230408
 REM @website address: http://www.usbong.ph
 REM
 REM Notes:
@@ -18,5 +18,10 @@ REM 1) 3 years (approx) since last updated
 REM 2) reusable technique
 
 "C:\Program Files\Mozilla Firefox\firefox.exe" "http://localhost/usbong_kms/index.php/browse/updateTotalQuantitySoldPerItem"
+
+REM added by Mike, 20230410
+REM TO-DO: -update: .bat file name; set of COMMANDS at startup; task scheduler
+"C:\Program Files\Mozilla Firefox\firefox.exe" "http://localhost/usbong_kms/server/autoSetSelectMySQLGlobalVariables.php"
+
 
 exit
