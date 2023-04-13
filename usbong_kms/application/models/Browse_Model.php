@@ -5944,7 +5944,15 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 //				echo $value['transaction_id'].";";
 				$iTotalQuantitySold = $iTotalQuantitySold + $value['fee_quantity'];
 
+				//TO-DO: -add: add item counts from transaction2020; auto-read input file?
+				//G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\usbongKMSItemListTransaction2020OK.txt
+				//item_total_sold=177;
+				//item_id=0;
+				
+				//server/viewTransactionsListFile.php
 			}
+			
+			
 /*			
 			echo "<br/>".$value['item_name']." : ";
 			echo $iTotalQuantitySold." : ";
