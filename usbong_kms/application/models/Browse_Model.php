@@ -5861,8 +5861,14 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	//added by Mike, 20201216
 	//note: use with $iQuantity = $iQuantity - $value['item_total_sold'];
 	//where $iQuantity = item total in stock
-	public function updateTotalQuantitySoldPerItem() {		
-
+	
+	//edited by Mike, 20230412; from 20230411
+	//TO-DO: -add: combine multiple transaction tables
+	//transactionorigv20230410t1238
+	//transaction2020
+	//reminder: delete in previous year's transaction also exist;
+	//output: updating via only the previous day's transaction NOT OK
+	public function updateTotalQuantitySoldPerItem() {
 		//identify newest transactionId
 		$this->db->select_max('item_id');
 		$query = $this->db->get('item');
@@ -5884,7 +5890,12 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
 			$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
 
+			//edited by Mike, 20230412; from 20230411
 			$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+			//$this->db->join('transaction2020 as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+			//$this->db->join('transactionorigv20230410t1238 as t2', 't1.item_id = t2.item_id', 'LEFT');
 
 			$this->db->where('t1.item_id', $itemId);
 			//edited by Mike, 20200625
