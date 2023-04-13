@@ -372,6 +372,7 @@ class Browse extends CI_Controller { //MY_Controller {
 //added by Mike, 20210212
 //		echo "PATIENT ID PARAM: ".$_POST['patientIdNameParam'];
 
+/* //edited by Mike, 20230413
 		//edited by Mike, 20220721
 		//$data['patientIdNameParam'] = $_POST['patientIdNameParam'];
 		if (!isset($_POST["patientIdNameParam"])) {
@@ -380,6 +381,8 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20220722
 		$data['patientIdNameParam'] = $_POST['patientIdNameParam'];
+*/
+		$data['patientIdNameParam'] = $patientId;
 
 
 		//TO-DO: -add: patient birthday to auto-compute age
@@ -2431,9 +2434,16 @@ class Browse extends CI_Controller { //MY_Controller {
 		echo "transactionID: ".$data['result'][0]["transaction_id"]."<br/><br/>";
 		echo "TranMDID: ".$data['result'][0]["TranMDID"]."<br/><br/>";
 */
-		//added by Mike, 20230410
+		//edited by Mike, 20230413; from 20230410
+		if ($data['result'][0]["medical_doctor_id"]!=$data['result'][0]["TranMDID"]) {
+			$data['bIsSetMDIdNotTranMDId']=true;
+			$data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
+			$data['selectMedicalDoctorNameParam']=$data['tranMedicalDoctorName'];
+		}
+
 		$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
 
+	
 		//echo "HALLO: ".$data['result'][0]["patient_id"]."<br/><br/>";
 		
 		//edited by Mike, 20230410; 20230410
