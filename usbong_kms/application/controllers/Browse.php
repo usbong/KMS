@@ -4450,7 +4450,12 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 	public function updateTotalQuantitySoldPerItem()
 	{
 		$this->load->model('Browse_Model');
-		$this->Browse_Model->updateTotalQuantitySoldPerItem();		
+		$this->Browse_Model->updateTotalQuantitySoldPerItem();	
+		
+		//echo count($this->Browse_Model->getTransactionsListFromFile());
+		
+		//echo $this->Browse_Model->getTransactionsListFromFile()[0]["item_total_sold"];
+
 		echo "***NOTHING FOLLOWS***";		
 	}
 
