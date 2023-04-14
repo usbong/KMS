@@ -5858,6 +5858,91 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		return $iQuantity;
 	}
 	
+	//added by Mike, 20230414
+	public function getTransactionsListFromFile() {		
+		$filename="G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\\usbongKMSItemListTransaction2020OK.txt";
+
+		ini_set('auto_detect_line_endings', true);
+
+		//added by Mike, 20200523
+		if (!file_exists($filename)) {
+			//add the day of the week
+			//edited by Mike, 20200726
+			//$sDateToday = (new DateTime())->format('Y-m-d, l');
+			$sDateToday = Date('Y-m-d, l');
+
+			echo $filename;
+
+			echo "There are no transactions for the day, ".$sDateToday.".";
+		}
+		else {
+			//added by Mike, 20230413
+			$outputArray = array();
+			
+			//Reference: https://stackoverflow.com/questions/9139202/how-to-parse-a-csv-file-using-php;
+			//answer by: thenetimp, 20120204T0730
+			//edited by: thenetimp, 20170823T1704
+
+			$iRowCount = -1; //we later add 1 to make start value zero (0)
+			//if (($handle = fopen("test.csv", "r")) !== FALSE) {
+			if (($handle = fopen($filename, "r")) !== FALSE) {
+			  //edited by Mike, 20230413
+			  //while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+			  while (($data = fgetcsv($handle, 1000, " ")) !== FALSE) {
+
+				$num = count($data) -1; //we add -1 for the computer to not include the excess cell due to the ending \n
+			//    echo "<p> $num fields in line $row: <br /></p>\n";
+				$iRowCount++;
+				for ($iColumnCount=0; $iColumnCount <= $num; $iColumnCount++) {
+			//        echo $data[$c] . "<br />\n";
+					//edited by Mike, 20200725
+					//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+					
+					//added by Mike, 20200726
+					//$cellValue = $data[$iColumnCount];	
+					$cellValue = utf8_encode($data[$iColumnCount]);
+					
+	//				echo $cellValue."<br/>";
+					
+					if (strpos($cellValue, "item_total_sold=")!==false) {
+						$cellValue=str_replace("item_total_sold=","",$cellValue);
+						
+//						echo $cellValue."<br/>";				
+
+						$itemTotalSold=$cellValue;
+					}
+					else if (strpos($cellValue, "item_id=")!==false) {
+						$cellValue=str_replace("item_id=","",$cellValue);
+						$cellValue=str_replace(";","",$cellValue);										
+
+//						echo $cellValue."<br/>";				
+						
+						$itemId=$cellValue;
+					}				
+				}
+
+				$data = array(
+					'item_id' => $itemId,
+					'item_total_sold' => $itemTotalSold
+				);		
+				
+				array_push($outputArray, $data);			
+
+//				echo "<br/>";			
+			  }
+			  
+			  fclose($handle);
+			}
+
+/* //removed by Mike, 20230414			
+			foreach ($outputArray as $dataValue) {
+			//	$this->db->insert('receipt', $dataValue);
+			}	
+*/
+			return $outputArray;
+		}		
+	}
+	
 	//added by Mike, 20201216
 	//note: use with $iQuantity = $iQuantity - $value['item_total_sold'];
 	//where $iQuantity = item total in stock
@@ -5869,6 +5954,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	//reminder: delete in previous year's transaction also exist;
 	//output: updating via only the previous day's transaction NOT OK
 	public function updateTotalQuantitySoldPerItem() {
+		//added by Mike, 20230414
+		$outputArray = $this->getTransactionsListFromFile();
+				
 		//identify newest transactionId
 		$this->db->select_max('item_id');
 		$query = $this->db->get('item');
@@ -5913,8 +6001,6 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 			//note: STR_TO_DATE output format: YYYY-mm-dd
 			$this->db->where("STR_TO_DATE(t2.transaction_date, '%m/%d/%Y') <",date("Y-m-d"));
 
-
-
 			$query = $this->db->get('item');
 
 	//		$row = $query->row();		
@@ -5943,13 +6029,24 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 				
 //				echo $value['transaction_id'].";";
 				$iTotalQuantitySold = $iTotalQuantitySold + $value['fee_quantity'];
-
-				//TO-DO: -add: add item counts from transaction2020; auto-read input file?
+			}
+			
+			//TO-DO: -add: add item counts from transaction2020; auto-read input file?
 				//G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\usbongKMSItemListTransaction2020OK.txt
 				//item_total_sold=177;
-				//item_id=0;
-				
+				//item_id=0;				
 				//server/viewTransactionsListFile.php
+
+			//added by Mike, 20230414
+			foreach ($outputArray as $outputArrayRow) {
+				if ($outputArrayRow['item_id']==$itemId) {
+					
+					echo $outputArrayRow['item_id']. "; ".$outputArrayRow['item_total_sold']."; ";
+
+					$iTotalQuantitySold = $iTotalQuantitySold + $outputArrayRow['item_total_sold'];
+
+					break;						
+				}		
 			}
 			
 			
