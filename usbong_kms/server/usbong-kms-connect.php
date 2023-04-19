@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2019~2021 Usbong Social Systems, Inc.
+  Copyright 2019~2023 USBONG
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 
@@ -8,9 +8,10 @@
 
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 
-  @author: Michael Syson
+  @company: USBONG
+  @author: SYSON, Michael B
   @date created: 20190804
-  @date updated: 20210323
+  @date updated: 20230419; from 20210323
 
   Given:
   1) Database (DB) details
@@ -28,10 +29,22 @@ define('BASEPATH', "http://localhost/usbong_kms/");
 //typically, webroot would be in /var/www/html/
 //include('/put_this_somewhere_outside_of_web_root/app+server/database.php');
 
-//edited by Mike, 20210323
-//TO-DO: -update: to eliminate excess steps
+//edited by Mike, 20230419; from 20210323
 //include('C:/xampp/htdocs/usbong_kms/server/database.php');
-include('/opt/lampp/htdocs/usbong_kms/server/database.php');
+//include('/opt/lampp/htdocs/usbong_kms/server/database.php');
+
+//updated: to eliminate excess steps
+//reference: https://stackoverflow.com/questions/5425891/how-do-i-check-if-a-directory-exists-is-dir-file-exists-or-both;
+//last accessed: 20230419
+//question by: Peter, 20110324T2138; edited by: Thomanski, 20210114T2346
+
+$sDbFileLocation='C:/xampp/htdocs/usbong_kms/server/database.php';
+if ( file_exists($sDbFileLocation) && !is_dir($sDbFileLocation)) {
+	include($sDbFileLocation);
+} 
+else {
+	include('/opt/lampp/htdocs/usbong_kms/server/database.php');
+}
 
 //added by Mike, 20210323
 //reminder: update computer server database values for username, password, etc in database.php
