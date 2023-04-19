@@ -12,6 +12,13 @@
 1) Click "Search Medicine" link<br/>
 2) Enter Item: "ace"
 
+### SELECT FILES to START auto-generation of REPORTS
+
+1) kasangkapan/viewAllReportsForTheDayUnified.bat
+
+2) Workbooks/moscReportForTheDayLibreOfficeCalc.ods
+
+TO-DO: -update: this
 
 ## I. Screenshots
 
