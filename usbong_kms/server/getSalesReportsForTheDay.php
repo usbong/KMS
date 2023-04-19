@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2020~2022 SYSON, MICHAEL B.
+  Copyright 2020~2023 USBONG
   
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20221110; from 20221108
+  @date updated: 20230419; from 20221110
   @website address: www.usbong.ph
   
   Input:
@@ -46,7 +46,10 @@
 	//edited by Mike, 20220823
 	//note: update: base directory location
 	//identify if WINDOWS file directory system 		
-	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	//edited by Mike, 20230419
+	//TO-DO: -add: auto-identify location
+	//$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	$fileBasePath = "D:\MOSC\KMS\output\informationDesk\cashier\\";
 						
 //	echo $fileBasePath;
 	
