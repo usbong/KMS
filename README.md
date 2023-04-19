@@ -18,7 +18,9 @@
 
 2) Workbooks/moscReportForTheDayLibreOfficeCalc.ods
 
-TO-DO: -update: this
+3) server/getSalesReportsForTheDay.php
+
+TO-DO: -update: this; file locations
 
 ## I. Screenshots
 
