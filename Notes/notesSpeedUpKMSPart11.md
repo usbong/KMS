@@ -40,7 +40,8 @@ innodb_log_buffer_size = 256M
 
 execution of [accessAndSaveDatabaseStorageInWindowsPCFromWindowsPC.bat](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/setOfCommandsToAutoTransferDatabaseStorageFromWindowsToWindowsServer/accessAndSaveDatabaseStorageInWindowsPCFromWindowsPC.bat)<br/>
 --> SPEED-UP of this part: [autoImportDatabaseToMySQLDB...](autoImportDatabaseToMySQLDBWindowsMachine.bat);<br/> 
---> ELAPSED TIME: <b>2mins, instead of 5mins</b>
+--> ELAPSED TIME: <b>2mins, instead of 5mins</b><br/>
+--> MySQL DB file size: 64MB
 
 ## REFERENCE
 
