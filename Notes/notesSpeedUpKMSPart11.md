@@ -30,7 +30,11 @@ innodb_log_buffer_size = 256M
 > innodb_flush_log_at_trx_commit = 1<br/>
 > innodb_lock_wait_timeout = 50
 
-2) restart mysql service via XAMPP Control Panel
+2) restart mysql service via XAMPP Control Panel<br/>
+--> where: restart : Stop, then Start<br/>
+
+<img src="https://github.com/usbong/KMS/blob/master/Notes/res/xamppControlPanelMySQLRestartV20230421T0913.png" width="60%">
+
 
 ## OUTPUT
 
