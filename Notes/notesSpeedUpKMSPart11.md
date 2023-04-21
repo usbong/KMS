@@ -35,9 +35,11 @@ innodb_log_buffer_size = 256M
 ## OUTPUT
 
 execution of [accessAndSaveDatabaseStorageInWindowsPCFromWindowsPC.bat](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/setOfCommandsToAutoTransferDatabaseStorageFromWindowsToWindowsServer/accessAndSaveDatabaseStorageInWindowsPCFromWindowsPC.bat)<br/>
---> speed-up; elapsed time: <b>2mins, instead of 5mins</b>
+--> SPEED-UP of this part: [autoImportDatabaseToMySQLDB...](autoImportDatabaseToMySQLDBWindowsMachine.bat);<br/> 
+--> ELAPSED TIME: <b>2mins, instead of 5mins</b>
 
 ## REFERENCE
 
-1) https://dba.stackexchange.com/questions/83125/mysql-any-way-to-import-a-huge-32-gb-sql-dump-faster; last accessed: 20230420<br/>
+1) https://dba.stackexchange.com/questions/83125/mysql-any-way-to-import-a-huge-32-gb-sql-dump-faster;<br/>
+--> last accessed: 20230420<br/>
 --> answer by: RolandoMySQLDBA, 20141123T1504; edited by T.Todua, 20191223T1933
