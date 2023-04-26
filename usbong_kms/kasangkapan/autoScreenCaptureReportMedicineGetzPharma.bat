@@ -1,6 +1,6 @@
 @echo off
 REM
-REM Copyright 2021~2022 SYSON, MICHAEL B.
+REM Copyright 2021~2023 SYSON, MICHAEL B.
 REM 
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -11,7 +11,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20210225
-REM @date updated: 20220617; from 20220616
+REM @date updated: 20230426; from 20220617
 REM
 REM Reference:
 REM 1) https://phantomjs.org/; last accessed: 20200724
@@ -32,5 +32,6 @@ phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postcelcoxx" ") 400"
 phantomjs saveWebPageAsImageFile.js "confirmMedicine/_poststarcox"
 phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postgabica" 
 phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postgabix"
+phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postreventa"
 
 explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
