@@ -316,4 +316,7 @@ quit;
 1) observed: PROBLEM#10 to have previously occurred;<br/>
 --> where: SOLUTION quickly identified;<br/>
 --> adds: however, repeated incidents cause writing of NOTES<br/>
---> on the ACTION to quickly solve problem<br/>
+--> on the ACTION to quickly solve problem
+
+2) ERROR incident occurred again, 2023-05-02 (TUESDAY);<br/>
+--> where: 2023-05-01 (MONDAY), LABOR DAY, HOLIDAY @CLINIC
