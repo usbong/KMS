@@ -334,7 +334,11 @@ quit;
 
 WINDOWS: [autoImportDatabaseToMySQLDBWindowsMachine.bat](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/setOfCommandsToAutoTransferDatabaseStorageFromWindowsToWindowsServer/autoImportDatabaseToMySQLDBWindowsMachine.bat)
 
+> mysql -uroot usbong_kms < D:\MOSC\DB\%inputMySQLFile%
+
 LINUX: [autoImportDatabaseToMySQLDBLinuxMachineNotViaXAMPP.sh](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/autoImportDatabaseToMySQLDBLinuxMachineNotViaXAMPP.sh)
+
+> mysql -uroot usbong_kms < $inputMySQLFile
 
 ### Reference:
 
