@@ -49,7 +49,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/user_guide/general/controllers.html
  */
+
+//added by Mike, 20230507
+#[\AllowDynamicProperties]
+
 class CI_Controller {
+
+	//added by Mike, 20230507
+/*	
+public $benchmark;    
+public $config;
+public $log;    
+public $hooks;  
+public $utf8;    
+public $uri;
+public $router;    
+public $exceptions;    
+public $output;    
+public $security;
+public $input;    
+public $lang;  
+// coming from autoload.php libraries and model
+public $db;      // libraries   
+public $email;   // libraries
+public $WorldM;  // model      
+*/
 
 	/**
 	 * Reference to the CI singleton
