@@ -320,3 +320,26 @@ quit;
 
 2) ERROR incident occurred again, 2023-05-02 (TUESDAY);<br/>
 --> where: 2023-05-01 (MONDAY), LABOR DAY, HOLIDAY @CLINIC
+
+
+## Problem#11) Database Error: "You probably tried to upload a file that is too large. Please refer to documentation for a workaround for this limit." 
+
+### Additional Notes:
+
+.mysql DB File Size @<b> >60MB</b> of SQL code (computer instructions)
+
+### Answer:
+
+1) Upload the file to DB via TERMINAL COMMAND:
+
+WINDOWS: [autoImportDatabaseToMySQLDBWindowsMachine.bat](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/setOfCommandsToAutoTransferDatabaseStorageFromWindowsToWindowsServer/autoImportDatabaseToMySQLDBWindowsMachine.bat)
+
+LINUX: [autoImportDatabaseToMySQLDBLinuxMachineNotViaXAMPP.sh](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/autoImportDatabaseToMySQLDBLinuxMachineNotViaXAMPP.sh)
+
+### Reference:
+
+1) http://localhost/phpmyadmin/doc/html/faq.html#faq1-16
+
+> 1.16 I cannot upload big dump files (memory, HTTP or timeout problems).
+
+> If you have shell (command line) access, use MySQL to import the files directly. You can do this by issuing the “source” command from within MySQL:
