@@ -2507,6 +2507,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, $transactionDate);
 
+//added by Mike, 20230514
+$data['bIsMultiTransaction']=false;
+
 
 //echo $data['resultPaid'][0]['patient_name'];
 //echo $data['resultPaid'][0]['transaction_id'];
@@ -2523,6 +2526,26 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210514; edited by Mike, 20210720
 //		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId); //3 = SNACK ITEM
 		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId, $transactionDate); //3 = SNACK ITEM
+
+		if (isset($data['resultPaidMedItem'][0])) {
+			//echo "dito";
+			//echo $data['resultPaidMedItem'][0]['transaction_id'];
+			if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidMedItem'][0]['transaction_id']) {
+				$data['bIsMultiTransaction']=true;
+			}
+		}
+
+		if (isset($data['resultPaidNonMedItem'][0])) {
+			if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidNonMedItem'][0]['transaction_id']) {
+				$data['bIsMultiTransaction']=true;
+			}
+		}
+
+		if (isset($data['resultPaidSnackItem'][0])) {
+			if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidSnackItem'][0]['transaction_id']) {
+				$data['bIsMultiTransaction']=true;
+			}
+		}
 
 		$this->load->view('viewAcknowledgmentForm', $data);		
 	}
@@ -4304,6 +4327,8 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 		if ($data['isMultiAdded']) {
 			//note: use with multiple transactions with varying types, 
 			//e.g. snack, non-med, med, added as paid on the same date; 
+
+//echo "dito";
 
 			//added by Mike, 20210926
 			$this->Browse_Model->addTransactionPaidReceiptOfMultiAddedTransactions($data);

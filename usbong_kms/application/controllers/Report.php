@@ -717,8 +717,11 @@ class Report extends CI_Controller { //MY_Controller {
 //					while ($transactionId==0) {
 					do {
 //						echo $iTransactionId."<br/>";
+						
+						//edited by Mike, 20230514
+//						$this->db->select('transaction_quantity');
+						$this->db->select('transaction_quantity, notes');
 
-						$this->db->select('transaction_quantity');
 						$this->db->where('transaction_id',$iTransactionId);
 
 						//added by Mike, 20221108
@@ -737,6 +740,11 @@ class Report extends CI_Controller { //MY_Controller {
 							break;
 						}	
 */
+						//added by Mike, 20230514
+						//echo $row->notes;
+						if (strpos($row->notes,"PAID; TRANSACTION")!==false) {
+							break;
+						}
 
 						$iTransactionId = $iTransactionId + 1;
 						
@@ -766,9 +774,11 @@ class Report extends CI_Controller { //MY_Controller {
 					}
 
 					//removed by Mike, 20221110
-					//echo $iTransactionId."<br/><br/>";
+//					echo $iTransactionId."<br/><br/>";
 
 					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($iTransactionId);
+					
+//					echo "dito: ".$value['receipt_number'];
 				}
 				unset($value);
 			}
