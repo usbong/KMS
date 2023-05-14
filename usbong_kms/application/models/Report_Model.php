@@ -650,6 +650,10 @@ class Report_Model extends CI_Model
 //		$this->db->where('t2.transaction_date=',"09/28/2020");
 //		$this->db->where('t2.transaction_date=',"11/09/2022");
 
+		//added by Mike, 20230514
+//		$this->db->where('t2.transaction_quantity!=',0);	
+		$this->db->where('t2.transaction_id = (SELECT MAX(t.transaction_id) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
+
 		//added by Mike, 20200601
 		//$this->db->where('t2.fee!=',0);
 		//$this->db->and_not_like('t2.notes',"NC");
@@ -677,7 +681,12 @@ class Report_Model extends CI_Model
 		$this->db->not_like('t2.notes',"SNACK ONLY");
 
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
-		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
+		
+		//edited by Mike, 20230514
+		//TO-DO: -reverify: this
+//		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
+		$this->db->order_by('t2.transaction_id', 'DESC');//ASC');
+
 
 		//$this->db->limit(8);//1);
 		
@@ -694,6 +703,8 @@ class Report_Model extends CI_Model
 		}
 		
 //		echo "report_id: ".$rowArray[0]['report_id'];
+
+//		echo "transaction_id: ".$rowArray[0]['transaction_id'];
 		
 /*		return $row->report_description;
 */

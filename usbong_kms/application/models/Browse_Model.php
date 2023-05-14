@@ -1593,7 +1593,15 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 				$notes = trim($notes)."; added note: ".$param['addedNote'];
 			}
 		}
-
+		
+		//added by Mike, 20230514
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+		//TO-DO: -reverify: this; session containers; time-up; clear container;
+		if (!isset($ipAddress) and !isset($machineAddress)) {
+			redirect('report/viewWebAddressList');
+		}
 
 		$transactionData = array(
 			'transaction_date' => date('m/d/Y'),
@@ -1605,7 +1613,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			'pas_fee' => $param['non_med_fee'],
 			'snack_fee' => $param['snack_fee'],
 			'medical_doctor_id' => $rowArray[0]['medical_doctor_id'],
-			'notes' => $notes				
+			'notes' => $notes,
+			//added by Mike, 20230514
+			'ip_address_id' => $ipAddress,
+			'machine_address_id' => $machineAddress			
 		);				
 
 		$this->db->insert('transaction', $transactionData);
