@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230110; from 20221207
+  @date updated: 20230514; from 20230110
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -283,6 +283,18 @@
 			TO-DO: -update: this due to increased web address length-->
 <?php //edited by Mike, 20210911	
 		if (isset($resultPaid[0])) {
+			//added by Mike, 20230514
+			if ($bIsMultiTransaction) {
+?>
+			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/1'); ?>'>
+				<!-- MULTI transaction-->
+<!--				<b>ACKNOWLEDGMENT RECEIPT [＊]</b> -->
+				<b>ACKNOWLEDGMENT RECEIPT</b>
+			</a>
+
+<?php
+			}
+			else {
 ?>
 			<!-- edited by Mike, 20210926 -->
 			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/0'); ?>'>
@@ -291,7 +303,10 @@
 			<b>[<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/1'); ?>'>
 				+
 			</a>]</b>
-<?php 	}
+<?php
+			}
+
+		}
 		else {
 			//example: include external .js file
 ?>		
@@ -321,12 +336,12 @@
 				//BERGSTEIN, AKI
 				//edited by Mike, 20220317
 //				echo $result[0]['patient_name'];
-				echo str_replace("�","Ñ",$result[0]['patient_name']);
+				echo str_replace(" ","Ñ",$result[0]['patient_name']);
 */							
 	
 														
 echo "<a class='rowLink' target='_blank' href='".site_url('browse/viewPatient/'.$result[0]['patient_id'])."'>";
-							echo str_replace("�","Ñ",$result[0]['patient_name']);
+							echo str_replace(" ","Ñ",$result[0]['patient_name']);
 echo "</a>";
 							
 
