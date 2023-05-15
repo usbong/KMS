@@ -2507,9 +2507,12 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, $transactionDate);
 
-//added by Mike, 20230514
-$data['bIsMultiTransaction']=false;
+		//added by Mike, 20230514
+		$data['bIsMultiTransaction']=false;
 
+		//note: faster for human to understand,
+		//albeit uses additional access to DB;
+		$data['bIsMultiTransaction']=$this->Browse_Model->getIsMultiTransaction($patientId, $transactionDate);
 
 //echo $data['resultPaid'][0]['patient_name'];
 //echo $data['resultPaid'][0]['transaction_id'];
@@ -2527,28 +2530,41 @@ $data['bIsMultiTransaction']=false;
 //		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId); //3 = SNACK ITEM
 		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId, $transactionDate); //3 = SNACK ITEM
 		
-		//edited by Mike, 20230515
+		//removed by Mike, 20230515; added by Mike, 20230515
+/*		
+		//echo $data['resultPaidMedItem'][0]['transaction_id'];
+		
 		if ($data['resultPaid'][0]['fee']!=0) {
 			if (isset($data['resultPaidMedItem'][0])) {
-				//echo "dito";
-				//echo $data['resultPaidMedItem'][0]['transaction_id'];
-				if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidMedItem'][0]['transaction_id']) {
-					$data['bIsMultiTransaction']=true;
+				
+				//added by Mike, 20230515
+				if (isset($data['resultPaid'][0]['med_fee'])&&($data['resultPaid'][0]['med_fee']==0)) {
+					//echo $data['resultPaidMedItem'][0]['transaction_id'];
+					if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidMedItem'][0]['transaction_id']) {
+						$data['bIsMultiTransaction']=true;
+					}
 				}
 			}
 
 			if (isset($data['resultPaidNonMedItem'][0])) {
-				if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidNonMedItem'][0]['transaction_id']) {
-					$data['bIsMultiTransaction']=true;
+				//added by Mike, 20230515
+				if (isset($data['resultPaid'][0]['pas_fee'])&&($data['resultPaid'][0]['pas_fee']==0)) {
+					if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidNonMedItem'][0]['transaction_id']) {
+						$data['bIsMultiTransaction']=true;
+					}
 				}
 			}
 
 			if (isset($data['resultPaidSnackItem'][0])) {
-				if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidSnackItem'][0]['transaction_id']) {
-					$data['bIsMultiTransaction']=true;
+				//added by Mike, 20230515
+				if (isset($data['resultPaid'][0]['snack_fee'])&&($data['resultPaid'][0]['snack_fee']==0)) {
+					if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidSnackItem'][0]['transaction_id']) {
+						$data['bIsMultiTransaction']=true;
+					}
 				}
 			}
 		}
+*/
 
 		$this->load->view('viewAcknowledgmentForm', $data);		
 	}
