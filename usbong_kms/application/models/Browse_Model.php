@@ -5219,6 +5219,45 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		return $rowArray;
 	}		
+	
+	//added by Mike, 20230515
+	public function getIsMultiTransaction($patientId, $transactionDate) 
+	{		
+		$this->db->select('transaction_id, transaction_quantity');
+
+//		$this->db->from('transaction');
+
+		//$this->db->group_by('transaction_id');		
+		$this->db->where('transaction_quantity!=', 0);
+		
+		$this->db->where('patient_id=', $patientId);
+		 
+		//added by Mike, 20210626; edited by Mike, 20210720
+//		$this->db->where('t2.transaction_date', date('m/d/Y'));
+
+		//echo $transactionDate."<br/>";
+
+		$this->db->where('transaction_date', date('m/d/Y', strtotime($transactionDate)));
+	
+		$query = $this->db->get('transaction');
+	
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+		
+		//ECHO count($rowArray);
+		
+		if (count($rowArray)>1) {
+			return True;
+		}
+
+		return False;
+		
+//		return True; //count($rowArray);
+	}		
+	
 
 	//added by Mike, 20210904
 	public function getCombinedTransactionPaidItemDetailsListForPatientForTheDay($itemTypeId, $patientId, $transactionDate) 
