@@ -2526,24 +2526,27 @@ $data['bIsMultiTransaction']=false;
 		//added by Mike, 20210514; edited by Mike, 20210720
 //		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId); //3 = SNACK ITEM
 		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId, $transactionDate); //3 = SNACK ITEM
-
-		if (isset($data['resultPaidMedItem'][0])) {
-			//echo "dito";
-			//echo $data['resultPaidMedItem'][0]['transaction_id'];
-			if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidMedItem'][0]['transaction_id']) {
-				$data['bIsMultiTransaction']=true;
+		
+		//edited by Mike, 20230515
+		if ($data['resultPaid'][0]['fee']!=0) {
+			if (isset($data['resultPaidMedItem'][0])) {
+				//echo "dito";
+				//echo $data['resultPaidMedItem'][0]['transaction_id'];
+				if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidMedItem'][0]['transaction_id']) {
+					$data['bIsMultiTransaction']=true;
+				}
 			}
-		}
 
-		if (isset($data['resultPaidNonMedItem'][0])) {
-			if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidNonMedItem'][0]['transaction_id']) {
-				$data['bIsMultiTransaction']=true;
+			if (isset($data['resultPaidNonMedItem'][0])) {
+				if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidNonMedItem'][0]['transaction_id']) {
+					$data['bIsMultiTransaction']=true;
+				}
 			}
-		}
 
-		if (isset($data['resultPaidSnackItem'][0])) {
-			if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidSnackItem'][0]['transaction_id']) {
-				$data['bIsMultiTransaction']=true;
+			if (isset($data['resultPaidSnackItem'][0])) {
+				if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidSnackItem'][0]['transaction_id']) {
+					$data['bIsMultiTransaction']=true;
+				}
 			}
 		}
 
