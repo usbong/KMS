@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230514; from 20230110
+  @date updated: 20230515; from 20230514
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -283,7 +283,8 @@
 			TO-DO: -update: this due to increased web address length-->
 <?php //edited by Mike, 20210911	
 		if (isset($resultPaid[0])) {
-			//added by Mike, 20230514
+			//added by Mike, 20230515; from 20230514			
+//			echo $bIsMultiTransaction;
 			if ($bIsMultiTransaction) {
 ?>
 			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/1'); ?>'>
@@ -341,7 +342,7 @@
 	
 														
 echo "<a class='rowLink' target='_blank' href='".site_url('browse/viewPatient/'.$result[0]['patient_id'])."'>";
-							echo str_replace(" ","Ñ",$result[0]['patient_name']);
+							echo str_replace("�","Ñ",$result[0]['patient_name']);
 echo "</a>";
 							
 
