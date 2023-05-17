@@ -2928,7 +2928,17 @@ class Browse extends CI_Controller { //MY_Controller {
 		//example: via Levenshtein Distance;
 		//reference: https://github.com/usbong/SLHCC/blob/e93bda14d0b3f63e6d7eab28f734d228d4d09137/Master%20List/generateDoctorReferralPTTreatmentReportFromMasterList/java/linux/software/generateDoctorReferralPTTreatmentSummaryReportOfTheTotalOfAllInputFilesFromMasterList.java;
 		//last accessed: 20230110
+		
+//		echo ">".$notes;
+		
 		$notes = str_replace("DISCOUNTE","DISCOUNTED",$notes);
+		
+		//added by Mike, 20230517
+		//notes "DISCOUNTEDD" causes error; not replaced
+//		$notes = str_replace("DISCOUNTEDD","DISCOUNTED",$notes);
+		$notes = str_replace("COUNTEDD","COUNTED",$notes);
+
+//		echo ">>".$notes;
 			
 		$data['notes'] = $notes."; "."UNPAID";
 		
