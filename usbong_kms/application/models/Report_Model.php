@@ -716,9 +716,11 @@ class Report_Model extends CI_Model
 		
 //		echo "report_id: ".$rowArray[0]['report_id'];
 
+/*
 		echo "count: ".count($rowArray)."<br/>";
 
 		echo "transaction_id: ".$rowArray[0]['transaction_id'];
+*/
 		
 /*		return $row->report_description;
 */
