@@ -1616,7 +1616,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			'notes' => $notes,
 			//added by Mike, 20230514
 			'ip_address_id' => $ipAddress,
-			'machine_address_id' => $machineAddress			
+			'machine_address_id' => $machineAddress,
+			//added by Mike, 20230517
+			'transaction_quantity' => 1
 		);				
 
 		$this->db->insert('transaction', $transactionData);
@@ -1626,7 +1628,13 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//TO-DO: -update: this to verify if there is x_ray_fee and lab_fee
 		//edited by Mike, 20211018
 //		if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
-		if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
+		//edited by Mike, 20230517
+		//Dr HONESTO and Dr CHASTITY using MOSC OR;
+//		if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
+		if (($param['medicalDoctorId']==1) || //SYSON, PEDRO
+			($param['medicalDoctorId']==6) || //Dr HONESTO
+			($param['medicalDoctorId']==4)) { //Dr CHASTITY
+
 			$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
 
 			$data = array(
