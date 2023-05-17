@@ -12,7 +12,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20201001
-REM @last modified: 20230207; from 20230206
+REM @last modified: 20230517; from 20230207
 REM @website address: http://www.usbong.ph
 REM
 
@@ -75,7 +75,10 @@ REM xcopy /d "\DB\usbong_kmsV20230204*" %destination%
 REM edited by Mike, 20230207
 REM xcopy /d "\DB\usbong_kmsV202302*" %destination%
 
-xcopy /d "\DB\usbong_kmsV%myInputMonth%*" %destination%
+REM edited by Mike, 20230517
+REM xcopy /d "\DB\usbong_kmsV%myInputMonth%*" %destination%
+REM no need to wait for answer to overwrite question; "/Y"
+xcopy /d "\DB\usbong_kmsV%myInputMonth%*" %destination% /Y
 
 REM unmount
 popd "%~dp0"
