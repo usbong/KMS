@@ -702,6 +702,7 @@ class Report extends CI_Controller { //MY_Controller {
 		if ((strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) or 
 			(strpos(strtoupper($medicalDoctorName), "CHASTITY")!==false)) {
 			if (is_array($data["result"])) {
+								
 				foreach ($data["result"] as &$value) {
 					//edited by Mike, 20200910
 					//note: we do +1 to get the transactionId for the MOSC OR from the receipt table
@@ -740,6 +741,7 @@ class Report extends CI_Controller { //MY_Controller {
 							break;
 						}	
 */
+
 						//added by Mike, 20230514
 						//echo $row->notes;
 						if (strpos($row->notes,"PAID; TRANSACTION")!==false) {
@@ -755,7 +757,13 @@ class Report extends CI_Controller { //MY_Controller {
 							$iTransactionQuantity = $row->transaction_quantity;
 						}
 						
-						if ($iTransactionId>=$iTransactionIdMax) {							
+						if ($iTransactionId>=$iTransactionIdMax) {
+							//edited by Mike, 20230523
+/*
+							echo "iTransactionIdMax: ".$iTransactionIdMax."<br/>";
+							echo "BREAK".$iTransactionId."<br/>";
+*/
+							$iTransactionId=$iTransactionIdMax;
 							break;
 						}						
 					}
@@ -774,7 +782,7 @@ class Report extends CI_Controller { //MY_Controller {
 					}
 
 					//removed by Mike, 20221110
-//					echo $iTransactionId."<br/><br/>";
+					echo $iTransactionId."<br/><br/>";
 
 					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($iTransactionId);
 					
