@@ -640,6 +640,7 @@ class Report_Model extends CI_Model
 		//edited by Mike, 20230517
 		//gets the earliest transaction in the set
 		$this->db->group_by('t1.patient_id');
+		
 		//notes multiple patients in payslip
 //		$this->db->group_by('t2.transaction_id');
 	
@@ -659,12 +660,18 @@ class Report_Model extends CI_Model
 		//added by Mike, 20230517
 		$this->db->where('t2.fee!=',0);	
 
+		//removed by Mike, 20230523
+		//TO-DO: -reverify: this ACTION;
+		//PF -> NON-MED ONLY; PAYSLIP ERROR; DR CHASTITY/HONESTO;
+/*
 		//edited by Mike, 20230517
 		if ((strpos(strtoupper($param["medicalDoctorName"]),"HONESTO")!==false) ||
 		(strpos(strtoupper($param["medicalDoctorName"]),"CHASTITY")!==false)) {					
 			$this->db->where('t2.transaction_id = (SELECT MAX(t.transaction_id) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
+	
 	//		$this->db->where('t2.transaction_id = (SELECT MAX(t.transaction_id) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_quantity!=0 and t.notes NOT LIKE "ONLY")',NULL,FALSE);
 		}
+*/
 		
 		//added by Mike, 20200601
 		//$this->db->where('t2.fee!=',0);
