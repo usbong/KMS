@@ -782,7 +782,7 @@ class Report extends CI_Controller { //MY_Controller {
 					}
 
 					//removed by Mike, 20221110
-					echo $iTransactionId."<br/><br/>";
+//					echo $iTransactionId."<br/><br/>";
 
 					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($iTransactionId);
 					
