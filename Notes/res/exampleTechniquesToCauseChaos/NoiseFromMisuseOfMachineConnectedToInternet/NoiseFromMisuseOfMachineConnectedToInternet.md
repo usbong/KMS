@@ -2,9 +2,11 @@
 
 1) Android Audio Recorder records NOISE <br/>
 --> from Laptop Sound Volume @MAX in < 1 meter (approx);<br/>
---> > 1 meter, e.g @2 meters, can be heard by human person,<br/>
---> albeit not captured in recording<br/>
+--> > 1 meter (approx) can be heard by human person,<br/>
+--> albeit not captured in recording;<br/>
 --> reminder: there exist speakers and decibel settings
+
+TO-DO: -add: example
 
 ## REFERENCE
 
