@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230523; from 20221110
+' @date updated: 20230529; from 20230523
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -552,8 +552,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
 								//edited by Mike, 20220808
 								//if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+								//edited by Mike, 20230529
+/*
 								if ((strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) or
 									(strpos(strtoupper($value['medical_doctor_name']), "CHASTITY")!==false)) {
+*/
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+										
 /*										
 										echo ">>";
 										
@@ -634,8 +639,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//deduct: 12% to Net Fee if Dr. Honesto and has MOSC OR
 								//edited by Mike, 20220808
 								//if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+								//edited by Mike, 20230529			
+/*								
 								if ((strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) or
 									(strpos(strtoupper($value['medical_doctor_name']), "CHASTITY")!==false)) {
+*/
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+										
 /*	//removed by Mike, 20221110
 echo "<br/>";
 echo $value['transaction_id']."<br/>";
@@ -704,8 +714,12 @@ echo $value['transaction_id']."<br/>";
 								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
 								//edited by Mike, 20220808
 //								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+								//edited by Mike, 20230529
+/*								
 								if ((strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) or 
 									(strpos(strtoupper($value['medical_doctor_name']), "CHASTITY")!==false)) {
+*/
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
 										//edited by Mike, 20200909										
