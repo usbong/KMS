@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2020~2023 USBONG
+  Copyright 2020~2023 SYSON, MICHAEL B.
   
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20230419; from 20221110
+  @date updated: 20230530; from 20221110
   @website address: www.usbong.ph
   
   Input:
@@ -46,10 +46,7 @@
 	//edited by Mike, 20220823
 	//note: update: base directory location
 	//identify if WINDOWS file directory system 		
-	//edited by Mike, 20230419
-	//TO-DO: -add: auto-identify location
-	//$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
-	$fileBasePath = "D:\MOSC\KMS\output\informationDesk\cashier\\";
+	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 						
 //	echo $fileBasePath;
 	
@@ -88,7 +85,12 @@
 /*
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-2 Day"));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-2 Day"));
-*/	
+*/
+/*
+	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-3 Day"));
+	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-2 Day"));
+*/
+	
 	//added by Mike, 20200524
 	$responses = [];
 
@@ -819,10 +821,12 @@
 							}								
 							
 							//edited by Mike, 20220815
-//							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+							//edited by Mike, 20230530
+/*
 							if ((strpos($listValue['medical_doctor_name'],"HONESTO")!==false) or
 								(strpos($listValue['medical_doctor_name'],"CHASTITY")!==false)) {
-
+*/
 //										echo $value['notes'];
 //										echo $value['transaction_id'];
 								//TO-DO: -update: this
@@ -923,9 +927,17 @@ echo "hallo<br/>";
 								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$iTransactionId."'")) {
 									$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
 
-//									echo "dito".$receiptArrayRowValue['receipt_number'];
-
-									if($receiptArrayRowValue) {
+/*
+//removed by Mike, 20221110
+//TO-DO: -reverify: 2022-11-07
+									echo "iTransactionId: ".$iTransactionId."<br/>";
+//									echo "patient name: ".$value['patient_name']."<br/>";
+									echo "fee: ".$value['fee']."<br/>";
+									echo "receipt number: ".$receiptArrayRowValue['receipt_number']."<br/>";
+*/									
+									//edited by Mike, 20221110
+//									if($receiptArrayRowValue) {
+									if (isset($receiptArrayRowValue)) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 										}
@@ -998,11 +1010,12 @@ echo "hallo<br/>";
 //							}
 							else {
 								//added by Mike, 20220107
-								//edited by Mike, 20220815
-	//							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+								//edited by Mike, 20230530; from 20220815
+								if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+/*
 								if ((strpos($listValue['medical_doctor_name'],"HONESTO")!==false) or
 									(strpos($listValue['medical_doctor_name'],"CHASTITY")!==false)) {
-	
+*/	
 	//echo $value['notes'];
 	/*										
 									if (strpos($value['notes'],"MOSC OR")!==false) {
