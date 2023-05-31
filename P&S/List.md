@@ -319,8 +319,9 @@ quit;
 --> on the ACTION to quickly solve problem
 
 2) ERROR incident occurred again, 2023-05-02 (TUESDAY);<br/>
---> where: 2023-05-01 (MONDAY), LABOR DAY, HOLIDAY @CLINIC
-
+--> where: 2023-05-01 (MONDAY), LABOR DAY, HOLIDAY @CLINIC<br/>
+--> ERROR incident occurred again, 2023-5-31 (WEDNESDAY),<br/>
+--> where: last day of the Month of MAY
 
 ## Problem#11) Database Error: "You probably tried to upload a file that is too large. Please refer to documentation for a workaround for this limit." 
 
