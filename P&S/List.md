@@ -352,6 +352,8 @@ LINUX: [autoImportDatabaseToMySQLDBLinuxMachineNotViaXAMPP.sh](https://github.co
 
 ## Problem#12) LibreOfficeCalc: Error saving the document... insufficient user rights.
 
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/usbongKMSLibreOfficeCalcInsufficientUserRights.png" width="50%">
+
 ### Answer:
 
 1) Delete: .ods#
