@@ -348,3 +348,15 @@ LINUX: [autoImportDatabaseToMySQLDBLinuxMachineNotViaXAMPP.sh](https://github.co
 > 1.16 I cannot upload big dump files (memory, HTTP or timeout problems).
 
 > If you have shell (command line) access, use MySQL to import the files directly. You can do this by issuing the “source” command from within MySQL:
+
+
+## Problem#12) LibreOfficeCalc: Error saving the document... insufficient user rights.
+
+### Answer:
+
+1) Delete: .ods#
+
+#### Example: 
+
+> .~lock.moscReportForTheDay2023-06-07.ods#
+
