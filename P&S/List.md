@@ -362,3 +362,21 @@ LINUX: [autoImportDatabaseToMySQLDBLinuxMachineNotViaXAMPP.sh](https://github.co
 
 > .~lock.moscReportForTheDay2023-06-07.ods#
 
+## Problem#13) LUBUNTU (Lite) does not display the log-in page; instead, enters BusyBox
+
+### Additional Notes:
+
+I/O error, harddisk sector error
+
+### Answer:
+
+1) Enter the UNIX COMMAND:
+
+> fsck /dev/sda1
+
+where: `/dev/sda1` is the harddisk where LUBUNTU OS is installed
+
+`"fsck"` shall repair haddisk bad sectors; output `clean` 
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/lubuntuFsckDevSda1-20230622T0842.jpg" width="50%">
+
