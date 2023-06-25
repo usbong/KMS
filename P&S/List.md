@@ -380,3 +380,10 @@ where: `/dev/sda1` is the harddisk where LUBUNTU OS is installed
 
 <img src="https://github.com/usbong/KMS/blob/master/P%26S/res/lubuntuFsckDevSda1-20230622T0842.jpg" width="50%">
 
+## Problem#14) Settings to connect from Windows computer to Linux server instance (EC2) hosted via Amazon Web Services (AWS)?
+
+### Answer:
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/awsLogInViaWinSCPNotesV20230625.png" width="30%">
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/awsLogInAuthenticationViaWinSCPNotesV20230625.png" width="40%">
