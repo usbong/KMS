@@ -445,4 +445,8 @@ Reminder: "...[ACTION] shall prevent access to router"
 
 1) Menu -> "3.Printer" -> "3.2-sided"
 
-2) Select "OFF" from the options list
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/brotherDCP-L2540DW-step1VerifyPrinter2SidedSetting20230701T1505.jpg" width="50%">
+
+3) Select "Off" from the options list
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/brotherDCP-L2540DW-step2SetPrinter2SidedSettingToOFF-20230701T1505.jpg" width="50%">
