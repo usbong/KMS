@@ -435,4 +435,14 @@ Connection Type: Bridge Mode
 
 Reminder: "...[ACTION] shall prevent access to router"
 
+## Problem#16) How to speed-up Brother DCP-L2540DW to print sent document from device wirelessly connected to the network?
 
+### Additional Note
+
+1) Documents, e.g. Acknowledgment Forms, one (1) page only
+
+### Answer
+
+1) Menu -> "3.Printer" -> "3.2-sided"
+
+2) Select "OFF" from the options list
