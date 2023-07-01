@@ -387,3 +387,52 @@ where: `/dev/sda1` is the harddisk where LUBUNTU OS is installed
 <img src="https://github.com/usbong/KMS/blob/master/P%26S/res/awsLogInViaWinSCPNotesV20230625.png" width="30%">
 
 <img src="https://github.com/usbong/KMS/blob/master/P%26S/res/awsLogInAuthenticationViaWinSCPNotesV20230625.png" width="40%">
+
+
+## Problem#15) wireless devices connected to LINKSYS router pre-set to be in BRIDGE mode are unable to access the Internet
+
+### Additional Notes:
+
+1) LINKSYS router connected to PLDT (Internet Service Provider) router 
+
+2) wired devices can access INTERNET
+
+### Solution: 
+
+1) execute: LINKSYS router physical reset using paperclip tip to reach reset button
+
+2) access: http://192.168.1.1/ui/dynamic/login.html
+
+default password: admin
+
+3) set the following:
+
+3.1) wireless settings 2GHz, 5GHz
+
+example password: halimbawa1234
+
+reminder: "taking longer than usual..." 
+
+--> verify that LINKSYS router wireless access password CORRECT
+
+3.2) set TIME ZONE
+
+example: GMT+08:00; Singapore, Taiwan, Russia
+
+3.3) Set router IP address settings: 
+
+IP address: 192.168.10.110
+
+Subnet Mask: 255.255.255.0
+
+Default Gateway: 192.168.10.1
+
+3.4) Set Connectivity, Internet Settings
+
+Type of Internet Connection
+
+Connection Type: Bridge Mode	
+
+Reminder: "...[ACTION] shall prevent access to router"
+
+
