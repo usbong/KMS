@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230515; from 20230514
+  @date updated: 20230719; from 20230515
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -561,7 +561,8 @@ echo "</a>";
 		$dTotalMedItemFee=0;
 		$dTotalMDDiscountedFeePlus=0;
 		
-		//DR. HONESTO OR DR. CHASTITY
+		//noted by Mike, 20230719; Dr CHASTITY already has own official receipt	
+		//DR. HONESTO;
 		$sWithDoctorWhoUsesMOSCOfficialReceipt="";
 
 		//edited by Mike, 20210628
@@ -605,8 +606,12 @@ echo "</a>";
 */						
 					//edited by Mike, 20230110; from 20221207
 					if (($value['medical_doctor_id']==1) or
-						($value['medical_doctor_id']==6) or
+						($value['medical_doctor_id']==6)) {
+
+/*	//removed by Mike, 20230719; Dr CHASTITY already has own official receipt	
+							or
 						($value['medical_doctor_id']==4)) {
+*/							
 /*
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6) or
@@ -620,9 +625,11 @@ echo "</a>";
 						if ($value['medical_doctor_id']==6) {
 							$sWithDoctorWhoUsesMOSCOfficialReceipt=" (WITH DR. HONESTO)";						
 						}
+/*	//removed by Mike, 20230719; Dr CHASTITY already has own official receipt						
 						else if ($value['medical_doctor_id']==4) {
 							$sWithDoctorWhoUsesMOSCOfficialReceipt=" (WITH DR. CHASTITY)";						
 						}
+*/						
 /*	//removed by Mike, 20230110
 						else if ($value['medical_doctor_id']==2) {
 							$sWithDoctorWhoUsesMOSCOfficialReceipt=" (WITH DR. PETER)";
@@ -653,8 +660,12 @@ echo "</a>";
 	//edited by Mike, 20230110; from 20221207
 				//edited by Mike, 20221111
 				if (($result[0]['medical_doctor_id']==1) or
-					($result[0]['medical_doctor_id']==6) or
+					($result[0]['medical_doctor_id']==6)) {
+
+/*	//removed by Mike, 20230719; Dr CHASTITY already has own official receipt	
+						or
 					($result[0]['medical_doctor_id']==4)) {
+*/
 
 /*
 				if (($result[0]['medical_doctor_id']==1) or
@@ -897,8 +908,11 @@ echo "</a>";
 					//added by Mike, 20221111; from 20220317
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
 					if (($result[0]['medical_doctor_id']==1) or
-						($result[0]['medical_doctor_id']==6) or
+						($result[0]['medical_doctor_id']==6)) {
+/*	//removed by Mike, 20230719; Dr CHASTITY already has own official receipt	
+							or
 						($result[0]['medical_doctor_id']==4)) {
+*/							
 /*
 					//added by Mike, 20221111; from 20220317
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
