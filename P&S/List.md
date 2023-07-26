@@ -419,13 +419,19 @@ reminder: "taking longer than usual..."
 
 example: GMT+08:00; Singapore, Taiwan, Russia
 
-3.3) Set router IP address settings: 
+3.3) Set <b>router</b> IP address settings: 
 
 IP address: 192.168.10.110
 
 Subnet Mask: 255.255.255.0
 
 Default Gateway: 192.168.10.1
+
+#### Additional Note
+
+To save the settings on the page, you shall also need to update: 
+
+the available IP address <b>range</b> based on the router address
 
 3.4) Set Connectivity, Internet Settings
 
