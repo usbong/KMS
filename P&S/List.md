@@ -456,3 +456,33 @@ Reminder: "...[ACTION] shall prevent access to router"
 3) Select "Off" from the options list
 
 <img src="https://github.com/usbong/KMS/blob/master/P%26S/res/brotherDCP-L2540DW-step2SetPrinter2SidedSettingToOFF-20230701T1505.jpg" width="50%">
+
+## Problem#17) Exceeded max_execution_time of 30seconds?
+
+### Answer
+
+1) XAMPP Control Panel -> Config -> php.ini
+
+2) Update the following parameters:
+
+`;edited by Mike, 20230802`<br/>
+`;max_execution_time=30`<br/>
+`max_execution_time=5000`
+
+#### Additional Notes
+
+1) The following can also be updated:
+
+`; edited by Mike, 20230802`<br/>
+`;max_input_time=60`<br/>
+`max_input_time=5000`
+
+`; edited by Mike, 20230802`<br/>
+`;memory_limit=128M`<br/>
+`memory_limit=1024M`
+
+### REFERENCE
+
+1) https://stackoverflow.com/questions/15833536/fatal-error-execution-time-of-30-seconds-exceeded-in-phpmyadmin; last accessed: 20230802<br/>
+--> answer by: M_R_K, 20130713T08:20;<br/>
+--> edited by: CRUSADER, 20230713T08:36
