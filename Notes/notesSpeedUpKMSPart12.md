@@ -19,5 +19,7 @@ HAVING COUNT > 1
 
 ## REFERENCE
 
-1) https://stackoverflow.com/questions/5930475/how-do-i-write-a-sql-query-to-detect-duplicate-primary-keys; last accessed: 20230824
+1) https://stackoverflow.com/questions/5930475/how-do-i-write-a-sql-query-to-detect-duplicate-primary-keys; last accessed: 20230824;<br/>
+answer by: Zalaboza, 20110508T2129<br/>
+edited by: casperOne, 20110508T2142
 
