@@ -1022,6 +1022,11 @@ class Browse extends CI_Controller { //MY_Controller {
 	//albeit not the nearest to expire
 	public function confirmMedicine()
 	{
+		//added by Mike, 20230922
+		if (!isset($_POST['nameParam'])) {
+			redirect('browse/searchMedicine');
+		}
+
 		$data['nameParam'] = $_POST['nameParam'];
 		
 		//added by Mike, 20200912
