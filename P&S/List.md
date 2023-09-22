@@ -323,6 +323,12 @@ quit;
 --> ERROR incident occurred again, 2023-5-31 (WEDNESDAY),<br/>
 --> where: last day of the Month of MAY
 
+3) ERROR incident occurred again, 2023-09-22 (FRIDAY);<br/>
+--> notes: action of immediately attempting to access KMS after server startup<br/>
+<b>Example:</b> http://192.168.1.99/usbong_kms/index.php/report/viewWebAddressList<br/>
+--> observed: LAN Messenger also did not start successfully; had to log-off from server and log-in again
+
+
 ## Problem#11) Database Error: "You probably tried to upload a file that is too large. Please refer to documentation for a workaround for this limit." 
 
 ### Additional Notes:
