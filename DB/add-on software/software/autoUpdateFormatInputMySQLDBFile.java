@@ -1,5 +1,5 @@
 /*
- * Copyright 2018~2022 SYSON, MICHAEL B.
+ * Copyright 2018~2023 SYSON, MICHAEL B.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 2018
- * @last updated: 20220408; from 20220406
+ * @last updated: 20220925; from 20220408
  * @website address: http://www.usbong.ph
  *
  */
@@ -58,7 +58,9 @@ public class autoUpdateFormatInputMySQLDBFile {
 	private static boolean inDebugMode = true;
 
 	//TO-DO: -update: this to auto-read from input configuration file
-	private static String sOutputFilenameInDBDirectory = "G:\\Usbong MOSC\\Everyone\\Information Desk\\DB";
+	//edited by Mike, 20230925
+	//private static String sOutputFilenameInDBDirectory = "G:\\Usbong MOSC\\Everyone\\Information Desk\\DB";
+	private static String sOutputFilenameInDBDirectory = "D:\\MOSC\\DB\\";
 	
 	public static void main ( String[] args ) throws Exception
 	{					
