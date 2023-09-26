@@ -1593,15 +1593,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 				$notes = trim($notes)."; added note: ".$param['addedNote'];
 			}
 		}
-		
-		//added by Mike, 20230514
-		$ipAddress = $this->session->userdata("client_ip_address");
-		$machineAddress = $this->session->userdata("client_machine_address");
-		
-		//TO-DO: -reverify: this; session containers; time-up; clear container;
-		if (!isset($ipAddress) and !isset($machineAddress)) {
-			redirect('report/viewWebAddressList');
-		}
+
 
 		$transactionData = array(
 			'transaction_date' => date('m/d/Y'),
@@ -1613,12 +1605,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			'pas_fee' => $param['non_med_fee'],
 			'snack_fee' => $param['snack_fee'],
 			'medical_doctor_id' => $rowArray[0]['medical_doctor_id'],
-			'notes' => $notes,
-			//added by Mike, 20230514
-			'ip_address_id' => $ipAddress,
-			'machine_address_id' => $machineAddress,
-			//added by Mike, 20230517
-			'transaction_quantity' => 1
+			'notes' => $notes				
 		);				
 
 		$this->db->insert('transaction', $transactionData);
@@ -1628,13 +1615,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//TO-DO: -update: this to verify if there is x_ray_fee and lab_fee
 		//edited by Mike, 20211018
 //		if (($param['medicalDoctorId']==1) or ($iCount==0)) { //SYSON, PEDRO
-		//edited by Mike, 20230517
-		//Dr HONESTO and Dr CHASTITY using MOSC OR;
-//		if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
-		if (($param['medicalDoctorId']==1) || //SYSON, PEDRO
-			($param['medicalDoctorId']==6) || //Dr HONESTO
-			($param['medicalDoctorId']==4)) { //Dr CHASTITY
-
+		if ($param['medicalDoctorId']==1) { //SYSON, PEDRO
 			$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
 
 			$data = array(
@@ -5036,12 +5017,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 //		$this->db->where('t2.transaction_date',date("m/d/Y"));
 		$this->db->where('t2.transaction_date',date("m/d/Y", strtotime($transactionDate)));
 				
-		//removed by Mike, 20230523; from 20230517
-		//note: multi-transaction; pf -> non-med
-		//TO-DO: -verify: this
-//		$this->db->limit(1);
-				
-		$query = $this->db->get('patient');		
+		$query = $this->db->get('patient');
 
 		$rowArray = $query->result_array();
 				
@@ -5232,45 +5208,6 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		return $rowArray;
 	}		
-	
-	//added by Mike, 20230515
-	public function getIsMultiTransaction($patientId, $transactionDate) 
-	{		
-		$this->db->select('transaction_id, transaction_quantity');
-
-//		$this->db->from('transaction');
-
-		//$this->db->group_by('transaction_id');		
-		$this->db->where('transaction_quantity!=', 0);
-		
-		$this->db->where('patient_id=', $patientId);
-		 
-		//added by Mike, 20210626; edited by Mike, 20210720
-//		$this->db->where('t2.transaction_date', date('m/d/Y'));
-
-		//echo $transactionDate."<br/>";
-
-		$this->db->where('transaction_date', date('m/d/Y', strtotime($transactionDate)));
-	
-		$query = $this->db->get('transaction');
-	
-		$rowArray = $query->result_array();
-		
-		if ($rowArray == null) {			
-			return False;
-		}
-		
-		//ECHO count($rowArray);
-		
-		if (count($rowArray)>1) {
-			return True;
-		}
-
-		return False;
-		
-//		return True; //count($rowArray);
-	}		
-	
 
 	//added by Mike, 20210904
 	public function getCombinedTransactionPaidItemDetailsListForPatientForTheDay($itemTypeId, $patientId, $transactionDate) 
@@ -5923,7 +5860,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	
 	//added by Mike, 20230414
 	public function getTransactionsListFromFile() {		
-		$filename="G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\\usbongKMSItemListTransaction2020OK.txt";
+		//edited by Mike, 20230926
+		//$filename="G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\\usbongKMSItemListTransaction2020OK.txt";
+		$filename="D:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt";
 
 		ini_set('auto_detect_line_endings', true);
 
