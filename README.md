@@ -26,6 +26,12 @@
 
 6) Models/Browse_Models.php; function getTransactionsListFromFile()
 
+7) kasangkapan/autoScreenCaptureReports.bat
+
+8) kasangkapan/autoScreenCaptureSummaryReportForTheDay.bat
+
+9) kasangkapan/autoScreenCaptureSummaryReportForTheNoonDay.bat
+
 TO-DO: -update: this; file locations
 
 ## I. Screenshots
