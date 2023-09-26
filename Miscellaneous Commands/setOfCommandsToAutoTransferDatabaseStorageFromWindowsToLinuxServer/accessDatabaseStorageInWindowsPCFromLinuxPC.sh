@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2020~2022 SYSON, MICHAEL B.
+# Copyright 2020~2023 SYSON, MICHAEL B.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 #
@@ -13,7 +13,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20201001
-# @last modified: 20220711; from 20220114
+# @last modified: 20230926; from 20220711
 # @website address: http://www.usbong.ph
 #
 # References:
@@ -48,7 +48,14 @@ sudo mkdir /mnt/myMOSC-AccountingFolder/
 #source: from Windows machine, e.g. Windows 7, Service Pack 1
 #Example:
 #source="//192.168.11.55/accounting/"
-source="//192.168.11.55/information desk/"
+#edited by Mike, 20230117
+#source="//192.168.11.10/information desk/"
+#edited by Mike, 20230926; from 20230730
+#source="//192.168.11.110/information desk/"
+source="//192.168.11.10/mosc/"
+
+#source="//192.168.10.104/information desk/"
+
 
 echo "source: "$source
 
@@ -60,4 +67,10 @@ echo "destination: "$destination
 
 #Note: add quotation marks, e.g. in $source
 #TO-DO: add: auto-read from external file password=halimbawaValue
-sudo mount -t cifs "$source" "$destination" -o user=unit_member
+#edited by Mike, 20230926
+#sudo mount -t cifs "$source" "$destination" -o user=unit_member
+#OK
+sudo mount -t cifs "//192.168.11.10/mosc/" "/mnt/myMOSC-AccountingFolder/" -o user="unit member",password="halimbawaPassword"
+
+#not OK yet
+sudo mount -t cifs "$source" "$destination" -o user="unit member"
