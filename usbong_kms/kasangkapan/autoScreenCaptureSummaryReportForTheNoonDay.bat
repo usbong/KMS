@@ -1,6 +1,6 @@
 @ECHO OFF
 REM
-REM Copyright 2020~2021 SYSON, MICHAEL B.
+REM Copyright 2020~2023 SYSON, MICHAEL B.
 REM
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -11,7 +11,8 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20201016
-REM @date updated: 20211102
+REM @date updated: 20230926; from 20211102
+REM @website: http://www.usbong.ph
 REM
 REM Reference:
 REM 1) https://phantomjs.org/; last accessed: 20200724
@@ -36,6 +37,10 @@ phantomjs saveWebPageAsImageFile.js viewReceiptReportPASForTheDay
 
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
 
-rem edited by Mike, 20201017
-rem explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
-explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%"\noonReport\"
+REM edited by Mike, 20201017
+REM explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
+
+REM edited by Mike, 20230926
+REM explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%"\noonReport\"
+explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\output\"%myDate%"\noonReport\"
+

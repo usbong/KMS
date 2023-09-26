@@ -10,7 +10,8 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 2020
-REM @date updated: 20230221; from 2020
+REM @date updated: 20230926; from 20230221
+REM @website address: http://www.usbong.ph
 REM
 REM Reference:
 REM 1) https://phantomjs.org/; last accessed: 20200724
@@ -50,4 +51,7 @@ REM edited by Mike, 20211215; from 20201205
 phantomjs saveWebPageAsImageFile.js viewReportPatientQueueAccounting
 phantomjs saveWebPageAsImageFile.js viewReportPatientQueue
 
-explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
+REM edited by Mike, 20230926
+REM explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
+explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\output\"%myDate%
+
