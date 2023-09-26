@@ -20,6 +20,12 @@
 
 3) server/getSalesReportsForTheDay.php
 
+4) DB/"add-on software"/software/autoUpdateFormatInputMySQLDBFile.java
+  
+5) "Miscellaneous Commands"/autoUpdateTotalQuantitySoldPerItemDatabase.bat
+
+6) Models/Browse_Models.php; function getTransactionsListFromFile()
+
 TO-DO: -update: this; file locations
 
 ## I. Screenshots
