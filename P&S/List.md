@@ -27,7 +27,7 @@ comment by: nawfal, 20160521T0347
 
 <br/>
 
-> [mysql]<br/>
+> [mysqld]<br/>
 > sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
 
 2.2) Execute the following COMMAND in Terminal Window:
