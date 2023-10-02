@@ -1,6 +1,6 @@
 /*
 '
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020~2023 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20221203; from 20220816
+' @date updated: 20231002; from 20221203
 ' @website address: http://www.usbong.ph
 '
 ' Reference:
@@ -85,7 +85,11 @@ if (isFromServerFolder=="-s") {
 
 //added by Mike, 20210702
 if (isFromKasangkapanFolder=="-k") {
-	webAddress = 'http://localhost/usbong_kms/kasangkapan/output/';
+	
+	//edited by Mike, 20231002
+	//webAddress = 'http://localhost/usbong_kms/kasangkapan/output/';	
+	webAddress = 'http://localhost/usbong_kms/kasangkapan/MOSC/add-on software/output/';
+		
 	fileExtension = '.html';
 }
 
