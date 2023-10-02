@@ -41,6 +41,10 @@ REM removed by Mike, 20231002
 REM del *List.txt
 REM rename *ListTemp.txt *List.txt
 
+REM TODO: verify: cause of generateMOSCSummaryReportDailyCount generating incorrect contents in consultationCountListTemp file
+del *ListTemp.txt
+
+
 cd %mainDirectory%
 
 REM removed by Mike, 20201025
@@ -50,5 +54,5 @@ rem TO-DO: -update: this
 rem "add-on software"\requirements\"chrome.exe - Shortcut.lnk" file:///D:/2019/add-on%%20software/generateMonthlySummaryReport/add-on%%20software/output/MonthlySummaryReportOutputTreatment.html file:///D:/2019/add-on%%20software/generateMonthlySummaryReport/add-on%%20software/output/MonthlySummaryReportOfUnclassifiedDiagnosedCasesOutput.html file:///D:/2019/add-on%%20software/generateMonthlySummaryReport/add-on%%20software/output/MonthlySummaryReportOutputConsultation.html file:///D:/2019/add-on%%20software/generateMonthlySummaryReport/add-on%%20software/output/MonthlyStatisticsConsultation.html file:///D:/2019/add-on%%20software/generateMonthlySummaryReport/add-on%%20software/output/MonthlyStatisticsProcedure.html file:///D:/2019/add-on%%20software/generateMonthlySummaryReport/add-on%%20software/output/MonthlyStatisticsTreatment.html
 
 REM edited by Mike, 202301002
-REM PAUSE
-EXIT
+PAUSE
+REM EXIT
