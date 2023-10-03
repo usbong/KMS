@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2020~2023 SYSON, MICHAEL B.
+  Copyright 2020~2023 USBONG
   
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20230530; from 20221110
+  @date updated: 20231003; from 20230530
   @website address: www.usbong.ph
   
   Input:
@@ -53,7 +53,10 @@
 	if (strpos(dirname(__FILE__), ':\\') !== false) { //WINDOWS file directory system
 	}
 	else {
-		$fileBasePath = "/home/unit_member/MOSC/output/informationDesk/cashier/";
+		//edited by Mike, 20231003
+		//TODO: -add: auto-update this
+		//$fileBasePath = "/home/unit_member/MOSC/output/informationDesk/cashier/";
+		$fileBasePath = "/home/unit_member/Documents/halimbawa/KMS/output/informationDesk/cashier/";		
 	}
 							
 	
