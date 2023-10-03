@@ -46,8 +46,10 @@
 	//edited by Mike, 20220823
 	//note: update: base directory location
 	//identify if WINDOWS file directory system 		
-	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
-						
+	//edited by Mike, 20231003
+	//$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";	
+	$fileBasePath = "D:\MOSC\KMS\output\informationDesk\cashier\\";
+	
 //	echo $fileBasePath;
 	
 	if (strpos(dirname(__FILE__), ':\\') !== false) { //WINDOWS file directory system
