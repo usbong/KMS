@@ -11,7 +11,8 @@
   @company: USBONG
   @author: SYSON, Michael B
   @date created: 20190804
-  @date updated: 20230419; from 20210323
+  @date updated: 20231003; from 20230419
+  @website address: www.usbong.ph
 
   Given:
   1) Database (DB) details
@@ -43,7 +44,18 @@ if ( file_exists($sDbFileLocation) && !is_dir($sDbFileLocation)) {
 	include($sDbFileLocation);
 } 
 else {
-	include('/opt/lampp/htdocs/usbong_kms/server/database.php');
+	//edited by Mike, 20231003
+	//include('/opt/lampp/htdocs/usbong_kms/server/database.php');
+	$sDbFileLocationLinux='/opt/lampp/htdocs/usbong_kms/server/database.php';
+
+	//note: previously, '/opt/lampp/htdocs/usbong_kms/...'	
+	if ( file_exists($sDbFileLocationLinux) && !is_dir($sDbFileLocationLinux)) {
+		include($sDbFileLocationLinux);
+	}
+	//note: newer, '/var/www/html/usbong_kms/...'	
+	else {
+		include('/var/www/html/usbong_kms/server/database.php');
+	}
 }
 
 //added by Mike, 20210323
