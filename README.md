@@ -174,9 +174,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 [LAN Messenger: Instant Messenging Client (Official Website)](http://lanmsngr.sourceforge.net/) <br/>
 Action: [Download](https://sourceforge.net/projects/lanmsngr/)
 
-### 2) Auto-screen Capture Photograph Image
-[PhantomJS Tool (Official Website)](https://phantomjs.org/) <br/>
-
 #### Notes
 1) LAN = Local Area Network<br/>
 2) For Linux Operating Systems (OS), e.g. LUBUNTU, we recommend using the software tool: "wine"<br/>
@@ -205,6 +202,10 @@ DONE!<br/>
 --> <b>lmc.exe /noconfig</b><br/>
 --> DONE!<br/>
 --> <b>Reference:</b> https://unix.stackexchange.com/questions/405926/a-port-address-conflict-has-been-detected-lan-messenger-will-close-now; last accessed: 20220208
+
+### 2) Auto-screen Capture Photograph Image
+[PhantomJS Tool (Official Website)](https://phantomjs.org/) <br/>
+
    
 ## IV. System Integration @Partner Clinic and Peripheral Units
 To eliminate excess steps and inefficient time usage, the Marikina Orthopedic Specialty Clinic (MOSC) requested Usbong's services to automate routine, monotonous tasks and share with unit members know-how on computers.<br/><br/>
