@@ -204,7 +204,15 @@ DONE!<br/>
 --> <b>Reference:</b> https://unix.stackexchange.com/questions/405926/a-port-address-conflict-has-been-detected-lan-messenger-will-close-now; last accessed: 20220208
 
 ### 2) Auto-screen Capture Photograph Image
+
 [PhantomJS Tool (Official Website)](https://phantomjs.org/) <br/>
+
+### WINDOWS
+
+2.1) Extract download file to <b>"phantomjs-2.1.1-windows\"</b><br/>
+
+2.2) Copy <b>"phantomjs-2.1.1-windows\phantomjs-2.1.1-windows\bin\phantomjs.exe"</b> to <b>"C:\xampp\htdocs\usbong_kms\kasangkapan\"<b/>
+
 
    
 ## IV. System Integration @Partner Clinic and Peripheral Units
