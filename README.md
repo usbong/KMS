@@ -12,27 +12,6 @@
 1) Click "Search Medicine" link<br/>
 2) Enter Item: "ace"
 
-### SELECT FILES to START auto-generation of REPORTS
-
-1) kasangkapan/viewAllReportsForTheDayUnified.bat
-
-2) Workbooks/moscReportForTheDayLibreOfficeCalc.ods
-
-3) server/getSalesReportsForTheDay.php
-
-4) DB/"add-on software"/software/autoUpdateFormatInputMySQLDBFile.java
-  
-5) "Miscellaneous Commands"/autoUpdateTotalQuantitySoldPerItemDatabase.bat
-
-6) Models/Browse_Models.php; function getTransactionsListFromFile()
-
-7) kasangkapan/autoScreenCaptureReports.bat
-
-8) kasangkapan/autoScreenCaptureSummaryReportForTheDay.bat
-
-9) kasangkapan/autoScreenCaptureSummaryReportForTheNoonDay.bat
-
-TO-DO: -update: this; file locations
 
 ## I. Screenshots
 
@@ -74,7 +53,45 @@ https://www.apachefriends.org/index.html
 
 <b>Technologies:</b> Apache Web Server, MySQL, PHP, phpMyAdmin
 
-### Installation Notes
+### B.1 Installation Notes (Windows)
+1) Download and open (as Administrator) to install XAMPP file from https://www.apachefriends.org/download.html;<br/>
+--> Example: <b>XAMPP for Windows 8.2.4</b><br/>
+2) Download ZIP folder via CODE button on https://github.com/usbong/KMS<br/>
+--> use: [GIT Commands](https://github.com/usbong/tugon/blob/main/notes/githubCommandsNotes.md) for slow/zero access to Web Browser
+3) Extract ZIP folder; Output: <b>"KMS-master"</b><br/>
+--> use: Linux machine to extract and open the download ZIP folder
+4) Copy <b>"KMS-master"</b> folder; Paste to <b>/Documents/Usbong/</b><br/>
+5) Copy <b>"KMS-master/usbong_kms"</b> folder to <b>"C:\xampp\htdocs\usbong_kms"</b><br/>
+
+6) skip this step; not necessary for Windows machines
+
+7) Enter the following website address in Computer Web Browser:<br/>
+<b>http://localhost/phpmyadmin/</b><br/>
+8) Left Panel -> New -> Create database; with database name: <b>usbong_kms</b><br/>
+9) Top Panel -> Import -> Browse button<br/>
+--> Example input database file: <b>KMS-master/DB/SQLCommands/usbong_kmsCreateDBTableStructureV20211219T0602.sql</b><br/>
+10) Enter the following website address in Computer Web Browser<br/>
+<b>localhost/usbong_kms/index.php/report/viewWebAddressList</b><br/>
+
+#### Addtional Notes: Computer Server's Internet Protocol (IP) Address
+<b>Example:</b> 192.168.1.110<br/>  
+
+1) Update: <b>"C:\xampp\htdocs\usbong_kms\application\views\viewWebAddressList.php"</b><br/>
+--> Search and Replace keyphrase: default <b>"192.168.11.62"</b> with <b>"localhost"</b><br/>
+--> 1.1): Set <b>"localhost"</b> to be the <b>Computer Server's network IP Address</b><br/>
+<b>Example:</b> http://192.168.1.110/usbong_kms/index.php/report/viewWebAddressList<br/>
+
+2) Update: <b>"C:\xampp\htdocs\usbong_kms\application\config\config.php"</b><br/>
+Set `base_url` to be the <b>Computer Server's network IP address</b><br/>
+
+> $config['base_url'] = 'http://localhost:80/usbong_kms/'; 
+
+> $config['base_url'] = 'http://192.168.1.110:80/usbong_kms/'; <br/>
+
+DONE!<br/>
+
+
+### B.2 Installation Notes (LINUX)
 1) Download and open (as Administrator/SuperUser) to install XAMPP file from https://www.apachefriends.org/download.html;<br/>
 --> Example: <b>XAMPP for Linux 7.4.27</b><br/>
 2) Download ZIP folder via CODE button on https://github.com/usbong/KMS<br/>
@@ -114,6 +131,30 @@ DONE!<br/>
 last accessed: 20220314<br/>
 answer by: Y. Joy Ch. Singha, 20180521T0816<br/>
 edited by: bad_coder, 20210724T1636<br/>
+
+
+## SELECT FILES to START auto-generation of REPORTS
+
+1) kasangkapan/viewAllReportsForTheDayUnified.bat
+
+2) Workbooks/moscReportForTheDayLibreOfficeCalc.ods
+
+3) server/getSalesReportsForTheDay.php
+
+4) DB/"add-on software"/software/autoUpdateFormatInputMySQLDBFile.java
+  
+5) "Miscellaneous Commands"/autoUpdateTotalQuantitySoldPerItemDatabase.bat
+
+6) Models/Browse_Models.php; function getTransactionsListFromFile()
+
+7) kasangkapan/autoScreenCaptureReports.bat
+
+8) kasangkapan/autoScreenCaptureSummaryReportForTheDay.bat
+
+9) kasangkapan/autoScreenCaptureSummaryReportForTheNoonDay.bat
+
+TO-DO: -update: this; file locations
+
 
 ## Open Source Software License
 Copyright 2019~2023 SYSON, MICHAEL B.
