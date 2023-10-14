@@ -106,16 +106,20 @@ class Report_Model extends CI_Model
 			$param["patientId"]=0;
 		}
 
+/*	//removed by Mike, 20231014
 		//added by Mike, 20210317
 		if ((!isset($param["transactionId"])) or ($param["transactionId"]==0)){
 			$param["transactionId"]=-1;
 		}
-
+*/
 
 		$data = array(
 
 					'image_filename' => $param['outputFileLocation'],
+					
+/*	//removed by Mike, 20231014
 					'transaction_id' => $param["transactionId"], //1
+*/
 
 					//added by Mike, 20210316
 					'patient_id' => $param["patientId"], //1
@@ -620,7 +624,8 @@ class Report_Model extends CI_Model
 
 //select max(`report_id`) from `report`
 //select max(`report_id`) from `report` where `report_filename` like '%PETER%' 
-		//edited by Mike, 20230517; from 20200906		
+		//edited by Mike, 20200906
+
 		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.x_ray_fee, t2.lab_fee, t2.transaction_type_name, t2.treatment_type_name, t3.medical_doctor_name'); //, t2.treatment_diagnosis');
 
 /*
@@ -637,13 +642,8 @@ class Report_Model extends CI_Model
 
 		//edited by Mike, 20200601
 		//$this->db->distinct('t1.patient_name');
-		//edited by Mike, 20230517
-		//gets the earliest transaction in the set
 		$this->db->group_by('t1.patient_id');
 		
-		//notes multiple patients in payslip
-//		$this->db->group_by('t2.transaction_id');
-	
 //		$this->db->where('t2.report_id=',$row->report_id);
 		
 		//added by Mike, 20200324; edited by Mike, 20200607
@@ -654,25 +654,6 @@ class Report_Model extends CI_Model
 //		$this->db->where('t2.transaction_date=',"09/28/2020");
 //		$this->db->where('t2.transaction_date=',"11/09/2022");
 
-		//added by Mike, 20230514
-		$this->db->where('t2.transaction_quantity!=',0);	
-
-		//added by Mike, 20230517
-		$this->db->where('t2.fee!=',0);	
-
-		//removed by Mike, 20230523
-		//TO-DO: -reverify: this ACTION;
-		//PF -> NON-MED ONLY; PAYSLIP ERROR; DR CHASTITY/HONESTO;
-/*
-		//edited by Mike, 20230517
-		if ((strpos(strtoupper($param["medicalDoctorName"]),"HONESTO")!==false) ||
-		(strpos(strtoupper($param["medicalDoctorName"]),"CHASTITY")!==false)) {					
-			$this->db->where('t2.transaction_id = (SELECT MAX(t.transaction_id) FROM transaction as t WHERE t.patient_id=t2.patient_id)',NULL,FALSE);
-	
-	//		$this->db->where('t2.transaction_id = (SELECT MAX(t.transaction_id) FROM transaction as t WHERE t.patient_id=t2.patient_id and t.transaction_quantity!=0 and t.notes NOT LIKE "ONLY")',NULL,FALSE);
-		}
-*/
-		
 		//added by Mike, 20200601
 		//$this->db->where('t2.fee!=',0);
 		//$this->db->and_not_like('t2.notes',"NC");
@@ -700,12 +681,7 @@ class Report_Model extends CI_Model
 		$this->db->not_like('t2.notes',"SNACK ONLY");
 
 //		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
-		
-		//edited by Mike, 20230514
-		//TO-DO: -reverify: this
-//		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
-		$this->db->order_by('t2.transaction_id', 'DESC');//ASC');
-
+		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
 
 		//$this->db->limit(8);//1);
 		
@@ -722,12 +698,6 @@ class Report_Model extends CI_Model
 		}
 		
 //		echo "report_id: ".$rowArray[0]['report_id'];
-
-/*
-		echo "count: ".count($rowArray)."<br/>";
-
-		echo "transaction_id: ".$rowArray[0]['transaction_id'];
-*/
 		
 /*		return $row->report_description;
 */
