@@ -127,8 +127,9 @@ class Report_Model extends CI_Model
 //					'added_datetime_stamp' => $addedDateTimeStamp
 					
 				);
-		
-		$this->db->insert('image', $data);
+		//edited by Mike, 20231016
+		//$this->db->insert('image', $data);
+		$this->db->insert('imagev2', $data);
 		
 		return $this->db->insert_id();		
 	}	

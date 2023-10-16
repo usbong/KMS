@@ -5288,7 +5288,14 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//removed by Mike, 20210528
 //		$this->db->limit(8);
 		
-		$query = $this->db->get('image');
+		//edited by Mike, 20231016
+		//https://dba.stackexchange.com/questions/69656/cant-create-table-but-table-doesnt-exist/69664#69664; last accessed: 20231016
+		//answer by: RolandoMySQLDBA, 20140703T1634
+		//edited by: CommunityBot, 20200615T0905
+		//note: orphaned rows, etc.; removed foreign constraint connecting to an earlier version of the 'transaction' table 
+		
+//		$query = $this->db->get('image');
+		$query = $this->db->get('imagev2');
 
 		$rowArray = $query->result_array();
 		
