@@ -132,6 +132,20 @@ last accessed: 20220314<br/>
 answer by: Y. Joy Ch. Singha, 20180521T0816<br/>
 edited by: bad_coder, 20210724T1636<br/>
 
+### B.3 Installation Notes (macOS)
+
+1) Download and open (as Administrator/SuperUser) to install XAMPP file from https://www.apachefriends.org/download.html;<br/>
+--> Example: <b>XAMPP for OS X 8.2.4</b><br/>
+
+.dmg file; System Preferences... -> Security & Privacy -> General 
+
+Click the lock
+
+Allow apps downloaded from: App Store and identified developers
+
+directory location: /Applications/XAMPP/xamppfiles/htdocs
+
+TODO: -update: this
 
 ## SELECT FILES to START auto-generation of REPORTS
 
