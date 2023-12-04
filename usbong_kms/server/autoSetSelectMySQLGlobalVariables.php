@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2023 SYSON, MICHAEL B.
+  Copyright 2020~2023 USBONG
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,8 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230124; from 20220411
+  @date updated: 20231204; from 20230124
+  @website: http://www.usbong.ph
   
   Output:
   1) Auto-set Global Variables
@@ -162,7 +163,17 @@
 	//reference: https://www.w3schools.com/php/func_mysqli_query.asp;
 	//last accessed: 20230124
 	// Perform query
-	if ($result = $mysqli -> query("SET GLOBAL query_cache_type=1 ")) {
+	
+	//notes: 
+	//Error: Unknown system variable 'query_cache_type' 
+	//mysql  Ver 8.0.19-0ubuntu5 for Linux on x86_64 ((Ubuntu))
+	//depracated;
+	//reference: https://stackoverflow.com/questions/43044193/datagrip-reports-unknown-system-variable-query-cache-type-when-connecting-to; last accessed: 20231204
+	//Bill Karwin, 20171001T2249
+	//CommunityBot, 20200620T0912
+	
+	
+	if ($result = $mysqli -> query("SET GLOBAL query_cache_type=1")) {
 		echo "OK!<br/><br/>";
 		echo "<b>SET GLOBAL query_cache_type=1;</b><br/><br/>";
 		echo "DONE!";

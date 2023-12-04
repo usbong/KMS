@@ -11,8 +11,8 @@
   @company: USBONG
   @author: SYSON, Michael B
   @date created: 20190804
-  @date updated: 20231003; from 20230419
-  @website address: www.usbong.ph
+  @date updated: 20231204
+  @website: http://www.usbong.ph
 
   Given:
   1) Database (DB) details
@@ -30,33 +30,30 @@ define('BASEPATH', "http://localhost/usbong_kms/");
 //typically, webroot would be in /var/www/html/
 //include('/put_this_somewhere_outside_of_web_root/app+server/database.php');
 
-//edited by Mike, 20230419; from 20210323
+//edited by Mike, 20210323
+//TO-DO: -update: to eliminate excess steps
 //include('C:/xampp/htdocs/usbong_kms/server/database.php');
+//edited by Mike, 20231204
 //include('/opt/lampp/htdocs/usbong_kms/server/database.php');
 
-//updated: to eliminate excess steps
-//reference: https://stackoverflow.com/questions/5425891/how-do-i-check-if-a-directory-exists-is-dir-file-exists-or-both;
-//last accessed: 20230419
-//question by: Peter, 20110324T2138; edited by: Thomanski, 20210114T2346
+//reference: https://stackoverflow.com/questions/5425891/how-do-i-check-if-a-directory-exists-is-dir-file-exists-or-both; last accessed: 20231204
+//$dir = '/opt/lampp/htdocs/usbong_kms/server/database.php';
+//priority now on non-LAMPP/non-XAMPP
+//$dir = '/var/www/html/usbong_kms/application/config/database.php';
+$dir = '/var/www/html/usbong_kms/server/database.php';
 
-$sDbFileLocation='C:/xampp/htdocs/usbong_kms/server/database.php';
-if ( file_exists($sDbFileLocation) && !is_dir($sDbFileLocation)) {
-	include($sDbFileLocation);
+if ( !file_exists( $dir ) && !is_dir( $dir ) ) {
+    $dir = '/opt/lampp/htdocs/usbong_kms/server/database.php';
 } 
-else {
-	//edited by Mike, 20231003
-	//include('/opt/lampp/htdocs/usbong_kms/server/database.php');
-	$sDbFileLocationLinux='/opt/lampp/htdocs/usbong_kms/server/database.php';
+include($dir);
 
-	//note: previously, '/opt/lampp/htdocs/usbong_kms/...'	
-	if ( file_exists($sDbFileLocationLinux) && !is_dir($sDbFileLocationLinux)) {
-		include($sDbFileLocationLinux);
-	}
-	//note: newer, '/var/www/html/usbong_kms/...'	
-	else {
-		include('/var/www/html/usbong_kms/server/database.php');
-	}
-}
+/*
+echo $dir."<br/><br/>";
+
+echo $db['hostname']."<br/><br/>";
+echo $db['username']."<br/><br/>";
+*/
+
 
 //added by Mike, 20210323
 //reminder: update computer server database values for username, password, etc in database.php
