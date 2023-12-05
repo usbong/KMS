@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 Usbong Social Systems, Inc.
+' Copyright 2020~2023 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -7,9 +7,11 @@
 '
 ' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
 '
-' @author: Michael Syson
+' @company: USBONG
+' @author: SYSON, MICHAEL B
 ' @date created: 20200529
-' @date updated: 20210219
+' @date updated: 20231205; from 20210219
+' @website address: www.usbong.ph
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1188,11 +1190,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$dtTotalWaitDoneElapsedTime=$dtTotalWaitDoneElapsedTime/$iTotalWaitDoneElapsedTimeCount;	
 				}
 	
-				$iHour=intval($dtTotalWaitDoneElapsedTime/60);
-				$iSec=$dtTotalWaitDoneElapsedTime%60;				
+				//edited by Mike, 20231205
+				//Severity: 8192
+				//Message: Implicit conversion from float 55.90909090909091 to int loses precision
+				//$iHour=intval($dtTotalWaitDoneElapsedTime/60);
+				//$iSec=$dtTotalWaitDoneElapsedTime%60;				
+
+				//echo $dtTotalWaitDoneElapsedTime."<br/><br/>";
+				//example output: 55.909090909091
+								
+				$iHour=intval(floor($dtTotalWaitDoneElapsedTime/60));
+				//OK
+				$iSec=intval(floor(($dtTotalWaitDoneElapsedTime-$iHour*60)));		
+/*
+				echo ($dtTotalWaitDoneElapsedTime-$iHour*60)."<br/><br/>";
+				echo "iHour: ".$iHour."<br/><br/>";
+				
+				echo "MODULO: ".($dtTotalWaitDoneElapsedTime%60)."<br/><br/>";
+*/				
+				
 				$sHour="".$iHour;
 				$sSec="".$iSec;
 				
+				//echo "SEC: ".$sSec."<br/><br/>";
+
 				if ($iHour<10) {
 					$sHour="0".$iHour;
 				}
