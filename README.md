@@ -169,6 +169,15 @@ TODO: -update: this
 
 TO-DO: -update: this; file locations
 
+## REMINDERS in auto-updating DB
+
+Create shortcuts (WINDOWS) or put copies of these ("trusted") executable files (LINUX) on the DESKTOP
+
+1) [From Windows to Windows Server](https://github.com/usbong/KMS/tree/master/Miscellaneous%20Commands/setOfCommandsToAutoTransferDatabaseStorageFromWindowsToWindowsServer)
+
+2) [From Windows to Linux Server](https://github.com/usbong/KMS/tree/master/Miscellaneous%20Commands/setOfCommandsToAutoTransferDatabaseStorageFromWindowsToLinuxServer)
+
+3) [From Linux to Linux Server](https://github.com/usbong/KMS/tree/master/Miscellaneous%20Commands/setOfCommandsToAutoTransferDatabaseStorageFromLinuxToLinuxServer)
 
 ## Open Source Software License
 Copyright 2019~2023 SYSON, MICHAEL B.
