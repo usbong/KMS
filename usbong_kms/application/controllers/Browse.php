@@ -1022,11 +1022,12 @@ class Browse extends CI_Controller { //MY_Controller {
 	//albeit not the nearest to expire
 	public function confirmMedicine()
 	{
-		//added by Mike, 20230922
+		//added by Mike, 20231213
+		//error: "Undefined index: nameParam"
 		if (!isset($_POST['nameParam'])) {
 			redirect('browse/searchMedicine');
-		}
-
+		}		
+		
 		$data['nameParam'] = $_POST['nameParam'];
 		
 		//added by Mike, 20200912
@@ -2512,12 +2513,6 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, $transactionDate);
 
-		//added by Mike, 20230514
-		$data['bIsMultiTransaction']=false;
-
-		//note: faster for human to understand,
-		//albeit uses additional access to DB;
-		$data['bIsMultiTransaction']=$this->Browse_Model->getIsMultiTransaction($patientId, $transactionDate);
 
 //echo $data['resultPaid'][0]['patient_name'];
 //echo $data['resultPaid'][0]['transaction_id'];
@@ -2534,42 +2529,6 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210514; edited by Mike, 20210720
 //		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId); //3 = SNACK ITEM
 		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId, $transactionDate); //3 = SNACK ITEM
-		
-		//removed by Mike, 20230515; added by Mike, 20230515
-/*		
-		//echo $data['resultPaidMedItem'][0]['transaction_id'];
-		
-		if ($data['resultPaid'][0]['fee']!=0) {
-			if (isset($data['resultPaidMedItem'][0])) {
-				
-				//added by Mike, 20230515
-				if (isset($data['resultPaid'][0]['med_fee'])&&($data['resultPaid'][0]['med_fee']==0)) {
-					//echo $data['resultPaidMedItem'][0]['transaction_id'];
-					if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidMedItem'][0]['transaction_id']) {
-						$data['bIsMultiTransaction']=true;
-					}
-				}
-			}
-
-			if (isset($data['resultPaidNonMedItem'][0])) {
-				//added by Mike, 20230515
-				if (isset($data['resultPaid'][0]['pas_fee'])&&($data['resultPaid'][0]['pas_fee']==0)) {
-					if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidNonMedItem'][0]['transaction_id']) {
-						$data['bIsMultiTransaction']=true;
-					}
-				}
-			}
-
-			if (isset($data['resultPaidSnackItem'][0])) {
-				//added by Mike, 20230515
-				if (isset($data['resultPaid'][0]['snack_fee'])&&($data['resultPaid'][0]['snack_fee']==0)) {
-					if ($data['resultPaid'][0]['transaction_id']!=$data['resultPaidSnackItem'][0]['transaction_id']) {
-						$data['bIsMultiTransaction']=true;
-					}
-				}
-			}
-		}
-*/
 
 		$this->load->view('viewAcknowledgmentForm', $data);		
 	}
@@ -2933,17 +2892,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		//example: via Levenshtein Distance;
 		//reference: https://github.com/usbong/SLHCC/blob/e93bda14d0b3f63e6d7eab28f734d228d4d09137/Master%20List/generateDoctorReferralPTTreatmentReportFromMasterList/java/linux/software/generateDoctorReferralPTTreatmentSummaryReportOfTheTotalOfAllInputFilesFromMasterList.java;
 		//last accessed: 20230110
-		
-//		echo ">".$notes;
-		
 		$notes = str_replace("DISCOUNTE","DISCOUNTED",$notes);
-		
-		//added by Mike, 20230517
-		//notes "DISCOUNTEDD" causes error; not replaced
-//		$notes = str_replace("DISCOUNTEDD","DISCOUNTED",$notes);
-		$notes = str_replace("COUNTEDD","COUNTED",$notes);
-
-//		echo ">>".$notes;
 			
 		$data['notes'] = $notes."; "."UNPAID";
 		
@@ -4361,8 +4310,6 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 		if ($data['isMultiAdded']) {
 			//note: use with multiple transactions with varying types, 
 			//e.g. snack, non-med, med, added as paid on the same date; 
-
-//echo "dito";
 
 			//added by Mike, 20210926
 			$this->Browse_Model->addTransactionPaidReceiptOfMultiAddedTransactions($data);
