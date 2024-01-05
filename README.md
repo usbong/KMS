@@ -42,6 +42,14 @@
 
 ## II. Add-on Software Requirements
 
+### LibreOffice Suite
+
+https://www.libreoffice.org/; last accessed: 20240105
+
+### Java Runtime Environment (JRE)/Java Development Kit (JDK)
+
+https://wiki.documentfoundation.org/Faq/General/InstallJava; last accessed: 20240105
+
 ### A. NON-XAMPP, Linux Machine
 
 [Auto-install Web Server in Linux Machine](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/installWebServerInLinuxMachineNotViaXAMPP.sh)
