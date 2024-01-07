@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2019~2023 USBONG
+  Copyright 2019~2024 USBONG
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 
@@ -11,7 +11,7 @@
   @company: USBONG
   @author: SYSON, Michael B
   @date created: 20190804
-  @date updated: 20231204
+  @date updated: 20240107; from 20231204
   @website: http://www.usbong.ph
 
   Given:
@@ -30,30 +30,33 @@ define('BASEPATH', "http://localhost/usbong_kms/");
 //typically, webroot would be in /var/www/html/
 //include('/put_this_somewhere_outside_of_web_root/app+server/database.php');
 
-//edited by Mike, 20210323
-//TO-DO: -update: to eliminate excess steps
+//edited by Mike, 20230419; from 20210323
 //include('C:/xampp/htdocs/usbong_kms/server/database.php');
-//edited by Mike, 20231204
 //include('/opt/lampp/htdocs/usbong_kms/server/database.php');
 
-//reference: https://stackoverflow.com/questions/5425891/how-do-i-check-if-a-directory-exists-is-dir-file-exists-or-both; last accessed: 20231204
-//$dir = '/opt/lampp/htdocs/usbong_kms/server/database.php';
-//priority now on non-LAMPP/non-XAMPP
-//$dir = '/var/www/html/usbong_kms/application/config/database.php';
-$dir = '/var/www/html/usbong_kms/server/database.php';
+//updated: to eliminate excess steps
+//reference: https://stackoverflow.com/questions/5425891/how-do-i-check-if-a-directory-exists-is-dir-file-exists-or-both;
+//last accessed: 20230419
+//question by: Peter, 20110324T2138; edited by: Thomanski, 20210114T2346
 
-if ( !file_exists( $dir ) && !is_dir( $dir ) ) {
-    $dir = '/opt/lampp/htdocs/usbong_kms/server/database.php';
+$sDbFileLocation='C:/xampp/htdocs/usbong_kms/server/database.php';
+if ( file_exists($sDbFileLocation) && !is_dir($sDbFileLocation)) {
+	include($sDbFileLocation);
 } 
-include($dir);
+else {
+	//edited by Mike, 20231003
+	//include('/opt/lampp/htdocs/usbong_kms/server/database.php');
+	$sDbFileLocationLinux='/opt/lampp/htdocs/usbong_kms/server/database.php';
 
-/*
-echo $dir."<br/><br/>";
-
-echo $db['hostname']."<br/><br/>";
-echo $db['username']."<br/><br/>";
-*/
-
+	//note: previously, '/opt/lampp/htdocs/usbong_kms/...'	
+	if ( file_exists($sDbFileLocationLinux) && !is_dir($sDbFileLocationLinux)) {
+		include($sDbFileLocationLinux);
+	}
+	//note: newer, '/var/www/html/usbong_kms/...'	
+	else {
+		include('/var/www/html/usbong_kms/server/database.php');
+	}
+}
 
 //added by Mike, 20210323
 //reminder: update computer server database values for username, password, etc in database.php
