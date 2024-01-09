@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2022 SYSON, MICHAEL B.
+  Copyright 2020~2024 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20220531; from 20210208
+  @date updated: 20240109; from 20220531
   @website address: http://www.usbong.ph
 
   Input:
@@ -168,14 +168,22 @@
 	//note: added:additional backslash to be "\\" 
 	//Windows 7 Service Pack 1 32-bit Operating System machine
 	//XAMPP 1.8.2 [PHP: 5.4.31]
-	$filename="C:\\xampp\\htdocs\\usbong_kms\\kasangkapan\\phantomjs-2.1.1-windows\\bin\\templates\\moscReportForTheDayLibreOfficeCalc.csv";
+	//edited by Mike, 20240109
+	//$filename="C:\\xampp\\htdocs\\usbong_kms\\kasangkapan\\phantomjs-2.1.1-windows\\bin\\templates\\moscReportForTheDayLibreOfficeCalc.csv";
+	$filename="C:\\xampp\\htdocs\\usbong_kms\\kasangkapan\\templates\\moscReportForTheDayLibreOfficeCalc.csv";
 
 	//TO-DO: -add: auto-write values from input files after executing command:  getSalesReportsForTheDay.php 
 	
 	//added by Mike, 20200524
 	//update file location
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";	
+	
+	//edited by Mike, 20240109
+	//$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";	
+	$fileBasePath = "C:\MOSC\KMS\output\informationDesk\cashier\\";	
+	
+	//TODO: -update: to be usable also with Linux;
+	
 
 /*	//removed by Mike, 20201018; due to pop-up notification to accept first before page is auto-opened
 	//added: instruction in autoScreenCaptureSummaryReportForTheNoonDay.bat
@@ -694,7 +702,7 @@
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y")?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>
