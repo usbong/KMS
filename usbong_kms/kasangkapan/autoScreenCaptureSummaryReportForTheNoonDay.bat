@@ -1,6 +1,6 @@
 @ECHO OFF
 REM
-REM Copyright 2020~2023 SYSON, MICHAEL B.
+REM Copyright 2020~2024 SYSON, MICHAEL B.
 REM
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -11,7 +11,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20201016
-REM @date updated: 20230926; from 20211102
+REM @date updated: 20240109; from 20230926
 REM @website: http://www.usbong.ph
 REM
 REM Reference:
@@ -34,13 +34,34 @@ REM added by Mike, 20211102
 phantomjs saveWebPageAsImageFile.js viewReceiptReportForTheDay
 phantomjs saveWebPageAsImageFile.js viewReceiptReportPASForTheDay
 
+REM edited by Mike, 20240109
+REM %date:~10,4%%date:~4,2%%date:~7,2%
 
-set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
+REM TODO: -update: this to auto-identify date format;
+REM based on location of first forward slash, i.e. /
+REM January 9, 2024, Tuesday
+REM in Windows 7, %date% outputs: Tue 01/09/2024
+REM in Windows 11, 09/01/2024
+
+REM note: local date format; dd/mm/yyyy (default in Windows 11)
+REM may vary depending on the settings;
+REM 09/01/2024
+REM year, %date:~6,4%
+REM month, %date:~3,2%
+REM day, %date:~0,2%
+
+set myDate=%date:~6,4%%date:~3,2%%date:~0,2%
 
 REM edited by Mike, 20201017
 REM explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
 
 REM edited by Mike, 20230926
 REM explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%"\noonReport\"
+
 explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\output\"%myDate%"\noonReport\"
+
+REM echo %myDate%
+REM echo %date%
+
+REM pause
 
