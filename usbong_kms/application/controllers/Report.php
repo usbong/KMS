@@ -634,7 +634,8 @@ class Report extends CI_Controller { //MY_Controller {
 
 	//added by Mike, 20200518; edited by Mike, 20200704
 	public function viewPayslipWebFor($medicalDoctorName)
-	{		
+	{
+/* //removed by Mike, 20240109		
 		//added by Mike, 20200704
 		if (strpos(strtoupper($medicalDoctorName), "PETER")!==false) {			
 			//verify day of the week
@@ -660,6 +661,7 @@ class Report extends CI_Controller { //MY_Controller {
 					  </script>";			
 			}
 		}
+*/
 
 /*	
 		$this->load->model('Browse_Model');
@@ -702,7 +704,6 @@ class Report extends CI_Controller { //MY_Controller {
 		if ((strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) or 
 			(strpos(strtoupper($medicalDoctorName), "CHASTITY")!==false)) {
 			if (is_array($data["result"])) {
-								
 				foreach ($data["result"] as &$value) {
 					//edited by Mike, 20200910
 					//note: we do +1 to get the transactionId for the MOSC OR from the receipt table
@@ -718,11 +719,8 @@ class Report extends CI_Controller { //MY_Controller {
 //					while ($transactionId==0) {
 					do {
 //						echo $iTransactionId."<br/>";
-						
-						//edited by Mike, 20230514
-//						$this->db->select('transaction_quantity');
-						$this->db->select('transaction_quantity, notes');
 
+						$this->db->select('transaction_quantity');
 						$this->db->where('transaction_id',$iTransactionId);
 
 						//added by Mike, 20221108
@@ -742,12 +740,6 @@ class Report extends CI_Controller { //MY_Controller {
 						}	
 */
 
-						//added by Mike, 20230514
-						//echo $row->notes;
-						if (strpos($row->notes,"PAID; TRANSACTION")!==false) {
-							break;
-						}
-
 						$iTransactionId = $iTransactionId + 1;
 						
 						//this is due to the transaction count can skip
@@ -757,13 +749,7 @@ class Report extends CI_Controller { //MY_Controller {
 							$iTransactionQuantity = $row->transaction_quantity;
 						}
 						
-						if ($iTransactionId>=$iTransactionIdMax) {
-							//edited by Mike, 20230523
-/*
-							echo "iTransactionIdMax: ".$iTransactionIdMax."<br/>";
-							echo "BREAK".$iTransactionId."<br/>";
-*/
-							$iTransactionId=$iTransactionIdMax;
+						if ($iTransactionId>=$iTransactionIdMax) {							
 							break;
 						}						
 					}
@@ -782,11 +768,9 @@ class Report extends CI_Controller { //MY_Controller {
 					}
 
 					//removed by Mike, 20221110
-//					echo $iTransactionId."<br/><br/>";
+					//echo $iTransactionId."<br/><br/>";
 
 					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($iTransactionId);
-					
-//					echo "dito: ".$value['receipt_number'];
 				}
 				unset($value);
 			}
