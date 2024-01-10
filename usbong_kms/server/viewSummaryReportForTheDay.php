@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2023 SYSON, MICHAEL B.
+  Copyright 2020~2024 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20220925; from 20220707
+  @date updated: 20240110; from 20220925
   @website address: http://www.usbong.ph
 
   Input:
@@ -178,8 +178,11 @@
 
 	//edited by Mike, 20230925
 	//$filename="G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\moscReportForTheDay".$dateToday."Final.csv";
- 
-	$filename="D:\MOSC\KMS\output\informationDesk\cashier\moscReportForTheDay".$dateToday."Final.csv";	
+	
+	//edited by Mike, 20240110
+	//$filename="D:\MOSC\KMS\output\informationDesk\cashier\moscReportForTheDay".$dateToday."Final.csv";	
+	$filename="C:\MOSC\KMS\output\informationDesk\cashier\\moscReportForTheDay".$dateToday."Final.csv";
+
 	
 //$filename="G:\Usbong\MOSC\Forms\Information Desk\output\informationDesk\cashier\moscReportForTheDay2021-10-06Final.csv";
 
