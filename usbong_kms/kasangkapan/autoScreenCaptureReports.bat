@@ -1,5 +1,6 @@
+@echo OFF
 REM
-REM Copyright 2020~2023 SYSON, MICHAEL B.
+REM Copyright 2020~2024 SYSON, MICHAEL B.
 REM 
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -10,7 +11,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 2020
-REM @date updated: 20230926; from 20230221
+REM @date updated: 20240113; from 20240112
 REM @website address: http://www.usbong.ph
 REM
 REM Reference:
@@ -18,8 +19,41 @@ REM 1) https://phantomjs.org/; last accessed: 20200724
 REM 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
 REM
 
+REM added by Mike, 20240112
+REM Windows 7
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
 set myDateDay=%date:~0,3%
+
+REM auto-identify date format;
+REM based on location of first forward slash, i.e. /
+REM January 9, 2024, Tuesday
+REM in Windows 7, %date% outputs: Tue 01/09/2024
+REM in Windows 11, 09/01/2024
+
+REM note: local date format; dd/mm/yyyy (default in Windows 11)
+REM may vary depending on the settings;
+REM 09/01/2024
+REM year, %date:~6,4%
+REM month, %date:~3,2%
+REM day, %date:~0,2%
+
+REM set myDate=%date:~6,4%%date:~3,2%%date:~0,2%
+
+REM set myDateSlashLocation=/ 
+set myDateSlashLocation=%date:~2,1%
+
+REM echo %myDateSlashLocation%
+
+REM Windows 11 format
+if %myDateSlashLocation%==/ (
+REM	echo "DITO"	
+	set myDate=%date:~6,4%%date:~3,2%%date:~0,2%
+	
+	REM added by Mike, 20240113
+	REM note: Windows 11; no day of the week included anymore
+	set myDateDay=NONE
+)
+
 
 phantomjs saveWebPageAsImageFile.js viewReportMedicineUnified
 phantomjs saveWebPageAsImageFile.js viewReportMedicineAsteriskUnified
@@ -34,11 +68,21 @@ phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Peter"
 
 echo %myDateDay%
 
-if "%myDateDay%"=="Mon" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Chastity"
-if "%myDateDay%"=="Tue" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil"
-if "%myDateDay%"=="Thu" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil"
-if "%myDateDay%"=="Wed" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto"
-if "%myDateDay%"=="Fri" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto"
+if %myDateDay%==NONE (
+
+phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Chastity"
+phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil"
+phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil"
+phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto"
+phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto"
+
+) else (
+	if "%myDateDay%"=="Mon" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Chastity"
+	if "%myDateDay%"=="Tue" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil"
+	if "%myDateDay%"=="Thu" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Rodil"
+	if "%myDateDay%"=="Wed" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto"
+	if "%myDateDay%"=="Fri" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Honesto"
+)
 
 REM removed by Mike, 20230221
 REM if "%myDateDay%"=="Sat" phantomjs saveWebPageAsImageFile.js "viewPayslipWebFor/Gracia"
@@ -55,3 +99,4 @@ REM edited by Mike, 20230926
 REM explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
 explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\output\"%myDate%
 
+REM pause
