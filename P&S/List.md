@@ -384,7 +384,13 @@ where: `/dev/sda1` is the harddisk where LUBUNTU OS is installed
 
 `"fsck"` shall repair haddisk bad sectors; output `clean` 
 
-<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/lubuntuFsckDevSda1-20230622T0842.jpg" width="50%">
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/lubuntuFsckDevSda1-Part1-20240119T1039.jpg" width="100%">
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/lubuntuFsckDevSda1-20230622T0842.jpg" width="100%">
+
+### Observation
+
+1) Electricity fluctuations that cause computers to abruptly shutdown creates the problem 
 
 ## Problem#14) Settings to connect from Windows computer to Linux server instance (EC2) hosted via Amazon Web Services (AWS)?
 
