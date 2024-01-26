@@ -187,6 +187,14 @@ Create shortcuts (WINDOWS) or put copies of these ("trusted") executable files (
 
 3) [From Linux to Linux Server](https://github.com/usbong/KMS/tree/master/Miscellaneous%20Commands/setOfCommandsToAutoTransferDatabaseStorageFromLinuxToLinuxServer)
 
+### Reminder
+
+update IP address of target KMS server to access
+
+#### Example
+
+source="unit_member@192.168.1.99:/home/unit_member/Documents/halimbawa/DB/"
+
 ## Open Source Software License
 Copyright 2019~2023 SYSON, MICHAEL B.
 
