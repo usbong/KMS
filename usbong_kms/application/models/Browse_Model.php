@@ -159,6 +159,12 @@ class Browse_Model extends CI_Model
 
 	public function getNewestPatientDetailsListViaName($param) 
 	{		
+		//added by Mike, 20240207
+		//TODO: -update: this;
+		//There are patient names that already have dots inside the DB
+		//$param['nameParam'] = str_replace(".","",$param['nameParam']);
+		//echo ">>>>>".$param['nameParam'];
+	
 		//added by Mike, 20210817
 		if (strpos($param['nameParam'],",")!==false) {
 			if (strpos($param['nameParam'],", ")!==false) {
@@ -306,7 +312,7 @@ class Browse_Model extends CI_Model
 
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
-
+			
 			$this->db->like('t1.patient_name', $param['nameParam']);
 			$this->db->group_by('t1.patient_id');
 
@@ -319,6 +325,16 @@ class Browse_Model extends CI_Model
 		
 			$this->db->where('t1.patient_name !=', "CANCELLED");
 			$this->db->where('t1.patient_name !=', "NONE");
+			
+			//added by Mike, 20240207
+			//How to remove the dots from patient names that are already inside the DB?
+			
+			//TODO: -find: equivalent of the following in CodeIgniter
+			//WHERE REPLACE(REPLACE(some_column, '.', ''), '-', '') in ('10000000000', '1999999999'
+			//Reference: https://stackoverflow.com/questions/22919352/remove-dots-and-hyphen-on-where-clause-mysql; last accessed: 20240207
+			//answered by Linger, 20240407T1741
+			//$this->db->where('t1.patient_name !=', "NONE");
+			
 			
 			$query = $this->db->get('patient');
 			$rowArrayPart1 = $query->result_array();
