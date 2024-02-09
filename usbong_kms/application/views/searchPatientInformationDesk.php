@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2023 SYSON, MICHAEL B.
+' Copyright 2020~2024 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230409; from 20220309
+' @date updated: 20240209; from 20230409
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -33,6 +33,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
                             font-family: Arial;
 							font-size: 11pt;
+							
+							/* 
+								//added by Mike, 20240209
+								//LINUX LUBUNTU; OS brightness resets
+							*/
+							background-color: #cacaca; 							
+							filter: brightness(80%);							
 								
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							width: 670px								
