@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2022 SYSON, MICHAEL B.
+# Copyright 2024 SYSON, MICHAEL B.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 #
@@ -14,7 +14,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20220328
-# @last modified: 20230102; from 20220807
+# @last modified: 20230216; from 20230102
 # @website address: http://www.usbong.ph
 #
 # Additional Notes:
@@ -36,15 +36,22 @@ sudo apt-get update
 
 sudo apt-get install apache2
 sudo apt-get install mysql-server
+
 #edited by Mike, 20220727
 #sudo apt-get install php
-sudo apt-get install php7.*-mysqli
+#edited by Mike, 20240216
+#sudo apt-get install php7.*-mysqli
+sudo apt-get install php8*-mysqli
 
-#added by Mike, 20220807
-sudo apt-get install php7.*-cli
+#edited by Mike, 20240216; from 20220807
+#sudo apt-get install php7.*-cli
+sudo apt-get install php8*-cli
+
 #note: update apache2 configuration to include PHP;
 #actions starts PHP with service apache2 start COMMAND
-sudo apt-get install libapache2-mod-php7.0.
+#edited by Mike, 20240216
+#sudo apt-get install libapache2-mod-php7.0.
+sudo apt-get install libapache2-mod-php8*
 
 #added by Mike, 20221230
 #------------------------------
