@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2023 SYSON, MICHAEL B.
+  Copyright 2020~2024 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20230507; from 20230417
+  @date updated: 20240222; from 20230418
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -17,8 +17,8 @@
   1) Previously, we used this PHP page without the CodeIgniter framework
   http://mosc-accounting/usbong_kms/server/viewWebAddressList.php
   2) Update the file location
-    Example#1: http://192.168.11.60/usbong_kms/server/viewWebAddressList.php
-    Example#2: http://192.168.11.60/usbong_kms/server/viewWebAddressList.php
+    Example#1: http://192.168.1.110/usbong_kms/server/viewWebAddressList.php
+    Example#2: http://192.168.11.10/usbong_kms/server/viewWebAddressList.php
 	Example#3:
 	192.168.11.101/usbong_kms/server/viewWebAddressList.php
 -->
@@ -237,86 +237,84 @@
 	//$dateToday = (new DateTime())->format('Y-m-d');
 	$dateToday = date('Y-m-d');
 
-	//removed by Mike, 20230507; deprecated; csv, Mac
-	//ini_set('auto_detect_line_endings', true);
-	
+	ini_set('auto_detect_line_endings', true);
 ?>
 <h2>Computer Web Address List (MOSC)</h2>
 <h2>I. SEARCH</h2>
-<h3>1) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/browse/searchPatient">Search Patient</a></h3>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/browse/searchPatient">http://192.168.11.60/usbong_kms/index.php/browse/searchPatient</a></h3>
-<h3>2) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/browse/searchMedicine">Search Medicine</a></h3>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/browse/searchMedicine">http://192.168.11.60/usbong_kms/index.php/browse/searchMedicine</a><br/>
-<h3>3) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/browse/searchNonMedicine">Search Non-Medicine</a></h3>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/browse/searchNonMedicine">http://192.168.11.60/usbong_kms/index.php/browse/searchNonMedicine</a><br/>
-<h3>4) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/browse/searchSnack">Search Snack</a></h3>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/browse/searchSnack">http://192.168.11.60/usbong_kms/index.php/browse/searchSnack</a><br/>
+<h3>1) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchPatient">Search Patient</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchPatient">http://192.168.11.10/usbong_kms/index.php/browse/searchPatient</a></h3>
+<h3>2) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchMedicine">Search Medicine</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchMedicine">http://192.168.11.10/usbong_kms/index.php/browse/searchMedicine</a><br/>
+<h3>3) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine">Search Non-Medicine</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine">http://192.168.11.10/usbong_kms/index.php/browse/searchNonMedicine</a><br/>
+<h3>4) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchSnack">Search Snack</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchSnack">http://192.168.11.10/usbong_kms/index.php/browse/searchSnack</a><br/>
 
 <h2>II. INFORMATION DESK + ACCOUNTING UNIT</h2>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportPatientQueueAccounting">http://192.168.11.60/usbong_kms/index.php/report/viewReportPatientQueueAccounting</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueueAccounting">http://192.168.11.10/usbong_kms/index.php/report/viewReportPatientQueueAccounting</a><br/>
 
 <h2><span id="summaryReportsHeaderId" class="moreTextSpanIIISummaryReportsHeader" onclick="toggleMore('summaryReportsHeaderId')">III. SUMMARY REPORTS FOR THE DAY</span></h2>
 <span id="summaryReportsId" class="moreTextSpanIIISummaryReports">
-<h3>1) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">http://192.168.11.60/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified</a>
-<h3>2) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">http://192.168.11.60/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay</a>
+<h3>1) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified</a>
+<h3>2) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">http://192.168.11.10/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay</a>
 
 <!-- added by Mike, 20210915 -->
-<h3>3) <a target="_blank" href="http://192.168.11.60/usbong_kms/server/viewSummaryReportForEndDay.php">View Summary Report for End Day</a></h3>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/server/viewSummaryReportForEndDay.php">http://192.168.11.60/usbong_kms/server/viewSummaryReportForEndDay.php</a>
+<h3>3) <a target="_blank" href="http://192.168.11.10/usbong_kms/server/viewSummaryReportForEndDay.php">View Summary Report for End Day</a></h3>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/server/viewSummaryReportForEndDay.php">http://192.168.11.10/usbong_kms/server/viewSummaryReportForEndDay.php</a>
 
 </span>
 
 <h2>IV. PAYSLIPS</h2>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">Payslip SYSON, PEDRO (MOSC)</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">Payslip SYSON, PEDRO (MOSC)</a><br/>
 <br/>
-http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/name<br/>
+http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/name<br/>
 <br/>
 where: name = keyword of medical doctor name<br/>
 <br/>
 Examples:<br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Pedro</a><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Peter">http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Peter</a><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Chastity</a><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Rodil">http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Rodil</a><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Honesto">http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Honesto</a><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Gracia">http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Gracia</a><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel">http://192.168.11.60/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Pedro</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Peter">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Peter</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Chastity</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Rodil">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Rodil</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Honesto">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Honesto</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Gracia">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Gracia</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel">http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel</a><br/>
 
 <h2>V. REPORTS</h2>
 <b>1) MEDICINE</b><br/>
-a) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportMedicine">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportMedicine</a><br/>
-b) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportMedicineUnified">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportMedicineUnified</a><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportMedicine">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportMedicine</a><br/>
+b) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportMedicineUnified">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportMedicineUnified</a><br/>
 <br/>
 <b>2) MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)</b><br/>
-a) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportMedicineAsterisk">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportMedicineAsterisk</a><br/>
-b) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified</a><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportMedicineAsterisk">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportMedicineAsterisk</a><br/>
+b) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified</a><br/>
 <br/>
 <b>3) NON-MEDICINE</b><br/>
-a) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportNonMedicine">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportNonMedicine</a><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportNonMedicine">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportNonMedicine</a><br/>
 <!-- removed by Mike, 20210712
-b) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportNonMedicineUnified">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportNonMedicineUnified</a><br/>
+b) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportNonMedicineUnified">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportNonMedicineUnified</a><br/>
 -->
 <br/>
 <b>4) SNACK</b><br/>
-a) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportSnack">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportSnack</a><br/>
-b) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportSnackUnified">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportSnackUnified</a><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportSnack">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportSnack</a><br/>
+b) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportSnackUnified">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportSnackUnified</a><br/>
 <br/>
 <b>5) X-RAY</b><br/>
-a) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportXray">
-http://192.168.11.60/usbong_kms/index.php/report/viewReportXray</a><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportXray">
+http://192.168.11.10/usbong_kms/index.php/report/viewReportXray</a><br/>
 <br/>
 <b>6) LAB</b><br/>
-a) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReportLab">http://192.168.11.60/usbong_kms/index.php/report/viewReportLab</a><br/>
+a) <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReportLab">http://192.168.11.10/usbong_kms/index.php/report/viewReportLab</a><br/>
 <br/>
 
 
@@ -324,56 +322,84 @@ a) <a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/vie
 <b>1) MOSC</b><br/>
 <!-- added by Mike, 20200812 -->
 <b>a) VIEW REPORT FOR THE DAY</b><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportForTheDay">
-http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportForDay<br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportForTheDay">
+http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportForDay<br/>
 </a>
 <br/>
 <b>b) VIEW REPORT FOR PREVIOUS MONTH</b><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReport">http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReport</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReport">http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReport</a><br/>
 <br/>
 <!-- TO-DO: -add: year -->
 <b>c) SET SPECIFIC MONTH</b><br/>
-http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportFor/month<br/>
+http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportFor/month<br/>
 <br/>
 where: month = transactions' month<br/>
 <br/>
 Example:<br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportFor/06">
-http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportFor/06</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportFor/06">
+http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportFor/06</a><br/>
 <br/>
 where "06" = "June 2020"<br/>
 <b>2) PAS</b><br/>
 <!-- added by Mike, 20200812 -->
 <b>a) VIEW REPORT FOR THE DAY</b><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportPASForTheDay">
-http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportPASForDay<br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportPASForTheDay">
+http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportPASForDay<br/>
 </a>
 <br/>
 <b>b) VIEW REPORT FOR PREVIOUS MONTH</b><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportPAS">
-http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportPAS</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportPAS">
+http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportPAS</a><br/>
 <br/>
 <b>c) SET SPECIFIC MONTH</b><br/>
-http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportPASFor/month<br/>
+http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportPASFor/month<br/>
 <br/>
 where: month = transactions' month<br/>
 <br/>
 Example:<br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportPASFor/06">
-http://192.168.11.60/usbong_kms/index.php/report/viewReceiptReportPASFor/06</a><br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportPASFor/06">
+http://192.168.11.10/usbong_kms/index.php/report/viewReceiptReportPASFor/06</a><br/>
 <br/>
 where "06" = "June 2020"<br/>
 <!-- added by Mike, 2021530 -->
 <h2>VII. PRICE LISTS:</h2>
 <b>1) X-RAY UNIT</b><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/server/viewXRayPriceList.php">
-http://192.168.11.60/usbong_kms/server/viewXRayPriceList.php<br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/server/viewXRayPriceList.php">
+http://192.168.11.10/usbong_kms/server/viewXRayPriceList.php<br/>
 </a>
 <b>2) LAB UNIT</b><br/>
-<a target="_blank" href="http://192.168.11.60/usbong_kms/server/viewLabPriceList.php">
-http://192.168.11.60/usbong_kms/server/viewLabPriceList.php<br/>
+<a target="_blank" href="http://192.168.11.10/usbong_kms/server/viewLabPriceList.php">
+http://192.168.11.10/usbong_kms/server/viewLabPriceList.php<br/>
 </a>
 
+<h2>VIII. CONTACTS LIST:</h2>
+<b>1) MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
+TEL#1: 02-8-942-4011<br/>
+TEL#2: 02-8-941-4888<br/>
+TEL#3: 02-8-533-4651<br/>
+<br/>
+<b>2) ST. VINCENT GEN. HOSPITAL</b><br/>
+TEL#1: 02-8-359-3986<br/>
+TEL#2: 02-8-531-5080<br/>
+<br/>
+<b>3) MARIKINA VALLEY MEDICAL CENTER</b><br/>
+TEL#1: 02-8-682-2222<br/>
+<br/>
+<b>4) METRO ANTIPOLO HOSPITAL AND MEDICAL CENTER</b><br/>
+TEL#1: 02-8-722-3208<br/>
+<br/>
+<b>5) 'AMANG' RODRIGUEZ MEMORIAL MEDICAL CENTER</b><br/>
+TEL#1: 02-8-948-0595<br/>
+TEL#2: 02-8-941-0342<br/>
+<br/>
+<b>6) STA. LUCIA HEALTH CARE CENTER</b><br/>
+TEL#1: 02-8-647-2545<br/>
+<br/>
+<b>7) BARANGAY STO. NIÑO</b><br/>
+TEL#1: 02-8-534-9703<br/>
+<br/>
+<b>8) OFFICE OF PUBLIC SAFETY AND SECURITY (OPSS)-MARIKINA</b><br/>
+TEL#1: 02-8-655-3061<br/>
 <br/>
 	<br />
 	<div>***NOTHING FOLLOWS***</div>
