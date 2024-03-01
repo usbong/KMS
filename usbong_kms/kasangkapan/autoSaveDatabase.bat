@@ -1,6 +1,6 @@
 @echo OFF
 REM
-REM Copyright 2020~2022 USBONG
+REM Copyright 2020~2024 USBONG
 REM 
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -11,7 +11,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 2020
-REM @date updated: 20220408; from 20220407
+REM @date updated: 20240301; from 20220408
 REM @website address: http://www.usbong.ph
 REM
 REM Reference:
@@ -19,7 +19,43 @@ REM 1) https://phantomjs.org/; last accessed: 20200724
 REM 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
 REM
 
+REM added by Mike, 20240301
+REM note change "D:" to the correct directory, e.g. "D:"
+REM except: the following two lines
+REM cd "C:\xampp\mysql\bin\"
+REM C:
+
+REM edited by Mike, 20240301
+REM Windows 7
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
+
+REM auto-identify date format;
+REM based on location of first forward slash, i.e. /
+REM January 9, 2024, Tuesday
+REM in Windows 7, %date% outputs: Tue 01/09/2024
+REM in Windows 11, 09/01/2024
+
+REM note: local date format; dd/mm/yyyy (default in Windows 11)
+REM may vary depending on the settings;
+REM 09/01/2024
+REM year, %date:~6,4%
+REM month, %date:~3,2%
+REM day, %date:~0,2%
+
+REM set myDate=%date:~6,4%%date:~3,2%%date:~0,2%
+
+REM set myDateSlashLocation=/ 
+set myDateSlashLocation=%date:~2,1%
+
+REM echo %myDateSlashLocation%
+
+REM Windows 11 format
+if %myDateSlashLocation%==/ (
+REM	echo "DITO"	
+	set myDate=%date:~6,4%%date:~3,2%%date:~0,2%
+)
+
+
 set myTime=%time:~0,2%%time:~3,2%
 
 set myHour=%time:~0,2%
@@ -35,7 +71,14 @@ cd "C:\xampp\mysql\bin\"
 C:
 
 REM update: username and password; DB location
-mysqldump -uroot usbong_kms > "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql"
+
+REM edited by Mike, 20230925
+REM mysqldump -uroot usbong_kms > "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql"
+
+REM edited by Mike, 20240301
+REM mysqldump -uroot usbong_kms > "D:\MOSC\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql"
+mysqldump -uroot usbong_kms > "D:\MOSC\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql"
+
 
 REM added by Mike, 20220407
 REM https://stackoverflow.com/questions/97875/rm-rf-equivalent-for-windows;
@@ -43,18 +86,47 @@ REM last accessed: 20220407; answer by: Duncan Smart, 20080918; edited by: Jim M
 REM /s = removes all directories and files
 REM /q = quiet mode; no additional re-verification
 REM delete input and output folders
-rd /s /q "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\input\"
-rd /s /q "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\output\"
 
-mkdir "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\input\"
+REM edited by Mike, 20230925
+REM rd /s /q "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\input\"
+REM rd /s /q "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\output\"
+
+REM mkdir "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\input\"
+
+REM edited by Mike, 20240301
+REM rd /s /q "D:\MOSC\DB\add-on software\input\"
+REM rd /s /q "D:\MOSC\DB\add-on software\output\"
+REM
+REM mkdir "D:\MOSC\DB\add-on software\input\"
+rd /s /q "D:\MOSC\DB\add-on software\input\"
+rd /s /q "D:\MOSC\DB\add-on software\output\"
+REM
+mkdir "D:\MOSC\DB\add-on software\input\"
+
 
 REM echo "hallo"
 
-REM xcopy "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql" "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\input\" /y /F
-echo F|xcopy "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV%myDate%T%myNewTime%.sql" "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\input\" /y
 
-cd "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\"
-G:
+REM xcopy "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql" "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\input\" /y /F
+
+REM edited by Mike, 20230925
+REM echo F|xcopy "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV%myDate%T%myNewTime%.sql" "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\input\" /y
+
+REM cd "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\"
+REM G:
+
+REM edited by Mike, 20240301
+REM echo F|xcopy "D:\MOSC\DB\usbong_kmsV%myDate%T%myNewTime%.sql" "D:\MOSC\DB\add-on software\input\" /y
+REM
+REM cd "D:\MOSC\DB\add-on software\"
+REM D:
+echo F|xcopy "D:\MOSC\DB\usbong_kmsV%myDate%T%myNewTime%.sql" "D:\MOSC\DB\add-on software\input\" /y
+
+cd "D:\MOSC\DB\add-on software\"
+D:
+
+
+
 start autoUpdateFormatInputMySQLDBFile.bat
  
  
@@ -72,10 +144,10 @@ REM :exit_loop
 REM xcopy "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\output\usbong_kmsV"%myDate%"T"%myNewTime%"Updated.sql" "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV"%myDate%"T"%myNewTime%"Updated.sql" /y /F
 REM echo F| xcopy "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\output\usbong_kmsV%myDate%T%myNewTime%Updated.sql" "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV"%myDate%"T"%myNewTime%"Updated.sql" /y
 
-cd "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin"
-C:
+cd "D:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin"
+D:
 
 REM echo "pause"
-REM pause
+pause
 
-exit
+REM exit
