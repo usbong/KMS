@@ -1,6 +1,6 @@
 @echo OFF
 REM
-REM Copyright 2020~2022 USBONG
+REM Copyright 2020~2024 USBONG
 REM 
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -11,7 +11,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20220406
-REM @date updated: 20220408; from 20220407
+REM @date updated: 20240301; from 20220408
 REM website address: http://www.usbong.ph
 REM
 REM Example input file: usbong_kmsV20220405T0834.sql
@@ -19,6 +19,7 @@ REM where: 20220405: YYYYMM
 
 REM java -cp ./software: autoUpdateFormatInputMySQLDBFile input/*.sql
 REM Windows Machine
-java -cp ./software; autoUpdateFormatInputMySQLDBFile input/*.sql
+java -cp ./software; autoUpdateFormatInputMySQLDBFile input/*.sql C:/MOSC/DB/
 
-exit
+REM exit
+pause
