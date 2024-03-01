@@ -1,7 +1,8 @@
 @echo off
 REM
 REM	Auto-generate MOSC Summary Report Daily Count
-REM Copyright 2020~2023 USBONG
+REM
+REM Copyright 2020~2024 USBONG
 REM
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -12,8 +13,20 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20200306
-REM @last updated: 20231002; from 20201025
+REM @last updated: 20240301; from 20231002
 REM @website address: www.usbong.ph
+REM
+REM Reminder:
+REM Update consultation count value in list:
+REM 
+REM 1) Get Consultation Count from MySQL DB:
+REM Example:  
+REM SELECT * FROM transaction WHERE patient_id != -1 AND transaction_quantity != 0 AND item_id = 0 AND notes NOT LIKE '%ONLY%' AND notes NOT LIKE '%TRANS%' AND notes NOT LIKE '%NC;%' AND notes NOT LIKE '%REQUESTED%' AND medical_doctor_id !=0 AND added_datetime_stamp BETWEEN '2023-08-01' AND '2023-08-31'
+REM
+REM 2) Update .txt file in assets folder
+REM C:\xampp\htdocs\usbong_kms\kasangkapan\MOSC\add-on software\assets\transactions\consultationCountList.txt
+REM 
+REM 3) Execute generateMOSCSummaryReportDailyCount.bat or .sh
 REM
 
 cd /d %1%
