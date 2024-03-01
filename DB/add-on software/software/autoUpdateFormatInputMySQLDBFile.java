@@ -1,5 +1,5 @@
 /*
- * Copyright 2018~2023 SYSON, MICHAEL B.
+ * Copyright 2018~2024 SYSON, MICHAEL B.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 2018
- * @last updated: 20220925; from 20220408
+ * @last updated: 20240301; from 20220925
  * @website address: http://www.usbong.ph
  *
  */
@@ -65,6 +65,13 @@ public class autoUpdateFormatInputMySQLDBFile {
 	public static void main ( String[] args ) throws Exception
 	{					
 		makeFilePath("output"); //"output" is the folder where I've instructed the add-on software/application to store the output file			
+				
+		//added by Mike, 20240301
+		//directory changeable
+		sOutputFilenameInDBDirectory = args[1]; //"D:\\MOSC\\DB\\";
+				
+		//System.out.println(">>>>> "+args[1]);
+				
 				
 //		File mySQLDBInputFile = new File("input/"+"usbong_kmsV*"+".sql");
 		File mySQLDBInputFile = new File(args[0]);
