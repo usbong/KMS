@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2023 SYSON, MICHAEL B.
+  Copyright 2020~2024 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,13 +7,18 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230507; from 20230410
+  @date updated: 20240301; from 20230410
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
   //notes: earlier transaction tables are named based on Year, 2020
   
   //TO-DO: update: indent in instructions
+  
+   Reference:
+   1) https://stackoverflow.com/questions/74865684/php-utf8-en-decode-deprecated-what-can-i-use; last accessed: 20240301
+   answer by: Eugene Kaurov, 20230216T1657
+     
 -->
 <?php
 //defined('BASEPATH') OR exit('No direct script access allowed');
@@ -790,9 +795,9 @@
 	
 	echo '<tr class="row">';
 
-	//removed by Mike, 20230507; deprecated; csv, Mac
+	//removed by Mike, 20240301
+	//deprecated
 	//ini_set('auto_detect_line_endings', true);
-
 
 	//added by Mike, 20200523
 	if (!file_exists($filename)) {
@@ -825,10 +830,11 @@
 				//added by Mike, 20200726
 				//$cellValue = $data[$iColumnCount];	
 				
-				//edited by Mike, 20230507
-				//utf8_encode(...) deprecated in >= PHP8.2.0
+				//edited by Mike, 20240301; from 20210306
+				//deprecated
 				//$cellValue = utf8_encode($data[$iColumnCount]);
 				$cellValue = mb_convert_encoding($data[$iColumnCount], "UTF-8", mb_detect_encoding($data[$iColumnCount]));
+
 				
 				if (is_numeric($cellValue)) {
 					if ((strpos($cellValue,"#")!==false)) {
@@ -888,11 +894,11 @@
 */							
 							$iCheckboxCount=$iCheckboxCount+1;
 						}
-
-						//edited by Mike, 20230507; from 20210209
-						//utf8_encode(...) deprecated in >= PHP8.2.0
+						//edited by Mike, 20240301; from 20210306
+						//deprecated
 						//if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PHYSICIAN")) {							
-						if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1]))=="PHYSICIAN")) {
+						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1])))=="PHYSICIAN") {
+
 							if ($result[0]["medical_doctor_name"]==""){							
 								//default value
 								//edited by Mike, 20210212
@@ -903,10 +909,10 @@
 								$cellValue=$result[0]["medical_doctor_name"];
 							}
 						}
-						//edited by Mike, 20230507; from 20210306
-						//utf8_encode(...) deprecated in >= PHP8.2.0
-						//else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PATIENT NAME")) {						
-						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1]))=="PATIENT NAME")) {
+						//edited by Mike, 20240301; from 20210306
+						//deprecated
+//						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PATIENT NAME")) {						
+						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1])))=="PATIENT NAME") {
 						$cellValue="<a href='".site_url('browse/viewPatient/'.$value['patient_id'])."' id='viewPatientId'>
 							<div class='patientName'>".
 								//edited by Mike, 20220317
@@ -918,10 +924,11 @@
 		<input type="hidden" name="patientIdNameParam" value="<?php echo $value['patient_id'];?>" form="indexCardId">
 <?php
 						}
-						//edited by Mike, 20230507; from 20210211
-						//utf8_encode(...) deprecated in >= PHP8.2.0
-//						else if ((utf8_encode($data[$iColumnCount])=="OTHERS ANSWER")) {
-						else if ((mb_convert_encoding($data[$iColumnCount], "UTF-8", mb_detect_encoding($data[$iColumnCount])))=="OTHERS ANSWER") {
+						//edited by Mike, 20240301; from 20210211
+						//deprecated
+						//$cellValue = utf8_encode($data[$iColumnCount]);
+						//else if ((utf8_encode($data[$iColumnCount])=="OTHERS ANSWER")) {
+						else if ($data[$iColumnCount]=="OTHERS ANSWER") {
 							$cellValue=str_replace("OTHERS ANSWER","<input class='inputText' type='text' id='inputTextOthersAnswerId' name='inputTextOthersAnswerNameParam' form='indexCardId'>",$cellValue);
 						}
 						
@@ -942,10 +949,11 @@
 							$cellValue="<input class='inputText' type='text' id='inputTextAddressId'></textarea>";
 						}
 */						
-						//edited by Mike, 20230507; from 20210306
-						//utf8_encode(...) deprecated in >= PHP8.2.0
-						//else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR")) {
-						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1]))=="PWD/SENIOR")) {
+						//edited by Mike, 20240301; from 20210306
+						//deprecated
+//						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PWD/SENIOR")) {					
+						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1])))=="PWD/SENIOR") {
+
 							//added by Mike, 20210319
 /*							
 							if (isset($result[0]["pwd_senior_id"])){
@@ -964,10 +972,10 @@
 							$cellValue="<input class='inputText' type='text' id='inputTextPwdSeniorId' name='inputTextPwdSeniorIdNameParam' placeholder='IDENTIFICATION' form='indexCardId' value='".$myValue."'>";
 
 						}
-						//edited by Mike, 20230507
-						//utf8_encode(...) deprecated in >= PHP8.2.0
-						//else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
-						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1]))=="CIVIL STATUS")) {
+						//edited by Mike, 20240301; from 20210306
+						//deprecated
+//						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CIVIL STATUS")) {
+						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1])))=="CIVIL STATUS") {
 							$cellValue="<select id='selectCivilStatusIdParam' name='selectCivilStatusNameParam' form='indexCardId'>";
 							
 							  if (isset($result[0]["civil_status_id"])) {
@@ -1005,10 +1013,10 @@
 							  }				
 							$cellValue=$cellValue."</select>";
 						}
-						//edited by Mike, 20230507
-						//utf8_encode(...) deprecated in >= PHP8.2.0
-						//else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="OCCUPATION")) {						
-						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1]))=="OCCUPATION")) {
+						//edited by Mike, 20240301; from 20210306
+						//deprecated
+//						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="OCCUPATION")) {						
+						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1])))=="OCCUPATION") {
 /*							//edited by Mike, 20210319							
 							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId' required>";
 */
@@ -1021,10 +1029,10 @@
 //							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId'  value='".$myValue."' required>";
 							$cellValue="<input class='inputText' type='text' id='inputTextOccupationId' name='inputTextOccupationIdNameParam' form='indexCardId'  value='".$myValue."'>";
 						}
-						//edited by Mike, 20230507
-						//utf8_encode(...) deprecated in >= PHP8.2.0
-						//else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="BIRTHDAY")) {
-						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1]))=="BIRTHDAY")) {
+						//edited by Mike, 20240301
+						//deprecated
+						//else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="BIRTHDAY")) {						 
+						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1])))=="BIRTHDAY") {
 /*							//edited by Mike, 20210319							
 							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' required>";
 */
@@ -1037,11 +1045,10 @@
 //							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' value='".$myValue."' required>";
 							$cellValue="<input class='inputText' type='date' id='inputTextBirthdayId' name='inputTextBirthdayIdNameParam' form='indexCardId' value='".$myValue."'>";
 						}
-						//edited by Mike, 20230507
-						//utf8_encode(...) deprecated in >= PHP8.2.0
+						//edited by Mike, 20240301
+						//deprecated
 						//else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="CONTACT#")) {						
-						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1]))=="CONTACT#")) {
-
+						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1])))=="CONTACT#") {
 /* //edited by Mike, 20210319						
 							$cellValue="<input class='inputText' type='tel' id='inputTextContactNumberId' name='inputTextContactNumberIdNameParam' form='indexCardId' required>";
 */
