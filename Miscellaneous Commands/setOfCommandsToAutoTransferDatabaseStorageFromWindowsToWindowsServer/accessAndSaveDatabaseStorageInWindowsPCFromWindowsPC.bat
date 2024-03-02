@@ -83,10 +83,9 @@ REM update destination location
 REM destination: to Linux machine, e.g. LUBUNTU 20.04 LTS
 REM destination="D:\MOSC"
 REM destination: to Windows machine, e.g. Windows 7
-REM set destination="D:\MOSC"
-REM set destination="D:\MOSC\DB"
 REM edited by Mike, 20240302
-set destination="C:\MOSC\DB\"
+REM set destination="C:\MOSC\DB\"
+set destination="D:\MOSC\DB\"
 
 
 REM echo "destination: "$destination
