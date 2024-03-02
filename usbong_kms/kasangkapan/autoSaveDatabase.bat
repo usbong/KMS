@@ -11,7 +11,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 2020
-REM @date updated: 20240301; from 20220408
+REM @date updated: 20240302; from 20240301
 REM @website address: http://www.usbong.ph
 REM
 REM Reference:
@@ -20,10 +20,7 @@ REM 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 
 REM
 
 REM added by Mike, 20240301
-REM note change "D:" to the correct directory, e.g. "D:"
-REM except: the following two lines
-REM cd "C:\xampp\mysql\bin\"
-REM C:
+REM note change "C:" to the correct directory, e.g. "D:"
 
 REM edited by Mike, 20240301
 REM Windows 7
@@ -77,7 +74,7 @@ REM mysqldump -uroot usbong_kms > "G:\Usbong MOSC\Everyone\Information Desk\DB\u
 
 REM edited by Mike, 20240301
 REM mysqldump -uroot usbong_kms > "D:\MOSC\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql"
-mysqldump -uroot usbong_kms > "D:\MOSC\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql"
+mysqldump -uroot usbong_kms > "C:\MOSC\DB\usbong_kmsV"%myDate%"T"%myNewTime%".sql"
 
 
 REM added by Mike, 20220407
@@ -98,10 +95,10 @@ REM rd /s /q "D:\MOSC\DB\add-on software\input\"
 REM rd /s /q "D:\MOSC\DB\add-on software\output\"
 REM
 REM mkdir "D:\MOSC\DB\add-on software\input\"
-rd /s /q "D:\MOSC\DB\add-on software\input\"
-rd /s /q "D:\MOSC\DB\add-on software\output\"
+rd /s /q "C:\MOSC\DB\add-on software\input\"
+rd /s /q "C:\MOSC\DB\add-on software\output\"
 REM
-mkdir "D:\MOSC\DB\add-on software\input\"
+mkdir "C:\MOSC\DB\add-on software\input\"
 
 
 REM echo "hallo"
@@ -120,10 +117,10 @@ REM echo F|xcopy "D:\MOSC\DB\usbong_kmsV%myDate%T%myNewTime%.sql" "D:\MOSC\DB\ad
 REM
 REM cd "D:\MOSC\DB\add-on software\"
 REM D:
-echo F|xcopy "D:\MOSC\DB\usbong_kmsV%myDate%T%myNewTime%.sql" "D:\MOSC\DB\add-on software\input\" /y
+echo F|xcopy "C:\MOSC\DB\usbong_kmsV%myDate%T%myNewTime%.sql" "C:\MOSC\DB\add-on software\input\" /y
 
-cd "D:\MOSC\DB\add-on software\"
-D:
+cd "C:\MOSC\DB\add-on software\"
+C:
 
 
 
@@ -144,10 +141,10 @@ REM :exit_loop
 REM xcopy "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\output\usbong_kmsV"%myDate%"T"%myNewTime%"Updated.sql" "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV"%myDate%"T"%myNewTime%"Updated.sql" /y /F
 REM echo F| xcopy "G:\Usbong MOSC\Everyone\Information Desk\DB\add-on software\output\usbong_kmsV%myDate%T%myNewTime%Updated.sql" "G:\Usbong MOSC\Everyone\Information Desk\DB\usbong_kmsV"%myDate%"T"%myNewTime%"Updated.sql" /y
 
-cd "D:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin"
-D:
+cd "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin"
+C:
 
 REM echo "pause"
-pause
+REM pause
 
-REM exit
+exit
