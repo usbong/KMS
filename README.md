@@ -167,6 +167,8 @@ TODO: -update: this
   
 5) "Miscellaneous Commands"/autoUpdateTotalQuantitySoldPerItemDatabase.bat
 
+remember to update getTransactionsListFromFile() in [Browse_Model](https://github.com/usbong/KMS/blob/master/usbong_kms/application/models/Browse_Model.php)
+
 6) Models/Browse_Models.php; function getTransactionsListFromFile()
 
 7) kasangkapan/autoScreenCaptureReports.bat
