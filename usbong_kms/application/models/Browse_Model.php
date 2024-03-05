@@ -5885,9 +5885,14 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	public function getTransactionsListFromFile() {		
 		//edited by Mike, 20230926
 		//$filename="G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\\usbongKMSItemListTransaction2020OK.txt";
-		$filename="D:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt";
+		
+		//edited by Mike, 20240305
+		//$filename="D:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt";
+		$filename="C:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt";
 
-		ini_set('auto_detect_line_endings', true);
+		//removed by Mike, 20240305
+		//deprecated
+		//ini_set('auto_detect_line_endings', true);
 
 		//added by Mike, 20200523
 		if (!file_exists($filename)) {
@@ -5925,7 +5930,11 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 					
 					//added by Mike, 20200726
 					//$cellValue = $data[$iColumnCount];	
-					$cellValue = utf8_encode($data[$iColumnCount]);
+					//edited by Mike, 20240305
+					//deprecated
+					//$cellValue = utf8_encode($data[$iColumnCount]);
+					$cellValue = mb_convert_encoding($data[$iColumnCount], "UTF-8", mb_detect_encoding($data[$iColumnCount]));
+					
 					
 	//				echo $cellValue."<br/>";
 					
