@@ -2414,6 +2414,16 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
 
+	//added by Mike, 20240305
+	$data['bFoldImageListValue'] = $bFoldImageListValue;
+	
+	if (isset($data['result'][0])) {
+			//echo "DITO!<br/>";
+			//return;
+			
+//			$data['result'][0]['medical_doctor_id']=0;
+//	}
+		
 		//added by Mike, 20210707
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($data['result'][0]['medical_doctor_id'], $patientId);
 
@@ -2432,8 +2442,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20210316
 		$data['resultIndexCardImageList'] = $this->Browse_Model->getIndexCardImageListForPatient($patientId);
 
-		//added by Mike, 20210320
-		$data['bFoldImageListValue'] = $bFoldImageListValue;
+		//removed by Mike, 20240305; from 20210320
+		//$data['bFoldImageListValue'] = $bFoldImageListValue;
 
 /*
 		echo "HALLO: ".$data['result'][0]["medical_doctor_id"]."<br/><br/>";
@@ -2448,6 +2458,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 
 		$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
+
+	//added by Mike, 20240305
+	}
 
 	
 		//echo "HALLO: ".$data['result'][0]["patient_id"]."<br/><br/>";
