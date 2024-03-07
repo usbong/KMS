@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2023 SYSON, MICHAEL B.
+' Copyright 2020~2024 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20231027; from 20230331
+' @date updated: 20240307; from 20231027
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -717,7 +717,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<tr>
 			<td class="columnTableHeaderDate">
 				<b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
-			</td>
+				
+<?php
+//echo ">>>>".$result[0]['patient_id'];
+//echo ">>>>".$result[0]['patient_name']; //NONE
+
+?>				
+				
+			</td>			
+<?php 
+//added by Mike, 20240307
+if (strpos($result[0]['patient_name'],"NONE")!==false) {
+?>
+<td class="columnTableHeaderIndexCard">
+	NO AVAILABLE INDEX CARD
+</td>
+<?php	
+}
+else {
+?>			
 			<td class="columnTableHeaderIndexCard">
 <!-- edited by Mike, 20210320
 					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'])?>' id="viewPatientIndexCard">
@@ -735,6 +753,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>								
 					</a>
 			</td>
+<?php 
+//added by Mike, 20240307
+}
+?>			
 		</tr>
 	</table>
 
