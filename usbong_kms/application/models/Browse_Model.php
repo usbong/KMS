@@ -4013,6 +4013,13 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$outputTransaction = $rowArray[0];
 		}
 
+		//added by Mike, 20240319
+		//TODO: -verify: this
+		//double click results to null?
+		if (!isset($outputTransaction)) {
+			return;
+		}
+
 		//added by Mike, 20210128
 		//part 3
 		//--
