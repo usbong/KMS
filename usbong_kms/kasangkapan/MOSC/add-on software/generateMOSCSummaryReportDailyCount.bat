@@ -13,7 +13,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20200306
-REM @last updated: 20240302; from 20240301
+REM @last updated: 20240401; from 20240302
 REM @website address: www.usbong.ph
 REM
 REM Reminder:
@@ -68,4 +68,5 @@ rem "add-on software"\requirements\"chrome.exe - Shortcut.lnk" file:///D:/2019/a
 
 REM edited by Mike, 202301002
 REM PAUSE
-EXIT
+REM removed by Mike, 20240401; otherwise, screen capture not generated
+REM EXIT
