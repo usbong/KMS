@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2023 SYSON, MICHAEL B.
+' Copyright 2020~2024 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230529; from 20230523
+' @date updated: 20240402; from 20230529
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -524,7 +524,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//$iMOSC = ($value['fee']-500)*.30;
 										//edited by Mike, 20210122
 										//max dexa: 2
-										if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+										//edited by Mike, 20240403
+										if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) or 
+										(strpos(strtoupper($value['notes']), "DEXAX2")!==false)) {
 											$iMOSC = ($value['fee']-1000)*.30;
 										}
 										else {
@@ -612,7 +614,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//edited by Mike, 20210122
 										//$iNetPF = ($value['fee']-500)*.70+500;
 										//max dexa: 2
-										if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+										//edited by Mike, 20240403
+										if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) or 
+										(strpos(strtoupper($value['notes']), "DEXAX2")!==false)) {											
 											$iNetPF = ($value['fee']-1000)*.70+1000;
 										}
 										else {
