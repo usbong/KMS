@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240402; from 20230529
+' @date updated: 20240403; from 20240402
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -495,9 +495,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20200824
 //									$iFee = $iFee - 500;
 									$iFee = $iFee;
+									
+									//added by Mike, 20240403
+									echo $iFee;
 								}						
+								//added by Mike, 20240403
+								else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+									//$iMOSC = ($value['fee']-200)*.30;
+									
+									echo ($iFee-200)." + 200";
+								}	
+								//added by Mike, 20240403
+								else {
+									echo $iFee;
+								}
 								
-								echo $iFee;
+								//removed by Mike, 20240403
+								//echo $iFee;
 								
 								$iTotalFee += $iFee; //$value['fee'];
 							?>
@@ -533,6 +547,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											$iMOSC = ($value['fee']-500)*.30;
 										}
 									}
+									//added by Mike, 20240403
+//									else if (strpos(strtoupper($value['notes']), "MEDCERT")!==false) {
+									else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+										$iMOSC = ($value['fee']-200)*.30;
+									}									
+									
 /*									//removed by Mike, 20200824									
 									//added by Mike, 20200824
 									else if (strpos(strtoupper($value['notes']), "MINORSET")!==false) {
@@ -615,6 +635,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//$iNetPF = ($value['fee']-500)*.70+500;
 										//max dexa: 2
 										//edited by Mike, 20240403
+										//TODO: -update: to include auto-remove space
 										if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) or 
 										(strpos(strtoupper($value['notes']), "DEXAX2")!==false)) {											
 											$iNetPF = ($value['fee']-1000)*.70+1000;
@@ -622,7 +643,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										else {
 											$iNetPF = ($value['fee']-500)*.70+500;
 										}
+
+										//added by Mike, 20240403
+										//output: whole numbers
+										echo floor(($iNetPF*100)/100);
 									}
+									//added by Mike, 20240403
+									else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+										//$iNetPF = ($value['fee']-200)*.70;//+200;
+										$iNetPF = ($value['fee']-200)*.70+200;
+										
+										//output: whole numbers
+										//echo floor(($iNetPF*100)/100)." + 200";	
+										echo floor((($iNetPF-200)*100)/100)." + 200";
+									}									
+
 /*									//removed by Mike, 20200824									
 									//added by Mike, 20200824
 									else if (strpos(strtoupper($value['notes']), "MINORSET")!==false) {
@@ -632,12 +667,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$iNetPF = $value['fee']*.70;
 
+										//added by Mike, 20240403
+										//output: whole numbers
+										echo floor(($iNetPF*100)/100);
 									}
 								}
 
-								//added by Mike, 20200407
+/*
+								//removed by Mike, 20240403; from 20200407
 								//output: whole numbers
 								echo floor(($iNetPF*100)/100);
+*/
 
 								//added by Mike, 20200906
 								//deduct: 12% to Net Fee if Dr. Honesto and has MOSC OR

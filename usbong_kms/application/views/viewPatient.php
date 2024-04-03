@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240307; from 20231027
+' @date updated: 20240403; from 20240307
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -516,6 +516,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			else if (notes.indexOf("DEXA")!==-1) {
 				professionalFee = parseInt(professionalFee) + 500;
+			}
+			
+			//added by Mike, 20240403
+			if ((notes.indexOf("MEDCERT")!==-1) ||
+				(notes.indexOf("MED CERT")!==-1)){
+				professionalFee = parseInt(professionalFee) + 200;
 			}
 
 /*	//removed by Mike, 20200824			
