@@ -636,8 +636,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//max dexa: 2
 										//edited by Mike, 20240403
 										//TODO: -update: to include auto-remove space
+/*										
 										if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) or 
 										(strpos(strtoupper($value['notes']), "DEXAX2")!==false)) {											
+*/										
+										if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXA2")!==false) or 
+										(strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXAX2")!==false)) {											
 											$iNetPF = ($value['fee']-1000)*.70+1000;
 										}
 										else {
