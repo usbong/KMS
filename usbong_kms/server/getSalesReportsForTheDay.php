@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20240108; from 20231003
+  @date updated: 20240404; from 20240108
   @website address: www.usbong.ph
   
   Input:
@@ -1274,6 +1274,10 @@ echo "hallo<br/>";
 							}
 
 						}
+						//added by Mike, 20240404
+						else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-200)*.70+200;
+						}													
 						else if (strpos($value['notes'],"NC")!==false) {
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 						}
