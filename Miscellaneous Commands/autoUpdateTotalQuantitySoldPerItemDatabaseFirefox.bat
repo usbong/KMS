@@ -1,5 +1,5 @@
 REM
-REM Copyright 2020~2024 USBONG
+REM Copyright 2020~2023 USBONG
 REM 
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -10,7 +10,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20201216T09:06
-REM @date updated: 20240417; from 20230926
+REM @date updated: 20230926; from 20230410
 REM @website address: http://www.usbong.ph
 REM
 REM Notes:
@@ -20,16 +20,12 @@ REM 3) reusable technique
 
 REM edited by Mike, 20230926
 REM "C:\Program Files\Mozilla Firefox\firefox.exe" "http://localhost/usbong_kms/index.php/browse/updateTotalQuantitySoldPerItem"
-REM 20240417
-REM "C:\Program Files (x86)\Mozilla Firefox\firefox.exe" "http://localhost/usbong_kms/index.php/browse/updateTotalQuantitySoldPerItem"
-"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" "http://localhost/usbong_kms/index.php/browse/updateTotalQuantitySoldPerItem"
+"C:\Program Files (x86)\Mozilla Firefox\firefox.exe" "http://localhost/usbong_kms/index.php/browse/updateTotalQuantitySoldPerItem"
 
 REM added by Mike, 20230410
 REM TO-DO: -update: .bat file name; set of COMMANDS at startup; task scheduler
 REM edited by Mike, 20230926
 REM "C:\Program Files\Mozilla Firefox\firefox.exe" "http://localhost/usbong_kms/server/autoSetSelectMySQLGlobalVariables.php"
-REM 20240417
-REM "C:\Program Files (x86)\Mozilla Firefox\firefox.exe" "http://localhost/usbong_kms/server/autoSetSelectMySQLGlobalVariables.php"
-"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" "http://localhost/usbong_kms/server/autoSetSelectMySQLGlobalVariables.php"
+"C:\Program Files (x86)\Mozilla Firefox\firefox.exe" "http://localhost/usbong_kms/server/autoSetSelectMySQLGlobalVariables.php"
 
 exit
