@@ -197,8 +197,15 @@ update IP address of target KMS server to access
 
 source="unit_member@192.168.1.99:/home/unit_member/Documents/halimbawa/DB/"
 
+### Files to update based on Server Browser (MS Edge? Firefox)
+
+1) https://github.com/usbong/KMS/blob/master/usbong_kms/kasangkapan/viewAllReportsForTheDayUnified.bat
+
+2) https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/autoUpdateTotalQuantitySoldPerItemDatabase.bat
+
+
 ## Open Source Software License
-Copyright 2019~2023 SYSON, MICHAEL B.
+Copyright 2019~2024 SYSON, MICHAEL B.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
