@@ -153,6 +153,8 @@ Allow apps downloaded from: App Store and identified developers
 
 directory location: /Applications/XAMPP/xamppfiles/htdocs
 
+How to start application: https://www.apachefriends.org/faq_osx.html
+
 TODO: -update: this
 
 ## SELECT FILES to START auto-generation of REPORTS
