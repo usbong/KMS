@@ -205,8 +205,20 @@ source="unit_member@192.168.1.99:/home/unit_member/Documents/halimbawa/DB/"
 
 2) https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/autoUpdateTotalQuantitySoldPerItemDatabase.bat
 
+## TASK SCHEDULERS
+
+### Windows 11
+
+1)
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/kmsTaskSchedulerPart1V20240422.jpg" width="100%">
+
+2)
+
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/kmsTaskSchedulerPart2V20240422.jpg" width="80%">
 
 ## Open Source Software License
+
 Copyright 2019~2024 SYSON, MICHAEL B.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
