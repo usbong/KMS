@@ -209,13 +209,8 @@ source="unit_member@192.168.1.99:/home/unit_member/Documents/halimbawa/DB/"
 
 ### Windows 11
 
-1)
+<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/kmsTaskSchedulerPart1V20240423.jpg" width="100%">
 
-<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/kmsTaskSchedulerPart1V20240422.jpg" width="100%">
-
-2)
-
-<img src="https://github.com/usbong/KMS/blob/master/P%26S/res/kmsTaskSchedulerPart2V20240422.jpg" width="80%">
 
 ## Open Source Software License
 
