@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20240404; from 20240108
+  @date updated: 20240425; from 20240404
   @website address: www.usbong.ph
   
   Input:
@@ -825,7 +825,8 @@
 								//edited by Mike, 20200910
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 								$myNetFeeValue = $value['fee']*0.70;
-							}								
+							}							
+							
 							
 							//edited by Mike, 20220815
 							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
@@ -973,7 +974,8 @@ echo "hallo<br/>";
 									//added by Mike, 20200531
 									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 								}
-								else*/if (strpos($value['notes'],"NC")!==false) {
+								else*/
+									if (strpos($value['notes'],"NC")!==false) {
 									$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 								}
 								else if (strpos($value['notes'],"NO CHARGE")!==false) {
@@ -1058,7 +1060,14 @@ echo "hallo<br/>";
 									}									
 								}
 							}
+							
+							//added by Mike, 20240425
+							if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-200)*.70+200;
+								$iNetFeeTotalCount = $iNetFeeTotalCount + 200*.30;
+							}									
 
+							
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
 							
 
@@ -1082,7 +1091,7 @@ echo "hallo<br/>";
 									//added by Mike, 20200531
 									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 								}
-							}
+							}							
 							
 							if (strpos($value['notes'],"MINORSET")!==false) {
 								$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
