@@ -1,6 +1,6 @@
 /*
 '
-' Copyright 2020~2023 USBONG
+' Copyright 2020~2024 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20231002; from 20221203
+' @date updated: 20240425; from 20231002
 ' @website address: http://www.usbong.ph
 '
 ' Reference:
@@ -34,6 +34,10 @@ var fileExtension = '';
 //added by Mike, 20210225
 var iPostPositionInFilename=fileName.indexOf("/_post")
 var data=""
+
+//added by Mike, 20240425
+var iUpdateTotalQuantitySoldPerItemPositionInFilename=fileName.indexOf("updateTotalQuantitySoldPerItem")
+
 
 if (iPostPositionInFilename !== -1) {
 	//Reference: https://stackoverflow.com/questions/1989009/javascript-substring;
@@ -69,6 +73,12 @@ if (iPostPositionInFilename !== -1) {
 
 	webAddress = 'http://localhost/usbong_kms/index.php/browse/';
 }	
+
+//added by Mike, 20240425
+if (iUpdateTotalQuantitySoldPerItemPositionInFilename !== -1) {
+//	data=system.args[2];
+	webAddress = 'http://localhost/usbong_kms/index.php/browse/';	
+}
 
 //added by Mike, 20201017
 var isNoonReport = system.args[3];
@@ -113,6 +123,10 @@ var page = require('webpage').create();
 
 //edited by Mike, 20200726
 //page.open('http://localhost/usbong_kms/index.php/REPORT/'+filename, function(status) {
+
+//added by Mike, 20240425
+//http://localhost/usbong_kms/index.php/browse/updateTotalQuantitySoldPerItem
+console.log("DEBUG Status: " + webAddress+fileName+fileExtension);
 
 //edited by Mike, 20210225; edited again by Mike, 20220616
 //TO-DO: -reverify: input, e.g. to be searched item keyphrase, with space
