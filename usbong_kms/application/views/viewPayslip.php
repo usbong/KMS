@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240403; from 20240402
+' @date updated: 20240501; from 20240403
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -654,12 +654,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 									//added by Mike, 20240403
 									else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
-										//$iNetPF = ($value['fee']-200)*.70;//+200;
-										$iNetPF = ($value['fee']-200)*.70+200;
 										
-										//output: whole numbers
-										//echo floor(($iNetPF*100)/100)." + 200";	
-										echo floor((($iNetPF-200)*100)/100)." + 200";
+										//added by Mike, 20240501
+										//echo ">>>>".$value['medical_doctor_name'];
+										if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
+											//$iNetPF = ($value['fee']-200)*.70;//+200;
+											$iNetPF = ($value['fee']-300)*.70+300;
+											
+											//output: whole numbers
+											//echo floor(($iNetPF*100)/100)." + 200";	
+											echo floor((($iNetPF-300)*100)/100)." + 300";
+										}
+										else {										
+											//$iNetPF = ($value['fee']-200)*.70;//+200;
+											$iNetPF = ($value['fee']-200)*.70+200;
+											
+											//output: whole numbers
+											//echo floor(($iNetPF*100)/100)." + 200";	
+											echo floor((($iNetPF-200)*100)/100)." + 200";
+										}
 									}									
 
 /*									//removed by Mike, 20200824									
