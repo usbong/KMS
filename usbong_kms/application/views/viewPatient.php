@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2024 SYSON, MICHAEL B.
+' Copyright 2020~2024 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240403; from 20240307
+' @date updated: 20240502; from 20240403
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -519,9 +519,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			
 			//added by Mike, 20240403
-			if ((notes.indexOf("MEDCERT")!==-1) ||
-				(notes.indexOf("MED CERT")!==-1)){
-				professionalFee = parseInt(professionalFee) + 200;
+			if ((notes.indexOf(".RT")!==-1) ||
+				(notes.indexOf("MED CERT")!==-1) ||
+				(notes.indexOf("MEDCERT")!==-1)){
+				//edited by Mike, 20240502
+				//DR PETER
+				//professionalFee = parseInt(professionalFee) + 200;
+				//professionalFee = parseInt(professionalFee) + 300;
+				
+				if (medicalDoctorId==2) { //DR PETER
+					professionalFee = parseInt(professionalFee) + 300;
+				}
+				else {
+					professionalFee = parseInt(professionalFee) + 200;
+				}								
 			}
 
 /*	//removed by Mike, 20200824			
