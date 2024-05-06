@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240501; from 20240403
+' @date updated: 20240506; from 20240501
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -503,7 +503,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
 									//$iMOSC = ($value['fee']-200)*.30;
 									
-									echo ($iFee-200)." + 200";
+									//edited by Mike, 20240506
+									//echo ($iFee-200)." + 200";
+									
+//									if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
+									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
+										echo ($iFee-300)." + 300";
+									}
+									else {										
+										echo ($iFee-200)." + 200";
+									}									
 								}	
 								//added by Mike, 20240403
 								else {
@@ -550,7 +559,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//added by Mike, 20240403
 //									else if (strpos(strtoupper($value['notes']), "MEDCERT")!==false) {
 									else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
-										$iMOSC = ($value['fee']-200)*.30;
+										//edited by Mike, 20240506
+										//$iMOSC = ($value['fee']-200)*.30;
+										
+										//echo ">>>>".$value['medical_doctor_name'];
+//										if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
+											$iMOSC = ($value['fee']-300)*.30;
+										}
+										else {										
+											$iMOSC = ($value['fee']-200)*.30;
+										}																	
 									}									
 									
 /*									//removed by Mike, 20200824									
@@ -657,7 +676,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										
 										//added by Mike, 20240501
 										//echo ">>>>".$value['medical_doctor_name'];
-										if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
+										//if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
 											//$iNetPF = ($value['fee']-200)*.70;//+200;
 											$iNetPF = ($value['fee']-300)*.70+300;
 											
