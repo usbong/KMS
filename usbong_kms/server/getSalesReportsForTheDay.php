@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20240501; from 20240425
+  @date updated: 20240506; from 20240501
   @website address: www.usbong.ph
   
   Input:
@@ -1288,7 +1288,16 @@ echo "hallo<br/>";
 							//edited by Mike, 20240501
 							//DR PETER MEDCERT; updated from 200PHP to 300PHP;
 							//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-200)*.70+200;
-							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-300)*.70+300;
+
+							//edited by Mike, 20240506
+							//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-300)*.70+300;
+							
+							if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-300)*.70+300;
+							}
+							else {										
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-200)*.70+200;
+							}
 						}													
 						else if (strpos($value['notes'],"NC")!==false) {
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
