@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240506; from 20240502
+' @date updated: 20240510; from 20240506
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -530,10 +530,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//edited by Mike, 20240506
 				//if (medicalDoctorId==2) { //DR PETER
 				if (notes.indexOf("MEDCERT3")!==-1){
-					professionalFee = parseInt(professionalFee) + 300;
+					//edited by Mike, 20240510
+					//professionalFee = parseInt(professionalFee) + 300;
+					if (notes.indexOf("MEDCERT3X2")!==-1){
+						professionalFee = parseInt(professionalFee) + 300*2;
+					}
+					else {
+						professionalFee = parseInt(professionalFee) + 300;
+					}
 				}
 				else {
-					professionalFee = parseInt(professionalFee) + 200;
+					//edited by Mike, 20240510
+					//professionalFee = parseInt(professionalFee) + 200;
+					if ((notes.indexOf("MEDCERT2X2")!==-1) || 
+					   (notes.indexOf("MEDCERTX2")!==-1)) {
+						professionalFee = parseInt(professionalFee) + 200*2;
+					}
+					else {
+						professionalFee = parseInt(professionalFee) + 200;
+					}
 				}								
 			}
 
