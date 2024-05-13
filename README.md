@@ -211,6 +211,21 @@ source="unit_member@192.168.1.99:/home/unit_member/Documents/halimbawa/DB/"
 
 <img src="https://github.com/usbong/KMS/blob/master/P%26S/res/kmsTaskSchedulerPart1V20240423.jpg" width="100%">
 
+### --
+
+<b>Program/script:</b> `C:\Windows\System32\cmd.exe`
+
+<b>Add arguments (optional):</b> `/c C:\xampp\htdocs\usbong_kms\kasangkapan\autoScreenCaptureReportUpdateTotalQuantitySoldPerItem.bat`
+
+<b>Start in (optional):</b> `C:\xampp\htdocs\usbong_kms\kasangkapan\`
+
+
+<img src="https://github.com/usbong/KMS/blob/master/Screenshots/Database/taskSchedulerActionV20240513.png" width="60%">
+
+
+### Reference
+
+https://stackoverflow.com/questions/26420003/batch-file-runs-manually-but-not-in-task-scheduler; last accessed: 20240513
 
 ## Open Source Software License
 
