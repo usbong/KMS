@@ -542,6 +542,11 @@ class Report_Model extends CI_Model
 		//removed by Mike, 20210902
 //		$this->db->where('t2.transaction_quantity!=',0);
 
+		//added by Mike, 20240517
+		//TODO: -verify this;
+		//if has "TRANSACTION" added official receipt via PLUS button in acknowledgment form page
+		$this->db->not_like('t2.notes',"TRANSACTION");
+		
 		//added by Mike, 20210902
 		$this->db->group_by('t1.patient_id');
 
