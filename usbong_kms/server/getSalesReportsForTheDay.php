@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20240510; from 20240506
+  @date updated: 20240518; from 20240510
   @website address: www.usbong.ph
   
   Input:
@@ -1081,7 +1081,10 @@ echo "hallo<br/>";
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 */
 								//max dexa: 2
-								if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+								//edited by Mike, 20240518
+								//if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+								if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) ||
+									(strpos(strtoupper($value['notes']), "DEXAX2")!==false)){
 									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
 									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
 								}
@@ -1243,7 +1246,10 @@ echo "hallo<br/>";
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 							}
 */
-							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+							//edited by Mike, 20240518
+							//if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+							if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX2")!==false)){								
 								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
 
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
@@ -1270,8 +1276,12 @@ echo "hallo<br/>";
 							//added by Mike, 20200531
 							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
 */
+
 							//max dexa: 2
-							if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+							//edited by Mike, 20240518
+							//if (strpos(strtoupper($value['notes']), "DEXA2")!==false) {
+							if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) ||
+							    (strpos(strtoupper($value['notes']), "DEXAX2")!==false)){
 								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-1000)*0.70 + 1000;									
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
 							}
