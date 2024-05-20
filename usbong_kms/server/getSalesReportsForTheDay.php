@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20240518; from 20240510
+  @date updated: 20240520; from 20240518
   @website address: www.usbong.ph
   
   Input:
@@ -1061,12 +1061,31 @@ echo "hallo<br/>";
 								}
 							}
 							
-							//added by Mike, 20240425
+							//edited by Mike, 20240520; from 20240425
+					
 							if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-200)*.70+200;
-								$iNetFeeTotalCount = $iNetFeeTotalCount + 200*.30;
-							}									
-
+/*								//edited by Mike, 20240520
+								$iNetFeeTotalCount = $iNetFeeTotalCount + 300*.30;
+*/
+								if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
+									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
+										$iNetFeeTotalCount = $iNetFeeTotalCount + (300*2)*.30;
+									}
+									else {
+										$iNetFeeTotalCount = $iNetFeeTotalCount + 300*.30;
+									}
+								}
+								else {	
+									if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
+										(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
+										$iNetFeeTotalCount = $iNetFeeTotalCount + (200*2)*.30;
+									}
+									else {
+										$iNetFeeTotalCount = $iNetFeeTotalCount + 200*.30;
+									}
+								}
+							}
 							
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
 							
