@@ -1,6 +1,6 @@
 @echo off
 REM
-REM Copyright 2021~2023 SYSON, MICHAEL B.
+REM Copyright 2021~2024 USBONG
 REM 
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -11,15 +11,46 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20210225
-REM @date updated: 20230811; from 20230426
+REM @date updated: 20240606; from 20230811
+REM @website address: www.usbong.ph
 REM
 REM Reference:
 REM 1) https://phantomjs.org/; last accessed: 20200724
 REM 2) downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
 REM
 
+REM edited by Mike, 20240606
+REM set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
+REM set myDateDay=%date:~0,3%
+
+REM Windows 7
 set myDate=%date:~10,4%%date:~4,2%%date:~7,2%
-set myDateDay=%date:~0,3%
+
+REM auto-identify date format;
+REM based on location of first forward slash, i.e. /
+REM January 9, 2024, Tuesday
+REM in Windows 7, %date% outputs: Tue 01/09/2024
+REM in Windows 11, 09/01/2024
+
+REM note: local date format; dd/mm/yyyy (default in Windows 11)
+REM may vary depending on the settings;
+REM 09/01/2024
+REM year, %date:~6,4%
+REM month, %date:~3,2%
+REM day, %date:~0,2%
+
+REM set myDate=%date:~6,4%%date:~3,2%%date:~0,2%
+
+REM set myDateSlashLocation=/ 
+set myDateSlashLocation=%date:~2,1%
+
+REM echo %myDateSlashLocation%
+
+REM Windows 11 format
+if %myDateSlashLocation%==/ (
+REM	echo "DITO"	
+	set myDate=%date:~6,4%%date:~3,2%%date:~0,2%
+)
 
 REM removed by Mike, 20210225
 REM echo %myDateDay%
@@ -29,9 +60,11 @@ REM phantomjs saveWebPageAsImageFile.js "confirmMedicine"
 REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postdiclogen" 
 REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postcelcoxx" 
 REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postcelcoxx" ") 400"
-REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_poststarcox"
+phantomjs saveWebPageAsImageFile.js "confirmMedicine/_poststarcox"
 REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postgabica" 
 phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postgabix"
 REM phantomjs saveWebPageAsImageFile.js "confirmMedicine/_postreventa"
 
-explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
+REM edited by Mike, 20240606
+REM explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\phantomjs-2.1.1-windows\bin\output\"%myDate%
+explorer "C:\xampp\htdocs\usbong_kms\kasangkapan\output\"%myDate%
