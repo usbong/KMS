@@ -152,6 +152,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200407
 		$data['nameParam'] = $_POST['nameParam'];
 		
+		//added by Mike, 20240624		
+		$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
 			redirect('browse/searchPatient');
