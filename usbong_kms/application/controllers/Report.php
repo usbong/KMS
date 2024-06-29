@@ -953,6 +953,21 @@ class Report extends CI_Controller { //MY_Controller {
 
 		$this->load->view('viewReportMedicineAsteriskUnified', $data);
 	}
+	
+	//added by Mike, 20240629
+	/*
+SELECT item_id, item_name, item_price FROM item WHERE is_hidden != 1 AND item_type_id = 1 ORDER BY item_total_sold DESC;	
+	*/
+	public function viewReportMedicinePriceList()
+	{
+		$this->load->model('Report_Model');
+		$itemTypeId = 1; //1 = Medicine
+
+		$data["result"] = $this->Report_Model->getItemPriceList($itemTypeId);
+
+		$this->load->view('viewReportMedicinePriceList', $data);
+	}
+	
 
 	//added by Mike, 20201127
 	public function viewReportSnack()
