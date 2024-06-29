@@ -2104,6 +2104,10 @@ class Report_Model extends CI_Model
 	//added by Mike, 20240629
 /*
 	SELECT item_id, item_name, item_price FROM item WHERE is_hidden != 1 AND item_type_id = 1 ORDER BY item_total_sold DESC;
+
+	// --
+	
+	SELECT item_id, item_name, item_price FROM item WHERE is_hidden != 1 AND item_type_id = 1 ORDER BY item_name ASC;
 */	
 	public function getItemPriceList($itemTypeId) 
 	{	
