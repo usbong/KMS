@@ -2100,7 +2100,42 @@ class Report_Model extends CI_Model
 //		return $rowArray;
 		return $outputArray;
 	}	
+	
+	//added by Mike, 20240629
+/*
+	SELECT item_id, item_name, item_price FROM item WHERE is_hidden != 1 AND item_type_id = 1 ORDER BY item_total_sold DESC;
+*/	
+	public function getItemPriceList($itemTypeId) 
+	{	
+		$this->db->select('t1.item_id, t1.item_name, t1.item_price');		
 
+		$this->db->from('item as t1');
+
+		//$this->db->distinct('t1.item_name');
+		$this->db->distinct('t1.item_id');
+		
+		$this->db->where('t1.item_type_id', $itemTypeId);
+		$this->db->where('t1.is_hidden', 0); //not hidden
+		$this->db->where('t1.item_id!=', 0);
+
+//		$this->db->order_by('t1.item_total_sold`', 'DESC');
+		$this->db->order_by('t1.item_name`', 'ASC');
+		
+		//$this->db->limit(8);
+		
+		$query = $this->db->get('item');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False; //edited by Mike, 20190722
+		}
+
+		return $rowArray;
+		//return $outputArray;
+	}
+	
 	//TO-DO: -update: this
 	//added by Mike, 20200520
 	public function getPurchasedItemTransactionsForTheDayUnifiedAll($itemTypeId) 
