@@ -2910,7 +2910,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		//reference: https://github.com/usbong/SLHCC/blob/e93bda14d0b3f63e6d7eab28f734d228d4d09137/Master%20List/generateDoctorReferralPTTreatmentReportFromMasterList/java/linux/software/generateDoctorReferralPTTreatmentSummaryReportOfTheTotalOfAllInputFilesFromMasterList.java;
 		//last accessed: 20230110
 		$notes = str_replace("DISCOUNTE","DISCOUNTED",$notes);
-			
+		
+		//added by Mike, 20240704
+		$notes = str_replace("DISCOUNTEDD","DISCOUNTED",$notes);
+		
 		$data['notes'] = $notes."; "."UNPAID";
 		
 		date_default_timezone_set('Asia/Hong_Kong');
