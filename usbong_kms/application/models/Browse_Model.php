@@ -4176,6 +4176,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	//added by Mike, 20200529
 	public function addPatientName($param) 
 	{			
+		//added by Mike, 20240802		
+		//remove all commas; then, add only one comma later
+		$param['patientLastNameParam'] = str_replace(",","",$param['patientLastNameParam']);
+		$param['patientFirstNameParam'] = str_replace(",","",$param['patientFirstNameParam']);
+	
 		//added by Mike, 20230328
 		$param['nameParam'] = trim($param['patientLastNameParam']).", ".trim($param['patientFirstNameParam']);
 		$param['nameParam'] = strtoupper($param['nameParam']);		
