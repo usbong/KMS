@@ -244,7 +244,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 ## III. Add-on Software Tools
 ### 1) Chat
 [LAN Messenger: Instant Messenging Client (Official Website)](http://lanmsngr.sourceforge.net/) <br/>
-Action: [Download](https://sourceforge.net/projects/lanmsngr/)
+Action: [Download](https://sourceforge.net/projects/lanmsngr/) (Windows)<br/>
+Action: [Download](https://sourceforge.net/projects/lanmsngr/files/1.2.35/) (Linux, also use <b>lmc-1.2.35-win32.exe</b>)
 
 #### Notes
 1) LAN = Local Area Network<br/>
