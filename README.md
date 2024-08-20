@@ -60,7 +60,35 @@ https://wiki.documentfoundation.org/Faq/General/InstallJava; last accessed: 2024
 4) <b>sudo chmod 777 /var/www/html</b><br/>
 5) Copy <b>"KMS-master/usbong_kms"</b> folder; Paste to <b>/var/www/html/</b><br/>
 
-TO-DO: -update: this; next phpmyadmin login/password configuration
+6) Enter the following website address in Computer Web Browser:<br/>
+<b>http://localhost/phpmyadmin/</b><br/>
+
+### ( ! ) Login Error? Solution to [Problem#3) "MySQL Error: : 'Access denied for user 'root'@'localhost'"](https://github.com/usbong/KMS/blob/master/P%26S/List.md)
+
+7) Left Panel -> New -> Create database; with database name: <b>usbong_kms</b><br/>
+8) Top Panel -> Import -> Browse button<br/>
+--> Example input database file: <b>KMS-master/DB/SQLCommands/usbong_kmsCreateDBTableStructureV20211219T0602.sql</b><br/>
+9) Enter the following website address in Computer Web Browser<br/>
+<b>localhost/usbong_kms/index.php/report/viewWebAddressList</b><br/>
+
+#### Addtional Notes: Computer Server's Internet Protocol (IP) Address
+<b>Example:</b> 192.168.1.110<br/>  
+
+1) Update: <b>"C:\xampp\htdocs\usbong_kms\application\views\viewWebAddressList.php"</b><br/>
+--> Search and Replace keyphrase: default <b>"192.168.11.62"</b> with <b>"localhost"</b><br/>
+--> 1.1): Set <b>"localhost"</b> to be the <b>Computer Server's network IP Address</b><br/>
+<b>Example:</b> http://192.168.1.110/usbong_kms/index.php/report/viewWebAddressList<br/>
+
+2) Update: <b>"C:\xampp\htdocs\usbong_kms\application\config\config.php"</b><br/>
+Set `base_url` to be the <b>Computer Server's network IP address</b><br/>
+
+> $config['base_url'] = 'http://localhost:80/usbong_kms/'; 
+
+> $config['base_url'] = 'http://192.168.1.110:80/usbong_kms/'; <br/>
+
+DONE!<br/>
+
+### ( ! ) Database Error when accessing http://192.168.1.110/usbong_kms/index.php/report/viewReportPatientQueueAccounting? Solution to [Problem#1) Report Patient Queue List Output: "... incompatible with sql_mode=only_full_group_by"](https://github.com/usbong/KMS/blob/master/P%26S/List.md)
 
 ### B. XAMPP
 https://www.apachefriends.org/index.html
