@@ -114,10 +114,13 @@ answer by: FloT, 20190404T2042
 
 .mysql DB File Size @<b>20.4MB</b> of SQL code (computer instructions)
 
-### Answer (LINUX UBUNTU (LUBUNTU20.04LTS)):
+### Answer (LINUX UBUNTU (LUBUNTU22.04LTS, LUBUNTU20.04LTS)):
 
 1) Execute the following COMMAND in Terminal Window (of Computer Server):<br/> 
-<b>sudo vi php.ini</b>
+
+<b>sudo vi /etc/php/<version>/apache2/php.ini</b>
+
+<b>sudo /etc/init.d/apache2 reload</b>
 
 2) Edit to update the following to be <b>64M</b>
 
@@ -130,10 +133,14 @@ upload_max_filesize=<b>64M</b>
 post_max_size=<b>64M</b>
 
 ### Reference:
-https://stackoverflow.com/questions/50690076/phpmyadmin-error-incorrect-format-parameter;<br/>
+1) https://stackoverflow.com/questions/50690076/phpmyadmin-error-incorrect-format-parameter;<br/>
 last accessed: 20230103<br/>
 answer by: FloT, 20180607T1658<br/>
 edited by: shireef khatab, 20200529T1240
+
+2) https://askubuntu.com/questions/356968/find-the-correct-php-ini-file;<br/>
+last accessed: 20240820<br/>
+answer by: WARD, Thomas, 20131012T0249
 
 ### Answer (Windows7):
 
