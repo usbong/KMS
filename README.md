@@ -52,9 +52,15 @@ https://wiki.documentfoundation.org/Faq/General/InstallJava; last accessed: 2024
 
 ### A. NON-XAMPP, Linux Machine
 
-[Auto-install Web Server in Linux Machine](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/installWebServerInLinuxMachineNotViaXAMPP.sh)
+1) [Auto-install Web Server in Linux Machine](https://github.com/usbong/KMS/blob/master/Miscellaneous%20Commands/installWebServerInLinuxMachineNotViaXAMPP.sh)
 
-TO-DO: -update: this
+2) Download ZIP folder via CODE button on https://github.com/usbong/KMS<br/>
+--> use: [GIT Commands](https://github.com/usbong/tugon/blob/main/notes/githubCommandsNotes.md) for slow/zero access to Web Browser
+3) Extract ZIP folder; Output: <b>"KMS-master"</b><br/>
+4) <b>sudo chmod 777 /var/www/html</b><br/>
+5) Copy <b>"KMS-master/usbong_kms"</b> folder; Paste to <b>/var/www/html/</b><br/>
+
+TO-DO: -update: this; next phpmyadmin login/password configuration
 
 ### B. XAMPP
 https://www.apachefriends.org/index.html
