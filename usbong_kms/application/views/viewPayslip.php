@@ -480,6 +480,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<span id="feeId<?php echo $iCount?>">
 							<?php
+							
+							//echo "DITO";
+							
 								//edited by Mike, 20200415
 //								echo $value['fee'];
 								//output: whole numbers							
@@ -546,7 +549,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<td class ="column">				
 								<div id="moscFeeId<?php echo $iCount?>">
-							<?php							
+							<?php				
+//echo ">>>".$iMOSC."END";
 								//edited by Mike, 20200403
 //								if (strtoupper($value['notes'])=="PRIVATE") {
 								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
@@ -559,6 +563,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//removed by Mike, 20200507
 //									echo $value['fee']*.30;
 
+									//edited by Mike, 20240829
+/*									
 									//added by Mike, 20200507
 									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
 										//$iMOSC = ($value['fee']-500)*.30;
@@ -573,14 +579,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											$iMOSC = ($value['fee']-500)*.30;
 										}
 									}
-									//added by Mike, 20240403
-//									else if (strpos(strtoupper($value['notes']), "MEDCERT")!==false) {
 									else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
-										//edited by Mike, 20240506
-										//$iMOSC = ($value['fee']-200)*.30;
-										
-										//echo ">>>>".$value['medical_doctor_name'];
-//										if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
 										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
 											//edited by Mike, 20240510
 											//$iMOSC = ($value['fee']-300)*.30;
@@ -591,10 +590,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												$iMOSC = ($value['fee']-300)*.30;
 											}											
 										}
-										else {										
-											//edited by Mike, 20240510
-											//$iMOSC = ($value['fee']-200)*.30;
-											//if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) {
+										else {				
 											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
 											    (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
 												
@@ -603,18 +599,69 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											else {
 												$iMOSC = ($value['fee']-200)*.30;
 											}
-										}																	
-									}									
-									
-/*									//removed by Mike, 20200824									
-									//added by Mike, 20200824
-									else if (strpos(strtoupper($value['notes']), "MINORSET")!==false) {
-										$iMOSC = ($value['fee']-500)*.30;
-									}									
-*/									
-									else {
-										$iMOSC = $value['fee']*.30;
+										}				
 									}
+*/
+									
+									//added by Mike, 20240829
+									$iCurrFeeValue=$value['fee'];
+									$iCurrExtraFeeValue=0;
+									
+									//echo "iCurrFeeValue: ".$iCurrFeeValue."<br/>";
+
+									//added by Mike, 20200507
+									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
+										//$iMOSC = ($value['fee']-500)*.30;
+										//edited by Mike, 20210122
+										//max dexa: 2
+										//edited by Mike, 20240403
+										if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) or 
+										(strpos(strtoupper($value['notes']), "DEXAX2")!==false)) {
+											//$iMOSC = ($dCurrFeeValue-1000)*.30;
+											$iCurrExtraFeeValue += (1000);//*.30;
+										}
+										else {
+											//$iMOSC = ($dCurrFeeValue-500)*.30;
+											$iCurrExtraFeeValue += (500);//*.30;
+										}
+									}
+									
+									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
+											//edited by Mike, 20240510
+											//$iMOSC = ($value['fee']-300)*.30;
+											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
+												//$iMOSC = ($value['fee']-300*2)*.30;
+												$iCurrExtraFeeValue += (300*2);//*.30;
+
+											}
+											else {
+												//$iMOSC = ($value['fee']-300)*.30;
+												$iCurrExtraFeeValue += (300);//*.30;
+											}											
+										}
+										else {				
+											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
+											    (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
+												
+												//$iMOSC = ($value['fee']-200*2)*.30;
+												$iCurrExtraFeeValue += (200*2);//*.30;												
+											}
+											else {
+												//$iMOSC = ($value['fee']-200)*.30;
+												$iCurrExtraFeeValue += (200)*.30;
+											}
+										}				
+									}
+/*									
+									else {
+										//$iMOSC = $value['fee']*.30;
+										$iCurrExtraFeeValue = 0;
+									}
+*/									
+									//echo "iCurrExtraFeeValue: ".$iCurrExtraFeeValue."<br>";
+										
+									$iMOSC=($value['fee']-$iCurrExtraFeeValue)*.30;																		
 								}
 
 								//added by Mike, 20200507
@@ -680,8 +727,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */									
 								}
 								else {
-//									echo $value['fee']*.70;
-
+									//edited by Mike, 20240829
+/*									
 									//added by Mike, 20200403; edited by Mike, 20200507
 									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
 										//edited by Mike, 20210122
@@ -689,10 +736,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//max dexa: 2
 										//edited by Mike, 20240403
 										//TODO: -update: to include auto-remove space
-/*										
-										if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) or 
-										(strpos(strtoupper($value['notes']), "DEXAX2")!==false)) {											
-*/										
+							
 										if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXA2")!==false) or 
 										(strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXAX2")!==false)) {											
 											$iNetPF = ($value['fee']-1000)*.70+1000;
@@ -712,14 +756,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//echo ">>>>".$value['medical_doctor_name'];
 										//if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
 										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
-/*
-											//$iNetPF = ($value['fee']-200)*.70;//+200;
-											$iNetPF = ($value['fee']-300)*.70+300;
-											
-											//output: whole numbers
-											//echo floor(($iNetPF*100)/100)." + 200";	
-											echo floor((($iNetPF-300)*100)/100)." + 300";
-*/											
+						
 											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
 												//$iNetPF = ($value['fee']-200)*.70;//+200;
 												$iNetPF = ($value['fee']-300*2)*.70+300*2;
@@ -736,14 +773,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											}
 										}
 										else {										
-/*	//edited by Mike, 20240510										
-											//$iNetPF = ($value['fee']-200)*.70;//+200;
-											$iNetPF = ($value['fee']-200)*.70+200;
-											
-											//output: whole numbers
-											//echo floor(($iNetPF*100)/100)." + 200";	
-											echo floor((($iNetPF-200)*100)/100)." + 200";
-*/
+
 											//if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) {
 											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
 												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {												
@@ -761,14 +791,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												echo floor((($iNetPF-200)*100)/100)." + 200";
 											}											
 										}
-									}									
 
-/*									//removed by Mike, 20200824									
-									//added by Mike, 20200824
-									else if (strpos(strtoupper($value['notes']), "MINORSET")!==false) {
-										$iNetPF = ($value['fee']-500)*.70+500;
-									}
-*/									
+									}											
 									else {
 										$iNetPF = $value['fee']*.70;
 
@@ -776,6 +800,98 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//output: whole numbers
 										echo floor(($iNetPF*100)/100);
 									}
+*/
+									//added by Mike, 20240829
+									$iCurrExtraFeeValue=0;
+
+									if (strpos(strtoupper($value['notes']), "DEXA")!==false) {
+										//edited by Mike, 20210122
+										//$iNetPF = ($value['fee']-500)*.70+500;
+										//max dexa: 2
+										//edited by Mike, 20240403
+										//TODO: -update: to include auto-remove space
+							
+										if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXA2")!==false) or 
+										(strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXAX2")!==false)) {											
+											//$iNetPF = ($value['fee']-1000)*.70+1000;
+											$iCurrExtraFeeValue += 1000;
+										}
+										else {
+											//$iNetPF = ($value['fee']-500)*.70+500;
+											$iCurrExtraFeeValue += 500;
+										}
+
+										//added by Mike, 20240403
+										//output: whole numbers
+										//removed by Mike, 20240829
+										//echo floor(($iNetPF*100)/100);
+									}
+									
+									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+										
+										//added by Mike, 20240501
+										//echo ">>>>".$value['medical_doctor_name'];
+										//if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
+						
+											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
+												//$iNetPF = ($value['fee']-200)*.70;//+200;
+												//$iNetPF = ($value['fee']-300*2)*.70+300*2;
+												
+												$iCurrExtraFeeValue += 300*2;
+												
+												//output: whole numbers
+												//echo floor(($iNetPF*100)/100)." + 200";	
+												//echo floor((($iNetPF-300*2)*100)/100)." + 300*2";
+											}
+											else {
+												//$iNetPF = ($value['fee']-300)*.70+300;
+																																		$iCurrExtraFeeValue += 300;
+
+												//output: whole numbers
+												//echo floor((($iNetPF-300)*100)/100)." + 300";
+											}
+										}
+										else {										
+
+											//if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) {
+											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
+												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {												
+												//$iNetPF = ($value['fee']-200*2)*.70+200*2;
+																																		$iCurrExtraFeeValue += 200*2;
+
+												//output: whole numbers
+												//echo floor(($iNetPF*100)/100)." + 200";	
+												//echo floor((($iNetPF-200*2)*100)/100)." + 200*2";
+											}
+											else {
+												//$iNetPF = ($value['fee']-200)*.70+200;
+												
+												$iCurrExtraFeeValue += 200;
+												
+												//output: whole numbers
+												//echo floor(($iNetPF*100)/100)." + 200";	
+												//echo floor((($iNetPF-200)*100)/100)." + 200";
+											}											
+										}
+
+									}											
+									
+/*									
+									if ($iCurrExtraFeeValue==0) {
+										//$iNetPF = $value['fee']*.70;
+																																$iCurrExtraFeeValue = 0;
+
+										//added by Mike, 20240403
+										//output: whole numbers
+										//echo floor(($iNetPF*100)/100);
+									}
+*/									
+									
+									$iNetPF = ($value['fee']-$iCurrExtraFeeValue)*.70+$iCurrExtraFeeValue;
+									
+									//output: whole numbers
+									echo floor(($iNetPF*100)/100);
 								}
 
 /*
