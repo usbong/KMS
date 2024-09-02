@@ -466,6 +466,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function confirmPatientInformationDesk()
 	{
 		$data['nameParam'] = $_POST['nameParam'];
+
+		//added by Mike, 20240902
+		$data['nameParam']=trim($data['nameParam']);
 				
 		//added by Mike, 20210730
 		if (!isset($data['nameParam'])) {
