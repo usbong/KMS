@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20240301; from 20240222
+  @date updated: 20240902; from 20240819
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -194,6 +194,10 @@
 						{
 							/*color: green;*/
 							border: 3px solid #ab9c7d;	
+						}
+						
+						a:link {
+						  color: rgb(48,103,126);
 						}
     /**/
     </style>
@@ -398,10 +402,22 @@ TEL#2: 02-8-941-0342<br/>
 <b>6) STA. LUCIA HEALTH CARE CENTER</b><br/>
 TEL#1: 02-8-647-2545<br/>
 <br/>
-<b>7) BARANGAY STO. NIÑO</b><br/>
+<b>7) I-SCAN DIAGNOSTIC CENTER (J.P. LAUREL, MARIKINA CITY BRANCH)</b><br/>
+<!--
+7.1) Dimasalang Rd., Manila City Branch<br/> 
+TEL#1: (02)241-8888; 0917-1227226<br/>
+7.2) Malakas St. Quezon City Branch<br/>
+TEL#2: (02)928-6197; (02)927-2659;0925-8647226<br/>
+7.3) MacArthur Highway, Valenzuela Branch<br/>
+TEL#3: (02)961-2371; 0925-5847226<br/>
+-->
+TEL#1: 02-8-584-6788<br/>
+MOBILE#1: 0998-952-7226<br/>
+<br/>
+<b>8) BARANGAY STO. NIÑO</b><br/>
 TEL#1: 02-8-534-9703<br/>
 <br/>
-<b>8) OFFICE OF PUBLIC SAFETY AND SECURITY (OPSS)-MARIKINA</b><br/>
+<b>9) OFFICE OF PUBLIC SAFETY AND SECURITY (OPSS)-MARIKINA</b><br/>
 TEL#1: 02-8-655-3061<br/>
 <br/>
 	<br />
