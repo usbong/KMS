@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240510; from 20240506
+' @date updated: 20240907; from 20240510
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -620,6 +620,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											//$iMOSC = ($dCurrFeeValue-1000)*.30;
 											$iCurrExtraFeeValue += (1000);//*.30;
 										}
+										//added by Mike, 20240907
+										else if ((strpos(strtoupper($value['notes']), "DEXA3")!==false) or 
+										(strpos(strtoupper($value['notes']), "DEXAX3")!==false)) {
+											$iCurrExtraFeeValue += (1500);//*.30;
+										}	
+										else if ((strpos(strtoupper($value['notes']), "DEXA4")!==false) or 
+										(strpos(strtoupper($value['notes']), "DEXAX4")!==false)) {											
+											$iCurrExtraFeeValue += (2000);//*.30;
+										}																				
 										else {
 											//$iMOSC = ($dCurrFeeValue-500)*.30;
 											$iCurrExtraFeeValue += (500);//*.30;
@@ -816,6 +825,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											//$iNetPF = ($value['fee']-1000)*.70+1000;
 											$iCurrExtraFeeValue += 1000;
 										}
+										//added by Mike, 20240907			
+										else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXA3")!==false) or 
+										(strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXAX3")!==false)) {											
+											$iCurrExtraFeeValue += 1500;
+										}										
+										else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXA4")!==false) or 
+										(strpos(str_replace(" ","",strtoupper($value['notes'])), "DEXAX4")!==false)) {											
+											$iCurrExtraFeeValue += 2000;
+										}										
 										else {
 											//$iNetPF = ($value['fee']-500)*.70+500;
 											$iCurrExtraFeeValue += 500;
