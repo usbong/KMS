@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20240829 from 20240520
+  @date updated: 20240907; from 20240829
   @website address: www.usbong.ph
   
   Input:
@@ -1321,6 +1321,19 @@ echo "hallo<br/>";
 
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
 							}
+							//added by Mike, 20240907
+							else if ((strpos(strtoupper($value['notes']), "DEXA3")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX3")!==false)){								
+								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 3;
+							}
+							else if ((strpos(strtoupper($value['notes']), "DEXA4")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX4")!==false)){								
+								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 4;
+							}							
 							else {
 								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
 								
@@ -1410,6 +1423,20 @@ echo "hallo<br/>";
 								
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
 							}
+							//added by Mike, 20240907
+							else if ((strpos(strtoupper($value['notes']), "DEXA3")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX3")!==false)){								
+								
+								$iCurrExtraFeeValue+=1500;
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 3;
+							}
+							else if ((strpos(strtoupper($value['notes']), "DEXA4")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX4")!==false)){								
+								$iCurrExtraFeeValue+=2000;
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 4;
+							}										
 							else {
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 								
