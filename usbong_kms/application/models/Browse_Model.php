@@ -176,7 +176,23 @@ class Browse_Model extends CI_Model
 			if (strpos($param['nameParam']," ,")!==false) {
 				$param['nameParam'] = str_replace(" ,", ",",$param['nameParam']);
 			}
-		}	
+		}
+		
+		//added by Mike, 20240921
+		$param['nameParam']=strtoupper($param['nameParam']);
+		//echo ">>>>".$param['nameParam'];
+		
+		$sAlternativeNameParam="";
+		if (strpos($param['nameParam']," MA ")!==false) {
+			$sAlternativeNameParam = str_replace(" MA ", " MA. ",$param['nameParam']);
+		}
+/*		//note no need to add this part; search finds the result
+		//no space after JR. or JR
+		else if (strpos($param['nameParam']," JR")!==false) {
+			$sAlternativeNameParam = str_replace(" JR", " JR.",$param['nameParam']);
+		}
+*/
+		
 /*		
 		//added by Mike, 20220601
 		$param['nameParam']=str_replace(strtoupper($param['nameParam']), "JR.","");
@@ -314,7 +330,13 @@ class Browse_Model extends CI_Model
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 			
 			$this->db->like('t1.patient_name', $param['nameParam']);
-			$this->db->group_by('t1.patient_id');
+			
+			//added by Mike, 20240921
+			if (!empty($sAlternativeNameParam)) {
+				$this->db->or_like('t1.patient_name', $sAlternativeNameParam);
+				
+				//echo "DITO!!";
+			}
 
 			//edited by Mike, 20210803
 			//TO-DO: -update: instructions if only 1 letter, et cetera
