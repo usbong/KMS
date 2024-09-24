@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240907; from 20240510
+' @date updated: 20240924; from 20240907
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -908,9 +908,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									
 									$iNetPF = ($value['fee']-$iCurrExtraFeeValue)*.70+$iCurrExtraFeeValue;
 									
+									//removed by Mike, 20240924
 									//output: whole numbers
-									echo floor(($iNetPF*100)/100);
+									//echo floor(($iNetPF*100)/100);
 								}
+								
+								//added by Mike, 20240924
+								//output: whole numbers
+								echo floor(($iNetPF*100)/100);
 
 /*
 								//removed by Mike, 20240403; from 20200407
