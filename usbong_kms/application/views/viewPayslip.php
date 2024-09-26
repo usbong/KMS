@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240924; from 20240907
+' @date updated: 20240926; from 20240924
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -634,7 +634,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											$iCurrExtraFeeValue += (500);//*.30;
 										}
 									}
-									
+																		
 									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
 										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
 											//edited by Mike, 20240510
@@ -651,27 +651,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										}
 										else {				
 											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
-											    (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
+												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
 												
 												//$iMOSC = ($value['fee']-200*2)*.30;
 												$iCurrExtraFeeValue += (200*2);//*.30;												
 											}
 											else {
 												//$iMOSC = ($value['fee']-200)*.30;
-												$iCurrExtraFeeValue += (200)*.30;
+												//edited by Mike, 20240926
+												//$iCurrExtraFeeValue += (200)*.30;
+												$iCurrExtraFeeValue += (200);//*.30;
 											}
 										}				
 									}
+									
 /*									
 									else {
 										//$iMOSC = $value['fee']*.30;
 										$iCurrExtraFeeValue = 0;
 									}
 */									
+
+									//edited by Mike, 20240926
+									//$iMOSC=($value['fee']-$iCurrExtraFeeValue)*.30;																		
+
 									//echo "iCurrExtraFeeValue: ".$iCurrExtraFeeValue."<br>";
-										
-									$iMOSC=($value['fee']-$iCurrExtraFeeValue)*.30;																		
+									//echo "value['fee']: ".$value['fee']."<br>";
+									
+									$iMOSC=($value['fee']-$iCurrExtraFeeValue)*.30;	
 								}
+
 
 								//added by Mike, 20200507
 								//output: whole numbers
