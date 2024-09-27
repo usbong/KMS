@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240926; from 20240924
+' @date updated: 20240927; from 20240926
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -682,34 +682,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 
 
-								//added by Mike, 20200507
+								//edited by Mike, 20240927; from 20200507
 								//output: whole numbers
-								echo floor(($iMOSC*100)/100);
+								//echo floor(($iMOSC*100)/100);
 
 //echo $value['medical_doctor_name'];
 
 								//added by Mike, 20200906
 								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
-								//edited by Mike, 20220808
-								//if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
-								//edited by Mike, 20230529
-/*
-								if ((strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) or
-									(strpos(strtoupper($value['medical_doctor_name']), "CHASTITY")!==false)) {
-*/
-								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+								//if not Dr HONESTO
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")==false) {
+									echo floor(($iMOSC*100)/100);
+								}
+								else {								
 										
 /*										
 										echo ">>";
 										
 										echo $value['receipt_number'];
-*/										
+*/
+
+									$iMOSC = $value['fee']*.30;
+									echo floor(($iMOSC*100)/100);
+										
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
 
-//										echo ">>>>>";
-
-										$dAddDueToMOSCOR = $value['fee']*.12;
+										//echo ">>>>> ".$value['fee'];
+										
+										//$dAddDueToMOSCOR = $value['fee']*.12;
+										$dAddDueToMOSCOR = ($value['fee']*.70)*.12;
 										
 										$iMOSC = $iMOSC + $dAddDueToMOSCOR;
 
@@ -922,9 +924,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//echo floor(($iNetPF*100)/100);
 								}
 								
-								//added by Mike, 20240924
+								//added by Mike, 20240927; from 20240924
 								//output: whole numbers
-								echo floor(($iNetPF*100)/100);
+								//echo floor(($iNetPF*100)/100);
 
 /*
 								//removed by Mike, 20240403; from 20200407
@@ -934,14 +936,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								//added by Mike, 20200906
 								//deduct: 12% to Net Fee if Dr. Honesto and has MOSC OR
-								//edited by Mike, 20220808
-								//if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
-								//edited by Mike, 20230529			
-/*								
-								if ((strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) or
-									(strpos(strtoupper($value['medical_doctor_name']), "CHASTITY")!==false)) {
+								
+								//if not Dr HONESTO
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")==false) {
+									echo floor(($iMOSC*100)/100);
+								}
+								//note: with Dr Honesto's case, his med cert payment is included in the 70/30 sharing with MOSC
+								else {								
+										
+/*										
+									echo ">>";										
+									echo $value['receipt_number'];
 */
-								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+									$iNetPF = $value['fee']*.70;
+									echo floor(($iNetPF*100)/100);
 										
 /*	//removed by Mike, 20221110
 echo "<br/>";
@@ -951,8 +959,10 @@ echo $value['transaction_id']."<br/>";
 */
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
-										$dDeductDueToMOSCOR = $value['fee']*.12;
-										
+										//edited by Mike, 20240927
+										//$dDeductDueToMOSCOR = $value['fee']*.12;
+										$dDeductDueToMOSCOR = ($value['fee']*.70)*.12;
+
 										//added by Mike, 20221108; from 20221107
 										//TO-DO: -reverify: this
 /*	//removed by Mike, 20221110
