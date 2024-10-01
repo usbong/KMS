@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20240927; from 20240926
+' @date updated: 20241001; from 20240927
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -939,7 +939,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								
 								//if not Dr HONESTO
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")==false) {
-									echo floor(($iMOSC*100)/100);
+									//edited by Mike, 20241001
+									echo floor(($iNetPF*100)/100);
 								}
 								//note: with Dr Honesto's case, his med cert payment is included in the 70/30 sharing with MOSC
 								else {								
@@ -980,7 +981,7 @@ echo $value['transaction_id']."<br/>";
 										}										
 									}									
 								}
-
+								
 								$iTotalNetPF += $iNetPF;
 							?>
 								</div>
