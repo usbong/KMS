@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2023 SYSON, MICHAEL B.
+  Copyright 2020~2024 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20230719; from 20230515
+  @date updated: 20241028; from 20230110
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -283,19 +283,6 @@
 			TO-DO: -update: this due to increased web address length-->
 <?php //edited by Mike, 20210911	
 		if (isset($resultPaid[0])) {
-			//added by Mike, 20230515; from 20230514			
-//			echo $bIsMultiTransaction;
-			if ($bIsMultiTransaction) {
-?>
-			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/1'); ?>'>
-				<!-- MULTI transaction-->
-<!--				<b>ACKNOWLEDGMENT RECEIPT [＊]</b> -->
-				<b>ACKNOWLEDGMENT RECEIPT</b>
-			</a>
-
-<?php
-			}
-			else {
 ?>
 			<!-- edited by Mike, 20210926 -->
 			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/0'); ?>'>
@@ -304,10 +291,7 @@
 			<b>[<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/1'); ?>'>
 				+
 			</a>]</b>
-<?php
-			}
-
-		}
+<?php 	}
 		else {
 			//example: include external .js file
 ?>		
@@ -337,7 +321,7 @@
 				//BERGSTEIN, AKI
 				//edited by Mike, 20220317
 //				echo $result[0]['patient_name'];
-				echo str_replace(" ","Ñ",$result[0]['patient_name']);
+				echo str_replace("�","Ñ",$result[0]['patient_name']);
 */							
 	
 														
@@ -561,8 +545,7 @@ echo "</a>";
 		$dTotalMedItemFee=0;
 		$dTotalMDDiscountedFeePlus=0;
 		
-		//noted by Mike, 20230719; Dr CHASTITY already has own official receipt	
-		//DR. HONESTO;
+		//DR. HONESTO ONLY;
 		$sWithDoctorWhoUsesMOSCOfficialReceipt="";
 
 		//edited by Mike, 20210628
@@ -604,14 +587,10 @@ echo "</a>";
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6)) {
 */						
-					//edited by Mike, 20230110; from 20221207
+					//edited by Mike, 20241028; from 20230110
 					if (($value['medical_doctor_id']==1) or
-						($value['medical_doctor_id']==6)) {
-
-/*	//removed by Mike, 20230719; Dr CHASTITY already has own official receipt	
-							or
-						($value['medical_doctor_id']==4)) {
-*/							
+						($value['medical_doctor_id']==6) /*or
+						($value['medical_doctor_id']==4)*/) {
 /*
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6) or
@@ -625,7 +604,7 @@ echo "</a>";
 						if ($value['medical_doctor_id']==6) {
 							$sWithDoctorWhoUsesMOSCOfficialReceipt=" (WITH DR. HONESTO)";						
 						}
-/*	//removed by Mike, 20230719; Dr CHASTITY already has own official receipt						
+/*	//removed by Mike, 20241028						
 						else if ($value['medical_doctor_id']==4) {
 							$sWithDoctorWhoUsesMOSCOfficialReceipt=" (WITH DR. CHASTITY)";						
 						}
@@ -657,15 +636,10 @@ echo "</a>";
 					}
 				}
 
-	//edited by Mike, 20230110; from 20221207
-				//edited by Mike, 20221111
+				//edited by Mike, 20241028; from 20230110
 				if (($result[0]['medical_doctor_id']==1) or
-					($result[0]['medical_doctor_id']==6)) {
-
-/*	//removed by Mike, 20230719; Dr CHASTITY already has own official receipt	
-						or
-					($result[0]['medical_doctor_id']==4)) {
-*/
+					($result[0]['medical_doctor_id']==6) /*or
+					($result[0]['medical_doctor_id']==4)*/) {
 
 /*
 				if (($result[0]['medical_doctor_id']==1) or
@@ -675,7 +649,7 @@ echo "</a>";
 					) {
 					$dTotalMDXrayFeeWithDiscount+=$dTotalMDDiscountedFeePlus;
 				}				
-				//note: add MD RECEIPT TOTAL only IF NOT DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
+				//note: add MD RECEIPT TOTAL only IF NOT DR. PEDRO OR DR. HONESTO
 				//adds: OR DR PETER
 */
 				}
@@ -904,15 +878,11 @@ echo "</a>";
 					//note: 800 -> 600; gives over 20% discount for SC classification;
 					if (strpos($result[0]['notes'],"SC;")!==false) {
 */
-					//edited by Mike, 20230110; from 20221207
-					//added by Mike, 20221111; from 20220317
+					//edited by Mike, 20241028; from 20230110
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
 					if (($result[0]['medical_doctor_id']==1) or
-						($result[0]['medical_doctor_id']==6)) {
-/*	//removed by Mike, 20230719; Dr CHASTITY already has own official receipt	
-							or
-						($result[0]['medical_doctor_id']==4)) {
-*/							
+						($result[0]['medical_doctor_id']==6) /*or
+						($result[0]['medical_doctor_id']==4)*/) {
 /*
 					//added by Mike, 20221111; from 20220317
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
