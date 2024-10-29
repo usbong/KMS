@@ -701,8 +701,10 @@ class Report extends CI_Controller { //MY_Controller {
 
 		//edited by Mike, 20220808
 //		if (strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) {
-		if ((strpos(strtoupper($medicalDoctorName), "HONESTO")!==false) or 
-			(strpos(strtoupper($medicalDoctorName), "CHASTITY")!==false)) {
+		if ((strpos(strtoupper($medicalDoctorName), "HONESTO")!==false)
+			//removed by Mike, 20241029
+			/* or 
+			(strpos(strtoupper($medicalDoctorName), "CHASTITY")!==false)*/) {
 			if (is_array($data["result"])) {
 				foreach ($data["result"] as &$value) {
 					//edited by Mike, 20200910

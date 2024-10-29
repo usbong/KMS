@@ -149,17 +149,18 @@ class Browse extends CI_Controller { //MY_Controller {
 	//added by Mike, 20200517
 	public function confirmPatient()
 	{
-		//edited by Mike, 20200407
+		//edited by Mike, 20241029; from 20200407
+		//if (!isset($data['nameParam'])) {
+		if (!isset($_POST['nameParam'])) {			
+			redirect('browse/searchPatient');
+		}
+
 		$data['nameParam'] = $_POST['nameParam'];
 		
 		//added by Mike, 20240624		
 		$data['nameParam'] = str_replace("/","",$data['nameParam']);
 		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
 		
-		//added by Mike, 20200328
-		if (!isset($data['nameParam'])) {
-			redirect('browse/searchPatient');
-		}
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
