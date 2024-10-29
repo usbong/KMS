@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20240927; from 20240907
+  @date updated: 20241029; from 20240927
   @website address: www.usbong.ph
   
   Input:
@@ -1014,7 +1014,11 @@ echo "hallo<br/>";
 									//$iCurrExtraFeeValue=0;
 
 									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
-										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
+										//edited by Mike, 20241029
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT0")!==false) {
+											$iCurrExtraFeeValue = 0;
+										}									
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
 											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
 												//$iNetFeeTotalCount = $iNetFeeTotalCount + (300*2)*.30;
 												
@@ -1333,7 +1337,12 @@ echo "hallo<br/>";
 
 							//edited by Mike, 20240506
 							//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-300)*.70+300;
-							if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
+							
+							//edited by Mike, 20241029
+							if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT0")!==false) {
+								$iCurrExtraFeeValue = 0;
+							}
+							else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
 								//edited by Mike, 20240510
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-300)*.70+300;
 								if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
