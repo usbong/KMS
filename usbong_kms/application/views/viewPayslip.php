@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20241001; from 20240927
+' @date updated: 20241029; from 20241001
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -510,7 +510,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//echo ($iFee-200)." + 200";
 									
 //									if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
-									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
+	
+	
+									//edited by Mike, 20241029
+									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT0")!==false) {	
+										echo $iFee;
+									}									
+									else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
 										//edited by Mike, 20240510
 										//echo ($iFee-300)." + 300";
 										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {	
@@ -636,7 +642,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 																		
 									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
-										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
+										
+										//edited by Mike, 20241029
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT0")!==false) {	
+											$iCurrExtraFeeValue = 0;
+										}										
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
 											//edited by Mike, 20240510
 											//$iMOSC = ($value['fee']-300)*.30;
 											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
@@ -861,7 +872,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										//added by Mike, 20240501
 										//echo ">>>>".$value['medical_doctor_name'];
 										//if (strpos(strtoupper($value['medical_doctor_name']), "PETER")!==false) {
-										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
+										
+										//edited by Mike, 20241029
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT0")!==false) {
+											$iCurrExtraFeeValue = 0;
+										}
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
 						
 											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
 												//$iNetPF = ($value['fee']-200)*.70;//+200;
