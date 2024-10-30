@@ -792,10 +792,19 @@ class Browse extends CI_Controller { //MY_Controller {
 	//edited by Mike, 20200615
 	public function confirmSnack()
 	{		
+		//added by Mike, 20241030
+		if (!isset($_POST['nameParam'])) {			
+			redirect('browse/searchPatient');
+		}
+		
 		$data['nameParam'] = $_POST['nameParam'];
 
 		//added by Mike, 20200912
 		$data['nameParam'] = trim($data['nameParam']);
+				
+		//added by Mike, 20241030
+		$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
 		
 		//added by Mike, 20200328
 		if (!isset($data['nameParam'])) {
