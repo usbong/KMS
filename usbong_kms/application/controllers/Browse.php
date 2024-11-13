@@ -157,10 +157,17 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['nameParam'] = $_POST['nameParam'];
 		
+		//added by Mike, 20241113
+		$data['nameParam'] = trim($data['nameParam']);
+		
 		//added by Mike, 20240624		
 		$data['nameParam'] = str_replace("/","",$data['nameParam']);
 		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
 		
+		//added by Mike, 20241113
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchPatient');
+		}		
 		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -532,6 +539,11 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200912
 		$data['nameParam'] = trim($data['nameParam']);
+		
+		//added by Mike, 20241113
+		//forward slash used in non-med item inventory
+		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);		
 
 /* //removed by Mike, 20230131		
 		//added by Mike, 20200328
@@ -1049,6 +1061,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		//added by Mike, 20200912
 		$data['nameParam'] = trim($data['nameParam']);
+		
+		//added by Mike, 20241113
+		//forward slash used in med item inventory
+		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
 
 		//added by Mike, 20201010
 		if (!isset($data['nameParam'])) {
