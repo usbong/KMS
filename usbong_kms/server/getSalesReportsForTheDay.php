@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20241029; from 20240927
+  @date updated: 20241209; from 20241029
   @website address: www.usbong.ph
   
   Input:
@@ -987,12 +987,12 @@ echo "hallo<br/>";
 	//										if ($receiptArrayRowValue['receipt_number']!=0) {
 											//edited by Mike, 20221107
 											//if ($receiptArrayRowValue['receipt_number']==0) {
-												//edited by Mike, 20240927
-												//$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+												//edited by Mike, 20241209; from 20240927
+												$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 												
 												//echo ">>>>>>>>>>>>".$value['fee'];
 												
-												$myNetFeeValue = $value['fee']*0.70 - ($value['fee']*.70)*.12;
+												//$myNetFeeValue = $value['fee']*0.70 - ($value['fee']*.70)*.12;
 												
 											//}
 											
