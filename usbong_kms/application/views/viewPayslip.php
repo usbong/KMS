@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20241029; from 20241001
+' @date updated: 20241209; from 20241029
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -721,8 +721,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 										//echo ">>>>> ".$value['fee'];
 										
-										//$dAddDueToMOSCOR = $value['fee']*.12;
-										$dAddDueToMOSCOR = ($value['fee']*.70)*.12;
+										//edited by Mike, 20241209
+										$dAddDueToMOSCOR = $value['fee']*.12;
+										//$dAddDueToMOSCOR = ($value['fee']*.70)*.12;
 										
 										$iMOSC = $iMOSC + $dAddDueToMOSCOR;
 
@@ -976,9 +977,9 @@ echo $value['transaction_id']."<br/>";
 */
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
-										//edited by Mike, 20240927
-										//$dDeductDueToMOSCOR = $value['fee']*.12;
-										$dDeductDueToMOSCOR = ($value['fee']*.70)*.12;
+										//edited by Mike, 20241209; from 20240927
+										$dDeductDueToMOSCOR = $value['fee']*.12;
+										//$dDeductDueToMOSCOR = ($value['fee']*.70)*.12;
 
 										//added by Mike, 20221108; from 20221107
 										//TO-DO: -reverify: this
