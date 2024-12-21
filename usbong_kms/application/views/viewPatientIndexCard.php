@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20240301; from 20230410
+  @date updated: 20241221; from 20240301
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -543,7 +543,7 @@
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
 */			
 			//edited by Mike, 20200411
-			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchase/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
+			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
 		}	
 
 	  </script>
