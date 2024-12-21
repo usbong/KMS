@@ -3456,6 +3456,105 @@ class Browse extends CI_Controller { //MY_Controller {
 		//additional note: multiple items may already exist in the Cart List
 	}
 	
+	public function deleteTransactionServicePurchaseIndexCardPage($medicalDoctorId, $patientId, $transactionId)
+	{
+		$data['medicalDoctorId'] = $medicalDoctorId;
+		$data['patientId'] = $patientId;
+		$data['transactionId'] = $transactionId;
+
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+
+		$this->load->model('Browse_Model');
+
+		//added by Mike, 20201115
+		//note: when we delete patient transaction in Cart List,
+		//computer auto-removes all added VAT
+		if (isset($_SESSION["addedVAT"])) {
+			$data['addedVAT']=$_SESSION["addedVAT"];
+			if (isset($data['addedVAT']) and ($data['addedVAT'])) {
+				//edited by Mike, 20210226
+				
+				$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
+
+				//execute these due to select patients classified as SC, i.e. "Senior Citizens"
+				$this->session->unset_userdata('addedVAT');
+				$data['addedVAT'] = False;		
+			}
+		}
+				
+		//added by Mike, 20201115
+		$this->session->unset_userdata('noVAT');
+		$data['noVAT'] = False;
+
+/*		//removed by Mike, 20201122
+		//execute these due to select patients classified as SC, i.e. "Senior Citizens"
+		$this->session->unset_userdata('addedVAT');
+		$data['addedVAT'] = False;		
+*/	
+		
+
+/*		//removed by Mike, 20201122
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		$this->load->model('Browse_Model');
+
+		//added by Mike, 20201115
+		//lessVATBeforePayTransactionItemPurchase($itemTypeId, $itemId, $patientId)		
+		$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
+*/
+	
+//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+
+		//added by Mike, 20230408
+		$data['transactionDate'] = $data['transactionDate']."DEL";
+
+		$data['patientIdParam'] = $data['patientId'];
+		//TO-DO: -update: medicalDoctorId; due to transaction deleted;
+		$data['selectMedicalDoctorIdParam'] = $data['medicalDoctorId'];
+		$this->Browse_Model->updateIndexCardFormLite($data);
+
+		$this->Browse_Model->deleteTransactionServicePurchaseIndexCardPage($data);
+
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+
+/* //removed by Mike, 20230309		
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
+
+		//added by Mike, 20200601
+		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
+*/
+
+		//added by Mike, 202005[19]
+		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+
+/*		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
+		//added by Mike, 20200406; edited by Mike, 20200407
+		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
+		//added by Mike, 20200501
+		$data['resultItem'] = $this->getResultItemQuantity($data);
+		if ($itemTypeId==1) {
+			$this->load->view('viewItemMedicine', $data);
+		}
+		else {
+			$this->load->view('viewItemNonMedicine', $data);
+		}
+*/
+		$this->load->view('viewPatient', $data);		
+		//added by Mike, 20201224
+		//note: when Unit member deletes patient transactions from Cart List
+		//AND deletes an item, e.g. non-medicine, computer automatically goes
+		//to the patient page with patient name, "CANCELLED",
+		//so that Unit member can view remaining items in Cart List
+		//additional note: multiple items may already exist in the Cart List
+	}
+	
 
 	//added by Mike, 20200411
 	public function deleteTransactionItemPurchase($itemTypeId, $itemId, $transactionId)
