@@ -1378,6 +1378,49 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 */		
 	}	
 
+	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
+	public function deleteTransactionServicePurchaseIndexCardPage($param) 
+	{			
+/*		//edited by Mike, 20200616
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+*/
+
+		$iTransactionId = $param['transactionId'];
+
+		$this->db->select('transaction_quantity');
+		$this->db->where('transaction_id',$iTransactionId);
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+
+		$transactionQuantity = $row->transaction_quantity;
+
+		if ($transactionQuantity==0) {
+			$this->db->where('transaction_id',$iTransactionId);
+			$this->db->delete('transaction');
+		}
+		else {			
+			$iCount = 0;
+			while ($iCount < $transactionQuantity) {			
+				$this->db->where('transaction_id',$iTransactionId);
+				$this->db->where('patient_id!=',0);
+				$this->db->delete('transaction');
+							
+				$iCount = $iCount + 1;
+				$iTransactionId = $iTransactionId - 1;
+			}
+		}
+
+/*		//removed by Mike, 20200611		
+		//added by Mike, 20200608
+		//delete all transactions of the patient for the day
+		//this is due to the computer server adding a new transaction that combines all the patient's purchases
+        $this->db->where('patient_id',$param['patientId']);
+        $this->db->where('transaction_date',$param['transactionDate']);
+        $this->db->delete('transaction');		
+*/		
+	}	
+	
 	//added by Mike, 20200517; edited by Mike, 20200616
 	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
 	public function deleteTransactionServicePurchasePrev($param) 
