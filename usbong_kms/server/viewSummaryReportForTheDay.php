@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20240110; from 20220925
+  @date updated: 20241226; from 20240110
   @website address: http://www.usbong.ph
 
   Input:
@@ -220,17 +220,22 @@
 		//        echo $data[$c] . "<br />\n";
 				//edited by Mike, 20200725
 				//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+								
+				//$cellValue = utf8_encode($cellValue);
+				//$cellValue = mysql_real_escape_string($data[$iColumnCount]);
+								
+				//added by Mike, 20241226
+				$data[$iColumnCount] = str_replace("“","\"",$data[$iColumnCount]); 
+				$data[$iColumnCount] = str_replace("”","\"",$data[$iColumnCount]); 
+				$data[$iColumnCount] = str_replace("’","'",$data[$iColumnCount]); 
 				
 				//added by Mike, 20200726
-				//$cellValue = $data[$iColumnCount];	
+				//$cellValue = $data[$iColumnCount];
 				$cellValue = utf8_encode($data[$iColumnCount]);
 				
 				//added by Mike, 20220531
 				$cellValue=strtoupper($cellValue);
-				
-				//$cellValue = utf8_encode($cellValue);
-				//$cellValue = mysql_real_escape_string($data[$iColumnCount]);
-				
+
 				//added by Mike, 20200811
 				//$cellValue = str_replace("�","'",$cellValue); //$data[$iColumnCount]); //$cellValue);
 	
