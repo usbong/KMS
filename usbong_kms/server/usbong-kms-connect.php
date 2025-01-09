@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2019~2024 USBONG
+  Copyright 2019~2025 USBONG
 
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 
@@ -11,8 +11,8 @@
   @company: USBONG
   @author: SYSON, Michael B
   @date created: 20190804
-  @date updated: 20240107; from 20231204
-  @website: http://www.usbong.ph
+  @date updated: 20250109; from 20231003
+  @website address: www.usbong.ph
 
   Given:
   1) Database (DB) details
@@ -25,7 +25,11 @@
 */
 
 //define('BASEPATH', "https://store.usbong.ph");
-define('BASEPATH', "http://localhost/usbong_kms/");
+
+//edited by Mike, 20250109
+//define('BASEPATH', "http://localhost/usbong_kms/");
+
+defined('BASEPATH') or define('BASEPATH', "http://localhost/usbong_kms/");
 
 //typically, webroot would be in /var/www/html/
 //include('/put_this_somewhere_outside_of_web_root/app+server/database.php');
