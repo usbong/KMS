@@ -91,7 +91,10 @@ $autoload['drivers'] = array();
 |	$autoload['helper'] = array('url', 'file');
 */
 //$autoload['helper'] = array();
-$autoload['helper'] = array('form', 'url'); //edited by Mike, 20190715
+
+//edited by Mike, 20250109; from 20190715
+//$autoload['helper'] = array('form', 'url');
+$autoload['helper'] = array('form', 'url', 'usbong_init_helper'); 
 
 /*
 | -------------------------------------------------------------------
