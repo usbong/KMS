@@ -215,6 +215,11 @@ class Report extends CI_Controller { //MY_Controller {
 		$this->load->view('storeReportImageOnly');
 	}
 
+	public function storeReportFileOnly()
+	{				
+		$this->load->view('storeReportFileOnly');
+	}
+
 	//added by Mike, 20220115
 	public function storeReportAudioOnly()
 	{				
