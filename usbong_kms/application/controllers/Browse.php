@@ -2378,7 +2378,16 @@ class Browse extends CI_Controller { //MY_Controller {
 //echo "hallo".$patientId;
 
 			$data['resultPaid']=null;
-			$data['cartListResult']=null;
+			
+			//edited by Mike, 20250210
+			//can now add cart list after applying speed-up measures;
+			//example from three years ago: 
+			//https://github.com/usbong/KMS/blob/master/Notes/notesSpeedUpKMSPart4.md
+			//transactions count currently at approx. 171K;
+			
+			//$data['cartListResult']=null;
+			$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();			
+			
 			//edited by Mike, 20211204
 //			$data['result'][0]['medical_doctor_name'] = "";			
 			$data['result'][0]['medical_doctor_id'] = "1"; //DR. PEDRO			
