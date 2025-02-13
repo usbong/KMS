@@ -1043,7 +1043,320 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('searchMedicine', $data);
 	}
+	
+	//added by Mike, 20250213
+	public function searchMedicineBoxesLeft()
+	{		
+		$data['param'] = $this->input->get('param'); //added by Mike, 20170616
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
 
+		$this->load->view('searchMedicineBoxesLeft', $data);
+	}
+
+	//added by Mike, 20250213
+	//TODO: -update: this to reuse confirmMedicine();
+	public function confirmMedicineBoxesLeft()
+	{
+		//added by Mike, 20231213
+		//error: "Undefined index: nameParam"
+		if (!isset($_POST['nameParam'])) {
+			redirect('browse/searchMedicineBoxesLeft');
+		}		
+		
+		$data['nameParam'] = $_POST['nameParam'];
+		
+		//added by Mike, 20200912
+		$data['nameParam'] = trim($data['nameParam']);
+		
+		//added by Mike, 20241113
+		//forward slash used in med item inventory
+		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+
+		//added by Mike, 20201010
+		if (!isset($data['nameParam'])) {
+			redirect('browse/searchMedicine');
+		}
+
+		//added by Mike, 20201010
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+		//added by Mike, 20201010
+/*		echo "ipAddress: ".$ipAddress."<br/>";
+		echo "machineAddress: ".$machineAddress."<br/>";
+*/
+		
+
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+	
+		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
+
+//		echo "count: ".count($data['result']);
+
+		//added by Mike, 20200417
+		$itemTypeId = 1; //1 = Medicine
+		$iCount = 0;
+		$itemId = -1;
+
+		//edited by Mike, 20200527
+		$remainingItemNow = 0;
+//		$remainingPaidItem = 0; //added by Mike, 20200501
+		
+		if ($data['result'] == True) {
+			foreach ($data['result'] as $value) {				
+				//edited by Mike, 20200422
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+					
+//				echo "itemId: " . $itemId;
+
+				//added by Mike, 20200417
+				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
+				//edited by Mike, 20200422
+//				if ($iCount==0) {
+				if (!$bIsSameItemId) {	
+
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
+
+//					echo "new>".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
+//echo "hallo".$data['result'][$iCount]['expiration_date'].":".$remainingItemNow."<br/>";
+										
+					
+					if ($remainingItemNow < 0) {
+						
+						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+						
+//						$remainingPaidItem = $remainingPaidItem - $data['result'][$iCount]['resultQuantityInStockNow'];
+
+						//added by Mike, 20210218
+						//$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
+
+					}
+					else {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
+					}
+					
+//					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+				}
+				else {
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+
+//echo "dito".$data['result'][$iCount]['expiration_date'].":".$remainingItemNow."<br/>";
+//					echo ">".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
+
+					if ($remainingItemNow < 0) { //already negative
+
+//					echo ">".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
+				
+						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
+							
+//							echo ">>>";
+							$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+							
+							$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
+						}
+						else {
+							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;					
+
+							//TO-DO: -reverify: again for cases with multiple additional stock items
+							//added by Mike, 20200522
+							$remainingItemNow = 0;
+						}
+					}
+					else {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+					}
+
+//echo "dito".$data['result'][$iCount]['expiration_date'].":".$remainingItemNow."<br/>";
+	
+				}
+				
+				$iCount = $iCount + 1;
+			}
+		}
+
+		//TO-DO: add: in non-medicine items
+		//added by Mike, 20200522
+		$itemId = -1;
+		
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+
+		//TO-DO: -reverify: this
+		//TO-DO: -add: in non-med
+		//added by Mike, 20200811
+		$iSameItemCount = 0;
+		$bHasNoneZeroQuantity = false;
+
+		if ($data['result'] == true) {
+			foreach ($data['result'] as $value) {				
+			
+//				echo $value['item_name'];
+			
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+				
+				if ($bIsSameItemId) {
+					//edited by Mike, 20200527
+					//note: include in results medicine items that are zero in quantity in stock
+					//TO-DO: -re-verify: this
+//					if ($value['resultQuantityInStockNow'] == 0) {
+/*					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
+//					if ($value['quantity_in_stock'] == 0) {
+	
+					echo $value['item_name'];
+					}
+					
+					else {
+						array_push($outputArray, $value);						
+					}
+*/						
+					//edited by Mike, 20200530; removed by Mike, 20200811
+					//array_push($outputArray, $value);
+					//Note: We show only one (1) transaction of the same item whose in-stock count is 0.
+					//This is to make the output list shorter.
+					//The list is ordered by expiration date.
+					if (!$bHasNoneZeroQuantity) {
+						//edited by Mike, 20210211
+//						if ($iSameItemCount == ($iSameItemTotalCount - 1)) { //if last item in the list of same items
+						if ($iSameItemCount == ($iSameItemTotalCount)) { //if last item in the list of same items
+							array_push($outputArray, $value);
+						}
+					}
+					else {
+						//edited by Mike, 20201204
+//						array_push($outputArray, $value);
+						
+						//TO-DO: -identify: remaining quantity of in-stock item
+						//still reaches item's last entry in the inventory list
+						//if not, no need to add in displayed list
+						//additional note: 
+						//observation: displayed list includes 3 or more of same item in inventory list,
+						//cause: delivered in-stock items excess; increased in returned for exchange items, etc
+						//TO-DO: -update: this
+						//edited by Mike, 20201219
+/*						if ($iSameItemTotalCount<=2) {
+							array_push($outputArray, $value);
+						}
+						else if ($iSameItemTotalCount<=3) {
+							if (($iSameItemCount == ($iSameItemTotalCount))) {//if last item in the list of same items
+							}
+							else {
+								array_push($outputArray, $value);
+							}
+						}
+*/
+	//added by Mike, 20210218						
+	//TO-DO: -reverify: this
+						if ($iSameItemTotalCount<=3) {
+							array_push($outputArray, $value);
+						}
+						else if ($iSameItemTotalCount>3) {
+							if (($iSameItemCount == ($iSameItemTotalCount)) or //if last item in the list of same items
+								($iSameItemCount == ($iSameItemTotalCount - 1))){  //if second to the last item in the list of same items
+								array_push($outputArray, $value);
+							
+////							echo $iSameItemCount.": ".$value['item_name']." : ".$value['resultQuantityInStockNow']."<br/>";
+////							array_push($outputArray, $value);
+							}
+							//added by Mike, 20210207
+							else {
+								//echo $value['resultQuantityInStockNow']."<br/>";
+								if ($value['resultQuantityInStockNow']!=0) {
+									array_push($outputArray, $value);
+								}
+							}
+						}
+						else {
+							array_push($outputArray, $value);
+						}												
+	//added by Mike, 20210218						
+	//array_push($outputArray, $value);
+
+					}
+					$iSameItemCount = $iSameItemCount + 1;
+
+				}
+				//added by Mike, 20200522
+				else {
+					//identify if there are more than 1 transaction of the same item in the list
+					$iSameItemTotalCount = -1; //0; //edited by Mike, 20200826
+					$bHasNoneZeroQuantity = false;
+					foreach ($data['result'] as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							$iSameItemTotalCount = $iSameItemTotalCount + 1;
+							
+							if ($outputValue['resultQuantityInStockNow']!=0) {
+								$bHasNoneZeroQuantity = true;		
+							}							
+						}
+					}
+					
+//					echo $iSameItemCount;
+					if ($iSameItemTotalCount>1) {							
+						if ($value['resultQuantityInStockNow']!=0) {
+							array_push($outputArray, $value);						
+						}									
+					}
+					else {
+						//array_push($outputArray, $value);						
+
+						if ($iSameItemTotalCount==1) {
+							//edited by Mike, 20200812
+							if (strpos($value['item_name'],"*")!==false) {
+									array_push($outputArray, $value);
+							}	
+							else {
+								if ($value['resultQuantityInStockNow']!=0) {
+									array_push($outputArray, $value);
+								}
+							}
+						}
+						//added by Mike, 20200826
+						//if $iSameItemTotalCount==0
+						else {
+							array_push($outputArray, $value);
+						}
+					}
+
+					$iSameItemCount = 1;
+				}
+			}
+		}
+		
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['result'] = [];
+		$data['result'] = array();
+		
+		$data['result'] = $outputArray;
+		
+		$data['quantityPerBox'] = 100; //TODO: -update: this
+		
+		$this->load->view('searchMedicineBoxesLeft', $data);
+	}
+	
 	//added by Mike, 20200328; edited by Mike, 20200417
 	//added by Mike, 20210218
 	//use sort asc with added_datetime_stamp
