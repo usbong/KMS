@@ -1055,16 +1055,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchMedicineBoxesLeft', $data);
 	}
 
-	//added by Mike, 20250213
-	//TODO: -update: this to reuse confirmMedicine();
-	public function confirmMedicineBoxesLeft()
-	{
-		//added by Mike, 20231213
-		//error: "Undefined index: nameParam"
-		if (!isset($_POST['nameParam'])) {
-			redirect('browse/searchMedicineBoxesLeft');
-		}		
-		
+	//added by Mike, 20250215
+	public function processConfirmMedicine() {
 		$data['nameParam'] = $_POST['nameParam'];
 		
 		//added by Mike, 20200912
@@ -1087,8 +1079,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20201010
 /*		echo "ipAddress: ".$ipAddress."<br/>";
 		echo "machineAddress: ".$machineAddress."<br/>";
-*/
-		
+*/		
 
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -1351,18 +1342,60 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['result'] = array();
 		
 		$data['result'] = $outputArray;
+						
+		return $data;
+	}
+
+	//added by Mike, 20250213
+	//TODO: -update: this to reuse confirmMedicine();
+	public function confirmMedicineBoxesLeft()
+	{
+		//added by Mike, 20231213
+		//error: "Undefined index: nameParam"
+		if (!isset($_POST['nameParam'])) {
+			redirect('browse/searchMedicineBoxesLeft');
+		}		
 		
-		$data['quantityPerBox'] = 100; //TODO: -update: this
-		
+		$data = $this->processConfirmMedicine();
+
+		//$data['result']['item_quantity_per_box'] = 0;//100; //TODO: -update: this
+
+/*
+		$data['quantityPerBox'] = 0;//100; //TODO: -update: this
+
+		if ($data['quantityPerBox']==0) {
+			$data['quantityPerBox']=1;
+		}
+*/
+				
 		$this->load->view('searchMedicineBoxesLeft', $data);
 	}
 	
+	
+
 	//added by Mike, 20200328; edited by Mike, 20200417
 	//added by Mike, 20210218
 	//use sort asc with added_datetime_stamp
 	//update added_datetime_stamp value due to select medicine items sold,
 	//albeit not the nearest to expire
 	public function confirmMedicine()
+	{
+		//added by Mike, 20231213
+		//error: "Undefined index: nameParam"
+		if (!isset($_POST['nameParam'])) {
+			redirect('browse/searchMedicine');
+		}		
+		
+		$data = $this->processConfirmMedicine();
+		
+		$this->load->view('searchMedicine', $data);
+	}
+	
+	//added by Mike, 20250215; from 20210218
+	//use sort asc with added_datetime_stamp
+	//update added_datetime_stamp value due to select medicine items sold,
+	//albeit not the nearest to expire
+	public function confirmMedicineORIG()
 	{
 		//added by Mike, 20231213
 		//error: "Undefined index: nameParam"
