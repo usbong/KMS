@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2023 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230206; from 20220721
+' @date updated: 20250215; from 20230206
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -358,6 +358,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$iCount = 1;
 
 				foreach ($result as $value) {
+					//added by Mike, 20250215					
+/*					
+					if (strpos(strtoupper($value['item_name']),"CALCIUM")!==false) {
+					}
+					else if (strpos(strtoupper($value['item_name']),"GLUCO")!==false) {
+					}
+*/					
+					if (strpos(strtoupper($value['item_name']),"*")!==false) {
+					}
+					else {					
+						if ($value['resultQuantityInStockNow']==0) {
+							continue;
+						}
+					}
 		?>				
 		
 					  <tr class="row">
@@ -365,7 +379,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a target='_blank' href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
-								echo $value['item_name'];
+								//edited by Mike, 20250214
+								//echo $value['item_name'];
+								echo strtoupper($value['item_name']);
 				?>		
 								</div>								
 							</a>

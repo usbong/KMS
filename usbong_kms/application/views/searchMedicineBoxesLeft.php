@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250213; from 20230206
+' @date updated: 20250215; from 20250213
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -363,6 +363,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$iCount = 1;
 
 				foreach ($result as $value) {
+					//added by Mike, 20250215
+/*					
+					if (strpos(strtoupper($value['item_name']),"CALCIUM")!==false) {
+					}
+					else if (strpos(strtoupper($value['item_name']),"GLUCO")!==false) {
+					}
+*/					
+					if (strpos(strtoupper($value['item_name']),"*")!==false) {
+					}
+					else {					
+						if ($value['resultQuantityInStockNow']==0) {
+							continue;
+						}
+					}					
 		?>				
 		
 					  <tr class="row">
@@ -370,7 +384,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a target='_blank' href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
-								echo $value['item_name'];
+								//edited by Mike, 20250214
+								//echo $value['item_name'];
+								echo strtoupper($value['item_name']);
 				?>		
 								</div>								
 							</a>
@@ -420,7 +436,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];				
 									
 									//echo floor($value['resultQuantityInStockNow']/$quantityPerBox); //." / ".($value['quantity_in_stock']/$quantityPerBox);	
-									echo floor($value['resultQuantityInStockNow']/$quantityPerBox)." / ".floor($value['quantity_in_stock']/$quantityPerBox);
+									//edited by Mike, 20250215
+									//echo floor($value['resultQuantityInStockNow']/$quantityPerBox)." / ".floor($value['quantity_in_stock']/$quantityPerBox);
+									
+																		
+									if ($value['item_quantity_per_box']==0) {
+										//$value['item_quantity_per_box']=1;
+									}
+									else if ($value['resultQuantityInStockNow']==0) {
+									}
+									else {
+										echo floor($value['resultQuantityInStockNow']/$value['item_quantity_per_box'])." / ".floor($value['quantity_in_stock']/$value['item_quantity_per_box']);
+									}
 								}
 							?>
 								</div>
