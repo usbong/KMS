@@ -1062,7 +1062,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 */
 		//edited by Mike, 20210110
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+
+		//edited by Mike, 20250215
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t2.quantity_in_stock, t2.expiration_date');
  
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -4249,7 +4253,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//added by Mike, 20230328
 		$param['nameParam'] = trim($param['patientLastNameParam']).", ".trim($param['patientFirstNameParam']);
 		$param['nameParam'] = strtoupper($param['nameParam']);		
-	
+
+		//added by Mike, 20250208
+		//NOTE: MYSQL COMMAND to update existing database:
+		//UPDATE `patient` SET `patient_name`=replace(`patient_name`, '.', '');
+		$param['nameParam'] = str_replace(".","",$param['nameParam']);
+			
 		//added by Mike, 20210817; removed by Mike, 20210817
 /*		echo ">>".$param['nameParam'];		
 		//trim Command already executed
