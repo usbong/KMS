@@ -163,6 +163,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20240624		
 		$data['nameParam'] = str_replace("/","",$data['nameParam']);
 		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+
+		//added by Mike, 20250219
+		$data['nameParam'] = str_replace(".","",$data['nameParam']);
 		
 		//added by Mike, 20241113
 		if (!isset($data['nameParam'])) {
