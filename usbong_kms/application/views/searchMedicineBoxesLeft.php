@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250215; from 20250213
+' @date updated: 20250219; from 20250215
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -264,7 +264,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 		<td class="pageNameColumn">
 			<h2>
-				Search Medicine | Box Left
+				Search Medicine | Boxes Left
 			</h2>		
 		</td>
 	  </tr>
@@ -345,6 +345,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class="columnTableHeader">				
 							<?php
+								echo "QTY<br/>PER BOX";
+							?>
+						</td>						
+						<td class="columnTableHeader">				
+							<?php
 								echo "BOXES LEFT";
 							?>
 						</td>						
@@ -378,7 +383,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 					}					
 		?>				
-		
 					  <tr class="row">
 						<td class ="column">				
 							<a target='_blank' href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
@@ -417,6 +421,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class =column>				
 								<div id=quantityInStockId<?php echo $iCount?>>
 							<?php
+								echo $value['item_quantity_per_box'];
+							?>
+								</div>
+						</td>						
+						<td class =column>				
+								<div id=quantityInStockId<?php echo $iCount?>>
+							<?php
 								//echo $value['quantity_in_stock'];
 
 								//edited by Mike, 20200408
@@ -427,26 +438,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else if ($value['quantity_in_stock']=="") {
 									//edited by Mike, 20200615
 									//echo 9999;
-									echo "0 / 0"; //edited by Mike, 20200703
+									//edited by Mike, 20250219
+									//echo "0 / 0"; //edited by Mike, 20200703
+									//echo "<b><span style='color:red'>NONE</span></b>";
+									echo "<b><span style='color:red'>0</span></b>";
 								}
 								else {
-									//edited by Mike, 20200417
-//									echo $value['quantity_in_stock'];
-									//edited by Mike, 20250213
-									//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];				
-									
-									//echo floor($value['resultQuantityInStockNow']/$quantityPerBox); //." / ".($value['quantity_in_stock']/$quantityPerBox);	
-									//edited by Mike, 20250215
-									//echo floor($value['resultQuantityInStockNow']/$quantityPerBox)." / ".floor($value['quantity_in_stock']/$quantityPerBox);
-									
-																		
 									if ($value['item_quantity_per_box']==0) {
 										//$value['item_quantity_per_box']=1;
 									}
 									else if ($value['resultQuantityInStockNow']==0) {
 									}
 									else {
-										echo floor($value['resultQuantityInStockNow']/$value['item_quantity_per_box'])." / ".floor($value['quantity_in_stock']/$value['item_quantity_per_box']);
+										$output = floor($value['resultQuantityInStockNow']/$value['item_quantity_per_box']);
+										
+										$outputDenominator = floor($value['quantity_in_stock']/$value['item_quantity_per_box']);
+																				
+										if ($output<=0) {
+											if ($outputDenominator<=0) {
+												//echo "<b><span style='color:red'>NONE</span></b>";
+												echo "<b><span style='color:red'>0</span></b>";
+											}
+											else {											
+												echo "<b><span style='color:red'>".$output." / ".$outputDenominator."</span></b>";
+											}												
+											//echo "<b><span style='color:red'>NONE</span></b>";
+										}
+										else {
+											echo $output." / ".$outputDenominator;
+										}
 									}
 								}
 							?>

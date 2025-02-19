@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2024 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20241209; from 20241029
+' @date updated: 20250219; from 20241209
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -522,6 +522,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {	
 											echo ($iFee-300*2)." + 300*2";										
 										}
+										//added by Mike, 20250219
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {	
+											echo ($iFee-300*3)." + 300*3";										
+										}										
 										else {
 											echo ($iFee-300)." + 300";
 										}
@@ -534,6 +538,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
 
 											echo ($iFee-200*2)." + 200*2";
+										}
+										else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
+											(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false)) {
+
+											echo ($iFee-200*3)." + 200*3";
 										}
 										else {
 											echo ($iFee-200)." + 200";
@@ -655,6 +664,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												$iCurrExtraFeeValue += (300*2);//*.30;
 
 											}
+											//added by Mike, 20250219
+											else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {
+												$iCurrExtraFeeValue += (300*3);//*.30;
+											}
 											else {
 												//$iMOSC = ($value['fee']-300)*.30;
 												$iCurrExtraFeeValue += (300);//*.30;
@@ -666,6 +679,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												
 												//$iMOSC = ($value['fee']-200*2)*.30;
 												$iCurrExtraFeeValue += (200*2);//*.30;												
+											}
+											//added by Mike, 20250219
+											else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
+												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false)) {
+												$iCurrExtraFeeValue += (200*3);//*.30;												
 											}
 											else {
 												//$iMOSC = ($value['fee']-200)*.30;
@@ -890,9 +908,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												//echo floor(($iNetPF*100)/100)." + 200";	
 												//echo floor((($iNetPF-300*2)*100)/100)." + 300*2";
 											}
+											//added by Mike, 20250219
+											else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {
+												$iCurrExtraFeeValue += 300*3;
+												
+												//output: whole numbers
+												//echo floor(($iNetPF*100)/100)." + 200";	
+												//echo floor((($iNetPF-300*2)*100)/100)." + 300*2";
+											}
 											else {
 												//$iNetPF = ($value['fee']-300)*.70+300;
-																																		$iCurrExtraFeeValue += 300;
+																																								$iCurrExtraFeeValue += 300;
 
 												//output: whole numbers
 												//echo floor((($iNetPF-300)*100)/100)." + 300";
@@ -904,12 +930,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
 												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {												
 												//$iNetPF = ($value['fee']-200*2)*.70+200*2;
-																																		$iCurrExtraFeeValue += 200*2;
+																																								$iCurrExtraFeeValue += 200*2;
 
 												//output: whole numbers
 												//echo floor(($iNetPF*100)/100)." + 200";	
 												//echo floor((($iNetPF-200*2)*100)/100)." + 200*2";
 											}
+											//added by Mike, 20250219
+											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
+												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false)) {												
+												//$iNetPF = ($value['fee']-200*2)*.70+200*2;
+																																								$iCurrExtraFeeValue += 200*3;
+
+												//output: whole numbers
+												//echo floor(($iNetPF*100)/100)." + 200";	
+												//echo floor((($iNetPF-200*2)*100)/100)." + 200*2";
+											}											
 											else {
 												//$iNetPF = ($value['fee']-200)*.70+200;
 												

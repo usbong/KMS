@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2024 USBONG
+' Copyright 2020~2025 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20241029; from 20240907
+' @date updated: 20250219; from 20241029
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -552,6 +552,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					if (notes.indexOf("MEDCERT3X2")!==-1){
 						professionalFee = parseInt(professionalFee) + 300*2;
 					}
+					//added by Mike, 20250219
+					else if (notes.indexOf("MEDCERT3X3")!==-1){
+						professionalFee = parseInt(professionalFee) + 300*3;
+					}
 					else {
 						professionalFee = parseInt(professionalFee) + 300;
 					}
@@ -559,9 +563,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				else {
 					//edited by Mike, 20240510
 					//professionalFee = parseInt(professionalFee) + 200;
-					if ((notes.indexOf("MEDCERT2X2")!==-1) || 
+					//edited by Mike, 20250219
+					/*if ((notes.indexOf("MEDCERT2X2")!==-1) || 
 					   (notes.indexOf("MEDCERTX2")!==-1)) {
+					*/
+					if ((notes.indexOf("MEDCERT2X2")!==-1)) {
 						professionalFee = parseInt(professionalFee) + 200*2;
+					}
+					else if ((notes.indexOf("MEDCERT2X3")!==-1)) {
+						professionalFee = parseInt(professionalFee) + 200*3;
 					}
 					else {
 						professionalFee = parseInt(professionalFee) + 200;
