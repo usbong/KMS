@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2020~2024 USBONG
+  Copyright 2020~2025 USBONG
   
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20241209; from 20241029
+  @date updated: 20250219; from 20241209
   @website address: www.usbong.ph
   
   Input:
@@ -1024,6 +1024,10 @@ echo "hallo<br/>";
 												
 												$iCurrExtraFeeValue+=300*2;
 											}
+											//added by Mike, 20250219
+											else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {
+												$iCurrExtraFeeValue+=300*3;
+											}
 											else {
 												//$iNetFeeTotalCount = $iNetFeeTotalCount + 300*.30;
 																						
@@ -1034,7 +1038,12 @@ echo "hallo<br/>";
 											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
 												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
 												//$iNetFeeTotalCount = $iNetFeeTotalCount + (200*2)*.30;
-																																		$iCurrExtraFeeValue+=200*2;
+																																								$iCurrExtraFeeValue+=200*2;
+											}
+											//added by Mike, 20250219
+											else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
+												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false)) {
+												$iCurrExtraFeeValue+=200*3;
 											}
 											else {
 												//$iNetFeeTotalCount = $iNetFeeTotalCount + 200*.30;
@@ -1350,6 +1359,10 @@ echo "hallo<br/>";
 									
 									$iCurrExtraFeeValue+=300*2;
 								}
+								//added by Mike, 20250219
+								else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {
+									$iCurrExtraFeeValue+=300*3;
+								}
 								else {
 									//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-300)*.70+300;
 									
@@ -1365,6 +1378,11 @@ echo "hallo<br/>";
 									
 									$iCurrExtraFeeValue+=200*2;
 								}
+								//added by Mike, 20250219
+								else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
+									(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false)) {
+									$iCurrExtraFeeValue+=200*3;
+								}								
 								else {
 									//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-200)*.70+200;
 									
