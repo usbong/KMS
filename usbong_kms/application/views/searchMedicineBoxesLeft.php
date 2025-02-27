@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250219; from 20250215
+' @date updated: 20250227; from 20250219
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -319,13 +319,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "<br/>";
 */			
 
+				//added by Mike, 20250227
 				$resultCount = count($result);
+				
+				foreach ($result as $value) {
+					if (strpos(strtoupper($value['item_name']),"*")!==false) {
+					}
+					else {					
+						if ($value['resultQuantityInStockNow']==0) {
+							//continue;
+							$resultCount--;
+						}
+					}
+				}
+				
+				//edited by Mike, 20250227
 				if ($resultCount==1) {
-					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
+					echo '<div>Showing <b>'.$resultCount.'</b> result found.</div>';
 				}
 				else {
-					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
-				}			
+					echo '<div>Showing <b>'.$resultCount.'</b> results found.</div>';			
+				}		
 
 				echo "<br/>";
 				echo "<table class='search-result'>";
