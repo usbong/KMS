@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2023 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230206; from 20221020
+' @date updated: 20250307; from 20230206
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -69,6 +69,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #00ff00;
 						}
 
+						div.tableHeaderAddNewNonMedItem
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #ff8000; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+						}	
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -94,6 +102,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
+
+						table.addNonMedItemTable
+						{
+							border: 2px dotted #ab9c7d;		
+							margin-top: 10px;
+						}	
 						
 						table.search-result
 						{
@@ -134,8 +148,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 50%;
 							display: inline-block;
 							text-align: right;
-						}						
+						}		
 
+/*
+						.Price-textbox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 10px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							width: 72%;
+
+							float: left;
+						}
+*/
     /**/
     </style>
     <title>
@@ -514,6 +541,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}			
 		}
 	?>
+	<br />
+	<br />
+	
+	<table class="addNonMedItemTable">
+	<tr>
+		<td>
+			<div class="tableHeaderAddNewNonMedItem">
+				ADD NEW NON-MED
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<!-- Form -->
+		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
+		<!-- "browse/addPatientName" faster -->
+		<form method="post" action="<?php echo site_url('browse/addNonMedItem/')?>">
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>Item Name <span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>				
+					  <input type="text" class="item-input" placeholder="" name="itemNameParam" value="<?php if (isset($itemNameParam)){echo $itemNameParam;}?>" required>
+					</td>
+				  </tr>
+				</table>
+			</div>
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>Price </span><span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+<!--									
+					  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
+-->					  
+					<input type="tel" id="" name="priceParam" class="Price-textbox no-spin" value="<?php if (isset($priceParam)){echo $priceParam;}?>" min="1" max="99999999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 7) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>
+					</td>
+				  </tr>
+				</table>
+			</div>	
+			<br />
+			<!-- Buttons -->
+			<button type="submit" class="Button-login">
+				Submit
+			</button>
+		</form>
+		</td>
+	</tr>
+	</table>	
+	<br />
+	<br />
 	<br />
 	<br />
 	<div class="copyright">
