@@ -537,6 +537,11 @@ class Browse extends CI_Controller { //MY_Controller {
 			redirect('browse/searchNonMedicine');
 		}
 		else {
+			//added by Mike, 20250307
+			if (strlen($_POST['nameParam'])<=1) {
+				redirect('browse/searchNonMedicine');
+			}
+			
 			$data['nameParam'] = $_POST['nameParam'];
 		}
 
@@ -3574,6 +3579,59 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchPatientLabUnit', $data);	
 	}
 
+	//added by Mike, 20250307
+	public function addNonMedItem()
+	{
+		//echo "HALLO";
+				
+		$data['itemNameParam'] = $_POST['itemNameParam'];
+		$data['priceParam'] = $_POST['priceParam'];
+
+/*
+		echo "itemNameParam".$data['itemNameParam'];
+		echo "priceParam".$data['priceParam'];
+*/
+				
+		if (!isset($data['itemNameParam'])) {
+			redirect('browse/searchNonMedicine');
+		}
+
+		if (!isset($data['priceParam'])) {
+			redirect('browse/searchNonMedicine');
+		}
+/*		
+		if (!is_numeric($data['priceParam'])) {
+			redirect('browse/searchNonMedicine');
+		}
+*/
+		//notes: update inside BROWSE_MODEL.php
+		$data['nameParam'] = $data['itemNameParam'];
+						
+		if (!is_numeric($data['priceParam'])) {
+			$this->load->view('searchNonMedicine', $data);	
+		}
+		else {
+			//$data['itemNameParam'] = "";
+			//$data['priceParam'] = "";
+			
+			date_default_timezone_set('Asia/Hong_Kong');
+			$dateTimeStamp = date('Y/m/d H:i:s');
+			
+			$data['transactionDate'] = date('m/d/Y');
+			
+			$this->load->model('Browse_Model');
+		
+			$data['itemId'] = $this->Browse_Model->addNonMedItem($data);
+			
+			//TODO: -reverify: this
+			//$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+
+			$_POST['nameParam'] = $data['nameParam'];
+			$this->confirmNonMedicine();
+		}
+
+		//$this->load->view('searchNonMedicine', $data);	
+	}	
 	
 	//added by Mike, 20200411; edited by Mike, 20200414
 //	public function addTransactionItemPurchase($itemId,$quantity)
