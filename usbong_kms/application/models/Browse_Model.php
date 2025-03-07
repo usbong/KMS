@@ -4307,6 +4307,57 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $this->db->insert_id();
 */		
 	}	
+	
+	//added by Mike, 20250307
+	public function addNonMedItem($param) 
+	{			
+		$param['nameParam'] = str_replace(",","",$param['itemNameParam']);
+		$param['nameParam'] = trim($param['nameParam']);
+		$param['nameParam'] = strtoupper($param['nameParam']);		
+		$param['nameParam'] = str_replace(".","",$param['nameParam']);
+
+		//--
+		$param['priceParam'] = str_replace(",","",$param['priceParam']);
+		$param['priceParam'] = trim($param['priceParam']);
+		
+		//echo ">>>>>>>>>>>>>".$param['priceParam']."<br/><br/>";
+		
+		//verify if patient name already exists
+		$this->db->select('item_name, item_id');
+		$this->db->where('item_name', $param['nameParam']);
+		$query = $this->db->get('item');	
+		
+		$rowArray = $query->result_array();
+		
+		if (isset($rowArray) and (count($rowArray)>0)) {
+			//TO-DO: -add: this in view
+			//echo "PATIENT NAME ALREADY EXISTS IN COMPUTER DATABASE!";
+			
+			return $rowArray[0]['item_id'];
+		}
+		else {
+			$data = array(
+						'item_name' => $param['nameParam'],
+						'item_price' => $param['priceParam'],
+						'item_type_id' => 2
+					);
+
+			$this->db->insert('item', $data);		
+
+			$itemId = $this->db->insert_id();
+
+			//return $this->db->insert_id();
+
+			$dataForInventory = array(
+						'item_id' => $itemId,
+						'quantity_in_stock' => -1
+					);
+
+			$this->db->insert('inventory', $dataForInventory);		
+			
+			return $itemId;
+		}
+	}		
 
 	//added by Mike, 20200529; edited by Mike, 20200530
 	public function addNewTransactionForPatient($param) 
