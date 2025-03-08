@@ -4319,21 +4319,29 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//--
 		$param['priceParam'] = str_replace(",","",$param['priceParam']);
 		$param['priceParam'] = trim($param['priceParam']);
+
+		//--
+		$param['quantityParam'] = str_replace(",","",$param['quantityParam']);
+		$param['quantityParam'] = trim($param['quantityParam']);
 		
 		//echo ">>>>>>>>>>>>>".$param['priceParam']."<br/><br/>";
 		
-		//verify if patient name already exists
+		//verify if item name already exists
 		$this->db->select('item_name, item_id');
 		$this->db->where('item_name', $param['nameParam']);
+		$this->db->where('item_price', $param['priceParam']);
+
 		$query = $this->db->get('item');	
 		
 		$rowArray = $query->result_array();
 		
 		if (isset($rowArray) and (count($rowArray)>0)) {
 			//TO-DO: -add: this in view
-			//echo "PATIENT NAME ALREADY EXISTS IN COMPUTER DATABASE!";
+			//echo "ITEM NAME ALREADY EXISTS IN COMPUTER DATABASE!";
 			
-			return $rowArray[0]['item_id'];
+			//return $rowArray[0]['item_id'];
+			
+			$itemId = $rowArray[0]['item_id'];
 		}
 		else {
 			$data = array(
@@ -4347,16 +4355,17 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$itemId = $this->db->insert_id();
 
 			//return $this->db->insert_id();
-
-			$dataForInventory = array(
-						'item_id' => $itemId,
-						'quantity_in_stock' => -1
-					);
-
-			$this->db->insert('inventory', $dataForInventory);		
-			
-			return $itemId;
 		}
+
+		$dataForInventory = array(
+					'item_id' => $itemId,
+					//'quantity_in_stock' => 10000 //-1
+					'quantity_in_stock' => $param['quantityParam']
+				);
+
+		$this->db->insert('inventory', $dataForInventory);		
+		
+		return $itemId;
 	}		
 
 	//added by Mike, 20200529; edited by Mike, 20200530
