@@ -38,6 +38,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 670px
                         }
 						
+						span.asterisk
+						{
+							color: #ff0000;							
+						}
+						
 						div.checkBox
 						{
 							border: 1.5pt solid black; height: 9pt; width: 9pt;
@@ -498,9 +503,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class =column>				
 								<div id=expirationId<?php echo $iCount?>>
 							<?php
+								//echo ">>>>".$value['expiration_date'];
+							
 								//echo $value['expiration_date'];
-								if ($value['expiration_date']==0) {
-
+								//if ($value['expiration_date']==0) {
+								if (($value['expiration_date']==0) || ($value['expiration_date']=='0000-00-00')) {
 									if ($value['quantity_in_stock']==-1) {
 										echo "UNKNOWN";
 									}
@@ -603,6 +610,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  </tr>
 				</table>
 			</div>	
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>Quantity </span><span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+<!--									
+					  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
+-->					  
+					<input type="tel" id="" name="quantityParam" class="Quantity-textbox no-spin" value="<?php if (isset($quantityParam)){echo $quantityParam;}?>" min="1" max="99999999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 7) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>
+					</td>
+				  </tr>
+				</table>
+			</div>				
 			<br />
 			<!-- Buttons -->
 			<button type="submit" class="Button-login">
