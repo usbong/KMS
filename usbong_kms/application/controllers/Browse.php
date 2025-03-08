@@ -3586,6 +3586,7 @@ class Browse extends CI_Controller { //MY_Controller {
 				
 		$data['itemNameParam'] = $_POST['itemNameParam'];
 		$data['priceParam'] = $_POST['priceParam'];
+		$data['quantityParam'] = $_POST['quantityParam'];
 
 /*
 		echo "itemNameParam".$data['itemNameParam'];
@@ -3599,6 +3600,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		if (!isset($data['priceParam'])) {
 			redirect('browse/searchNonMedicine');
 		}
+
+		if (!isset($data['quantityParam'])) {
+			redirect('browse/searchNonMedicine');
+		}		
+		
 /*		
 		if (!is_numeric($data['priceParam'])) {
 			redirect('browse/searchNonMedicine');
@@ -3607,7 +3613,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		//notes: update inside BROWSE_MODEL.php
 		$data['nameParam'] = $data['itemNameParam'];
 						
-		if (!is_numeric($data['priceParam'])) {
+		//if (!is_numeric($data['priceParam'])) {
+		if ((!is_numeric($data['priceParam'])) || (!is_numeric($data['quantityParam']))) {
 			$this->load->view('searchNonMedicine', $data);	
 		}
 		else {
