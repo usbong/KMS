@@ -5472,7 +5472,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	public function deleteIndexCardImageViaId($iIndexCardImageId) {
 		$this->db->select('image_filename');
 		$this->db->where('image_id', $iIndexCardImageId); 
-		$query = $this->db->get('image');
+		//added by Mike, 20250310
+		//$query = $this->db->get('image');
+		$query = $this->db->get('imagev2');
+		
 		$rowArray = $query->result_array();
 		
 		if ($rowArray == null) {			
@@ -5483,7 +5486,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		//deletes image file transaction row in MySQL DB
 		$this->db->where('image_id',$iIndexCardImageId);
-		$this->db->delete('image');
+		//added by Mike, 20250310
+		//$this->db->delete('image');
+		$this->db->delete('imagev2');
 	}
 
 
