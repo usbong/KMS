@@ -735,6 +735,10 @@ class Browse_Model extends CI_Model
 		//added by Mike, 20211203
 		$this->db->where('t1.is_hidden', 0); //NOT hidden
 
+		//added by Mike, 20250313
+		//$this->db->where('t1.is_to_be_deleted', 0); //NOT for deletion
+		$this->db->where('t2.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE
+
 		$this->db->like('t1.item_name', $param['nameParam']);
 		
 		//added by Mike, 20200607
@@ -3107,6 +3111,24 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			//TO-DO: -delete transaction if all fee values are zero
 		}
 	}	
+	
+	//added by Mike, 20250313
+	public function deleteItemFromSearch($param) 
+	{			
+		$itemId = $param['itemId'];
+
+		//update: transaction with all the items in the cart
+		$data = array(
+					'is_to_be_deleted' => 1						
+				);
+
+		$this->db->where('item_id',$itemId);
+		$this->db->where('is_to_be_deleted',0);
+
+		$this->db->limit(1);
+		$this->db->order_by('added_datetime_stamp', 'DESC');
+		$this->db->update('inventory', $data);		
+	}		
 
 	//edited by Mike, 20200629
 	public function deleteTransactionItemPurchaseReverify($param) 
@@ -5000,6 +5022,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		$this->db->from('item as t1');
 
+		//added by Mike, 20250313
+		//$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
+
 		//removed by Mike, 20210110
 //		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 //		$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
@@ -5021,6 +5046,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//TO-DO: -add: auto-identify item_type
 		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 
+		//added by Mike, 20250313
+		//$this->db->where('t2.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE
 
 		//edited by Mike, 20200401; removed by Mike, 20210110
 //		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
@@ -5865,6 +5892,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		
+		//added by Mike, 20250313
+		//$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
+				
 		//edited by Mike, 20210110
 //		$this->db->where('t1.item_id', $itemId);
 		$this->db->where('t1.item_id', $itemValue['item_id']);
@@ -5872,6 +5902,8 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		//added by Mike, 20230303
 		$this->db->where('t1.is_hidden', 0); //not hidden
 
+		//added by Mike, 20250313
+		//$this->db->where('t3.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE
 
 		//edited by Mike, 20200625
 		//note: we include transactions in the cart list, albeit unpaid
