@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250307; from 20230206
+' @date updated: 20250313; from 20250307
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -167,7 +167,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 							float: left;
 						}
-*/
+*/						
+						.Button-delete {
+							background-color: #E9E9E9;
+							color: #000000;
+							/*font-weight: bold;*/
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+						}						
+
+						.Button-delete:hover {
+							background-color: #C0C0C0;
+							color: #000000;
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+						}		
+						
+
     /**/
     </style>
     <title>
@@ -277,6 +293,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
 		  }
 */
+
+		function myPopupFunctionDelete(itemId,itemName) {	
+			//alert("DITO");
+		
+			if (confirm("Delete ["+itemName+"]?")) { //YES
+				window.location.href = "<?php echo site_url('browse/deleteItemFromSearch/2/"+itemId+"');?>";
+			} else {
+				//CANCEL
+			} 
+		}	
 	  </script>
   <body>
 	<table class="imageTable">
@@ -422,6 +448,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "PRICE"; //ITEM PRICE;
 							?>
 						</td>
+						<td class="">
+							<?php
+								//DELETE ITEM COLUMN
+							?>
+						</td>
 					  </tr>
 <?php				
 				$iCount = 1;
@@ -528,6 +559,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<td class="column">
+							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",'".strtoupper($value['item_name'])."'";?>)" class="Button-delete">
+								DELETE
+							</button>
+						</td>						
 					  </tr>
 		<?php				
 					$iCount++;		
