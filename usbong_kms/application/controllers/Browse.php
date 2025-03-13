@@ -3978,6 +3978,46 @@ class Browse extends CI_Controller { //MY_Controller {
 		//additional note: multiple items may already exist in the Cart List
 	}
 	
+	//added by Mike, 20250313
+	public function deleteItemFromSearch($itemTypeId, $itemId)
+	{
+		//echo "itemId: ".$itemId;
+
+		$data['itemTypeId'] = $itemTypeId;
+		$data['itemId'] = $itemId;
+	
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+		
+		$this->load->model('Browse_Model');
+
+		$this->Browse_Model->deleteItemFromSearch($data);
+
+		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId,$itemId);
+		
+		$result = $data['result'];
+		
+		if (isset($result)) {			
+			if ($result!=null) {		
+				$resultCount = count($result);				
+				if ($resultCount>0) {
+					$_POST['nameParam']=strtoupper($result[0]['item_name']);
+				}
+			}
+		}
+		
+		//echo ">".$_POST['nameParam'];
+		
+		//$_POST['nameParam']="AIRCAST DELUX LUMBAR SUPPORT";
+
+		//echo ">>>".$_POST['nameParam'];
+		
+		$this->confirmNonMedicine();
+
+		//echo ">>>>>".$_POST['nameParam'];
+	}	
 
 	//added by Mike, 20200411
 	public function deleteTransactionItemPurchase($itemTypeId, $itemId, $transactionId)
