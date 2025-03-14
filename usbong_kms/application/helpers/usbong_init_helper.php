@@ -22,7 +22,61 @@
 //OK
 //echo "HALLO";
 
+
+//edited by Mike, 20250314
 $ipAddress = $_SERVER['REMOTE_ADDR'];
+
+//TODO: -reverify: this
+//------------------------------
+if (isset($_SESSION["client_ip_address"]) && (isset($_SESSION["client_machine_address"]))) {
+
+	//$ipAddress = $_SERVER['REMOTE_ADDR'];
+	$machineAddress = "";
+
+	if (strpos($ipAddress, "::")!==false) {
+		$ipAddress = "SERVER ADDRESS";
+		
+		$machineAddress = "SERVER MACHINE ADDRESS";
+
+		//echo "<font color='#FF0000'><b>Please set as default in the Computer Server Browser,<br/>the Computer Server Internet Protocol (IP) Address<br/>that is not \"localhost\".<br/><br/></b></font>";
+	}
+
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { //Windows machine
+		$rawMachineAddressInput =  exec('getmac');
+		$machineAddress = explode(" ", $rawMachineAddressInput)[0];
+	}
+	else {
+		//TO-DO: -reverify: this set of instructions due receives server machine address, not client machine address
+		//note: output is blank if Windows Machine
+		//We use this set of instructions with Linux Machines
+		//Reference: https://stackoverflow.com/questions/1420381/how-can-i-get-the-mac-and-the-ip-address-of-a-connected-client-in-php;
+		//last accessed: 20200820
+		//answer by: Paul Dixon, 20090914T0848
+		#run the external command, break output into lines
+		$arp=`arp -n $ipAddress`; //`arp -a $ipAddress`;
+		$lines=explode("\n", $arp);
+
+		#look for the output line describing our IP address
+		foreach($lines as $line)
+		{
+		   $cols=preg_split('/\s+/', trim($line));
+		   if ($cols[0]==$ipAddress)
+		   {
+			   $machineAddress=$cols[1];
+		   }
+		}
+	}
+
+	//CI not yet loaded
+	//Undefined property: CI_Loader::$session
+	//$this->session->set_userdata('client_ip_address', $ipAddress);
+	//$this->session->set_userdata('client_machine_address', $machineAddress);
+	
+	$_SESSION["client_ip_address"] = $ipAddress;
+	$_SESSION["client_machine_address"] = $machineAddress;
+}
+//------------------------------
+
 
 /*
 if ((strpos($ipAddress, "127.0.0.1")!==false) ||
