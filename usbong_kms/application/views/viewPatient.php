@@ -591,7 +591,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			//added by Mike, 20200602
 			if (notes.indexOf("NC")!==-1) { //gratis, i.e. NO CHARGE
-				professionalFee = 0;
+				//edited by Mike, 20250314
+				//professionalFee = 0;
+
+				//first occurrence only
+				if (notes.indexOf("BALANCE")!==-1) { //BALANCE
+					iStart = notes.indexOf("BALANCE");
+					iEnd = iStart+ "BALANCE".length;
+					
+					iStartNC = notes.indexOf("NC")
+					
+					//"NC" inside "BALANCE"
+					if ((iStartNC>=iStart) && (iStartNC<=iEnd)) {
+					}
+					else {
+						professionalFee = 0;
+					}
+				}
+				else {
+					professionalFee = 0;
+				}
 			}
 
 //			setTimeout(setButton("addButtonId",false),30000);

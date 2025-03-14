@@ -518,7 +518,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else {
 //									echo $value['quantity_in_stock'];
 									//edited by Mike, 20221008
-									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];										
+									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+									
 /*	//removed by Mike, 20221008									
 									if ($value['resultQuantityInStockNow']==0) {
 										continue;
@@ -559,11 +560,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+						<?php
+							//added by Mike, 20250314
+							$updateResultTemp = array();
+							$updateResultTemp = $updateResult;
+							
+							$myNextElement=next($updateResult);
+							
+							if ($myNextElement) { //element exists
+								if ($myNextElement['item_id']!=$value['item_id']) {
+						?>
 						<td class="column">
 							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",'".strtoupper($value['item_name'])."'";?>)" class="Button-delete">
 								DELETE
 							</button>
 						</td>						
+						<?php
+								}
+							}	
+							//current element is already the last
+							else {
+						?>								
+							<td class="column">
+								<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",'".strtoupper($value['item_name'])."'";?>)" class="Button-delete">
+									DELETE
+								</button>
+							</td>						
+						<?php
+							}
+						?>
 					  </tr>
 		<?php				
 					$iCount++;		

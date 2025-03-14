@@ -115,11 +115,9 @@
 		echo "<b><font color='#FF4500'>YOUR MACHINE ADDRESS: </font></b>".$machineAddress;
 */		
 		//added by Mike, 20250314; debug
-/*		
 		if (isset($_SESSION["hasAddedPatientInCartList"])) {		
 			$this->session->unset_userdata('hasAddedPatientInCartList');
 		}
-*/
 
 		//TO-DO: -use: stored session values
 		//TO-DO: -reverify: this		
