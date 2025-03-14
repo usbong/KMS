@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2024 SYSON, MICHAEL B.
+  Copyright 2020~2025 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20240902; from 20240819
+  @date updated: 20250314; from 20240902
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -114,6 +114,13 @@
 		echo "<br/>";		
 		echo "<b><font color='#FF4500'>YOUR MACHINE ADDRESS: </font></b>".$machineAddress;
 */		
+		//added by Mike, 20250314; debug
+/*		
+		if (isset($_SESSION["hasAddedPatientInCartList"])) {		
+			$this->session->unset_userdata('hasAddedPatientInCartList');
+		}
+*/
+
 		//TO-DO: -use: stored session values
 		//TO-DO: -reverify: this		
 	?>
