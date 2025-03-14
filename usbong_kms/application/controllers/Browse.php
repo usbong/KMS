@@ -178,6 +178,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20201010
 		$ipAddress = $this->session->userdata("client_ip_address");
 		$machineAddress = $this->session->userdata("client_machine_address");
+		
+		//added by Mike, 20250314
+		//prevent unable to add any patient due to locked
+		if (isset($_SESSION["hasAddedPatientInCartList"])) {
+			$this->session->unset_userdata('hasAddedPatientInCartList');
+		}
 
 		$this->load->model('Browse_Model');
 
@@ -794,8 +800,7 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 			}
 		}
-		
-		
+				
 		//edited by Mike, 20200723
 		//note: this is due to the following removed function is not available in PHP 5.3
 		//$data['result'] = [];
@@ -3328,10 +3333,24 @@ class Browse extends CI_Controller { //MY_Controller {
 			}
 		}
 		
+		//added by Mike, 20250314
+		if (isset($_SESSION["hasAddedPatientInCartList"])) {
+			//don't add the patient
+			//$this->session->unset_userdata('hasAddedPatientInCartList');
+		}
+		else {
+			$this->session->set_userdata('hasAddedPatientInCartList', True);
+			
+			//edited by Mike, 20201105
+			$this->Browse_Model->addTransactionServicePurchase($data);
+			//echo $this->Browse_Model->addTransactionServicePurchase($data);
+		}
+
+/*		
 		//edited by Mike, 20201105
 		$this->Browse_Model->addTransactionServicePurchase($data);
 		//echo $this->Browse_Model->addTransactionServicePurchase($data);
-
+*/
 
 		//edited by Mike, 20200407
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
@@ -3845,6 +3864,11 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->Browse_Model->deleteTransactionServicePurchase($data);
 
+		//added by Mike, 20250314
+		if (isset($_SESSION["hasAddedPatientInCartList"])) {
+			$this->session->unset_userdata('hasAddedPatientInCartList');
+		}
+				
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 
@@ -4540,6 +4564,11 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 		$this->session->unset_userdata('noVAT');
 		$data['noVAT'] = False;		
 		//-----
+		
+		//added by Mike, 20250314
+		if (isset($_SESSION["hasAddedPatientInCartList"])) {
+			$this->session->unset_userdata('hasAddedPatientInCartList');
+		}		
 
 		//edited by Mike, 20200508; edited by Mike, 20200509
 		if ($itemTypeId==1) {
@@ -4642,6 +4671,11 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 		$this->session->unset_userdata('noVAT');
 		$data['noVAT'] = False;		
 		//-----
+		
+		//added by Mike, 20250314
+		if (isset($_SESSION["hasAddedPatientInCartList"])) {
+			$this->session->unset_userdata('hasAddedPatientInCartList');
+		}		
 
 		//added by Mike, 20210626
 /* /removed by Mike, 20210626		
