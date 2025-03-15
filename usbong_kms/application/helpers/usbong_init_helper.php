@@ -26,9 +26,12 @@
 //edited by Mike, 20250314
 $ipAddress = $_SERVER['REMOTE_ADDR'];
 
+//edited by Mike, 20250315
 //TODO: -reverify: this
+
 //------------------------------
-if (isset($_SESSION["client_ip_address"]) && (isset($_SESSION["client_machine_address"]))) {
+//note: faster if using "and" instead of "||", that is "or"
+if (!isset($_SESSION["client_ip_address"]) and (!isset($_SESSION["client_machine_address"]))) {
 
 	//$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$machineAddress = "";
