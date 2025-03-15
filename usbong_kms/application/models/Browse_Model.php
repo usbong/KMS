@@ -725,6 +725,7 @@ class Browse_Model extends CI_Model
 		//note: -re-verify: if this solves the issue with inventory items that use the same added_timestamp, i.e. 2020-04-06 08:40:44
 //		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
 //		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
+		
 		$this->db->group_by('t2.inventory_id');
 		
 		//added by Mike, 20200521
@@ -752,12 +753,14 @@ class Browse_Model extends CI_Model
 
 //removed by Mike, 20210207
 //		$this->db->order_by('t2.expiration_date', 'ASC');//ASC');
+
 		//added by Mike, 20210207
 		//we use added_datetime_stamp due to select medicine items may be bought,
 		//albeit not based on nearest expiration date
 		//due to excess patient waiting time to find item
-		$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
-
+		
+		//removed by Mike, 20250315
+		//$this->db->order_by('t2.added_datetime_stamp', 'ASC');//ASC');
 
 		//edited by Mike, 20200709
 //		$this->db->limit(8);//1);
@@ -5555,6 +5558,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			session_start();
 		}
 */		
+
+//added by Mike, 20250315
+//TODO: reverify: if this can already be deleted
+//----------	
 		//TO-DO: -reverify: this
 		$this->load->library("session");
 		
@@ -5584,6 +5591,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			//redirect(base_url()."/server/viewWebAddressList.php");		
 			redirect('report/viewWebAddressList');			
 		}
+	
+//----------	
 	
 		//edited by Mike, 20201115
 /*		
@@ -5618,6 +5627,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200407
 		
+		//added by Mike, 20250315
+		$this->db->where('t1.is_hidden', 0); //not hidden
+
 		$this->db->where('t2.transaction_date', date('m/d/Y'));//ASC');
 //		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 		$this->db->like('t2.notes', "UNPAID");
