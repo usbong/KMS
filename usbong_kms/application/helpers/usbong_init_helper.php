@@ -27,22 +27,21 @@
 $ipAddress = $_SERVER['REMOTE_ADDR'];
 
 //edited by Mike, 20250315
-//TODO: -reverify: this
-
 //------------------------------
+
 //note: faster if using "and" instead of "||", that is "or"
 if (!isset($_SESSION["client_ip_address"]) and (!isset($_SESSION["client_machine_address"]))) {
 
 	//$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$machineAddress = "";
 
+	//removed by Mike, 20250315; otherwise, $ipAddress causes ACCESS PROHIBITED
+/*
 	if (strpos($ipAddress, "::")!==false) {
-		$ipAddress = "SERVER ADDRESS";
-		
+		$ipAddress = "SERVER ADDRESS";		
 		$machineAddress = "SERVER MACHINE ADDRESS";
-
-		//echo "<font color='#FF0000'><b>Please set as default in the Computer Server Browser,<br/>the Computer Server Internet Protocol (IP) Address<br/>that is not \"localhost\".<br/><br/></b></font>";
 	}
+*/
 
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { //Windows machine
 		$rawMachineAddressInput =  exec('getmac');
@@ -78,6 +77,7 @@ if (!isset($_SESSION["client_ip_address"]) and (!isset($_SESSION["client_machine
 	$_SESSION["client_ip_address"] = $ipAddress;
 	$_SESSION["client_machine_address"] = $machineAddress;
 }
+
 //------------------------------
 
 
