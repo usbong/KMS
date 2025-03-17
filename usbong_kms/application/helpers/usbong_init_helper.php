@@ -26,22 +26,25 @@
 //edited by Mike, 20250314
 $ipAddress = $_SERVER['REMOTE_ADDR'];
 
-//edited by Mike, 20250315
+//removed by Mike, 20250315; sessions later cleared
+/*
 //------------------------------
 
 //note: faster if using "and" instead of "||", that is "or"
 if (!isset($_SESSION["client_ip_address"]) and (!isset($_SESSION["client_machine_address"]))) {
+	
+	echo "IP and MACHINE ADDRESSES; SESSIONS NOT YET SET!";
 
 	//$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$machineAddress = "";
 
 	//removed by Mike, 20250315; otherwise, $ipAddress causes ACCESS PROHIBITED
-/*
-	if (strpos($ipAddress, "::")!==false) {
-		$ipAddress = "SERVER ADDRESS";		
-		$machineAddress = "SERVER MACHINE ADDRESS";
-	}
-*/
+
+////	if (strpos($ipAddress, "::")!==false) {
+////		$ipAddress = "SERVER ADDRESS";		
+////		$machineAddress = "SERVER MACHINE ADDRESS";
+////	}
+
 
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { //Windows machine
 		$rawMachineAddressInput =  exec('getmac');
@@ -77,7 +80,7 @@ if (!isset($_SESSION["client_ip_address"]) and (!isset($_SESSION["client_machine
 	$_SESSION["client_ip_address"] = $ipAddress;
 	$_SESSION["client_machine_address"] = $machineAddress;
 }
-
+*/
 //------------------------------
 
 
