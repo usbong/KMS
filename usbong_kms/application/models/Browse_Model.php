@@ -2519,7 +2519,14 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			//$this->session->set_flashdata('data', $data);
 			//redirect('account/login');
 			//window.open('".base_url()."/server/viewWebAddressList.php');		
-			redirect('report/viewWebAddressList');
+			
+			//edited by Mike, 20250317
+			//redirect('report/viewWebAddressList');			
+
+			$this->setClientIpAndMachineAddresses();
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");
 		}
 
 		$sNotesValue = "";
@@ -2585,7 +2592,13 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			//$this->session->set_flashdata('data', $data);
 			//redirect('account/login');
 			//window.open('".base_url()."/server/viewWebAddressList.php');		
-			redirect('report/viewWebAddressList');
+			
+			//edited by Mike, 20250317
+			//redirect('report/viewWebAddressList');			
+			$this->setClientIpAndMachineAddresses();
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");			
 		}
 
 
@@ -3263,7 +3276,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 //		if (($ipAddress=="") and ($machineAddress=="")) {
 		if (!isset($ipAddress) and !isset($machineAddress)) {
-			redirect('report/viewWebAddressList');
+			//edited by Mike, 20250317
+			//redirect('report/viewWebAddressList');			
+			$this->setClientIpAndMachineAddresses();
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");			
 		}
 		
 		//added by Mike, 20200916
@@ -3462,7 +3480,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 //		if (($ipAddress=="") and ($machineAddress=="")) {
 		if (!isset($ipAddress) and !isset($machineAddress)) {
-			redirect('report/viewWebAddressList');
+			//edited by Mike, 20250317
+			//redirect('report/viewWebAddressList');			
+			$this->setClientIpAndMachineAddresses();
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");
 		}
 		
 		//added by Mike, 20200916
@@ -3603,7 +3626,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 //		if (($ipAddress=="") and ($machineAddress=="")) {
 		if (!isset($ipAddress) and !isset($machineAddress)) {
-			redirect('report/viewWebAddressList');
+			//edited by Mike, 20250317
+			//redirect('report/viewWebAddressList');			
+			$this->setClientIpAndMachineAddresses();
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");
 		}
 		
 		//added by Mike, 20200916
@@ -3808,7 +3836,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 //		if (($ipAddress=="") and ($machineAddress=="")) {
 		if (!isset($ipAddress) and !isset($machineAddress)) {
-			redirect('report/viewWebAddressList');
+			//edited by Mike, 20250317
+			//redirect('report/viewWebAddressList');			
+			$this->setClientIpAndMachineAddresses();
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");
 		}
 		
 		//added by Mike, 20200605
@@ -3915,7 +3948,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 //		if (($ipAddress=="") and ($machineAddress=="")) {
 		if (!isset($ipAddress) and !isset($machineAddress)) {
-			redirect('report/viewWebAddressList');
+			//edited by Mike, 20250317
+			//redirect('report/viewWebAddressList');			
+			$this->setClientIpAndMachineAddresses();
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");
 		}
 		
 		//added by Mike, 20201105; removed by Mike, 20201105
@@ -5548,6 +5586,64 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $rowArray;
 	}		
 
+	//added by Mike, 20250317
+	public function setClientIpAndMachineAddresses() {
+		//note: faster if using "and" instead of "||", that is "or"
+		if (!isset($_SESSION["client_ip_address"]) and (!isset($_SESSION["client_machine_address"]))) {
+			
+			//echo "IP and MACHINE ADDRESSES; SESSIONS NOT YET SET!";
+
+			$ipAddress = $_SERVER['REMOTE_ADDR'];
+			$machineAddress = "";
+
+			//removed by Mike, 20250315; otherwise, $ipAddress causes ACCESS PROHIBITED
+
+		////	if (strpos($ipAddress, "::")!==false) {
+		////		$ipAddress = "SERVER ADDRESS";		
+		////		$machineAddress = "SERVER MACHINE ADDRESS";
+		////	}
+
+
+			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { //Windows machine
+				$rawMachineAddressInput =  exec('getmac');
+				$machineAddress = explode(" ", $rawMachineAddressInput)[0];
+			}
+			else {
+				//TO-DO: -reverify: this set of instructions due receives server machine address, not client machine address
+				//note: output is blank if Windows Machine
+				//We use this set of instructions with Linux Machines
+				//Reference: https://stackoverflow.com/questions/1420381/how-can-i-get-the-mac-and-the-ip-address-of-a-connected-client-in-php;
+				//last accessed: 20200820
+				//answer by: Paul Dixon, 20090914T0848
+				#run the external command, break output into lines
+				$arp=`arp -n $ipAddress`; //`arp -a $ipAddress`;
+				$lines=explode("\n", $arp);
+
+				#look for the output line describing our IP address
+				foreach($lines as $line)
+				{
+				   $cols=preg_split('/\s+/', trim($line));
+				   if ($cols[0]==$ipAddress)
+				   {
+					   $machineAddress=$cols[1];
+				   }
+				}
+			}
+
+			$this->session->set_userdata('client_ip_address', $ipAddress);
+			
+			$this->session->set_userdata('client_machine_address', $machineAddress);
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");
+
+/*			
+			$_SESSION["client_ip_address"] = $ipAddress;
+			$_SESSION["client_machine_address"] = $machineAddress;
+*/			
+		}
+	}	
+
 	//added by Mike, 20200519; edited by Mike, 20200821
 	public function getServiceAndItemDetailsListViaNotesUnpaid() 
 	{		
@@ -5588,8 +5684,14 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 //		if (!isset($ipAddress)) {
 		if (!isset($ipAddress) and !isset($machineAddress)) {
 //			session_destroy;			
-			//redirect(base_url()."/server/viewWebAddressList.php");		
-			redirect('report/viewWebAddressList');			
+			//redirect(base_url()."/server/viewWebAddressList.php");
+			
+			//edited by Mike, 20250317
+			//redirect('report/viewWebAddressList');			
+			$this->setClientIpAndMachineAddresses();
+			
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");
 		}
 	
 //----------	
@@ -5619,6 +5721,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//removed by Mike, 20230304; added again by Mike, 20230304
 		//due to: need to get the patient name via patientID;
 		//--> output: another access to DB, even if not via JOIN COMMAND;
+		
 		//removed by Mike, 20210110; added again by Mike, 20210110
 		$this->db->join('patient as t3', 't2.patient_id = t3.patient_id', 'LEFT');
 
