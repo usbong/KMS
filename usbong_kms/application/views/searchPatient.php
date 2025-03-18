@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2021 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220105; from 20210724
+' @date updated: 20250318; from 20220105
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -469,7 +469,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 				echo '<div>';					
 				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our patients\' names.';
-				echo '<br/><br/>Recommendation Steps:';
+				echo '<br/><br/>Recommended Steps:';
 				echo '<br/>1) Reverify that the patient is <b>not</b> new.';				
 				echo '<br/>2) Reverify that the spelling is correct.';				
 				echo '<br/>3) Add <b>new</b> patient name.';				
