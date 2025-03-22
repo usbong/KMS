@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250318; from 20220105
+' @date updated: 20250322; from 20250318
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -340,14 +340,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
-	<br />
-	<br />
 
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
 		//get only name strings from array 
 		if (isset($result)) {			
+		
+			echo "<br/>";
+			echo "<br/>";
+
 			if ($result!=null) {		
 				$resultCount = count($result);
 				if ($resultCount==1) {
@@ -473,11 +475,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo '<br/>1) Reverify that the patient is <b>not</b> new.';				
 				echo '<br/>2) Reverify that the spelling is correct.';				
 				echo '<br/>3) Add <b>new</b> patient name.';				
-				echo '<br/><br/>';
 				echo '</div>';				
 			}			
 		}
 	?>
+	<br />
+	<br />
+		
 	<table class="addPatientTable">
 	<tr>
 		<td>

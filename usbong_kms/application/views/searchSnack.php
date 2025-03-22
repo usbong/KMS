@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2023 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230206; from 20220721
+' @date updated: 20250322; from 20230206
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -69,6 +69,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #00ff00;
 						}
 
+						div.tableHeaderAddNewNonMedItem
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #ff8000; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+						}	
+
 						input.browse-input
 						{
 							width: 100%;
@@ -94,6 +102,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
+						
+						table.addNonMedItemTable
+						{
+							border: 2px dotted #ab9c7d;		
+							margin-top: 10px;
+						}							
 						
 						table.search-result
 						{
@@ -135,7 +149,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 							text-align: right;
 						}						
+						
+						.Button-delete {
+							background-color: #E9E9E9;
+							color: #000000;
+							/*font-weight: bold;*/
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+						}						
 
+						.Button-delete:hover {
+							background-color: #C0C0C0;
+							color: #000000;
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+						}		
     /**/
     </style>
     <title>
@@ -245,6 +273,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
 		  }
 */
+		function myPopupFunctionDelete(itemId,itemName) {	
+			//alert("DITO");
+			
+			//snack item; 3
+			if (confirm("Delete ["+itemName+"]?")) { //YES
+				window.location.href = "<?php echo site_url('browse/deleteItemFromSearch/3/"+itemId+"');?>";
+			} else {
+				//CANCEL
+			} 
+		}	
 	  </script>
   <body>
 	<table class="imageTable">
@@ -311,13 +349,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */			
 
 				$resultCount = count($result);
-				if ($resultCount==1) {
-					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
+								
+				$iCount = 0;
+				$updateResult = [];
+				foreach ($result as $value) {
+					if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
+					}
+					else if ($value['quantity_in_stock']=="") {
+					}
+					else {
+						if ($value['resultQuantityInStockNow']==0) {
+							$iCount++;
+							continue;
+						}
+					}
+					
+					array_push($updateResult,$value);
+				}
+				//edited by Mike, 20221013
+				//echo '<div>Showing <b>'.(count($result)-$iCount).'</b> results found.</div>';				
+
+				$updatedResultCount = count($updateResult);
+
+				if ($updatedResultCount==1) {
+					//edited by Mike, 20221020
+//						echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+					echo '<div>Showing <b>1</b> result found.</div>';
+				}
+				else if ($updatedResultCount<=0) {
+					//edited by Mike, 20221020
+					//echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+					echo '<div>Showing <b>0</b> result found.</div>';
 				}
 				else {
-					echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
-				}			
-
+					//edited by Mike, 20221020
+					//TO-DO: -reverify: this
+//						echo '<div>Showing <b>'.($updatedResultCount-$iCount).'</b> results found.</div>';				
+					echo '<div>Showing <b>'.($updatedResultCount).'</b> results found.</div>';				
+				}
+					
 				echo "<br/>";
 				echo "<table class='search-result'>";
 				
@@ -344,6 +414,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class="columnTableHeader">				
 							<?php
 								echo "PRICE"; //ITEM PRICE;
+							?>
+						</td>
+						<td class="">
+							<?php
+								//DELETE ITEM COLUMN
 							?>
 						</td>
 					  </tr>
@@ -417,6 +492,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+<?php
+							//added by Mike, 20250314
+							$updateResultTemp = array();
+							$updateResultTemp = $updateResult;
+							
+							$myNextElement=next($updateResult);
+							
+							if ($myNextElement) { //element exists
+								if ($myNextElement['item_id']!=$value['item_id']) {
+						?>
+						<td class="column">
+							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",'".strtoupper($value['item_name'])."'";?>)" class="Button-delete">
+								DELETE
+							</button>
+						</td>						
+						<?php
+								}
+							}	
+							//current element is already the last
+							else {
+						?>								
+							<td class="column">
+								<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",'".strtoupper($value['item_name'])."'";?>)" class="Button-delete">
+									DELETE
+								</button>
+							</td>						
+						<?php
+							}
+						?>
 					  </tr>
 		<?php				
 					$iCount++;		
@@ -437,6 +541,109 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}			
 		}
 	?>
+	<br />
+	<br />
+	
+	<table class="addNonMedItemTable">
+	<tr>
+		<td>
+			<div class="tableHeaderAddNewNonMedItem">
+				ADD NEW SNACK
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<!-- Form -->
+		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
+		<!-- "browse/addPatientName" faster -->
+		<form method="post" action="<?php echo site_url('browse/addSnackItem/')?>">
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>Item Name <span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>				
+					  <input type="text" class="item-input" placeholder="" name="itemNameParam" value="<?php if (isset($itemNameParam)){echo $itemNameParam;}?>" required>
+					</td>
+				  </tr>
+				</table>
+			</div>
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>Price </span><span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+<!--									
+					  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
+-->					  
+					<input type="tel" id="" name="priceParam" class="Price-textbox no-spin" value="<?php if (isset($priceParam)){echo $priceParam;}?>" min="1" max="99999999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 7) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>
+					</td>
+				  </tr>
+				</table>
+			</div>	
+			<div>
+				<table width="100%">
+				  <tr>
+					<td>
+					  <b><span>Quantity </span><span class="asterisk">*</span></b>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+<!--									
+					  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
+-->					  
+					<input type="tel" id="" name="quantityParam" class="Quantity-textbox no-spin" value="<?php if (isset($quantityParam)){echo $quantityParam;}?>" min="1" max="99999999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 7) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>
+					</td>
+				  </tr>
+				</table>
+			</div>				
+			<br />
+			<!-- Buttons -->
+			<button type="submit" class="Button-login">
+				Submit
+			</button>
+		</form>
+		</td>
+	</tr>
+	</table>	
+	
 	<br />
 	<br />
 	<br />

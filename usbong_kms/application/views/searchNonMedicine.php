@@ -350,10 +350,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
-
-
-	<br/>
-	<br/>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
@@ -361,6 +357,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 		//get only name strings from array 
 		if (isset($result)) {			
+
+			echo "<br/>";
+			echo "<br/>";
+
 			if ($result!=null) {		
 /*			
 				echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];
