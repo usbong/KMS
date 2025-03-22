@@ -3659,6 +3659,67 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$this->load->view('searchNonMedicine', $data);	
 	}	
 	
+	//added by Mike, 20250322
+	public function addSnackItem()
+	{
+		//echo "HALLO";
+				
+		$data['itemNameParam'] = $_POST['itemNameParam'];
+		$data['priceParam'] = $_POST['priceParam'];
+		$data['quantityParam'] = $_POST['quantityParam'];
+
+/*
+		echo "itemNameParam".$data['itemNameParam'];
+		echo "priceParam".$data['priceParam'];
+*/
+				
+		if (!isset($data['itemNameParam'])) {
+			redirect('browse/searchNonMedicine');
+		}
+
+		if (!isset($data['priceParam'])) {
+			redirect('browse/searchNonMedicine');
+		}
+
+		if (!isset($data['quantityParam'])) {
+			redirect('browse/searchNonMedicine');
+		}		
+		
+/*		
+		if (!is_numeric($data['priceParam'])) {
+			redirect('browse/searchNonMedicine');
+		}
+*/
+		//notes: update inside BROWSE_MODEL.php
+		$data['nameParam'] = $data['itemNameParam'];
+						
+		//if (!is_numeric($data['priceParam'])) {
+		if ((!is_numeric($data['priceParam'])) || (!is_numeric($data['quantityParam']))) {
+			$this->load->view('searchNonMedicine', $data);	
+		}
+		else {
+			//$data['itemNameParam'] = "";
+			//$data['priceParam'] = "";
+			
+			date_default_timezone_set('Asia/Hong_Kong');
+			$dateTimeStamp = date('Y/m/d H:i:s');
+			
+			$data['transactionDate'] = date('m/d/Y');
+			
+			$this->load->model('Browse_Model');
+		
+			$data['itemId'] = $this->Browse_Model->addSnackItem($data);
+			
+			//TODO: -reverify: this
+			//$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+
+			$_POST['nameParam'] = $data['nameParam'];
+			$this->confirmSnack();
+		}
+
+		//$this->load->view('searchNonMedicine', $data);	
+	}		
+	
 	//added by Mike, 20200411; edited by Mike, 20200414
 //	public function addTransactionItemPurchase($itemId,$quantity)
 //	public function addTransactionItemPurchase($itemTypeId, $itemId, $quantity)
@@ -4006,6 +4067,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function deleteItemFromSearch($itemTypeId, $itemId)
 	{
 		//echo "itemId: ".$itemId;
+		//echo "itemTypeId: ".$itemTypeId;
 
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
@@ -4038,7 +4100,14 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//echo ">>>".$_POST['nameParam'];
 		
-		$this->confirmNonMedicine();
+		//edited by Mike, 20250322
+		//TODO: -add: med item
+		if ($itemTypeId==2) {
+			$this->confirmNonMedicine();
+		}
+		else if ($itemTypeId==3) { //snack
+			$this->confirmSnack();
+		}		
 
 		//echo ">>>>>".$_POST['nameParam'];
 	}	
