@@ -805,6 +805,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//added by Mike, 20230221
 		$this->db->where('t1.is_hidden', 0); //1 = hidden
 		
+		//added by Mike, 20250322
+		$this->db->where('t2.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE
+		
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0); //0 = NONE
 
@@ -4430,6 +4433,66 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		return $itemId;
 	}		
+
+	//added by Mike, 20250322
+	public function addSnackItem($param) 
+	{			
+		$param['nameParam'] = str_replace(",","",$param['itemNameParam']);
+		$param['nameParam'] = trim($param['nameParam']);
+		$param['nameParam'] = strtoupper($param['nameParam']);		
+		$param['nameParam'] = str_replace(".","",$param['nameParam']);
+
+		//--
+		$param['priceParam'] = str_replace(",","",$param['priceParam']);
+		$param['priceParam'] = trim($param['priceParam']);
+
+		//--
+		$param['quantityParam'] = str_replace(",","",$param['quantityParam']);
+		$param['quantityParam'] = trim($param['quantityParam']);
+		
+		//echo ">>>>>>>>>>>>>".$param['priceParam']."<br/><br/>";
+		
+		//verify if item name already exists
+		$this->db->select('item_name, item_id');
+		$this->db->where('item_name', $param['nameParam']);
+		$this->db->where('item_price', $param['priceParam']);
+
+		$query = $this->db->get('item');	
+		
+		$rowArray = $query->result_array();
+		
+		if (isset($rowArray) and (count($rowArray)>0)) {
+			//TO-DO: -add: this in view
+			//echo "ITEM NAME ALREADY EXISTS IN COMPUTER DATABASE!";
+			
+			//return $rowArray[0]['item_id'];
+			
+			$itemId = $rowArray[0]['item_id'];
+		}
+		else {
+			$data = array(
+						'item_name' => $param['nameParam'],
+						'item_price' => $param['priceParam'],
+						'item_type_id' => 3
+					);
+
+			$this->db->insert('item', $data);		
+
+			$itemId = $this->db->insert_id();
+
+			//return $this->db->insert_id();
+		}
+
+		$dataForInventory = array(
+					'item_id' => $itemId,
+					//'quantity_in_stock' => 10000 //-1
+					'quantity_in_stock' => $param['quantityParam']
+				);
+
+		$this->db->insert('inventory', $dataForInventory);		
+		
+		return $itemId;
+	}	
 
 	//added by Mike, 20200529; edited by Mike, 20200530
 	public function addNewTransactionForPatient($param) 
