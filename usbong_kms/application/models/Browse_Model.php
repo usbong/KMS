@@ -3135,10 +3135,15 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	public function deleteItemFromSearch($param) 
 	{			
 		$itemId = $param['itemId'];
+		
+		//added by Mike, 20250324
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
 
 		//update: transaction with all the items in the cart
 		$data = array(
-					'is_to_be_deleted' => 1						
+					'is_to_be_deleted' => 1,
+					'is_to_be_deleted_added_datetime_stamp' => $dateTimeStamp
 				);
 
 		$this->db->where('item_id',$itemId);
@@ -4390,6 +4395,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$param['quantityParam'] = str_replace(",","",$param['quantityParam']);
 		$param['quantityParam'] = trim($param['quantityParam']);
 		
+		//echo ">>>>".$param['isReturnedItemCheckBoxParam'];
+		
 		//echo ">>>>>>>>>>>>>".$param['priceParam']."<br/><br/>";
 		
 		//verify if item name already exists
@@ -4413,7 +4420,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$data = array(
 						'item_name' => $param['nameParam'],
 						'item_price' => $param['priceParam'],
-						'item_type_id' => 2
+						'item_type_id' => 2,
 					);
 
 			$this->db->insert('item', $data);		
@@ -4426,7 +4433,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$dataForInventory = array(
 					'item_id' => $itemId,
 					//'quantity_in_stock' => 10000 //-1
-					'quantity_in_stock' => $param['quantityParam']
+					'quantity_in_stock' => $param['quantityParam'],
+					'is_item_returned' => $param['isReturnedItemCheckBoxParam']
 				);
 
 		$this->db->insert('inventory', $dataForInventory);		
