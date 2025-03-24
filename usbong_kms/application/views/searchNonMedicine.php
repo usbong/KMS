@@ -700,6 +700,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>
 					</td>
 				  </tr>
+				  <tr>
+				  <td>
+					<!-- add extra blank row -->
+				  </td>
+				  </tr>
+				  <tr>
+					<td>
+					<b><span>Is returned item? </span><span class="asterisk">*</span></b>
+					<input type="checkbox" name="isReturnedItemCheckBoxParam">
+					</td>
+				  </tr>
 				</table>
 			</div>				
 			<br />

@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2024 SYSON, MICHAEL B.
+  Copyright 2020~2025 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20241028; from 20230110
+  @date updated: 20250324; from 20241028
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -564,22 +564,80 @@ echo "</a>";
 						echo "SET";
 						echo "</td>";			
 						echo "<td class='column'>";
-						//edited by Mike, 20220524
-//						echo "PROF FEE: DR. ".$value['medical_doctor_name'];
-						echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."</b>";
+						//edited by Mike, 20250324; from 20220524
+						
+						//echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."</b>";
+						
+						if (strpos($result[0]['notes'],"DISCOUNTED")!==false) {
+							echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']." (DISCOUNTED)</b>";	
+						}
+						else {
+							echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."</b>";
+						}
+						
+						$dMedCertPrice=0;
+						
+						if (strpos($result[0]['notes'],"MEDCERT")!==false) {
+							$sMedCertToken=substr($result[0]['notes'],strpos($result[0]['notes'],"MEDCERT"),strlen("MEDCERT")+1);
+							
+							$dMedCertPrice=str_replace("MEDCERT","",$sMedCertToken);
+							
+							if (strpos($dMedCertPrice,";")!==false) {
+								$dMedCertPrice=200;
+							}
+							else {
+								$dMedCertPrice=$dMedCertPrice*100;
+							}
+							
+							//echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."<br/>(WITH MEDCERT: @".$dMedCertPrice.")</b>";
+						}
+						
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						//echo $value['fee'];
-						//edited by Mike, 20210706
-						echo number_format($value['fee'], 2, '.', ',');
+						
+						//edited by Mike, 20250324; from 20210706
+						//echo number_format($value['fee'], 2, '.', ',');
+						echo number_format($value['fee']-$dMedCertPrice, 2, '.', ',');
+						
 						echo "</td>";	
 						echo "<td class='columnFee'>";
-						//echo $value['fee'];
-						//edited by Mike, 20220524; from 20210706
-//						echo number_format($value['fee'], 2, '.', ',');
-						echo "<b>".number_format($value['fee'], 2, '.', ',')."</b>";
+						//edited by Mike, 20250324
+						//echo "<b>".number_format($value['fee'], 2, '.', ',')."</b>";
+						echo "<b>".number_format($value['fee']-$dMedCertPrice, 2, '.', ',')."</b>";
+					
 						echo "</td>";
-					echo "</tr>";			
+					echo "</tr>";		
+
+					//added by Mike, 20250324
+					if ($dMedCertPrice!=0) {
+						echo "<tr>";
+							echo "<td class='columnFee'>";
+							echo "1";
+							echo "</td>";			
+							echo "<td class='column'>";
+							echo "PC";
+							echo "</td>";			
+							echo "<td class='column'>";
+							
+							//echo "<b>WITH MEDCERT: @".$dMedCertPrice."</b>";
+							echo "<b>WITH MEDCERT</b>";
+							
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+							
+							echo number_format($dMedCertPrice, 2, '.', ',');
+							
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+
+							//echo "<b>".number_format($value['fee'], 2, '.', ',')."</b>";
+							echo "<b>".number_format($dMedCertPrice, 2, '.', ',')."</b>";
+							
+							echo "</td>";
+						echo "</tr>";							
+					}
+					
 					
 					//added by Mike, 20220317
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY

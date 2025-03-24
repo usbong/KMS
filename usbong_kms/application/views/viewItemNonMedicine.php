@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220720; 20211128
+' @date updated: 20250324; 20220720
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -138,7 +138,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-weight: bold;
 							background-color: #0088ff; <!--#93d151; lime green-->
 							border: 2px dotted #ab9c7d;		
-							text-align: center
+							text-align: center;
+							float: left;							
+							display: inline-block;
+						}
+
+						div.vatDiv
+						{
+							background-color: #ffe400;
+							font-weight: bold;
+							background-color: #00aaff;
+							
+							border: 2px dotted #ab9c7d;									
+							border-radius: 3px;	    
+							text-align: center;
+							float: center;							
+							display: inline-block;
+							
+							padding: 2px;
+							margin-left: 40px;
 						}
 
 						td.columnTableHeader
@@ -255,7 +273,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase {
 /*							padding: 8px 42px 8px 42px;
 */
-							padding: 12px;
+							padding: 14px;
 							background-color: #ffe400;
 							color: #222222;
 							font-size: 16px;
@@ -328,7 +346,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						input[type="checkbox"] {
 							transform: scale(1.5);
-						}						
+						}			
+
+						input.Quantity-textbox {
+							padding-top: 14px;
+							padding-bottom: 14px;
+						}							
 
         /*------------------*/
         /* Modal            */
@@ -479,9 +502,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  }
 */
 
-		//added by Mike, 20200329; edited by Mike, 20200911
+		//edited by Mike, 20250324; from 20200911
 //		function myPopupFunction() {				
-		function myPopupFunction(itemId) {				
+		function myPopupFunction(itemId) {	
 			//added by Mike, 20210526
 			//note: we add this command to prevent multiple button clicks
 			//received by computer server before identifying that a patient transaction
@@ -498,88 +521,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				numericalFee = eval(fee)
 				fee = numericalFee + numericalFee*.12
 			}
-/*
-			var product_id = document.getElementById("product_idParam").value;
-			var customer_id = document.getElementById("customer_idParam").value;
-			var quantity = document.getElementById("quantityParam").value;
-			var price = document.getElementById("priceParam").value;
+		
+			//added by Mike, 20250324
+			//if not a number
+			if (isNaN(quantity)) {
+				alert("Kailangang BILANG ang QUANTITY.");
+				window.location.href = "<?php echo site_url('browse/viewItemNonMedicine/"+itemId+"');?>";
+				return;
+			}
 			
-			var textCart = document.getElementById("Text-cartId");
-			var textCart2Digits = document.getElementById("Text-cart-2digitsId");
-			var textCart3Digits = document.getElementById("Text-cart-3digitsId");
-	
-			var totalItemsInCart = parseInt(document.getElementById("totalItemsInCartId").value);
-*/
-			//edited by Mike, 20210509
-/*			
-			//added by Mike, 20200419
 			if (quantity==0) {	
-			  alert("Kailangang hindi zero (0) ang QUANTITY.");
-			  return;
-			}
-
-			//added by Mike, 20200419			
-			if (fee==0){	
-			  alert("Kailangang hindi zero (0) ang FEE.");
-			  return;
-			}
-*/			
-			if (quantity==0) {	
-			  alert("Kailangang hindi zero (0) ang QUANTITY.");
+			  alert("Kailangang hindi ZERO (0) ang QUANTITY.");
+			  window.location.href = "<?php echo site_url('browse/viewItemNonMedicine/"+itemId+"');?>";
 			  return;
 			}
 			else if (parseInt(quantity)<0) {	
-			  alert("Kailangang hindi negative ang QUANTITY.");
+			  alert("Kailangang hindi NEGATIVE ang QUANTITY.");
+			  window.location.href = "<?php echo site_url('browse/viewItemNonMedicine/"+itemId+"');?>";
 			  return;
 			}
-
+			//added by Mike, 20250324
+			//else if (!Number.isInteger(quantity)) {	
+			else if (quantity.includes(".")) {	
+			  alert("Kailangang WHOLE NUMBER ang QUANTITY.");
+			  window.location.href = "<?php echo site_url('browse/viewItemNonMedicine/"+itemId+"');?>";
+			  return;
+			}
+			
 
 			if (fee==0){	
-			  alert("Kailangang hindi zero (0) ang FEE.");
+			  alert("Kailangang hindi ZERO (0) ang FEE.");
 			  return;
 			}
 			else if (parseInt(fee)<0) {	
-			  alert("Kailangang hindi negative ang FEE.");
+			  alert("Kailangang hindi NEGATIVE ang FEE.");
 			  return;
 			}
 			
 			//do the following only if quantity is a Number, i.e. not NaN
 			if ((!isNaN(quantity)) && (!isNaN(fee))) {	
-/*
-				//added by Mike, 20170701
-				var quantityField = document.getElementById("quantityId");			
-				if (quantity>1) {
-					quantityField.innerHTML = "Added <b>" +quantity +"</b> units of ";
-				}
-				else {
-					quantityField.innerHTML = "Added <b>1</b> unit of ";
-					quantity=1; //added by Mike, 20181029
-				}
-				var productPriceField = document.getElementById("productPriceId");
-				var totalPrice = quantity*price;
-				productPriceField.innerHTML = totalPrice;								
-				//-----------------------------------------------------------
-				
-				totalItemsInCart+=parseInt(quantity);
-				if (totalItemsInCart>99) {
-					totalItemsInCart=99;
-				}
-	
-				document.getElementById("totalItemsInCartId").value = totalItemsInCart;
-*/						
-/*
-				//TO-DO: -add: transaction in database
-				alert("itemId: " + itemId);
-				alert("quantity: " + quantity);
-				window.location.href = "<?php echo site_url('browse/searchMedicine/');?>";
-*/
-				//added by Mike, 20200330; edited by Mike, 20200411
-/*				window.location.href = "<?php echo site_url('browse/addTransactionMedicinePurchase/"+itemId+"/"+quantity+"');?>";
-*/
-
 				//2 = Non-medicine
-				//edited by Mike, 20201115
-				//window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"');?>";
 				//last parameter plusVATId; where 1 = plus VAT for non-medicine items
 				if (vatCheckedBox.checked) {
 					window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"/1');?>";
@@ -587,53 +568,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				else {
 					window.location.href = "<?php echo site_url('browse/addTransactionItemPurchase/2/"+itemId+"/"+quantity+"/"+fee+"/0');?>";
 				}
-
-
-/*
-				//added by Mike, 20170627
-				if (customer_id=="") {
-					window.location.href = "<?php echo site_url('account/login/');?>";
-				}
-				else {				
-		//			var base_url = window.location.origin;
-					var site_url = "<?php echo site_url('cart/addToCart/');?>";
-					var my_url = site_url.concat(product_id,'/',customer_id,'/',quantity,'/',price);
-					
-					$.ajax({
-				        type:"POST",
-				        url:my_url,
-		
-				        success:function() {			        	
-				        	if (totalItemsInCart<10) {
-					        	textCart.innerHTML=totalItemsInCart;
-								textCart2Digits.innerHTML="";
-								textCart3Digits.innerHTML="";
-				        	}
-							else if (totalItemsInCart<100) {
-					        	textCart.innerHTML="";
-								textCart2Digits.innerHTML=totalItemsInCart;
-								textCart3Digits.innerHTML="";
-							}
-							else {
-					        	textCart.innerHTML="";
-								textCart2Digits.innerHTML="";
-								textCart3Digits.innerHTML=totalItemsInCart;
-							}
-							
-							$('#myPopup').modal('show');
-				        }
-		
-				    });
-				    event.preventDefault();
-				}
-*/
-
-				//added by Mike, 20200331
-//				$('#myPopup').modal('show');
-
-//				document.getElementById("myPopup").classList.toggle("show");
 			}
-		}	
+		}
 
 		//added by Mike, 20200331; edited by Mike, 20200411
 /*
@@ -982,7 +918,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if (!isset($value['expiration_date'])) {
 									echo "UNKNOWN";
 								}
-								else if ($value['expiration_date']==0) {
+								//edited by Mike, 20250324
+								else if (($value['expiration_date']==0)||(($value['expiration_date']=="0000-00-00"))) {
 
 									if ($value['quantity_in_stock']==-1) {
 										echo "UNKNOWN";
@@ -1042,13 +979,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											return false;										
 										}
 									}" required>						
-							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase" id="buyButtonId">BUY</button>									
+							<button onclick="myPopupFunction(<?php echo $value['item_id'];?>)" class="Button-purchase" id="buyButtonId">BUY</button>				
 <!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
 -->
-						<!-- added by Mike, 20200911 -->
-						</td>		
-						<td class="columnVat">		
-							<label>+12%<br/>VAT</label>
+						<!-- edited by Mike, 20250324; from 20200911 -->
+						<div class="vatDiv">
+							<label>+12%VAT</label><br/>
 <?php						  //edited by Mike, 20201115							
 							  if ((isset($noVAT)) and ($noVAT)) {
 ?>
@@ -1066,8 +1002,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php
 							  }
 ?>
+						</div>
+						</td>		
+<!-- removed by Mike, 20250324						
+						<td class="columnVat">		
 						</td>
-						
+-->						
 					  </tr>
 		<?php				
 					$iCount++;		
