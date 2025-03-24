@@ -2962,7 +2962,7 @@ class Browse extends CI_Controller { //MY_Controller {
 			$data['addedVAT']=$param['addedVAT']; //TRUE
 		}
 		else {
-			$itemId=$param;			
+			$itemId=$param;	
 		}
 		
 		//added by Mike, 20201115
@@ -3032,9 +3032,17 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$data['resultItem'] = $this->getResultItemQuantity($data);
 		
-		//edited by Mike, 20200608
+		//edited by Mike, 20250324; from 20200608
+		if (!isset($data['result'][0]['item_name'])) {
+			redirect('browse/searchNonMedicine');
+		}
+		
 		//$data['itemName'] = $data['resultItem'][0]['item_name'];
 		$data['itemName'] = $data['result'][0]['item_name'];	
+
+
+		//echo ">>>>>: ".$data['result'];//[0]['item_name'];
+
 
 /*		
 		foreach ($data['resultItem'] as $value) {
@@ -3606,6 +3614,16 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemNameParam'] = $_POST['itemNameParam'];
 		$data['priceParam'] = $_POST['priceParam'];
 		$data['quantityParam'] = $_POST['quantityParam'];
+
+		//added by Mike, 20250324
+		//$data['isReturnedItemCheckBoxParam'] = $_POST['isReturnedItemCheckBoxParam']; //can be blank
+		
+		if (isset($_POST['isReturnedItemCheckBoxParam'])) {
+			$data['isReturnedItemCheckBoxParam']=1;
+		}
+		else {
+			$data['isReturnedItemCheckBoxParam']=0;
+		}
 
 /*
 		echo "itemNameParam".$data['itemNameParam'];
