@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250227; from 20250219
+' @date updated: 20250325; from 20250227
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -435,7 +435,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class =column>				
 								<div id=quantityInStockId<?php echo $iCount?>>
 							<?php
-								echo $value['item_quantity_per_box'];
+								//edited by Mike, 20250325
+								//echo $value['item_quantity_per_box'];
+								if ($value['item_quantity_per_box']==0) {
+									echo "N/A";
+								}
+								else {
+									echo $value['item_quantity_per_box'];
+								}
 							?>
 								</div>
 						</td>						
@@ -460,6 +467,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else {
 									if ($value['item_quantity_per_box']==0) {
 										//$value['item_quantity_per_box']=1;
+										
+										//added by Mike, 20250325
+										echo "N/A";
 									}
 									else if ($value['resultQuantityInStockNow']==0) {
 									}
