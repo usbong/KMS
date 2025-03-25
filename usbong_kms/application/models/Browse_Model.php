@@ -1392,7 +1392,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 */		
 	}	
 
-	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
+	//note: if we delete the patient health service transaction, all the medicine and non-medicine items included in the cart after payment are also deleted
 	public function deleteTransactionServicePurchaseIndexCardPage($param) 
 	{			
 /*		//edited by Mike, 20200616
@@ -1514,6 +1514,39 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
         $this->db->delete('transaction');		
 
 	}
+	
+	//added by Mike, 20250325
+	public function getPatientIdFrom($transactionId) {
+		$this->db->select('patient_id');
+        $this->db->where('transaction_id',$transactionId);
+		
+		$query = $this->db->get('transaction');	
+				
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+	
+		return $rowArray;
+	}
+	
+	//added by Mike, 20250325	
+	public function deletePatientTransactionDueToItemOnly($param) 
+	{
+        $this->db->where('patient_id',$param['patientId']);
+        $this->db->where('transaction_date',$param['transactionDate']);
+		
+		//echo ">>>>>".$param['transactionDate'];
+		
+        $this->db->group_start();
+		$this->db->like('notes',"MED ONLY"); //includes NON-MED ONLY
+		$this->db->or_like('notes',"SNACK ONLY");
+		$this->db->or_like('notes',"; ONLY");
+		$this->db->group_end();
+		
+        $this->db->delete('transaction');
+	}	
 
 	//added by Mike, 20200401
 	public function payTransactionMedicinePurchase() 
