@@ -183,7 +183,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/*border-radius: 3px;*/
 						}		
 						
-
+						button.copyToClipboardButton {
+							background-color: #ffffff;
+							border: 1px dotted #333333;
+						}
+						
+						button.copyToClipboardButton:hover {
+							background-color: #eeeeee;
+							border: 1px solid #333333;
+						}
     /**/
     </style>
     <title>
@@ -302,7 +310,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			} else {
 				//CANCEL
 			} 
-		}	
+		}
+
+		function myCopyToClipboardFunction(itemCount) {
+		  var copyText = document.getElementById("itemNameDivId"+itemCount);
+
+		  //alert("itemCount: " + itemCount);	
+
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = copyText.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + copyText.innerText);	
+		}
 	  </script>
   <body>
 	<table class="imageTable">
@@ -433,6 +470,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>		
 								</div>								
 						</td>
+						<td>				
+						<!-- copy to clipboard column -->
+						</td>						
 						<td class="columnTableHeader">				
 							<?php
 								echo "AVAILABLE"; //IN-STOCK;
@@ -492,7 +532,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="column">				
 							<a target='_blank' href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-								<div class="itemName">
+								<div id="itemNameDivId<?php echo $iCount?>" class="itemName">
 				<?php
 								//edited by Mike, 20200715
 								//echo $value['item_name'];
@@ -500,6 +540,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>		
 								</div>								
 							</a>
+						</td>
+						<td class =column>		
+							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
 						</td>
 						<td class =column>				
 								<div id=quantityInStockId<?php echo $iCount?>>

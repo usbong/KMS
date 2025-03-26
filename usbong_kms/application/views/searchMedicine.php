@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250227; from 20250215
+' @date updated: 20250326; from 20250322
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -37,6 +37,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							width: 670px
                         }
+
+						span.asterisk
+						{
+							color: #ff0000;							
+						}
 						
 						div.checkBox
 						{
@@ -68,6 +73,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #00ff00; <!--#93d151; lime green-->
 							border: 1pt solid #00ff00;
 						}
+						
+						div.tableHeaderAddNewMedItem
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #ff8000; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+						}	
 
 						input.browse-input
 						{
@@ -94,7 +107,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
-						
+
+						table.addMedItemTable
+						{
+							border: 2px dotted #ab9c7d;		
+							margin-top: 10px;
+						}	
+												
 						span.alertSpan {
 							color: red;
 							font-weight: bold;
@@ -112,6 +131,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1px solid #ab9c7d;		
 -->
 						}						
+
+						td.submitButtonTd
+						{
+							float: right;
+						}
 
 						td.column
 						{
@@ -254,6 +278,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
 		  }
 */
+		function myPopupFunctionDelete(itemId,itemName) {	
+			//alert("DITO");
+		
+			if (confirm("Delete ["+itemName+"]?")) { //YES
+				window.location.href = "<?php echo site_url('browse/deleteItemFromSearch/1/"+itemId+"');?>";
+			} else {
+				//CANCEL
+			} 
+		}	
+
 	  </script>
   <body>
 	<table class="imageTable">
@@ -301,10 +335,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
-
-
-	<br/>
-	<br/>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
@@ -318,9 +348,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "<br/>";
 				echo "<br/>";
 */			
+				echo "<br/>";
+				echo "<br/>";
 
+/*	//edited by Mike, 20250326				
 				$resultCount = count($result);
-				
+
 				//added by Mike, 20250227
 				foreach ($result as $value) {
 					if (strpos(strtoupper($value['item_name']),"*")!==false) {
@@ -331,8 +364,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$resultCount--;
 						}
 					}
+
+					//added by Mike, 20250326					
+					array_push($updateResult,$value);
 				}
-				
+*/
+
+					$iCount = 0;
+					$updateResult = [];
+					foreach ($result as $value) {
+						if (strpos(strtoupper($value['item_name']),"*")!==false) {
+						}
+						else {											
+							if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
+							}
+							else if ($value['quantity_in_stock']=="") {
+							}
+							else {
+								if ($value['resultQuantityInStockNow']==0) {
+									$iCount++;
+									continue;
+								}
+							}
+						}
+						
+						array_push($updateResult,$value);
+					}
+
+
+/*				//edited by Mike, 20250326				
 				//edited by Mike, 20250227
 				if ($resultCount==1) {
 					echo '<div>Showing <b>'.$resultCount.'</b> result found.</div>';
@@ -340,6 +400,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				else {
 					echo '<div>Showing <b>'.$resultCount.'</b> results found.</div>';			
 				}			
+*/
+				$updatedResultCount = count($updateResult);
+				
+				//echo ">>updatedResultCount: ".$updatedResultCount."<br/>";
+
+				if ($updatedResultCount==1) {
+					echo '<div>Showing <b>1</b> result found.</div>';
+				}
+				else if ($updatedResultCount<=0) {
+					echo '<div>Showing <b>0</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.($updatedResultCount).'</b> results found.</div>';				
+				}
 
 				echo "<br/>";
 				echo "<table class='search-result'>";
@@ -371,7 +445,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php				
 				$iCount = 1;
 
-				foreach ($result as $value) {
+				//added by Mike, 20250326
+				if (!isset($updateResult)) {
+					$updateResult=[];
+				}
+				
+				//edited by Mike, 20250326
+//				foreach ($result as $value) {
+				foreach ($updateResult as $value) {
+										
 					//added by Mike, 20250215					
 /*					
 					if (strpos(strtoupper($value['item_name']),"CALCIUM")!==false) {
@@ -465,6 +547,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
+<?php
+							//added by Mike, 20250314
+							$updateResultTemp = array();
+							$updateResultTemp = $updateResult;
+							
+							$myNextElement=next($updateResult);
+							
+							if ($myNextElement) { //element exists
+							
+							//echo ">>>>>".$myNextElement['item_name']."<br/>";
+							
+								if ($myNextElement['item_id']!=$value['item_id']) {
+
+							//echo "LOOB!";									
+									
+						?>
+						<td class="column">
+							<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",'".strtoupper($value['item_name'])."'";?>)" class="Button-delete">
+								DELETE
+							</button>
+						</td>						
+						<?php
+								}								
+							}	
+							//current element is already the last
+							else {
+						?>								
+							<td class="column">
+								<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",'".strtoupper($value['item_name'])."'";?>)" class="Button-delete">
+									DELETE
+								</button>
+							</td>						
+						<?php
+							}
+						?>						
 					  </tr>
 		<?php				
 					$iCount++;		
@@ -485,6 +602,110 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}			
 		}
 	?>
+	<br />
+	<br />
+
+	<!-- Form -->
+	<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
+	<!-- "browse/addPatientName" faster -->
+	<form method="post" action="<?php echo site_url('browse/addMedItem/')?>">	
+	<table class="addMedItemTable">
+	<tr>
+		<td colspan="2">
+			<div class="tableHeaderAddNewMedItem">
+				ADD NEW MED
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		  <b><span>Item Name <span class="asterisk">*</span></b>
+		</td>
+		<td>				
+		  <input type="text" class="item-input" placeholder="" name="itemNameParam" value="<?php if (isset($itemNameParam)){echo $itemNameParam;}?>" required>
+		</td>
+	</tr>
+    <tr>
+	  <td>
+	    <b><span>Expiration </span><span class="asterisk">*</span></b>
+	  </td>
+	  <td>
+	  <input type="date" id="" name="expirationDateParam" class="" value="<?php if (isset($expirationDateParam)){echo $expirationDateParam;}?>" required>
+	  </td>
+    </tr>
+    <tr>
+	  <td>
+	    <b><span>Price </span><span class="asterisk">*</span></b>
+	  </td>
+	  <td>
+	  <input type="tel" id="" name="priceParam" class="Price-textbox no-spin" value="<?php if (isset($priceParam)){echo $priceParam;}?>" min="1" max="99999999" 
+		onKeyPress="var key = event.keyCode || event.charCode;		
+					const keyBackspace = 8;
+					const keyDelete = 46;
+					const keyLeftArrow = 37;
+					const keyRightArrow = 39;
+		
+					if (this.value.length == 7) {			
+						if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+							return true;
+						}
+						else {
+							return false;										
+						}
+					}" required>
+	  </td>
+    </tr>
+    <tr>
+	  <td>
+	    <b><span>Quantity </span><span class="asterisk">*</span></b>
+	  </td>
+	  <td>
+	  <input type="tel" id="" name="quantityParam" class="Quantity-textbox no-spin" value="<?php if (isset($quantityParam)){echo $quantityParam;}?>" min="1" max="99999999" 
+		onKeyPress="var key = event.keyCode || event.charCode;		
+					const keyBackspace = 8;
+					const keyDelete = 46;
+					const keyLeftArrow = 37;
+					const keyRightArrow = 39;
+		
+					if (this.value.length == 7) {			
+						if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+							return true;
+						}
+						else {
+							return false;										
+						}
+					}" required>
+	  </td>
+    </tr>
+	<tr>
+	  <td>
+		<!-- add extra blank row -->
+	  </td>
+	  <td>
+		<!-- add extra blank row -->
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+		<b><span>Is returned item? </span><span class="asterisk">*</span></b>
+	  </td>
+	  <td>
+		<input type="checkbox" name="isReturnedItemCheckBoxParam">
+	  </td>
+	</tr>
+	<tr>				  
+	  <td>
+	  </td>
+	  <td class="submitButtonTd">
+		<!-- Buttons -->
+		<button type="submit" class="Button-login">
+			Submit
+		</button>
+	  </td>
+    </tr>
+	</table>		
+	</form>
+
 	<br />
 	<br />
 	<br />
