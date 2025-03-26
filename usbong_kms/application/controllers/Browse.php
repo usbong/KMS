@@ -3605,7 +3605,79 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->view('searchPatientLabUnit', $data);	
 	}
+	
+	//added by Mike, 20250326
+	public function addMedItem()
+	{
+		//echo "HALLO";
+				
+		$data['itemNameParam'] = $_POST['itemNameParam'];
+		$data['priceParam'] = $_POST['priceParam'];
+		$data['quantityParam'] = $_POST['quantityParam'];
+		$data['expirationDateParam'] = $_POST['expirationDateParam'];
 
+		//added by Mike, 20250324
+		//$data['isReturnedItemCheckBoxParam'] = $_POST['isReturnedItemCheckBoxParam']; //can be blank
+		
+		if (isset($_POST['isReturnedItemCheckBoxParam'])) {
+			$data['isReturnedItemCheckBoxParam']=1;
+		}
+		else {
+			$data['isReturnedItemCheckBoxParam']=0;
+		}
+
+/*
+		echo "itemNameParam".$data['itemNameParam'];
+		echo "priceParam".$data['priceParam'];
+*/
+				
+		if (!isset($data['itemNameParam'])) {
+			redirect('browse/searchMedicine');
+		}
+
+		if (!isset($data['priceParam'])) {
+			redirect('browse/searchMedicine');
+		}
+
+		if (!isset($data['quantityParam'])) {
+			redirect('browse/searchMedicine');
+		}		
+		
+/*		
+		if (!is_numeric($data['priceParam'])) {
+			redirect('browse/searchNonMedicine');
+		}
+*/
+		//notes: update inside BROWSE_MODEL.php
+		$data['nameParam'] = $data['itemNameParam'];
+						
+		//if (!is_numeric($data['priceParam'])) {
+		if ((!is_numeric($data['priceParam'])) || (!is_numeric($data['quantityParam']))) {
+			$this->load->view('searchMedicine', $data);	
+		}
+		else {
+			//$data['itemNameParam'] = "";
+			//$data['priceParam'] = "";
+			
+			date_default_timezone_set('Asia/Hong_Kong');
+			$dateTimeStamp = date('Y/m/d H:i:s');
+			
+			$data['transactionDate'] = date('m/d/Y');
+			
+			$this->load->model('Browse_Model');
+		
+			$data['itemId'] = $this->Browse_Model->addMedItem($data);
+			
+			//TODO: -reverify: this
+			//$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
+
+			$_POST['nameParam'] = $data['nameParam'];
+			$this->confirmMedicine();
+		}
+
+		//$this->load->view('searchNonMedicine', $data);	
+	}		
+	
 	//added by Mike, 20250307
 	public function addNonMedItem()
 	{
@@ -4226,6 +4298,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		else if ($itemTypeId==3) { //snack
 			$this->confirmSnack();
 		}		
+		else { //$itemTypeId==1; //med item
+			$this->confirmMedicine();
+		}
+		
 
 		//echo ">>>>>".$_POST['nameParam'];
 	}	
