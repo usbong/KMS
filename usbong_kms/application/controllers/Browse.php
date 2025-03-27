@@ -3343,8 +3343,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		//added by Mike, 20250314
 		if (isset($_SESSION["hasAddedPatientInCartList"])) {
+			//added by Mike, 20250327
+			//TODO: -reverify: this; if iPad gets stuck, close all tabs, then return to home page;
 			//don't add the patient
 			//$this->session->unset_userdata('hasAddedPatientInCartList');
+			
+			//echo "HALLO";
 		}
 		else {
 			$this->session->set_userdata('hasAddedPatientInCartList', True);
@@ -3353,6 +3357,8 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->Browse_Model->addTransactionServicePurchase($data);
 			//echo $this->Browse_Model->addTransactionServicePurchase($data);
 		}
+		
+		echo "DITO";
 
 /*		
 		//edited by Mike, 20201105
