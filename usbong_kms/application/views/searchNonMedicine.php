@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250313; from 20250307
+' @date updated: 20250327; from 20250313
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -34,8 +34,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-family: Arial;
 							font-size: 11pt;
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. 
+								width: 670px
+							*/
+							width: 800px
                         }
 						
 						span.asterisk
@@ -141,6 +143,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
+
+						td.columnTableHeaderItemName
+						{
+							font-weight: bold;
+							background-color: #00ff00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+						}						
 												
 						td.imageColumn
 						{
@@ -185,13 +195,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						button.copyToClipboardButton {
 							background-color: #ffffff;
-							border: 1px dotted #333333;
+							border: 0px dotted #333333;
+							font-size: 20px;
+							padding: 0;
 						}
 						
 						button.copyToClipboardButton:hover {
-							background-color: #eeeeee;
-							border: 1px solid #333333;
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
 						}
+
+						button.copyToClipboardButton:active {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}						
     /**/
     </style>
     <title>
@@ -463,7 +484,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class="columnTableHeader">				
+						<td class="columnTableHeaderItemName">				
 								<div class="tableHeader">
 				<?php
 								echo "ITEM NAME";
