@@ -4365,6 +4365,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//NOTE: MYSQL COMMAND to update existing database:
 		//UPDATE `patient` SET `patient_name`=replace(`patient_name`, '.', '');
 		$param['nameParam'] = str_replace(".","",$param['nameParam']);
+		
+		//added by Mike, 20250328
+		$param['nameParam'] = str_replace("/","",$param['nameParam']);
+		$param['nameParam'] = str_replace("\\","",$param['nameParam']);
+		$param['nameParam'] = str_replace("[","",$param['nameParam']);
+		$param['nameParam'] = str_replace("]","",$param['nameParam']);
 			
 		//added by Mike, 20210817; removed by Mike, 20210817
 /*		echo ">>".$param['nameParam'];		
