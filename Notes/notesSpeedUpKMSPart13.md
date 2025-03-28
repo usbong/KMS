@@ -8,7 +8,7 @@ How to speed-up search using MySQL?
 
 Transfer transactions.
 
-### Steps to Transfer Transactions Using phpmyadmin
+### Steps to Transfer Transactions Using phpmyadmin | [video](https://www.youtube.com/watch?v=nmfBJFksyIM)
 
 1) Go to "operations" 
 
