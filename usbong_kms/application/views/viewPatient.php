@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250219; from 20241029
+' @date updated: 20250328; from 20250219
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -619,7 +619,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
 				window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
 			}
-	
+
 			//added by Mike, 20210424
 			//note: no need to add this due to computer enables button after reloading page
 //			document.getElementById("addButtonId").disabled = false;
