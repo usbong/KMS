@@ -166,6 +166,12 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20250219
 		$data['nameParam'] = str_replace(".","",$data['nameParam']);
+
+		//added by Mike, 20250328; show "[DUPLICATE]"
+/*		
+		$data['nameParam'] = str_replace("[","",$data['nameParam']);
+		$data['nameParam'] = str_replace("]","",$data['nameParam']);
+*/
 		
 		//added by Mike, 20241113
 		if (!isset($data['nameParam'])) {
@@ -557,7 +563,15 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20241113
 		//forward slash used in non-med item inventory
 		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
-		$data['nameParam'] = str_replace("\\","",$data['nameParam']);		
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+
+		//added by Mike, 20250328
+		$data['nameParam'] = str_replace(",","",$data['nameParam']);
+		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+		$data['nameParam'] = str_replace("[","",$data['nameParam']);
+		$data['nameParam'] = str_replace("]","",$data['nameParam']);
+		
 
 /* //removed by Mike, 20230131		
 		//added by Mike, 20200328
@@ -1079,6 +1093,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		//forward slash used in med item inventory
 		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
 		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+		
+		//added by Mike, 20250328
+		$data['nameParam'] = str_replace(",","",$data['nameParam']);
+		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("[","",$data['nameParam']);
+		$data['nameParam'] = str_replace("]","",$data['nameParam']);
 
 		//added by Mike, 20201010
 		if (!isset($data['nameParam'])) {
@@ -3348,7 +3368,7 @@ class Browse extends CI_Controller { //MY_Controller {
 			//don't add the patient
 			//$this->session->unset_userdata('hasAddedPatientInCartList');
 			
-			//echo "HALLO";
+			echo "HALLO";
 		}
 		else {
 			$this->session->set_userdata('hasAddedPatientInCartList', True);
@@ -3357,8 +3377,6 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->Browse_Model->addTransactionServicePurchase($data);
 			//echo $this->Browse_Model->addTransactionServicePurchase($data);
 		}
-		
-		echo "DITO";
 
 /*		
 		//edited by Mike, 20201105
@@ -3556,9 +3574,21 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['nameParam'] = trim($data['patientLastNameParam']).", ".trim($data['patientFirstNameParam']);
 		$data['nameParam'] = strtoupper($data['nameParam']);
 */
+
 		//notes: update inside BROWSE_MODEL.php
 		$data['nameParam'] = $data['patientLastNameParam'].", ".$data['patientFirstNameParam'];
 		$data['nameParam'] = strtoupper($data['nameParam']);
+
+/*		
+		//added by Mike, 20250328
+		$data['nameParam'] = str_replace("\/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+		
+		echo ">>>>>".$data['nameParam'];
+		
+		$data['nameParam'] = str_replace(".","",$data['nameParam']);
+		$data['nameParam'] = str_replace(",","",$data['nameParam']);
+*/		
 						
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
@@ -4093,6 +4123,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20201115
 		$this->session->unset_userdata('noVAT');
 		$data['noVAT'] = False;
+		
+		//added by Mike, 20250328
+		$this->session->unset_userdata('hasAddedPatientInCartList');
 
 /*		//removed by Mike, 20201122
 		//execute these due to select patients classified as SC, i.e. "Senior Citizens"
