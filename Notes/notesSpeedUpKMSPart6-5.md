@@ -1,4 +1,4 @@
-# Notes: Speed-up Knowledge Management System (KMS) Part 6
+# Notes: Speed-up Knowledge Management System (KMS) Part 6.5
 
 ## 1) PROBLEM:
 
