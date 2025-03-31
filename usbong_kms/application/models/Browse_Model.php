@@ -993,7 +993,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
 		//edited by Mike, 20220914
 		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date');
+		
+		//edited by Mike, 20250331
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date, t2.is_to_be_deleted');
 
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -6173,6 +6176,13 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 				
 		if ($iQuantity==0) {
 			return 0;
+		}
+		
+		//added by Mike, 20250331
+		if (isset($itemValue['is_to_be_deleted'])) {
+			if ($itemValue['is_to_be_deleted']==1) {
+				return 0;
+			}
 		}
 		
 		//noted by Mike, 20201201
