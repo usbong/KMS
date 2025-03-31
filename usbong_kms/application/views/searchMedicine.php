@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250327; from 20250326
+' @date updated: 20250331; from 20250327
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -43,6 +43,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						span.asterisk
 						{
 							color: #ff0000;							
+						}
+
+						div.outOfStockDiv {
+							text-indent: 6em;
 						}
 						
 						div.checkBox
@@ -353,6 +357,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  // Alert the copied text
 		  alert("Copied: " + copyText.innerText);	
 		}
+		
+		function myCopyToClipboardFunctionItemName(itemName) {
+		  var sCopyText = itemName;
+
+		  //alert("itemCount: " + itemCount);	
+
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = sCopyText; //copyText.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + sCopyText); //copyText.innerText);	
+		}		
 	  </script>
   <body>
 	<table class="imageTable">
@@ -476,6 +509,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo '<div>Showing <b>1</b> result found.</div>';
 				}
 				else if ($updatedResultCount<=0) {
+					if (isset($value['item_name'])) {
+						echo "<b>".$value['item_name']."</b>";
+?>						
+						<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemName("<?php echo $value['item_name'];?>")'>⿻</button>
+<?php						
+						echo "<br/><br/><div class='outOfStockDiv'>is already <span style='color:red'><b>OUT-OF-STOCK</b></span>.</div>";
+
+						echo "<br/>";
+					}
+					
+
 					echo '<div>Showing <b>0</b> result found.</div>';
 				}
 				else {

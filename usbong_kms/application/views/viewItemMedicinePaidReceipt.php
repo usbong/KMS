@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220719; from 20210928
+' @date updated: 20250331; from 20220719
 ' @website: http://www.usbong.ph
 -->
 <?php
@@ -551,19 +551,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php
 			$itemCounter = 1;
 		?>
-<!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
-		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
--->
-
 		<div>
 			<table width="100%">
-<!--
-			  <tr>
-				<td>
-				  <b><span>Pangalan</span></b>
-				</td>
-			  </tr>
--->
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
@@ -592,76 +581,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>
 	
 	<!-- Form -->
-	<!-- 1 = Medicine -->
-<!--  //edited by Mike, 20200607
-	<form method="post" action="<?php echo site_url('browse/confirmItemMedicinePaidReceipt/1')?>">
--->
-	<form method="post" action="<?php echo site_url('browse/confirmItemPaidReceipt/'.$medicalDoctorId.'/1')?>">
-<!--
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>Last Name <span class="asterisk">*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>				
-				  <input type="text" class="receipt-input" placeholder="" name="memberLastNameParam" required>
-				</td>
-			  </tr>
-			</table>
-		</div>
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>First Name </span><span class="asterisk">*</span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-				  <input type="text" class="receipt-input" placeholder="" name="memberFirstNameParam" required>
-				</td>
-			  </tr>
-			</table>
-		</div>	
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>Address <span class="asterisk">*</span></span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-					<textarea rows="5" class="receipt-input" placeholder="" name="memberAddressParam" required></textarea>						
-				</td>
-			  </tr>
-			</table>
-		</div>	
--->
-<!-- //removed by Mike, 20200607
-		<div>
-			<table width="100%">
-			  <tr>
-				<td>
-				  <b><span>Official Receipt Number (MOSC) <span class="asterisk">*</span></span></b>
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-				  <input type="tel" class="receipt-input" placeholder="" name="officialReceiptNumberParam" required>
-				</td>
-			  </tr>
-			</table>
-		</div>	
-		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
-		<br />
--->
 		<div>
 			<table width="100%">
 			<?php
+				//added by Mike, 20250331
+				$bHasFoundReceiptType=false;
+			
 				//added by Mike, 20200608
 				//note: this is for medicine items
 				//removed by Mike, 20200611
@@ -671,6 +596,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //				if ($patientId!=0){
 					if (isset($outputTransaction)) {						
 						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
+							$bHasFoundReceiptType=true;
 			?>
 						  <tr>
 							<td>
@@ -692,6 +618,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			    if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")==false) {
 					//added by Mike, 20200608
 					if ($medicalDoctorId!=0) {
+						$bHasFoundReceiptType=true;
 			 ?>
 				  <tr>
 				    <td>
@@ -714,6 +641,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					if (isset($outputTransaction)) {						
 						if ($outputTransaction['pas_fee']!=0) {
 //						if ($outputTransaction->pas_fee!==0) {
+							$bHasFoundReceiptType=true;
 
 ?>
 				  <tr>
@@ -743,10 +671,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
 
 		<br />
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Submit
-		</button>
+		<!-- Button -->
+<?php 
+		if ($bHasFoundReceiptType) {
+?>		
+			<button type="submit" class="Button-login">
+				Submit
+			</button>
+<?php 
+		}
+?>
 	</form>
 	<br />
 
