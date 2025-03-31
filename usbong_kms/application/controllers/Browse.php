@@ -1806,6 +1806,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//echo $data['resultItem'][0]['is_hidden'];
 		$data['is_hidden'] = $data['resultItem'][0]['is_hidden'];
 
+		//added by Mike, 20250331
+		$data['is_to_be_deleted'] = $data['resultItem'][0]['is_to_be_deleted'];
+		
+		//echo "IS TO BE DELETED: ".$data['is_to_be_deleted'];
+
 		$data['resultItem'] = $this->getResultItemQuantity($data);		
 
 		
@@ -2214,6 +2219,12 @@ class Browse extends CI_Controller { //MY_Controller {
 					$itemId = $value['item_id'];
 					$bIsSameItemId = false;
 				}
+				
+				//added by Mike, 20250331
+				if (isset($value['is_to_be_deleted']) and ($value['is_to_be_deleted']==1)) {
+					//echo "HALLO<br/><br/>";
+					continue;
+				}
 					
 //				echo "itemId: " . $itemId;
 /*				
@@ -2401,7 +2412,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['resultItem'] = $outputArray;
 */		
 		foreach ($outputArray as $value) {
-			if ($value['resultQuantityInStockNow']==0) {				
+			//edited by Mike, 20250331
+			//if ($value['resultQuantityInStockNow']==0) {		
+		if ((!isset($value['resultQuantityInStockNow'])) || ($value['resultQuantityInStockNow']==0)) {			
 			}
 			else {
 				array_push($data['resultItem'], $value);
