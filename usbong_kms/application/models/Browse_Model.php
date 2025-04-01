@@ -1010,6 +1010,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		//edited by Mike, 20200604
 		$this->db->where('t1.item_id', $param['itemId']);
+	
+
+		//added by Mike, 20250401
+		$this->db->where('t1.is_hidden', 0); //1 = hidden
+		$this->db->where('t2.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE		
+
 
 		//added by Mike, 20200607
 //		$this->db->order_by('t1.item_name', 'ASC');
@@ -6136,6 +6142,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	public function getItemAvailableQuantityInStock($itemValue)
 //	public function getItemAvailableQuantityInStock($itemTypeId, $itemId, $expirationDate)
 	{			
+	
 /*	//removed by Mike, 20210110
 		//edited by Mike, 20201202
 //		$this->db->select('t2.quantity_in_stock, t1.item_name');
@@ -6165,6 +6172,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 
 		}
 */
+
 		if (isset($itemValue['quantity_in_stock'])) {
 			$iQuantity = $itemValue['quantity_in_stock'];
 		}
@@ -6177,13 +6185,17 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		if ($iQuantity==0) {
 			return 0;
 		}
-		
+
 		//added by Mike, 20250331
+		//echo ">>>>>".$itemValue['is_to_be_deleted'];
+
+/*		removed by Mike, 20250401
 		if (isset($itemValue['is_to_be_deleted'])) {
 			if ($itemValue['is_to_be_deleted']==1) {
 				return 0;
 			}
 		}
+*/
 		
 		//noted by Mike, 20201201
 		//use $iQuantity = $iQuantity - $value['item_total_sold'];
@@ -6197,7 +6209,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		//edited by Mike, 20210110
 //		$iQuantity = $iQuantity - $row->item_total_sold;
 		$iQuantity = $iQuantity - $itemValue['item_total_sold'];
-		
+				
 		//------------------------------------		
 		//edited by Mike, 20201202
 		//$this->db->select('t1.item_price, t2.fee');
@@ -6210,7 +6222,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 		
-		//added by Mike, 20250313
+		//removed by Mike, 20250401; from 20250313
 		//$this->db->join('inventory as t3', 't1.item_id = t3.item_id', 'LEFT');
 				
 		//edited by Mike, 20210110
@@ -6220,7 +6232,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		//added by Mike, 20230303
 		$this->db->where('t1.is_hidden', 0); //not hidden
 
-		//added by Mike, 20250313
+		//removed by Mike, 20250401; from 20250313
 		//$this->db->where('t3.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE
 
 		//edited by Mike, 20200625
@@ -6310,6 +6322,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		
 		//------------------------------------
 */		
+
 		return $iQuantity;
 	}
 
