@@ -1792,8 +1792,10 @@ class Browse extends CI_Controller { //MY_Controller {
 //		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
 		//added by Mike, 20210123
 		//TO-DO: -reverify: if necessary
-		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($data);
-
+		//removed by Mike, 20250401
+		//$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($data);
+		$data['resultQuantityInStockNow'] = "";
+		
 		//added by Mike, 20200501; edited by Mike, 20200604
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
@@ -2220,11 +2222,13 @@ class Browse extends CI_Controller { //MY_Controller {
 					$bIsSameItemId = false;
 				}
 				
+/*				//removed by Mike, 20250401; debug				
 				//added by Mike, 20250331
 				if (isset($value['is_to_be_deleted']) and ($value['is_to_be_deleted']==1)) {
-					//echo "HALLO<br/><br/>";
+					echo "HALLO<br/><br/>";
 					continue;
 				}
+*/
 					
 //				echo "itemId: " . $itemId;
 /*				
