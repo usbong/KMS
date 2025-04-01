@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250331; from 20250327
+' @date updated: 20250401; from 20250331
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -475,7 +475,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					foreach ($result as $value) {
 						if (strpos(strtoupper($value['item_name']),"*")!==false) {
 						}
-						else {											
+						else {		
 							if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
 							}
 							else if ($value['quantity_in_stock']=="") {
@@ -514,11 +514,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>						
 						<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemName("<?php echo $value['item_name'];?>")'>⿻</button>
 <?php						
-						echo "<br/><br/><div class='outOfStockDiv'>is already <span style='color:red'><b>OUT-OF-STOCK</b></span>.</div>";
+						//edited by Mike, 20250401
+						//echo "<br/><br/><div class='outOfStockDiv'>is already <span style='color:red'><b>OUT-OF-STOCK</b></span>.</div>";
+						//echo "<br/>";
 
-						echo "<br/>";
+						echo "<br/><br/><span style='color:red'><b>OUT-OF-STOCK</b></span>.";
+						echo "<br/><br/>";
 					}
-					
 
 					echo '<div>Showing <b>0</b> result found.</div>';
 				}

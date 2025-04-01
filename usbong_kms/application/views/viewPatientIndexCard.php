@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2024 SYSON, MICHAEL B.
+  Copyright 2020~2025 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20241221; from 20240301
+  @date updated: 20250401; from 20241221
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -45,12 +45,6 @@
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
 							width: 900px; /*860px;*/ /* 802px;*//* 670px */
-							
-							/* //TO-DO: -reverify: this if necessary */
-							/* use zoom 67% (prev) scale*/
-							zoom: 90%; /* at present, command not supported in Mozilla Firefox */				
-							transform: scale(0.90);
-							transform-origin: 0 0;							
                         }
 						
 						div.copyright
@@ -158,7 +152,7 @@
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: center;							
+							text-align: center;		
 						}						
 
 						td.columnTransactionDate
@@ -201,6 +195,8 @@
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right;
+							width: 1%;
+							padding-left: 1.5em;
 						}						
 
 						td.columnNumberQuantityTotal
@@ -300,6 +296,20 @@
 							display: inline-block;
 							text-align: right;
 						}						
+
+						.Fee-textbox { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 5px;
+							
+							font-size: 16px;
+							border: 1px solid #68502b;
+							border-radius: 3px;	    	    
+							text-align: right;
+							width: 100%;
+
+							float: right;
+						}
 
 						td.formDateColumn
 						{
@@ -420,7 +430,28 @@
 						table.tableIndexCardImage
 						{
 							border: 2px solid #00ddaa; /*river sea blue green;*/
-						}						
+						}
+
+						button.saveButton {
+							background-color: #ffffff;
+							border: 0px dotted #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.saveButton:hover {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.saveButton:active {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}							
 						
 <!-- added by Mike, 20210210 -->
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
@@ -1594,6 +1625,9 @@
 							echo "LAB";
 						?>
 					</td>
+					<!-- added by Mike, 20250401 -->
+					<td>				
+					</td>
 					<td class ="columnTableHeaderNotes">				
 						<?php
 							echo "CLASSIFICATION<br/>& NOTES";
@@ -1614,6 +1648,12 @@
 /*	
 			$value = $result[0];
 */				
+			$bIsEditable=false;
+			if (strcmp(date("m-d-Y"),date("m-d-Y",strtotime($value['transaction_date'])))==0) { //if equal
+				if (strpos($value['notes'],"ONLY")==false) {
+					$bIsEditable=true;
+				}
+			}
 	?>				
 	
 				  <tr class="row">
@@ -1650,8 +1690,31 @@
 					</td>							
 					<td class ="columnNumber">				
 						<?php
-							echo $value['fee'];
+							//edited by Mike, 20250401
+							//echo $value['fee'];
+							if ($bIsEditable) {
 						?>
+						<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="<?php echo $value['fee'];?>" min="1" max="99999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 5) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>	
+<?php
+							}
+							else {
+								echo $value['fee'];
+							}
+?>
 					</td>
 					<td class ="columnNumber">				
 						<?php
@@ -1663,6 +1726,23 @@
 							echo $value['lab_fee'];
 						?>
 					</td>
+					<!-- added by Mike, 20250401 -->
+					<td>			
+						<?php //if (date("m-d-Y",strtotime($value['transaction_date']))
+							//echo date("m-d-Y");
+							//echo date("m-d-Y",strtotime($value['transaction_date']));
+/*							
+							if (strcmp(date("m-d-Y"),date("m-d-Y",strtotime($value['transaction_date'])))==0) { //if equal
+								if (strpos($value['notes'],"ONLY")==false) {
+*/
+							if ($bIsEditable) {							
+									
+						?>
+						<button class='saveButton' onclick='mysaveFunctionItemName("<?php echo $value['item_name'];?>")'>💾</button>
+						<?php
+							}
+						?>
+					</td>					
 					<td class ="columnNotes">				
 						<?php
 							//edited by Mike, 20200518
