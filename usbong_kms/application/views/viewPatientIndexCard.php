@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250401; from 20241221
+  @date updated: 20250402; from 20250401
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -300,13 +300,13 @@
 						.Fee-textbox { 
 							background-color: #fCfCfC;
 							color: #68502b;
-							padding: 5px;
+							padding: 8px;
 							
 							font-size: 16px;
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
 							text-align: right;
-							width: 100%;
+							width: 120%;
 
 							float: right;
 						}
@@ -437,6 +437,7 @@
 							border: 0px dotted #333333;
 							font-size: 20px;
 							padding: 0;
+							margin-right: -0.2em;
 						}
 						
 						button.saveButton:hover {
@@ -444,6 +445,7 @@
 							border: 0px solid #333333;
 							font-size: 20px;
 							padding: 0;
+							margin-right: -0.2em;
 						}
 						
 						button.saveButton:active {
@@ -1694,7 +1696,7 @@
 							//echo $value['fee'];
 							if ($bIsEditable) {
 						?>
-						<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="<?php echo $value['fee'];?>" min="1" max="99999" 
+						<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="<?php echo intval($value['fee']);?>" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -1718,13 +1720,57 @@
 					</td>
 					<td class ="columnNumber">				
 						<?php
-							echo $value['x_ray_fee'];
+							//echo $value['x_ray_fee'];
+							if ($bIsEditable) {
 						?>
+						<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="<?php echo intval($value['x_ray_fee']);?>" min="1" max="99999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 5) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>
+<?php
+							}
+							else {
+								echo $value['x_ray_fee'];
+							}
+?>									
 					</td>
 					<td class ="columnNumber">				
 						<?php
-							echo $value['lab_fee'];
+							//echo $value['lab_fee'];
+							if ($bIsEditable) {							
 						?>
+						<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="<?php echo intval($value['lab_fee']);?>" min="1" max="99999" 
+						onKeyPress="var key = event.keyCode || event.charCode;		
+									const keyBackspace = 8;
+									const keyDelete = 46;
+									const keyLeftArrow = 37;
+									const keyRightArrow = 39;
+						
+									if (this.value.length == 5) {			
+										if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+											return true;
+										}
+										else {
+											return false;										
+										}
+									}" required>
+<?php
+							}
+							else {
+								echo $value['lab_fee'];
+							}
+?>									
 					</td>
 					<!-- added by Mike, 20250401 -->
 					<td>			
@@ -1737,6 +1783,7 @@
 */
 							if ($bIsEditable) {							
 									
+							//TODO: -update: this;
 						?>
 						<button class='saveButton' onclick='mysaveFunctionItemName("<?php echo $value['item_name'];?>")'>💾</button>
 						<?php

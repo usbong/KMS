@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250401; from 20250331
+' @date updated: 20250402; from 20250401
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -358,10 +358,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  alert("Copied: " + copyText.innerText);	
 		}
 		
-		function myCopyToClipboardFunctionItemName(itemName) {
-		  var sCopyText = itemName;
+		function myCopyToClipboardFunctionItemText(itemText) {
+		  var sCopyText = itemText;
 
-		  //alert("itemCount: " + itemCount);	
+		  //alert("itemText: " + itemText);	
 
 	      //reference: 
 		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
@@ -510,15 +510,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 				else if ($updatedResultCount<=0) {
 					if (isset($value['item_name'])) {
-						echo "<b>".$value['item_name']."</b>";
+						echo "<b>".strtoupper($value['item_name'])."</b>";
 ?>						
-						<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemName("<?php echo $value['item_name'];?>")'>⿻</button>
+						<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText("<?php echo strtoupper($value['item_name']);?>")'>⿻</button>
 <?php						
 						//edited by Mike, 20250401
 						//echo "<br/><br/><div class='outOfStockDiv'>is already <span style='color:red'><b>OUT-OF-STOCK</b></span>.</div>";
 						//echo "<br/>";
 
-						echo "<br/><br/><span style='color:red'><b>OUT-OF-STOCK</b></span>.";
+						echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>.";
 						echo "<br/><br/>";
 					}
 
@@ -581,7 +581,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 					else {					
 						if ($value['resultQuantityInStockNow']==0) {
-							continue;
+							//echo "DITO";
+							//edited by Mike, 20250402
+							if ($updatedResultCount==0) {
+								continue;
+							}
 						}
 					}
 		?>				
