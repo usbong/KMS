@@ -1427,12 +1427,41 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		}
 		else {			
 			$iCount = 0;
+			
+			//noted by Mike, 20250402
+			//if the transactionId is not immediately next to each other due to other transactions were being added at the info desk, the remaining transactions won't get deleted;
+			//do $iCount = $iCount + 1; only if a transaction was successfully deleted
+			
+			$param['transactionDate']=str_replace("DEL","",$param['transactionDate']);
+			
 			while ($iCount < $transactionQuantity) {			
+				//if not equal
+				//echo ">>>>".$param['transactionDate'];
+				//echo ">>>>m/d/Y".date('m/d/Y');
+				
+				if (strcmp($param['transactionDate'],date('m/d/Y'))!==0) {
+					break;
+				}
+			
 				$this->db->where('transaction_id',$iTransactionId);
 				$this->db->where('patient_id!=',0);
+				
+				//added by Mike, 20250402
+				$this->db->where('transaction_date',$param['transactionDate']);
+				$this->db->where('patient_id',$param['patientIdParam']);
+				
 				$this->db->delete('transaction');
-							
-				$iCount = $iCount + 1;
+
+				//edited by Mike, 20250402
+				//echo ">>>>>".$this->db->affected_rows()."<br/>";
+				//echo "transactionId: ".$iTransactionId."<br/>";
+				
+				if ($this->db->affected_rows()>0) {
+					$iCount = $iCount + 1;
+					
+					//echo "DITO!!!".$iCount."<br/>";
+				}
+				
 				$iTransactionId = $iTransactionId - 1;
 			}
 		}
@@ -6395,8 +6424,8 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		return $iQuantity;
 	}
 	
-	//added by Mike, 20230414
-	public function getTransactionsListFromFile() {		
+	//edited by Mike, 20250402; from 20230414
+	public function getTransactionsListFromFilePrevOK() {		
 		//edited by Mike, 20230926
 		//$filename="G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\\usbongKMSItemListTransaction2020OK.txt";
 		
@@ -6491,6 +6520,144 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		}		
 	}
 	
+	//added by Mike, 20250402
+	public function getTransactionsListFromFile() {		
+		//edited by Mike, 20230926
+		//$filename="G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\\usbongKMSItemListTransaction2020OK.txt";
+		
+		//edited by Mike, 20240305
+		//$filename="D:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt";
+		//edited by Mike, 20250402
+		//$filename="C:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt";
+		
+		$sFilenameArray=array();
+		array_push($sFilenameArray, "C:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt");	
+		array_push($sFilenameArray, "C:\MOSC\KMS\\usbongKMSItemListTransaction2021OK.txt");	
+
+		$outputArray = array();
+
+		//removed by Mike, 20240305
+		//deprecated
+		//ini_set('auto_detect_line_endings', true);
+
+		//edited by Mike, 20250402
+		foreach ($sFilenameArray as $filename) {
+			//added by Mike, 20200523
+			if (!file_exists($filename)) {
+/*				
+				//add the day of the week
+				//edited by Mike, 20200726
+				//$sDateToday = (new DateTime())->format('Y-m-d, l');
+				$sDateToday = Date('Y-m-d, l');
+
+				echo $filename;
+
+				echo "There are no transactions for the day, ".$sDateToday.".";
+*/				
+				continue;
+			}
+			else {
+				echo ">>>> filename: ".$filename."<br/>";
+				
+				//removed by Mike, 20250402; from 20230413
+				//$outputArray = array();
+				
+				//Reference: https://stackoverflow.com/questions/9139202/how-to-parse-a-csv-file-using-php;
+				//answer by: thenetimp, 20120204T0730
+				//edited by: thenetimp, 20170823T1704
+
+				$iRowCount = -1; //we later add 1 to make start value zero (0)
+				//if (($handle = fopen("test.csv", "r")) !== FALSE) {
+				if (($handle = fopen($filename, "r")) !== FALSE) {
+				  //edited by Mike, 20230413
+				  //while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+				  while (($data = fgetcsv($handle, 1000, " ")) !== FALSE) {
+
+					$num = count($data) -1; //we add -1 for the computer to not include the excess cell due to the ending \n
+				//    echo "<p> $num fields in line $row: <br /></p>\n";
+					$iRowCount++;
+					for ($iColumnCount=0; $iColumnCount <= $num; $iColumnCount++) {
+				//        echo $data[$c] . "<br />\n";
+						//edited by Mike, 20200725
+						//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
+						
+						//added by Mike, 20200726
+						//$cellValue = $data[$iColumnCount];	
+						//edited by Mike, 20240305
+						//deprecated
+						//$cellValue = utf8_encode($data[$iColumnCount]);
+						$cellValue = mb_convert_encoding($data[$iColumnCount], "UTF-8", mb_detect_encoding($data[$iColumnCount]));
+						
+						
+		//				echo $cellValue."<br/>";
+						
+						if (strpos($cellValue, "item_total_sold=")!==false) {
+							$cellValue=str_replace("item_total_sold=","",$cellValue);
+							
+	//						echo $cellValue."<br/>";				
+
+							$itemTotalSold=$cellValue;
+						}
+						else if (strpos($cellValue, "item_id=")!==false) {
+							$cellValue=str_replace("item_id=","",$cellValue);
+							$cellValue=str_replace(";","",$cellValue);										
+
+	//						echo $cellValue."<br/>";				
+							
+							$itemId=$cellValue;
+						}				
+					}
+
+/*	//edited by Mike, 20250402
+					$data = array(
+						'item_id' => $itemId,
+						'item_total_sold' => $itemTotalSold
+					);		
+					
+					array_push($outputArray, $data);		
+*/
+				$bHasFoundItem=false;
+				foreach ($outputArray as &$outputArrayRow) {
+					if ($outputArrayRow['item_id']==$itemId) {
+						//echo "FOUND!".$outputArrayRow['item_id']."<br/>";
+
+						$outputArrayRow['item_total_sold']+=$itemTotalSold;
+						$bHasFoundItem=true;
+						break;						
+					}
+				}	
+				unset($outputArrayRow);
+				
+				if (!$bHasFoundItem) {
+					$data = array(
+						'item_id' => $itemId,
+						'item_total_sold' => $itemTotalSold
+					);		
+					
+					array_push($outputArray, $data);		
+				}
+
+	//				echo "<br/>";			
+				  }
+				  
+				  fclose($handle);
+				}
+
+	/* //removed by Mike, 20230414			
+				foreach ($outputArray as $dataValue) {
+				//	$this->db->insert('receipt', $dataValue);
+				}	
+	*/
+				//edited by Mike, 20250402
+				//return $outputArray;
+			}		
+		}
+		
+		echo ">>>COUNT: ".count($outputArray)."<br/>";
+		
+		return $outputArray;
+	}	
+	
 	//added by Mike, 20201216
 	//note: use with $iQuantity = $iQuantity - $value['item_total_sold'];
 	//where $iQuantity = item total in stock
@@ -6502,8 +6669,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	//reminder: delete in previous year's transaction also exist;
 	//output: updating via only the previous day's transaction NOT OK
 	public function updateTotalQuantitySoldPerItem() {
-		//added by Mike, 20230414
-		$outputArray = $this->getTransactionsListFromFile();
+		//edited by Mike, 20250402; from 20230414
+		$outputArray = $this->getTransactionsListFromFile();		
+		//$outputArray = array(); //$this->getTransactionsListFromFile();
 				
 		//identify newest transactionId
 		$this->db->select_max('item_id');
@@ -6512,12 +6680,12 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		$iItemIdMax = $row->item_id;
 
 		$itemId=0;		
-		
+
 		while ($itemId<$iItemIdMax) {
 			$iTotalQuantitySold=0;
 
-/*			echo "item_id: ".$itemId.";";
-*/
+////			echo "item_id: ".$itemId.";";		
+
 			//$this->db->select('t1.item_price, t2.fee');
 			//edited by Mike, 20200901
 			$this->db->select('t1.item_name, t1.item_price, t2.fee, t2.fee_quantity, t2.transaction_id');
@@ -6526,9 +6694,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
 			$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
 
-			//edited by Mike, 20230412; from 20230411
+			//edited by Mike, 20250402; from 20230412
 			$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
-
+			//$this->db->join('transaction2021 as t2', 't1.item_id = t2.item_id', 'LEFT');
 			//$this->db->join('transaction2020 as t2', 't1.item_id = t2.item_id', 'LEFT');
 
 			//$this->db->join('transactionorigv20230410t1238 as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -6553,10 +6721,10 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 
 	//		$row = $query->row();		
 			$rowArray = $query->result_array();
-/*
-			echo "count: ".count($rowArray);
-			echo "transaction_id: ";
-*/
+
+////			echo "count: ".count($rowArray);
+////			echo "transaction_id: ";
+
 			//TO-DO: -update: this
 			if ($rowArray == null) {
 				$itemId=$itemId+1;
@@ -6578,6 +6746,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 //				echo $value['transaction_id'].";";
 				$iTotalQuantitySold = $iTotalQuantitySold + $value['fee_quantity'];
 			}
+			
 			
 			//TO-DO: -add: add item counts from transaction2020; auto-read input file?
 				//G:\Usbong MOSC\Everyone\Information Desk\USBONG\KMS\usbongKMSItemListTransaction2020OK.txt
