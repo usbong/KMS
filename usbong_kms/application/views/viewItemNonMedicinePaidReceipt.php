@@ -830,10 +830,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 								<div class="transactionDate">
 					<?php
+									//edited by Mike, 20250403
+/*									
 									//edited by Mike, 20200507
 									//echo $value['transaction_date'];
 									//echo $value['added_datetime_stamp'];
 									echo str_replace(" ","T",$value['added_datetime_stamp']);
+*/
+								$addedDatetimeStamp=$value['added_datetime_stamp'];
+
+echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$patientId.'/'.date("m-d-Y",strtotime($transactionDate)))."' id='viewAcknowledgmentFormId' target='_blank'><b>".str_replace(" ","T",$addedDatetimeStamp)."</b></a>";									
 					?>		
 								</div>								
 							</td>

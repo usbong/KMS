@@ -581,6 +581,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</table>
 	
 	<!-- Form -->
+	<form method="post" action="<?php echo site_url('browse/confirmItemPaidReceipt/'.$medicalDoctorId.'/1')?>">	
 		<div>
 			<table width="100%">
 			<?php
