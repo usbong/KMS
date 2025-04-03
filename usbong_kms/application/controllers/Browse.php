@@ -3385,7 +3385,7 @@ class Browse extends CI_Controller { //MY_Controller {
 			//don't add the patient
 			//$this->session->unset_userdata('hasAddedPatientInCartList');
 			
-			echo "HALLO";
+			//echo "HALLO";
 		}
 		else {
 			$this->session->set_userdata('hasAddedPatientInCartList', True);
@@ -4954,6 +4954,7 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 		//edited by Mike, 20200608
 		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
 		$data['outputTransactionServicePurchase'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
+		
 		if (isset($data['outputTransactionServicePurchase'])) {
 			$data['outputTransaction'] = $data['outputTransactionServicePurchase'];
 		}
