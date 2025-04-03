@@ -1418,9 +1418,17 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->where('transaction_id',$iTransactionId);
 		$query = $this->db->get('transaction');
 		$row = $query->row();
+		
+		//edited by Mike, 20250403
+		//$transactionQuantity = $row->transaction_quantity;
 
-		$transactionQuantity = $row->transaction_quantity;
-
+		if (isset($row->transaction_quantity)) {
+			$transactionQuantity = $row->transaction_quantity;
+		}
+		else {
+			return;
+		}
+		
 		if ($transactionQuantity==0) {
 			$this->db->where('transaction_id',$iTransactionId);
 			$this->db->delete('transaction');
@@ -2597,8 +2605,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			//redirect('account/login');
 			//window.open('".base_url()."/server/viewWebAddressList.php');		
 			
-			//edited by Mike, 20250317
-			//redirect('report/viewWebAddressList');			
+			//edited by Mike, 20250403; from 20250317			
+			//redirect('report/viewWebAddressList');
+			if (isset($_SESSION["hasAddedPatientInCartList"])) {
+				redirect('report/viewWebAddressList');
+			}
 
 			$this->setClientIpAndMachineAddresses();
 			
@@ -5864,9 +5875,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$this->session->set_userdata('client_ip_address', $ipAddress);
 			
 			$this->session->set_userdata('client_machine_address', $machineAddress);
-			
+
+/*			//removed by Mike, 20250403			
 			$ipAddress = $this->session->userdata("client_ip_address");
 			$machineAddress = $this->session->userdata("client_machine_address");
+*/			
 
 /*			
 			$_SESSION["client_ip_address"] = $ipAddress;
@@ -5913,6 +5926,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//edited by Mike, 20201013
 		//TO-DO: -reverify: this
 //		if (!isset($ipAddress)) {
+	
 		if (!isset($ipAddress) and !isset($machineAddress)) {
 //			session_destroy;			
 			//redirect(base_url()."/server/viewWebAddressList.php");
