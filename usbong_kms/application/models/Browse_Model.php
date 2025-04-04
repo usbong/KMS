@@ -1405,7 +1405,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	}	
 
 	//note: if we delete the patient health service transaction, all the medicine and non-medicine items included in the cart after payment are also deleted
-	public function deleteTransactionServicePurchaseIndexCardPage($param) 
+	//edited by Mike, 20250404
+	//public function deleteTransactionServicePurchaseIndexCardPage($param) 
+	public function deleteTransactionServicePurchaseBasedOnIndexCardPage($param) 
 	{			
 /*		//edited by Mike, 20200616
         $this->db->where('transaction_id',$param['transactionId']);
@@ -1483,6 +1485,35 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
         $this->db->delete('transaction');		
 */		
 	}	
+	
+	//added by Mike, 20250404
+	public function updateTransactionServicePurchaseIndexCardPage($param) 
+	{			
+		$iTransactionId = $param['transactionId'];
+
+		//note identify the transactions to be updated;
+		//not only the combined transaction;
+		//$param['transactionDate'];
+		//$param['patientIdParam']
+		//$param['professionalFee'];
+
+		
+		//TODO: -update: this;
+
+		$data = array(
+					'fee' => $param['professionalFee'],
+					'x_ray_fee' => $param['xRayFee'],
+					'lab_fee' => $param['labFee'],
+				);
+
+		//$this->db->where('transaction_id', $iTransactionId);
+		$this->db->where('transaction_date', $param['transactionDate']);
+		$this->db->where('patient_id', $param['patientId']); //$param['patientIdParam']);
+		$this->db->where('item_id', 0);
+		
+        $this->db->update('transaction', $data);
+	}	
+	
 	
 	//added by Mike, 20200517; edited by Mike, 20200616
 	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
@@ -4923,6 +4954,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
 		//edited by Mike, 20230410; from 20230409
 		//$this->db->select('t1.patient_name, t1.patient_id, t1.last_visit_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
+		
 		$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t2.medical_doctor_id 'TranMDID', t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address");
 				
 		$this->db->from('patient as t1');
