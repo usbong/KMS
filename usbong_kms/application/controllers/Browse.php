@@ -2857,11 +2857,6 @@ class Browse extends CI_Controller { //MY_Controller {
 	$data['bFoldImageListValue'] = $bFoldImageListValue;
 	
 	if (isset($data['result'][0])) {
-			//echo "DITO!<br/>";
-			//return;
-			
-//			$data['result'][0]['medical_doctor_id']=0;
-//	}
 		
 		//added by Mike, 20210707
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($data['result'][0]['medical_doctor_id'], $patientId);
@@ -2884,11 +2879,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//removed by Mike, 20240305; from 20210320
 		//$data['bFoldImageListValue'] = $bFoldImageListValue;
 
-/*
-		echo "HALLO: ".$data['result'][0]["medical_doctor_id"]."<br/><br/>";
-		echo "transactionID: ".$data['result'][0]["transaction_id"]."<br/><br/>";
-		echo "TranMDID: ".$data['result'][0]["TranMDID"]."<br/><br/>";
-*/
+
+////		echo "HALLO: ".$data['result'][0]["medical_doctor_id"]."<br/><br/>";
+////		echo "transactionID: ".$data['result'][0]["transaction_id"]."<br/><br/>";
+////		echo "TranMDID: ".$data['result'][0]["TranMDID"]."<br/><br/>";
+
 		//edited by Mike, 20230413; from 20230410
 		if ($data['result'][0]["medical_doctor_id"]!=$data['result'][0]["TranMDID"]) {
 			$data['bIsSetMDIdNotTranMDId']=true;
@@ -2915,7 +2910,7 @@ class Browse extends CI_Controller { //MY_Controller {
 			//echo "HALLO".$data['result'][0]["TranMDID"];
 		}
 		
-		$this->load->view('viewPatientIndexCard', $data);
+		$this->load->view('viewPatientIndexCard', $data);	
 	}
 	
 	//added by Mike, 20210630
@@ -4174,7 +4169,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['selectMedicalDoctorIdParam'] = $data['medicalDoctorId'];
 		$this->Browse_Model->updateIndexCardFormLite($data);
 
-		$this->Browse_Model->deleteTransactionServicePurchaseIndexCardPage($data);
+		$this->Browse_Model->deleteTransactionServicePurchaseBasedOnIndexCardPage($data);
 
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
@@ -4273,40 +4268,69 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['selectMedicalDoctorIdParam'] = $data['medicalDoctorId'];
 		$this->Browse_Model->updateIndexCardFormLite($data);
 
-		$this->Browse_Model->deleteTransactionServicePurchaseIndexCardPage($data);
+		$this->Browse_Model->deleteTransactionServicePurchaseBasedOnIndexCardPage($data);
 
+		//added by Mike, 20250404
+		$this->viewPatientIndexCard($patientId, 0); //$bFoldImageListValue)	
+		
+/* //removed by Mike, 20250404
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
-		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
-
-/* //removed by Mike, 20230309		
-		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
-
-		//added by Mike, 20200601
-		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
-*/
+		
+		//edited by Mike, 20250404
+		//$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
 
 		//added by Mike, 202005[19]
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
 
-/*		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
-		//added by Mike, 20200406; edited by Mike, 20200407
-		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId,$itemId);
-		//added by Mike, 20200501
-		$data['resultItem'] = $this->getResultItemQuantity($data);
-		if ($itemTypeId==1) {
-			$this->load->view('viewItemMedicine', $data);
-		}
-		else {
-			$this->load->view('viewItemNonMedicine', $data);
-		}
-*/
-		$this->load->view('viewPatient', $data);		
+		//edited by Mike, 20250404
+		//$this->load->view('viewPatient', $data);	
+		$this->load->view('viewPatientIndexCard', $data);	
+		
 		//added by Mike, 20201224
 		//note: when Unit member deletes patient transactions from Cart List
 		//AND deletes an item, e.g. non-medicine, computer automatically goes
 		//to the patient page with patient name, "CANCELLED",
 		//so that Unit member can view remaining items in Cart List
 		//additional note: multiple items may already exist in the Cart List
+*/		
+	}
+	
+	//added by Mike, 20250404
+	public function updateTransactionServicePurchaseIndexCardPage($medicalDoctorId, $patientId, $transactionId, $professionalFee, $xRayFee, $labFee)
+	{
+		$data['medicalDoctorId'] = $medicalDoctorId;
+		$data['patientId'] = $patientId;
+		$data['transactionId'] = $transactionId;
+
+		$data['professionalFee'] = $professionalFee;
+		$data['xRayFee'] = $xRayFee;
+		$data['labFee'] = $labFee;
+
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+		
+		$data['transactionDate'] = date('m/d/Y');
+
+		$this->load->model('Browse_Model');
+		
+		//changing SC is not allowed; user should delete the transaction instead;
+
+		//note save button only for transaction for the day;
+		//other fiends, e.g. medical doctor, not change;
+		//use "update" button;
+/*
+		$data['transactionDate'] = $data['transactionDate']."DEL";
+		$data['patientIdParam'] = $data['patientId'];
+		$data['selectMedicalDoctorIdParam'] = $data['medicalDoctorId'];
+		$this->Browse_Model->updateIndexCardFormLite($data);
+*/
+		$data['transactionDate'] = str_replace("DEL","",$data['transactionDate']);
+
+		$this->Browse_Model->updateTransactionServicePurchaseIndexCardPage($data);
+
+		//added by Mike, 20250404
+		$this->viewPatientIndexCard($patientId, 0); //$bFoldImageListValue)	
 	}
 	
 	//added by Mike, 20250313
