@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250402; from 20250401
+  @date updated: 20250404; from 20250402
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -578,7 +578,27 @@
 			//edited by Mike, 20200411
 			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
 		}	
+		
+		//added by Mike, 20250404
+		function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId) {				
+			var professionalFee = document.getElementById("professionalFeeParam").value;			
+			var xRayFee = document.getElementById("xRayFeeParam").value;			
+			var labFee = document.getElementById("labFeeParam").value;		
 
+			//added by Mike, 20200523
+//			alert(medicalDoctorId);
+/*
+			alert("professionalFee: "+professionalFee);
+			alert("xRayFee: "+xRayFee);
+			alert("labFee: "+labFee);
+*/			
+
+			//window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
+			
+			//	public function updateTransactionServicePurchaseIndexCardPage($medicalDoctorId, $patientId, $transactionId, $professionalFee, $xRayFee, $labFee)
+				
+			window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"');?>";
+		}	
 	  </script>
   <body>
 <?php
@@ -1153,7 +1173,14 @@
 <!-- edited by Mike, 20210803
 							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="<?php echo $result[0]["age"];?>" min="1" max="999" required>
 -->
-							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="<?php echo $result[0]["age"];?>" min="1" max="999">
+							<input type="tel" id="inputAgeId" name="inputAgeNameParam" class="inputAgeTextBox no-spin" placeholder="hal.10" value="<?php 
+							if (isset($result[0]["age"])) {
+								echo $result[0]["age"];
+							}
+							else {
+								echo "";
+							}
+							?>" min="1" max="999">
 							
 <!--	//edited by Mike, 20210212
 							<select id='selectAgeUnitIdParam' name='selectAgeUnitNameParam'>
@@ -1403,6 +1430,23 @@
 //$sDateToday = Date('Y-m-d, l', strtotime($value['last_visit_date']));
   //edited by Mike, 20230408
 //  $sDateToday = Date('Y-m-d', strtotime($value['last_visit_date']));
+  
+    
+  //added by Mike, 20250404
+  if (!isset($value['last_visited_date'])) {
+	  $value['last_visited_date']="";
+  }
+  if (!isset($value['transaction_date'])) {
+	  $value['transaction_date']="";
+  }
+  if (!isset($value['transaction_id'])) {
+	  $value['transaction_id']="";
+  }
+
+  if (!isset($bFoldImageListValue)) {
+	  $bFoldImageListValue=0;
+  }
+  
   
     
   //added by Mike, 20230408
@@ -1785,7 +1829,7 @@
 									
 							//TODO: -update: this;
 						?>
-						<button class='saveButton' onclick='mysaveFunctionItemName("<?php echo $value['item_name'];?>")'>💾</button>
+						<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'];?>)">💾</button>
 						<?php
 							}
 						?>
