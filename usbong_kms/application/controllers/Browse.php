@@ -537,8 +537,233 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchSnack', $data);
 	}
 
-	//edited by Mike, 20200615
+	//added by Mike, 20250405
 	public function confirmNonMedicine()
+	{				
+		//edited by Mike, 20230131	
+		//TO-DO: -add: show only a smaller set if letter count is only 1
+
+//		$data['nameParam'] = $_POST['nameParam'];
+		if (!isset($_POST['nameParam'])) {
+			//added by Mike, 20200328
+			redirect('browse/searchNonMedicine');
+		}
+		else {
+			//added by Mike, 20250307
+			if (strlen($_POST['nameParam'])<=1) {
+				redirect('browse/searchNonMedicine');
+			}
+			
+			$data['nameParam'] = $_POST['nameParam'];
+		}
+
+		//added by Mike, 20200912
+		$data['nameParam'] = trim($data['nameParam']);
+		
+		//added by Mike, 20241113
+		//forward slash used in non-med item inventory
+		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+
+		//added by Mike, 20250328
+		$data['nameParam'] = str_replace(",","",$data['nameParam']);
+		//$data['nameParam'] = str_replace("/","",$data['nameParam']);
+		$data['nameParam'] = str_replace("\\","",$data['nameParam']);
+		$data['nameParam'] = str_replace("[","",$data['nameParam']);
+		$data['nameParam'] = str_replace("]","",$data['nameParam']);
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		//added by Mike, 20201010
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+
+		$this->load->model('Browse_Model');
+	
+		$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaName($data);
+
+//		echo "count: ".count($data['result']);
+
+		//added by Mike, 20200417; edited by Mike, 20200615
+		//$itemTypeId = 1; //1 = Medicine
+		$itemTypeId = 2; //2 = Non-medicine
+		$iCount = 0;
+		$itemId = -1;
+
+		//edited by Mike, 20200527
+		$remainingItemNow = 0;
+//		$remainingPaidItem = 0; //added by Mike, 20200501
+	
+		//ECHO "count: ".COUNT($data['result']);
+		
+		$resultTemp = array();
+		$resultTemp = $data['result'];
+		
+		if ($data['result'] == True) {
+			foreach ($data['result'] as $value) {		
+				//echo $value['item_name']."<br/><br/>";
+
+/*				//removed by Mike, 20250405			
+				//added by Mike, 20250405
+				if ($value['is_lost_item']==1) {
+					//continue;
+				}
+*/			
+				//edited by Mike, 20200422
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					//echo ">>>NEW: ".$value['item_name']."<br/><br/>";
+					
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+					
+					//added by Mike, 20250405
+					$iTotalLostItemCount=0;
+					$iLostItemCountIndex = 0;
+					$iLostItemCountArray = array();					
+					
+					foreach ($resultTemp as $valueTemp) {	
+						if ($valueTemp['item_id']==$itemId) {
+							//echo ">>>quantity_in_stock: ".$value['quantity_in_stock']."<br/>";
+							if ($valueTemp['is_lost_item']==1) {
+								$iTotalLostItemCount += $valueTemp['quantity_in_stock'];
+								//echo "iTotalLostItemCount: ".$iTotalLostItemCount."<br/>";
+								array_push($iLostItemCountArray,$iLostItemCountIndex);
+							}				
+							$iLostItemCountIndex++;			
+						}
+					}
+					foreach ($iLostItemCountArray as $iLostItemCountIndex) {
+						array_splice($resultTemp,($iLostItemCountIndex),1);
+					}				
+				}
+				
+				//echo "itemId: " . $itemId;
+
+				//added by Mike, 20200417
+				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
+				//edited by Mike, 20200422
+//				if ($iCount==0) {
+				if (!$bIsSameItemId) {	
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
+					
+					//added by Mike, 20250405
+					//first in a list of the same items;
+					//echo "remainingItemNow: ".$remainingItemNow."<br/><br/>";	
+					//echo "iTotalLostItemCount: ".$iTotalLostItemCount."<br/><br/>";
+					$remainingItemNow-=$iTotalLostItemCount*2; //including itself
+					//echo $remainingItemNow."<br/><br/>";	
+					
+					if ($remainingItemNow < 0) {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+					}
+					else {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
+					}
+				}
+				else {
+					if ($remainingItemNow < 0) { //already negative
+						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
+							$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+							
+							$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
+						}
+						else {
+							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;					
+							//TO-DO: -reverify: again for cases with multiple additional stock items
+							//added by Mike, 20200522
+							$remainingItemNow = 0;
+						}
+					}
+					else {
+						$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+					}
+				}
+				
+				$iCount = $iCount + 1;
+			}
+		}
+
+		//TO-DO: add: in non-medicine items
+		//added by Mike, 20200522
+		$itemId = -1;
+
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+
+		//TO-DO: -reverify: this
+		//added by Mike, 20200821
+		$iSameItemCount = 0;
+		$bHasNoneZeroQuantity = false;
+
+		if ($data['result'] == True) {
+			foreach ($data['result'] as $value) {				
+			
+				//echo $value['item_name']."<br/>";
+			
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+				
+				if ($bIsSameItemId) {
+					array_push($outputArray, $value);
+				}
+				//added by Mike, 20200522; edited by Mike, 20200821
+				else {
+					array_push($outputArray, $value);						
+					//delete the items with zero in-stock value if there exists another set of such item in the inventory
+					foreach ($outputArray as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							//added by Mike, 20250405
+							if (!isset($outputValue['resultQuantityInStockNow'])) {
+								$outputValue['resultQuantityInStockNow'] = 0;
+							}
+							
+							if ($outputValue['resultQuantityInStockNow'] == 0) {
+								$outputValue = $value;
+							}
+						}						
+					}
+					unset($outputValue);
+				}
+			}
+		}
+				
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['result'] = [];
+		$data['result'] = array();
+		
+		$data['result'] = $outputArray;
+/*		
+		//added by Mike, 20250405
+		foreach ($outputArray as &$outputValue) {
+			//identify lost items;
+			echo $outputValue['item_name']."<br/>";
+			echo "is_lost_item: ".$outputValue['is_lost_item']."<br/>";
+			echo "resultQuantityInStockNow: ".$outputValue['resultQuantityInStockNow']."<br/>";
+			echo "------<br/>";
+		}
+		
+		//deduct items that have been lost;
+*/		
+		
+		$this->load->view('searchNonMedicine', $data);
+	}
+
+	//edited by Mike, 20250405; from 20200615
+	public function confirmNonMedicineOK()
 	{				
 		//edited by Mike, 20230131	
 		//TO-DO: -add: show only a smaller set if letter count is only 1
@@ -3726,14 +3951,18 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$this->load->view('searchNonMedicine', $data);	
 	}		
 	
-	//added by Mike, 20250307
-	public function addNonMedItem()
+	//added by Mike, 20250405; from 20250307
+	//TODO: -update: to set the max possible based on availability if lost item
+	public function addNonMedItem($isLostItem)
 	{
-		//echo "HALLO";
+		echo "HALLO: isLostItem".$isLostItem."</br></br>";
 				
 		$data['itemNameParam'] = $_POST['itemNameParam'];
 		$data['priceParam'] = $_POST['priceParam'];
 		$data['quantityParam'] = $_POST['quantityParam'];
+		
+		//added by Mike, 20250405
+		$data['isLostItem'] = $isLostItem;
 
 		//added by Mike, 20250324
 		//$data['isReturnedItemCheckBoxParam'] = $_POST['isReturnedItemCheckBoxParam']; //can be blank
