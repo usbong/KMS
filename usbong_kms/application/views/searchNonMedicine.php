@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250327; from 20250313
+' @date updated: 20250405; from 20250327
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -78,12 +78,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						div.tableHeaderAddNewNonMedItem
 						{
+							font-size: 12pt;
 							font-weight: bold;
 							text-align: center;
 							background-color: #ff8000; <!--#93d151; lime green-->
 							border: 1pt solid #ff8000;
+							padding: 0.2em;
 						}	
-						
+
+						button.tableHeaderFlipSwitchIconButton
+						{
+							font-size: 18pt;
+							background-color: #ffffff;
+							border: 0px solid #333333;
+						}
+	
+						button.tableHeaderFlipSwitchIconButton:hover
+						{
+							font-size: 18pt;
+							background-color: #eeeeee;
+							border: 0px solid #333333;
+						}
+
+						button.tableHeaderFlipSwitchIconButton:active
+						{
+							font-size: 18pt;
+							background-color: #eeeeee;
+							border: 0px solid #333333;
+						}						
+		
 						input.browse-input
 						{
 							width: 100%;
@@ -115,6 +138,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
 						}	
+						
+						td.tableHeaderAddNewNonMedItemTd {
+							background-color: #ff8000;
+						}
 						
 						table.search-result
 						{
@@ -361,6 +388,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  // Alert the copied text
 		  alert("Copied: " + copyText.innerText);	
 		}
+		
+		function myFlipSwitchFunction() {
+		  var addNewNonMedItemDiv = document.getElementById("addNewNonMedItemDivId");
+
+		  var addNewNonMedItemTdHeader = document.getElementById("addNewNonMedItemTdHeaderId");
+
+		  var addNewNonMedItemTd = document.getElementById("addNewNonMedItemTdId");
+
+		  var addNewNonMedForm = document.getElementById("addNonMedItemFormId");
+		  
+		  var isReturnedItemTd = document.getElementById("isReturnedItemTdId");
+
+		  //alert("DITO");
+		  
+		  var sText = addNewNonMedItemDiv.innerHTML;
+		  
+		  var sFormActionUrl = addNewNonMedForm.action;
+		  
+		  //if equal
+		  if (sText.localeCompare("ADD NEW NON-MED")==0) {
+			addNewNonMedItemDiv.innerHTML="REPORT LOST ITEM";
+			addNewNonMedItemDiv.style.backgroundColor = "white";
+			addNewNonMedItemTdHeader.style.backgroundColor = "white";
+			addNewNonMedItemTdHeader.style.border = "1pt dotted #000000";
+			addNewNonMedItemTd.style.backgroundColor = "#eeeeee";
+			isReturnedItemTd.style.visibility = "hidden";
+			
+			//isLostItem
+			//addNewNonMedForm.action = "addNonMedItem/1"; 			
+			addNewNonMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"1";
+		  }
+		  else {
+			addNewNonMedItemDiv.innerHTML="ADD NEW NON-MED";
+			addNewNonMedItemDiv.style.backgroundColor = "#ff8000";
+			addNewNonMedItemTdHeader.style.backgroundColor = "#ff8000";
+			addNewNonMedItemTdHeader.style.border = "0pt dotted #000000";
+			addNewNonMedItemTd.style.backgroundColor = "#ffffff";
+			isReturnedItemTd.style.visibility = "visible";
+
+			//addNewNonMedForm.action = "addNonMedItem/0"; 			
+			addNewNonMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"0";
+		  }
+		}		
 	  </script>
   <body>
 	<table class="imageTable">
@@ -444,6 +514,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						else if ($value['quantity_in_stock']=="") {
 						}
 						else {
+							//added by Mike, 20250405
+							if (!isset($value['resultQuantityInStockNow'])) {
+								$value['resultQuantityInStockNow'] = 0;
+							}
+							
 							if ($value['resultQuantityInStockNow']==0) {
 								$iCount++;
 								continue;
@@ -564,6 +639,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<td class =column>		
 							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
+							<!-- paste clipboard icon 📋 -->
 						</td>
 						<td class =column>				
 								<div id=quantityInStockId<?php echo $iCount?>>
@@ -678,18 +754,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	<table class="addNonMedItemTable">
 	<tr>
+		<td id="addNewNonMedItemTdHeaderId" class="tableHeaderAddNewNonMedItemTd">
+			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem">ADD NEW NON-MED</div>
+		</td>
 		<td>
-			<div class="tableHeaderAddNewNonMedItem">
-				ADD NEW NON-MED
-			</div>
+			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>
+			</button>
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td id="addNewNonMedItemTdId">
 		<!-- Form -->
 		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
 		<!-- "browse/addPatientName" faster -->
-		<form method="post" action="<?php echo site_url('browse/addNonMedItem/')?>">
+		<form id="addNonMedItemFormId" method="post" action="<?php echo site_url('browse/addNonMedItem/0')?>">
 			<div>
 				<table width="100%">
 				  <tr>
@@ -770,7 +848,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  </td>
 				  </tr>
 				  <tr>
-					<td>
+					<td id="isReturnedItemTdId">
 					<b><span>Is returned item? </span><span class="asterisk">*</span></b>
 					<input type="checkbox" name="isReturnedItemCheckBoxParam">
 					</td>

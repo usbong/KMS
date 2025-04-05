@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250404; from 20250402
+  @date updated: 20250405; from 20250404
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -368,6 +368,8 @@
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 0px;
+							padding-right: 0.2em;
+							
 							font-size: 18px;
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
