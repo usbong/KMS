@@ -705,7 +705,11 @@ class Browse_Model extends CI_Model
 */
 		//edited by Mike, 20210110
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.quantity_in_stock, t2.expiration_date');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+
+		//edited by Mike, 20250405
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
+		
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date, t2.is_lost_item');
 
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -740,6 +744,9 @@ class Browse_Model extends CI_Model
 		//$this->db->where('t1.is_to_be_deleted', 0); //NOT for deletion
 		$this->db->where('t2.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE
 
+		//added by Mike, 20250405
+		//$this->db->where('t2.is_lost_item', 0);
+		
 		$this->db->like('t1.item_name', $param['nameParam']);
 		
 		//added by Mike, 20200607
@@ -4619,6 +4626,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$itemId = $rowArray[0]['item_id'];
 		}
 		else {
+			//added by Mike, 20250405
+			if ($param['isLostItem']==1) {
+				return null;
+			}
+			
 			$data = array(
 						'item_name' => $param['nameParam'],
 						'item_price' => $param['priceParam'],
@@ -4632,12 +4644,27 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			//return $this->db->insert_id();
 		}
 
-		$dataForInventory = array(
-					'item_id' => $itemId,
-					//'quantity_in_stock' => 10000 //-1
-					'quantity_in_stock' => $param['quantityParam'],
-					'is_item_returned' => $param['isReturnedItemCheckBoxParam']
-				);
+		if ($param['isLostItem']==1) {
+			date_default_timezone_set('Asia/Hong_Kong');
+			$dateTimeStamp = date('Y/m/d H:i:s');
+
+			$dataForInventory = array(
+						'item_id' => $itemId,
+						//'quantity_in_stock' => 10000 //-1
+						'quantity_in_stock' => $param['quantityParam'],
+						'is_item_returned' => $param['isReturnedItemCheckBoxParam'],
+						'is_lost_item' => $param['isLostItem'],
+						'is_lost_item_added_datetime_stamp' => $dateTimeStamp
+					);
+		}
+		else {
+			$dataForInventory = array(
+						'item_id' => $itemId,
+						//'quantity_in_stock' => 10000 //-1
+						'quantity_in_stock' => $param['quantityParam'],
+						'is_item_returned' => $param['isReturnedItemCheckBoxParam']
+					);
+		}
 
 		$this->db->insert('inventory', $dataForInventory);		
 		
@@ -6249,6 +6276,7 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 */
 
 		if (isset($itemValue['quantity_in_stock'])) {
+			//edited by Mike, 20250405
 			$iQuantity = $itemValue['quantity_in_stock'];
 		}
 		//added by Mike, 20200414
@@ -6256,7 +6284,8 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 			//edited by Mike, 20200527
 			return -1;//-9999;//-1; //9999;
 		}
-				
+				//echo "HALLO!";
+
 		if ($iQuantity==0) {
 			return 0;
 		}
