@@ -1003,7 +1003,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		//edited by Mike, 20250331
 		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date, t2.is_to_be_deleted');
+		//edited by Mike, 20250407
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date, t2.is_to_be_deleted');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date, t2.is_to_be_deleted, t2.is_lost_item');
 
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -1022,8 +1024,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//added by Mike, 20250401
 		$this->db->where('t1.is_hidden', 0); //1 = hidden
 		$this->db->where('t2.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE		
-
-
+		
 		//added by Mike, 20200607
 //		$this->db->order_by('t1.item_name', 'ASC');
 		//$this->db->order_by('t2.added_datetime_stamp', 'ASC'); //we do this for cases with equal expiration dates
