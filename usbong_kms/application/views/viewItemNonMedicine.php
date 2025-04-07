@@ -804,7 +804,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				$value = $result[0];
 				if (isset($resultItem[0])) {
-					$value = $resultItem[0];
+					$value = $resultItem[0];					
 				}				
 
 		?>				

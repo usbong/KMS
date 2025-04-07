@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250405; from 20250327
+' @date updated: 20250407; from 20250405
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -537,9 +537,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //						echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
 						echo '<div>Showing <b>1</b> result found.</div>';
 					}
+					//edited by Mike, 20250407
 					else if ($updatedResultCount<=0) {
-						//edited by Mike, 20221020
-						//echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
+						//added by Mike, 20250407
+						if (isset($value['item_name'])) {					
+							echo "<b>".strtoupper($value['item_name'])."</b>";
+	?>						
+							<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText("<?php echo strtoupper($value['item_name']);?>")'>⿻</button>
+	<?php						
+							echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+							echo "<br/><br/>";
+						}
+
 						echo '<div>Showing <b>0</b> result found.</div>';
 					}
 					else {
@@ -609,7 +618,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					if ($value['resultQuantityInStockNow']==0) {
 //						continue;
 					}
-
+					
+										
 /*	//removed by Mike, 20221008
 					//added by Mike, 20221008
 					if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
@@ -656,9 +666,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "0/0";
 								}
 								else {
-//									echo $value['quantity_in_stock'];
-									//edited by Mike, 20221008
-									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+									if ($value['resultQuantityInStockNow']<0) {
+										echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+									}
+									else {
+	//									echo $value['quantity_in_stock'];
+										//edited by Mike, 20221008
+										echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+									}
 									
 /*	//removed by Mike, 20221008									
 									if ($value['resultQuantityInStockNow']==0) {
@@ -742,7 +757,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			else {					
 
 				echo '<div>';					
-				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our medicine names.';
+				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our non-medicine names.';
 				echo '<br><br>Recommendation:';
 				echo '<br>&#x25CF; Reverify that the spelling is correct.';				
 				echo '</div>';					
