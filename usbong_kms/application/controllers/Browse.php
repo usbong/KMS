@@ -629,9 +629,14 @@ class Browse extends CI_Controller { //MY_Controller {
 					foreach ($resultTemp as $valueTemp) {	
 						if ($valueTemp['item_id']==$itemId) {
 							//echo ">>>quantity_in_stock: ".$value['quantity_in_stock']."<br/>";
+							
+							//edited by Mike, 20250407
 							if ($valueTemp['is_lost_item']==1) {
+							//if (($valueTemp['is_lost_item']==1) && ($valueTemp['is_to_be_deleted']==0)){
 								$iTotalLostItemCount += $valueTemp['quantity_in_stock'];
+								
 								//echo "iTotalLostItemCount: ".$iTotalLostItemCount."<br/>";
+								
 								array_push($iLostItemCountArray,$iLostItemCountIndex);
 							}				
 							$iLostItemCountIndex++;			
@@ -655,25 +660,33 @@ class Browse extends CI_Controller { //MY_Controller {
 					//first in a list of the same items;
 					//echo "remainingItemNow: ".$remainingItemNow."<br/><br/>";	
 					//echo "iTotalLostItemCount: ".$iTotalLostItemCount."<br/><br/>";
+
 					$remainingItemNow-=$iTotalLostItemCount*2; //including itself
-					//echo $remainingItemNow."<br/><br/>";	
+				
+					//echo ">>>".$remainingItemNow."<br/><br/>";	
 					
 					if ($remainingItemNow < 0) {
-						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+						//echo "DITO: ".($remainingItemNow+$iTotalLostItemCount);
+						//edited by Mike, 20250407
+						//$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+						
+						//note each item would have a total missing quantity;
+						$data['result'][$iCount]['resultQuantityInStockNow'] = ($remainingItemNow+$iTotalLostItemCount);
 					}
 					else {
 						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
 					}
 				}
 				else {
-					if ($remainingItemNow < 0) { //already negative
+					if ($remainingItemNow < 0) { //already negative					
 						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
 							$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
 							
 							$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
 						}
 						else {
-							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;					
+							$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;	
+							
 							//TO-DO: -reverify: again for cases with multiple additional stock items
 							//added by Mike, 20200522
 							$remainingItemNow = 0;
@@ -701,6 +714,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200821
 		$iSameItemCount = 0;
 		$bHasNoneZeroQuantity = false;
+					
+		//edited by Mike, 20250407
+		$iSameItemIdCount=0;
+		$iSameItemIdLostCount=0;
 
 		if ($data['result'] == True) {
 			foreach ($data['result'] as $value) {				
@@ -710,29 +727,55 @@ class Browse extends CI_Controller { //MY_Controller {
 				//$itemId = $value['item_id'];
 				if ($itemId==$value['item_id']) {
 					$bIsSameItemId = true;
+					////$iSameItemIdCount++;
 				}
 				else {
 					$itemId = $value['item_id'];
 					$bIsSameItemId = false;
+
+					//$iSameItemIdLostCount=0;
+					//$iSameItemIdCount=0;					
 				}
 				
+////				echo "iSameItemIdCount: ".$iSameItemIdCount."<br/>";
+				
 				if ($bIsSameItemId) {
-					array_push($outputArray, $value);
+						array_push($outputArray, $value);
 				}
 				//added by Mike, 20200522; edited by Mike, 20200821
 				else {
+					//edited by Mike, 20250407
+					//$iSameItemIdCount=0;
+
+					//echo ">>>>item name: ".$value['item_name']."<br/><br/>";
+					
 					array_push($outputArray, $value);						
 					//delete the items with zero in-stock value if there exists another set of such item in the inventory
+					
 					foreach ($outputArray as &$outputValue) {
+						
+						//$iSameItemIdLostCount=0;
+						//$iSameItemIdCount=0;	
+
+////echo "outputValue['item_id']: ".$outputValue['item_id']."<br/>";						
+					
 						if ($outputValue['item_id'] == $value['item_id']) {
+							//edited by Mike, 20250407
+							////echo ">>>>>iSameItemIdCount: ".$iSameItemIdCount."<br/>";
+							
 							//added by Mike, 20250405
 							if (!isset($outputValue['resultQuantityInStockNow'])) {
 								$outputValue['resultQuantityInStockNow'] = 0;
 							}
 							
-							if ($outputValue['resultQuantityInStockNow'] == 0) {
+							if ($outputValue['resultQuantityInStockNow'] < 0) {
+								//no need to do anything
+							}
+							else if ($outputValue['resultQuantityInStockNow'] == 0) {
 								$outputValue = $value;
 							}
+							
+							$iSameItemIdCount++;
 						}						
 					}
 					unset($outputValue);
@@ -746,18 +789,49 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['result'] = array();
 		
 		$data['result'] = $outputArray;
-/*		
-		//added by Mike, 20250405
-		foreach ($outputArray as &$outputValue) {
-			//identify lost items;
-			echo $outputValue['item_name']."<br/>";
-			echo "is_lost_item: ".$outputValue['is_lost_item']."<br/>";
-			echo "resultQuantityInStockNow: ".$outputValue['resultQuantityInStockNow']."<br/>";
-			echo "------<br/>";
-		}
 		
-		//deduct items that have been lost;
-*/		
+		//added by Mike, 20250407
+		$bIsSameItemIdTemp=false;
+		$outputArrayTemp = array();
+		$outputArrayTemp = $outputArray;
+		
+		rsort($outputArrayTemp); //reverse sort
+		$bIsFirstInstanceOfItem=true;
+		$itemIdTemp=-1;
+		$bIsSameItemIdTemp=false;
+		
+		foreach ($outputArrayTemp as &$outputTempValue) {
+/*			
+			echo $outputTempValue['item_id']."<br/>";
+			echo $outputTempValue['quantity_in_stock']."<br/>";
+			echo $outputTempValue['resultQuantityInStockNow']."<br/>";
+*/			
+			if ($itemIdTemp==$outputTempValue['item_id']) {
+				//echo "SAME!!!".$outputTempValue['resultQuantityInStockNow']."<br/>";
+
+				if ($outputTempValue['resultQuantityInStockNow'] < 0) {
+					$outputTempValue['resultQuantityInStockNow']=0;
+					//echo "DITO!!!";
+				}
+				else {
+					//array_push($outputArrayTemp, $outputTempValue);		
+				}
+
+				$bIsSameItemIdTemp = true;
+			}
+			else {
+				//echo "NEW!!!";
+				$itemIdTemp=$outputTempValue['item_id'];
+				$bIsSameItemIdTemp=false;
+				//array_push($outputArrayTemp, $outputTempValue);		
+			}
+			//array_push($outputArrayTemp, $outputTempValue);		
+		}
+		unset($outputTempValue);
+
+		sort($outputArrayTemp);
+		$data['result']=$outputArrayTemp;
+		//rsort($data['result']);
 		
 		$this->load->view('searchNonMedicine', $data);
 	}
@@ -2421,6 +2495,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('viewItemMedicine', $data);
 	}
 
+	//added by Mike, 20250407
+	//TODO: -reverify: output in viewItemNonMedicine,
+	//especially when there's a lost item;
+	
 	//added by Mike, 20200603; edited by Mike, 20200617
 	//TO-DO: -update: this by eliminating excess instructions
 	public function getResultItemQuantity($data) {				
@@ -2651,6 +2729,343 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 
 		return $data['resultItem'];
+	}
+	
+	//added by Mike, 20200603; edited by Mike, 20200617
+	//TO-DO: -update: this by eliminating excess instructions
+	public function getResultItemQuantityBuggyV20250407($data) {				
+		//added by Mike, 20200417
+		//edited by Mike, 20200615
+//		$itemTypeId = 1; //1 = Medicine
+		$itemTypeId = $data['itemTypeId']; //1 = Medicine; 2= Non-medicine
+		$iCount = 0;
+		$itemId = -1;
+		
+
+		//edited by Mike, 20200527
+		$remainingItemNow = 0;
+//		$remainingPaidItem = 0; //added by Mike, 20200501
+		
+		$resultTemp = array();
+		$resultTemp = $data['resultItem'];
+					
+		if ($data['resultItem'] == True) {
+			foreach ($data['resultItem'] as $value) {				
+				//edited by Mike, 20200422
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+					
+					//added by Mike, 20250407
+					//note confirmNonMedicine();
+					$iTotalLostItemCount=0;
+					$iLostItemCountIndex = 0;
+					$iLostItemCountArray = array();					
+					
+					foreach ($resultTemp as $valueTemp) {	
+						if ($valueTemp['item_id']==$itemId) {
+							//echo ">>>quantity_in_stock: ".$value['quantity_in_stock']."<br/>";
+							
+							//edited by Mike, 20250407
+							if ($valueTemp['is_lost_item']==1) {
+							//if (($valueTemp['is_lost_item']==1) && ($valueTemp['is_to_be_deleted']==0)){
+								$iTotalLostItemCount += $valueTemp['quantity_in_stock'];
+								
+								//echo "iTotalLostItemCount: ".$iTotalLostItemCount."<br/>";
+								
+								array_push($iLostItemCountArray,$iLostItemCountIndex);
+							}				
+							$iLostItemCountIndex++;			
+						}
+					}
+					foreach ($iLostItemCountArray as $iLostItemCountIndex) {
+						array_splice($resultTemp,($iLostItemCountIndex),1);
+					}						
+				}
+				
+/*				//removed by Mike, 20250401; debug				
+				//added by Mike, 20250331
+				if (isset($value['is_to_be_deleted']) and ($value['is_to_be_deleted']==1)) {
+					echo "HALLO<br/><br/>";
+					continue;
+				}
+*/
+					
+//				echo "itemId: " . $itemId;
+/*				
+				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";
+*/				
+				//added by Mike, 20200417
+				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
+				//edited by Mike, 20200422
+//				if ($iCount==0) {
+				if (!$bIsSameItemId) {	
+
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); //"0";				
+					
+					//edited by Mike, 20200527
+//					$remainingPaidItem = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					//edited by Mike, 20210110
+//					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId); 
+					
+					$remainingItemNow = $this->Browse_Model->getItemAvailableQuantityInStock($value); 
+							
+					$remainingItemNow-=$iTotalLostItemCount*2; //including itself
+					
+//					echo $remainingItemNow;	
+					
+					if ($remainingItemNow < 0) {
+						
+						//$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
+						
+						//note each item would have a total missing quantity;
+						$data['result'][$iCount]['resultQuantityInStockNow'] = ($remainingItemNow+$iTotalLostItemCount);
+						
+//						$remainingPaidItem = $remainingPaidItem - $data['result'][$iCount]['resultQuantityInStockNow'];
+					}
+					else {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
+					}
+					
+//					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+				}
+				else {
+					//edited by Mike, 20200501
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = $data['result'][$iCount]['quantity_in_stock'] ;					
+
+					if ($remainingItemNow < 0) { //already negative
+						if ($data['resultItem'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
+							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = 0;
+							
+							$remainingItemNow = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingItemNow;
+						}
+						else {
+							$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] + $remainingItemNow;					
+
+							//TO-DO: -reverify: again for cases with multiple additional stock items
+							//added by Mike, 20200522
+							$remainingItemNow = 0;
+						}
+					}
+					else {
+						$data['resultItem'][$iCount]['resultQuantityInStockNow'] = $data['resultItem'][$iCount]['quantity_in_stock'] ;					
+					}
+				}
+				
+//				$data['result'][$iCount]['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId, $value['expiration_date']); //"0";
+
+				//['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
+				
+				$iCount = $iCount + 1;
+			}
+		}
+
+		//TO-DO: add: in non-medicine items
+		//added by Mike, 20200522
+		$itemId = -1;
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$outputArray = [];
+		$outputArray = array();
+
+		$iSameItemCount = 0;
+		$bHasNoneZeroQuantity = false;
+					
+		//edited by Mike, 20250407
+		$iSameItemIdCount=0;
+		$iSameItemIdLostCount=0;
+		
+		if ($data['resultItem'] == True) {
+			foreach ($data['resultItem'] as $value) {				
+			
+//				echo $value['item_name'];
+			
+				//$itemId = $value['item_id'];
+				if ($itemId==$value['item_id']) {
+					$bIsSameItemId = true;
+				}
+				else {
+					$itemId = $value['item_id'];
+					$bIsSameItemId = false;
+				}
+				
+				if ($bIsSameItemId) {
+					//edited by Mike, 20200527
+					//note: include in results medicine items that are zero in quantity in stock
+					//TO-DO: -re-verify: this
+//					if ($value['resultQuantityInStockNow'] == 0) {
+/*					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
+//					if ($value['quantity_in_stock'] == 0) {
+	
+					echo $value['item_name'];
+					}
+					
+					else {
+						array_push($outputArray, $value);						
+					}
+*/						
+					//TO-DO: -reverify: this
+					//edited by Mike, 20200530
+					array_push($outputArray, $value);						
+/*
+					//added by Mike, 20200607
+					foreach ($outputArray as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+//							if ($outputValue['resultQuantityInStockNow'] == 0) {
+							if (($outputValue['resultQuantityInStockNow'] == 0) and ($value['resultQuantityInStockNow'] != 0)){
+								$outputValue = $value;
+								
+								echo "value: ".$value['resultQuantityInStockNow'];
+							}
+						}						
+					}
+					unset($outputValue);
+*/					
+					//TO-DO: -add: auto-verify if there exists another set of the item in the inventory
+					
+/*
+					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
+//					if ($value['quantity_in_stock'] == 0) {
+					}
+					else {						
+						array_push($outputArray, $value);						
+					}
+*/
+				}
+				//added by Mike, 20200522
+				else {
+					//edited by Mike, 20200530
+					
+/*
+					//edited by Mike, 20200525
+//					if ($value['resultQuantityInStockNow'] == 0) {
+					if (($value['resultQuantityInStockNow'] == 0) && (strpos($value['item_name'],"*")===false)) {
+//					if ($value['quantity_in_stock'] == 0) {
+					}
+					else {						
+						array_push($outputArray, $value);						
+					}
+*/
+
+					array_push($outputArray, $value);						
+
+					//delete the items with zero in-stock value if there exists another set of such item in the inventory
+					foreach ($outputArray as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							if (!isset($outputValue['resultQuantityInStockNow'])) {
+								$outputValue['resultQuantityInStockNow'] = 0;
+							}
+							
+							if ($outputValue['resultQuantityInStockNow'] < 0) {
+								//no need to do anything
+							}
+							else if ($outputValue['resultQuantityInStockNow'] == 0) {
+								$outputValue = $value;
+							}
+							
+							$iSameItemIdCount++;
+						}						
+					}
+					unset($outputValue);
+
+				}
+/*
+				array_push($outputArray, $value);						
+
+				//delete the items with zero in-stock value if there exists another set of such item in the inventory
+				foreach ($outputArray as &$outputValue) {
+					if ($outputValue['item_id'] == $value['item_id']) {
+						if ($outputValue['resultQuantityInStockNow'] == 0) {
+							$outputValue = $value;
+						}
+					}						
+				}
+				unset($outputValue);
+*/
+			}
+		}
+		
+		//edited by Mike, 20200723
+		//note: this is due to the following removed function is not available in PHP 5.3
+		//$data['resultItem'] = [];
+		$data['resultItem'] = array();
+
+/*		//edited by Mike, 20250407
+		foreach ($outputArray as $value) {
+			//edited by Mike, 20250331
+			//if ($value['resultQuantityInStockNow']==0) {		
+		if ((!isset($value['resultQuantityInStockNow'])) || ($value['resultQuantityInStockNow']==0)) {			
+			}
+			else {
+				array_push($data['resultItem'], $value);
+			}
+		}
+*/
+		$data['resultItem'] = $outputArray;
+		
+		//added by Mike, 20250407
+		$bIsSameItemIdTemp=false;
+		$outputArrayTemp = array();
+		$outputArrayTemp = $outputArray;
+		
+		rsort($outputArrayTemp); //reverse sort
+		$bIsFirstInstanceOfItem=true;
+		$itemIdTemp=-1;
+		$bIsSameItemIdTemp=false;
+		
+		foreach ($outputArrayTemp as &$outputTempValue) {
+/*			
+			echo $outputTempValue['item_id']."<br/>";
+			echo $outputTempValue['quantity_in_stock']."<br/>";
+			echo $outputTempValue['resultQuantityInStockNow']."<br/>";
+*/			
+			if ($itemIdTemp==$outputTempValue['item_id']) {
+				//echo "SAME!!!".$outputTempValue['resultQuantityInStockNow']."<br/>";
+
+				if (isset($outputTempValue['resultQuantityInStockNow'])) {
+					if ($outputTempValue['resultQuantityInStockNow'] < 0) {
+						$outputTempValue['resultQuantityInStockNow']=0;
+						//echo "DITO!!!";
+					}
+				}
+				else {
+					//array_push($outputArrayTemp, $outputTempValue);		
+				}
+				
+				array_push($outputArray, $value);						
+
+					//delete the items with zero in-stock value if there exists another set of such item in the inventory
+					foreach ($outputArray as &$outputValue) {
+						if ($outputValue['item_id'] == $value['item_id']) {
+							if ($outputValue['resultQuantityInStockNow'] == 0) {
+								$outputValue = $value;
+							}
+						}						
+					}
+					unset($outputValue);
+
+				$bIsSameItemIdTemp = true;
+			}
+			else {
+				//echo "NEW!!!";
+				$itemIdTemp=$outputTempValue['item_id'];
+				$bIsSameItemIdTemp=false;
+				//array_push($outputArrayTemp, $outputTempValue);		
+			}
+			//array_push($outputArrayTemp, $outputTempValue);		
+		}
+		unset($outputTempValue);
+
+		sort($outputArrayTemp);
+		$data['resultItem']=$outputArrayTemp;
+		
+		return $data['resultItem'];
+		
 	}
 
 	//added by Mike, 20200501; edited by Mike, 20200527
@@ -3955,7 +4370,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	//TODO: -update: to set the max possible based on availability if lost item
 	public function addNonMedItem($isLostItem)
 	{
-		echo "HALLO: isLostItem".$isLostItem."</br></br>";
+		//echo "HALLO: isLostItem".$isLostItem."</br></br>";
 				
 		$data['itemNameParam'] = $_POST['itemNameParam'];
 		$data['priceParam'] = $_POST['priceParam'];
