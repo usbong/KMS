@@ -511,15 +511,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					foreach ($result as $value) {
 						if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
 						}
+/*						
 						else if ($value['quantity_in_stock']=="") {
 						}
+*/						
 						else {
+							//echo "HALLO!".$value['resultQuantityInStockNow']."<br/>";
+							
 							//added by Mike, 20250405
 							if (!isset($value['resultQuantityInStockNow'])) {
 								$value['resultQuantityInStockNow'] = 0;
 							}
 							
+							//edited by Mike, 20250408
 							if ($value['resultQuantityInStockNow']==0) {
+							//if ($value['resultQuantityInStockNow']<=0) {
 								$iCount++;
 								continue;
 							}
@@ -529,6 +535,80 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 					//edited by Mike, 20221013
 					//echo '<div>Showing <b>'.(count($result)-$iCount).'</b> results found.</div>';				
+
+					//added by Mike, 20250408					
+					//--------------------------	
+					
+					$bIsSameItemId=false;
+					$itemId=-1;
+					$itemCount=0;
+					
+					//sort($updateResult);
+					$cleanedUpdateResult = array();
+					
+					foreach ($updateResult as $valueTemp) {
+						$myNextElementTemp=next($updateResult);
+							
+						//echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+							
+						if ($myNextElementTemp) { //element exists
+							//if has the same id;
+							if ($myNextElementTemp['item_id']==$valueTemp['item_id']) {
+								if ($valueTemp['resultQuantityInStockNow']<0) {
+								  continue;
+								}
+							}
+						}	
+
+						array_push($cleanedUpdateResult, $valueTemp);
+
+						$itemCount++;
+					}		
+					
+					sort($cleanedUpdateResult);
+					
+					//TODO: -reverify: if this is still necessary
+/*				
+					$itemIdGroupArray = array();
+					$groupSortedCleanedUpdateResult = array();
+					
+					foreach ($cleanedUpdateResult as $valueTemp) {
+						$myNextElementTemp=next($cleanedUpdateResult);
+							
+						if ($myNextElementTemp) { //element exists
+							//if has the same id;
+							if ($myNextElementTemp['item_id']==$valueTemp['item_id']) {
+								array_push($itemIdGroupArray, $valueTemp);
+							}
+							else {
+								array_push($itemIdGroupArray, $valueTemp);
+
+								rsort($itemIdGroupArray);
+								
+////								foreach ($itemIdGroupArray as $valueTempTwo) {
+////									echo $valueTempTwo['item_name']."; ".$valueTempTwo['resultQuantityInStockNow']."<br/>";
+////								}
+								
+								$groupSortedCleanedUpdateResult= array_merge($groupSortedCleanedUpdateResult, $itemIdGroupArray);
+								$itemIdGroupArray=array();
+							}
+						}	
+						//current element is already the last
+						else {
+								array_push($itemIdGroupArray, $valueTemp);
+							
+								rsort($itemIdGroupArray);
+								$groupSortedCleanedUpdateResult= array_merge($groupSortedCleanedUpdateResult, $itemIdGroupArray);
+								$itemIdGroupArray=array();
+						}		
+					}	
+					
+					//noted: in viewItemNonMedicine, the displayed available quantity could be any of the items in the list for that item_id
+					
+					$updateResult = $groupSortedCleanedUpdateResult; //$cleanedUpdateResult;
+*/					
+					$updateResult = $cleanedUpdateResult; 
+					//--------------------------
 
 					$updatedResultCount = count($updateResult);
 
@@ -600,39 +680,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 					  </tr>
 <?php				
+				//removed by Mike, 20250408
 				$iCount = 1;
 				
+				//sort($updateResult);
+
 				//added by Mike, 20221013
 				if (!isset($updateResult)) {
 					$updateResult=[];
 				}
-				
+
 				//edited by Mike, 20221008
 				//foreach ($result as $value) {
 				foreach ($updateResult as $value) {
-					//added by Mike, 20210126
-					//TO-DO: -update: in Browse.php, confirmNonMedicine(...)
-					//sort in reverse $outputArray
-					//to eliminate excess resultQuantityInStockNow=0;
-					//albeit keep if the last remaining with 0 resultQuantityInStockNow value
-					if ($value['resultQuantityInStockNow']==0) {
-//						continue;
-					}
-					
-										
-/*	//removed by Mike, 20221008
-					//added by Mike, 20221008
-					if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
-					}
-					else if ($value['quantity_in_stock']=="") {
-					}
-					else {
-						if ($value['resultQuantityInStockNow']==0) {
-							continue;
-						}
-					}
-*/
-
 		?>				
 		
 					  <tr class="row">

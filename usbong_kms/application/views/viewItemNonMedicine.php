@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250403; 20250324
+' @date updated: 20250408; 20250403
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -806,6 +806,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				if (isset($resultItem[0])) {
 					$value = $resultItem[0];					
 				}				
+				
+				//added by Mike, 20250408
+				//TODO: -verify: summing up the total available resultQuantityInStockNow
 
 		?>				
 		
