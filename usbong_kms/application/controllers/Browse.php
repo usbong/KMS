@@ -829,7 +829,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 		unset($outputTempValue);
 
-		sort($outputArrayTemp);
+		//sort($outputArrayTemp);
 		$data['result']=$outputArrayTemp;
 		//rsort($data['result']);
 		
@@ -2727,6 +2727,14 @@ class Browse extends CI_Controller { //MY_Controller {
 				array_push($data['resultItem'], $value);
 			}
 		}
+		
+		//added by Mike, 20250408
+/*
+		//if non-med or snack item
+		if ($data['resultItem'][0]['item_type_id']>=2) {
+			//sort($data['resultItem']);
+		}
+*/
 
 		return $data['resultItem'];
 	}
@@ -3715,13 +3723,13 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//echo ">>>>>: ".$data['result'];//[0]['item_name'];
 
-
-/*		
+/*
 		foreach ($data['resultItem'] as $value) {
-			echo "dito".$value['resultQuantityInStockNow']."<br/>";
+			echo "dito".$value['resultQuantityInStockNow']."; ";
 			echo "dito".$value['quantity_in_stock']."<br/>";
 		}
 */
+
 		$this->load->view('viewItemNonMedicine', $data);
 	}
 
