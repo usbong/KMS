@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250324; from 20241028
+  @date updated: 20250410; from 20250324
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -576,6 +576,7 @@ echo "</a>";
 						}
 						
 						$dMedCertPrice=0;
+						$dDexaPrice=0; //added by Mike, 20250410
 						
 						if (strpos($result[0]['notes'],"MEDCERT")!==false) {
 							$sMedCertToken=substr($result[0]['notes'],strpos($result[0]['notes'],"MEDCERT"),strlen("MEDCERT")+1);
@@ -591,6 +592,22 @@ echo "</a>";
 							
 							//echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."<br/>(WITH MEDCERT: @".$dMedCertPrice.")</b>";
 						}
+
+						//added by Mike, 20250410
+						if (strpos($result[0]['notes'],"DEXA")!==false) {
+							$sDexaToken=substr($result[0]['notes'],strpos($result[0]['notes'],"DEXA"),strlen("DEXA")+1);
+							
+							$dDexaPrice=str_replace("DEXA","",$sDexaToken);
+							
+							if (strpos($dDexaPrice,";")!==false) {
+								$dDexaPrice=500;
+							}
+							else {
+								$dDexaPrice=$dDexaPrice*500;
+							}
+							
+							//echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."<br/>(WITH MEDCERT: @".$dMedCertPrice.")</b>";
+						}
 						
 						echo "</td>";	
 						echo "<td class='columnFee'>";
@@ -598,13 +615,17 @@ echo "</a>";
 						
 						//edited by Mike, 20250324; from 20210706
 						//echo number_format($value['fee'], 2, '.', ',');
-						echo number_format($value['fee']-$dMedCertPrice, 2, '.', ',');
+						//edited by Mike, 20250410
+						//echo number_format($value['fee']-$dMedCertPrice, 2, '.', ',');
+						echo number_format($value['fee']-$dMedCertPrice-$dDexaPrice, 2, '.', ',');
 						
 						echo "</td>";	
 						echo "<td class='columnFee'>";
 						//edited by Mike, 20250324
 						//echo "<b>".number_format($value['fee'], 2, '.', ',')."</b>";
-						echo "<b>".number_format($value['fee']-$dMedCertPrice, 2, '.', ',')."</b>";
+						//edited by Mike, 20250410
+						//echo "<b>".number_format($value['fee']-$dMedCertPrice, 2, '.', ',')."</b>";
+						echo "<b>".number_format($value['fee']-$dMedCertPrice-$dDexaPrice, 2, '.', ',')."</b>";
 					
 						echo "</td>";
 					echo "</tr>";		
@@ -637,7 +658,36 @@ echo "</a>";
 							echo "</td>";
 						echo "</tr>";							
 					}
-					
+
+					//added by Mike, 20250410
+					if ($dDexaPrice!=0) {
+						echo "<tr>";
+							echo "<td class='columnFee'>";
+							echo "1";
+							echo "</td>";			
+							echo "<td class='column'>";
+							echo "SET";
+							echo "</td>";			
+							echo "<td class='column'>";
+							
+							//echo "<b>WITH MEDCERT: @".$dMedCertPrice."</b>";
+							//echo "<b>WITH DEXA</b>";
+							echo "<b>WITH DEXA X".($dDexaPrice/500)." @500.00</b>";
+							
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+							
+							echo number_format($dDexaPrice, 2, '.', ',');
+							
+							echo "</td>";	
+							echo "<td class='columnFee'>";
+
+							//echo "<b>".number_format($value['fee'], 2, '.', ',')."</b>";
+							echo "<b>".number_format($dDexaPrice, 2, '.', ',')."</b>";
+							
+							echo "</td>";
+						echo "</tr>";							
+					}					
 					
 					//added by Mike, 20220317
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
