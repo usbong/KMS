@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250405; from 20250404
+  @date updated: 20250411; from 20250405
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -44,7 +44,7 @@
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
-							width: 900px; /*860px;*/ /* 802px;*//* 670px */
+							width: 960px; /*900px*/ /*860px;*/ /* 802px;*//* 670px */
                         }
 						
 						div.copyright
@@ -281,7 +281,7 @@
 						{
 							font-weight: bold;
 							text-align: right;
-							width: 26%;
+							width: 10%; /*26%*/
 						}						
 
 						td.imageColumn
