@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250411; from 20250405
+  @date updated: 20250414; from 20250411
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -88,6 +88,13 @@
 						{
 							font-size: 12pt;	
 							width: 92%;							
+						}
+
+						input.inputTextPatientName
+						{
+							font-size: 12pt;	
+							width: 92%;			
+							visibility: visible;
 						}
 
 						input.browse-input
@@ -386,25 +393,6 @@
 */						}
 						
 
-/*
-						input.inputText {
-							background-color: #fCfCfC;
-							color: #68502b;
-							padding: 0px;
-							font-size: 16px;
-							border: 1px solid #68502b;
-							border-radius: 3px;	    	    
-							text-align: left;
-							width: 98%;
-						}
-
-						input[type=text]:focus 
-						{
-							/*color:#0011f1;*/
-							border: 1.7px solid #0011f1; /*black;*/
-						}
-*/
-
 						div.buttonSubmitUpdate
 						{
 							font-size: 16px;
@@ -601,6 +589,21 @@
 				
 			window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"');?>";
 		}	
+		
+		//added by Mike, 20250414
+		function validateForm() {
+			var patientName = document.getElementById("patientNameId").value;	
+			var inputTextPatientName = document.getElementById("inputTextPatientNameId").value;	
+			
+			//alert(inputTextPatientName);
+						
+			if (inputTextPatientName.trim()==="") {
+				alert ("( ! ) An empty PATIENT NAME is not valid.");
+				return false;
+			}
+			
+			return true;
+		}
 	  </script>
   <body>
 <?php
@@ -724,7 +727,7 @@
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
 <!-- Form -->
-<form id="indexCardId" method="post"action="<?php echo site_url('browse/confirmUpdateIndexCardForm/'.$result[0]['patient_id'].'/0')?>">
+<form id="indexCardId" method="post"action="<?php echo site_url('browse/confirmUpdateIndexCardForm/'.$result[0]['patient_id'].'/0')?>" onsubmit="return validateForm()">
 	<?php 
 		//edited by Mike, 20200518
 		if ($result[0]["medical_doctor_name"]==""){
@@ -968,17 +971,27 @@
 						//deprecated
 //						else if (($iColumnCount-1>=0) and (utf8_encode($data[$iColumnCount-1])=="PATIENT NAME")) {						
 						else if (($iColumnCount-1>=0) and (mb_convert_encoding($data[$iColumnCount-1], "UTF-8", mb_detect_encoding($data[$iColumnCount-1])))=="PATIENT NAME") {
+							
+						//edited by Mike, 20250414
+
 						$cellValue="<a href='".site_url('browse/viewPatient/'.$value['patient_id'])."' id='viewPatientId'>
-							<div class='patientName'>".
+						<div class='patientName' id='patientNameId'>".
 								//edited by Mike, 20220317
 								//str_replace('ï¿½','Ã‘',$value['patient_name'])."
 								str_replace("�","Ñ",$value['patient_name'])."
 							</div>								
 						</a>";
-?>
+					
+?>						
 		<input type="hidden" name="patientIdNameParam" value="<?php echo $value['patient_id'];?>" form="indexCardId">
 <?php
 						}
+/*						
+						//added by Mike, 20250414
+						else if (($iColumnCount-2>=0) and (mb_convert_encoding($data[$iColumnCount-2], "UTF-8", mb_detect_encoding($data[$iColumnCount-2])))=="PATIENT NAME") {
+							echo "<button class='saveButton' onclick=''>💾</button>";
+						}
+*/						
 						//edited by Mike, 20240301; from 20210211
 						//deprecated
 						//$cellValue = utf8_encode($data[$iColumnCount]);
@@ -1377,6 +1390,16 @@
 							echo "<td class='tableHeaderColumn'>".$cellValue."</td>";
 						}
 */
+						else if (strpos($cellValue,"EDIT")!==false) {
+													
+							$updatedPatientName=str_replace("�","Ñ",$value['patient_name']);
+						
+							$myValue="<td class='columnField'><input class='inputTextPatientName' type='text' id='inputTextPatientNameId' name='inputTextPatientNameNameParam'
+							placeholder=''
+							form='indexCardId' value='".$updatedPatientName."'></input></td>";
+
+							echo $myValue;	
+						}
 						else {
 							//blank space HTML command: "&nbsp;"
 							echo "<td class='columnField'><b>".$cellValue."</b></td>";
@@ -1734,7 +1757,7 @@
 							echo str_replace("�","Ñ",$value['patient_name']);
 			?>		
 							</div>								
-						</a>							
+						</a>				
 					</td>							
 					<td class ="columnNumber">				
 						<?php
