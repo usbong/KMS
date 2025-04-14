@@ -7036,6 +7036,9 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 */			
 
 		$data = array(
+			//added by Mike, 20250414
+			'patient_name' => $param['inputTextPatientNameNameParam'],
+
 			'sex_id' => $param['selectSexNameParam'],
 			'age' => $param['inputAgeNameParam'],
 			'age_unit' => $param['selectAgeUnitNameParam'],
