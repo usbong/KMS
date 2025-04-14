@@ -420,7 +420,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		echo "AGE PARAM: ".$_POST['inputAgeNameParam'];
 		echo "AGE UNIT PARAM: ".$_POST['selectAgeUnitNameParam'];
 */
-		
+		//added by Mike, 20250414
+		$data['inputTextPatientNameNameParam'] = strtoupper(trim($_POST['inputTextPatientNameNameParam']));
+
 		$data['selectMedicalDoctorNameParam'] = strtoupper(trim($_POST['selectMedicalDoctorNameParam']));
 		$data['selectSexNameParam'] = strtoupper(trim($_POST['selectSexNameParam']));
 		$data['inputAgeNameParam'] = strtoupper(trim($_POST['inputAgeNameParam']));
