@@ -5019,6 +5019,33 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		return $rowArray;
 	}	
+	
+	//added by Mike, 20250415
+	//new; no transaction
+	public function getDetailsListViaIdIndexCardNoTransaction($nameId) 
+	{		
+		$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t1.medical_doctor_id, t2.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address");
+		
+		//$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t1.medical_doctor_id, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address");
+
+		
+		$this->db->from('patient as t1');
+		$this->db->join('medical_doctor as t2', 't1.medical_doctor_id = t2.medical_doctor_id', 'LEFT');
+
+		$this->db->where('t1.patient_id', $nameId);		
+
+		
+		$query = $this->db->get('patient');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {					
+			return False; //edited by Mike, 20190722
+		}
+		
+		return $rowArray;
+	}	
 
 	
 	//added by Mike, 20210212
@@ -7034,6 +7061,8 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 
 		$data['inputTextProvinceCityPhAddressIdNameParam'] = strtoupper(trim($_POST['inputTextProvinceCityPhAddressIdNameParam']));
 */			
+
+		//echo ">>>>".$param['selectMedicalDoctorNameParam'];
 
 		$data = array(
 			//added by Mike, 20250414
