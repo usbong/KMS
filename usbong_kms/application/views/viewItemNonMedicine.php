@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250408; 20250403
+' @date updated: 20250415; 20250409
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -75,6 +75,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							background-color: #00ff00; <!--#93d151; lime green-->
 							border: 1pt solid #00ff00;
+						}
+						
+						div.quantityInStockDiv
+						{
+							text-align: center;							
 						}
 
 						input.browse-input
@@ -844,7 +849,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								?>">						
 
-								<div id="quantityInStockId<?php echo $iCount?>">
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
 /*
@@ -912,8 +917,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 								else {
 //									echo $resultQuantityInStockNow;
+
+									//edited by Mike, 20250415; from 20250409
+									//show total available;
+									//echo $resultQuantityInStockNow." / ".$value['quantity_in_stock'];
+
+									$resultQuantityInStockNowTotal=0;
+									$quantityInStockTotal=0;
 									
-									echo $resultQuantityInStockNow." / ".$value['quantity_in_stock'];
+									foreach ($resultItem as $value) {
+										if ($value['is_lost_item']==1) {
+											//make its quantity negative
+											$value['resultQuantityInStockNow']*=(-1);
+										}
+
+										
+										$resultQuantityInStockNowTotal+=$value['resultQuantityInStockNow'];
+										//$quantityInStockTotal+=$value['quantity_in_stock'];
+									}
+		
+									//echo $resultQuantityInStockNowTotal." / ".$quantityInStockTotal;
+									echo $resultQuantityInStockNowTotal;
+
+/*									//TODO: -update: this									
+									$iTotalResultQuantityInStockNow=0;
+									$iTotalQuantityInStockNow=0;
+									
+									foreach ($resultItem as $resultItemValue) {
+										if (isset($resultItemValue['resultQuantityInStockNow'])) {
+
+									echo $iTotalResultQuantityInStockNow."/";
+									echo $iTotalQuantityInStockNow."<br/>";
+									echo "--<br/>";
+
+											$iTotalResultQuantityInStockNow+=$resultItemValue['resultQuantityInStockNow'];
+											$iTotalQuantityInStockNow+=$resultItemValue['quantity_in_stock'];
+										}
+									}
+									
+									echo $iTotalResultQuantityInStockNow." / ".$iTotalQuantityInStockNow;
+*/									
 								}								
 							?>
 								</div>

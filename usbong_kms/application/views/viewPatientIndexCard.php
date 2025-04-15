@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250414; from 20250411
+  @date updated: 20250415; from 20250414
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -95,6 +95,7 @@
 							font-size: 12pt;	
 							width: 92%;			
 							visibility: visible;
+							border: 2pt solid #0000dd;	
 						}
 
 						input.browse-input
@@ -202,8 +203,8 @@
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right;
-							width: 1%;
-							padding-left: 1.5em;
+							width: 8%;
+							padding-left: 2em;
 						}						
 
 						td.columnNumberQuantityTotal
@@ -1633,7 +1634,7 @@
 		$value = null;
 		if (isset($resultPaid[0])) {
 			$value = $resultPaid[0];
-		}		
+		}
 
 		if ((!isset($value)) or ($value['transaction_date']=="")) {				
 			echo '<div>';					

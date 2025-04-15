@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250407; from 20250405
+' @date updated: 20250415; from 20250409
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -411,7 +411,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			addNewNonMedItemDiv.innerHTML="REPORT LOST ITEM";
 			addNewNonMedItemDiv.style.backgroundColor = "white";
 			addNewNonMedItemTdHeader.style.backgroundColor = "white";
-			addNewNonMedItemTdHeader.style.border = "1pt dotted #000000";
+			addNewNonMedItemTdHeader.style.border = "2pt solid #000000";
 			addNewNonMedItemTd.style.backgroundColor = "#eeeeee";
 			isReturnedItemTd.style.visibility = "hidden";
 			
