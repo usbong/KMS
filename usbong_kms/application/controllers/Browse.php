@@ -3470,33 +3470,6 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->model('Browse_Model');
 		
-/*	//removed by Mike, 20210306
-		//edited by Mike, 20200407
-		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
-		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
-				
-		$medicalDoctorId = $data['result'][0]['medical_doctor_id'];
-		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
-		
-		//added by Mike, 20200601; removed by Mike, 20200608
-//		$data['resultPaid'] = $this->getElapsedTime($data['resultPaid']);
-
-//		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
-		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
-*/
-
-		//TO-DO: -update: this
-/*
-		$itemTypeId = 2;
-	
-		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
-		//added by Mike, 20200406
-		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsLpdist($itemTypeId, $itemId);
-		$data['cartListResult'] = $this->Browse_Model->getItemDetailsListViaNotesUnpaid();
-		//added by Mike, 20200406; edited by Mike, 20200407
-		$data['resultQuantityInStockNow'] = $this->Browse_Model->getItemAvailableQuantityInStock($itemTypeId, $itemId);
-*/	
-
 		//added by Mike, 20210209
 		$this->load->model('Browse_Model');
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
@@ -3506,8 +3479,14 @@ class Browse extends CI_Controller { //MY_Controller {
 	//added by Mike, 20240305
 	$data['bFoldImageListValue'] = $bFoldImageListValue;
 	
-	if (isset($data['result'][0])) {
+	
+	//edited by Mike, 20250415
+	if (!isset($data['result'][0])) {
+		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCardNoTransaction($patientId);
+		$data['result'][0]["TranMDID"]=-1; //no transaction
+	}
 		
+	//if (isset($data['result'][0])) {		
 		//added by Mike, 20210707
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($data['result'][0]['medical_doctor_id'], $patientId);
 
@@ -3538,13 +3517,17 @@ class Browse extends CI_Controller { //MY_Controller {
 		if ($data['result'][0]["medical_doctor_id"]!=$data['result'][0]["TranMDID"]) {
 			$data['bIsSetMDIdNotTranMDId']=true;
 			$data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
+			
+			//echo ">>>>>>".$data['result'][0]["medical_doctor_name"];
+			
 			$data['selectMedicalDoctorNameParam']=$data['tranMedicalDoctorName'];
 		}
-
-		$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
-
-	//added by Mike, 20240305
-	}
+		else {
+			$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
+		}
+		
+	//removed by Mike, 20250415; from 20240305
+	//}
 
 	
 		//echo "HALLO: ".$data['result'][0]["patient_id"]."<br/><br/>";
@@ -3724,14 +3707,13 @@ class Browse extends CI_Controller { //MY_Controller {
 
 
 		//echo ">>>>>: ".$data['result'];//[0]['item_name'];
-
 /*
 		foreach ($data['resultItem'] as $value) {
 			echo "dito".$value['resultQuantityInStockNow']."; ";
 			echo "dito".$value['quantity_in_stock']."<br/>";
+			//echo "dito".$value['is_lost_item']."<br/>";
 		}
 */
-
 		$this->load->view('viewItemNonMedicine', $data);
 	}
 
