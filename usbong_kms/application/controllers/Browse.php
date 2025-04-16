@@ -1432,6 +1432,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20200527
 		$remainingItemNow = 0;
 //		$remainingPaidItem = 0; //added by Mike, 20200501
+
+		$resultTemp = array();
+		$resultTemp = $data['result'];
 		
 		if ($data['result'] == True) {
 			foreach ($data['result'] as $value) {				
@@ -1443,9 +1446,34 @@ class Browse extends CI_Controller { //MY_Controller {
 				else {
 					$itemId = $value['item_id'];
 					$bIsSameItemId = false;
-				}
+	
+					//echo ">>>NEW: ".$value['item_name']."<br/><br/>";
 					
-//				echo "itemId: " . $itemId;
+					//added by Mike, 20250405
+					$iTotalLostItemCount=0;
+					$iLostItemCountIndex = 0;
+					$iLostItemCountArray = array();					
+
+					foreach ($resultTemp as $valueTemp) {	
+						if ($valueTemp['item_id']==$itemId) {
+							//echo ">>>quantity_in_stock: ".$value['quantity_in_stock']."<br/>";
+							
+							//edited by Mike, 20250407
+							if ($valueTemp['is_lost_item']==1) {
+							//if (($valueTemp['is_lost_item']==1) && ($valueTemp['is_to_be_deleted']==0)){
+								$iTotalLostItemCount += $valueTemp['quantity_in_stock'];
+								
+								//echo "iTotalLostItemCount: ".$iTotalLostItemCount."<br/>";
+								
+								array_push($iLostItemCountArray,$iLostItemCountIndex);
+							}				
+							$iLostItemCountIndex++;			
+						}
+					}
+					foreach ($iLostItemCountArray as $iLostItemCountIndex) {
+						array_splice($resultTemp,($iLostItemCountIndex),1);
+					}				
+				}
 
 				//added by Mike, 20200417
 				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
@@ -1457,21 +1485,38 @@ class Browse extends CI_Controller { //MY_Controller {
 
 //					echo "new>".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
 //echo "hallo".$data['result'][$iCount]['expiration_date'].":".$remainingItemNow."<br/>";
-										
+	
+					//echo ">>>>>>".$iTotalLostItemCount."<br/>";
+	
+					//added by Mike, 20250416
+					//$remainingItemNow-=$iTotalLostItemCount*2; //including itself					
+
+					//echo ">>>>>>REMAINING ITEM NOW".$remainingItemNow."<br/>";
 					
 					if ($remainingItemNow < 0) {
-						
+						//edited by Mike, 20250416
 						$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
+						
+						//note each item would have a total missing quantity;
+						//$data['result'][$iCount]['resultQuantityInStockNow'] = ($remainingItemNow+$iTotalLostItemCount);
 						
 //						$remainingPaidItem = $remainingPaidItem - $data['result'][$iCount]['resultQuantityInStockNow'];
 
 						//added by Mike, 20210218
 						//$remainingItemNow = $data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow;
-
 					}
 					else {
 						$data['result'][$iCount]['resultQuantityInStockNow'] = $remainingItemNow;
 					}
+					
+					//added by Mike, 20250416
+					//note each item would have a total missing quantity;
+					//$data['result'][$iCount]['resultQuantityInStockNow'] = ($remainingItemNow+$iTotalLostItemCount);
+
+					//$data['result'][$iCount]['resultQuantityInStockNow'] -=$iTotalLostItemCount*2;
+
+//$remainingItemNow-=$iTotalLostItemCount*2; //including itself		
+
 					
 //					$data['result'][$iCount]['resultQuantityInStockNow'] = 0;
 				}
@@ -1527,6 +1572,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20200811
 		$iSameItemCount = 0;
 		$bHasNoneZeroQuantity = false;
+/*		
+		//edited by Mike, 20250416
+		$iSameItemIdCount=0;
+		$iSameItemIdLostCount=0;
+*/
 
 		if ($data['result'] == true) {
 			foreach ($data['result'] as $value) {				
@@ -1675,8 +1725,42 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$data['result'] = [];
 		$data['result'] = array();
 		
-		$data['result'] = $outputArray;
-						
+		//$data['result'] = $outputArray;
+		$outputArrayTemp = array();
+		//$outputArrayTemp = $outputArray;
+		
+		//added by Mike, 20250416
+		//echo $iTotalLostItemCount."<br/>";
+		foreach ($outputArray as $value) {		
+			if ($value['is_lost_item']==1) {
+				continue;
+			}
+/*			
+			echo ">>>>quantity_in_stock: ".$value['quantity_in_stock']."<br/>";
+			echo ">>>>resultQuantityInStockNow: ".$value['resultQuantityInStockNow']."<br/>";
+*/			
+			$iDifference=$value['resultQuantityInStockNow']-$iTotalLostItemCount;
+			
+			if ($iTotalLostItemCount>0) {
+				if ($iDifference<0) {				
+					//$value['resultQuantityInStockNow']=0;
+					$value['resultQuantityInStockNow']=$iDifference;
+
+					$iTotalLostItemCount=$iDifference*(-1);
+				}
+				else {
+					$value['resultQuantityInStockNow']=$iDifference;
+					$iTotalLostItemCount=0;
+					//array_push($outputArrayTemp,$value);
+				}
+			}
+			array_push($outputArrayTemp,$value);
+			
+			//echo "DITO!!!".$value['resultQuantityInStockNow']."<br/>";
+		}
+
+		$data['result'] = $outputArrayTemp;
+		
 		return $data;
 	}
 
@@ -4286,8 +4370,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchPatientLabUnit', $data);	
 	}
 	
-	//added by Mike, 20250326
-	public function addMedItem()
+	//edited by Mike, 20250416; from 20250326
+	//public function addMedItem()
+	//TODO: -update: to set the max possible based on availability if lost item
+	public function addMedItem($isLostItem)
 	{
 		//echo "HALLO";
 				
@@ -4295,6 +4381,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['priceParam'] = $_POST['priceParam'];
 		$data['quantityParam'] = $_POST['quantityParam'];
 		$data['expirationDateParam'] = $_POST['expirationDateParam'];
+
+		//added by Mike, 20250416
+		$data['isLostItem'] = $isLostItem;
 
 		//added by Mike, 20250324
 		//$data['isReturnedItemCheckBoxParam'] = $_POST['isReturnedItemCheckBoxParam']; //can be blank
