@@ -1094,7 +1094,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//edited by Mike, 20250215
 		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t2.quantity_in_stock, t2.expiration_date');
+		//edited by Mike, 20250416
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t2.quantity_in_stock, t2.expiration_date');
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t2.quantity_in_stock, t2.expiration_date, t2.is_lost_item');
  
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
@@ -1587,10 +1589,14 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		$rowArray = $query->result_array();
 		
-		if ($rowArray == null) {			
+		if ($rowArray == null) {	
 			return False;
 		}
-				
+		
+		//added by Mike, 20250416
+		$patientId=$rowArray[0]['patient_id']; 
+		
+		//echo ">>>>>".$patientId;
 		
         $this->db->where('transaction_id',$param['transactionId']);
         $this->db->delete('transaction');
@@ -1602,6 +1608,28 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
         $this->db->where('transaction_date',$param['transactionDate']);
         $this->db->delete('transaction');		
 
+		//added by Mike, 20250416
+        $this->db->select('transaction_id');
+        $this->db->where('patient_id',$patientId);
+        $query = $this->db->get('transaction');
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {	
+			//added by Mike, 20250416
+			//if patient has no transaction;
+			//if patient has no medical doctor set yet;
+			//also, delete only if the patient was added on the same day that it is to be deleted
+			
+			$this->db->where('patient_id',$patientId);
+			$this->db->where('medical_doctor_id',null);
+			$this->db->where('added_datetime_stamp<=',date("Y-m-d h:i:s"));
+			$this->db->where('added_datetime_stamp>=',date("Y-m-d")." 00:00:00");
+
+			$this->db->delete('patient');
+		
+			return False;
+		}
 	}
 	
 	//added by Mike, 20250325
@@ -4577,6 +4605,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		//ECHO ">>>>>>".$param['expirationDateParam'];
 
+/*		//edited by Mike, 20250416
 		$dataForInventory = array(
 					'item_id' => $itemId,
 					//'quantity_in_stock' => 10000 //-1
@@ -4584,7 +4613,32 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 					'is_item_returned' => $param['isReturnedItemCheckBoxParam'],
 					'expiration_date' => $param['expirationDateParam']
 				);
+*/				
+		if ($param['isLostItem']==1) {
+			date_default_timezone_set('Asia/Hong_Kong');
+			$dateTimeStamp = date('Y/m/d H:i:s');
 
+			$dataForInventory = array(
+						'item_id' => $itemId,
+						//'quantity_in_stock' => 10000 //-1
+						'quantity_in_stock' => $param['quantityParam'],
+						'is_item_returned' => $param['isReturnedItemCheckBoxParam'],
+						'expiration_date' => $param['expirationDateParam'],
+
+						'is_lost_item' => $param['isLostItem'],
+						'is_lost_item_added_datetime_stamp' => $dateTimeStamp
+					);
+		}
+		else {
+			$dataForInventory = array(
+						'item_id' => $itemId,
+						//'quantity_in_stock' => 10000 //-1
+						'quantity_in_stock' => $param['quantityParam'],
+						'is_item_returned' => $param['isReturnedItemCheckBoxParam'],
+						'expiration_date' => $param['expirationDateParam']
+					);
+		}
+		
 		$this->db->insert('inventory', $dataForInventory);		
 		
 		return $itemId;
