@@ -78,6 +78,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #00ff00;
 						}
 
+						div.quantityInStockDiv
+						{
+							text-align: center;							
+						}
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -845,7 +850,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								?>">
 
-								<div id="quantityInStockId<?php echo $iCount?>">
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
 /*
@@ -869,7 +874,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}									
 								//edited by Mike, 20200615
 								else if ($value['quantity_in_stock']=="") {
-									echo "0 / 0";
+									//edited by Mike, 20250416
+									//echo "0 / 0";
+									echo "0";
 								}
 								//edited by Mike, 20200411; edited by Mike, 20200713
 /*
@@ -900,7 +907,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else {
 //									echo $resultQuantityInStockNow;
 									
-									echo $resultQuantityInStockNow." / ".$value['quantity_in_stock'];
+									//edited by Mike, 20250416
+									//show total available;
+									//echo $resultQuantityInStockNow." / ".$value['quantity_in_stock'];
+
+									$resultQuantityInStockNowTotal=0;
+									$quantityInStockTotal=0;
+									
+									foreach ($resultItem as $value) {
+										if ($value['is_lost_item']==1) {
+											//make its quantity negative
+											$value['resultQuantityInStockNow']*=(-1);
+										}
+
+										$resultQuantityInStockNowTotal+=$value['resultQuantityInStockNow'];
+										//$quantityInStockTotal+=$value['quantity_in_stock'];
+									}
+		
+									//echo $resultQuantityInStockNowTotal." / ".$quantityInStockTotal;
+									echo $resultQuantityInStockNowTotal;									
 								}								
 							?>
 								</div>

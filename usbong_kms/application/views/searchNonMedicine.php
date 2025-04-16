@@ -721,9 +721,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo 9999;
 								}
 								else if ($value['quantity_in_stock']=="") {
-									//edited by Mike, 20200615
+									//edited by Mike, 20250416; from 20200615
 									//echo 9999;
-									echo "0/0";
+									//echo "0/0";
+									echo "0";
 								}
 								else {
 									if ($value['resultQuantityInStockNow']<0) {

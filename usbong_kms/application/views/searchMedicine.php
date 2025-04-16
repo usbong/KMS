@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250407; from 20250405
+' @date updated: 20250416; from 20250407
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -119,7 +119,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
 						}	
-												
+						
+						td.tableHeaderAddNewMedItemTd {
+							background-color: #ff8000;
+						}
+						
 						span.alertSpan {
 							color: red;
 							font-weight: bold;
@@ -206,6 +210,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 20px;
 							padding: 0;
 						}		
+
+						button.tableHeaderFlipSwitchIconButton
+						{
+							font-size: 18pt;
+							background-color: #ffffff;
+							border: 0px solid #333333;
+						}
+	
+						button.tableHeaderFlipSwitchIconButton:hover
+						{
+							font-size: 18pt;
+							background-color: #eeeeee;
+							border: 0px solid #333333;
+						}
+
+						button.tableHeaderFlipSwitchIconButton:active
+						{
+							font-size: 18pt;
+							background-color: #eeeeee;
+							border: 0px solid #333333;
+						}	
     /**/
     </style>
     <title>
@@ -385,6 +410,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 		  // Alert the copied text
 		  alert("Copied: " + sCopyText); //copyText.innerText);	
+		}	
+
+		function myFlipSwitchFunction() {
+		  var addNewMedItemDiv = document.getElementById("addNewMedItemDivId");
+
+		  var addNewMedItemTdHeader = document.getElementById("addNewMedItemTdHeaderId");
+
+		  //var addNewMedItemTd = document.getElementById("addNewMedItemTdId");
+		  //noted table color not changed;
+		  //var addMedItemTable = document.getElementById("addMedItemTable");
+		  
+		  var addNewMedForm = document.getElementById("addMedItemFormId");
+		  
+		  var isReturnedItemTd = document.getElementById("isReturnedItemTdId");
+		  var isReturnedItemTdInputCheckbox = document.getElementById("isReturnedItemTdIdInputCheckbox");
+
+		  //alert("DITO");
+		  
+		  var sText = addNewMedItemDiv.innerHTML;
+		  
+		  var sFormActionUrl = addNewMedForm.action;
+		  
+		  //if equal
+		  if (sText.localeCompare("ADD NEW MED")==0) {
+			addNewMedItemDiv.innerHTML="REPORT LOST ITEM";
+			addNewMedItemDiv.style.backgroundColor = "white";
+			addNewMedItemTdHeader.style.backgroundColor = "white";
+			addNewMedItemTdHeader.style.border = "2pt solid #000000";
+			//addMedItemTable.style.backgroundColor = "#eeeeee";
+			isReturnedItemTd.style.visibility = "hidden";
+			isReturnedItemTdInputCheckbox.style.visibility = "hidden";
+			
+			//isLostItem
+			//addNewNonMedForm.action = "addNonMedItem/1"; 			
+			addNewMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"1";
+		  }
+		  else {
+			addNewMedItemDiv.innerHTML="ADD NEW MED";
+			addNewMedItemDiv.style.backgroundColor = "#ff8000";
+			addNewMedItemTdHeader.style.backgroundColor = "#ff8000";
+			addNewMedItemTdHeader.style.border = "0pt dotted #000000";
+			//addMedItemTable.style.backgroundColor = "#ffffff";
+			isReturnedItemTd.style.visibility = "visible";
+			isReturnedItemTdInputCheckbox.style.visibility = "visible";
+
+			//addNewNonMedForm.action = "addNonMedItem/0"; 			
+			addNewMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"0";
+		  }
 		}		
 	  </script>
   <body>
@@ -618,12 +691,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else if ($value['quantity_in_stock']=="") {
 									//edited by Mike, 20200615
 									//echo 9999;
-									echo "0 / 0"; //edited by Mike, 20200703
+									//echo "0 / 0"; //edited by Mike, 20250416; from 20200703
+									echo "0";
 								}
 								else {
 									//edited by Mike, 20200417
 //									echo $value['quantity_in_stock'];
-									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];										
+									//edited by Mike, 20250416
+									//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+
+									if ($value['resultQuantityInStockNow']<0) {
+										echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+									}
+									else {
+	//									echo $value['quantity_in_stock'];
+										//edited by Mike, 20221008
+										echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+									}
 								}
 							?>
 								</div>
@@ -731,14 +815,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<!-- Form -->
 	<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
 	<!-- "browse/addPatientName" faster -->
-	<form method="post" action="<?php echo site_url('browse/addMedItem/')?>">	
+	<form id="addMedItemFormId" method="post" action="<?php echo site_url('browse/addMedItem/0')?>">	
 	<table class="addMedItemTable">
 	<tr>
-		<td colspan="2">
-			<div class="tableHeaderAddNewMedItem">
-				ADD NEW MED
-			</div>
+		<td colspan="2" id="addNewMedItemTdHeaderId" class="tableHeaderAddNewMedItemTd">
+			<div id="addNewMedItemDivId" class="tableHeaderAddNewMedItem">ADD NEW MED</div>
 		</td>
+		<td>
+			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>
+			</button>
+		</td>		
 	</tr>
 	<tr>
 		<td>
@@ -809,10 +895,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  </td>
 	</tr>
 	<tr>
-	  <td>
+	  <td id="isReturnedItemTdId">
 		<b><span>Is returned item? </span><span class="asterisk">*</span></b>
 	  </td>
-	  <td>
+	  <td id="isReturnedItemTdIdInputCheckbox">
 		<input type="checkbox" name="isReturnedItemCheckBoxParam">
 	  </td>
 	</tr>
