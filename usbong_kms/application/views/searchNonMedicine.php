@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250415; from 20250409
+' @date updated: 20250421; from 20250415
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -389,6 +389,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  alert("Copied: " + copyText.innerText);	
 		}
 		
+		//added by Mike, 20250421
+		function myCopyToClipboardFunctionItemText(copyText) {
+		  //alert ("DITO: " + copyText);
+			
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = copyText;//.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + copyText);//.innerText);	
+		  
+		}
+		
 		function myFlipSwitchFunction() {
 		  var addNewNonMedItemDiv = document.getElementById("addNewNonMedItemDivId");
 
@@ -497,6 +526,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */			
 
 				$resultCount = count($result);
+				
+				//added by Mike, 20250421
+				$iTotalQuantityInStock=0;
+				$iTotalQuantityLostItem=0;
+				
 /* //edited by Mike, 20221013
 				if ($resultCount==1) {
 					echo '<div>Showing <b>'.count($result).'</b> result found.</div>';
@@ -516,6 +550,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 */						
 						else {
+							//added by Mike, 20250421
+							//echo "DITO!!!".$value['quantity_in_stock']."<br/>";
+							//echo $value['is_lost_item']."<br/><br/>";
+							
+							if (!$value['is_lost_item']) {
+								$iTotalQuantityInStock+=$value['quantity_in_stock'];
+							}
+							else {
+								$iTotalQuantityLostItem+=$value['quantity_in_stock'];
+							}
+							
 							//echo "HALLO!".$value['resultQuantityInStockNow']."<br/>";
 							
 							//added by Mike, 20250405
@@ -620,12 +665,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//edited by Mike, 20250407
 					else if ($updatedResultCount<=0) {
 						//added by Mike, 20250407
-						if (isset($value['item_name'])) {					
+						if (isset($value['item_name'])) {	
 							echo "<b>".strtoupper($value['item_name'])."</b>";
 	?>						
-							<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText("<?php echo strtoupper($value['item_name']);?>")'>⿻</button>
+							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunctionItemText('<?php echo $value['item_name'];?>')">⿻</button>
 	<?php						
-							echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+							//echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
+							$iCurrentTotal = $iTotalQuantityInStock-$iTotalQuantityLostItem;
+							//use this with med items; not non-med items
+							//$iCurrentTotal = $value['resultQuantityInStockNow'];
+
+							echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
+
 							echo "<br/><br/>";
 						}
 
@@ -685,9 +738,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				
 				//sort($updateResult);
 
-				//added by Mike, 20221013
-				if (!isset($updateResult)) {
-					$updateResult=[];
+				//edited by Mike, 20250421; from 20221013
+				//if (!isset($updateResult)) {
+				if ($updatedResultCount==0) {					
+					$updateResult=array(); //[];
 				}
 
 				//edited by Mike, 20221008

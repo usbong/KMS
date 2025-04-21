@@ -10,8 +10,11 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250416; from 20250407
+' @date updated: 20250421; from 20250416
 ' @website address: http://www.usbong.ph
+
+//TODO: -fix: count when med item has lost item and the list shows other items with different ids
+
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');

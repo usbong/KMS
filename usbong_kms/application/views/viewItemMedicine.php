@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250403; from 20250401
+' @date updated: 20250421; from 20250403
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -817,6 +817,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					if (isset($resultItem[0])) {
 						$value = $resultItem[0];
 					}
+					
+					//added by Mike, 20250421
+					if (!isset($value['quantity_in_stock'])) {
+						$value['quantity_in_stock']=-1;
+					}
 
 //				}
 		?>				
@@ -826,7 +831,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div class="itemName">
 				<?php
-								echo $value['item_name'];
+								//edited by Mike, 20250421
+								echo strtoupper($value['item_name']);
 				?>		
 								</div>								
 							</a>
@@ -925,7 +931,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 		
 									//echo $resultQuantityInStockNowTotal." / ".$quantityInStockTotal;
-									echo $resultQuantityInStockNowTotal;									
+									
+									//edited by Mike, 20250421
+									//echo $resultQuantityInStockNowTotal;
+
+									if ($resultQuantityInStockNowTotal<=0) {
+										echo "<span style='color:red'><b>".$resultQuantityInStockNowTotal."</b></span>";
+									}
+									else {
+										echo $resultQuantityInStockNowTotal;
+									}
 								}								
 							?>
 								</div>
