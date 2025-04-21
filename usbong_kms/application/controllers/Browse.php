@@ -858,6 +858,9 @@ class Browse extends CI_Controller { //MY_Controller {
 			$data['nameParam'] = $_POST['nameParam'];
 		}
 
+		//added by Mike, 20250421
+		$data['nameParam'] = strtoupper($data['nameParam']);
+
 		//added by Mike, 20200912
 		$data['nameParam'] = trim($data['nameParam']);
 		
@@ -1387,6 +1390,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function processConfirmMedicine() {
 		$data['nameParam'] = $_POST['nameParam'];
 		
+		//added by Mike, 20250421
+		$data['nameParam'] = strtoupper($data['nameParam']);
+		
 		//added by Mike, 20200912
 		$data['nameParam'] = trim($data['nameParam']);
 		
@@ -1470,6 +1476,7 @@ class Browse extends CI_Controller { //MY_Controller {
 							$iLostItemCountIndex++;			
 						}
 					}
+					
 					foreach ($iLostItemCountArray as $iLostItemCountIndex) {
 						array_splice($resultTemp,($iLostItemCountIndex),1);
 					}				
@@ -1733,7 +1740,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		//echo $iTotalLostItemCount."<br/>";
 		foreach ($outputArray as $value) {		
 			if ($value['is_lost_item']==1) {
-				continue;
+				//echo "YOYO!!".$value['item_name']."<br/>";
+				//echo ">>>>".$value['quantity_in_stock']."<br/>";
+				//echo "iTotalLostItemCount: ".$iTotalLostItemCount."<br/>";
+				
+				//edited by Mike, 20250421
+				$iTotalLostItemCount+=$value['quantity_in_stock'];
+				//continue;
 			}
 /*			
 			echo ">>>>quantity_in_stock: ".$value['quantity_in_stock']."<br/>";
@@ -1742,6 +1755,9 @@ class Browse extends CI_Controller { //MY_Controller {
 			$iDifference=$value['resultQuantityInStockNow']-$iTotalLostItemCount;
 			
 			if ($iTotalLostItemCount>0) {
+				
+				//echo "HERE!!!".$iDifference."<br/>";
+				
 				if ($iDifference<0) {				
 					//$value['resultQuantityInStockNow']=0;
 					$value['resultQuantityInStockNow']=$iDifference;
