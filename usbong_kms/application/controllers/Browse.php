@@ -1477,11 +1477,16 @@ class Browse extends CI_Controller { //MY_Controller {
 						}
 					}
 					
+/*					//TODO: -reverify: this; array_splice
 					foreach ($iLostItemCountArray as $iLostItemCountIndex) {
 						array_splice($resultTemp,($iLostItemCountIndex),1);
 					}				
+*/					
 				}
-
+				
+				//added by Mike, 20250422
+				//$data['result'] = $resultTemp;
+				
 				//added by Mike, 20200417
 				//note: sell first the item that is nearest to the expiration date using now as the reference date and time stamp				
 				//edited by Mike, 20200422
@@ -1535,9 +1540,9 @@ class Browse extends CI_Controller { //MY_Controller {
 //					echo ">".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
 
 					if ($remainingItemNow < 0) { //already negative
-
-//					echo ">".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
-				
+/*
+					echo ">".$data['result'][$iCount]['quantity_in_stock'].": remainingNow:".$remainingItemNow."<br/>";
+*/				
 						if ($data['result'][$iCount]['quantity_in_stock'] + $remainingItemNow < 0) {
 							
 //							echo ">>>";
@@ -1726,7 +1731,8 @@ class Browse extends CI_Controller { //MY_Controller {
 				}
 			}
 		}
-		
+
+/*		//TODO: -reverify: this; Mike, 20250422		
 		//edited by Mike, 20200723
 		//note: this is due to the following removed function is not available in PHP 5.3
 		//$data['result'] = [];
@@ -1735,6 +1741,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		//$data['result'] = $outputArray;
 		$outputArrayTemp = array();
 		//$outputArrayTemp = $outputArray;
+
 		
 		//added by Mike, 20250416
 		//echo $iTotalLostItemCount."<br/>";
@@ -1748,14 +1755,13 @@ class Browse extends CI_Controller { //MY_Controller {
 				$iTotalLostItemCount+=$value['quantity_in_stock'];
 				//continue;
 			}
-/*			
-			echo ">>>>quantity_in_stock: ".$value['quantity_in_stock']."<br/>";
-			echo ">>>>resultQuantityInStockNow: ".$value['resultQuantityInStockNow']."<br/>";
-*/			
+			
+			////echo ">>>>quantity_in_stock: ".$value['quantity_in_stock']."<br/>";
+			////echo ">>>>resultQuantityInStockNow: ".$value['resultQuantityInStockNow']."<br/>";
+			
 			$iDifference=$value['resultQuantityInStockNow']-$iTotalLostItemCount;
 			
 			if ($iTotalLostItemCount>0) {
-				
 				//echo "HERE!!!".$iDifference."<br/>";
 				
 				if ($iDifference<0) {				
@@ -1776,6 +1782,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 
 		$data['result'] = $outputArrayTemp;
+*/
 		
 		return $data;
 	}
