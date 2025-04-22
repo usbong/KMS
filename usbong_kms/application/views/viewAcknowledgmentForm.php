@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250410; from 20250324
+  @date updated: 20250422; from 20250410
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -553,8 +553,11 @@ echo "</a>";
 			//auto-identify fee, e.g. Consultation+Procedure, X-RAY
 			
 			//added by Mike, 20210902
-			foreach ($resultPaid as $value) {					
-						
+			foreach ($resultPaid as $value) {		
+/*
+echo "notes".$value['notes']."<br/>";			
+echo "notes".$value['fee']."<br/>";			
+*/
 				if ($value['fee']!=0) {
 					echo "<tr>";
 						echo "<td class='columnFee'>";
@@ -568,7 +571,7 @@ echo "</a>";
 						
 						//echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."</b>";
 						
-						if (strpos($result[0]['notes'],"DISCOUNTED")!==false) {
+						if (strpos($value['notes'],"DISCOUNTED")!==false) {
 							echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']." (DISCOUNTED)</b>";	
 						}
 						else {
@@ -577,9 +580,9 @@ echo "</a>";
 						
 						$dMedCertPrice=0;
 						$dDexaPrice=0; //added by Mike, 20250410
-						
-						if (strpos($result[0]['notes'],"MEDCERT")!==false) {
-							$sMedCertToken=substr($result[0]['notes'],strpos($result[0]['notes'],"MEDCERT"),strlen("MEDCERT")+1);
+
+						if (strpos($value['notes'],"MEDCERT")!==false) {
+							$sMedCertToken=substr($value['notes'],strpos($value['notes'],"MEDCERT"),strlen("MEDCERT")+1);
 							
 							$dMedCertPrice=str_replace("MEDCERT","",$sMedCertToken);
 							
@@ -594,8 +597,8 @@ echo "</a>";
 						}
 
 						//added by Mike, 20250410
-						if (strpos($result[0]['notes'],"DEXA")!==false) {
-							$sDexaToken=substr($result[0]['notes'],strpos($result[0]['notes'],"DEXA"),strlen("DEXA")+1);
+						if (strpos($value['notes'],"DEXA")!==false) {
+							$sDexaToken=substr($value['notes'],strpos($value['notes'],"DEXA"),strlen("DEXA")+1);
 							
 							$dDexaPrice=str_replace("DEXA","",$sDexaToken);
 							

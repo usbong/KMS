@@ -542,21 +542,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 
 					//added by Mike, 20250326					
-					array_push($updateResult,$value);
+					array_push($updatedResult,$value);
 				}
 */
-
+/*
+					//added by Mike, 20250421
+					$iTotalQuantityInStock=0;
+					$iTotalQuantityLostItem=0;
+*/
 					$iCount = 0;
-					$updateResult = [];
+					$updatedResult = array(); //[];
 					foreach ($result as $value) {
+/*						
+						echo $value['item_name'].":".$value['resultQuantityInStockNow']."<br/>";
+*/						
 						if (strpos(strtoupper($value['item_name']),"*")!==false) {
 						}
-						else {		
+						else {								
 							if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
 							}
+							/*
 							else if ($value['quantity_in_stock']=="") {
-							}
+							}*/
 							else {
+/*								
+								if (!$value['is_lost_item']) {
+									//$iTotalQuantityInStock+=$value['quantity_in_stock'];
+								}
+								else {
+									//$iTotalQuantityLostItem+=$value['quantity_in_stock'];
+									$value['resultQuantityInStockNow']-=$value['quantity_in_stock'];
+								}	
+*/								
+								if (!isset($value['resultQuantityInStockNow'])) {
+									$value['resultQuantityInStockNow'] = 0;
+								}
+								
 								if ($value['resultQuantityInStockNow']==0) {
 									$iCount++;
 									continue;
@@ -564,7 +585,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							}
 						}
 						
-						array_push($updateResult,$value);
+						array_push($updatedResult,$value);
 					}
 
 
@@ -577,14 +598,85 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo '<div>Showing <b>'.$resultCount.'</b> results found.</div>';			
 				}			
 */
-				$updatedResultCount = count($updateResult);
+
+				//edited by Mike, 20250421
+				//TODO: -reverify: this
+				//--------------------------	
+				
+				$bIsSameItemId=false;
+				$itemId=-1;
+				$itemCount=0;
+				
+				//sort($updatedResult);
+				$cleanedupdatedResult = array();
+				
+				$iTotalQuantityLostItem=0;
+				
+				foreach ($updatedResult as $valueTemp) {
+					//$myNextElementTemp=next($updatedResult);
+/*						
+					echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+*/					
+					if ($valueTemp['is_lost_item']) {
+					//if ($valueTemp['resultQuantityInStockNow']<0) {
+/*						
+					  echo "DITO!<br/>";
+					  //$iTotalQuantityLostItem+=$valueTemp['resultQuantityInStockNow'];
+					  
+					  echo ">START: ".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+					  
+					  echo "minus ".$valueTemp['resultQuantityInStockNow']."<br/>";
+*/												
+					  //current($cleanedupdatedResult)['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+					  
+					  if ($itemCount>0) {
+						  //$cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+
+						  $cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=($valueTemp['resultQuantityInStockNow']*-1);
+
+					  }
+/*
+					  echo ">>>".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+*/
+					  continue;
+					}
+					else {
+/*						
+						echo "ADD<br/>";
+*/						
+						array_push($cleanedupdatedResult, $valueTemp);
+					}
+					
+					$itemCount++;
+				}		
+				
+				//sort($cleanedupdatedResult);					
+
+				//added by Mike, 20250421
+				//$updatedResult = array(); //clear contents
+
+				$updatedResult = $cleanedupdatedResult; //array();
+				$updatedResultCount=0;
+/*				
+				echo "<br/>CHECK!!!<br/>";
+				foreach ($updatedResult as $valueTemp) {
+					echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+				}
+*/				
+				//-----				
+				
+				if (isset($updatedResult[0])) {
+					//echo ">>>>>>>>>".$updatedResult[0]['item_id'];
+					
+					$updatedResultCount = count($updatedResult);
+				}				
 				
 				//echo ">>updatedResultCount: ".$updatedResultCount."<br/>";
-
+/*
 				if ($updatedResultCount==1) {
 					echo '<div>Showing <b>1</b> result found.</div>';
 				}
-				else if ($updatedResultCount<=0) {
+				else*/ if ($updatedResultCount<=0) {
 					if (isset($value['item_name'])) {
 						echo "<b>".strtoupper($value['item_name'])."</b>";
 ?>						
@@ -594,7 +686,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						//echo "<br/><br/><div class='outOfStockDiv'>is already <span style='color:red'><b>OUT-OF-STOCK</b></span>.</div>";
 						//echo "<br/>";
 
-						echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
+						echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$value['resultQuantityInStockNow'].")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
 						echo "<br/><br/>";
 					}
 
@@ -637,14 +732,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php				
 				$iCount = 1;
 
-				//added by Mike, 20250326
-				if (!isset($updateResult)) {
-					$updateResult=[];
+				//edited by Mike, 20250421; from 20250326
+				//if (!isset($updatedResult)) {
+				if ($updatedResultCount==0) {
+					$updatedResult=array(); //[];
 				}
 				
 				//edited by Mike, 20250326
 //				foreach ($result as $value) {
-				foreach ($updateResult as $value) {
+				foreach ($updatedResult as $value) {
 										
 					//added by Mike, 20250215					
 /*					
@@ -759,10 +855,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 <?php
 							//added by Mike, 20250314
-							$updateResultTemp = array();
-							$updateResultTemp = $updateResult;
+							$updatedResultTemp = array();
+							$updatedResultTemp = $updatedResult;
 							
-							$myNextElement=next($updateResult);
+							$myNextElement=next($updatedResult);
 							
 							if ($myNextElement) { //element exists
 							
