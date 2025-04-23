@@ -1170,7 +1170,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		return $rowArray;
 	}	
-
+	
 	//added by Mike, 20200328; 20200406
 	public function getMedicineDetailsListViaNamePrev($param) 
 	{		
@@ -3294,10 +3294,29 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
 		//update: transaction with all the items in the cart
+		//edited by Mike, 20250423
 		$data = array(
 					'is_to_be_deleted' => 1,
 					'is_to_be_deleted_added_datetime_stamp' => $dateTimeStamp
 				);
+
+/*
+		//TODO: -update: this
+		//echo $param['itemTypeId'];
+		if ($param['itemTypeId']==1) { //if med item
+			//set all instances of the item in inventory to...
+			$data = array(
+						'is_to_be_deleted' => 1,
+					);		
+		}
+		else {
+			$data = array(
+						'is_to_be_deleted' => 1,
+						'is_to_be_deleted_added_datetime_stamp' => $dateTimeStamp
+					);
+			$this->db->limit(1);
+		}
+*/
 
 		$this->db->where('item_id',$itemId);
 		$this->db->where('is_to_be_deleted',0);
