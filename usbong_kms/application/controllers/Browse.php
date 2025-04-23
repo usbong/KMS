@@ -1783,7 +1783,26 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['result'] = $outputArrayTemp;
 */
+		//added by Mike, 20250423
+		//TODO: -reverify: this
+/*		
+		echo ">>>".count($data)."<br/>";
 		
+		//echo $data['item_name']."<br/>";
+		
+		if (!isset($data['item_name'])) {
+			echo "HALLO!".$data['nameParam'];
+			
+			$data['result'] = $this->Browse_Model->getMedicineDetailsInItemTableOnlyViaName($data);
+			
+			echo "DITO!!!".$data['result'][0]['item_id'];
+			
+			$data['result'][0]['quantity_in_stock']=0;
+			
+			//echo $data['result'][0]['item_name']."<br/>";
+		}
+*/		
+
 		return $data;
 	}
 
