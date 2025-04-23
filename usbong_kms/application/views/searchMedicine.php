@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250421; from 20250416
+' @date updated: 20250423; from 20250421
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -91,6 +91,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #ff8000;
 						}	
 
+						div.quantityInStockDiv
+						{
+							text-align: center;							
+						}
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -550,6 +555,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$iTotalQuantityInStock=0;
 					$iTotalQuantityLostItem=0;
 */
+
+					//added by Mike, 20250423
+					//TODO: -reverify: this; delete button
+					//note: just show the who list without the consolidation if a set of the item was deleted;
+					//echo ">>>>".$updatedResultCount;
+
 					$iCount = 0;
 					$updatedResult = array(); //[];
 					foreach ($result as $value) {
@@ -662,7 +673,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				foreach ($updatedResult as $valueTemp) {
 					echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
 				}
-*/				
+*/
+				//edited by Mike, 20250423
+				//echo "<br/>CHECK!!!<br/>";
+				
+				//put together the resultQuantityInStockNow of the same items 
+				//$iPrevItemId=-1;
+				//$iPrevResultQuantityInStockNow=0;
+				$bIsSameId=false;
+				$consolidatedUpdatedResult = array();
+
+				foreach ($updatedResult as $valueTemp) {
+					$bIsSameId=false;
+					
+					foreach ($consolidatedUpdatedResult as &$consolidatedValueTemp) {
+						if ($valueTemp['item_id']==$consolidatedValueTemp['item_id']) {
+							//echo "DITO!";
+							$consolidatedValueTemp['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+							//continue;
+							
+							$bIsSameId=true;
+							break;
+						}
+					}
+					unset($consolidatedValueTemp);
+					
+					//echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+					
+					if (!$bIsSameId) {
+						array_push($consolidatedUpdatedResult,$valueTemp);
+					}
+				}
+/*				
+				echo "<br/>CONSOLIDATED; CHECK!!!<br/>";
+				
+				foreach ($consolidatedUpdatedResult as $consolidatedValueTemp) {
+					echo $consolidatedValueTemp['resultQuantityInStockNow']." / ".$consolidatedValueTemp['quantity_in_stock']."<br/>";
+				}				
+*/
+				$updatedResult=$consolidatedUpdatedResult;
 				//-----				
 				
 				if (isset($updatedResult[0])) {
@@ -778,7 +827,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
 						</td>						
 						<td class =column>				
-								<div id=quantityInStockId<?php echo $iCount?>>
+								<div class="quantityInStockDiv" id=quantityInStockId<?php echo $iCount?>>
 							<?php
 								//echo $value['quantity_in_stock'];
 
@@ -799,13 +848,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20250416
 									//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
 
-									if ($value['resultQuantityInStockNow']<0) {
+									if ($value['resultQuantityInStockNow']<=0) {
 										echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
 									}
 									else {
 	//									echo $value['quantity_in_stock'];
-										//edited by Mike, 20221008
-										echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+										//edited by Mike, 20250423; from 20221008
+										//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+										echo $value['resultQuantityInStockNow'];
 									}
 								}
 							?>
