@@ -1851,6 +1851,25 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->view('searchMedicine', $data);
 	}
 	
+	//added by Mike, 20250424
+	public function confirmMedicineFromDeleteItem()
+	{
+		//added by Mike, 20231213
+		//error: "Undefined index: nameParam"
+		if (!isset($_POST['nameParam'])) {
+			redirect('browse/searchMedicine');
+		}		
+		
+		$data = $this->processConfirmMedicine();
+		
+		//added by Mike, 20250424
+		$data['bIsDeleteItemFromSearch'] = true;
+		
+		//echo "HALLO: ".$data['bIsDeleteItemFromSearch'];
+		
+		$this->load->view('searchMedicine', $data);
+	}
+	
 	//added by Mike, 20250215; from 20210218
 	//use sort asc with added_datetime_stamp
 	//update added_datetime_stamp value due to select medicine items sold,
@@ -5108,7 +5127,7 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['itemTypeId'] = $itemTypeId;
 		$data['itemId'] = $itemId;
-	
+			
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
@@ -5146,9 +5165,10 @@ class Browse extends CI_Controller { //MY_Controller {
 			$this->confirmSnack();
 		}		
 		else { //$itemTypeId==1; //med item
-			$this->confirmMedicine();
+			//edited by Mike, 20250424
+			//$this->confirmMedicine();
+			$this->confirmMedicineFromDeleteItem();
 		}
-		
 
 		//echo ">>>>>".$_POST['nameParam'];
 	}	
