@@ -433,7 +433,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  
 		  var isReturnedItemTd = document.getElementById("isReturnedItemTdId");
 		  var isReturnedItemTdInputCheckbox = document.getElementById("isReturnedItemTdIdInputCheckbox");
-
+		  
 		  //alert("DITO");
 		  
 		  var sText = addNewMedItemDiv.innerHTML;
@@ -466,7 +466,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//addNewNonMedForm.action = "addNonMedItem/0"; 			
 			addNewMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"0";
 		  }
-		}		
+		}	
 	  </script>
   <body>
 	<table class="imageTable">
@@ -988,7 +988,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<!-- Form -->
 	<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
 	<!-- "browse/addPatientName" faster -->
-	<form id="addMedItemFormId" method="post" action="<?php echo site_url('browse/addMedItem/0')?>">	
+<!-- //removed by Mike, 20250424; no need to include the flip switch button inside the form	
+		<form id="addMedItemFormId" method="post" action="<?php echo site_url('browse/addMedItem/0')?>"  onsubmit="validateMyForm();">	
+-->
 	<table class="addMedItemTable">
 	<tr>
 		<td colspan="2" id="addNewMedItemTdHeaderId" class="tableHeaderAddNewMedItemTd">
@@ -999,6 +1001,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</button>
 		</td>		
 	</tr>
+	<form id="addMedItemFormId" method="post" action="<?php echo site_url('browse/addMedItem/0')?>"  onsubmit="validateMyForm();">	
 	<tr>
 		<td>
 		  <b><span>Item Name <span class="asterisk">*</span></b>
@@ -1080,13 +1083,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  </td>
 	  <td class="submitButtonTd">
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button id="submitButtonId" type="submit" class="Button-login">
 			Submit
 		</button>
 	  </td>
     </tr>
-	</table>		
 	</form>
+	</table>		
 
 	<br />
 	<br />
