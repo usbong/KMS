@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2025 USBONG
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,8 +10,11 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250325; from 20250227
+' @date updated: 20250424; from 20250325
 ' @website address: http://www.usbong.ph
+
+//TODO: -fix: count when med item has lost item and the list shows other items with different ids
+
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -34,9 +37,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-family: Arial;
 							font-size: 11pt;
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. 
+								width: 670px
+							*/
+							width: 800px
                         }
+
+						span.asterisk
+						{
+							color: #ff0000;							
+						}
+
+						div.outOfStockDiv {
+							text-indent: 6em;
+						}
 						
 						div.checkBox
 						{
@@ -68,7 +82,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #00ff00; <!--#93d151; lime green-->
 							border: 1pt solid #00ff00;
 						}
+						
+						div.tableHeaderAddNewMedItem
+						{
+							font-weight: bold;
+							text-align: center;
+							background-color: #ff8000; <!--#93d151; lime green-->
+							border: 1pt solid #ff8000;
+						}	
 
+						div.quantityInStockDiv
+						{
+							text-align: center;							
+						}
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -94,6 +121,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
+
+						table.addMedItemTable
+						{
+							border: 2px dotted #ab9c7d;		
+							margin-top: 10px;
+						}	
+						
+						td.tableHeaderAddNewMedItemTd {
+							background-color: #ff8000;
+						}
 						
 						span.alertSpan {
 							color: red;
@@ -112,6 +149,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1px solid #ab9c7d;		
 -->
 						}						
+
+						td.submitButtonTd
+						{
+							float: right;
+						}
 
 						td.column
 						{
@@ -141,6 +183,62 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right;
 						}						
 
+						.Button-delete {
+							background-color: #E9E9E9;
+							color: #000000;
+							/*font-weight: bold;*/
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+						}						
+
+						.Button-delete:hover {
+							background-color: #C0C0C0;
+							color: #000000;
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+						}		
+						
+						button.copyToClipboardButton {
+							background-color: #ffffff;
+							border: 0px dotted #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.copyToClipboardButton:hover {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.copyToClipboardButton:active {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}		
+
+						button.tableHeaderFlipSwitchIconButton
+						{
+							font-size: 18pt;
+							background-color: #ffffff;
+							border: 0px solid #333333;
+						}
+	
+						button.tableHeaderFlipSwitchIconButton:hover
+						{
+							font-size: 18pt;
+							background-color: #eeeeee;
+							border: 0px solid #333333;
+						}
+
+						button.tableHeaderFlipSwitchIconButton:active
+						{
+							font-size: 18pt;
+							background-color: #eeeeee;
+							border: 0px solid #333333;
+						}	
     /**/
     </style>
     <title>
@@ -254,6 +352,121 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			element.style.width = defaultScrollWidth; //(element.scrollWidth+element.scrollWidth*0.42)+"px";			
 		  }
 */
+		function myPopupFunctionDelete(itemId,itemName) {	
+			//alert("DITO");
+		
+			if (confirm("Delete ["+itemName+"]?")) { //YES
+				window.location.href = "<?php echo site_url('browse/deleteItemFromSearch/1/"+itemId+"');?>";
+			} else {
+				//CANCEL
+			} 
+		}	
+
+		function myCopyToClipboardFunction(itemCount) {
+		  var copyText = document.getElementById("itemNameDivId"+itemCount);
+
+		  //alert("itemCount: " + itemCount);	
+
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = copyText.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + copyText.innerText);	
+		}
+		
+		function myCopyToClipboardFunctionItemText(itemText) {
+		  var sCopyText = itemText;
+
+		  //alert("itemText: " + itemText);	
+
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = sCopyText; //copyText.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + sCopyText); //copyText.innerText);	
+		}	
+
+		function myFlipSwitchFunction() {
+		  var addNewMedItemDiv = document.getElementById("addNewMedItemDivId");
+
+		  var addNewMedItemTdHeader = document.getElementById("addNewMedItemTdHeaderId");
+
+		  //var addNewMedItemTd = document.getElementById("addNewMedItemTdId");
+		  //noted table color not changed;
+		  //var addMedItemTable = document.getElementById("addMedItemTable");
+		  
+		  var addNewMedForm = document.getElementById("addMedItemFormId");
+		  
+		  var isReturnedItemTd = document.getElementById("isReturnedItemTdId");
+		  var isReturnedItemTdInputCheckbox = document.getElementById("isReturnedItemTdIdInputCheckbox");
+
+		  //alert("DITO");
+		  
+		  var sText = addNewMedItemDiv.innerHTML;
+		  
+		  var sFormActionUrl = addNewMedForm.action;
+		  
+		  //if equal
+		  if (sText.localeCompare("ADD NEW MED")==0) {
+			addNewMedItemDiv.innerHTML="REPORT LOST ITEM";
+			addNewMedItemDiv.style.backgroundColor = "white";
+			addNewMedItemTdHeader.style.backgroundColor = "white";
+			addNewMedItemTdHeader.style.border = "2pt solid #000000";
+			//addMedItemTable.style.backgroundColor = "#eeeeee";
+			isReturnedItemTd.style.visibility = "hidden";
+			isReturnedItemTdInputCheckbox.style.visibility = "hidden";
+			
+			//isLostItem
+			//addNewNonMedForm.action = "addNonMedItem/1"; 			
+			addNewMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"1";
+		  }
+		  else {
+			addNewMedItemDiv.innerHTML="ADD NEW MED";
+			addNewMedItemDiv.style.backgroundColor = "#ff8000";
+			addNewMedItemTdHeader.style.backgroundColor = "#ff8000";
+			addNewMedItemTdHeader.style.border = "0pt dotted #000000";
+			//addMedItemTable.style.backgroundColor = "#ffffff";
+			isReturnedItemTd.style.visibility = "visible";
+			isReturnedItemTdInputCheckbox.style.visibility = "visible";
+
+			//addNewNonMedForm.action = "addNonMedItem/0"; 			
+			addNewMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"0";
+		  }
+		}		
 	  </script>
   <body>
 	<table class="imageTable">
@@ -301,17 +514,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
-
-
-	<br/>
-	<br/>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
 	
 		//get only name strings from array 
-		if (isset($result)) {			
+		if (isset($result)) {		
+		
+			echo "<br/>";
+			echo "<br/>";
+
 			if ($result!=null) {		
 /*			
 				echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];
@@ -319,9 +532,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "<br/>";
 */			
 
-				//added by Mike, 20250227
+/*	//edited by Mike, 20250326				
 				$resultCount = count($result);
-				
+
+				//added by Mike, 20250227
 				foreach ($result as $value) {
 					if (strpos(strtoupper($value['item_name']),"*")!==false) {
 					}
@@ -331,15 +545,212 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$resultCount--;
 						}
 					}
+
+					//added by Mike, 20250326					
+					array_push($updatedResult,$value);
 				}
-				
+*/
+/*
+					//added by Mike, 20250421
+					$iTotalQuantityInStock=0;
+					$iTotalQuantityLostItem=0;
+*/
+
+					//added by Mike, 20250423
+					//TODO: -reverify: this; delete button
+					//note: just show the who list without the consolidation if a set of the item was deleted;
+					//echo ">>>>".$updatedResultCount;
+
+					$iCount = 0;
+					$updatedResult = array(); //[];
+					foreach ($result as $value) {
+/*						
+						echo $value['item_name'].":".$value['resultQuantityInStockNow']."<br/>";
+*/						
+						if (strpos(strtoupper($value['item_name']),"*")!==false) {
+						}
+						else {								
+							if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
+							}
+							/*
+							else if ($value['quantity_in_stock']=="") {
+							}*/
+							else {
+/*								
+								if (!$value['is_lost_item']) {
+									//$iTotalQuantityInStock+=$value['quantity_in_stock'];
+								}
+								else {
+									//$iTotalQuantityLostItem+=$value['quantity_in_stock'];
+									$value['resultQuantityInStockNow']-=$value['quantity_in_stock'];
+								}	
+*/								
+								if (!isset($value['resultQuantityInStockNow'])) {
+									$value['resultQuantityInStockNow'] = 0;
+								}
+								
+								if ($value['resultQuantityInStockNow']==0) {
+									$iCount++;
+									continue;
+								}
+							}
+						}
+						
+						array_push($updatedResult,$value);
+					}
+
+
+/*				//edited by Mike, 20250326				
 				//edited by Mike, 20250227
 				if ($resultCount==1) {
 					echo '<div>Showing <b>'.$resultCount.'</b> result found.</div>';
 				}
 				else {
 					echo '<div>Showing <b>'.$resultCount.'</b> results found.</div>';			
-				}		
+				}			
+*/
+
+				//edited by Mike, 20250421
+				//TODO: -reverify: this
+				//--------------------------	
+				//edited by Mike, 20250424
+				if (!isset($bIsDeleteItemFromSearch)) {				
+					$bIsSameItemId=false;
+					$itemId=-1;
+					$itemCount=0;
+					
+					//sort($updatedResult);
+					$cleanedupdatedResult = array();
+					
+					$iTotalQuantityLostItem=0;
+					
+					foreach ($updatedResult as $valueTemp) {
+						//$myNextElementTemp=next($updatedResult);
+	/*						
+						echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+	*/					
+						if ($valueTemp['is_lost_item']) {
+						//if ($valueTemp['resultQuantityInStockNow']<0) {
+							
+						  ////echo "DITO!<br/>";
+						  //$iTotalQuantityLostItem+=$valueTemp['resultQuantityInStockNow'];
+						  
+						  ////echo ">START: ".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+						  
+						  ////echo "minus ".$valueTemp['resultQuantityInStockNow']."<br/>";
+						  //current($cleanedupdatedResult)['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+						  
+						  if ($itemCount>0) {
+							  //$cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+
+							  $cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=($valueTemp['resultQuantityInStockNow']*-1);
+
+						  }
+
+						  ////echo ">>>".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+						  
+						  continue;
+						}
+						else {
+							
+							////echo "ADD<br/>";
+							
+							array_push($cleanedupdatedResult, $valueTemp);
+						}
+						
+						$itemCount++;
+					}		
+					
+					//sort($cleanedupdatedResult);					
+
+					//added by Mike, 20250421
+					//$updatedResult = array(); //clear contents
+
+					$updatedResult = $cleanedupdatedResult; //array();
+					$updatedResultCount=0;
+/*				
+				echo "<br/>CHECK!!!<br/>";
+				foreach ($updatedResult as $valueTemp) {
+					echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+				}
+*/
+				//edited by Mike, 20250423
+				//echo "<br/>CHECK!!!<br/>";
+/*				
+				//edited by Mike, 20250424
+				if (!isset($bIsDeleteItemFromSearch)) {
+*/
+					//put together the resultQuantityInStockNow of the same items 
+					//$iPrevItemId=-1;
+					//$iPrevResultQuantityInStockNow=0;
+					$bIsSameId=false;
+					$consolidatedUpdatedResult = array();
+
+					foreach ($updatedResult as $valueTemp) {
+						$bIsSameId=false;
+						
+						foreach ($consolidatedUpdatedResult as &$consolidatedValueTemp) {
+							if ($valueTemp['item_id']==$consolidatedValueTemp['item_id']) {
+								//echo "DITO!";
+								$consolidatedValueTemp['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+								//continue;
+								
+								$bIsSameId=true;
+								break;
+							}
+						}
+						unset($consolidatedValueTemp);
+						
+						//echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+						
+						if (!$bIsSameId) {
+							array_push($consolidatedUpdatedResult,$valueTemp);
+						}
+					}
+	/*				
+					echo "<br/>CONSOLIDATED; CHECK!!!<br/>";
+					
+					foreach ($consolidatedUpdatedResult as $consolidatedValueTemp) {
+						echo $consolidatedValueTemp['resultQuantityInStockNow']." / ".$consolidatedValueTemp['quantity_in_stock']."<br/>";
+					}				
+	*/
+					$updatedResult=$consolidatedUpdatedResult;
+				}
+				//-----				
+				
+				if (isset($updatedResult[0])) {
+					//echo ">>>>>>>>>".$updatedResult[0]['item_id'];
+					
+					$updatedResultCount = count($updatedResult);
+				}				
+				
+				//echo ">>updatedResultCount: ".$updatedResultCount."<br/>";
+/*
+				if ($updatedResultCount==1) {
+					echo '<div>Showing <b>1</b> result found.</div>';
+				}
+				else*/ if ($updatedResultCount<=0) {
+					if (isset($value['item_name'])) {
+						echo "<b>".strtoupper($value['item_name'])."</b>";
+?>						
+						<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText("<?php echo strtoupper($value['item_name']);?>")'>⿻</button>
+<?php						
+						//edited by Mike, 20250401
+						//echo "<br/><br/><div class='outOfStockDiv'>is already <span style='color:red'><b>OUT-OF-STOCK</b></span>.</div>";
+						//echo "<br/>";
+
+						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
+						echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$value['resultQuantityInStockNow'].")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
+						echo "<br/><br/>";
+					}
+
+					echo '<div>Showing <b>0</b> result found.</div>';
+				}
+				else {
+					echo '<div>Showing <b>'.($updatedResultCount).'</b> results found.</div>';				
+				}
 
 				echo "<br/>";
 				echo "<table class='search-result'>";
@@ -352,6 +763,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "ITEM NAME";
 				?>		
 						</td>
+						<td>				
+						<!-- copy to clipboard column -->
+						</td>							
 						<td class="columnTableHeader">				
 							<?php
 								echo "AVAILABLE"; //IN-STOCK;
@@ -366,7 +780,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								echo "BOXES LEFT";
 							?>
-						</td>						
+						</td>							
 						<td class="columnTableHeader">				
 							<?php
 								echo "EXPIRATION";
@@ -378,11 +792,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 						</td>
 					  </tr>
+
+
+
 <?php				
 				$iCount = 1;
 
-				foreach ($result as $value) {
-					//added by Mike, 20250215
+				//edited by Mike, 20250421; from 20250326
+				//if (!isset($updatedResult)) {
+				if ($updatedResultCount==0) {
+					$updatedResult=array(); //[];
+				}
+				
+				//edited by Mike, 20250326
+//				foreach ($result as $value) {
+				foreach ($updatedResult as $value) {
+										
+					//added by Mike, 20250215					
 /*					
 					if (strpos(strtoupper($value['item_name']),"CALCIUM")!==false) {
 					}
@@ -393,14 +819,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 					else {					
 						if ($value['resultQuantityInStockNow']==0) {
-							continue;
+							//echo "DITO";
+							//edited by Mike, 20250402
+							if ($updatedResultCount==0) {
+								continue;
+							}
 						}
-					}					
+					}
 		?>				
+		
 					  <tr class="row">
 						<td class ="column">				
 							<a target='_blank' href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-								<div class="itemName">
+								<div id="itemNameDivId<?php echo $iCount?>" class="itemName">
 				<?php
 								//edited by Mike, 20250214
 								//echo $value['item_name'];
@@ -409,25 +840,56 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
+						<td class =column>		
+							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
+						</td>
 						<td class =column>				
-								<div id=quantityInStockId<?php echo $iCount?>>
+								<div class="quantityInStockDiv" id=quantityInStockId<?php echo $iCount?>>
 							<?php
 								//echo $value['quantity_in_stock'];
 
-								//edited by Mike, 20200408
-								if ($value['quantity_in_stock']<0) {
+								//edited by Mike, 20250424; from 20200408
+								if (strpos(strtoupper($value['item_name']),"*")!==false) {
+									echo 9999;									
+								}	
+								else if ($value['quantity_in_stock']<0) {
 									echo 9999;
 								}
 								//added by Mike, 20200614
 								else if ($value['quantity_in_stock']=="") {
 									//edited by Mike, 20200615
 									//echo 9999;
-									echo "0 / 0"; //edited by Mike, 20200703
+									//echo "0 / 0"; //edited by Mike, 20250416; from 20200703
+									echo "0";
 								}
 								else {
 									//edited by Mike, 20200417
 //									echo $value['quantity_in_stock'];
-									echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];										
+									//edited by Mike, 20250416
+									//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+
+									if ($value['resultQuantityInStockNow']<=0) {
+										echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+									}
+									else {
+	//									echo $value['quantity_in_stock'];
+										//edited by Mike, 20250423; from 20221008
+										//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+
+										//edited by Mike, 20250424
+										//echo $value['resultQuantityInStockNow'];
+										if (!isset($bIsDeleteItemFromSearch)) {
+											echo $value['resultQuantityInStockNow'];
+										}
+										else {
+											if ($value['is_lost_item']) {
+												echo "<span style='color:red;font-weight:bold;'>-".$value['resultQuantityInStockNow']."</span>";
+											}
+											else {
+												echo $value['resultQuantityInStockNow'];
+											}
+										}
+									}
 								}
 							?>
 								</div>
@@ -495,12 +957,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 							?>
 								</div>
-						</td>						
+						</td>											
 						<td class =column>				
 								<div id=expirationId<?php echo $iCount?>>
 							<?php
+								//edited by Mike, 20250424
+								if (strpos(strtoupper($value['item_name']),"*")!==false) {
+									echo '<span>N/A</span>';
+								}	
 								//echo $value['expiration_date'];
-								if ($value['expiration_date']==0) {
+								else if ($value['expiration_date']==0) {
 									if ($value['quantity_in_stock']==-1) {
 										echo "UNKNOWN";
 									}
@@ -537,7 +1003,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo $value['item_price'];
 							?>
 								</div>
-						</td>
+						</td>			
 					  </tr>
 		<?php				
 					$iCount++;		
@@ -558,6 +1024,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}			
 		}
 	?>
+
 	<br />
 	<br />
 	<br />

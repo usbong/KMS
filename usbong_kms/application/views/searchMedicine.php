@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250423; from 20250421
+' @date updated: 20250424; from 20250423
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -613,61 +613,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//edited by Mike, 20250421
 				//TODO: -reverify: this
 				//--------------------------	
-				
-				$bIsSameItemId=false;
-				$itemId=-1;
-				$itemCount=0;
-				
-				//sort($updatedResult);
-				$cleanedupdatedResult = array();
-				
-				$iTotalQuantityLostItem=0;
-				
-				foreach ($updatedResult as $valueTemp) {
-					//$myNextElementTemp=next($updatedResult);
-/*						
-					echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
-*/					
-					if ($valueTemp['is_lost_item']) {
-					//if ($valueTemp['resultQuantityInStockNow']<0) {
-/*						
-					  echo "DITO!<br/>";
-					  //$iTotalQuantityLostItem+=$valueTemp['resultQuantityInStockNow'];
-					  
-					  echo ">START: ".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
-					  
-					  echo "minus ".$valueTemp['resultQuantityInStockNow']."<br/>";
-*/												
-					  //current($cleanedupdatedResult)['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
-					  
-					  if ($itemCount>0) {
-						  //$cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
-
-						  $cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=($valueTemp['resultQuantityInStockNow']*-1);
-
-					  }
-/*
-					  echo ">>>".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
-*/
-					  continue;
-					}
-					else {
-/*						
-						echo "ADD<br/>";
-*/						
-						array_push($cleanedupdatedResult, $valueTemp);
-					}
+				//edited by Mike, 20250424
+				if (!isset($bIsDeleteItemFromSearch)) {				
+					$bIsSameItemId=false;
+					$itemId=-1;
+					$itemCount=0;
 					
-					$itemCount++;
-				}		
-				
-				//sort($cleanedupdatedResult);					
+					//sort($updatedResult);
+					$cleanedupdatedResult = array();
+					
+					$iTotalQuantityLostItem=0;
+					
+					foreach ($updatedResult as $valueTemp) {
+						//$myNextElementTemp=next($updatedResult);
+	/*						
+						echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+	*/					
+						if ($valueTemp['is_lost_item']) {
+						//if ($valueTemp['resultQuantityInStockNow']<0) {
+							
+						  ////echo "DITO!<br/>";
+						  //$iTotalQuantityLostItem+=$valueTemp['resultQuantityInStockNow'];
+						  
+						  ////echo ">START: ".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+						  
+						  ////echo "minus ".$valueTemp['resultQuantityInStockNow']."<br/>";
+						  //current($cleanedupdatedResult)['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+						  
+						  if ($itemCount>0) {
+							  //$cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
 
-				//added by Mike, 20250421
-				//$updatedResult = array(); //clear contents
+							  $cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=($valueTemp['resultQuantityInStockNow']*-1);
 
-				$updatedResult = $cleanedupdatedResult; //array();
-				$updatedResultCount=0;
+						  }
+
+						  ////echo ">>>".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+						  
+						  continue;
+						}
+						else {
+							
+							////echo "ADD<br/>";
+							
+							array_push($cleanedupdatedResult, $valueTemp);
+						}
+						
+						$itemCount++;
+					}		
+					
+					//sort($cleanedupdatedResult);					
+
+					//added by Mike, 20250421
+					//$updatedResult = array(); //clear contents
+
+					$updatedResult = $cleanedupdatedResult; //array();
+					$updatedResultCount=0;
 /*				
 				echo "<br/>CHECK!!!<br/>";
 				foreach ($updatedResult as $valueTemp) {
@@ -676,42 +676,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 				//edited by Mike, 20250423
 				//echo "<br/>CHECK!!!<br/>";
-				
-				//put together the resultQuantityInStockNow of the same items 
-				//$iPrevItemId=-1;
-				//$iPrevResultQuantityInStockNow=0;
-				$bIsSameId=false;
-				$consolidatedUpdatedResult = array();
-
-				foreach ($updatedResult as $valueTemp) {
+/*				
+				//edited by Mike, 20250424
+				if (!isset($bIsDeleteItemFromSearch)) {
+*/
+					//put together the resultQuantityInStockNow of the same items 
+					//$iPrevItemId=-1;
+					//$iPrevResultQuantityInStockNow=0;
 					$bIsSameId=false;
-					
-					foreach ($consolidatedUpdatedResult as &$consolidatedValueTemp) {
-						if ($valueTemp['item_id']==$consolidatedValueTemp['item_id']) {
-							//echo "DITO!";
-							$consolidatedValueTemp['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
-							//continue;
-							
-							$bIsSameId=true;
-							break;
+					$consolidatedUpdatedResult = array();
+
+					foreach ($updatedResult as $valueTemp) {
+						$bIsSameId=false;
+						
+						foreach ($consolidatedUpdatedResult as &$consolidatedValueTemp) {
+							if ($valueTemp['item_id']==$consolidatedValueTemp['item_id']) {
+								//echo "DITO!";
+								$consolidatedValueTemp['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+								//continue;
+								
+								$bIsSameId=true;
+								break;
+							}
+						}
+						unset($consolidatedValueTemp);
+						
+						//echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+						
+						if (!$bIsSameId) {
+							array_push($consolidatedUpdatedResult,$valueTemp);
 						}
 					}
-					unset($consolidatedValueTemp);
+	/*				
+					echo "<br/>CONSOLIDATED; CHECK!!!<br/>";
 					
-					//echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
-					
-					if (!$bIsSameId) {
-						array_push($consolidatedUpdatedResult,$valueTemp);
-					}
+					foreach ($consolidatedUpdatedResult as $consolidatedValueTemp) {
+						echo $consolidatedValueTemp['resultQuantityInStockNow']." / ".$consolidatedValueTemp['quantity_in_stock']."<br/>";
+					}				
+	*/
+					$updatedResult=$consolidatedUpdatedResult;
 				}
-/*				
-				echo "<br/>CONSOLIDATED; CHECK!!!<br/>";
-				
-				foreach ($consolidatedUpdatedResult as $consolidatedValueTemp) {
-					echo $consolidatedValueTemp['resultQuantityInStockNow']." / ".$consolidatedValueTemp['quantity_in_stock']."<br/>";
-				}				
-*/
-				$updatedResult=$consolidatedUpdatedResult;
 				//-----				
 				
 				if (isset($updatedResult[0])) {
@@ -831,8 +835,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								//echo $value['quantity_in_stock'];
 
-								//edited by Mike, 20200408
-								if ($value['quantity_in_stock']<0) {
+								//edited by Mike, 20250424; from 20200408
+								if (strpos(strtoupper($value['item_name']),"*")!==false) {
+									echo 9999;									
+								}	
+								else if ($value['quantity_in_stock']<0) {
 									echo 9999;
 								}
 								//added by Mike, 20200614
@@ -855,7 +862,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	//									echo $value['quantity_in_stock'];
 										//edited by Mike, 20250423; from 20221008
 										//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
-										echo $value['resultQuantityInStockNow'];
+
+										//edited by Mike, 20250424
+										//echo $value['resultQuantityInStockNow'];
+										if (!isset($bIsDeleteItemFromSearch)) {
+											echo $value['resultQuantityInStockNow'];
+										}
+										else {
+											if ($value['is_lost_item']) {
+												echo "<span style='color:red;font-weight:bold;'>-".$value['resultQuantityInStockNow']."</span>";
+											}
+											else {
+												echo $value['resultQuantityInStockNow'];
+											}
+										}
 									}
 								}
 							?>
@@ -864,8 +884,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class =column>				
 								<div id=expirationId<?php echo $iCount?>>
 							<?php
+								//edited by Mike, 20250424
+								if (strpos(strtoupper($value['item_name']),"*")!==false) {
+									echo '<span>N/A</span>';
+								}	
 								//echo $value['expiration_date'];
-								if ($value['expiration_date']==0) {
+								else if ($value['expiration_date']==0) {
 									if ($value['quantity_in_stock']==-1) {
 										echo "UNKNOWN";
 									}
