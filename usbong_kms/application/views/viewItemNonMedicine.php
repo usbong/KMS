@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250421; 20250415
+' @date updated: 20250425; 20250421
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -526,12 +526,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			//added by Mike, 20200911
 			var vatCheckedBox = document.getElementById("vatCheckBoxParam");
+
+			//added by Mike, 20250425			
+			var isPatientTransactionScPwd = document.getElementById("isPatientTransactionScPwdParam");
 			
+			//alert(isPatientTransactionScPwd);
+
 			if (vatCheckedBox.checked) {
-				numericalFee = eval(fee)
-				fee = numericalFee + numericalFee*.12
+				if (isPatientTransactionScPwd!==null) {
+					if (isPatientTransactionScPwd.value==1) {
+						alert("Patient is SC or PWD card holder.");
+						vatCheckedBox.checked=0;
+					}
+					else {
+						//add VAT
+						numericalFee = eval(fee);
+						fee = numericalFee + numericalFee*.12;
+					}
+				}
+				else {
+					//add VAT
+					numericalFee = eval(fee);
+					fee = numericalFee + numericalFee*.12;
+				}
 			}
-		
+			
 			//added by Mike, 20250324
 			//if not a number
 			if (isNaN(quantity)) {
@@ -663,7 +682,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//edited by Mike, 20201210
 //			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"/"+patientId+"');?>";
 
-			//note: all carts should include a patient transation with Medical Doctor Identification
+			//note: all carts should include a patient transaction with Medical Doctor Identification
 			window.location.href = "<?php echo site_url('browse/payTransactionItemPurchase/2/"+itemId+"/"+patientId+"/"+medicalDoctorId+"');?>";
 /*						
 			alert("patientId: " +patientId);
@@ -1158,6 +1177,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<input type="hidden" id="isPatientTransactionGratisParam" value="0">
 <?php					
 				}
+				
+				//added by Mike, 20250425
+				//for SC/PWD;
+				if ((strpos($cartValue['notes'],"SC;")!==false) ||
+					(strpos($cartValue['notes'],"PWD;")!==false)) {
+?>
+					<input type="hidden" id="isPatientTransactionScPwdParam" value="1">
+<?php
+				}
+				else {
+?>					
+					<input type="hidden" id="isPatientTransactionScPwdParam" value="0">
+<?php					
+				}				
 		?>				
 		
 					  <tr class="row">
