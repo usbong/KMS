@@ -2731,6 +2731,35 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $this->db->insert_id();
 	}	
 
+	//added by Mike, 20250425
+	public function checkIfHasAddedPatientInCartList()//$param) 
+	{		
+		$this->load->library("session");
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+		if (!isset($ipAddress) and !isset($machineAddress)) {
+			$this->setClientIpAndMachineAddresses();
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");			
+		}
+		
+		$this->db->select('patient_id, notes');
+		$this->db->where('transaction_date', date('m/d/Y'));
+		//$this->db->where('notes', "UNPAID");		
+		$this->db->where('patient_id!=', 0);		
+
+		$this->db->like('notes',"UNPAID");
+		$this->db->where('ip_address_id', $ipAddress);
+		$this->db->where('machine_address_id', $machineAddress);
+
+		$query = $this->db->get('transaction');
+		//$row = $query->row();		
+		$rowArray = $query->result_array();
+		return $rowArray;
+	}
+	
+	
 	//added by Mike, 20200330; edited by Mike, 20200703
 	public function addTransactionItemPurchase($param) 
 	{		
@@ -3744,6 +3773,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			else if ($rowValue['item_type_id']==3) { //snack
 			}
 			else {
+				//echo "DITO!!!";
 				//non-medicine item
 				//less 12% VAT
 				//note: algebra; variables = containers whose value inside may vary
@@ -3760,19 +3790,18 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 							'fee' => $rowValue['fee'],
 							'pas_fee' => $rowValue['fee'],
 						);
-/*
-				$this->db->where('notes',"UNPAID");
-				$this->db->where('transaction_date', date('m/d/Y'));
-				//added by Mike, 20200821
-				$this->db->where('ip_address_id', $ipAddress);
-				$this->db->where('machine_address_id', $machineAddress);
-*/
+
+				////$this->db->where('notes',"UNPAID");
+				////$this->db->where('transaction_date', date('m/d/Y'));
+				//////added by Mike, 20200821
+				////$this->db->where('ip_address_id', $ipAddress);
+				////$this->db->where('machine_address_id', $machineAddress);
+
 				$this->db->where('transaction_id', $rowValue['transaction_id']);
 
 				$this->db->update('transaction', $data);
-
-
 			}		
+			
 /*			echo "totalFeeMedicine: ".$totalFeeMedicine."<br/>";
 			echo "totalFeeNonMedicine: ".$totalFeeNonMedicine."<br/>";
 			echo ">";
@@ -3790,6 +3819,30 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return null;		
 	}	
 
+	//added by Mike, 20250425
+	public function deleteAllNonMedItemsInCart() //$patientId) 
+	{			
+		//added by Mike, 20200821
+		$this->load->library("session");
+		$ipAddress = $this->session->userdata("client_ip_address");
+		$machineAddress = $this->session->userdata("client_machine_address");
+		
+		if (!isset($ipAddress) and !isset($machineAddress)) {
+			$this->setClientIpAndMachineAddresses();
+			$ipAddress = $this->session->userdata("client_ip_address");
+			$machineAddress = $this->session->userdata("client_machine_address");
+		}
+
+		$this->db->where('transaction_date', date('m/d/Y'));
+
+		$this->db->like('notes',"UNPAID");
+		$this->db->where('ip_address_id', $ipAddress);
+		$this->db->where('machine_address_id', $machineAddress);
+		$this->db->where('item_id!=', 0);
+		$this->db->where('patient_id', 0);
+		$this->db->where('pas_fee!=', 0); //non-med	
+		$this->db->delete('transaction');
+	}	
 
 	//added by Mike, 20200411; edited by Mike, 20200916
 	//add new transaction with the total for each item type
