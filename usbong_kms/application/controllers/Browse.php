@@ -4137,9 +4137,13 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['transactionDate'] = date('m/d/Y');
 		
 		$this->load->model('Browse_Model');
+		
+		//echo ">>>";
 
 		//added by Mike, 20201122
 		if (isset($_SESSION["addedVAT"])) {
+		//echo ">>>>>>";
+
 			$data['addedVAT']=$_SESSION["addedVAT"];
 			if (isset($data['addedVAT']) and ($data['addedVAT'])) {				
 				$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
@@ -4155,7 +4159,7 @@ class Browse extends CI_Controller { //MY_Controller {
 			//added by Mike, 20250327
 			//TODO: -reverify: this; if iPad gets stuck, close all tabs, then return to home page;
 			//don't add the patient
-			//$this->session->unset_userdata('hasAddedPatientInCartList');
+			$this->session->unset_userdata('hasAddedPatientInCartList');
 			
 			//echo "HALLO";
 		}
@@ -4704,7 +4708,22 @@ class Browse extends CI_Controller { //MY_Controller {
 //		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
 //		$data['transactionId'] = $this->Browse_Model->addTransactionMedicinePurchase($data);
 
-		$this->Browse_Model->addTransactionItemPurchase($data);
+		//edited by Mike, 20250425
+		//$this->Browse_Model->addTransactionItemPurchase($data);
+		
+		if ($itemTypeId==2) { //NON-MED
+			if (count($this->Browse_Model->checkIfHasAddedPatientInCartList())>0) {
+				$this->Browse_Model->addTransactionItemPurchase($data);
+			}
+			else {
+				//echo "<font color='#FF0000'><b>PAALALA: ADD PATIENT FIRST BEFORE ADDING NON-MED ITEMS.</b></font><br/>";
+				
+				echo "<font color='#FF0000'><b>PAALALA: <a style='color:#222222' target='_blank' href='".site_url('browse/searchPatient')."'>ADD PATIENT</a> FIRST BEFORE ADDING NON-MED ITEMS.</b></font><br/>";
+			}
+		}
+		else {
+			$this->Browse_Model->addTransactionItemPurchase($data);
+		}
 		
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 
@@ -4908,8 +4927,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		if (isset($_SESSION["addedVAT"])) {
 			$data['addedVAT']=$_SESSION["addedVAT"];
 			if (isset($data['addedVAT']) and ($data['addedVAT'])) {
-				//edited by Mike, 20210226
-				
+				//edited by Mike, 20210226				
 				$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
 
 				//execute these due to select patients classified as SC, i.e. "Senior Citizens"
@@ -4925,27 +4943,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20250328
 		$this->session->unset_userdata('hasAddedPatientInCartList');
 
-/*		//removed by Mike, 20201122
-		//execute these due to select patients classified as SC, i.e. "Senior Citizens"
-		$this->session->unset_userdata('addedVAT');
-		$data['addedVAT'] = False;		
-*/	
-		
-
-/*		//removed by Mike, 20201122
-		date_default_timezone_set('Asia/Hong_Kong');
-		$dateTimeStamp = date('Y/m/d H:i:s');
-		
-		$data['transactionDate'] = date('m/d/Y');
-		$this->load->model('Browse_Model');
-
-		//added by Mike, 20201115
-		//lessVATBeforePayTransactionItemPurchase($itemTypeId, $itemId, $patientId)		
-		$data['outputTransaction'] = $this->Browse_Model->lessVATBeforePayTransactionItemPurchase($patientId);
-*/
-	
-//		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
-
+		//added by Mike, 20250425
+		//echo "DELETE!!!";
+		$this->Browse_Model->deleteAllNonMedItemsInCart();
 
 		//added by Mike, 20230408
 		$data['transactionDate'] = $data['transactionDate']."DEL";
