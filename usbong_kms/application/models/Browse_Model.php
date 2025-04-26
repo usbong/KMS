@@ -6160,8 +6160,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t3.patient_name, t3.patient_id');
 */
 		//edited by Mike, 20230304
-		//edited by Mike, 20210110
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.medical_doctor_id, t3.patient_name, t3.patient_id');
+		//edited by Mike, 20250426; from 20210110
+		
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.medical_doctor_id, t3.patient_name, t3.patient_id');
+
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.med_fee, t2.pas_fee, t2.snack_fee, t2.medical_doctor_id, t3.patient_name, t3.patient_id');
 
 /*
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_type_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.fee_quantity, t2.notes, t2.medical_doctor_id, t2.patient_id');
@@ -6277,8 +6280,60 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			unset($row);
 		}		
 		//------------------------------
-	
-		return $rowArray;			
+		
+		//added by Mike, 20250426
+		//rearrange the items so that each is together with the same type
+		$rowArrayGrouped = array();
+		$rowArrayGroupedMedItem = array();
+		$rowArrayGroupedNonMedItem = array();
+		$rowArrayGroupedSnackItem = array();
+		//$rowArrayGroupedPatient = array();
+		
+		foreach ($rowArray as $row) {
+/*
+echo $row['patient_id']."; ";
+echo "HERE".$row['item_type_id'];//."<br/>";
+*/			
+			if (intval($row['patient_id'])!=0) {
+				//echo $row['patient_name'];
+				//put in front of array
+				array_unshift($rowArrayGrouped,$row);
+				//$patientRow=$row;
+				//array_push($rowArrayGroupedPatient,$row);
+			}
+			else {
+				//med item
+				//else if ($row['med_fee']!==0) {
+				if (intval($row['item_type_id'])==1) {
+					array_push($rowArrayGroupedMedItem,$row);
+				}
+				//non-med item			
+				//else if ($row['pas_fee']!==0) {
+				else if (intval($row['item_type_id'])==2) {
+					array_push($rowArrayGroupedNonMedItem,$row);
+				}			
+				//snack item
+				//else if ($row['snack_fee']!==0) {
+				else if (intval($row['item_type_id'])==3) {
+					array_push($rowArrayGroupedSnackItem,$row);
+				}
+			}
+		}
+		
+		$rowArrayGrouped = array_merge($rowArrayGrouped,$rowArrayGroupedMedItem);
+		$rowArrayGrouped = array_merge($rowArrayGrouped,$rowArrayGroupedNonMedItem);
+		$rowArrayGrouped = array_merge($rowArrayGrouped,$rowArrayGroupedSnackItem);
+		//array_merge($rowArrayGrouped,$rowArrayGroupedPatient);
+/*		
+		//check!!
+		echo "<br/>CHECK!!<br/>";
+		foreach ($rowArrayGrouped as $row) {
+echo $row['patient_id']."; ";
+echo "DITO".$row['item_type_id']."<br/>";
+		}
+*/		
+		//return $rowArray;			
+		return $rowArrayGrouped;
 	}		
 
 	//added by Mike, 20200406; edited by Mike, 20200603
