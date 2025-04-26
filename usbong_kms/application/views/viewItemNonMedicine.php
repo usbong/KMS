@@ -1200,32 +1200,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						//patient service
 						if ($iCurrType==0) {
-							//echo "DITO!!!<br/><br/>";
-	?>					
-							<tr class="row">
-							<td class ="column">				
-							</td>
-							<td class ="column">				
-								<div class="">
-					<?php
-									echo "<b>SERVICE TOTAL</b>";
-					?>		
-								</div>								
-							</td>
-							<td class ="column">				
-							</td>
-							<td class ="column">				
-							</td>
-							<td class ="column">				
-							</td>
-							<td class ="column">				
-							</td>
-							<td class="columnFee">
-							<?php
-								echo "<b>".number_format($dPatientServiceTotal, 2, '.', '')."</b>";
-							?>
-							</td>
-	<?php						
+							if ($dPatientServiceTotal!=0) {				
+								//echo "DITO!!!<br/><br/>";
+		?>					
+								<tr class="row">
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+									<div class="">
+						<?php
+										echo "<b>SERVICE TOTAL</b>";
+						?>		
+									</div>								
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class="columnFee">
+								<?php
+									echo "<b>".number_format($dPatientServiceTotal, 2, '.', '')."</b>";
+								?>
+								</td>
+		<?php						
+							}
 						}
 						//med item
 						//if (intval($cartValue['item_type_id'])==1) {
@@ -1517,7 +1519,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php				
 					$iCount++;		
 //					echo "<br/>";
-				}				
+				}		
+
+				if ($cartValue['snack_fee']!=0) {				
 ?>
 				<tr class="row">
 					<td class ="column">				
@@ -1545,8 +1549,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</td>
 					
 				</tr>
+<?php
+				}
+?>
+				
 				<!-- TOTAL -->				
 					  <tr class="row">
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
 						<td class ="column">				
 						</td>
 						<td class ="columnGrandTotal">				
@@ -1555,12 +1569,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "<b>GRAND TOTAL</b>";
 				?>		
 							</div>								
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
 						</td>
 						<td class ="column">				
 						=

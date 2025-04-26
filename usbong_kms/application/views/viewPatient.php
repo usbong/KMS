@@ -1280,6 +1280,7 @@ else {
 						
 						//patient service
 						if ($iCurrType==0) {
+							if ($dPatientServiceTotal!=0) {				
 							//echo "DITO!!!<br/><br/>";
 	?>					
 							<tr class="row">
@@ -1306,6 +1307,7 @@ else {
 							?>
 							</td>
 	<?php						
+							}
 						}
 						//med item
 						//if (intval($cartValue['item_type_id'])==1) {
@@ -1546,8 +1548,9 @@ else {
 					$iCount++;		
 //					echo "<br/>";
 				}				
+				
+				if ($cartValue['snack_fee']!=0) {
 ?>
-
 				<tr class="row">
 					<td class ="column">				
 					</td>
@@ -1574,9 +1577,17 @@ else {
 							</td>
 					
 				</tr>
-
+<?php
+				}
+?>
 				<!-- TOTAL -->		
 					  <tr class="row">
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
 						<td class ="column">				
 						</td>
 						<td class ="columnGrandTotal">				
@@ -1585,12 +1596,6 @@ else {
 								echo "<b>GRAND TOTAL</b>";
 				?>		
 							</div>								
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
 						</td>
 						<td class ="column">				
 						=
