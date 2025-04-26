@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2023 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20230128; from 20220625
+' @date updated: 20250426; from 20230128
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -123,8 +123,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: right
-						}						
+							text-align: left;
+						}					
+
+						td.columnGrandTotal
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: right;
+						}							
 
 						td.columnFee
 						{
@@ -1018,7 +1024,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$hasPatientInCartListParamValue = False;
 
 			$cartListResultCount = 0;
-			
+						
 			if ((isset($cartListResult)) and ($cartListResult!=False)) {
 				$cartListResultCount = count($cartListResult);
 			}
@@ -1051,6 +1057,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 				$iCount = 1;
 				$cartFeeTotal = 0;
+				
+				//added by Mike, 20250426
+				$iCurrType=0; //patient; at the top of list
+				$dMedItemTotal=0;
+				$dNonMedItemTotal=0;
+				$dSnackItemTotal=0;
+				$dPatientServiceTotal=0;			
+				
 				foreach ($cartListResult as $cartValue) { 
 /*	
 				$value = $result[0];
@@ -1062,6 +1076,124 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				//added by Mike, 20211128
 //				echo "cartValueNotes: ".$cartValue['notes']."<br/>";
+				
+				if (intval($cartValue['patient_id'])!=0) {
+					$dPatientServiceTotal=$cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
+				}
+				else {
+/*					
+					echo "iCurrType: ".$iCurrType." ; ";
+					echo "item_type_id: ".$cartValue['item_type_id']."<br/>";
+*/					
+					//med item
+					if ($cartValue['item_type_id']==1) {
+						$dMedItemTotal+=$cartValue['med_fee'];
+					}
+					//non-med item
+					else if ($cartValue['item_type_id']==2) {
+						$dNonMedItemTotal+=$cartValue['pas_fee'];
+					}
+					//snack item
+					else if ($cartValue['item_type_id']==3) {
+						$dSnackItemTotal+=$cartValue['snack_fee'];
+					}
+					
+					if ($iCurrType!=$cartValue['item_type_id']) {
+						//echo "CHANGE!!! iCurrType: ".$iCurrType."<br/><br/>";
+						
+						//patient service
+						if ($iCurrType==0) {
+							//echo "DITO!!!<br/><br/>";
+	?>					
+							<tr class="row">
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+								<div class="">
+					<?php
+									echo "<b>SERVICE TOTAL</b>";
+					?>		
+								</div>								
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class="columnFee">
+							<?php
+								echo "<b>".number_format($dPatientServiceTotal, 2, '.', '')."</b>";
+							?>
+							</td>
+	<?php						
+						}
+						//med item
+						//if (intval($cartValue['item_type_id'])==1) {
+						else if ($iCurrType==1) {
+							//echo "DITO!!!<br/><br/>";
+	?>					
+							<tr class="row">
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+								<div class="">
+					<?php
+									echo "<b>MED TOTAL</b>";
+					?>		
+								</div>								
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class="columnFee">
+							<?php
+								echo "<b>".number_format($dMedItemTotal, 2, '.', '')."</b>";
+							?>
+							</td>
+	<?php						
+						}
+						//non-med item
+						//else if (intval($cartValue['item_type_id'])==2) {
+						else if ($iCurrType==2) {
+	?>					
+							<tr class="row">
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+								<div class="">
+					<?php
+									echo "<b>NON-MED TOTAL</b>";
+					?>		
+								</div>								
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class="columnFee">
+							<?php
+								echo "<b>".number_format($dNonMedItemTotal, 2, '.', '')."</b>";
+							?>
+							</td>							
+	<?php						
+						}						
+						//snack item
+						//put before the GRAND TOTAL row			
+					}
+					$iCurrType=$cartValue['item_type_id'];
+				}
 				
 				if (strpos($cartValue['notes'],"NC;")!==false) {
 ?>
@@ -1209,16 +1341,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //					echo "<br/>";
 				}				
 ?>
+<tr class="row">
+					<td class ="column">				
+					</td>
+					<td class ="column">				
+						<div class="">
+			<?php
+							echo "<b>SNACK TOTAL</b>";
+			?>		
+						</div>								
+					</td>		
+</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class="columnFee">
+							<?php
+								echo "<b>".number_format($dSnackItemTotal, 2, '.', '')."</b>";
+							?>
+							</td>
+					
+				</tr>
 				<!-- TOTAL -->				
 					  <tr class="row">
 						<td class ="column">				
+						</td>
+						<td class ="columnGrandTotal">				
 							<div class="total">
 				<?php
-								echo "<b>TOTAL</b>";
+								echo "<b>GRAND TOTAL</b>";
 				?>		
 							</div>								
-						</td>
-						<td class ="column">				
 						</td>
 						<td class ="column">				
 						</td>
