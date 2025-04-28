@@ -3079,7 +3079,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		//edited by Mike, 20200704
 		//if ($row->notes=="UNPAID") {
-		if ((isset($row)) and ($row->notes=="UNPAID")) {
+		//edited by Mike, 20250428
+		//if ((isset($row)) and ($row->notes=="UNPAID")) {
+		if ((isset($row)) and (strpos(strtoupper($row->notes),"UNPAID")!==false)) {
 			$this->db->where('transaction_id',$iTransactionId);
 			$this->db->delete('transaction');			
 
