@@ -106,7 +106,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #eeeeee;
 							border: 0px solid #333333;
 						}						
-		
+
+						div.quantityInStockDiv
+						{
+							text-align: center;							
+						}
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -541,7 +546,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//echo '<div>Showing <b>'.count($result).'</b> results found.</div>';			
 
 					$iCount = 0;
-					$updateResult = [];
+					$updatedResult = [];
 					foreach ($result as $value) {
 						if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
 						}
@@ -550,9 +555,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 */						
 						else {
+/*
 							//added by Mike, 20250421
-							//echo "DITO!!!".$value['quantity_in_stock']."<br/>";
-							//echo $value['is_lost_item']."<br/><br/>";
+							echo "DITO!!!".$value['quantity_in_stock']."<br/>";
+							echo $value['is_lost_item']."<br/><br/>";
+*/
 							
 							if (!$value['is_lost_item']) {
 								$iTotalQuantityInStock+=$value['quantity_in_stock'];
@@ -576,7 +583,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							}
 						}
 						
-						array_push($updateResult,$value);
+						array_push($updatedResult,$value);
 					}
 					//edited by Mike, 20221013
 					//echo '<div>Showing <b>'.(count($result)-$iCount).'</b> results found.</div>';				
@@ -588,11 +595,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$itemId=-1;
 					$itemCount=0;
 					
-					//sort($updateResult);
-					$cleanedUpdateResult = array();
+					//sort($updatedResult);
+					$cleanedupdatedResult = array();
 					
-					foreach ($updateResult as $valueTemp) {
-						$myNextElementTemp=next($updateResult);
+					foreach ($updatedResult as $valueTemp) {
+						$myNextElementTemp=next($updatedResult);
 							
 						//echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
 							
@@ -605,95 +612,165 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							}
 						}	
 
-						array_push($cleanedUpdateResult, $valueTemp);
+						array_push($cleanedupdatedResult, $valueTemp);
 
 						$itemCount++;
 					}		
 					
-					sort($cleanedUpdateResult);
-					
-					//TODO: -reverify: if this is still necessary
-/*				
-					$itemIdGroupArray = array();
-					$groupSortedCleanedUpdateResult = array();
-					
-					foreach ($cleanedUpdateResult as $valueTemp) {
-						$myNextElementTemp=next($cleanedUpdateResult);
-							
-						if ($myNextElementTemp) { //element exists
-							//if has the same id;
-							if ($myNextElementTemp['item_id']==$valueTemp['item_id']) {
-								array_push($itemIdGroupArray, $valueTemp);
-							}
-							else {
-								array_push($itemIdGroupArray, $valueTemp);
-
-								rsort($itemIdGroupArray);
-								
-////								foreach ($itemIdGroupArray as $valueTempTwo) {
-////									echo $valueTempTwo['item_name']."; ".$valueTempTwo['resultQuantityInStockNow']."<br/>";
-////								}
-								
-								$groupSortedCleanedUpdateResult= array_merge($groupSortedCleanedUpdateResult, $itemIdGroupArray);
-								$itemIdGroupArray=array();
-							}
-						}	
-						//current element is already the last
-						else {
-								array_push($itemIdGroupArray, $valueTemp);
-							
-								rsort($itemIdGroupArray);
-								$groupSortedCleanedUpdateResult= array_merge($groupSortedCleanedUpdateResult, $itemIdGroupArray);
-								$itemIdGroupArray=array();
-						}		
-					}	
-					
-					//noted: in viewItemNonMedicine, the displayed available quantity could be any of the items in the list for that item_id
-					
-					$updateResult = $groupSortedCleanedUpdateResult; //$cleanedUpdateResult;
-*/					
-					$updateResult = $cleanedUpdateResult; 
+					sort($cleanedupdatedResult);
+				
+					$updatedResult = $cleanedupdatedResult; 
 					//--------------------------
 
-					$updatedResultCount = count($updateResult);
+					$updatedResultCount = count($updatedResult);
+					
+				//edited by Mike, 20250424
+/*					
+				if (!isset($bIsDeleteItemFromSearch)) {				
+					$bIsSameItemId=false;
+					$itemId=-1;
+					$itemCount=0;
+					//sort($updatedResult);
+					$cleanedupdatedResult = array();
+					$iTotalQuantityLostItem=0;
+					
+					foreach ($updatedResult as $valueTemp) {
+						//$myNextElementTemp=next($updatedResult);
+							
+						////echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+						
+						if ($valueTemp['is_lost_item']) {
+						//if ($valueTemp['resultQuantityInStockNow']<0) {
+							
+						  ////echo "DITO!<br/>";
+						  //$iTotalQuantityLostItem+=$valueTemp['resultQuantityInStockNow'];
+						  
+						  ////echo ">START: ".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+						  
+						  ////echo "minus ".$valueTemp['resultQuantityInStockNow']."<br/>";
+						  //current($cleanedupdatedResult)['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+						  
+						  if ($itemCount>0) {
+							  //$cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
 
-					if ($updatedResultCount==1) {
-						//edited by Mike, 20221020
-//						echo '<div>Showing <b>'.$updatedResultCount.'</b> result found.</div>';
-						echo '<div>Showing <b>1</b> result found.</div>';
-					}
-					//edited by Mike, 20250407
-					else if ($updatedResultCount<=0) {
-						//added by Mike, 20250407
-						if (isset($value['item_name'])) {	
-							echo "<b>".strtoupper($value['item_name'])."</b>";
-	?>						
-							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunctionItemText('<?php echo $value['item_name'];?>')">⿻</button>
-	<?php						
-							//echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+							  $cleanedupdatedResult[$itemCount-1]['resultQuantityInStockNow']+=($valueTemp['resultQuantityInStockNow']*-1);
 
-							$iCurrentTotal = $iTotalQuantityInStock-$iTotalQuantityLostItem;
-							//use this with med items; not non-med items
-							//$iCurrentTotal = $value['resultQuantityInStockNow'];
+						  }
 
-							echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
-
-
-							echo "<br/><br/>";
+						  ////echo ">>>".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+						  
+						  continue;
 						}
+						else {
+							
+							////echo "ADD<br/>";
+							
+							array_push($cleanedupdatedResult, $valueTemp);
+						}
+						
+						$itemCount++;
+					}		
+					
+					//sort($cleanedupdatedResult);					
 
-						echo '<div>Showing <b>0</b> result found.</div>';
-					}
-					else {
-						//edited by Mike, 20221020
-						//TO-DO: -reverify: this
-//						echo '<div>Showing <b>'.($updatedResultCount-$iCount).'</b> results found.</div>';				
-						echo '<div>Showing <b>'.($updatedResultCount).'</b> results found.</div>';				
-					}
+					//added by Mike, 20250421
+					//$updatedResult = array(); //clear contents
 
-/* //edited by Mike, 20221013
-				}			
+					$updatedResult = $cleanedupdatedResult; //array();
+					$updatedResultCount=0;
+*/					
+
+
+
+					$bIsSameId=false;
+					$consolidatedUpdatedResult = array();
+
+					foreach ($updatedResult as $valueTemp) {
+						$bIsSameId=false;
+						
+						foreach ($consolidatedUpdatedResult as &$consolidatedValueTemp) {
+							if ($valueTemp['item_id']==$consolidatedValueTemp['item_id']) {
+								//echo "DITO!";
+								$consolidatedValueTemp['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
+								
+								//continue;
+								
+								$bIsSameId=true;
+								break;
+							}
+						}
+						unset($consolidatedValueTemp);
+						
+						//echo $valueTemp['resultQuantityInStockNow']." / ".$valueTemp['quantity_in_stock']."<br/>";
+						
+						if (!$bIsSameId) {
+							array_push($consolidatedUpdatedResult,$valueTemp);
+						}
+					}
+					
+					////echo "<br/>CONSOLIDATED; CHECK!!!<br/>";
+					
+					////foreach ($consolidatedUpdatedResult as $consolidatedValueTemp) {
+					////	echo $consolidatedValueTemp['resultQuantityInStockNow']." / ".$consolidatedValueTemp['quantity_in_stock']."<br/>";
+					////}				
+	
+					$updatedResult=$consolidatedUpdatedResult;
+				////}
+				//-----							
+
+
+				if (isset($updatedResult[0])) {
+					//echo ">>>>>>>>>".$updatedResult[0]['item_id'];
+					
+					$updatedResultCount = count($updatedResult);
+				}				
+				
+				//echo ">>updatedResultCount: ".$updatedResultCount."<br/>";
+/*
+				if ($updatedResultCount==1) {
+					echo '<div>Showing <b>1</b> result found.</div>';
+				}
+				else*/ if ($updatedResultCount<=0) {
+					//added by Mike, 20250407
+					if (isset($value['item_name'])) {	
+						echo "<b>".strtoupper($value['item_name'])."</b>";
+?>						
+						<button class="copyToClipboardButton" onclick="myCopyToClipboardFunctionItemText('<?php echo $value['item_name'];?>')">⿻</button>
+<?php						
+						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
+						//edited by Mike, 20250428
+						//$iCurrentTotal = $iTotalQuantityInStock-$iTotalQuantityLostItem;
+						
+						$iCurrentTotal = $iTotalQuantityInStock-$iTotalQuantityLostItem-$value['item_total_sold'];
+						
+/*						
+						//echo $updatedResult[0]['resultQuantityInStockNow'].";";
+						echo $iTotalQuantityInStock.";";
+						echo $iTotalQuantityLostItem*2;
+						echo ">>>".$iCurrentTotal;
 */
+						
+						//use this with med items; not non-med items
+						//$iCurrentTotal = $value['resultQuantityInStockNow'];
+
+						//edited by Mike, 20250428
+						//TODO: -update: this
+						echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
+						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$value['resultQuantityInStockNow'].")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+
+						echo "<br/><br/>";
+					}
+
+					echo '<div>Showing <b>0</b> result found.</div>';
+				}
+				else {
+					//edited by Mike, 20221020
+					//TO-DO: -reverify: this
+//						echo '<div>Showing <b>'.($updatedResultCount-$iCount).'</b> results found.</div>';				
+					echo '<div>Showing <b>'.($updatedResultCount).'</b> results found.</div>';				
+				}
 
 				echo "<br/>";
 				echo "<table class='search-result'>";
@@ -736,21 +813,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//removed by Mike, 20250408
 				$iCount = 1;
 				
-				//sort($updateResult);
+				//sort($updatedResult);
 
 				//edited by Mike, 20250421; from 20221013
-				//if (!isset($updateResult)) {
+				//if (!isset($updatedResult)) {
 				if ($updatedResultCount==0) {					
-					$updateResult=array(); //[];
+					$updatedResult=array(); //[];
 				}
 
 				//edited by Mike, 20221008
 				//foreach ($result as $value) {
-				foreach ($updateResult as $value) {
+				foreach ($updatedResult as $value) {
 		?>				
 		
 					  <tr class="row">
-						<td class ="column">				
+						<td class="column">				
 							<a target='_blank' href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div id="itemNameDivId<?php echo $iCount?>" class="itemName">
 				<?php
@@ -761,12 +838,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class =column>		
+						<td class="column">		
 							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
 							<!-- paste clipboard icon 📋 -->
 						</td>
-						<td class =column>				
-								<div id=quantityInStockId<?php echo $iCount?>>
+						<td class="column">				
+								<div class="quantityInStockDiv" id=quantityInStockId<?php echo $iCount?>>
 							<?php
 								//echo $value['quantity_in_stock'];
 
@@ -786,8 +863,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 									else {
 	//									echo $value['quantity_in_stock'];
-										//edited by Mike, 20221008
-										echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+										//edited by Mike, 20250428; from 20221008
+										//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
+
+										//edited by Mike, 20250424
+										//echo $value['resultQuantityInStockNow'];
+										if (!isset($bIsDeleteItemFromSearch)) {
+											echo $value['resultQuantityInStockNow'];
+										}
+										else {
+											if ($value['is_lost_item']) {
+												echo "<span style='color:red;font-weight:bold;'>-".$value['resultQuantityInStockNow']."</span>";
+											}
+											else {
+												echo $value['resultQuantityInStockNow'];
+											}
+										}										
 									}
 									
 /*	//removed by Mike, 20221008									
@@ -832,10 +923,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>
 						<?php
 							//added by Mike, 20250314
-							$updateResultTemp = array();
-							$updateResultTemp = $updateResult;
+							$updatedResultTemp = array();
+							$updatedResultTemp = $updatedResult;
 							
-							$myNextElement=next($updateResult);
+							$myNextElement=next($updatedResult);
 							
 							if ($myNextElement) { //element exists
 								if ($myNextElement['item_id']!=$value['item_id']) {

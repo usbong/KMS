@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250426; from 20230128
+' @date updated: 20250428; from 20250426
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -1064,6 +1064,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$dNonMedItemTotal=0;
 				$dSnackItemTotal=0;
 				$dPatientServiceTotal=0;			
+				$iCountTransactionTypes=0;
 				
 				foreach ($cartListResult as $cartValue) { 
 /*	
@@ -1071,7 +1072,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */				
 				
 				if ($cartValue['patient_id']!=0) {
-					$patientId = $cartValue['patient_id'];
+					$dPatientServiceTotal=$cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
+					
+					//added by Mike, 20250428
+					$patientId=$cartValue['patient_id'];
+					
+					$iCountTransactionTypes++;					
 				}
 
 				//added by Mike, 20211128
@@ -1079,6 +1085,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				
 				if (intval($cartValue['patient_id'])!=0) {
 					$dPatientServiceTotal=$cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
+					
+					$iCountTransactionTypes++;
 				}
 				else {
 /*					
@@ -1088,14 +1096,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//med item
 					if ($cartValue['item_type_id']==1) {
 						$dMedItemTotal+=$cartValue['med_fee'];
+						$iCountTransactionTypes++;
 					}
 					//non-med item
 					else if ($cartValue['item_type_id']==2) {
 						$dNonMedItemTotal+=$cartValue['pas_fee'];
+						$iCountTransactionTypes++;
 					}
 					//snack item
 					else if ($cartValue['item_type_id']==3) {
 						$dSnackItemTotal+=$cartValue['snack_fee'];
+						$iCountTransactionTypes++;
 					}
 					
 					if ($iCurrType!=$cartValue['item_type_id']) {
@@ -1338,42 +1349,108 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						</td>						
 					  </tr>
-		<?php				
+<?php				
 					$iCount++;		
 //					echo "<br/>";
 				}				
+				
+				//edited by Mike, 20250428
+				if ($iCountTransactionTypes>1) {
 
-				if ($cartValue['snack_fee']!=0) {				
+					if ($cartValue['med_fee']!=0) {
 ?>
-				<tr class="row">
-					<td class ="column">				
+					<tr class="row">
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+							<div class="">
+				<?php
+								echo "<b>MED TOTAL</b>";
+				?>		
+							</div>								
+						</td>		
 					</td>
-					<td class ="column">				
-						<div class="">
-			<?php
-							echo "<b>SNACK TOTAL</b>";
-			?>		
-						</div>								
-					</td>		
-</td>
-							<td class ="column">				
-							</td>
-							<td class ="column">				
-							</td>
-							<td class ="column">				
-							</td>
-							<td class ="column">				
-							</td>
-							<td class="columnFee">
-							<?php
-								echo "<b>".number_format($dSnackItemTotal, 2, '.', '')."</b>";
-							?>
-							</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class="columnFee">
+								<?php
+									echo "<b>".number_format($dMedItemTotal, 2, '.', '')."</b>";
+								?>
+								</td>
+						
+					</tr>
+	<?php
+					}
 					
-				</tr>
+					if ($cartValue['pas_fee']!=0) {
+	?>
+					<tr class="row">
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+							<div class="">
+				<?php
+								echo "<b>NON-MED TOTAL</b>";
+				?>		
+							</div>								
+						</td>		
+	</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class="columnFee">
+								<?php
+									echo "<b>".number_format($dNonMedItemTotal, 2, '.', '')."</b>";
+								?>
+								</td>
+						
+					</tr>
+	<?php
+					}				
+					
+					if ($cartValue['snack_fee']!=0) {
+	?>
+					<tr class="row">
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+							<div class="">
+				<?php
+								echo "<b>SNACK TOTAL</b>";
+				?>		
+							</div>								
+						</td>		
+	</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class="columnFee">
+								<?php
+									echo "<b>".number_format($dSnackItemTotal, 2, '.', '')."</b>";
+								?>
+								</td>
+						
+					</tr>
 <?php
+					}
 				}
-?>				
+?>
 				<!-- TOTAL -->				
 					  <tr class="row">
 						<td class ="column">				

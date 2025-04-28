@@ -816,7 +816,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>				
 		
 					  <tr class="row">
-						<td class ="column">				
+						<td class="column">				
 							<a target='_blank' href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div id="itemNameDivId<?php echo $iCount?>" class="itemName">
 				<?php
@@ -827,10 +827,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class =column>		
+						<td class="column">		
 							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
 						</td>						
-						<td class =column>				
+						<td class="column">				
 								<div class="quantityInStockDiv" id=quantityInStockId<?php echo $iCount?>>
 							<?php
 								//echo $value['quantity_in_stock'];
