@@ -831,7 +831,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 		unset($outputTempValue);
 
+		//removed by Mike, 20250428
 		//sort($outputArrayTemp);
+		
 		$data['result']=$outputArrayTemp;
 		//rsort($data['result']);
 		
@@ -5644,6 +5646,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['outputTransactionId'] = $outputTransactionId;
 		$data['patientId'] = $patientId;
+		
+		//echo "DITO!!!patientId".$data['patientId']."<br/>";
+		
 		//edited by Mike, 20200608
 		//$data['outputTransaction'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
 		$data['outputTransactionServicePurchase'] = $this->Browse_Model->payTransactionServiceAndItemPurchase($data);
