@@ -5041,9 +5041,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$this->db->from('patient as t1');
 		}
 		else {
+
 			//edited by Mike, 20220930
 //			$this->db->select('t1.patient_name, t1.patient_id, t3.medical_doctor_id, t3.medical_doctor_name');
-			$this->db->select('t1.patient_name, t1.patient_id, t2.notes, t3.medical_doctor_id, t3.medical_doctor_name');
+			//edited by Mike, 20250429
+			//$this->db->select('t1.patient_name, t1.patient_id, t2.notes, t3.medical_doctor_id, t3.medical_doctor_name');
+			$this->db->select('t1.patient_name, t1.patient_id, t1.added_datetime_stamp, t2.notes, t3.medical_doctor_id, t3.medical_doctor_name');
 
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
