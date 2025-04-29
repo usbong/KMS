@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250322; from 20250318
+' @date updated: 20250429; from 20250322
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -360,6 +360,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}			
 
 				echo "<br/>";
+
+				//added by Mike, 20250429
+				//echo $result[0]['added_datetime_stamp']."<br/>";
+
+				if (isset($result[0]['added_datetime_stamp']) and (strpos($result[0]['added_datetime_stamp'],date('Y/m/d'))!==false)) {
+					echo "<span style='color:red'><b>CAUTION! THE <span style='color:black'>SAME NAME</span> WAS ADDED ON <span style='color:black'>".substr($result[0]['added_datetime_stamp'],0,strpos($result[0]['added_datetime_stamp']," "))."</span> IN THE OLD RECORDS!</b></span>";
+
+					echo "<br/><br/>";
+				}
+
 				echo "<table class='search-result'>";
 				
 				//add: table headers
@@ -404,7 +414,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 					  <tr class="row">
 						<td class ="column">				
-							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
+<?php
+							//edited by Mike, 20250429
+							if (isset($result[0]['added_datetime_stamp'])) {
+								//echo site_url('browse/viewPatient/'.$value['patient_id'])
+								if (strpos($result[0]['added_datetime_stamp'],date('Y/m/d'))!==false) {
+	?>
+									<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id']) ?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
+	<?php
+								}
+								else {
+	?>
+									<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$value['patient_id'].'/0') ?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
+	<?php
+								}
+							}
+							else {
+	?>
+									<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id']) ?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
+	<?php
+							}
+?>							
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];

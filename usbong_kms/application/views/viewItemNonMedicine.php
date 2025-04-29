@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250428; 20250426
+' @date updated: 20250429; 20250428
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -909,7 +909,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else if ($value['quantity_in_stock']=="") {
 									//edited by Mike, 20200615
 //									echo "0 / 0";
-									echo 9999;
+									echo "9999";
 								}
 /*								//edited by Mike, 20200803
 								//edited by Mike, 20200411; edited by Mike, 20200615
@@ -920,7 +920,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//added by Mike, 20200803
 								//note: put this here before "else if ($resultQuantityInStockNow<0) {"
 								else if ($value['quantity_in_stock']==-1) {
-									echo 9999;
+									echo "9999";
 								}
 								else if ($resultQuantityInStockNow<0) {
 									//edited by Mike, 20200723
