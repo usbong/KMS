@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250424; from 20250423
+' @date updated: 20250430; from 20250424
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						span.asterisk
 						{
-							color: #ff0000;							
+							color: #ff0000;
 						}
 
 						div.outOfStockDiv {
@@ -105,7 +105,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 							height: 100%;
 						}	
-
+/*						
+						input.item-input 
+						{
+							width: 100%;
+						}
+*/
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -126,10 +131,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
+							width: 46%;
 						}	
 						
 						td.tableHeaderAddNewMedItemTd {
 							background-color: #ff8000;
+							width: 100%;
 						}
 						
 						span.alertSpan {
@@ -150,11 +157,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+<!--
 						td.submitButtonTd
 						{
 							float: right;
 						}
-
+-->
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
@@ -224,6 +232,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 18pt;
 							background-color: #ffffff;
 							border: 0px solid #333333;
+							float: right;
 						}
 	
 						button.tableHeaderFlipSwitchIconButton:hover
@@ -231,6 +240,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 18pt;
 							background-color: #eeeeee;
 							border: 0px solid #333333;
+							float: right;
 						}
 
 						button.tableHeaderFlipSwitchIconButton:active
@@ -238,7 +248,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 18pt;
 							background-color: #eeeeee;
 							border: 0px solid #333333;
+							float: right;
 						}	
+						
+						button.addNewMedButton 
+						{
+							float: right;
+						}
     /**/
     </style>
     <title>
@@ -425,7 +441,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		  var addNewMedItemTdHeader = document.getElementById("addNewMedItemTdHeaderId");
 
-		  //var addNewMedItemTd = document.getElementById("addNewMedItemTdId");
+		  var addNewMedItemTd = document.getElementById("addNewMedItemTdId");
+		  
 		  //noted table color not changed;
 		  //var addMedItemTable = document.getElementById("addMedItemTable");
 		  
@@ -446,7 +463,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			addNewMedItemDiv.style.backgroundColor = "white";
 			addNewMedItemTdHeader.style.backgroundColor = "white";
 			addNewMedItemTdHeader.style.border = "2pt solid #000000";
-			//addMedItemTable.style.backgroundColor = "#eeeeee";
+			addNewMedItemTd.style.backgroundColor = "#eeeeee";
+			
 			isReturnedItemTd.style.visibility = "hidden";
 			isReturnedItemTdInputCheckbox.style.visibility = "hidden";
 			
@@ -459,7 +477,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			addNewMedItemDiv.style.backgroundColor = "#ff8000";
 			addNewMedItemTdHeader.style.backgroundColor = "#ff8000";
 			addNewMedItemTdHeader.style.border = "0pt dotted #000000";
-			//addMedItemTable.style.backgroundColor = "#ffffff";
+			addNewMedItemTd.style.backgroundColor = "#ffffff";
+			
 			isReturnedItemTd.style.visibility = "visible";
 			isReturnedItemTdInputCheckbox.style.visibility = "visible";
 
@@ -994,6 +1013,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<table class="addMedItemTable">
 	<tr>
 		<td colspan="2" id="addNewMedItemTdHeaderId" class="tableHeaderAddNewMedItemTd">
+			<!-- TODO: -add: image icon; Mike, 20250430 -->
 			<div id="addNewMedItemDivId" class="tableHeaderAddNewMedItem">ADD NEW MED</div>
 		</td>
 		<td>
@@ -1001,96 +1021,103 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</button>
 		</td>		
 	</tr>
-	<form id="addMedItemFormId" method="post" action="<?php echo site_url('browse/addMedItem/0')?>"  onsubmit="validateMyForm();">	
 	<tr>
-		<td>
-		  <b><span>Item Name <span class="asterisk">*</span></b>
+		<td id="addNewMedItemTdId" colspan="3">
+		<table width="100%">
+		<form id="addMedItemFormId" method="post" action="<?php echo site_url('browse/addMedItem/0')?>"  onsubmit="validateMyForm();">	
+		<tr>
+			<td>
+			  <b><span>Item Name <span class="asterisk">*</span></b>
+			</td>
+			<td>				
+			  <input type="text" class="item-input" placeholder="" name="itemNameParam" value="<?php if (isset($itemNameParam)){echo $itemNameParam;}?>" required>
+			</td>
+		</tr>
+		<tr>
+		  <td>
+			<b><span>Expiration </span><span class="asterisk">*</span></b>
+		  </td>
+		  <td>
+		  <input type="date" id="" name="expirationDateParam" class="" value="<?php if (isset($expirationDateParam)){echo $expirationDateParam;}?>" required>
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+			<b><span>Price </span><span class="asterisk">*</span></b>
+		  </td>
+		  <td>
+		  <input type="tel" id="" name="priceParam" class="Price-textbox no-spin" value="<?php if (isset($priceParam)){echo $priceParam;}?>" min="1" max="99999999" 
+			onKeyPress="var key = event.keyCode || event.charCode;		
+						const keyBackspace = 8;
+						const keyDelete = 46;
+						const keyLeftArrow = 37;
+						const keyRightArrow = 39;
+			
+						if (this.value.length == 7) {			
+							if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+								return true;
+							}
+							else {
+								return false;										
+							}
+						}" required>
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+			<b><span>Quantity </span><span class="asterisk">*</span></b>
+		  </td>
+		  <td>
+		  <input type="tel" id="" name="quantityParam" class="Quantity-textbox no-spin" value="<?php if (isset($quantityParam)){echo $quantityParam;}?>" min="1" max="99999999" 
+			onKeyPress="var key = event.keyCode || event.charCode;		
+						const keyBackspace = 8;
+						const keyDelete = 46;
+						const keyLeftArrow = 37;
+						const keyRightArrow = 39;
+			
+						if (this.value.length == 7) {			
+							if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
+								return true;
+							}
+							else {
+								return false;										
+							}
+						}" required>
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+			<!-- add extra blank row -->
+		  </td>
+		  <td>
+			<!-- add extra blank row -->
+		  </td>
+		</tr>
+		<tr>
+		  <td id="isReturnedItemTdId">
+			<b><span>Is returned item? </span><span class="asterisk">*</span></b>
+		  </td>
+		  <td id="isReturnedItemTdIdInputCheckbox">
+			<input type="checkbox" name="isReturnedItemCheckBoxParam">
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+		  </td>
+		  <td class="submitButtonTd">
+			<!-- Buttons -->
+			<button id="submitButtonId" type="submit" class="addNewMedButton">
+				Submit
+			</button>
+		  </td>
+		  <td>
+		  </td>
+		</tr>
+		</form>
+		</table>
 		</td>
-		<td>				
-		  <input type="text" class="item-input" placeholder="" name="itemNameParam" value="<?php if (isset($itemNameParam)){echo $itemNameParam;}?>" required>
-		</td>
 	</tr>
-    <tr>
-	  <td>
-	    <b><span>Expiration </span><span class="asterisk">*</span></b>
-	  </td>
-	  <td>
-	  <input type="date" id="" name="expirationDateParam" class="" value="<?php if (isset($expirationDateParam)){echo $expirationDateParam;}?>" required>
-	  </td>
-    </tr>
-    <tr>
-	  <td>
-	    <b><span>Price </span><span class="asterisk">*</span></b>
-	  </td>
-	  <td>
-	  <input type="tel" id="" name="priceParam" class="Price-textbox no-spin" value="<?php if (isset($priceParam)){echo $priceParam;}?>" min="1" max="99999999" 
-		onKeyPress="var key = event.keyCode || event.charCode;		
-					const keyBackspace = 8;
-					const keyDelete = 46;
-					const keyLeftArrow = 37;
-					const keyRightArrow = 39;
-		
-					if (this.value.length == 7) {			
-						if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-							return true;
-						}
-						else {
-							return false;										
-						}
-					}" required>
-	  </td>
-    </tr>
-    <tr>
-	  <td>
-	    <b><span>Quantity </span><span class="asterisk">*</span></b>
-	  </td>
-	  <td>
-	  <input type="tel" id="" name="quantityParam" class="Quantity-textbox no-spin" value="<?php if (isset($quantityParam)){echo $quantityParam;}?>" min="1" max="99999999" 
-		onKeyPress="var key = event.keyCode || event.charCode;		
-					const keyBackspace = 8;
-					const keyDelete = 46;
-					const keyLeftArrow = 37;
-					const keyRightArrow = 39;
-		
-					if (this.value.length == 7) {			
-						if( key == keyBackspace || key == keyDelete || key == keyLeftArrow || key == keyRightArrow) {
-							return true;
-						}
-						else {
-							return false;										
-						}
-					}" required>
-	  </td>
-    </tr>
-	<tr>
-	  <td>
-		<!-- add extra blank row -->
-	  </td>
-	  <td>
-		<!-- add extra blank row -->
-	  </td>
-	</tr>
-	<tr>
-	  <td id="isReturnedItemTdId">
-		<b><span>Is returned item? </span><span class="asterisk">*</span></b>
-	  </td>
-	  <td id="isReturnedItemTdIdInputCheckbox">
-		<input type="checkbox" name="isReturnedItemCheckBoxParam">
-	  </td>
-	</tr>
-	<tr>				  
-	  <td>
-	  </td>
-	  <td class="submitButtonTd">
-		<!-- Buttons -->
-		<button id="submitButtonId" type="submit" class="Button-login">
-			Submit
-		</button>
-	  </td>
-    </tr>
-	</form>
 	</table>		
-
 	<br />
 	<br />
 	<br />

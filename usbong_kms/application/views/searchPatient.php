@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250429; from 20250322
+' @date updated: 20250430; from 20250429
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -418,7 +418,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							//edited by Mike, 20250429
 							if (isset($result[0]['added_datetime_stamp'])) {
 								//echo site_url('browse/viewPatient/'.$value['patient_id'])
-								if (strpos($result[0]['added_datetime_stamp'],date('Y/m/d'))!==false) {
+								//edited by Mike, 20250430
+/*								
+								echo ">>>>>".$result[0]['last_visited_date']."!!!<br/>";
+								echo "stamp: ".$result[0]['added_datetime_stamp']."<br/>";
+								echo "date: ".date('Y-m-d')."<br/>";
+*/								
+								//if (strpos($result[0]['added_datetime_stamp'],date('Y/m/d'))!==false) {
+								//if ((strpos($result[0]['added_datetime_stamp'],date('Y/m/d'))!==false)and ($result[0]['last_visited_date']==="")) {
+								if ((strpos($result[0]['added_datetime_stamp'],date('Y-m-d'))!==false)and (strpos($result[0]['last_visited_date'],'/')===false)) { //blank
 	?>
 									<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id']) ?>' id="patientNameId<?php echo $iCount?>" onclick="copyTextMOSC(<?php echo $iCount?>)">
 	<?php

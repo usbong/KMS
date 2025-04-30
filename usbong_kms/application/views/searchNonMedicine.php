@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250421; from 20250415
+' @date updated: 20250430; from 20250421
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -142,10 +142,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
+							width: 46%;
 						}	
 						
 						td.tableHeaderAddNewNonMedItemTd {
 							background-color: #ff8000;
+							width: 100%;
 						}
 						
 						table.search-result
@@ -244,7 +246,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 0px solid #333333;
 							font-size: 20px;
 							padding: 0;
-						}						
+						}		
+
+						button.addNewNonMedButton 
+						{
+							float: right;
+						}
+						
     /**/
     </style>
     <title>
@@ -433,6 +441,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  var addNewNonMedForm = document.getElementById("addNonMedItemFormId");
 		  
 		  var isReturnedItemTd = document.getElementById("isReturnedItemTdId");
+		  var isReturnedItemTdInputCheckbox = document.getElementById("isReturnedItemTdIdInputCheckbox");
+		  
 
 		  //alert("DITO");
 		  
@@ -448,6 +458,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			addNewNonMedItemTdHeader.style.border = "2pt solid #000000";
 			addNewNonMedItemTd.style.backgroundColor = "#eeeeee";
 			isReturnedItemTd.style.visibility = "hidden";
+			isReturnedItemTdInputCheckbox.style.visibility = "hidden";
 			
 			//isLostItem
 			//addNewNonMedForm.action = "addNonMedItem/1"; 			
@@ -460,6 +471,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			addNewNonMedItemTdHeader.style.border = "0pt dotted #000000";
 			addNewNonMedItemTd.style.backgroundColor = "#ffffff";
 			isReturnedItemTd.style.visibility = "visible";
+			isReturnedItemTdInputCheckbox.style.visibility = "visible";
 
 			//addNewNonMedForm.action = "addNonMedItem/0"; 			
 			addNewNonMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"0";
@@ -976,6 +988,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<table class="addNonMedItemTable">
 	<tr>
 		<td id="addNewNonMedItemTdHeaderId" class="tableHeaderAddNewNonMedItemTd">
+			<!-- TODO: -add: image icon; Mike, 20250430 -->
 			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem">ADD NEW NON-MED</div>
 		</td>
 		<td>
@@ -984,33 +997,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 	</tr>
 	<tr>
-		<td id="addNewNonMedItemTdId">
+		<td id="addNewNonMedItemTdId"  colspan="3">
+		<table width="100%">
 		<!-- Form -->
 		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
 		<!-- "browse/addPatientName" faster -->
 		<form id="addNonMedItemFormId" method="post" action="<?php echo site_url('browse/addNonMedItem/0')?>">
-			<div>
-				<table width="100%">
 				  <tr>
 					<td>
 					  <b><span>Item Name <span class="asterisk">*</span></b>
 					</td>
-				  </tr>
-				  <tr>
 					<td>				
 					  <input type="text" class="item-input" placeholder="" name="itemNameParam" value="<?php if (isset($itemNameParam)){echo $itemNameParam;}?>" required>
 					</td>
 				  </tr>
-				</table>
-			</div>
-			<div>
-				<table width="100%">
 				  <tr>
 					<td>
 					  <b><span>Price </span><span class="asterisk">*</span></b>
 					</td>
-				  </tr>
-				  <tr>
 					<td>
 <!--									
 					  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
@@ -1032,16 +1036,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>
 					</td>
 				  </tr>
-				</table>
-			</div>	
-			<div>
-				<table width="100%">
 				  <tr>
 					<td>
 					  <b><span>Quantity </span><span class="asterisk">*</span></b>
 					</td>
-				  </tr>
-				  <tr>
 					<td>
 <!--									
 					  <input type="text" class="patient-input" placeholder="" name="patientFirstNameParam" required>
@@ -1063,25 +1061,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}" required>
 					</td>
 				  </tr>
-				  <tr>
+				<tr>
 				  <td>
 					<!-- add extra blank row -->
 				  </td>
+				  <td>
+					<!-- add extra blank row -->
+				  </td>
+				</tr>
+				  <tr>
+					  <td id="isReturnedItemTdId">
+						<b><span>Is returned item? </span><span class="asterisk">*</span></b>
+					  </td>
+					  <td id="isReturnedItemTdIdInputCheckbox">
+						<input type="checkbox" name="isReturnedItemCheckBoxParam">
+					  </td>
 				  </tr>
 				  <tr>
-					<td id="isReturnedItemTdId">
-					<b><span>Is returned item? </span><span class="asterisk">*</span></b>
-					<input type="checkbox" name="isReturnedItemCheckBoxParam">
-					</td>
+				  <td>
+				  </td>
+				  <td class="submitButtonTd">
+					<!-- Buttons -->
+					<button id="submitButtonId" type="submit" class="addNewNonMedButton">
+						Submit
+					</button>
+				  </td>
+				  <td>
+				  </td>
 				  </tr>
-				</table>
-			</div>				
-			<br />
-			<!-- Buttons -->
-			<button type="submit" class="Button-login">
-				Submit
-			</button>
 		</form>
+		</table>
 		</td>
 	</tr>
 	</table>	
