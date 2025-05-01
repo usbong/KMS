@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250422; from 20250410
+  @date updated: 20250501; from 20250422
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -158,6 +158,14 @@
 							border: 1px dotted #000000;		
 							text-align: left;
 							font-weight: bold;
+						}						
+
+						td.columnItemHeaderListGrandTotal
+						{
+							border: 1px dotted #000000;		
+							text-align: left;
+							font-weight: bold;
+							text-align: right;
 						}						
 
 						td.columnFee
@@ -702,6 +710,7 @@ echo "notes".$value['fee']."<br/>";
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6) /*or
 						($value['medical_doctor_id']==4)*/) {
+
 /*
 					if (($value['medical_doctor_id']==1) or
 						($value['medical_doctor_id']==6) or
@@ -736,6 +745,7 @@ echo "notes".$value['fee']."<br/>";
 					$dTotalMDXrayFeeWithDiscount=0;
 				}
 
+/*				//removed by Mike, 20250501
 				//note: 800 -> 600; gives over 20% discount for SC classification;
 				//but NOT for all PWD classifications
 				if ((strpos($result[0]['notes'],"SC;")!==false) or
@@ -746,7 +756,7 @@ echo "notes".$value['fee']."<br/>";
 						$dTotalMDDiscountedFeePlus+=10; //added due to 800 -> 600 in MD Fee
 					}
 				}
-
+*/
 				//edited by Mike, 20241028; from 20230110
 				if (($result[0]['medical_doctor_id']==1) or
 					($result[0]['medical_doctor_id']==6) /*or
@@ -774,6 +784,9 @@ echo "notes".$value['fee']."<br/>";
 	
 						if ((strpos($result[0]['notes'],"SC;")!==false) or
 							((strpos($result[0]['notes'],"PWD;")!==false))) {
+							
+							//note there'll always be a discounted amount here; raw amount auto-deducted; Mike, 20250501
+							
 							echo "MD RECEIPT TOTAL (discounted: ".number_format($dTotalMDFeeWithDiscount+$dTotalMDDiscountedFeePlus, 2, '.', ',').")";
 						}
 						else {
@@ -1009,10 +1022,15 @@ echo "</a>";
 					if ((strpos($result[0]['notes'],"SC;")!==false) or
 						((strpos($result[0]['notes'],"PWD;")!==false))) {
 						
-						//added by Mike, 20220317
+						//edited by Mike, 20250501; from 20220317
 						//note: "WITH DR. HONESTO" TEXT NOT ANYMORE DISPLAYED
 						
-						echo "MOSC RECEIPT TOTAL (discounted: ".number_format($dTotalMDXrayFeeWithDiscount, 2, '.', ',').")";
+						if ($dTotalMDXrayFeeWithDiscount!=0) {
+							echo "MOSC RECEIPT TOTAL (discounted: ".number_format($dTotalMDXrayFeeWithDiscount, 2, '.', ',').")";
+						}
+						else {
+							echo "MOSC RECEIPT TOTAL".$sWithDoctorWhoUsesMOSCOfficialReceipt;
+						}
 					}
 					else {
 						echo "MOSC RECEIPT TOTAL".$sWithDoctorWhoUsesMOSCOfficialReceipt;
@@ -1276,8 +1294,8 @@ echo "</a>";
 			</td>
 			<td class="column">
 			</td>			
-			<td class='columnItemHeaderList'>
-				GRAND TOTAL:
+			<td class='columnItemHeaderListGrandTotal'>
+				GRAND TOTAL
 			</td>
 			<td class="columnFee">
 			</td>
