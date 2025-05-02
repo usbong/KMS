@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250430; from 20250421
+' @date updated: 20250502; from 20250430
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -43,6 +43,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						span.asterisk
 						{
 							color: #ff0000;							
+						}
+						
+						span.spanAddNewNonMedItem
+						{
+							text-align: top;
 						}
 						
 						div.checkBox
@@ -137,6 +142,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
+						
+						img.nonMedIcon {
+							width: 6%;
+							height: auto;
+							vertical-align: text-center;
+						}
+
 
 						table.addNonMedItemTable
 						{
@@ -443,16 +455,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  var isReturnedItemTd = document.getElementById("isReturnedItemTdId");
 		  var isReturnedItemTdInputCheckbox = document.getElementById("isReturnedItemTdIdInputCheckbox");
 		  
-
 		  //alert("DITO");
 		  
-		  var sText = addNewNonMedItemDiv.innerHTML;
+		  //var sText = addNewNonMedItemDiv.innerHTML;
 		  
 		  var sFormActionUrl = addNewNonMedForm.action;
 		  
+		  //alert(addNewNonMedItemDiv.innerHTML);
+		  
 		  //if equal
-		  if (sText.localeCompare("ADD NEW NON-MED")==0) {
-			addNewNonMedItemDiv.innerHTML="REPORT LOST ITEM";
+		  //edited by Mike, 20250502
+		  //if (addNewNonMedItemDiv.innerHTML.localeCompare("ADD NEW NON-MED")==0) {
+		  if (addNewNonMedItemDiv.innerHTML.includes("ADD NEW NON-MED")) {
+
+			  //alert("0!!!");
+
+			//edited by Mike, 20250502
+			//addNewNonMedItemDiv.innerHTML="REPORT LOST ITEM";
+			addNewNonMedItemDiv.innerHTML=addNewNonMedItemDiv.innerHTML.replace("ADD NEW NON-MED","REPORT LOST ITEM");
+			
 			addNewNonMedItemDiv.style.backgroundColor = "white";
 			addNewNonMedItemTdHeader.style.backgroundColor = "white";
 			addNewNonMedItemTdHeader.style.border = "2pt solid #000000";
@@ -465,7 +486,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			addNewNonMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"1";
 		  }
 		  else {
-			addNewNonMedItemDiv.innerHTML="ADD NEW NON-MED";
+			//alert("1!!!");
+			  
+			//edited by Mike, 20250502
+			//addNewNonMedItemDiv.innerHTML="ADD NEW NON-MED";
+			addNewNonMedItemDiv.innerHTML=addNewNonMedItemDiv.innerHTML.replace("REPORT LOST ITEM","ADD NEW NON-MED");
+			  
 			addNewNonMedItemDiv.style.backgroundColor = "#ff8000";
 			addNewNonMedItemTdHeader.style.backgroundColor = "#ff8000";
 			addNewNonMedItemTdHeader.style.border = "0pt dotted #000000";
@@ -989,7 +1015,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<tr>
 		<td id="addNewNonMedItemTdHeaderId" class="tableHeaderAddNewNonMedItemTd">
 			<!-- TODO: -add: image icon; Mike, 20250430 -->
-			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem">ADD NEW NON-MED</div>
+			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem"><span class="spanAddNewNonMedItem">ADD NEW NON-MED</span> <img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250502T1513"></div>
 		</td>
 		<td>
 			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>
