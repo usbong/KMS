@@ -7275,6 +7275,17 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 
 		$this->db->where('patient_id',$param['patientIdNameParam']);
 		$this->db->update('patient', $data);
+		
+		//added by Mike, 20250502
+		$data = array(
+			'medical_doctor_id' => $param['selectMedicalDoctorNameParam'],
+		);
+
+//echo ">>>>date: ".date('m/d/Y');
+
+		$this->db->where('patient_id',$param['patientIdNameParam']);
+		$this->db->where('transaction_date',date('m/d/Y')); //$param['transactionDate']);
+		$this->db->update('transaction', $data);
 	}	
 	
 	
