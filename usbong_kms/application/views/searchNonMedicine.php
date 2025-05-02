@@ -146,7 +146,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						img.nonMedIcon {
 							width: 6%;
 							height: auto;
-							vertical-align: text-center;
+							vertical-align: text-bottom;
 						}
 
 
