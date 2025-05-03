@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250415; from 20250414
+  @date updated: 20250503; from 20250415
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -596,10 +596,21 @@
 			var patientName = document.getElementById("patientNameId").value;	
 			var inputTextPatientName = document.getElementById("inputTextPatientNameId").value;	
 			
+			//added by Mike, 20250503
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;	
+			
+			//alert(medicalDoctorId);
+			
 			//alert(inputTextPatientName);
 						
 			if (inputTextPatientName.trim()==="") {
 				alert ("( ! ) An empty PATIENT NAME is not valid.");
+				return false;
+			}
+
+			//ANY or --
+			if ((medicalDoctorId==="0") || (medicalDoctorId==="3")) {
+				alert ("( ! ) Please choose a valid Medical Doctor.");
 				return false;
 			}
 			
