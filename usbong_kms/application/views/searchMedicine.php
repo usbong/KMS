@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250430; from 20250424
+' @date updated: 20250503; from 20250430
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -47,6 +47,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							color: #ff0000;
 						}
+						
+						span.spanAddNewMedItem
+						{
+							text-align: top;
+						}						
 
 						div.outOfStockDiv {
 							text-indent: 6em;
@@ -85,10 +90,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						div.tableHeaderAddNewMedItem
 						{
+							font-size: 12pt;
 							font-weight: bold;
 							text-align: center;
 							background-color: #ff8000; <!--#93d151; lime green-->
 							border: 1pt solid #ff8000;
+							padding: 0.2em;							
 						}	
 
 						div.quantityInStockDiv
@@ -126,7 +133,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
-
+						
+						img.medIcon {
+							width: 6%;
+							height: auto;
+							vertical-align: text-bottom;
+						}
+						
 						table.addMedItemTable
 						{
 							border: 2px dotted #ab9c7d;		
@@ -458,8 +471,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  var sFormActionUrl = addNewMedForm.action;
 		  
 		  //if equal
-		  if (sText.localeCompare("ADD NEW MED")==0) {
-			addNewMedItemDiv.innerHTML="REPORT LOST ITEM";
+		  //edited by Mike, 20250503
+		  //if (sText.localeCompare("ADD NEW MED")==0) {
+		  if (sText.includes("ADD NEW MED")) {
+			  
+			//addNewMedItemDiv.innerHTML="REPORT LOST ITEM";
+			//sText=sText.replace("ADD NEW MED","REPORT LOST ITEM");
+			addNewMedItemDiv.innerHTML=addNewMedItemDiv.innerHTML.replace("ADD NEW MED","REPORT LOST ITEM");
+			
 			addNewMedItemDiv.style.backgroundColor = "white";
 			addNewMedItemTdHeader.style.backgroundColor = "white";
 			addNewMedItemTdHeader.style.border = "2pt solid #000000";
@@ -473,7 +492,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			addNewMedForm.action = sFormActionUrl.substring(0, sFormActionUrl.length - 1)+"1";
 		  }
 		  else {
-			addNewMedItemDiv.innerHTML="ADD NEW MED";
+			//addNewMedItemDiv.innerHTML="ADD NEW MED";
+			//sText=sText.replace("REPORT LOST ITEM","ADD NEW MED");
+			addNewMedItemDiv.innerHTML=addNewMedItemDiv.innerHTML.replace("REPORT LOST ITEM","ADD NEW MED");
+			
 			addNewMedItemDiv.style.backgroundColor = "#ff8000";
 			addNewMedItemTdHeader.style.backgroundColor = "#ff8000";
 			addNewMedItemTdHeader.style.border = "0pt dotted #000000";
@@ -1013,8 +1035,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<table class="addMedItemTable">
 	<tr>
 		<td colspan="2" id="addNewMedItemTdHeaderId" class="tableHeaderAddNewMedItemTd">
-			<!-- TODO: -add: image icon; Mike, 20250430 -->
-			<div id="addNewMedItemDivId" class="tableHeaderAddNewMedItem">ADD NEW MED</div>
+			<!-- edited by Mike, 20250503; from 20250430 -->
+			<div id="addNewMedItemDivId" class="tableHeaderAddNewMedItem"><span class="spanAddNewMedItem">ADD NEW MED</span> <img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250503T1553"></div>
 		</td>
 		<td>
 			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>

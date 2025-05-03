@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250502; from 20250430
+' @date updated: 20250503; from 20250502
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -148,7 +148,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							height: auto;
 							vertical-align: text-bottom;
 						}
-
 
 						table.addNonMedItemTable
 						{
@@ -1014,8 +1013,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<table class="addNonMedItemTable">
 	<tr>
 		<td id="addNewNonMedItemTdHeaderId" class="tableHeaderAddNewNonMedItemTd">
-			<!-- TODO: -add: image icon; Mike, 20250430 -->
-			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem"><span class="spanAddNewNonMedItem">ADD NEW NON-MED</span> <img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250502T1513"></div>
+			<!-- edited by Mike, 20250503; from 20250430 -->
+			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem"><span class="spanAddNewNonMedItem">ADD NEW NON-MED</span> <img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250503T0954"></div>
 		</td>
 		<td>
 			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>
