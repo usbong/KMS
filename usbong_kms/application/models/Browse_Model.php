@@ -5106,18 +5106,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	//added by Mike, 20210306
 	public function getDetailsListViaIdIndexCard($nameId) 
 	{		
-		//edited by Mike, 20200541
-//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
-		//edited by Mike, 20210319
-//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t2.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit');
-		//edited by Mike, 20230406
-//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t2.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
-		
-		//edited by Mike, 20230407
-		//$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
-		//edited by Mike, 20230410; from 20230409
-		//$this->db->select('t1.patient_name, t1.patient_id, t1.last_visit_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address');
-		
+		//echo "nameID: ".$nameId;
+	
 		$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t2.medical_doctor_id 'TranMDID', t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address");
 				
 		$this->db->from('patient as t1');
@@ -5132,15 +5122,22 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		//added by Mike, 20230410
 		//$this->db->not_like('t2.notes', 'IN-QUEUE');
-		$this->db->where('t2.transaction_type_name=', 'CASH');		
 		
+		$this->db->where('t2.transaction_type_name=', 'CASH');		
+
+		//edited by Mike, 20250505
+/*
 		//added by Mike, 20200523
-//		$this->db->order_by('t2.transaction_date`', 'DESC');//ASC');
-		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+//		$this->db->order_by('t2.transaction_date', 'DESC');//ASC');
+		$this->db->order_by('t2.added_datetime_stamp', 'DESC');//ASC');
 
 		//added by Mike, 20200529; edited by Mike, 20200606
-		$this->db->group_by('t2.added_datetime_stamp`', 'DESC');//ASC');
+		$this->db->group_by('t2.added_datetime_stamp', 'DESC');//ASC');
+		
 		//$this->db->group_by('t2.transaction_date`', 'DESC');//ASC');
+*/
+		$this->db->where('t2.medical_doctor_id!=', 0);		
+		$this->db->order_by('t2.transaction_id', 'DESC');
 		
 		$query = $this->db->get('patient');
 
@@ -7276,18 +7273,27 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		$this->db->where('patient_id',$param['patientIdNameParam']);
 		$this->db->update('patient', $data);
 		
-		//added by Mike, 20250502
-		$data = array(
-			'medical_doctor_id' => $param['selectMedicalDoctorNameParam'],
-		);
+		//edited by Mike, 20250503; from 20250502
+		//TODO: -set the value to default if value is 0,8, or 3;
+		//echo ">>>>".$param['selectMedicalDoctorNameParam'];
+/*		
+		if (($param['selectMedicalDoctorNameParam']!=0) and ($param['selectMedicalDoctorNameParam']!=8) and ($param['selectMedicalDoctorNameParam']!=3)) {
+			
+			echo "DITO!";
+*/			
+			$data = array(
+				'medical_doctor_id' => $param['selectMedicalDoctorNameParam'],
+			);
 
 //echo ">>>>date: ".date('m/d/Y');
 
-		$this->db->where('patient_id',$param['patientIdNameParam']);
-		$this->db->where('transaction_date',date('m/d/Y')); //$param['transactionDate']);
-		$this->db->update('transaction', $data);
+			$this->db->where('patient_id',$param['patientIdNameParam']);
+			$this->db->where('transaction_date',date('m/d/Y')); //$param['transactionDate']);
+			$this->db->update('transaction', $data);
+/*
+		}
+*/		
 	}	
-	
 	
 	//added by Mike, 20230406
 	//medical doctor only
