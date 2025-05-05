@@ -3622,7 +3622,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 
 		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
-
+/*		
+		echo "HALLO!!!".$data['result'][0]["medical_doctor_name"];
+		echo "; ID".$data['result'][0]["medical_doctor_id"];
+		echo "; TRANSACTION ID".$data['result'][0]["transaction_id"];
+*/
 	//added by Mike, 20240305
 	$data['bFoldImageListValue'] = $bFoldImageListValue;
 	
@@ -3660,17 +3664,18 @@ class Browse extends CI_Controller { //MY_Controller {
 ////		echo "transactionID: ".$data['result'][0]["transaction_id"]."<br/><br/>";
 ////		echo "TranMDID: ".$data['result'][0]["TranMDID"]."<br/><br/>";
 
-		//edited by Mike, 20230413; from 20230410
+		//edited by Mike, 20250505; from 20230413
 		if ($data['result'][0]["medical_doctor_id"]!=$data['result'][0]["TranMDID"]) {
+			//take as priority the MD id in latest transaction 
+			$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
+		}
+		else {
 			$data['bIsSetMDIdNotTranMDId']=true;
 			$data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 			
 			//echo ">>>>>>".$data['result'][0]["medical_doctor_name"];
 			
 			$data['selectMedicalDoctorNameParam']=$data['tranMedicalDoctorName'];
-		}
-		else {
-			$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
 		}
 		
 	//removed by Mike, 20250415; from 20240305
