@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20250219; from 20241209
+  @date updated: 20250506; from 20250219
   @website address: www.usbong.ph
   
   Input:
@@ -124,7 +124,10 @@
 */
 	//TO-DO: -add: med and non-med only counts in other Medical Doctors report
 	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and transaction_quantity!='0' group by patient_id"))
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+	//edited by Mike, 20250506
+//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+	//TODO: -verify: the other medical doctors;
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id, patient_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0"))
 
 	{
 		//added by Mike, 20200524
@@ -155,11 +158,14 @@
 			//added by Mike, 20201031
 			$iNonMedOnlyQuantityTotalCount = 0;	
 
+//echo "---";
+
 			foreach ($selectedMedicalDoctorResultArray as $value) {
 //				if (strpos($value['item_name'], "*") === false) {
 				//removed by Mike, 20200711
 /*				if ($value['fee'] !== "0.00") {
 */	
+					//echo $value['patient_id']."; ".$value['fee']."<br/>";
 
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
 
