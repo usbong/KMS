@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20250506; from 20250219
+  @date updated: 20250507; from 20250506
   @website address: www.usbong.ph
   
   Input:
@@ -763,8 +763,11 @@
 			//edited by Mike, 20211214
 			//TO-DO: -fix: transaction with combined total can still be deleted
 //			if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 group by patient_id order by transaction_id ASC")) {
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id order by transaction_id ASC")) {
-				
+			//edited by Mike, 20250507
+			//if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id order by transaction_id ASC")) {
+			
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 order by transaction_id ASC")) {
+			
 /*		//note; added by Mike, 20211022
 		$this->db->not_like('t2.notes',"MED");
 		$this->db->not_like('t2.notes',"ONLY");
@@ -1145,7 +1148,9 @@ echo "hallo<br/>";
 /*
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 */
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+	//edited by Mike, 20250507
+	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
