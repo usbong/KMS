@@ -3608,7 +3608,8 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 	//added by Mike, 20200517; edited by Mike, 20210320
 //	public function viewPatientIndexCard($patientId)
-	public function viewPatientIndexCard($patientId, $bFoldImageListValue)	
+	//edited by Mike, 20250507
+	public function viewPatientIndexCardVersion20250507($patientId, $bFoldImageListValue)	
 	{
 //		$data['nameParam'] = $_POST[nameParam];
 		
@@ -3622,6 +3623,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 
 		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
+		
+		//added by Mike, 20250507
+		$iTranMDID=-1;
 /*		
 		echo "HALLO!!!".$data['result'][0]["medical_doctor_name"];
 		echo "; ID".$data['result'][0]["medical_doctor_id"];
@@ -3634,8 +3638,16 @@ class Browse extends CI_Controller { //MY_Controller {
 	//edited by Mike, 20250415
 	if (!isset($data['result'][0])) {
 		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCardNoTransaction($patientId);
-		$data['result'][0]["TranMDID"]=-1; //no transaction
+		
+		//edited by Mike, 20250507
+		//$data['result'][0]["TranMDID"]=-1; //no transaction
+		//$iTranMDID=-1;
 	}
+	
+	//added by Mike, 20250507
+	$iTranMDID=$this->Browse_Model->getMedicalDoctorIdViaTransactionId($data['result'][0]['transaction_id']);
+	
+	//echo ">>>>>".$iTranMDID;
 		
 	//if (isset($data['result'][0])) {		
 		//added by Mike, 20210707
@@ -3664,10 +3676,119 @@ class Browse extends CI_Controller { //MY_Controller {
 ////		echo "transactionID: ".$data['result'][0]["transaction_id"]."<br/><br/>";
 ////		echo "TranMDID: ".$data['result'][0]["TranMDID"]."<br/><br/>";
 
-		//edited by Mike, 20250505; from 20230413
-		if ($data['result'][0]["medical_doctor_id"]!=$data['result'][0]["TranMDID"]) {
+		//edited by Mike, 20250507; from 20250505
+		//if ($data['result'][0]["medical_doctor_id"]!=$data['result'][0]["TranMDID"]) {
+		if ($data['result'][0]["medical_doctor_id"]!=$iTranMDID) {
 			//take as priority the MD id in latest transaction 
-			$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
+			//edited by Mike, 20250507
+			//$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
+			$data['result'][0]["medical_doctor_id"]=$iTranMDID;
+		}
+		else {
+			$data['bIsSetMDIdNotTranMDId']=true;
+			$data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
+			
+			//echo ">>>>>>".$data['result'][0]["medical_doctor_name"];
+			
+			$data['selectMedicalDoctorNameParam']=$data['tranMedicalDoctorName'];
+		}
+		
+	//removed by Mike, 20250415; from 20240305
+	//}
+
+	
+		//echo "HALLO: ".$data['result'][0]["patient_id"]."<br/><br/>";
+		
+		//edited by Mike, 20230410; 20230410
+		//added by Mike, 20220526
+		if (!isset($data['result'][0]["medical_doctor_id"])) {
+			//redirect('browse/searchPatient');
+			$data['idParam']=$patientId;
+			$data['result']=$this->Browse_Model->getNewestPatientDetailsListViaId($data);
+			
+			//note: no transaction, so entered this branch;
+			//echo "HALLO".$data['result'][0]["TranMDID"];
+		}
+		
+		$this->load->view('viewPatientIndexCard', $data);	
+	}
+	
+	public function viewPatientIndexCard($patientId, $bFoldImageListValue)	
+	{
+//		$data['nameParam'] = $_POST[nameParam];
+		
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+		
+		//added by Mike, 20210209
+		$this->load->model('Browse_Model');
+		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
+
+		//removed by Mike, 20250507
+		//$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
+		
+		//added by Mike, 20250507
+		$iTranMDID=-1;
+/*		
+		echo "HALLO!!!".$data['result'][0]["medical_doctor_name"];
+		echo "; ID".$data['result'][0]["medical_doctor_id"];
+		echo "; TRANSACTION ID".$data['result'][0]["transaction_id"];
+*/
+	//added by Mike, 20240305
+	$data['bFoldImageListValue'] = $bFoldImageListValue;
+	
+	
+	//edited by Mike, 20250507; from 20250415
+	//if (!isset($data['result'][0])) {
+		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCardNoTransaction($patientId);
+		
+		//edited by Mike, 20250507
+		//$data['result'][0]["TranMDID"]=-1; //no transaction
+		//$iTranMDID=-1;
+	//}
+	
+	//added by Mike, 20250507
+	//$iTranMDID=$this->Browse_Model->getMedicalDoctorIdViaTransactionId($data['result'][0]['transaction_id']);
+	$iTranMDID=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId);
+	
+	//echo ">>>>>".$iTranMDID;
+		
+	//if (isset($data['result'][0])) {		
+		//added by Mike, 20210707
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($data['result'][0]['medical_doctor_id'], $patientId);
+
+		//added by Mike, 20221102
+		$data['patientId'] = $patientId;
+
+		//added by Mike, 20210314
+		$data['resultPaidMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatient(1, $patientId); //1 = MED ITEM
+
+		//added by Mike, 20210315
+		$data['resultPaidNonMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatient(2, $patientId); //2 = NON-MED ITEM
+
+		//added by Mike, 20210514
+		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatient(3, $patientId); //3 = SNACK ITEM
+
+		//added by Mike, 20210316
+		$data['resultIndexCardImageList'] = $this->Browse_Model->getIndexCardImageListForPatient($patientId);
+
+		//removed by Mike, 20240305; from 20210320
+		//$data['bFoldImageListValue'] = $bFoldImageListValue;
+
+
+////		echo "HALLO: ".$data['result'][0]["medical_doctor_id"]."<br/><br/>";
+////		echo "transactionID: ".$data['result'][0]["transaction_id"]."<br/><br/>";
+////		echo "TranMDID: ".$data['result'][0]["TranMDID"]."<br/><br/>";
+
+		//edited by Mike, 20250507; from 20250505
+		//if ($data['result'][0]["medical_doctor_id"]!=$data['result'][0]["TranMDID"]) {
+		if ($data['result'][0]["medical_doctor_id"]!=$iTranMDID) {
+			//take as priority the MD id in latest transaction 
+			//edited by Mike, 20250507
+			//$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
+			$data['result'][0]["medical_doctor_id"]=$iTranMDID;
 		}
 		else {
 			$data['bIsSetMDIdNotTranMDId']=true;
