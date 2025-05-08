@@ -4641,6 +4641,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->select('item_name, item_id');
 		$this->db->where('item_name', $param['nameParam']);
 		$this->db->where('item_price', $param['priceParam']);
+		
+		//added by Mike, 20250508
+		//same item with same name but the other hidden can be created;
+		$this->db->where('is_hidden', 0);
 
 		$query = $this->db->get('item');	
 		
@@ -4649,7 +4653,6 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		if (isset($rowArray) and (count($rowArray)>0)) {
 			//TO-DO: -add: this in view
 			//echo "ITEM NAME ALREADY EXISTS IN COMPUTER DATABASE!";
-			
 			//return $rowArray[0]['item_id'];
 			
 			$itemId = $rowArray[0]['item_id'];
@@ -5016,6 +5019,31 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			return False; //edited by Mike, 20190722
 		}
 		
+		return $rowArray;
+	}	
+	
+	//added by Mike, 20250508
+	public function getNewestMedicalDoctorIdInTransactionFrom($patientId) {
+		//echo $patientId;
+		
+		$this->db->select('medical_doctor_id');
+        $this->db->where('patient_id',$patientId);
+        $this->db->where('transaction_quantity!=',0);
+		
+		$this->db->where('transaction_date', date('m/d/Y'));		
+		$this->db->order_by('added_datetime_stamp`', 'DESC');
+		
+		$query = $this->db->get('transaction');	
+				
+		$rowArray = $query->result_array();
+/*
+		if ($rowArray == null) {			
+			//edited by Mike, 20250508
+			//any
+			//$rowArray[0]['medical_doctor_id']=0;
+			//return $rowArray[0]['medical_doctor_id'];
+		}
+*/
 		return $rowArray;
 	}	
 
