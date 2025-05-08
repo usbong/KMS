@@ -3530,6 +3530,16 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 		
+		//added by Mike, 20250508
+		$medicalDoctorIdArray=$this->Browse_Model->getNewestMedicalDoctorIdInTransactionFrom($patientId);
+		
+		if (!isset($medicalDoctorIdArray[0]['medical_doctor_id'])) {
+			$data['result'][0]['medical_doctor_id']=0;
+		}
+		else {
+			$data['result'][0]['medical_doctor_id'] = $medicalDoctorIdArray[0]['medical_doctor_id'];
+		}
+		
 		//added by Mike, 20210906
 //		echo $data['result'][0]['medical_doctor_id'];
 
