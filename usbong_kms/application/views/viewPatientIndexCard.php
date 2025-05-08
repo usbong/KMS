@@ -724,11 +724,17 @@
 							ACKNOWLEDGMENT FORM
 						</a>";
 					*/
-			
-					//note: we update the date format to m/d/y in Browse.php (Controller folder)
-					echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y"))."' id='viewAcknowledgmentFormId' target='_blank'>
-							ACKNOWLEDGMENT FORM
-						</a>";
+						//edited by Mike, 20250508
+						// or ($value['transaction_date']=="")
+						if (!isset($resultPaid[0]['added_datetime_stamp'])) {
+							echo "ACKNOWLEDGMENT FORM<br/>NOT YET AVAILABLE";
+						}
+						else {
+							//note: we update the date format to m/d/y in Browse.php (Controller folder)
+							echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y"))."' id='viewAcknowledgmentFormId' target='_blank'>
+									ACKNOWLEDGMENT FORM
+								</a>";
+						}
 				?>
 				
 			</td>
@@ -1748,11 +1754,11 @@
 							//edited by Mike, 20210720
 //							echo str_replace(" ","T",$value['added_datetime_stamp']);
 
-						echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
-							//edited by Mike, 20210927
-//							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
-							str_replace(" ","<br/>T",$value['added_datetime_stamp'])."</b>
-						</a>";
+							echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>".
+								//edited by Mike, 20210927
+	//							str_replace(" ","T",$value['added_datetime_stamp'])."</b>
+								str_replace(" ","<br/>T",$value['added_datetime_stamp'])."</b>
+							</a>";
 				?>
 <!--
 						</div>								
