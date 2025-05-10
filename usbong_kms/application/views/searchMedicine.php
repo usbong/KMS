@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250503; from 20250430
+' @date updated: 20250510; from 20250503
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -1034,7 +1034,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 	<table class="addMedItemTable">
 	<tr>
-		<td colspan="2" id="addNewMedItemTdHeaderId" class="tableHeaderAddNewMedItemTd">
+		<!-- removed colspan="2" due to older browser (2012 default Lenovo Tablet Browser) doesn't display it correctly, by Mike, 20250510 -->
+		<td id="addNewMedItemTdHeaderId" class="tableHeaderAddNewMedItemTd">
 			<!-- edited by Mike, 20250503; from 20250430 -->
 			<div id="addNewMedItemDivId" class="tableHeaderAddNewMedItem"><span class="spanAddNewMedItem">ADD NEW MED</span> <img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250503T1553"></div>
 		</td>
