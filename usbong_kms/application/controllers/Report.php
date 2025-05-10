@@ -722,10 +722,14 @@ class Report extends CI_Controller { //MY_Controller {
 	//				$iTransactionId = $value['transaction_id']+1;
 					$iTransactionId = $value['transaction_id'];
 
+					//removed by Mike, 20250510, 
+					//all combined transactions now have for its transaction_quantity,
+					//a value > 0;
+/*
 					//identify transaction with the combined fees
 //					while ($transactionId==0) {
 					do {
-//						echo $iTransactionId."<br/>";
+						echo $iTransactionId."<br/>";
 
 						$this->db->select('transaction_quantity');
 						$this->db->where('transaction_id',$iTransactionId);
@@ -737,15 +741,15 @@ class Report extends CI_Controller { //MY_Controller {
 						$query = $this->db->get('transaction');
 						$row = $query->row();
 
-/* //removed by Mike, 20221110
-						//added by Mike, 20221109
-						//TO-DO: -reverify: this
-						//note: transactionId is the combined transaction
-						//of MD's first patient for the day
-						if ($iTransactionId==$iTransactionIdMax) {							
-							break;
-						}	
-*/
+//// //removed by Mike, 20221110
+////						//added by Mike, 20221109
+////						//TO-DO: -reverify: this
+////						//note: transactionId is the combined transaction
+////						//of MD's first patient for the day
+////						if ($iTransactionId==$iTransactionIdMax) {							
+////							break;
+////						}	
+
 
 						$iTransactionId = $iTransactionId + 1;
 						
@@ -773,11 +777,14 @@ class Report extends CI_Controller { //MY_Controller {
 					else {
 						$iTransactionId = $iTransactionId -1;
 					}
+*/					
 
 					//removed by Mike, 20221110
-					//echo $iTransactionId."<br/><br/>";
+					//echo ">>>>".$iTransactionId."<br/><br/>";
 
 					$value['receipt_number'] = $this->Report_Model->getReceiptNumber($iTransactionId);
+					
+					//echo ">>>>>".$value['receipt_number'];
 				}
 				unset($value);
 			}
