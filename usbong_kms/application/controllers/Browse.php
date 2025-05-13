@@ -5457,8 +5457,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		
 		$this->load->model('Browse_Model');
 		$this->load->model('Report_Model');
-	
-		$this->Browse_Model->deleteTransactionFromPatient($data);
+		
+		//edited by Mike, 20250513
+		//$this->Browse_Model->deleteTransactionFromPatient($data);
+		$this->Browse_Model->deleteTransactionFromPatientWaitingList($data);
 
 		//edited by Mike, 20201128
 //		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
@@ -5525,7 +5527,7 @@ class Browse extends CI_Controller { //MY_Controller {
 		$this->load->model('Browse_Model');
 		$this->load->model('Report_Model');
 	
-		$this->Browse_Model->deleteTransactionFromPatient($data);
+		$this->Browse_Model->deleteTransactionFromPatientWaitingList($data);
 		
 		//edited by Mike, 20201128
 //		$data["result"] = $this->Report_Model->getPatientQueueReportForTheDay();
