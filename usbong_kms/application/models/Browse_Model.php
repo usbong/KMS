@@ -1632,6 +1632,69 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		}
 	}
 	
+	//added by Mike, 20250513
+	public function deleteTransactionFromPatientWaitingList($param) 
+	{
+		//added by Mike, 20200608
+        $this->db->select('patient_id');
+        $this->db->where('transaction_id',$param['transactionId']);
+        $query = $this->db->get('transaction');
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {	
+			return False;
+		}
+		
+		//added by Mike, 20250416
+		$patientId=$rowArray[0]['patient_id']; 
+
+/*		//removed by Mike, 20250513; deletes combined transaction
+		echo ">>>>>".$patientId."<br/>";
+		echo "transactionId: ".$param['transactionId'];
+		
+        $this->db->where('transaction_id',$param['transactionId']);
+        $this->db->delete('transaction');
+*/		
+
+		//echo ">>>>".$param['transactionDate'];
+
+		//edited by Mike, 20250513; from 20200608
+		//delete all transactions of the patient for the day
+		//this is due to the computer server adding a new transaction that combines all the patient's purchases
+        $this->db->where('patient_id',$rowArray[0]['patient_id']);
+        $this->db->where('transaction_date',$param['transactionDate']);
+        
+		//removed by Mike, 20250513;
+		//no "IN-QUEUE" if transaction was only added at cashier unit, instead of at the info desk;
+		//$this->db->like('notes',"IN-QUEUE");
+        
+		$this->db->delete('transaction');		
+
+		//added by Mike, 20250416
+        $this->db->select('transaction_id');
+        $this->db->where('patient_id',$patientId);
+        $query = $this->db->get('transaction');
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {	
+			//added by Mike, 20250416
+			//if patient has no transaction;
+			//if patient has no medical doctor set yet;
+			//also, delete only if the patient was added on the same day that it is to be deleted
+			
+			$this->db->where('patient_id',$patientId);
+			$this->db->where('medical_doctor_id',null);
+			$this->db->where('added_datetime_stamp<=',date("Y-m-d h:i:s"));
+			$this->db->where('added_datetime_stamp>=',date("Y-m-d")." 00:00:00");
+
+			$this->db->delete('patient');
+		
+			return False;
+		}
+	}	
+	
 	//added by Mike, 20250325
 	public function getPatientIdFrom($transactionId) {
 		$this->db->select('patient_id');
