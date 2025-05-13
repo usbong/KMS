@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250503; from 20250415
+  @date updated: 20250513; from 20250503
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -444,7 +444,28 @@
 							border: 0px solid #333333;
 							font-size: 20px;
 							padding: 0;
-						}							
+						}	
+
+						button.copyToClipboardButton {
+							background-color: #ffffff;
+							border: 0px dotted #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.copyToClipboardButton:hover {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.copyToClipboardButton:active {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}						
 						
 <!-- added by Mike, 20210210 -->
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
@@ -616,6 +637,35 @@
 			
 			return true;
 		}
+		
+		function myCopyToClipboardFunction(inputText) {
+		  var sCopyText = inputText;
+
+		  //alert("itemText: " + itemText);	
+
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = sCopyText; //copyText.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + sCopyText); //copyText.innerText);	
+		}			
 	  </script>
   <body>
 <?php
@@ -1514,8 +1564,25 @@
   else {
 	$sDateToday = Date('Y-m-d', strtotime($value['last_visited_date']));
   }
+
+  //added by Mike, 20250513
+  if (strpos($sDateToday,"1970-01-01")!==false) {
+	//$sDateToday = $value['last_visited_date'];
+	
+	if (isset($resultPaid[0]['added_datetime_stamp'])) {
+		//input: 2025-05-10 11:56:46;
+		//output: 2025-05-10
+		$sDateToday=strtok($resultPaid[0]['added_datetime_stamp']," ");
+	}
+  }
   
-  echo "<b>LAST VISITED:</b> ".$sDateToday;
+  //echo ">>>>>>>>>>>>>>".$sDateToday."<br/>";
+  
+  //edited by Mike, 20250513
+  //echo "<b>LAST VISITED:</b> ".$sDateToday;
+  //note space before the ⿻ button;
+  echo "<b>LAST VISITED:</b> ".$sDateToday." <button class='copyToClipboardButton' onclick='myCopyToClipboardFunction(\"".$sDateToday."\")'>⿻</button>";
+
 
 ?>
 

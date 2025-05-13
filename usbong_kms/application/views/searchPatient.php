@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250508; from 20250430
+' @date updated: 20250513; from 20250508
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -150,6 +150,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							color: #ff0000;							
 						}
+						
+button.copyToClipboardButton {
+							background-color: #ffffff;
+							border: 0px dotted #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.copyToClipboardButton:hover {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.copyToClipboardButton:active {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}							
 
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
 	last accessed: 20200321
@@ -292,6 +313,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //			alert("text: "+sHoldTextPatientName + sHoldTextFee);//el.value);
 
 		}
+		
+		//added by Mike, 20250513
+		function myCopyToClipboardFunction(inputText) {
+		  var sCopyText = inputText;
+
+		  //alert("itemText: " + itemText);	
+
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = sCopyText; //copyText.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + sCopyText); //copyText.innerText);	
+		}			
 	  </script>
   <body>
     <table class="imageTable">
@@ -395,9 +446,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "MEDICAL DOCTOR";
 							?>
 								</div>
-						</td>											
+						</td>			
+						<td>
+						</td>
 					  </tr>
 <?php				
+				//added by Mike, 20250513
+				$sPatientName="";
+				$sTransactionDate="";
+				$sMedicalDoctor="";				
+
 				$iCount = 1;
 				foreach ($result as $value) {
 		//			echo $value['report_description'];			
@@ -446,8 +504,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div class="patientName">
 				<?php
 //								echo $value['patient_name'];
-								//TO-DO: -update: this
-								echo str_replace("�","Ñ",$value['patient_name']);
+								//edited by Mike, 20250513
+								//echo str_replace("�","Ñ",$value['patient_name']);
+								
+								$sPatientName=str_replace("�","Ñ",$value['patient_name']);
+								
+								echo $sPatientName;
+								
 //								echo str_replace("ufffd","Ñ",$value['patient_name']);
 				?>		
 								</div>								
@@ -462,11 +525,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								//edited by Mike, 20210724
 //								if ($value['transaction_date']==0) {
+	
+								//edited by Mike, 20250513
 								if (!isset($value['transaction_date']) or ($value['transaction_date']==0)) {
-									echo DATE("Y-m-d");
+									//echo DATE("Y-m-d");
+									$sTransactionDate=DATE("Y-m-d");
 								}
 								else {
-									echo DATE("Y-m-d", strtotime($value['transaction_date']));
+									//echo DATE("Y-m-d", strtotime($value['transaction_date']));
+									$sTransactionDate=DATE("Y-m-d", strtotime($value['transaction_date']));
+									
+									echo $sTransactionDate;
 								}
 							?>
 								</div>
@@ -482,11 +551,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "NEW; NONE YET";
 								}
 								else {
-									echo $value['medical_doctor_name'];
+									//edited by Mike, 20250513
+									//echo $value['medical_doctor_name'];
+									$sMedicalDoctor=$value['medical_doctor_name'];
+									
+									echo $sMedicalDoctor;
 								}								
 							?>
 								</div>
-						</td>						
+						</td>			
+						<td>
+<?php					 //added by Mike, 20250513
+						 //$patientName=str_replace("�","Ñ",$value['patient_name']);
+
+						 echo "<button class='copyToClipboardButton' onclick='myCopyToClipboardFunction(\"".$sPatientName."; ".$sTransactionDate."; ".$sMedicalDoctor."\")'>⿻</button>";
+?>						
+						</td>
 					  </tr>
 		<?php				
 					$iCount++;		
