@@ -5228,7 +5228,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//$this->db->where('transaction_id', $transactionId);		
 		//$this->db->where('transaction_date', date('m/d/Y'));
 		$this->db->where('patient_id', $patientId);
-		$this->db->where('transaction_quantity!=', 0);		
+		$this->db->where('transaction_quantity!=', 0);
+		//added by Mike, 20250514; 
+		//newly added for the day; still unpaid
+		$this->db->or_where('transaction_date', date('m/d/Y'));
+		
 		$this->db->where('medical_doctor_id!=', 0);		
 		
 		$this->db->order_by('added_datetime_stamp', 'DESC');
