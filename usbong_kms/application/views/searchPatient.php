@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250513; from 20250508
+' @date updated: 20250517; from 20250513
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -81,6 +81,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #ff8000; <!--#93d151; lime green-->
 							border: 1pt solid #ff8000;
 						}						
+
+						div.transactionDateDiv
+						{
+							text-align: center;
+						}
 						
 						input.browse-input
 						{
@@ -517,7 +522,7 @@ button.copyToClipboardButton {
 							</a>
 						</td>
 						<td class ="column">				
-								<div id="transactionDateId<?php echo $iCount?>">
+								<div class="transactionDateDiv" id="transactionDateId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20200518								
 //								echo $value['transaction_date'];
@@ -529,13 +534,24 @@ button.copyToClipboardButton {
 								//edited by Mike, 20250513
 								if (!isset($value['transaction_date']) or ($value['transaction_date']==0)) {
 									//echo DATE("Y-m-d");
-									$sTransactionDate=DATE("Y-m-d");
+									//$sTransactionDate=DATE("Y-m-d");
+									//edited by Mike, 20250517
+									//echo $sTransactionDate;
+									echo "-"; //"NEW";
 								}
 								else {
 									//echo DATE("Y-m-d", strtotime($value['transaction_date']));
 									$sTransactionDate=DATE("Y-m-d", strtotime($value['transaction_date']));
 									
-									echo $sTransactionDate;
+									//added by Mike, 20250517
+									//echo $sTransactionDate;
+									//if a transaction today;
+									if (strpos($sTransactionDate,DATE("Y-m-d"))!==false) {
+										echo "-"; //"NEW";
+									}
+									else {
+										echo $sTransactionDate;
+									}
 								}
 							?>
 								</div>
