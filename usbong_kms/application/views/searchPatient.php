@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250517; from 20250513
+' @date updated: 20250519; from 20250517
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -537,7 +537,7 @@ button.copyToClipboardButton {
 									//$sTransactionDate=DATE("Y-m-d");
 									//edited by Mike, 20250517
 									//echo $sTransactionDate;
-									echo "-"; //"NEW";
+									echo "--"; //"NEW";
 								}
 								else {
 									//echo DATE("Y-m-d", strtotime($value['transaction_date']));
@@ -547,7 +547,7 @@ button.copyToClipboardButton {
 									//echo $sTransactionDate;
 									//if a transaction today;
 									if (strpos($sTransactionDate,DATE("Y-m-d"))!==false) {
-										echo "-"; //"NEW";
+										echo "--"; //"NEW";
 									}
 									else {
 										echo $sTransactionDate;

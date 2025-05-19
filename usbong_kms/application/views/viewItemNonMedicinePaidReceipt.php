@@ -727,11 +727,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- added by Mike, 20200610 -->
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
 
-		<br />
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Submit
-		</button>
+<?php
+		//added by Mike, 20250519
+		//TODO: -reverify: sometimes no OR input box is displayed
+		if (isset($outputTransaction)) {
+?>		
+			<br />
+			<!-- Button -->
+			<button type="submit" class="Button-login">
+				Submit
+			</button>
+<?php
+		//added by Mike, 20250519
+		}
+?>
 	</form>
 	<br />
 
