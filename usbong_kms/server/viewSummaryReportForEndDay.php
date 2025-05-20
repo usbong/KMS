@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2021 SYSON, MICHAEL B.
+  Copyright 2020~2025 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20211229; from 20210916
+  @date updated: 20250520; from 20211229
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -158,15 +158,23 @@
 	//edited by Mike, 20210914
 //	$filename="C:\\xampp\\htdocs\\usbong_kms\\kasangkapan\\phantomjs-2.1.1-windows\\bin\\templates\\moscReportForTheDayLibreOfficeCalc.csv";
 
-	$filename="C:\\xampp\\htdocs\\usbong_kms\\usbongTemplates\\Cashier\\moscGetSalesReportForEndDayLibreOfficeCalc.csv";
+  //edited by Mike, 20230925  
+  $filename="C:\\xampp\\htdocs\\usbong_kms\\usbongTemplates\\Cashier\\moscGetSalesReportForEndDayLibreOfficeCalc.csv";
 
+  //note: also correct output; //$filename="C:\\xampp\htdocs\usbong_kms\usbongTemplates\Cashier\moscGetSalesReportForEndDayLibreOfficeCalc.csv";
+	
+	
 	//TO-DO: -add: auto-write values from input files after executing command:  getSalesReportsForTheDay.php 
 
 	//TO-DO: -remove: this
 	//added by Mike, 20200524
 	//update file location
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";	
+	//edited by Mike, 20230925
+	//$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";	
+	
+	$fileBasePath = "D:\MOSC\KMS\output\informationDesk\cashier\\";	
+
 
 	//TO-DO: -add: execute instructions in getSalesReportsForTheDay.php
 	//use auto-computed values
@@ -224,7 +232,10 @@
 
 	//added by Mike, 20200524
 //	$fileBasePath = "D:\Usbong\MOSC\Forms\Information Desk\output\cashier\\";
-	$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	
+	//removed by Mike, 20230925
+	//$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
+	
 
 /* //edited by Mike, 20210916; note: use to set date
 	//added by Mike, 20200902
@@ -242,8 +253,9 @@
 	$iMinorsetQuantityTotalCount = 0;
 	
 	//medical doctor; SYSON, PEDRO
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
-
+	//edited by Mike, 20250520
+	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0"))
 	{
 /* //removed by Mike, 20210915		
 		//added by Mike, 20200524
@@ -879,8 +891,10 @@
 		foreach ($selectedMedicalDoctorList as $listValue) {
 			//added by Mike, 20200713
 			$responses = [];
-
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+			
+			//edited by Mike, 20250520
+			//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 order by transaction_id ASC"))
 			{
 /* //removed by Mike, 20210915						
 				echo "--<br />";
@@ -1155,7 +1169,9 @@
 	$responses = [];
 	
 	//medical doctor; SYSON, PETER
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+	//edited by Mike, 20250520
+	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
+	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0"))
 	{
 /* //removed by Mike, 20210915				
 		//added by Mike, 20200524
@@ -1660,6 +1676,8 @@
 
 	ini_set('auto_detect_line_endings', true);
 
+	//echo ">>>>>> ".$filename;
+	
 	//added by Mike, 20200523
 	if (!file_exists($filename)) {
 		//add the day of the week
