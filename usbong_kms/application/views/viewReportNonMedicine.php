@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20221109; from 20220908
+' @date updated: 20250521; from 20221109
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -526,6 +526,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								//echo "transactionId: ".$value['transaction_id']."<br/>";
 
+								//echo "test: ".$value['hallo'];
+								//echo "vat_amount_paid: ".$value['vat_amount_paid'];
+								
 								if ($value['receipt_id']==0) {
 									$fFee = $value['fee'];
 								}								
