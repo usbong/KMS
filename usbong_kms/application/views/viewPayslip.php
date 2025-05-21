@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250219; from 20241209
+' @date updated: 20250521; from 20250219
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -717,10 +717,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //echo $value['medical_doctor_name'];
 
-								//added by Mike, 20200906
+								//edited by Mike, 20250521; from 20200906
 								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
 								//if not Dr HONESTO
-								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")==false) {
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 									echo floor(($iMOSC*100)/100);
 								}
 								else {								
@@ -764,6 +764,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								if (strtoupper($value['notes'])=="PRIVATE") {
 								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
 //									echo $value['fee'];
+
+									//echo "DITO!!!";
+
 
 									$iNetPF = $value['fee'];
 /*									
@@ -990,14 +993,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//added by Mike, 20200906
 								//deduct: 12% to Net Fee if Dr. Honesto and has MOSC OR
 								
+								//echo $value['medical_doctor_name']."<br/>";
+								
+								//edited by Mike, 20250521
 								//if not Dr HONESTO
-								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")==false) {
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
+									
+									//echo "HALLO!!!";
+									
 									//edited by Mike, 20241001
 									echo floor(($iNetPF*100)/100);
 								}
 								//note: with Dr Honesto's case, his med cert payment is included in the 70/30 sharing with MOSC
 								else {								
-										
+
 /*										
 									echo ">>";										
 									echo $value['receipt_number'];
