@@ -2072,11 +2072,19 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 //			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee');
 			//edited by Mike, 20220312
 //			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee, t1.item_id');
-			$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee, t1.item_id, t1.x_ray_fee, t1.lab_fee');
+			
+			//edited by Mike, 20250521
+			//$this->db->select('t1.patient_id, t3.item_type_id, t1.med_fee, t1.pas_fee, t1.item_id, t1.x_ray_fee, t1.lab_fee');
+			//$this->db->select('t1.patient_id, t2.item_type_id, t1.med_fee, t1.pas_fee, t1.item_id, t1.x_ray_fee, t1.lab_fee');
+			$this->db->select('t1.patient_id, t1.med_fee, t1.pas_fee, t1.item_id, t1.x_ray_fee, t1.lab_fee');
 
 			$this->db->from('transaction as t1');
-			$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');
-			$this->db->join('item_type as t3', 't2.item_type_id = t3.item_type_id', 'LEFT');
+			
+			//$this->db->join('item as t2', 't1.item_id = t2.item_id', 'LEFT');
+			
+			//removed by Mike, 20250521
+			//$this->db->join('item_type as t3', 't2.item_type_id = t3.item_type_id', 'LEFT');
+
 			$this->db->where('t1.transaction_id',$param['transactionId']);
 			
 			//added by Mike, 20210422
@@ -2155,7 +2163,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 				}
 				//identify item type
 				else {
-					if ($rowArray[0]['item_type_id']==1) { //MEDICINE															
+					//edited by Mike, 20250521
+					//if ($rowArray[0]['item_type_id']==1) { //MEDICINE					
+					if ($param['receiptTypeId']==1) { //MEDICINE						
 						$param['receiptTypeId'] = 1; //1 = MOSC Receipt; 2 = PAS Receipt
 
 						$data = array(
@@ -2170,7 +2180,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 					}
 					//edited by Mike, 20210904; reminder: there exists SNACK item
 //					else { //NON-MEDICINE
-					else if ($rowArray[0]['item_type_id']==2) { 
+					//edited by Mike, 20250521
+					//else if ($rowArray[0]['item_type_id']==2) { 
+					else if ($param['receiptTypeId']==2) { 
 						$param['receiptNumber'] = $param['receiptNumberPAS'];
 						
 						if ($param['receiptNumber']!=0) {

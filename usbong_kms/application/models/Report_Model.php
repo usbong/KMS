@@ -1645,7 +1645,9 @@ class Report_Model extends CI_Model
 		//edited by Mike, 20211203
 //		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number, t3.receipt_type_id');
 		if ($itemTypeId==2) { //non-med item
-			$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number, t3.receipt_type_id');
+			//edited by Mike, 20250521
+			//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes, t3.receipt_id, t3.receipt_number, t3.receipt_type_id');
+			$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes');
 		}
 		else {
 			$this->db->select('t1.item_name, t1.item_price, t1.item_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.notes');
@@ -1654,11 +1656,13 @@ class Report_Model extends CI_Model
 		$this->db->from('item as t1');
 		$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
 
+/*		//removed by Mike, 20250521
 		//edited by Mike, 20211203
 		//reminder: deleting excess JOIN COMMANDS causes noticeable speed-up in execution
 		if ($itemTypeId==2) { //non-med item
 			$this->db->join('receipt as t3', 't2.transaction_id = t3.transaction_id', 'LEFT'); //added by Mike, 20200430
 		}
+*/		
 
 		$this->db->distinct('t1.item_name');
 
@@ -1777,7 +1781,6 @@ class Report_Model extends CI_Model
 				$iItemQuantity = 0;
 				$dItemTotalFee = 0;
 
-
 				//quantity
 				if ($value['fee_quantity']==0) {
 					$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
@@ -1804,6 +1807,30 @@ class Report_Model extends CI_Model
 						$dItemTotalVATAmount = $dItemTotalVATAmount + $dAddedVATAmount;
 					}
 */					
+
+					//added by Mike, 20250521
+					//-----
+					//check receipt if it exists;
+					$this->db->select('receipt_id, receipt_number, receipt_type_id');
+					$this->db->where('transaction_id', $value['transaction_id']);		
+					$query = $this->db->get('receipt');
+					
+					$receiptRowArray = $query->result_array();
+			
+					if ($receiptRowArray != null) {
+						$value['receipt_id']=$receiptRowArray[0]['receipt_id'];
+						$value['receipt_type_id']=$receiptRowArray[0]['receipt_type_id'];
+						$value['receipt_number']=$receiptRowArray[0]['receipt_number'];
+						
+						//echo "HALLO!!!".$value['receipt_id']."<br/>";
+					}
+					else {
+						$value['receipt_id']=0;
+						$value['receipt_type_id']=0;
+						$value['receipt_number']=0;
+					}
+					//-----
+
 					if ($value['receipt_id']==0) {
 						$dAddedVATAmount = 0;
 					}								
@@ -1870,6 +1897,7 @@ class Report_Model extends CI_Model
 			//edited by Mike, 20210218
 //			array_push($outputArray, $currentValue);
 			foreach ($sameItemOutputArray as $value) {
+				$value['hallo'] = 1;
 				array_push($outputArray, $value);
 			}		
 		}
