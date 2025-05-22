@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20250507; from 20250506
+  @date updated: 20250522; from 20250507
   @website address: www.usbong.ph
   
   Input:
@@ -960,6 +960,7 @@ echo "hallo<br/>";
 //									if($receiptArrayRowValue) {
 									if (isset($receiptArrayRowValue)) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
+											//TODO: -reverify: this if Private
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 										}
 									}
@@ -1065,6 +1066,8 @@ echo "hallo<br/>";
 
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
 								$iNetFeeTotalCount = $iNetFeeTotalCount + ($iCurrExtraFeeValue*.30) + $myNetFeeValue;	
+								
+								echo $value['patient_name'].": ".$myNetFeeValue."<br/>";
 															
 								if (strpos($value['notes'],"MINORSET")!==false) {
 									$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
@@ -1180,6 +1183,9 @@ echo "hallo<br/>";
 /*	
 				if ($value['fee'] !== "0.00") {
 */					
+
+					//echo $value['fee']."<br/>";
+
 					//edited by Mike, 20200530
 
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
@@ -1309,6 +1315,7 @@ echo "hallo<br/>";
 						}	
 */						
 
+/*	//removed by Mike, 20250522; TODO: -reverify: this
 						$iCurrExtraFeeValue=0;
 
 						//edited by Mike, 20200829
@@ -1400,7 +1407,10 @@ echo "hallo<br/>";
 									$iCurrExtraFeeValue+=200;
 								}
 							}
-						}								
+						}						
+
+					    echo "iCurrExtraFeeValue: ".$iCurrExtraFeeValue."<br/>";
+*/
 						
 						if (strpos($value['notes'],"NC")!==false) {
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
@@ -1413,7 +1423,12 @@ echo "hallo<br/>";
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 						}	
 */
-						$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;
+						//edited by Mike, 20250522
+						//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;
+						
+						$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
+
+					    //echo "iNetFeeTotalCount: ".$iNetFeeTotalCount."<br/>";
 					}
 										
 					if (strpos($value['notes'],"MINORSET")!==false) {
@@ -1422,6 +1437,12 @@ echo "hallo<br/>";
 /*				}	
 */				
 			}
+			
+/*	//removed by Mike, 20250522								
+					echo "iFeeTotalCount: ".$iFeeTotalCount."<br/>";
+					echo "iQuantityTotalCount: ".$iQuantityTotalCount."<br/>";
+					echo "iNetFeeTotalCount: ".$iNetFeeTotalCount."<br/>";
+*/
 
 			//write as .txt file
 			$jsonResponse = array(
