@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250521; from 20250219
+' @date updated: 20250523; from 20250521
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -565,6 +565,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="moscFeeId<?php echo $iCount?>">
 							<?php				
+
 //echo ">>>".$iMOSC."END";
 								//edited by Mike, 20200403
 //								if (strtoupper($value['notes'])=="PRIVATE") {
@@ -717,13 +718,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //echo $value['medical_doctor_name'];
 
-								//edited by Mike, 20250521; from 20200906
+/*
+								//edited by Mike, 20250523; from 20250523
 								//add: 12% to MOSC Fee if Dr. Honesto and has MOSC OR
 								//if not Dr HONESTO
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 									echo floor(($iMOSC*100)/100);
 								}
 								else {								
+*/
 										
 /*										
 										echo ">>";
@@ -733,7 +736,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 									$iMOSC = $value['fee']*.30;
 									echo floor(($iMOSC*100)/100);
-										
+								
+								//added by Mike, 20250523
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
 
@@ -752,7 +757,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										}
 									}									
 								}
-
+/*
+								}
+*/
 								$iTotalMOSC += $iMOSC;
 							?>
 								</div>
@@ -994,8 +1001,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//deduct: 12% to Net Fee if Dr. Honesto and has MOSC OR
 								
 								//echo $value['medical_doctor_name']."<br/>";
-								
-								//edited by Mike, 20250521
+
+/*								//edited by Mike, 20250523; from 20250521
 								//if not Dr HONESTO
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 									
@@ -1006,6 +1013,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}
 								//note: with Dr Honesto's case, his med cert payment is included in the 70/30 sharing with MOSC
 								else {								
+*/
 
 /*										
 									echo ">>";										
@@ -1020,6 +1028,9 @@ echo $value['transaction_id']."<br/>";
 //echo $value['patient_name']."<br/>";
 //echo $value['receipt_number']."<br/>";
 */
+
+								//added by Mike, 20250523
+								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
 										//edited by Mike, 20241209; from 20240927
@@ -1041,9 +1052,11 @@ echo $value['transaction_id']."<br/>";
 										if ($dAddDueToMOSCOR!=0) {
 											echo " - ".$dDeductDueToMOSCOR;
 										}										
-									}									
+									}		
 								}
-								
+/*									
+								}
+*/								
 								$iTotalNetPF += $iNetPF;
 							?>
 								</div>
@@ -1092,9 +1105,14 @@ echo $value['transaction_id']."<br/>";
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
 									//edited by Mike, 20200910
 									if ((isset($value['receipt_number'])) and (!empty($value['receipt_number']))) {
+										
+										//ECHO "dito!!";
+										
 										//edited by Mike, 20200909										
 										//echo "; MOSC OR";
+										//edited by Mike, 20250523
 										if ($dAddDueToMOSCOR!=0) {
+										//if (isset($dAddDueToMOSCOR) and ($dAddDueToMOSCOR!=0)) {
 											echo "; MOSC OR";
 										}								
 									}									
