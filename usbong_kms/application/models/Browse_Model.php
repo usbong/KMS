@@ -5234,16 +5234,22 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	{		
 		//echo $patientId;
 	
-		$this->db->select("medical_doctor_id");
+		$this->db->select("medical_doctor_id");//, transaction_id");
 		
 		//$this->db->from('transaction');
 		//$this->db->where('transaction_id', $transactionId);		
 		//$this->db->where('transaction_date', date('m/d/Y'));
-		$this->db->where('patient_id', $patientId);
+		//removed by Mike, 20250523
+		//$this->db->where('patient_id', $patientId);
+
 		$this->db->where('transaction_quantity!=', 0);
-		//added by Mike, 20250514; 
+		
+		//removed by Mike, 20250523; from 20250514; 
 		//newly added for the day; still unpaid
-		$this->db->or_where('transaction_date', date('m/d/Y'));
+		//$this->db->or_where('transaction_date', date('m/d/Y'));
+
+		//added by Mike, 20250523
+		$this->db->where('patient_id', $patientId);
 		
 		$this->db->where('medical_doctor_id!=', 0);		
 		
@@ -5255,10 +5261,38 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
 		
-		if ($rowArray == null) {					
-			return False;
+		if ($rowArray == null) {	
+			//echo "DITO!!!";
+			//added by Mike, 20250523
+			//----------		
+			$this->db->select("medical_doctor_id");//, transaction_id");
+			//$this->db->where('transaction_quantity!=', 0);
+		
+			//newly added for the day in waiting list; still unpaid
+			$this->db->where('transaction_date', date('m/d/Y'));
+
+			$this->db->where('patient_id', $patientId);			
+			$this->db->where('medical_doctor_id!=', 0);		
+			
+			$this->db->order_by('added_datetime_stamp', 'DESC');
+			$this->db->limit(1);		
+			$query = $this->db->get('transaction');
+
+			$rowArrayPartTwo = $query->result_array();
+			//----------		
+		
+			if ($rowArrayPartTwo == null) {	
+				//echo "FALSE!!!";
+				return False;
+			}
+			
+			return $rowArrayPartTwo[0]['medical_doctor_id'];
 		}
-				
+/*
+		echo ">>>>patientId: ".$patientId."<br/>";
+		echo ">>>>transaction_id: ".$rowArray[0]['transaction_id']."<br/>";
+*/				 
+				 
 		return $rowArray[0]['medical_doctor_id'];
 	}	
 	
