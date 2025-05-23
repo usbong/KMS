@@ -3794,9 +3794,15 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//edited by Mike, 20250507; from 20250505
 		//if ($data['result'][0]["medical_doctor_id"]!=$data['result'][0]["TranMDID"]) {
-		if ($data['result'][0]["medical_doctor_id"]!=$iTranMDID) {
+		//edited by Mike, 20250523
+		//if ($data['result'][0]["medical_doctor_id"]!=$iTranMDID) {
+		//if $iTranMDID has value; not blank
+		if (($iTranMDID) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
+
 			//take as priority the MD id in latest transaction 
 			//edited by Mike, 20250507
+			
+			//echo "HALLO!";
 			//$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
 			$data['result'][0]["medical_doctor_id"]=$iTranMDID;
 		}
