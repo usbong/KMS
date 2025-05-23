@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20250522; from 20250507
+  @date updated: 20250523; from 20250522
   @website address: www.usbong.ph
   
   Input:
@@ -1067,7 +1067,7 @@ echo "hallo<br/>";
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
 								$iNetFeeTotalCount = $iNetFeeTotalCount + ($iCurrExtraFeeValue*.30) + $myNetFeeValue;	
 								
-								echo $value['patient_name'].": ".$myNetFeeValue."<br/>";
+								//echo $value['patient_name'].": ".$myNetFeeValue."<br/>";
 															
 								if (strpos($value['notes'],"MINORSET")!==false) {
 									$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
