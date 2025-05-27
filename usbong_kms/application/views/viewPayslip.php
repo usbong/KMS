@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250523; from 20250521
+' @date updated: 20250527; from 20250523
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -734,7 +734,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										echo $value['receipt_number'];
 */
 
+/*	//removed by Mike, 20250527
 									$iMOSC = $value['fee']*.30;
+*/									
 									echo floor(($iMOSC*100)/100);
 								
 								//added by Mike, 20250523
@@ -767,6 +769,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 								<div id="medicalDoctorFeeId<?php echo $iCount?>">
 							<?php
+								//added by Mike, 20250527
+								//TODO: -fix: if private and with dexa etc;
+								
 								//edited by Mike, 20200403; edited by Mike, 20200507
 //								if (strtoupper($value['notes'])=="PRIVATE") {
 								if (strpos(strtoupper($value['notes']), "PRIVATE")!==false) {
@@ -1019,8 +1024,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo ">>";										
 									echo $value['receipt_number'];
 */
+									
+/*	//removed by Mike, 20250527
 									$iNetPF = $value['fee']*.70;
+*/
 									echo floor(($iNetPF*100)/100);
+									
 										
 /*	//removed by Mike, 20221110
 echo "<br/>";
