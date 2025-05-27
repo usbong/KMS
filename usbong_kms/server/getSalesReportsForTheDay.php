@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20250523; from 20250522
+  @date updated: 20250527; from 20250523
   @website address: www.usbong.ph
   
   Input:
@@ -1315,7 +1315,7 @@ echo "hallo<br/>";
 						}	
 */						
 
-/*	//removed by Mike, 20250522; TODO: -reverify: this
+	//re-added by Mike, 20250527; from 20250522; TODO: -reverify: this
 						$iCurrExtraFeeValue=0;
 
 						//edited by Mike, 20200829
@@ -1356,7 +1356,7 @@ echo "hallo<br/>";
 							}
 
 						}
-
+						
 						if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
 							//edited by Mike, 20240501
 							//DR PETER MEDCERT; updated from 200PHP to 300PHP;
@@ -1409,8 +1409,8 @@ echo "hallo<br/>";
 							}
 						}						
 
-					    echo "iCurrExtraFeeValue: ".$iCurrExtraFeeValue."<br/>";
-*/
+					    ////echo "iCurrExtraFeeValue: ".$iCurrExtraFeeValue."<br/>";
+
 						
 						if (strpos($value['notes'],"NC")!==false) {
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
@@ -1423,10 +1423,13 @@ echo "hallo<br/>";
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 						}	
 */
-						//edited by Mike, 20250522
-						//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;
+						//edited by Mike, 20250527; from 20250522
+						//due to med cert3; not private;
+						//TODO: -reverify this
 						
-						$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
+						$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;
+						
+						//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 
 					    //echo "iNetFeeTotalCount: ".$iNetFeeTotalCount."<br/>";
 					}
