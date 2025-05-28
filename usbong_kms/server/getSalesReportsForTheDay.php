@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20250527; from 20250523
+  @date updated: 20250528; from 20250527
   @website address: www.usbong.ph
   
   Input:
@@ -830,7 +830,8 @@
 								//added by Mike, 20200531
 								$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;
 								
-								//TO-DO: -reverify: if +DEXA
+								//edited by Mike, 20250528
+								//note: no +DEXA with other medical doctors beside Dr Peter
 							}
 							//added by Mike, 20201026
 							else {
@@ -1062,12 +1063,24 @@ echo "hallo<br/>";
 											}
 										}
 									}
+									
+									//added by Mike, 20250528
+									//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;								
 								}
 
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($iCurrExtraFeeValue*.30) + $myNetFeeValue;	
-								
+
+								//edited by Mike, 20250528
+								//note variation with Dr Peter's due to medical doctor includes special case with Dr Honesto
+								if (strpos($value['notes'],"PRIVATE")!==false) {
+									$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
+								}
+								else {
+									$iNetFeeTotalCount = $iNetFeeTotalCount + ($iCurrExtraFeeValue*.30) + $myNetFeeValue;	
+								}
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;								
 								//echo $value['patient_name'].": ".$myNetFeeValue."<br/>";
+
 															
 								if (strpos($value['notes'],"MINORSET")!==false) {
 									$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
