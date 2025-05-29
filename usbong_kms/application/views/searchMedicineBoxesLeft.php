@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250424; from 20250325
+' @date updated: 20250529; from 20250424
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -840,11 +840,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class =column>		
+						<td class="column">		
 							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
 						</td>
-						<td class =column>				
-								<div class="quantityInStockDiv" id=quantityInStockId<?php echo $iCount?>>
+						<td class="column">				
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
 
@@ -894,8 +894,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class =column>				
-								<div id=quantityInStockId<?php echo $iCount?>>
+						<td class="column">				
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20250325
 								//echo $value['item_quantity_per_box'];
@@ -908,8 +908,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
-						<td class =column>				
-								<div id=quantityInStockId<?php echo $iCount?>>
+						<td class="column">				
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
 
@@ -958,8 +958,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>											
-						<td class =column>				
-								<div id=expirationId<?php echo $iCount?>>
+						<td class="column">				
+								<div id="expirationId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20250424
 								if (strpos(strtoupper($value['item_name']),"*")!==false) {
@@ -997,8 +997,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class =column>				
-								<div id=itemPriceId<?php echo $iCount?>>
+						<td class="column">				
+								<div id="itemPriceId<?php echo $iCount?>">
 							<?php
 								echo $value['item_price'];
 							?>
