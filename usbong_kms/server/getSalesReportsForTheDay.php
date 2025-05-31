@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20250528; from 20250527
+  @date updated: 20250531; from 20250528
   @website address: www.usbong.ph
   
   Input:
@@ -84,19 +84,6 @@
 
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")));
-
-/*
-	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
-	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
-*/
-/*
-	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-2 Day"));
-	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-2 Day"));
-*/
-/*
-	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-3 Day"));
-	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-2 Day"));
-*/
 	
 	//added by Mike, 20200524
 	$responses = [];
@@ -105,28 +92,6 @@
 	$iMinorsetQuantityTotalCount = 0;
 	
 	//medical doctor; SYSON, PEDRO
-	//edited by Mike, 20200706
-//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1 and transaction_quantity='0'"))	
-	//edited by Mike, 20200711
-//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
-/*	
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and transaction_quantity='0' group by patient_id"))		
-*/
-	//edited by Mike, 20200826
-	//TO-DO: -reverify this
-	//edited by Mike, 20200902
-//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	//edited by Mike, 20201027
-//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	//edited by Mike, 20201031
-/*
-	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-*/
-	//TO-DO: -add: med and non-med only counts in other Medical Doctors report
-	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id=1 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and transaction_quantity!='0' group by patient_id"))
-	//edited by Mike, 20250506
-//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
-	//TODO: -verify: the other medical doctors;
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, x_ray_fee, lab_fee, med_fee, pas_fee, notes, transaction_id, patient_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='1' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0"))
 
 	{
@@ -290,14 +255,6 @@
 	
 
 	//x-ray
-//	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0'"))
-	//edited by Mike, 20200706
-//	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0' and transaction_quantity='0'"))
-	//NOTE: the "group by" command gets the earliest transaction entered, not the newest
-	//edited by Mike, 20200902
-//	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".date('m/d/Y')."' and x_ray_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	//edited by Mike, 20200910
-//	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and x_ray_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and x_ray_fee!='0' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
@@ -368,17 +325,6 @@
 	
 
 	//added by Mike, 20200521; edited by Mike, 20200706
-//	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
-	//edited by Mike, 20200902
-//	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-
-/*	//edited by Mike, 20200909	
-	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-*/
-	//edited by Mike, 20200917
-//	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0' and t1.item_name!='MINORSET'"))
-	//edited by Mike, 20201208
-//	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name!='MINORSET'"))
 	if ($selectedMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.notes NOT Like '%UNPAID%' and t2.transaction_quantity='0' and t1.item_name!='MINORSET'"))
 	{
 		//added by Mike, 20200524
@@ -441,22 +387,6 @@
 	$responses = [];
 	
 	//non-medicine
-	//edited by Mike, 20200706
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
-	//edited by Mike, 20200708
-//if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	//edited by Mike, 20200902
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	//edited by Mike, 20200916
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	//edited by Mike, 20200923; note removed from output list item with item name, "MINORSET"
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0'"))
-	//edited by Mike, 20201120
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET'"))
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET' and t1.item_id!='0'"))
-	
-//edited by Mike, 20210222
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select distinct t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET'"))
 	if ($selectedNonMedicineResultArray = $mysqli->query("select distinct t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0' and t1.item_name !='MINORSET' group by t2.transaction_id"))
 	{
 		//added by Mike, 20200524
@@ -580,16 +510,6 @@
 	$responses = [];
 		
 	//lab
-//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."'"))
-	//edited by Mike, 20200706
-//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0'"))
-	//edited by Mike, 20200902
-//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".date('m/d/Y')."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	//edited by Mike, 20201026
-	//note: in certain cases, pressing delete button deletes transaction with LAB fee and transaction quantity zero
-//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	//edited by Mike, 20210129
-//	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and transaction_quantity!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
 	{
 		//added by Mike, 20200524
@@ -729,43 +649,9 @@
 	if ($selectedMedicalDoctorList = $mysqli->query("select medical_doctor_id, medical_doctor_name from medical_doctor where medical_doctor_id>3")) //3 is SUMMARY
 	{
 		foreach ($selectedMedicalDoctorList as $listValue) {
-			//edited by Mike, 20200706
-//			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id='".$listValue['medical_doctor_id']."' and transaction_quantity='0'"))
-
-			//edited by Mike, 20200712
-/*
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id='".$listValue['medical_doctor_id']."' and transaction_quantity='0' group by patient_id"))
-*/
 			//added by Mike, 20200713
 			$responses = [];
 
-			//TO-DO: -reverify this
-			//edited by Mike, 20200902
-//			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-			//edited by Mike, 20200910
-//			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-			//edited by Mike, 20201031
-/*
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-*/
-/*
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-*/
-			//edited by Mike, 20211022
-			//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
-			//TO-DO: -reverify: this; computation error with Dr. Honesto 
-			//NOT yet successfully replicated in development machine
-			//TO-DO: -reverify: Report_Model->getPayslipForTheDayWeb(...)
-			//edited by Mike, 20211023
-//			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id order by transaction_id ASC")) {
-//			if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id order by transaction_id ASC")) {
-
-			//edited by Mike, 20211214
-			//TO-DO: -fix: transaction with combined total can still be deleted
-//			if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 group by patient_id order by transaction_id ASC")) {
-			//edited by Mike, 20250507
-			//if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id order by transaction_id ASC")) {
-			
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 order by transaction_id ASC")) {
 			
 /*		//note; added by Mike, 20211022
@@ -993,22 +879,7 @@ echo "hallo<br/>";
 										//echo "dito: ".$value['transaction_id'];
 										
 										if($receiptArrayRowValue) {
-											//edited by Mike, 20220815; from 20220107
-											//reminder: DR. HONESTO and DR. CHASTITZ use MOSC OR; set to zero if as DR. HONESTO or DR. CHASTITY OR
-	//										if ($receiptArrayRowValue['receipt_number']!=0) {
-											//edited by Mike, 20221107
-											//if ($receiptArrayRowValue['receipt_number']==0) {
-												//edited by Mike, 20241209; from 20240927
-												$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
-												
-												//echo ">>>>>>>>>>>>".$value['fee'];
-												
-												//$myNetFeeValue = $value['fee']*0.70 - ($value['fee']*.70)*.12;
-												
-											//}
-											
-											//removed by Mike, 20221108
-											//echo $myNetFeeValue."<br/>";
+											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 										}
 										// free result set
 										mysqli_free_result($receiptArray);											
@@ -1140,32 +1011,10 @@ echo "hallo<br/>";
 			echo "Error: " . $mysqli->error;
 	}																
 
-
-	//removed by Mike, 20200708
-	//added by Mike, 20200524
-	//echo "<br/>";
-
 	//added by Mike, 20200524
 	$responses = [];
 	
 	//medical doctor; SYSON, PETER
-	//edited by Mike, 20200530
-//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2"))	
-	//edited by Mike, 20200706
-	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2 and transaction_quantity='0'"))	
-
-	//edited by Mike, 20200712
-/*	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and fee!='0' and medical_doctor_id=2 and transaction_quantity='0' group by patient_id"))	
-*/
-	//TO-DO: -reverify this
-	//edited by Mike, 20200902
-//	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes from transaction where transaction_date='".date('m/d/Y')."' and medical_doctor_id=2 and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	//edited by Mike, 20201031
-/*
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID'  and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-*/
-	//edited by Mike, 20250507
-	//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
 	if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='2' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0"))
 	{
 		//added by Mike, 20200524
@@ -1507,12 +1356,6 @@ echo "hallo<br/>";
 	$responses = [];
 	
 	//medicine asterisk, i.e. Glucosamine Sulphate and Calcium with Vitamin D
-	//edited by Mike, 20200706
-//	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID'"))
-	//edited by Mike, 20200902
-//	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	//edited by Mike, 20200917
-//	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
 	if ($selectedMedicineAsteriskResultArray = $mysqli->query("select t1.item_name, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=1 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0'"))
 	{
 		//added by Mike, 20200524
@@ -1584,15 +1427,6 @@ echo "hallo<br/>";
 
 
 	//Value-Added Tax VAT for Non-medicine items
-	//edited by Mike, 20200902
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".date('m/d/Y')."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	//edited by Mike, 20200917; edited again by Mike, 20201003
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID%' and t2.transaction_quantity='0'"))
-	//edited by Mike, 20201222
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like 'PAID' and t2.transaction_quantity='0'"))
-	//edited by Mike, 20201223
-//	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID' and t2.transaction_quantity='0'"))
 	if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID' and t2.transaction_quantity='0'"))
 	{
 		//added by Mike, 20200524
@@ -1613,14 +1447,8 @@ echo "hallo<br/>";
 			$iQuantityTotalCount = 0;
 
 			foreach ($selectedNonMedicineResultArray as $value) {
-				//added by Mike, 20200708
 				//identify non-medicine item transaction if with VAT
-				//edited by Mike, 20201120
-				//TO-DO: -update: this due to incorret quantity total count
-//edited by Mike, 20210222
-//				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
 				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2'"))
-//				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' group by t1.receipt_id"))
 				{
 /*
 					echo $value['item_name'];
