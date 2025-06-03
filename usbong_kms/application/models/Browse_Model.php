@@ -5101,7 +5101,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	public function getNewestMedicalDoctorIdInTransactionFrom($patientId) {
 		//echo $patientId;
 		
-		$this->db->select('medical_doctor_id');
+		//edited by Mike, 20250603
+		//$this->db->select('medical_doctor_id');
+		$this->db->select('medical_doctor_id, transaction_date');
+
         $this->db->where('patient_id',$patientId);
         $this->db->where('transaction_quantity!=',0);
 		
@@ -5230,7 +5233,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	}	
 */	
 	//added by Mike, 20250507
-	public function getMedicalDoctorIdFromTransaction($patientId) 
+	public function getMedicalDoctorIdFromTransactionPrev($patientId) 
 	{		
 		//echo $patientId;
 	
@@ -5296,6 +5299,182 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $rowArray[0]['medical_doctor_id'];
 	}	
 	
+	//added by Mike, 20250603
+	public function getMedicalDoctorIdFromTransactionTEST($patientId,$lastVisitedDate) 
+	{		
+		//echo $patientId;
+	
+		$this->db->select("medical_doctor_id, transaction_date");//, transaction_id");
+		
+		//$this->db->from('transaction');
+		//$this->db->where('transaction_id', $transactionId);		
+		//$this->db->where('transaction_date', date('m/d/Y'));
+		//removed by Mike, 20250523
+		//$this->db->where('patient_id', $patientId);
+
+		$this->db->where('transaction_quantity!=', 0);
+		
+		//removed by Mike, 20250523; from 20250514; 
+		//newly added for the day; still unpaid
+		//$this->db->or_where('transaction_date', date('m/d/Y'));
+
+		//added by Mike, 20250523
+		$this->db->where('patient_id', $patientId);
+		
+		$this->db->where('medical_doctor_id!=', 0);		
+		
+		$this->db->order_by('added_datetime_stamp', 'DESC');
+		$this->db->limit(1);
+		
+		$query = $this->db->get('transaction');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		//echo ">>>>>".$rowArray[0]['transaction_date'];
+		
+		//added by Mike, 20250603
+
+		//input: 04/13/2023
+		//output: 2023-04-13
+		//$rowArray[0]['transaction_date']
+
+		//input: 04/11/2025
+		//output: 2025-04-11
+		//$lastVisitedDate
+
+		$transactionDate=str_replace("/","-",$rowArray[0]['transaction_date']);
+		
+		$transactionDateArray=explode("-",$transactionDate);
+		
+		$transactionDate=$transactionDateArray[2]."-".$transactionDateArray[0]."-".$transactionDateArray[1];
+
+		//echo "transactionDate: ".$transactionDate."<br/>";
+		
+		$lastVisitedDate=str_replace("/","-",$lastVisitedDate);
+
+		$lastVisitedDateArray=explode("-",$lastVisitedDate);
+		
+		$lastVisitedDate=$lastVisitedDateArray[2]."-".$lastVisitedDateArray[0]."-".$lastVisitedDateArray[1];
+
+		//echo "lastVisitedDate: ".$lastVisitedDate."<br/>";
+
+		//if ("2023-04-13" > "2025-04-11") {
+
+		//no need to get the transaction date if last visited in patient's record is newer
+		//if ("2025-04-11" > "2023-04-13") { 
+		if ($lastVisitedDate > $transactionDate) {
+			$rowArray=null;
+		}
+		
+		if ($rowArray == null) {	
+			//echo "DITO!!!";
+			//added by Mike, 20250523
+			//----------		
+			$this->db->select("medical_doctor_id, transaction_date");//, transaction_id");
+			//$this->db->where('transaction_quantity!=', 0);
+		
+			//newly added for the day in waiting list; still unpaid
+			$this->db->where('transaction_date', date('m/d/Y'));
+
+			$this->db->where('patient_id', $patientId);			
+			$this->db->where('medical_doctor_id!=', 0);		
+			
+			$this->db->order_by('added_datetime_stamp', 'DESC');
+			$this->db->limit(1);		
+			$query = $this->db->get('transaction');
+
+			$rowArrayPartTwo = $query->result_array();
+			//----------		
+		
+			if ($rowArrayPartTwo == null) {	
+				//echo "FALSE!!!";
+				return False;
+			}
+			
+			//return $rowArrayPartTwo[0]['medical_doctor_id'];
+			return $rowArrayPartTwo[0];
+		}
+/*
+		echo ">>>>patientId: ".$patientId."<br/>";
+		echo ">>>>transaction_id: ".$rowArray[0]['transaction_id']."<br/>";
+*/				 
+				 
+		//return $rowArray[0]['medical_doctor_id'];
+		return $rowArray[0];
+	}		
+	
+	//added by Mike, 20250603
+	public function getMedicalDoctorIdFromTransaction($patientId) 
+	{		
+		//echo $patientId;
+	
+		$this->db->select("medical_doctor_id, transaction_date");//, transaction_id");
+		
+		//$this->db->from('transaction');
+		//$this->db->where('transaction_id', $transactionId);		
+		//$this->db->where('transaction_date', date('m/d/Y'));
+		//removed by Mike, 20250523
+		//$this->db->where('patient_id', $patientId);
+
+		$this->db->where('transaction_quantity!=', 0);
+		
+		//removed by Mike, 20250523; from 20250514; 
+		//newly added for the day; still unpaid
+		//$this->db->or_where('transaction_date', date('m/d/Y'));
+
+		//added by Mike, 20250523
+		$this->db->where('patient_id', $patientId);
+		
+		$this->db->where('medical_doctor_id!=', 0);		
+		
+		$this->db->order_by('added_datetime_stamp', 'DESC');
+		$this->db->limit(1);
+		
+		$query = $this->db->get('transaction');
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		//echo ">>>>>".$rowArray[0]['transaction_date'];
+		
+		if ($rowArray == null) {	
+			//echo "DITO!!!";
+			//added by Mike, 20250523
+			//----------		
+			$this->db->select("medical_doctor_id, transaction_date");//, transaction_id");
+			//$this->db->where('transaction_quantity!=', 0);
+		
+			//newly added for the day in waiting list; still unpaid
+			$this->db->where('transaction_date', date('m/d/Y'));
+
+			$this->db->where('patient_id', $patientId);			
+			$this->db->where('medical_doctor_id!=', 0);		
+			
+			$this->db->order_by('added_datetime_stamp', 'DESC');
+			$this->db->limit(1);		
+			$query = $this->db->get('transaction');
+
+			$rowArrayPartTwo = $query->result_array();
+			//----------		
+		
+			if ($rowArrayPartTwo == null) {	
+				//echo "FALSE!!!";
+				return False;
+			}
+			
+			//return $rowArrayPartTwo[0]['medical_doctor_id'];
+			return $rowArrayPartTwo[0];
+		}
+/*
+		echo ">>>>patientId: ".$patientId."<br/>";
+		echo ">>>>transaction_id: ".$rowArray[0]['transaction_id']."<br/>";
+*/				 
+				 
+		//return $rowArray[0]['medical_doctor_id'];
+		return $rowArray[0];
+	}	
+	
 	//added by Mike, 20210306
 	public function getDetailsListViaIdIndexCard($nameId) 
 	{		
@@ -5356,7 +5535,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $rowArray;
 	}	
 	
-	//added by Mike, 20250415
+	//edited by Mike, 20250603; from 20250415
+	//TODO: -reverify if function still necessary
 	//new; no transaction
 	public function getDetailsListViaIdIndexCardNoTransaction($nameId) 
 	{		
