@@ -3530,15 +3530,70 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 		
-		//added by Mike, 20250508
-		$medicalDoctorIdArray=$this->Browse_Model->getNewestMedicalDoctorIdInTransactionFrom($patientId);
+		//edited by Mike, 20250603; from 20250508
+		//TODO: -verify: if duplicate
+	//$medicalDoctorIdArray=$this->Browse_Model->getNewestMedicalDoctorIdInTransactionFrom($patientId);
+		$iTranMDArrayRow=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId);
 		
+		//added by Mike, 20250603
+		//----------
+		$lastVisitedDate=$data['result'][0]['last_visited_date'];
+		$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+		
+		//note: no need to use lastVisitedDate value if it's based on a transaction that was deleted; string has the keyword "DEL";
+		//echo ">>>lastVisitedDate: ".$lastVisitedDate."<br/>";
+/*		
+		echo "iTranMDID: ".$iTranMDID."<br/>";
+		echo "md in patient record: ".$data['result'][0]["medical_doctor_id"];
+*/		
+		//TODO -put: in function
+		if (($iTranMDID) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
+			//----------
+			//input: 04/13/2023
+			//output: 2023-04-13
+			//$rowArray[0]['transaction_date']
+
+			//input: 04/11/2025
+			//output: 2025-04-11
+			//$lastVisitedDate
+
+			$transactionDate=str_replace("/","-",$iTranMDArrayRow['transaction_date']);
+			
+			$transactionDateArray=explode("-",$transactionDate);
+			
+			$transactionDate=$transactionDateArray[2]."-".$transactionDateArray[0]."-".$transactionDateArray[1];
+
+			//echo "transactionDate: ".$transactionDate."<br/>";
+			
+			$lastVisitedDate=str_replace("/","-",$lastVisitedDate);
+
+			$lastVisitedDateArray=explode("-",$lastVisitedDate);
+			
+			$lastVisitedDate=$lastVisitedDateArray[2]."-".$lastVisitedDateArray[0]."-".$lastVisitedDateArray[1];
+
+			//echo "lastVisitedDate: ".$lastVisitedDate."<br/>";
+
+			//if ("2023-04-13" > "2025-04-11") {
+
+			//no need to get the transaction date if last visited in patient's record is newer
+			//if ("2025-04-11" > "2023-04-13") { 
+			if ($lastVisitedDate > $transactionDate) {
+				//use the $lastVisitedDate already in 	$data['result'][0]["medical_doctor_id"];
+			}
+			else {
+				$data['result'][0]["medical_doctor_id"]=$iTranMDID;
+			}
+			//----------
+		}
+
+/*		
 		if (!isset($medicalDoctorIdArray[0]['medical_doctor_id'])) {
 			$data['result'][0]['medical_doctor_id']=0;
 		}
 		else {
 			$data['result'][0]['medical_doctor_id'] = $medicalDoctorIdArray[0]['medical_doctor_id'];
 		}
+*/		
 		
 		//added by Mike, 20210906
 //		echo $data['result'][0]['medical_doctor_id'];
@@ -3752,19 +3807,43 @@ class Browse extends CI_Controller { //MY_Controller {
 	
 	//edited by Mike, 20250507; from 20250415
 	//if (!isset($data['result'][0])) {
-		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCardNoTransaction($patientId);
+		//edited by Mike, 20250603;
+		//TODO: -reverify: this
+		//$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCardNoTransaction($patientId);
+
+		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
+
 		
 		//edited by Mike, 20250507
 		//$data['result'][0]["TranMDID"]=-1; //no transaction
 		//$iTranMDID=-1;
 	//}
 	
-	//added by Mike, 20250507
+	//added by Mike, 20250603
+	//note: no need to use lastVisitedDate value if it's based on a transaction that was deleted; string has the keyword "DEL";
+
+	//$lastVisitedDate = str_replace("DEL","",$data['result'][0]['last_visited_date']);	
+	
+	$lastVisitedDate = $data['result'][0]['last_visited_date'];	
+	
+	//edited by Mike, 20250603; from 20250507
 	//$iTranMDID=$this->Browse_Model->getMedicalDoctorIdViaTransactionId($data['result'][0]['transaction_id']);
-	$iTranMDID=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId);
+	
+//$iTranMDID=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId);
+
+	//edited by Mike, 20250603	//$iTranMDID=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId,$lastVisitedDate);
+	
+	//$iTranMDArrayRow=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId,$lastVisitedDate);
+
+	$iTranMDArrayRow=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId);
+	
+	$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
 	
 	//echo ">>>>>".$iTranMDID;
-		
+/*	
+	echo "iTranMDID: ".$iTranMDID."<br/>";
+	echo "md in patient record: ".$data['result'][0]["medical_doctor_id"];
+*/		
 	//if (isset($data['result'][0])) {		
 		//added by Mike, 20210707
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($data['result'][0]['medical_doctor_id'], $patientId);
@@ -3797,14 +3876,58 @@ class Browse extends CI_Controller { //MY_Controller {
 		//edited by Mike, 20250523
 		//if ($data['result'][0]["medical_doctor_id"]!=$iTranMDID) {
 		//if $iTranMDID has value; not blank
+/*		
 		if (($iTranMDID) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
 
+			//edited by Mike, 20250603; from 20250507
 			//take as priority the MD id in latest transaction 
-			//edited by Mike, 20250507
 			
-			//echo "HALLO!";
+			//$lastVisitedDate = str_replace("DEL","",$data['result'][0]['last_visited_date']);
+			
+			//if ()
+			//echo "HALLO!";			
+			//echo $data['result'][0]['last_visited_date'];
 			//$data['result'][0]["medical_doctor_id"]=$data['result'][0]["TranMDID"];
 			$data['result'][0]["medical_doctor_id"]=$iTranMDID;
+		}
+*/		
+		if (($iTranMDID) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
+			//----------
+			//input: 04/13/2023
+			//output: 2023-04-13
+			//$rowArray[0]['transaction_date']
+
+			//input: 04/11/2025
+			//output: 2025-04-11
+			//$lastVisitedDate
+
+			$transactionDate=str_replace("/","-",$iTranMDArrayRow['transaction_date']);
+			
+			$transactionDateArray=explode("-",$transactionDate);
+			
+			$transactionDate=$transactionDateArray[2]."-".$transactionDateArray[0]."-".$transactionDateArray[1];
+
+			//echo "transactionDate: ".$transactionDate."<br/>";
+			
+			$lastVisitedDate=str_replace("/","-",$lastVisitedDate);
+
+			$lastVisitedDateArray=explode("-",$lastVisitedDate);
+			
+			$lastVisitedDate=$lastVisitedDateArray[2]."-".$lastVisitedDateArray[0]."-".$lastVisitedDateArray[1];
+
+			//echo "lastVisitedDate: ".$lastVisitedDate."<br/>";
+
+			//if ("2023-04-13" > "2025-04-11") {
+
+			//no need to get the transaction date if last visited in patient's record is newer
+			//if ("2025-04-11" > "2023-04-13") { 
+			if ($lastVisitedDate > $transactionDate) {
+				//use the $lastVisitedDate already in 	$data['result'][0]["medical_doctor_id"];
+			}
+			else {
+				$data['result'][0]["medical_doctor_id"]=$iTranMDID;
+			}
+			//----------
 		}
 		else {
 			$data['bIsSetMDIdNotTranMDId']=true;
