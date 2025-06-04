@@ -3538,7 +3538,24 @@ class Browse extends CI_Controller { //MY_Controller {
 		//added by Mike, 20250603
 		//----------
 		$lastVisitedDate=$data['result'][0]['last_visited_date'];
+		
+		//echo "lastVisitedDate: ".$lastVisitedDate;
+		
+		if (strlen($lastVisitedDate)==0) {
+			$lastVisitedDate="00/00/0000";
+		}
+		
+		//edited by Mike, 20250604
+/*	
+		$iTranMDID=null;
+		if ($iTranMDArrayRow) { //not False
+			$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+		}
+*/		
 		$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+		
+		////echo $iTranMDArrayRow;		
+		////echo $iTranMDID;
 		
 		//note: no need to use lastVisitedDate value if it's based on a transaction that was deleted; string has the keyword "DEL";
 		//echo ">>>lastVisitedDate: ".$lastVisitedDate."<br/>";
