@@ -3530,6 +3530,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 		
+		//added by Mike, 20250605
+		if (!isset($data['result'][0])) {
+			redirect('browse/searchPatient');			
+		}
+
+		
 		//edited by Mike, 20250603; from 20250508
 		//TODO: -verify: if duplicate
 	//$medicalDoctorIdArray=$this->Browse_Model->getNewestMedicalDoctorIdInTransactionFrom($patientId);
@@ -3552,7 +3558,13 @@ class Browse extends CI_Controller { //MY_Controller {
 			$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
 		}
 */		
-		$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+		//edited by Mike, 20250605
+		//Message: Trying to access array offset on value of type bool
+		//$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+		$iTranMDID=-1;
+		if ($iTranMDArrayRow) { //not False
+			$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+		}
 		
 		////echo $iTranMDArrayRow;		
 		////echo $iTranMDID;
@@ -3564,7 +3576,9 @@ class Browse extends CI_Controller { //MY_Controller {
 		echo "md in patient record: ".$data['result'][0]["medical_doctor_id"];
 */		
 		//TODO -put: in function
-		if (($iTranMDID) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
+		//edited by Mike, 20250605
+		//if (($iTranMDID) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
+		if (($iTranMDArrayRow) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
 			//----------
 			//input: 04/13/2023
 			//output: 2023-04-13
@@ -3854,7 +3868,13 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	$iTranMDArrayRow=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId);
 	
-	$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+	//edited by Mike, 20250605
+	//Message: Trying to access array offset on value of type bool
+	//$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+	$iTranMDID=-1;
+	if ($iTranMDArrayRow) { //not False
+		$iTranMDID=$iTranMDArrayRow['medical_doctor_id'];
+	}
 	
 	//echo ">>>>>".$iTranMDID;
 /*	
@@ -3908,7 +3928,8 @@ class Browse extends CI_Controller { //MY_Controller {
 			$data['result'][0]["medical_doctor_id"]=$iTranMDID;
 		}
 */		
-		if (($iTranMDID) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
+		//edited by Mike, 20250605
+		if (($iTranMDArrayRow) and ($data['result'][0]["medical_doctor_id"]!=$iTranMDID)) {
 			//----------
 			//input: 04/13/2023
 			//output: 2023-04-13
