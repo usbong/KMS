@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250513; from 20250503
+  @date updated: 20250605; from 20250513
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -1569,10 +1569,16 @@
   if (strpos($sDateToday,"1970-01-01")!==false) {
 	//$sDateToday = $value['last_visited_date'];
 	
-	if (isset($resultPaid[0]['added_datetime_stamp'])) {
+	//echo "DITO!!!";
+	
+	if (isset($resultPaid[0]['added_datetime_stamp'])) {		
 		//input: 2025-05-10 11:56:46;
 		//output: 2025-05-10
 		$sDateToday=strtok($resultPaid[0]['added_datetime_stamp']," ");
+	}
+	//added by Mike, 20250605
+	else {
+		$sDateToday="NEW; NONE YET";
 	}
   }
   
