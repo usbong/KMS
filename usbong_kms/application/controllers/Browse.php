@@ -3541,9 +3541,12 @@ class Browse extends CI_Controller { //MY_Controller {
 	//$medicalDoctorIdArray=$this->Browse_Model->getNewestMedicalDoctorIdInTransactionFrom($patientId);
 		$iTranMDArrayRow=$this->Browse_Model->getMedicalDoctorIdFromTransaction($patientId);
 		
-		//added by Mike, 20250603
+		//edited by Mike, 20250606; from 20250603
 		//----------
-		$lastVisitedDate=$data['result'][0]['last_visited_date'];
+		$lastVisitedDate=0;
+		if (isset($data['result'][0]['last_visited_date'])) {
+			$lastVisitedDate=$data['result'][0]['last_visited_date'];
+		}
 		
 		//echo "lastVisitedDate: ".$lastVisitedDate;
 		
