@@ -5528,8 +5528,15 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20250325
 		$data['transactionDate'] = date('m/d/Y');
-		$data['patientId'] = $patientRowArray[0]['patient_id'];
-		$this->Browse_Model->deletePatientTransactionDueToItemOnly($data);
+		
+		
+		//edited by Mike, 20250609
+		//TODO: -reverify: this
+		if (isset($patientRowArray[0]['patient_id'])) {
+			$data['patientId'] = $patientRowArray[0]['patient_id'];
+		
+			$this->Browse_Model->deletePatientTransactionDueToItemOnly($data);
+		}
 
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId,$itemId);
 
