@@ -3972,11 +3972,12 @@ class Browse extends CI_Controller { //MY_Controller {
 		}
 		else {
 			$data['bIsSetMDIdNotTranMDId']=true;
-			$data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
+			
+$data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 			
 			//echo ">>>>>>".$data['result'][0]["medical_doctor_name"];
 			
-			$data['selectMedicalDoctorNameParam']=$data['tranMedicalDoctorName'];
+			$data['selectMedicalDoctorNameParam']=$data['tranMedicalDoctorName'];		
 		}
 		
 	//removed by Mike, 20250415; from 20240305
@@ -4024,11 +4025,9 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$this->load->model('Browse_Model');
 		
-		//added by Mike, 20210629
 		$data['cashierList'] = $this->Browse_Model->getCashierList();
 
-		
-		$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
+		//$data['result'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
 
 		//added by Mike, 20210626
 //		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($data['result'][0]['medical_doctor_id'], $patientId);
@@ -4044,9 +4043,38 @@ class Browse extends CI_Controller { //MY_Controller {
 //echo ">>>transactionDate: ".$transactionDate;
 		$transactionDate = str_replace("-","/",$transactionDate);
 
-		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, $transactionDate);
+		//edited by Mike, 20250610
+		//$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($data['result'][0]['medical_doctor_id'], $patientId, $transactionDate);
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($patientId, $transactionDate);
+/*		
+		echo ">>>>>>".date("m/d/Y", strtotime($transactionDate))."<br/>";
+		
+		echo ">>>".$transactionDate."<br/>";
+		echo "medical_doctor_id: ".$data['resultPaid'][0]['medical_doctor_id']."<br/>";
+		echo "patient_id: ".$data['resultPaid'][0]['patient_id']."<br/>";
+		echo "transaction_id: ".$data['resultPaid'][0]['transaction_id']."<br/>";
+*/
+/*
+		//added by Mike, 20250610
+		//noted problem in SQL command; should be "t2.medical_doctor_id" instead of "t1.medical_doctor_id"
+		//if no transaction this day; get the latest;
+		if ((!isset($data['resultPaid'][0]['medical_doctor_id'])) or (strlen($data['resultPaid'][0]['medical_doctor_id'])==0)) {
+			//echo "DITO!!!";
+			
+			$data['resultPaidTemp'] = $this->Browse_Model->getDetailsListViaIdIndexCard($patientId);
+			
+			$data['sMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaidTemp'][0]['medical_doctor_id'])[0]['medical_doctor_name'];
+			
+			$data['resultPaid'][0]['medical_doctor_id']=$data['resultPaidTemp'][0]['medical_doctor_id'];
+			//echo ">>>>>".$data['resultPaid'][0]['medical_doctor_id'];
+		}
+		else {
+			$data['sMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaid'][0]['medical_doctor_id'])[0]['medical_doctor_name'];
+		}
+*/		
+		$data['sMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaid'][0]['medical_doctor_id'])[0]['medical_doctor_name'];
 
-
+		
 //echo $data['resultPaid'][0]['patient_name'];
 //echo $data['resultPaid'][0]['transaction_id'];
 //echo $data['resultPaid'][1]['transaction_id'];
