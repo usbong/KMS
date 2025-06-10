@@ -5023,6 +5023,23 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		return $rowArray;
 	}
+	
+	//added by Mike, 20250610
+	public function getMedicalDoctorNameFromId($medicalDoctorId) {
+		$this->db->select('medical_doctor_id, medical_doctor_name');
+
+		$this->db->where('medical_doctor_id', $medicalDoctorId);
+
+		$query = $this->db->get('medical_doctor');	
+		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {			
+			return False;
+		}
+
+		return $rowArray;
+	}
 
 	//added by Mike, 20210808
 	public function getMedicalTechnologistList() {
@@ -5480,6 +5497,30 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $rowArray[0];
 	}	
 	
+	//added by Mike, 20250610
+	public function getLatestMedicalDoctorIdViaPatientId($nameId) 
+	{		
+		$this->db->select("medical_doctor_id");
+				
+		$this->db->where('patient_id', $nameId);		
+		$this->db->where('transaction_type_name=', 'CASH');		
+		$this->db->where('medical_doctor_id!=', 0);		
+		$this->db->order_by('transaction_id', 'DESC');		
+		
+		$query = $this->db->get('transaction');
+		
+		$this->db->limit(1);
+
+//		$row = $query->row();		
+		$rowArray = $query->result_array();
+		
+		if ($rowArray == null) {					
+			return False;
+		}
+		
+		return $rowArray;
+	}	
+	
 	//added by Mike, 20210306
 	public function getDetailsListViaIdIndexCard($nameId) 
 	{		
@@ -5498,14 +5539,17 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//added by Mike, 20250507
 		//caution removing 'TranMDID' still causes "Fatal error: Allowed memory size of..."; 
 		//problem caused by too many records after joining multiple tables;
-		
-		$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t2.medical_doctor_id 'TranMDID', t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address");
+		//edited by Mike, 20250610
+		//$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t2.medical_doctor_id 'TranMDID', t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address");
+				
+		$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t2.transaction_id, t2.transaction_date, t2.fee, t2.notes, t2.transaction_type_name, t2.treatment_type_name, t2.treatment_diagnosis, t2.added_datetime_stamp, t1.medical_doctor_id, t2.medical_doctor_id, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address");
 				
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
 		//edited by Mike, 20230406
 		//$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
-		$this->db->join('medical_doctor as t3', 't1.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+		//removed by Mike, 20250610		
+		//$this->db->join('medical_doctor as t3', 't1.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
 
 //		$this->db->distinct('t1.patient_name');
 //		$this->db->like('t1.patient_name', $param['nameParam']);
@@ -5529,6 +5573,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->order_by('t2.transaction_id', 'DESC');		
 		
 		$query = $this->db->get('patient');
+		
+		//added by Mike, 20250610
+		$this->db->limit(1);
 
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
@@ -6068,7 +6115,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	//added by Mike, 20210626
 	//edited by Mike, 20210720
 //	public function getPaidPatientDetailsListForTheDayNoItemFee($medicalDoctorId, $patientId) 
-	public function getPaidPatientDetailsListForTheDayNoItemFee($medicalDoctorId, $patientId,$transactionDate) 
+	//edited by Mike, 20250610
+	public function getPaidPatientDetailsListForTheDayNoItemFeePREV($medicalDoctorId, $patientId,$transactionDate) 
 	{			
 		//edited by Mike, 20210901
 //		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
@@ -6126,7 +6174,67 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $rowArray;
 	}		
 
+	public function getPaidPatientDetailsListForTheDayNoItemFee($patientId,$transactionDate) 
+	{			
+		//edited by Mike, 20210901
+//		$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		//edited by Mike, 20250610
+		//$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.transaction_quantity, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
+		
+		$this->db->select('t1.patient_name, t1.patient_id, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t2.medical_doctor_id, t2.transaction_id, t2.transaction_date, t2.transaction_quantity, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp');
 
+		$this->db->from('patient as t1');
+		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
+		//removed by Mike, 20250610
+		//$this->db->join('medical_doctor as t3', 't2.medical_doctor_id = t3.medical_doctor_id', 'LEFT');
+
+		//edited by Mike, 20210902
+//		$this->db->distinct('t1.patient_name');
+		
+		//removed by Mike, 20220316
+		$this->db->group_by('t2.transaction_id');
+		
+		$this->db->where('t2.transaction_quantity!=',0);
+		$this->db->where('t2.notes!=', 'UNPAID');
+		$this->db->where('t1.patient_id', $patientId);
+
+		//removed by Mike, 20210720
+//		$this->db->not_like('t2.notes', "ONLY");
+
+		//added by Mike, 20220316
+		$this->db->order_by('t2.added_datetime_stamp`', 'DESC');//ASC');				
+				
+		//edited by Mike, 20210720
+//		$this->db->where('t2.transaction_date',date("m/d/Y"));
+		$this->db->where('t2.transaction_date',date("m/d/Y", strtotime($transactionDate)));
+				
+		$query = $this->db->get('patient');
+
+		$rowArray = $query->result_array();
+				
+		if ($rowArray == null) {		
+			return False;
+		}
+		
+//		echo "count: ".count($rowArray);		
+/* //removed by Mike, 20210902	
+		foreach ($rowArray as $key => $rowValue) {
+			if (strpos(strtoupper($rowValue['notes']),"UNPAID")!==false) {
+					unset($rowArray[$key]);
+			}
+			
+//			echo $rowValue['fee']."<br/>";
+			
+			if ($rowValue['fee']==0) {
+				unset($rowArray[$key]);
+			}
+		}
+		echo "count: ".count($rowArray);		
+		echo ">>: ".$rowArray['fee'];		
+*/
+				
+		return $rowArray;
+	}		
 
 	//added by Mike, 20200406; edited by Mike, 20200507
 	//note: items that are added a day or so after the transaction date would be shown in the view item page's history as a transaction on the day it was added
