@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250605; from 20250513
+  @date updated: 20250610; from 20250605
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -781,9 +781,16 @@
 						}
 						else {
 							//note: we update the date format to m/d/y in Browse.php (Controller folder)
+							//edited by Mike, 20250610
+/*							
 							echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y"))."' id='viewAcknowledgmentFormId' target='_blank'>
 									ACKNOWLEDGMENT FORM
 								</a>";
+*/								
+								echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($resultPaid[0]['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'>
+									ACKNOWLEDGMENT FORM
+								</a>";
+
 						}
 				?>
 				

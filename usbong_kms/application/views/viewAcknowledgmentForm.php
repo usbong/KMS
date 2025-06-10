@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250501; from 20250422
+  @date updated: 20250610; from 20250501
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -293,6 +293,7 @@
 		if (isset($resultPaid[0])) {
 ?>
 			<!-- edited by Mike, 20210926 -->
+			
 			<a target='_blank' href='<?php echo site_url('browse/setOfficialReceiptTransactionServiceAndItemPurchase/'.$resultPaid[0]['medical_doctor_id'].'/'.$resultPaid[0]['patient_id'].'/'.$resultPaid[0]['transaction_id'].'/0'); ?>'>
 				<b>ACKNOWLEDGMENT RECEIPT</b>
 			</a>
@@ -332,9 +333,13 @@
 				echo str_replace("�","Ñ",$result[0]['patient_name']);
 */							
 	
-														
-echo "<a class='rowLink' target='_blank' href='".site_url('browse/viewPatient/'.$result[0]['patient_id'])."'>";
-							echo str_replace("�","Ñ",$result[0]['patient_name']);
+//edited by Mike, 20250610														
+//echo "<a class='rowLink' target='_blank' href='".site_url('browse/viewPatient/'.$result[0]['patient_id'])."'>";
+//echo str_replace("�","Ñ",$result[0]['patient_name']);
+
+echo "<a class='rowLink' target='_blank' href='".site_url('browse/viewPatient/'.$resultPaid[0]['patient_id'])."'>";
+echo str_replace("�","Ñ",$resultPaid[0]['patient_name']);
+
 echo "</a>";
 							
 
@@ -393,6 +398,7 @@ echo "</a>";
 					echo $result[0]['province_city_ph_address'];					
 				}
 */
+/*	//edited by Mike, 20250610
 				echo $result[0]['location_address'];				
 
 				if (!empty($result[0]['location_address'])) {
@@ -408,7 +414,25 @@ echo "</a>";
 				if (!empty($result[0]['postal_address'])) {
 					echo ", ";
 				}
-				echo $result[0]['province_city_ph_address'];									
+				echo $result[0]['province_city_ph_address'];	
+*/
+				echo $resultPaid[0]['location_address'];				
+
+				if (!empty($resultPaid[0]['location_address'])) {
+					echo ", ";
+				}
+				echo $resultPaid[0]['barangay_address'];
+
+				if (!empty($resultPaid[0]['barangay_address'])) {
+					echo ", ";
+				}
+				echo $resultPaid[0]['postal_address'];					
+
+				if (!empty($resultPaid[0]['postal_address'])) {
+					echo ", ";
+				}
+				echo $resultPaid[0]['province_city_ph_address'];	
+			
 ?>				
 			</td>
 			<td>
@@ -432,7 +456,7 @@ echo "</a>";
 					echo $result[0]['pwd_senior_id'];
 				}
 */
-				if (strpos($result[0]['notes'],"SC;")!==false) {
+				if (strpos($resultPaid[0]['notes'],"SC;")!==false) {
 /* //edited by Mike, 20211201
 					echo "SC#";
 					$bIsWithSCPWDCard=true;
@@ -440,35 +464,35 @@ echo "</a>";
 
 					$bIsWithSCPWDCard=true;
 
-					if (empty($result[0]['pwd_senior_id'])) {
+					if (empty($resultPaid[0]['pwd_senior_id'])) {
 						echo "SC#";
 					}
 					else {
-						echo $result[0]['pwd_senior_id'];
+						echo $resultPaid[0]['pwd_senior_id'];
 						$bIsWithSCPWDCard=true;
 					}
 				}
-				else if (strpos($result[0]['notes'],"PWD;")!==false) {
+				else if (strpos($resultPaid[0]['notes'],"PWD;")!==false) {
 /* //edited by Mike, 20211201
 					echo "PWD#";
 					$bIsWithSCPWDCard=true;
 */
 					$bIsWithSCPWDCard=true;
 
-					if (empty($result[0]['pwd_senior_id'])) {
+					if (empty($resultPaid[0]['pwd_senior_id'])) {
 						echo "PWD#";
 					}
 					else {
-						echo $result[0]['pwd_senior_id'];
+						echo $resultPaid[0]['pwd_senior_id'];
 						$bIsWithSCPWDCard=true;
 					}
 				}
 				else {
-					if (empty($result[0]['pwd_senior_id'])) {
+					if (empty($resultPaid[0]['pwd_senior_id'])) {
 						echo "N/A";
 					}
 					else {
-						echo $result[0]['pwd_senior_id'];
+						echo $resultPaid[0]['pwd_senior_id'];
 						$bIsWithSCPWDCard=true;
 					}
 				}						
@@ -502,14 +526,14 @@ echo "</a>";
 					echo "<br/>__________";
 				}
 */
-				if (strpos($result[0]['notes'],"SC;")!==false) {
+				if (strpos($resultPaid[0]['notes'],"SC;")!==false) {
 					echo "<br/>__________";
 				}
-				else if (strpos($result[0]['notes'],"PWD;")!==false) {
+				else if (strpos($resultPaid[0]['notes'],"PWD;")!==false) {
 					echo "<br/>__________";
 				}
 				else {
-					if (empty($result[0]['pwd_senior_id'])) {
+					if (empty($resultPaid[0]['pwd_senior_id'])) {
 						echo "N/A";
 					}
 					else {
@@ -580,10 +604,10 @@ echo "notes".$value['fee']."<br/>";
 						//echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."</b>";
 						
 						if (strpos($value['notes'],"DISCOUNTED")!==false) {
-							echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']." (DISCOUNTED)</b>";	
+							echo "<b>PROF FEE: DR. ".$sMedicalDoctorName." (DISCOUNTED)</b>";	
 						}
 						else {
-							echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."</b>";
+							echo "<b>PROF FEE: DR. ".$sMedicalDoctorName."</b>";
 						}
 						
 						$dMedCertPrice=0;
@@ -758,8 +782,8 @@ echo "notes".$value['fee']."<br/>";
 				}
 */
 				//edited by Mike, 20241028; from 20230110
-				if (($result[0]['medical_doctor_id']==1) or
-					($result[0]['medical_doctor_id']==6) /*or
+				if (($resultPaid[0]['medical_doctor_id']==1) or
+					($resultPaid[0]['medical_doctor_id']==6) /*or
 					($result[0]['medical_doctor_id']==4)*/) {
 
 /*
@@ -782,8 +806,8 @@ echo "notes".$value['fee']."<br/>";
 						echo "</td>";			
 						echo "<td class='columnItemHeaderList'>";
 	
-						if ((strpos($result[0]['notes'],"SC;")!==false) or
-							((strpos($result[0]['notes'],"PWD;")!==false))) {
+						if ((strpos($resultPaid[0]['notes'],"SC;")!==false) or
+							((strpos($resultPaid[0]['notes'],"PWD;")!==false))) {
 							
 							//note there'll always be a discounted amount here; raw amount auto-deducted; Mike, 20250501
 							
@@ -1004,8 +1028,8 @@ echo "</a>";
 */
 					//edited by Mike, 20241028; from 20230110
 					//DR. PEDRO OR DR. HONESTO OR DR. CHASTITY
-					if (($result[0]['medical_doctor_id']==1) or
-						($result[0]['medical_doctor_id']==6) /*or
+					if (($resultPaid[0]['medical_doctor_id']==1) or
+						($resultPaid[0]['medical_doctor_id']==6) /*or
 						($result[0]['medical_doctor_id']==4)*/) {
 /*
 					//added by Mike, 20221111; from 20220317
@@ -1019,8 +1043,8 @@ echo "</a>";
 */						$dTotalMDXrayFeeWithDiscount+=$dTotalMDDiscountedFeePlus;
 					}
 					
-					if ((strpos($result[0]['notes'],"SC;")!==false) or
-						((strpos($result[0]['notes'],"PWD;")!==false))) {
+					if ((strpos($resultPaid[0]['notes'],"SC;")!==false) or
+						((strpos($resultPaid[0]['notes'],"PWD;")!==false))) {
 						
 						//edited by Mike, 20250501; from 20220317
 						//note: "WITH DR. HONESTO" TEXT NOT ANYMORE DISPLAYED
@@ -1131,8 +1155,8 @@ echo "</a>";
 
 					$dTotalNonMedFeeWithDiscount=$dTotalNonMedFee*0.12;
 
-					if ((strpos($result[0]['notes'],"SC;")!==false) or
-						((strpos($result[0]['notes'],"PWD;")!==false))) {
+					if ((strpos($resultPaid[0]['notes'],"SC;")!==false) or
+						((strpos($resultPaid[0]['notes'],"PWD;")!==false))) {
 						echo "PAS RECEIPT TOTAL (discounted: ".number_format($dTotalNonMedFeeWithDiscount, 2, '.', ',').")";
 					}
 					else {
