@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250322; from 20230206
+' @date updated: 20250613; from 20250322
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -77,6 +77,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #ff8000;
 						}	
 
+						div.quantityInStockDiv
+						{
+							text-align: center;							
+						}
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -164,6 +169,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #333333;
 							/*border-radius: 3px;*/
 						}		
+
+						button.copyToClipboardButton {
+							background-color: #ffffff;
+							border: 0px dotted #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.copyToClipboardButton:hover {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}
+						
+						button.copyToClipboardButton:active {
+							background-color: #cccccc;
+							border: 0px solid #333333;
+							font-size: 20px;
+							padding: 0;
+						}								
     /**/
     </style>
     <title>
@@ -283,6 +309,65 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//CANCEL
 			} 
 		}	
+		
+		function myCopyToClipboardFunction(itemCount) {
+		  var copyText = document.getElementById("itemNameDivId"+itemCount);
+
+		  //alert("itemCount: " + itemCount);	
+
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = copyText.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + copyText.innerText);	
+		}
+/*		
+		function myCopyToClipboardFunctionItemText(itemText) {
+		  var sCopyText = itemText;
+
+		  //alert("itemText: " + itemText);	
+
+	      //reference: 
+		  //1) https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined;
+		  //last accessed: 20250326
+		  //note available if not using HTTPS with the "S"
+		  // Copy the text inside the text field
+		  //navigator.clipboard.writeText(copyText.innerText);		
+
+		  //2) https://github.com/josdejong/svelte-jsoneditor/issues/98;
+		  //last accessed: 20250326
+		  //3) https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript/33928558#33928558; last accessed: 20250325
+		  //answer by nikksan, 20170914
+		  //edited by Korayem, 20200217
+
+		  var input = document.createElement('textarea');
+		  input.innerHTML = sCopyText; //copyText.innerText;
+		  document.body.appendChild(input);
+		  input.select();
+		  var result = document.execCommand('copy');
+		  document.body.removeChild(input);
+	
+		  // Alert the copied text
+		  alert("Copied: " + sCopyText); //copyText.innerText);	
+		}			
+*/		
 	  </script>
   <body>
 	<table class="imageTable">
@@ -401,6 +486,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>		
 								</div>								
 						</td>
+						<td>				
+						<!-- copy to clipboard column -->
+						</td>		
 						<td class="columnTableHeader">				
 							<?php
 								echo "AVAILABLE"; //IN-STOCK;
@@ -430,7 +518,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="column">				
 							<a target='_blank' href='<?php echo site_url('browse/viewItemSnack/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-								<div class="itemName">
+								<div id="itemNameDivId<?php echo $iCount?>" class="itemName">
 				<?php
 								//edited by Mike, 20200715
 								//echo $value['item_name'];
@@ -439,8 +527,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class =column>				
-								<div id=quantityInStockId<?php echo $iCount?>>
+						<td class="column">		
+							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
+						</td>							
+						<td class="column">				
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
 
@@ -466,8 +557,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class =column>				
-								<div id=expirationId<?php echo $iCount?>>
+						<td class="column">				
+								<div id="expirationId<?php echo $iCount?>">
 							<?php
 								//echo $value['expiration_date'];
 								if ($value['expiration_date']==0) {

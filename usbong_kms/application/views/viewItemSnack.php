@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250428; from 20250426
+' @date updated: 20250613; from 20250428
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -76,6 +76,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #00ff00;
 						}
 
+						div.quantityInStockDiv
+						{
+							text-align: center;							
+						}
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -825,8 +830,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>		
 								</div>								
 							</a>
-						</td>
-						<td class ="column">	
+						</td>						
+						<td class="column">	
 								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->							
 								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 
 									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {										
@@ -845,7 +850,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								?>">
 
-								<div id="quantityInStockId<?php echo $iCount?>">
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
 /*
