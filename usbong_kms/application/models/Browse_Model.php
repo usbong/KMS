@@ -6181,7 +6181,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//edited by Mike, 20250610
 		//$this->db->select('t1.patient_name, t1.patient_id, t2.transaction_id, t2.transaction_date, t2.transaction_quantity, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp, t3.medical_doctor_id, t3.medical_doctor_name');
 		
-		$this->db->select('t1.patient_name, t1.patient_id, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t2.medical_doctor_id, t2.transaction_id, t2.transaction_date, t2.transaction_quantity, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp');
+		//edited by Mike, 20250613
+		//$this->db->select('t1.patient_name, t1.patient_id, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t2.medical_doctor_id, t2.transaction_id, t2.transaction_date, t2.transaction_quantity, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp');
+		$this->db->select('t1.patient_name, t1.patient_id, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t1.pwd_senior_id, t2.medical_doctor_id, t2.transaction_id, t2.transaction_date, t2.transaction_quantity, t2.fee, t2.fee_quantity, t2.x_ray_fee, t2.lab_fee, t2.notes, t2.added_datetime_stamp');
 
 		$this->db->from('patient as t1');
 		$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
