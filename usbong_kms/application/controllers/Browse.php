@@ -1137,9 +1137,9 @@ class Browse extends CI_Controller { //MY_Controller {
 	//edited by Mike, 20200615
 	public function confirmSnack()
 	{		
-		//added by Mike, 20241030
+		//edited by Mike, 20250616; from 20241030
 		if (!isset($_POST['nameParam'])) {			
-			redirect('browse/searchPatient');
+			redirect('browse/searchSnack');
 		}
 		
 		$data['nameParam'] = $_POST['nameParam'];
@@ -3954,8 +3954,14 @@ class Browse extends CI_Controller { //MY_Controller {
 
 			$lastVisitedDateArray=explode("-",$lastVisitedDate);
 			
-			$lastVisitedDate=$lastVisitedDateArray[2]."-".$lastVisitedDateArray[0]."-".$lastVisitedDateArray[1];
-
+			//edited by Mike, 20250616
+			//TODO: -reverify: this
+			if (isset($lastVisitedDateArray[2]) and isset($lastVisitedDateArray[1])) {
+				$lastVisitedDate=$lastVisitedDateArray[2]."-".$lastVisitedDateArray[0]."-".$lastVisitedDateArray[1];
+			}
+			else {
+				$lastVisitedDate="00-00-0000";
+			}
 			//echo "lastVisitedDate: ".$lastVisitedDate."<br/>";
 
 			//if ("2023-04-13" > "2025-04-11") {
