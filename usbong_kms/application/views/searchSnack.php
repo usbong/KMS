@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250613; from 20250322
+' @date updated: 20250616; from 20250613
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -560,9 +560,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class="column">				
 								<div id="expirationId<?php echo $iCount?>">
 							<?php
-								//echo $value['expiration_date'];
-								if ($value['expiration_date']==0) {
-
+								//echo $value['expiration_date']."<BR/>";
+								//if ($value['expiration_date']==0) {
+								if (($value['expiration_date']==0) or 
+									($value['expiration_date']=="0000-00-00")) {
 									if ($value['quantity_in_stock']==-1) {
 										echo "UNKNOWN";
 									}
