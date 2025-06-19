@@ -1128,6 +1128,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		//added by Mike, 20250326
 		$this->db->where('t2.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE		
+		
+		//removed by Mike, 20250619
+		//$this->db->where('t2.is_lost_item', 0); //NOT lost item
 
 		$this->db->like('t1.item_name', $param['nameParam']);
 		
@@ -1167,7 +1170,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 /*		return $row->report_description;
 */
 //		return $rowArray[0]['report_description'];
-		
+/*
+		echo count($rowArray);
+		echo "expiration date: ".$rowArray[3]['expiration_date'];
+*/		
 		return $rowArray;
 	}	
 	
