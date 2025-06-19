@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250510; from 20250503
+' @date updated: 20250619; from 20250510
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -733,8 +733,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						foreach ($consolidatedUpdatedResult as &$consolidatedValueTemp) {
 							if ($valueTemp['item_id']==$consolidatedValueTemp['item_id']) {
 								//echo "DITO!";
+								//echo $valueTemp['resultQuantityInStockNow'];
+								
 								$consolidatedValueTemp['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
 								//continue;
+								
+								//added by Mike, 20250619
+								//TODO: -reverify: this
+								$consolidatedValueTemp['expiration_date']=$valueTemp['expiration_date'];
 								
 								$bIsSameId=true;
 								break;
@@ -758,7 +764,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$updatedResult=$consolidatedUpdatedResult;
 				}
 				//-----				
-				
+								
 				if (isset($updatedResult[0])) {
 					//echo ">>>>>>>>>".$updatedResult[0]['item_id'];
 					
@@ -835,6 +841,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//edited by Mike, 20250326
 //				foreach ($result as $value) {
 				foreach ($updatedResult as $value) {
+										
+					//echo ">>>>>expiration_date: ".$value['expiration_date']."<br/>";
 										
 					//added by Mike, 20250215					
 /*					
@@ -922,8 +930,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class =column>				
-								<div id=expirationId<?php echo $iCount?>>
+						<td class ="column">				
+								<div id="expirationId<?php echo $iCount?>">
 							<?php
 								//edited by Mike, 20250424
 								if (strpos(strtoupper($value['item_name']),"*")!==false) {
