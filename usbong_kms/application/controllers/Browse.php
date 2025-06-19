@@ -1592,6 +1592,8 @@ class Browse extends CI_Controller { //MY_Controller {
 		$iSameItemIdLostCount=0;
 */
 
+		//added by Mike, 20250619
+		//TODO: -reverify if still necessary
 		if ($data['result'] == true) {
 			foreach ($data['result'] as $value) {				
 			
@@ -1803,6 +1805,14 @@ class Browse extends CI_Controller { //MY_Controller {
 			
 			//echo $data['result'][0]['item_name']."<br/>";
 		}
+*/		
+/*
+		echo count($data['result']);
+		echo "expiration date: ".$data['result'][3]['expiration_date'];
+*/
+/*
+		echo count($outputArray);
+		echo "expiration date: ".$outputArray[2]['expiration_date'];
 */		
 
 		return $data;
