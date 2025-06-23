@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250503; from 20250502
+' @date updated: 20250623; from 20250503
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -791,9 +791,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						//use this with med items; not non-med items
 						//$iCurrentTotal = $value['resultQuantityInStockNow'];
 
-						//edited by Mike, 20250428
+						//edited by Mike, 20250623; from 20250428
 						//TODO: -update: this
-						echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+						//≤
+						echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
 
 						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$value['resultQuantityInStockNow'].")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
 
@@ -895,8 +897,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "0";
 								}
 								else {
+									//edited by Mike, 20250623
+									//TODO: -reverify: $value['resultQuantityInStockNow']
+									//≤
 									if ($value['resultQuantityInStockNow']<0) {
-										echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+										//echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+										echo "<span style='color:red;font-weight:bold;'>0</span>";
 									}
 									else {
 	//									echo $value['quantity_in_stock'];
