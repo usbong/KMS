@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250623; from 20250503
+' @date updated: 20250624; from 20250623
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -585,6 +585,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$iCount = 0;
 					$updatedResult = [];
 					foreach ($result as $value) {
+						//echo ">>>iCount: ".$iCount."<br/>";
+						
 						if (($value['quantity_in_stock']<0) or ($value['quantity_in_stock']=="") ){
 						}
 /*						
@@ -612,11 +614,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$value['resultQuantityInStockNow'] = 0;
 							}
 							
-							//edited by Mike, 20250408
-							if ($value['resultQuantityInStockNow']==0) {
-							//if ($value['resultQuantityInStockNow']<=0) {
+							//edited by Mike, 20250624; from 20250408
+							//TODO: -reverify this
+							//if ($value['resultQuantityInStockNow']==0) {
+							if ($value['resultQuantityInStockNow']<=0) {
 								$iCount++;
-								continue;
+								//continue; //removed by Mike, 20250624
+								//to show items whose resultQuantityInStockNow <= 0 
+								//set to "hidden" in items table if should not anymore be displayed
+								//or deleting using "delete" button
 							}
 						}
 						
@@ -660,6 +666,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//--------------------------
 
 					$updatedResultCount = count($updatedResult);
+					
+					//echo "updatedResultCount: ".$updatedResultCount."<br/>";
 					
 				//edited by Mike, 20250424
 /*					
@@ -717,8 +725,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$updatedResultCount=0;
 */					
 
-
-
 					$bIsSameId=false;
 					$consolidatedUpdatedResult = array();
 
@@ -727,7 +733,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						foreach ($consolidatedUpdatedResult as &$consolidatedValueTemp) {
 							if ($valueTemp['item_id']==$consolidatedValueTemp['item_id']) {
-								//echo "DITO!";
+/*								
+								echo "DITO!<br/>";
+								echo ">>>".$valueTemp['resultQuantityInStockNow']."<br/>";
+*/								
 								$consolidatedValueTemp['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
 								
 								//continue;
@@ -744,13 +753,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							array_push($consolidatedUpdatedResult,$valueTemp);
 						}
 					}
+/*					
+					echo "<br/>CONSOLIDATED; CHECK!!!<br/>";
 					
-					////echo "<br/>CONSOLIDATED; CHECK!!!<br/>";
-					
-					////foreach ($consolidatedUpdatedResult as $consolidatedValueTemp) {
-					////	echo $consolidatedValueTemp['resultQuantityInStockNow']." / ".$consolidatedValueTemp['quantity_in_stock']."<br/>";
-					////}				
-	
+					foreach ($consolidatedUpdatedResult as $consolidatedValueTemp) {
+						echo $consolidatedValueTemp['resultQuantityInStockNow']." / ".$consolidatedValueTemp['quantity_in_stock']."<br/>";
+					}				
+*/	
 					$updatedResult=$consolidatedUpdatedResult;
 				////}
 				//-----							
@@ -791,11 +800,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						//use this with med items; not non-med items
 						//$iCurrentTotal = $value['resultQuantityInStockNow'];
 
-						//edited by Mike, 20250623; from 20250428
+						//edited by Mike, 20250624; from 20250623
 						//TODO: -update: this
-						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+						echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
 						//≤
-						echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
 
 						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$value['resultQuantityInStockNow'].")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
 
@@ -894,15 +903,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//edited by Mike, 20250416; from 20200615
 									//echo 9999;
 									//echo "0/0";
-									echo "0";
+									//edited by Mike, 20250624
+									//echo "0";
+									echo "<span style='color:red;font-weight:bold;'>0</span>";							
 								}
 								else {
-									//edited by Mike, 20250623
+									//edited by Mike, 20250624; from 20250623
+									//echo ">>>".$value['resultQuantityInStockNow']."<br/>";
+									
 									//TODO: -reverify: $value['resultQuantityInStockNow']
 									//≤
-									if ($value['resultQuantityInStockNow']<0) {
-										//echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
-										echo "<span style='color:red;font-weight:bold;'>0</span>";
+									if ($value['resultQuantityInStockNow']<=0) {
+										echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+										
+										//echo "<span style='color:red;font-weight:bold;'>0</span>";
 									}
 									else {
 	//									echo $value['quantity_in_stock'];
