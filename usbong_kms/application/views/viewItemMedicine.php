@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250510; from 20250428
+' @date updated: 20250625; from 20250510
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -68,6 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: right;
+							margin-right: 10%;
 						}							
 
 						div.tableHeader
@@ -254,9 +255,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 12px;
+							padding-right: 0;
+							
 							font-size: 16px;
 							border: 1px solid #68502b;
-							width: 20%;
+							width: 12%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -741,8 +744,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
-	<br/>
-	<br/>
 		<a target='_blank' href='<?php echo site_url('browse/viewItemMedicineWithItemPurchasedHistory/'.$itemId)?>' id="viewItemPurchasedHistory">
 			<div class="itemPurchasedHistory">
 <?php
@@ -750,6 +751,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>		
 			</div>								
 		</a>
+		<br/>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
