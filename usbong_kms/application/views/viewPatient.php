@@ -1180,7 +1180,7 @@ else {
 				echo "</table>";				
 				//echo "<br/>";				
 //				echo '<div>***NOTHING FOLLOWS***';	
-				//echo "<br/>";				
+				echo "<br/>";				
 			}
 			else {					
 				//edited by Mike, 20200331
