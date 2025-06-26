@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250616; from 20250613
+' @date updated: 20250626; from 20250616
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -416,9 +416,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</button>
 	</form>
 
-
-	<br/>
-	<br/>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
@@ -429,9 +426,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			if ($result!=null) {		
 /*			
 				echo "<b>MEDICAL DOCTOR: </b>".$result[0]["medical_doctor_name"];
+*/				
 				echo "<br/>";
-				echo "<br/>";
-*/			
+				echo "<br/>";			
 
 				$resultCount = count($result);
 								
@@ -547,7 +544,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								else if ($value['quantity_in_stock']=="") {
 									//edited by Mike, 20200615
 									//echo 9999;
-									echo "0/0";
+									//edited by Mike, 20250626
+									//echo "0/0";
+									echo "UNKNOWN";
 								}
 								else {
 //									echo $value['quantity_in_stock'];

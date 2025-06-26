@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250428; from 20250426
+' @date updated: 20250626; from 20250428
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -798,7 +798,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</button>
 	</form>
 	<br/>
-	<br/>
 <!--	//removed by Mike, 20210220
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
@@ -1179,9 +1178,9 @@ else {
 /*				}				
 */
 				echo "</table>";				
-				echo "<br/>";				
+				//echo "<br/>";				
 //				echo '<div>***NOTHING FOLLOWS***';	
-				echo "<br/>";				
+				//echo "<br/>";				
 			}
 			else {					
 				//edited by Mike, 20200331
@@ -1706,7 +1705,6 @@ else {
 <?php
 		}
 	?>
-	<br />
 	<br />
 	<br />
 	<br />

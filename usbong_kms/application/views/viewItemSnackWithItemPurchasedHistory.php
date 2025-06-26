@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* edited by Mike, 20201001 */
 							/* TO-DO: -add: auto-identify if Tablet PC */
 							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 1000px
+							width: 800px
                         }
 						
 						div.checkBox
@@ -62,6 +62,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}
 
+						div.itemPurchasedHistory
+						{
+							font-weight: bold;
+							text-align: right;
+							margin-right: 10%; /*22%;*/							
+						}	
+						
 						div.tableHeader
 						{
 							font-weight: bold;
@@ -70,6 +77,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #00ff00;
 						}
 
+						div.quantityInStockDiv
+						{
+							text-align: center;							
+						}
+						
 						input.browse-input
 						{
 							width: 100%;
@@ -120,6 +132,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right
 						}						
 
+						td.columnCentered
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+						}						
+
 						td.columnFee
 						{
 							border: 1px dotted #ab9c7d;		
@@ -141,6 +159,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}		
 
+						td.columnTableHeaderName
+						{
+							font-weight: bold;
+							background-color: #00ff00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 34%;
+						}	
+
 						td.columnTableHeaderFee
 						{
 							font-weight: bold;
@@ -148,7 +175,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 13%;
+							width: 9%;
 						}		
 
 						td.columnTableHeaderDateHistory
@@ -165,17 +192,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 20%;
+							width: 25%;
 						}		
 
 						td.columnTableHeaderItemNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00ff00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 28%;
+							width: 20%;
 						}		
 
 						td.columnTableHeaderHistory
@@ -214,7 +240,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 50%; /*38%;*/
 							display: inline-block;
 							text-align: right;
 						}						
@@ -235,9 +261,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 12px;
+							padding-right: 0;
+							
 							font-size: 16px;
 							border: 1px solid #68502b;
-							width: 20%;
+							width: 12%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -715,9 +743,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Enter
 		</button>
 	</form>
-	<br/>
-	<br/>
-	
+		<a target='_blank' href='<?php echo site_url('browse/viewItemSnackWithItemPurchasedHistory/'.$itemId)?>' id="viewItemPurchasedHistory">
+			<div class="itemPurchasedHistory">
+<?php
+			echo "ITEM PURCHASED HISTORY"
+?>		
+			</div>								
+		</a>
+	<br/>	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
 	<?php
@@ -741,19 +774,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="columnTableHeader">				
+						<td class ="columnTableHeaderName">				
 				<?php
 							echo "ITEM NAME";
 				?>		
 						</td>
 						<td class ="columnTableHeader">				
 							<?php
-								echo "AVAILABLE"; //IN-STOCK
+								echo "AVAIL"; //AVAILABLE; //IN-STOCK
 							?>
 						</td>
 						<td class ="columnTableHeader">				
 							<?php
-								echo "EXPIRATION";
+								echo "EXP"; //EXPIRATION
 							?>
 						</td>
 						<td class ="columnTableHeader">				
@@ -765,6 +798,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php
 								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
 							?>
+						</td>			
+						<td>
+						</td>
+						<td>
 						</td>						
 					  </tr>
 <?php				
@@ -824,7 +861,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								?>">
 
-								<div id="quantityInStockId<?php echo $iCount?>">
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
 /*
@@ -846,7 +883,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo "9999";
 								}
 								else if ($value['quantity_in_stock']=="") {
-									echo "0 / 0";
+									//edited by Mike, 20250626
+									//echo "0 / 0";
+									echo "0";
 								}
 								//edited by Mike, 20200411; edited by Mike, 20200713
 /*
@@ -882,7 +921,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class ="columnCentered">				
 								<div id="itemExpirationId<?php echo $iCount?>">
 							<?php
 								//echo $value['expiration_date'];
@@ -890,7 +929,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								if (!isset($value['expiration_date'])) {
 									echo "UNKNOWN";
 								}
-								else if ($value['expiration_date']==0) {
+								//edited by Mike, 20250626
+								else if (($value['expiration_date']==0)||(($value['expiration_date']=="0000-00-00"))) {
+									
 									if ($value['quantity_in_stock']==-1) {
 										echo "UNKNOWN";
 									}									
@@ -917,7 +958,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
-						<td class ="column">		
+						<td class ="columnCentered">		
 								<!-- edited by Mike, 20200912 
 								<input type="hidden" id="feeParam" value="<?php echo $value['item_price']?>">
 								</input>
@@ -935,7 +976,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">		
 							<!-- edited by Mike, 20200611 -->
 							<!-- increased number of digits for the fee -->
-							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="99999999" 
+							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -1346,10 +1387,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="columnTableHeaderDateHistory">				
 								<div class="transactionDate">
 					<?php
+									//added by Mike, 20250626
+									echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$value['patient_id'].'/'.date("m-d-Y",strtotime($value['transaction_date'])))."' id='viewAcknowledgmentFormId' target='_blank'><b>";
+										
 									//edited by Mike, 20200507
 									//echo $value['transaction_date'];
 									//echo $value['added_datetime_stamp'];
-									echo str_replace(" ","T",$value['added_datetime_stamp']);
+									
+									//edited by Mike, 20250626; from 20210619
+									//echo str_replace(" ","T",$value['added_datetime_stamp']);
+									echo str_replace(" ","<br/>T",$value['added_datetime_stamp']);
+										
+									//added by Mike, 20250626
+									echo "</a>";		
 					?>		
 								</div>								
 							</td>

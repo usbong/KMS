@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250625; from 20250510
+' @date updated: 20250626; from 20250625
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -37,8 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* edited by Mike, 20201001 */
 							/* TO-DO: -add: auto-identify if Tablet PC */
 							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							/*width: 1000px*/
-							width: 1000px							
+							width: 800px							
                         }
 						
 						div.checkBox
@@ -68,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: right;
-							margin-right: 10%;
+							margin-right: 10%; /*22%;*/	
 						}							
 
 						div.tableHeader
@@ -134,6 +133,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}						
 
+						td.columnCentered
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+						}							
+
 						td.columnGrandTotal
 						{
 							border: 1px dotted #ab9c7d;		
@@ -161,6 +166,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}		
 
+						td.columnTableHeaderName
+						{
+							font-weight: bold;
+							background-color: #00ff00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 40%;
+						}		
+
 						td.columnTableHeaderFee
 						{
 							font-weight: bold;
@@ -168,7 +182,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 13%;
+							width: 9%;
 						}		
 						
 						td.columnTableHeaderDateHistory
@@ -234,7 +248,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 50%; /*38%;*/
 							display: inline-block;
 							text-align: right;
 						}						
@@ -247,7 +261,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
 							width: 72%;
-
 							float: left;
 						}
 
@@ -775,30 +788,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeaderName">				
 				<?php
 							echo "ITEM NAME";
 				?>		
 						</td>
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeader">				
 							<?php
-								echo "AVAILABLE"; //IN-STOCK
+								echo "AVAIL"; //AVAILABLE; //IN-STOCK
 							?>
 						</td>
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeader">				
 							<?php
-								echo "EXPIRATION";
+								echo "EXP"; //EXPIRATION
 							?>
 						</td>
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeader">				
 							<?php
 								echo "PRICE"; //"ITEM PRICE";
 							?>
 						</td>
-						<td class ="columnTableHeaderFee">				
+						<td class="columnTableHeaderFee">				
 							<?php
 								echo "FEE"; //"ITEM FEE, i.e. discounted price, set price";
 							?>
+						</td>	
+						<td>
+						</td>
+						<td>
 						</td>						
 					  </tr>
 <?php				
@@ -953,7 +970,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>
-						<td class ="column">				
+						<td class="columnCentered">				
 								<div id="itemExpirationId<?php echo $iCount?>">
 							<?php
 								//echo $value['expiration_date'];
@@ -989,7 +1006,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								</div>
 						</td>						
-						<td class ="column">		
+						<td class="columnCentered">		
 								<!-- edited by Mike, 20200912 
 								<input type="hidden" id="feeParam" value="<?php echo $value['item_price']?>">
 								</input>
@@ -1007,7 +1024,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">		
 							<!-- edited by Mike, 20200611 -->
 							<!-- increased number of digits for the fee -->
-							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="99999999" 
+							<input type="tel" id="feeParam" class="Fee-textbox no-spin" value="<?php echo $value['item_price'];?>" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;

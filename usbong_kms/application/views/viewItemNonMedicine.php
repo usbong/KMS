@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250625; 20250429
+' @date updated: 20250626; 20250625
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* edited by Mike, 20201001 */
 							/* TO-DO: -add: auto-identify if Tablet PC */							
 							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 1000px
+							width: 800px
                         }
 						
 						div.checkBox
@@ -67,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: right;
-							margin-right: 10%;
+							margin-right: 10%; /*22%;*/	
 						}							
 
 						div.tableHeader
@@ -175,28 +175,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 							
 							padding: 2px;
-							margin-left: 40px;
+							margin-left: 5%; /*40px*/
 						}
 
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00ff00; 
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
 
+						td.columnTableHeaderName
+						{
+							font-weight: bold;
+							background-color: #00ff00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 34%;
+						}	
+						
 						td.columnTableHeaderFee
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00ff00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 13%;
-						}		
-						
+							width: 9%; /*13%;*/
+						}	
+
 						td.columnTableHeaderDateHistory
 						{
 							border: 1px dotted #ab9c7d;		
@@ -260,7 +267,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 50%; /*38%;*/
 							display: inline-block;
 							text-align: right;
 						}						
@@ -810,19 +817,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="columnTableHeader">				
+						<td class ="columnTableHeaderName">				
 				<?php
 							echo "ITEM NAME";
 				?>		
 						</td>
 						<td class ="columnTableHeader">				
 							<?php
-								echo "AVAILABLE"; //IN-STOCK
+								echo "AVAIL"; //AVAILABLE; //IN-STOCK
 							?>
 						</td>
 						<td class ="columnTableHeader">				
 							<?php
-								echo "EXPIRATION";
+								echo "EXP"; //EXPIRATION
 							?>
 						</td>
 						<td class ="columnTableHeader">				
@@ -1103,10 +1110,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 						</div>
 						</td>		
-<!-- removed by Mike, 20250324						
-						<td class="columnVat">		
+						<td>
 						</td>
--->						
 					  </tr>
 		<?php				
 					$iCount++;		
