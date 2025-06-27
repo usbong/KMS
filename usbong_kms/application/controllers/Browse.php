@@ -2225,7 +2225,7 @@ class Browse extends CI_Controller { //MY_Controller {
 	public function viewItemMedicine($itemId)
 	{
 //		$data['nameParam'] = $_POST[nameParam];
-		
+
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
@@ -2235,6 +2235,11 @@ class Browse extends CI_Controller { //MY_Controller {
 		$data['itemTypeId'] = $itemTypeId; //added by Mike, 20200615
 
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		
+		//added by Mike, 20250627
+		if (!isset($data['result'][0]['item_name'])) {
+			redirect('browse/searchMedicine');
+		}	
 		
 		//added by Mike, 20200406; removed by Mike, 20220518
 //		$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
@@ -4382,6 +4387,11 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 		
+		//added by Mike, 20250627
+		if (!isset($data['result'][0]['item_name'])) {
+			redirect('browse/searchSnack');
+		}	
+		
 		//added by Mike, 20200406; removed by Mike, 20220625
 		//TO-DO: -update: computer instructions to speed-up this up in viewItemSnackWithItemPurchasedHistory(...)
 		//$data['resultPaid'] = $this->Browse_Model->getPaidItemDetailsList($itemTypeId, $itemId);
@@ -5078,6 +5088,21 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 		}
 		
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
+		
+		//added by Mike, 20250627
+		if (isset($data['result'])) {
+			$sText = "searchNonMedicine";
+
+			if ($itemTypeId=="1") {
+				$sText = "searchMedicine";
+			}
+			else if ($itemTypeId=="3") {
+				$sText = "searchSnack";
+			}	
+			
+			echo "<font color='#FF0000'><b>PAALALA: THIS ITEM HAS ALREADY BEEN REMOVED.</font> <a style='color:#222222' target='_blank' href='".site_url('browse/'.$sText)."'>SEARCH ITEM</a>.</b><br/>";
+		}
+		
 
 /* //removed by Mike, 20230309
 		//added by Mike, 20200406
