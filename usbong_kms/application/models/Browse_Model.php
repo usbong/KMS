@@ -5991,6 +5991,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//TO-DO: -add: auto-identify item_type
 		$this->db->where('t1.item_type_id', $itemTypeId); //2 = Non-medicine
 
+
+		//added by Mike, 20250627
+		$this->db->where('t1.is_hidden', 0); //not hidden
+
+
 		//added by Mike, 20250313
 		//$this->db->where('t2.is_to_be_deleted', 0); //NOT for deletion; INVENTORY TABLE
 
