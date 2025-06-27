@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2023 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20230127; from 20220719
+' @date updated: 20250627; from 20230127
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -168,7 +168,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.receiptDetailsColumn
 						{
-							width: 90%;
+							width: 76%;
 							display: inline-block;
 							text-align: right;
 						}						

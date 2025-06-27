@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250624; from 20250623
+' @date updated: 20250627; from 20250624
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. 
 								width: 670px
 							*/
-							width: 800px
+							width: 780px
                         }
 						
 						span.asterisk
@@ -195,6 +195,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #00ff00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+							width: 80%;
 						}						
 												
 						td.imageColumn
@@ -205,7 +206,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 54%;
 							display: inline-block;
 							text-align: right;
 						}		

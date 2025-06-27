@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250626; from 20250616
+' @date updated: 20250627; from 20250626
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 11pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							width: 780px
                         }
 						
 						div.checkBox
@@ -150,7 +150,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 52%;
 							display: inline-block;
 							text-align: right;
 						}						
