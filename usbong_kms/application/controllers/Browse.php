@@ -5089,8 +5089,8 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 		
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 		
-		//added by Mike, 20250627
-		if (isset($data['result'])) {
+		//edited by Mike, 20250628; from 20250627
+		if (!isset($data['result'])) {
 			$sText = "searchNonMedicine";
 
 			if ($itemTypeId=="1") {
