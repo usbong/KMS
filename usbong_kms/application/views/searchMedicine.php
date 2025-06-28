@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250627; from 20250619
+' @date updated: 20250628; from 20250627
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -946,18 +946,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo '<span>N/A</span>';
 								}	
 								//echo $value['expiration_date'];
-								else if ($value['expiration_date']==0) {
+								//edited by Mike, 20250628
+								else if (($value['expiration_date']==0) || ($value['expiration_date']=='0000-00-00')) {
 									if ($value['quantity_in_stock']==-1) {
-										echo "UNKNOWN";
-									}
-									//added by Mike, 20200614
-									else if ($value['quantity_in_stock']=="") {
 										echo "UNKNOWN";
 									}
 									else {
 										//edited by Mike, 20200828
 										//echo "NONE";
-										echo '<span class="alertSpan">';										
+										echo '<span class="alertSpan">';	
 										echo "NONE";
 										echo '</span>';
 									}

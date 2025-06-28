@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250627; from 20250610
+  @date updated: 20250628; from 20250627
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -300,6 +300,7 @@
 							width: 58%; /*59%*/
 							display: inline-block;
 							text-align: right;
+							font-size: 22px;
 						}						
 
 						.Fee-textbox { 
@@ -711,8 +712,9 @@
 			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
 		</td>
 		<td class="pageNameColumn">
-			<h2>
+			<b>
 				Search Patient<br/>
+
 <!--				@INDEX CARD PAGE
 -->				
 					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
@@ -722,7 +724,7 @@
 		?>		
 						</div>								
 					</a>				
-			</h2>		
+			</b>		
 		</td>
 	  </tr>
 	</table>

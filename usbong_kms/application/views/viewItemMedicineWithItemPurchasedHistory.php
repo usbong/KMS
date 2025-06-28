@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250627; from 20250626
+' @date updated: 20250628; from 20250627
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* edited by Mike, 20201001 */
 							/* TO-DO: -add: auto-identify if Tablet PC */
 							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 800px							
+							width: 850px							
                         }
 						
 						div.checkBox
@@ -183,7 +183,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 8%; /*15%*/
+							width: 10%; /*15%*/
 						}								
 
 						td.columnTableHeaderPatientNameHistory

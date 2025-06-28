@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250627; 20250626
+' @date updated: 20250628; 20250627
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* edited by Mike, 20201001 */
 							/* TO-DO: -add: auto-identify if Tablet PC */							
 							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 800px
+							width: 850px
                         }
 						
 						div.checkBox
@@ -1760,201 +1760,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<!-- added by Mike, 20201103 -->
 			<input type="hidden" id="hasPatientInCartListParam" value="<?php echo $hasPatientInCartListParamValue;?>">
 <?php			
-			
-			echo "<br/>";
-
-			echo '<h3>Item Purchased History</h3>';
-			
-			//added by Mike, 20200615
-			$value = $result[0];
-			//edited by Mike, 20210110
-//			if ((!isset($value)) or ($value['transaction_date']=="")) {				
-			if (!isset($value)) {				
-				echo '<div>';					
-				echo 'There are no transactions.';
-				echo '</div>';					
-			}
-			else {
-				//edited by Mike, 20200406
-				$resultCount = 0;
-
-				if ((isset($resultPaid)) and ($resultPaid!=False)) {
-					$resultCount = count($resultPaid);
-				}
-	
-				//item purchase history			
-				if ($resultCount==0) {				
-					echo '<div>';					
-					echo 'There are no transactions.';
-					echo '</div>';					
-				}
-				else {
-	//				$resultCount = count($resultPaid);
-					if ($resultCount==1) {
-						echo '<div>Showing <b>'.count($resultPaid).'</b> result found.</div>';
-					}
-					else {
-						echo '<div>Showing <b>'.count($resultPaid).'</b> results found.</div>';			
-					}			
-					echo '<br/>';
-					
-					echo "<table class='search-result'>";
-?>
-
-					  <tr class="row">
-						<td class ="columnTableHeaderHistory">				
-				<?php
-							echo "ADDED DATETIME";
-				?>		
-						</td>
-						<td class ="columnTableHeaderPatientNameHistory">				
-				<?php
-							echo "PATIENT NAME";
-				?>		
-						</td>
-
-						<td class ="columnTableHeaderItemNameHistory">				
-				<?php
-							echo "ITEM NAME";
-				?>		
-						</td>
-						<td class ="columnTableHeaderBlankHistory">				
-						</td>						
-						<td class ="columnTableHeaderFeeHistory">				
-							<?php
-								echo "QTY";
-							?>
-						</td>
-						<td class ="columnTableHeaderBlankHistory">				
-						</td>
-						<td class ="columnTableHeaderFeeHistory">				
-							<?php
-								echo "FEE";
-							?>
-						</td>
-						<td class ="columnTableHeaderBlankHistory">				
-						</td>						
-						<td class ="columnTableHeaderFeeHistory">				
-							<?php
-								echo "TOTAL";
-							?>
-						</td>
-					  </tr>
-					
-			<?php					
-					//add: table headers
-					$iCount = 1;
-					foreach ($resultPaid as $value) {
-	/*	
-					$value = $result[0];
-	*/				
-			?>				
-			
-						  <tr class="row">
-							<td class ="columnTableHeaderDateHistory">				
-								<div class="transactionDate">
-					<?php
-									//edited by Mike, 20200507
-									//echo $value['transaction_date'];
-									//echo $value['added_datetime_stamp'];
-									echo str_replace(" ","T",$value['added_datetime_stamp']);
-					?>		
-								</div>								
-							</td>
-							<td class ="columnName">				
-								<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
-									<div class="patientName">
-					<?php
-									echo $value['patient_name'];
-					?>		
-									</div>								
-								</a>
-							</td>
-							<td class ="column">				
-								<a href='<?php echo site_url('browse/viewItemNonMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-									<div class="itemName">
-					<?php	
-									//edited by Mike, 20200715
-									//echo $value['item_name'];
-									echo strtoupper($value['item_name']);
-
-					?>		
-									</div>								
-								</a>
-							</td>
-								<?php
-//edited by Mike, 20210622
-									//added by Mike, 20200415
-									if ($value['fee_quantity']==0) {
-	//									$iQuantity =  1;
-										$iQuantity =  floor(($value['fee']/$value['item_price']*100)/100);
-									}
-									else {
-										$iQuantity =  $value['fee_quantity'];
-									}
-								?>
-							<td class ="column">				
-							x
-							</td>
-							<td class ="column">				
-									<div id="itemQuantityId<?php echo $iCount?>">
-								<?php
-	//								echo $value['fee']/$value['item_price'];
-//									echo floor(($value['fee']/$value['item_price']*100)/100);
-									//edited by Mike, 20200415
-//									echo floor(($value['fee']/$value['fee']*100)/100);
-/*									
-									if ($value['fee_quantity']==0) {
-										echo 1;
-									}
-									else {
-										echo $value['fee_quantity'];									
-									}
-*/									
-									echo $iQuantity;
-								?>
-									</div>
-							</td>
-							<td class ="column">				
-							</td>
-							<td class ="column">				
-									<div id="itemPriceId<?php echo $iCount?>">
-								<?php
-									echo "@".number_format((float)$value['fee']/$iQuantity, 2, '.', '');
-								?>
-									</div>
-							</td>
-							<td class ="column">				
-							=
-							</td>
-							<td class ="column">				
-									<div id="itemQuantityId<?php echo $iCount?>">
-								<?php
-									echo $value['fee'];
-								?>
-									</div>
-							</td>
-							<td>
-								<?php //edited by Mike, 20200416 
-									if ($value['transaction_date']==date('m/d/Y')) {
-								?>							
-								<button onclick="myPopupFunctionDelete(<?php echo $value['item_id'].",".$value['transaction_id'];?>)" class="Button-delete">DELETE</button>									
-	<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
-	-->
-								<?php 
-									}
-								?>	
-							</td>						
-						  </tr>
-			<?php				
-						$iCount++;		
-	//					echo "<br/>";
-					}				
-					echo "</table>";				
-				}				
-			}
 		}
-	?>
+?>
 	<br />
 	<br />
 	<br />

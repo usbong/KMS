@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2024 USBONG
+' Copyright 2020~2025 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200529
-' @date updated: 20240209; from 20231205
+' @date updated: 20250628; from 20240209
 ' @website address: www.usbong.ph
 -->
 <?php
@@ -42,8 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							filter: brightness(80%);
 							*/
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							width: 720px;
                         }
 						
 						div.checkBox
@@ -75,6 +74,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							background-color: #00ff00; <!--#93d151; lime green-->
 							border: 1pt solid #00ff00;
+						}
+						
+						div.patientName
+						{
+							text-align: left;
 						}
 						
 						div.tableHeaderAddNewPatient
@@ -191,7 +195,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: left
+							text-align: center;
 						}						
 
 						td.columnCount
@@ -229,7 +233,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 12%;
+							width: 8%; /*12%;*/
+						}		
+
+						td.columnTableHeaderName
+						{
+							font-weight: bold;
+							background-color: #00ff00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 34%;
 						}		
 
 						td.columnTableHeaderFee
@@ -273,6 +286,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 50%;
 							display: inline-block;
 							text-align: right;
+							font-size: 22px;
+							font-weight: bold;
 						}						
 
 						.Fee-textbox { 
@@ -637,9 +652,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
 		</td>
 		<td class="pageNameColumn">
-			<h2>
 				Search Patient Names<br/>@Accounting Unit
-			</h2>		
 		</td>
 	  </tr>
 	</table>
@@ -748,7 +761,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 
-						<td class ="columnTableHeader">				
+						<td class ="columnTableHeaderName">				
 								<div class="tableHeader">
 				<?php
 								echo "PATIENT NAME";
@@ -941,7 +954,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//we set the id to default, i.e. DR. PEDRO
 //								if ($value['medical_doctor_id']==0) { //ANY
 								if ($value['medical_doctor_name']=="ANY") { //ANY
-									echo "NEW; NONE YET";
+									echo "NEW;<br/>NONE YET";
 								}
 								else {
 									
