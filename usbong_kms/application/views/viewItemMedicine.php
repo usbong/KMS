@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250628; from 20250627
+' @date updated: 20250630; from 20250628
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -61,6 +61,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						div.itemName
 						{
 							text-align: left;
+							width: 100%;
 						}
 						
 						div.itemPurchasedHistory
@@ -120,6 +121,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+						table.cartListResult
+						{
+							width: 80%;
+						}						
+
 						table.imageTable
 						{
 							width: 100%;
@@ -128,6 +134,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}						
 
 						td.column
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: left;
+						}						
+
+						td.columnItemName
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: left;
@@ -173,6 +185,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 34%;
+						}		
+
+						td.columnTableHeaderItemNameCartList
+						{
+							font-weight: bold;
+							background-color: #00ff00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 20%;
 						}		
 
 						td.columnTableHeaderFee
@@ -854,7 +875,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="column">				
 							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-								<div class="itemName">
+								<div>
 				<?php
 								//edited by Mike, 20250421
 								echo strtoupper($value['item_name']);
@@ -1127,7 +1148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}			
 				echo '<br/>';
 				
-				echo "<table class='search-result'>";
+				echo "<table class='cartListResult'>";
 
 				//added by Mike, 20200608
 				//note: at present, the computer server accepts only 1 patient per cart list
@@ -1304,11 +1325,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>		
 							</div>								
 						</td>
-						<td class ="column">				
+						<td class ="columnItemName">				
 							<a href='<?php 
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									echo site_url('browse/viewPatient/'.$cartValue['patient_id']);
-									
 									//added by Mike, 20201103
 									$hasPatientInCartListParamValue = True;
 								}

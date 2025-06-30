@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020~2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220627; from 20250626
+' @date updated: 20250630; from 20220627
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -118,7 +118,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 <!--							border: 1px solid #ab9c7d;		
 -->
-						}						
+						}			
+
+						table.cartListResult
+						{
+							width: 82%;
+						}							
 
 						table.imageTable
 						{
@@ -1066,7 +1071,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}			
 				echo '<br/>';
 				
-				echo "<table class='search-result'>";
+				echo "<table class='cartListResult'>";
 
 				//added by Mike, 20200608
 				//note: at present, the computer server accepts only 1 patient per cart list

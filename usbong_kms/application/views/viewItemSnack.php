@@ -120,6 +120,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+						table.cartListResult
+						{
+							width: 82%;
+						}	
+						
 						table.imageTable
 						{
 							width: 100%;
@@ -1075,7 +1080,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}			
 				echo '<br/>';
 				
-				echo "<table class='search-result'>";
+				echo "<table class='cartListResult'>";
 
 				//added by Mike, 20200608
 				//note: at present, the computer server accepts only 1 patient per cart list

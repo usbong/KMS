@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250627; from 20250626
+' @date updated: 20250630; from 20250627
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -113,7 +113,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 <!--							border: 1px solid #ab9c7d;		
 -->
-						}						
+						}			
+
+						table.cartListResult
+						{
+							width: 88%;
+						}								
 
 						table.imageTable
 						{
@@ -1109,7 +1114,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}			
 				echo '<br/>';
 				
-				echo "<table class='search-result'>";
+				echo "<table class='cartListResult'>";
 
 				//added by Mike, 20200608
 				//note: at present, the computer server accepts only 1 patient per cart list

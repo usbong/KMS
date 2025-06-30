@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250628; from 20250627
+' @date updated: 20250630; from 20250628
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -599,11 +599,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					array_push($updatedResult,$value);
 				}
 */
-/*
-					//added by Mike, 20250421
+
+					//edited by Mike, 20250630; from 20250421
+					$resultCount = count($result);
+					
 					$iTotalQuantityInStock=0;
 					$iTotalQuantityLostItem=0;
-*/
+					
+					//added by Mike, 20250630
+					$updatedResultCount=0;
 
 					//added by Mike, 20250423
 					//TODO: -reverify: this; delete button
@@ -634,11 +638,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$value['resultQuantityInStockNow']-=$value['quantity_in_stock'];
 								}	
 */								
+								//added by Mike, 20250630
+								if (!$value['is_lost_item']) {
+									$iTotalQuantityInStock+=$value['quantity_in_stock'];
+								}
+								else {
+									$iTotalQuantityLostItem+=$value['quantity_in_stock'];
+								}
+							
 								if (!isset($value['resultQuantityInStockNow'])) {
 									$value['resultQuantityInStockNow'] = 0;
 								}
 								
-								if ($value['resultQuantityInStockNow']==0) {
+								//edited by Mike, 20250630
+								//if ($value['resultQuantityInStockNow']==0) {
+								if ($value['resultQuantityInStockNow']<=0) {
 									$iCount++;
 									continue;
 								}
@@ -716,7 +730,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					//$updatedResult = array(); //clear contents
 
 					$updatedResult = $cleanedupdatedResult; //array();
-					$updatedResultCount=0;
+					
+					//edited by Mike, 20250630
+					//$updatedResultCount=0;
+					$updatedResultCount = count($updatedResult);
+
+					
 /*				
 				echo "<br/>CHECK!!!<br/>";
 				foreach ($updatedResult as $valueTemp) {
@@ -795,8 +814,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						//echo "<br/>";
 
 						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+						
+						$iCurrentTotal = $iTotalQuantityInStock-$iTotalQuantityLostItem-$value['item_total_sold'];
+						
+						//edited by Mike, 20250630
+						//echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$value['resultQuantityInStockNow'].")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
 
-						echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$value['resultQuantityInStockNow'].")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
+echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></span> @".$value['item_price']."<button class='copyToClipboardButton' onclick='myCopyToClipboardFunctionItemText(".$value['item_price'].")'>⿻</button>";
 
 						echo "<br/><br/>";
 					}
