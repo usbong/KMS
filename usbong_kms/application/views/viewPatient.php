@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250628; from 20250626
+' @date updated: 20250702; from 20250628
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 11pt;
-							width: 780px;
+							width: 720px;
                         }
 						
 						div.checkBox
