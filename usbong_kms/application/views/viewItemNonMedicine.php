@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250630; 20250628
+' @date updated: 20250705; 20250630
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -206,7 +206,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #00ff00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 9%; /*13%;*/
+							width: 11%; /*13%;*/
 						}	
 
 						td.columnTableHeaderDateHistory
