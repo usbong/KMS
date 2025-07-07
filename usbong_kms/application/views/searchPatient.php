@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250628; from 20250616
+' @date updated: 20250707; from 20250702
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -76,8 +76,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #ff8000; <!--#93d151; lime green-->
+							background-color: #ff8000;
 							border: 1pt solid #ff8000;
+							padding-bottom: 0.3em;
+							padding-top: 0.1em;
 						}						
 
 						div.transactionDateDiv
@@ -111,6 +113,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}						
 
+						img.patientIcon {
+							width: 14%;
+							height: auto;
+							vertical-align: text-bottom;
+						}
+						
 						table.addPatientTable
 						{
 							border: 2px dotted #ab9c7d;		
@@ -623,7 +631,7 @@ button.copyToClipboardButton {
 	<tr>
 		<td>
 			<div class="tableHeaderAddNewPatient">
-				ADD NEW PATIENT
+				ADD NEW PATIENT <img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon.png');?>?lastmod=20250707T1528">
 			</div>
 		</td>
 	</tr>

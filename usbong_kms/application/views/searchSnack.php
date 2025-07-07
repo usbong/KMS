@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250627; from 20250626
+' @date updated: 20250707; from 20250627
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -75,6 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							background-color: #ff8000; <!--#93d151; lime green-->
 							border: 1pt solid #ff8000;
+							padding-bottom: 0.1em;
 						}	
 
 						div.quantityInStockDiv
@@ -107,11 +108,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							float: left;
 							text-align: center;
 						}
+
+						img.snackIcon {
+							width: 12%;
+							height: auto;
+							vertical-align: text-bottom;
+						}
 						
 						table.addNonMedItemTable
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
+							
+							width: 20%;
 						}							
 						
 						table.search-result
@@ -639,7 +648,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<tr>
 		<td>
 			<div class="tableHeaderAddNewNonMedItem">
-				ADD NEW SNACK
+				ADD NEW SNACK <img class="snackIcon" src="<?php echo base_url('assets/images/snackIcon.png');?>?lastmod=20250707T1005">
 			</div>
 		</td>
 	</tr>
