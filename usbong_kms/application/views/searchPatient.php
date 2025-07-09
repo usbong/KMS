@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250707; from 20250702
+' @date updated: 20250709; from 20250707
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -631,7 +631,7 @@ button.copyToClipboardButton {
 	<tr>
 		<td>
 			<div class="tableHeaderAddNewPatient">
-				ADD NEW PATIENT <img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon.png');?>?lastmod=20250707T1528">
+				ADD NEW PATIENT <img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250709T1547">
 			</div>
 		</td>
 	</tr>
