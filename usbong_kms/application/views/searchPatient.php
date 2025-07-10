@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250709; from 20250707
+' @date updated: 20250710; from 20250709
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -155,14 +155,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 58%;
 							display: inline-block;
 							text-align: right;
-						}						
+						}					
+
+						td.addPatientTableInputColumn
+						{
+							padding-left: 0.6em;
+						}
 						
 						span.asterisk
 						{
 							color: #ff0000;							
 						}
 						
-button.copyToClipboardButton {
+						button.copyToClipboardButton {
 							background-color: #ffffff;
 							border: 0px dotted #333333;
 							font-size: 20px;
@@ -636,7 +641,7 @@ button.copyToClipboardButton {
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="addPatientTableInputColumn">
 		<!-- Form -->
 		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
 		<!-- "browse/addPatientName" faster -->
