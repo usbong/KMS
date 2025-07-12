@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2025 SYSON, MICHAEL B.
+  Copyright 2020~2025 USBONG
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250610; from 20250501
+  @date updated: 20250712; from 20250610
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -842,7 +842,9 @@ echo "notes".$value['fee']."<br/>";
 							echo "<td class='column'>";
 							//edited by Mike, 20210706
 	//						echo "PROFESSIONAL FEE: GRATIS";
-							echo "PROF FEE: DR. ".$value['medical_doctor_name']."; GRATIS";
+							//edited by Mike, 20250712
+							//echo "PROF FEE: DR. ".$value['medical_doctor_name']."; GRATIS";
+							echo "PROF FEE: DR. ".$sMedicalDoctorName."; GRATIS";
 							echo "</td>";	
 							echo "<td class='columnFee'>";
 							echo "0.00";
