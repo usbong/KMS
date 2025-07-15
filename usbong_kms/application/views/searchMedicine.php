@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250630; from 20250628
+' @date updated: 20250715; from 20250630
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -93,8 +93,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 12pt;
 							font-weight: bold;
 							text-align: center;
-							background-color: #ff8000; <!--#93d151; lime green-->
-							border: 1pt solid #ff8000;
+							background-color: #ff8000; 
 							padding: 0.2em;							
 						}	
 
@@ -135,9 +134,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 						
 						img.medIcon {
-							width: 6%;
+							width: 8%;
 							height: auto;
-							vertical-align: text-bottom;
+							vertical-align: middle;
 						}
 						
 						table.addMedItemTable
@@ -1073,8 +1072,7 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 	<tr>
 		<!-- removed colspan="2" due to older browser (2012 default Lenovo Tablet Browser) doesn't display it correctly, by Mike, 20250510 -->
 		<td id="addNewMedItemTdHeaderId" class="tableHeaderAddNewMedItemTd">
-			<!-- edited by Mike, 20250503; from 20250430 -->
-			<div id="addNewMedItemDivId" class="tableHeaderAddNewMedItem"><span class="spanAddNewMedItem">ADD NEW MED</span> <img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250503T1553"></div>
+			<div id="addNewMedItemDivId" class="tableHeaderAddNewMedItem">ADD NEW MED <img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250503T1553"></div>
 		</td>
 		<td>
 			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>

@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250710; from 20250709
+' @date updated: 20250715; from 20250710
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -78,8 +78,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							background-color: #ff8000;
 							border: 1pt solid #ff8000;
-							padding-bottom: 0.3em;
-							padding-top: 0.1em;
+							padding-bottom: 0.2em;
+							padding-top: 0.2em;
 						}						
 
 						div.transactionDateDiv
@@ -116,7 +116,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						img.patientIcon {
 							width: 14%;
 							height: auto;
-							vertical-align: text-bottom;
+							vertical-align: middle;
 						}
 						
 						table.addPatientTable

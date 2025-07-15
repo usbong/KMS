@@ -86,9 +86,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 12pt;
 							font-weight: bold;
 							text-align: center;
-							background-color: #ff8000; <!--#93d151; lime green-->
-							border: 1pt solid #ff8000;
+							background-color: #ff8000;
 							padding: 0.2em;
+							padding-top: 0.3em;
 						}	
 
 						button.tableHeaderFlipSwitchIconButton
@@ -144,9 +144,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 						
 						img.nonMedIcon {
-							width: 6%;
+							width: 8%;
 							height: auto;
-							vertical-align: text-bottom;
+							vertical-align: middle;
 						}
 
 						table.addNonMedItemTable
@@ -1035,7 +1035,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<tr>
 		<td id="addNewNonMedItemTdHeaderId" class="tableHeaderAddNewNonMedItemTd">
 			<!-- edited by Mike, 20250503; from 20250430 -->
-			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem"><span class="spanAddNewNonMedItem">ADD NEW NON-MED</span> <img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250503T0954"></div>
+			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem">ADD NEW NON-MED <img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250503T0954"></div>
 		</td>
 		<td>
 			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>
