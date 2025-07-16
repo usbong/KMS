@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250715; from 20250707
+' @date updated: 20250716; from 20250715
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -77,7 +77,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1pt solid #ff8000;
 							padding: 0.2em;
 							padding-top: 0.4em;
-							
 						}	
 
 						div.quantityInStockDiv
@@ -121,8 +120,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
-							
-							width: 20%;
+							width: 25%;
 						}							
 						
 						table.search-result
@@ -165,6 +163,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 							text-align: right;
 						}						
+						
+						td.addSnackTableInputColumn
+						{
+							padding-left: 0.6em;
+						}
 						
 						.Button-delete {
 							background-color: #E9E9E9;
@@ -655,7 +658,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="addSnackTableInputColumn">
 		<!-- Form -->
 		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
 		<!-- "browse/addPatientName" faster -->
