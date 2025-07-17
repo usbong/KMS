@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250630; from 20250628
+' @date updated: 20250717; from 20250630
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -1582,7 +1582,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						=
 						</td>
-						<td class ="column">				
+						<td class ="columnGrandTotal">				
 								<div id="feeTotalId<?php echo $iCount?>">
 							<?php
 //								echo "<b>".$cartFeeTotal."<b/>";
