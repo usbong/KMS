@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250702; from 20250628
+' @date updated: 20250718; from 20250702
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -58,6 +58,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 						
 						div.itemName
+						{
+							text-align: left;
+						}
+
+						div.cartItemName
 						{
 							text-align: left;
 						}
@@ -1397,7 +1402,7 @@ else {
 				?>		
 							</div>								
 						</td>
-						<td class ="column">				
+						<td class ="column">		
 							<a href='<?php 
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									echo site_url('browse/viewPatient/'.$cartValue['patient_id']);

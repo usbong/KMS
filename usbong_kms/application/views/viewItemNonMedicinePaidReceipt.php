@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2022 SYSON, MICHAEL B.
+' Copyright 2020-2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20220712; from 20210928
+' @date updated: 20250718; from 20220712
 -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');

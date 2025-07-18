@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2024 SYSON, MICHAEL B.
+' Copyright 2020-2025 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250628; from 20250627
+' @date updated: 20250718; from 20250628
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -120,6 +120,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+						table.cartListResult
+						{
+							width: 80%;
+						}	
+						
 						table.imageTable
 						{
 							width: 100%;
@@ -130,14 +135,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: right
+							text-align: left;
 						}		
 
 						td.columnCentered
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-						}							
+						}
+
+						td.columnGrandTotal
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: right;
+						}						
 
 						td.columnFee
 						{
@@ -1063,7 +1074,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 			}			
 
-			//added by Mike, 20200401
+			//edited by Mike, 20250718; from 20200401
 			echo '<h3>Cart List</h3>';
 
 			//added by Mike, 20201103
@@ -1091,7 +1102,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}			
 				echo '<br/>';
 				
-				echo "<table class='search-result'>";
+				echo "<table class='cartListResult'>";
 
 				//added by Mike, 20200608
 				//note: at present, the computer server accepts only 1 patient per cart list
@@ -1103,16 +1114,146 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 				$iCount = 1;
 				$cartFeeTotal = 0;
+				
+				//added by Mike, 20250426
+				$iCurrType=0; //patient; at the top of list
+				$dMedItemTotal=0;
+				$dNonMedItemTotal=0;
+				$dSnackItemTotal=0;
+				$dPatientServiceTotal=0;
+				$iCountTransactionTypes=0;
+				
 				foreach ($cartListResult as $cartValue) { 
 /*	
 				$value = $result[0];
 */				
 				
-				if ($cartValue['patient_id']!=0) {
-					$patientId = $cartValue['patient_id'];
-
-					//added by Mike, 202012010
-					$medicalDoctorId = $cartValue['medical_doctor_id'];	
+				if (intval($cartValue['patient_id'])!=0) {
+					$dPatientServiceTotal=$cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
+					
+					//added by Mike, 20250428
+					$patientId=$cartValue['patient_id'];
+					
+					$iCountTransactionTypes++;
+				}
+				else {
+/*					
+					echo "iCurrType: ".$iCurrType." ; ";
+					echo "item_type_id: ".$cartValue['item_type_id']."<br/>";
+*/					
+					//med item
+					if ($cartValue['item_type_id']==1) {
+						$dMedItemTotal+=$cartValue['med_fee'];
+						$iCountTransactionTypes++;
+					}
+					//non-med item
+					else if ($cartValue['item_type_id']==2) {
+						$dNonMedItemTotal+=$cartValue['pas_fee'];
+						$iCountTransactionTypes++;
+					}
+					//snack item
+					else if ($cartValue['item_type_id']==3) {
+						$dSnackItemTotal+=$cartValue['snack_fee'];
+						$iCountTransactionTypes++;
+					}
+					
+					if ($iCurrType!=$cartValue['item_type_id']) {
+						//echo "CHANGE!!! iCurrType: ".$iCurrType."<br/><br/>";
+						
+						//patient service
+						if ($iCurrType==0) {
+							if ($dPatientServiceTotal!=0) {				
+							//echo "DITO!!!<br/><br/>";
+	?>					
+							<tr class="row">
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+								<div class="">
+					<?php
+									echo "<b>SERVICE TOTAL</b>";
+					?>		
+								</div>								
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class="columnFee">
+							<?php
+								echo "<b>".number_format($dPatientServiceTotal, 2, '.', '')."</b>";
+							?>
+							</td>
+	<?php						
+							}
+						}
+						//med item
+						//if (intval($cartValue['item_type_id'])==1) {
+						else if ($iCurrType==1) {
+							//echo "DITO!!!<br/><br/>";
+	?>					
+							<tr class="row">
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+								<div class="">
+					<?php
+									echo "<b>MED TOTAL</b>";
+					?>		
+								</div>								
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class="columnFee">
+							<?php
+								echo "<b>".number_format($dMedItemTotal, 2, '.', '')."</b>";
+							?>
+							</td>
+	<?php						
+						}
+						//non-med item
+						//else if (intval($cartValue['item_type_id'])==2) {
+						else if ($iCurrType==2) {
+	?>					
+							<tr class="row">
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+								<div class="">
+					<?php
+									echo "<b>NON-MED TOTAL</b>";
+					?>		
+								</div>								
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class ="column">				
+							</td>
+							<td class="columnFee">
+							<?php
+								echo "<b>".number_format($dNonMedItemTotal, 2, '.', '')."</b>";
+							?>
+							</td>							
+	<?php						
+						}						
+						//snack item
+						//put before the GRAND TOTAL row			
+					}
+					$iCurrType=$cartValue['item_type_id'];
 				}
 
 				//added by Mike, 20211128
@@ -1138,11 +1279,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>		
 							</div>								
 						</td>
-						<td class ="column">				
+						<td class ="columnItemName">				
 							<a href='<?php 
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									echo site_url('browse/viewPatient/'.$cartValue['patient_id']);
-									
 									//added by Mike, 20201103
 									$hasPatientInCartListParamValue = True;
 								}
@@ -1274,32 +1414,129 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>						
 
 					  </tr>
-		<?php				
+<?php				
 					$iCount++;		
 //					echo "<br/>";
-				}				
+				}	
+
+				//edited by Mike, 20250428
+				if ($iCountTransactionTypes>1) {
+
+					if ($cartValue['med_fee']!=0) {
+?>
+					<tr class="row">
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+							<div class="">
+				<?php
+								echo "<b>MED TOTAL</b>";
+				?>		
+							</div>								
+						</td>		
+	</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class="columnFee">
+								<?php
+									echo "<b>".number_format($dMedItemTotal, 2, '.', '')."</b>";
+								?>
+								</td>
+						
+					</tr>
+	<?php
+					}
+					
+					if ($cartValue['pas_fee']!=0) {
+	?>
+					<tr class="row">
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+							<div class="">
+				<?php
+								echo "<b>NON-MED TOTAL</b>";
+				?>		
+							</div>								
+						</td>		
+	</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class="columnFee">
+								<?php
+									echo "<b>".number_format($dNonMedItemTotal, 2, '.', '')."</b>";
+								?>
+								</td>
+						
+					</tr>
+	<?php
+					}				
+					
+					if ($cartValue['snack_fee']!=0) {
+	?>
+					<tr class="row">
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+							<div class="">
+				<?php
+								echo "<b>SNACK TOTAL</b>";
+				?>		
+							</div>								
+						</td>		
+	</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class ="column">				
+								</td>
+								<td class="columnFee">
+								<?php
+									echo "<b>".number_format($dSnackItemTotal, 2, '.', '')."</b>";
+								?>
+								</td>
+						
+					</tr>
+<?php
+					}
+				}
 ?>
 				<!-- TOTAL -->				
 					  <tr class="row">
 						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="column">				
+						</td>
+						<td class ="columnGrandTotal">				
 							<div class="total">
 				<?php
-								echo "<b>TOTAL</b>";
+								echo "<b>GRAND TOTAL</b>";
 				?>		
 							</div>								
 						</td>
 						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
-						</td>
-						<td class ="column">				
 						=
 						</td>
-						<td class ="column">				
+						<td class ="columnGrandTotal">				
 								<div id="feeTotalId<?php echo $iCount?>">
 							<?php
 //								echo "<b>".$cartFeeTotal."<b/>";
