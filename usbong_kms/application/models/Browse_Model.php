@@ -6742,9 +6742,17 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//TO-DO: -remove: this set of instructions due to use of "get" keyword in command/method
 		//verify if the MINORSET non-med item exists in the list
 		$hasMinorSetInCartList=false;
+		$iNumOfMinorSetInCartList=0; //added by Mike, 20250719
+		
 		foreach ($rowArray as $row) {
-			if (strtoupper($row['item_name'])=="MINORSET") {
+			//edited by Mike, 20250719
+			//if (strtoupper($row['item_name'])=="MINORSET") {
+			if (strpos(strtoupper($row['item_name']),"MINORSET")!==false) {		
 				$hasMinorSetInCartList = true;
+				$iNumOfMinorSetInCartList += $row['fee_quantity']; //added by Mike, 20250719
+				
+				//echo ">>>>iNumOfMinorSetInCartList: ".$iNumOfMinorSetInCartList."<br/>";
+				
 			}
 		}
 		
@@ -6753,9 +6761,37 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			foreach ($rowArray as &$row) {
 				if ($row['patient_id']>0) {
 					if (strpos(strtoupper($row['notes']),"MINORSET")!==false) {
+						if (strpos(strtoupper($row['notes']),"MINORSETX")!==false) {
+							$sNotesMinorsetXTemp = substr($row['notes'],strpos($row['notes'],"MINORSETX")+strlen("MINORSETX"));
+							
+							//echo ">>>>".$sNotesMinorsetXTemp."<br/>";
+							
+							//$sNotesMinorsetXTemp = substr($sNotesMinorsetXTemp,0,strpos($sNotesMinorsetXTemp,";"));
+							
+							//echo "sNotesMinorsetXTemp: ".$sNotesMinorsetXTemp."<br/>";
+							
+							$row['notes'] = str_replace("; MINORSETX".((int)$sNotesMinorsetXTemp),"; MINORSETX".($iNumOfMinorSetInCartList),$row['notes']);
+							
+							$row['notes'] = str_replace("; MINORSETX1","; MINORSET",$row['notes']);
+						}
+						else {
+							//$row['notes'] = $row['notes']."; MINORSETX".($iNumOfMinorSetInCartList+1);
+
+							$row['notes'] = str_replace("; MINORSET","; MINORSETX".($iNumOfMinorSetInCartList),$row['notes']);
+						}
 					}
 					else {
-						$row['notes'] = $row['notes']."; MINORSET";
+						//edited by Mike, 20250719
+						//$row['notes'] = $row['notes']."; MINORSET";
+						
+						//echo "iNumOfMinorSetInCartList: ".$iNumOfMinorSetInCartList;
+						
+						if ($iNumOfMinorSetInCartList>1) {
+							$row['notes'] = $row['notes']."; MINORSETX".$iNumOfMinorSetInCartList;
+						}
+						else {
+							$row['notes'] = $row['notes']."; MINORSET";
+						}
 					}					
 					$data = array(
 						'notes' => $row['notes']
@@ -6777,6 +6813,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 					if (strpos(strtoupper($row['notes']),"MINORSET")!==false) {
 						$row['notes'] = str_replace("; MINORSET", "", $row['notes']);
 						$row['notes'] = str_replace("MINORSET; ", "", $row['notes']);
+						
+						//added by Mike, 20250719
+						$row['notes'] = str_replace("; MINORSETX".$iNumOfMinorSetInCartList, "", $row['notes']);
+						$row['notes'] = str_replace("MINORSETX".$iNumOfMinorSetInCartList."; ", "", $row['notes']);
 					}
 					else {
 					}
