@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250717; 20250705
+' @date updated: 20250722; 20250721
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -33,10 +33,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 11pt;
-							
-							/* edited by Mike, 20201001 */
-							/* TO-DO: -add: auto-identify if Tablet PC */							
-							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							width: 850px
                         }
 						
@@ -543,7 +539,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		//edited by Mike, 20250324; from 20200911
 //		function myPopupFunction() {				
-		function myPopupFunction(itemId) {	
+		function myPopupFunction(itemId) {			
 			//added by Mike, 20210526
 			//note: we add this command to prevent multiple button clicks
 			//received by computer server before identifying that a patient transaction
@@ -574,6 +570,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 				}
 				else {
+					alert("HALLO!");
+					
 					//add VAT
 					numericalFee = eval(fee);
 					fee = numericalFee + numericalFee*.12;
@@ -588,6 +586,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				return;
 			}
 			
+			//alert("quantity: "+quantity.indexOf("."));
+	
 			if (quantity==0) {	
 			  alert("Kailangang hindi ZERO (0) ang QUANTITY.");
 			  window.location.href = "<?php echo site_url('browse/viewItemNonMedicine/"+itemId+"');?>";
@@ -598,14 +598,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  window.location.href = "<?php echo site_url('browse/viewItemNonMedicine/"+itemId+"');?>";
 			  return;
 			}
-			//added by Mike, 20250324
+			//edited by Mike, 20250722; from 20250324
 			//else if (!Number.isInteger(quantity)) {	
-			else if (quantity.includes(".")) {	
+			//includes(...) fails in default Internet browser of Lenovo Tablet PC
+			//else if (quantity.includes(".")) {	
+			else if (quantity.indexOf(".") !== -1) {
 			  alert("Kailangang WHOLE NUMBER ang QUANTITY.");
 			  window.location.href = "<?php echo site_url('browse/viewItemNonMedicine/"+itemId+"');?>";
 			  return;
 			}
-			
 
 			if (fee==0){	
 			  alert("Kailangang hindi ZERO (0) ang FEE.");
