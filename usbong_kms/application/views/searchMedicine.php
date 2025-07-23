@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250718; from 20250715
+' @date updated: 20250723; from 20250718
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -138,6 +138,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							height: auto;
 							vertical-align: middle;
 						}
+
+						img.flipSwitchIcon {
+							max-width: 95%;
+							height: auto;
+							vertical-align: middle;
+							margin: 0;
+							padding: 0;
+						}
 						
 						table.addMedItemTable
 						{
@@ -148,7 +156,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						td.tableHeaderAddNewMedItemTd {
 							background-color: #ff8000;
-							width: 100%;
+							width: 90%;
+							border: 2px solid #ff8000;
+							margin: 0;
+							padding: 0;
+						}
+						
+						td.tableHeaderFlipSwitchTd {
+							width: 10%;
+							margin: 0;
+							padding: 0;
+							padding-left: 0.4em;
 						}
 						
 						span.alertSpan {
@@ -249,26 +267,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						button.tableHeaderFlipSwitchIconButton
 						{
-							font-size: 18pt;
+							width: 80%;
 							background-color: #ffffff;
 							border: 0px solid #333333;
-							float: right;
+							margin: 0;
+							padding: 0;
+							padding: 0.1em;
 						}
 	
 						button.tableHeaderFlipSwitchIconButton:hover
 						{
+							width: 80%;
 							font-size: 18pt;
 							background-color: #eeeeee;
 							border: 0px solid #333333;
-							float: right;
+							margin: 0;
+							padding: 0;
+							padding: 0.1em;
 						}
 
 						button.tableHeaderFlipSwitchIconButton:active
 						{
+							width: 80%;
 							font-size: 18pt;
 							background-color: #eeeeee;
 							border: 0px solid #333333;
-							float: right;
+							margin: 0;
+							padding: 0;
+							padding: 0.1em;
 						}	
 						
 						button.addNewMedButton 
@@ -480,8 +506,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  //if equal
 		  //edited by Mike, 20250503
 		  //if (sText.localeCompare("ADD NEW MED")==0) {
-		  if (sText.includes("ADD NEW MED")) {
-			  
+		  //edited by Mike, 20250723
+			//includes(...) fails in default Internet browser of Lenovo Tablet PC
+		  //if (sText.includes("ADD NEW MED")) {
+		  if (sText.indexOf("ADD NEW MED") !== -1) {
 			//addNewMedItemDiv.innerHTML="REPORT LOST ITEM";
 			//sText=sText.replace("ADD NEW MED","REPORT LOST ITEM");
 			addNewMedItemDiv.innerHTML=addNewMedItemDiv.innerHTML.replace("ADD NEW MED","REPORT LOST ITEM");
@@ -505,7 +533,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			addNewMedItemDiv.style.backgroundColor = "#ff8000";
 			addNewMedItemTdHeader.style.backgroundColor = "#ff8000";
-			addNewMedItemTdHeader.style.border = "0pt dotted #000000";
+			
+			//edited by Mike, 20250723
+			//addNewMedItemTdHeader.style.border = "0pt dotted #000000";
+			addNewMedItemTdHeader.style.border = "2pt solid #ff8000";
+			
 			addNewMedItemTd.style.backgroundColor = "#ffffff";
 			
 			isReturnedItemTd.style.visibility = "visible";
@@ -1081,8 +1113,12 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 		<td id="addNewMedItemTdHeaderId" class="tableHeaderAddNewMedItemTd">
 			<div id="addNewMedItemDivId" class="tableHeaderAddNewMedItem">ADD NEW MED <img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250503T1553"></div>
 		</td>
-		<td>
-			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>
+		<td class="tableHeaderFlipSwitchTd">
+			<!-- ⎘ -->
+			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">
+			
+			<img class="flipSwitchIcon" src="<?php echo base_url('assets/images/flipSwitchIcon.png');?>?lastmod=20250723T1450">
+			
 			</button>
 		</td>		
 	</tr>
@@ -1174,8 +1210,6 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 			<button id="submitButtonId" type="submit" class="addNewMedButton">
 				Submit
 			</button>
-		  </td>
-		  <td>
 		  </td>
 		</tr>
 		</form>
