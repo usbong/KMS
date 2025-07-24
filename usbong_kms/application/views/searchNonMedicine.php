@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250627; from 20250624
+' @date updated: 20250724; from 20250627
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -93,23 +93,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						button.tableHeaderFlipSwitchIconButton
 						{
-							font-size: 18pt;
+							width: 80%;
 							background-color: #ffffff;
 							border: 0px solid #333333;
+							margin: 0;
+							padding: 0;
+							padding: 0.1em;
 						}
 	
 						button.tableHeaderFlipSwitchIconButton:hover
 						{
+							width: 80%;
 							font-size: 18pt;
 							background-color: #eeeeee;
 							border: 0px solid #333333;
+							margin: 0;
+							padding: 0;
+							padding: 0.1em;
 						}
 
 						button.tableHeaderFlipSwitchIconButton:active
 						{
+							width: 80%;
 							font-size: 18pt;
 							background-color: #eeeeee;
 							border: 0px solid #333333;
+							margin: 0;
+							padding: 0;
+							padding: 0.1em;							
 						}						
 
 						div.quantityInStockDiv
@@ -149,6 +160,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							vertical-align: middle;
 						}
 
+						img.flipSwitchIcon {
+							max-width: 95%;
+							height: auto;
+							vertical-align: middle;
+							margin: 0;
+							padding: 0;
+						}
+						
 						table.addNonMedItemTable
 						{
 							border: 2px dotted #ab9c7d;		
@@ -158,7 +177,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						td.tableHeaderAddNewNonMedItemTd {
 							background-color: #ff8000;
-							width: 100%;
+							width: 90%;
+							border: 2px solid #ff8000;
+							margin: 0;
+							padding: 0;
+						}
+						
+						td.tableHeaderFlipSwitchTd {
+							width: 10%;
+							margin: 0;
+							padding: 0;
+							padding-left: 0.4em;
 						}
 						
 						table.search-result
@@ -466,9 +495,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  //if equal
 		  //edited by Mike, 20250502
 		  //if (addNewNonMedItemDiv.innerHTML.localeCompare("ADD NEW NON-MED")==0) {
-		  if (addNewNonMedItemDiv.innerHTML.includes("ADD NEW NON-MED")) {
-
-			  //alert("0!!!");
+		  //edited by Mike, 20250724
+		  //if (addNewNonMedItemDiv.innerHTML.includes("ADD NEW NON-MED")) {
+		  //includes(...) fails in default Internet browser of Lenovo Tablet PC
+		  if (addNewNonMedItemDiv.innerHTML.indexOf("ADD NEW NON-MED") !== -1) {
+			//alert("0!!!");
 
 			//edited by Mike, 20250502
 			//addNewNonMedItemDiv.innerHTML="REPORT LOST ITEM";
@@ -494,7 +525,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  
 			addNewNonMedItemDiv.style.backgroundColor = "#ff8000";
 			addNewNonMedItemTdHeader.style.backgroundColor = "#ff8000";
-			addNewNonMedItemTdHeader.style.border = "0pt dotted #000000";
+			
+			//edited by Mike, 20250724
+			//addNewNonMedItemTdHeader.style.border = "0pt dotted #000000";
+			addNewNonMedItemTdHeader.style.border = "2pt solid #ff8000";
+			
 			addNewNonMedItemTd.style.backgroundColor = "#ffffff";
 			isReturnedItemTd.style.visibility = "visible";
 			isReturnedItemTdInputCheckbox.style.visibility = "visible";
@@ -1037,9 +1072,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<!-- edited by Mike, 20250503; from 20250430 -->
 			<div id="addNewNonMedItemDivId" class="tableHeaderAddNewNonMedItem">ADD NEW NON-MED <img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250503T0954"></div>
 		</td>
-		<td>
-			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">⎘</button>
-			</button>
+		<td class="tableHeaderFlipSwitchTd">
+			<!-- ⎘ -->
+			<button class="tableHeaderFlipSwitchIconButton" onclick="myFlipSwitchFunction()">
+			<img class="flipSwitchIcon" src="<?php echo base_url('assets/images/flipSwitchIcon.png');?>?lastmod=20250724T1526">
+			</button>			
 		</td>
 	</tr>
 	<tr>
@@ -1131,8 +1168,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<button id="submitButtonId" type="submit" class="addNewNonMedButton">
 						Submit
 					</button>
-				  </td>
-				  <td>
 				  </td>
 				  </tr>
 		</form>
