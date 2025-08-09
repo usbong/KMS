@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20250806; from 20250314
+  @date updated: 20250809; from 20250806
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -157,26 +157,39 @@
 							float: left;
 							text-align: center;
 						}
-						
+
 						img.patientIcon {
 							width: 4%;
 							height: auto;
 							vertical-align: middle;
 							margin-left: 1%;
+							margin-right: 1%;	
 						}						
 						
-						img.medIcon {
+						img.patientIcon:hover {
+							width: 4%;
+							height: auto;
+							vertical-align: middle;
+							margin-left: 1%;
+							margin-right: 1%;	
+							opacity: 0.6;
+						}						
+
+						img.medIcon, .nonMedIcon {
 							width: 3%;
 							height: auto;
 							vertical-align: middle;
 							margin-left: 1%;
+							margin-right: 2%;
 						}
-
-						img.nonMedIcon {
-							width: 8%;
+						
+						img.medIcon:hover, .nonMedIcon:hover {
+							width: 3%;
 							height: auto;
 							vertical-align: middle;
 							margin-left: 1%;
+							margin-right: 2%;
+							opacity: 0.6;
 						}
 						
 						img.snackIcon {
@@ -184,6 +197,16 @@
 							height: auto;
 							vertical-align: middle;
 							margin-left: 1%;
+							margin-right: 2%;
+						}
+
+						img.snackIcon:hover {
+							width: 2%;
+							height: auto;
+							vertical-align: middle;
+							margin-left: 1%;
+							margin-right: 2%;
+							opacity: 0.6;
 						}
 						
 						table.imageTable
@@ -296,14 +319,13 @@
 ?>
 <h2>Computer Web Address List (MOSC)</h2>
 <h2>I. SEARCH</h2>
-<h3>1) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchPatient">Search Patient<img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432"></a></h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchPatient">http://192.168.11.12/usbong_kms/index.php/browse/searchPatient</a></h3>
-<h3>2) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchMedicine">Search Medicine<img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250806T1432"></a></h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchMedicine">http://192.168.11.12/usbong_kms/index.php/browse/searchMedicine</a><br/>
-<h3>3) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchNonMedicine">Search Non-Medicine<img class="medIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250806T1432"></a></h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchNonMedicine">http://192.168.11.12/usbong_kms/index.php/browse/searchNonMedicine</a><br/>
-<h3>4) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchSnack">Search Snack<img class="snackIcon" src="<?php echo base_url('assets/images/snackIcon.png');?>?lastmod=20250806T1432"></a></h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchSnack">http://192.168.11.12/usbong_kms/index.php/browse/searchSnack</a><br/>
+<h3>1)<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchPatient"><img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432">Search Patient</a></h3>
+
+<h3>2)<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchMedicine"><img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250806T1432">Search Medicine</a></h3>
+
+<h3>3)<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchNonMedicine"><img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250806T1432">Search Non-Medicine</a></h3>
+
+<h3>4) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchSnack"><img class="snackIcon" src="<?php echo base_url('assets/images/snackIcon.png');?>?lastmod=20250806T1432">Search Snack</a></h3>
 
 <h2>II. INFORMATION DESK + ACCOUNTING UNIT</h2>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportPatientQueueAccounting">http://192.168.11.12/usbong_kms/index.php/report/viewReportPatientQueueAccounting</a><br/>
