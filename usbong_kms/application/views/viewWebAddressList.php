@@ -442,21 +442,21 @@ Examples:<br/>
 1. MEDICINE
 </h3>
 <h3>
-a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicine"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedIcon.png');?>?lastmod=20250812T1413">VIEW REPORT MED</a><br/>
+a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicine"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedIcon.png');?>?lastmod=20250812T1520">VIEW REPORT MED</a><br/>
 </h3>
 <h3>
 b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineUnified">
-<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedUnifiedIcon.png');?>?lastmod=20250812T1413">VIEW REPORT MED UNIFIED</a>
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedUnifiedIcon.png');?>?lastmod=20250812T1520">VIEW REPORT MED UNIFIED</a>
 </h3>
 <h3>
 2. MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)
 </h3>
 <h3>
 a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsterisk">
-<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskIcon.png');?>?lastmod=20250812T1413">VIEW REPORT MED *</a>
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskIcon.png');?>?lastmod=20250812T1542">VIEW REPORT MED *</a>
 </h3>
 <h3>
-b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskUnifiedIcon.png');?>?lastmod=20250812T1413">VIEW REPORT MED * UNIFIED</a>
+b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskUnifiedIcon.png');?>?lastmod=20250812T1542">VIEW REPORT MED * UNIFIED</a>
 </h3>
 <h3>
 3. NON-MEDICINE
