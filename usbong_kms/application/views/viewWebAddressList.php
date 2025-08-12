@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20250809; from 20250806
+  @date updated: 20250812; from 20250809
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -162,16 +162,16 @@
 							width: 4%;
 							height: auto;
 							vertical-align: middle;
-							margin-left: 1%;
-							margin-right: 1%;	
+							margin-left: 0.5%;
+							margin-right: 1.5%;	
 						}						
 						
 						img.patientIcon:hover {
 							width: 4%;
 							height: auto;
 							vertical-align: middle;
-							margin-left: 1%;
-							margin-right: 1%;	
+							margin-left: 0.5%;
+							margin-right: 1.5%;	
 							opacity: 0.6;
 						}						
 
@@ -196,17 +196,83 @@
 							width: 2%;
 							height: auto;
 							vertical-align: middle;
-							margin-left: 1%;
-							margin-right: 2%;
+							margin-left: 1.5%;
+							margin-right: 2.5%;
 						}
 
 						img.snackIcon:hover {
 							width: 2%;
 							height: auto;
 							vertical-align: middle;
-							margin-left: 1%;
-							margin-right: 2%;
+							margin-left: 1.5%;
+							margin-right: 2.5%;
 							opacity: 0.6;
+						}
+						
+						img.reportSummaryEndDayIcon {
+							width: 5%;
+							height: auto;
+							vertical-align: middle;
+							margin-left: 0%;
+							margin-right: 1%;
+							margin-top: -0.5%;
+							margin-bottom: -0.5%;							
+						}
+
+						img.reportSummaryEndDayIcon:Hover {
+							background-color: #d9eeff;
+							
+							width: 5%;
+							height: auto;
+							vertical-align: middle;
+							margin-left: 0%;
+							margin-right: 1%;
+							margin-top: -0.5%;
+							margin-bottom: -0.5%;							
+						}
+						
+						img.reportPatientQueueAccountingIcon {
+							width: 5%;
+							height: auto;
+							vertical-align: middle;
+							margin-left: 2%;
+							margin-right: 1%;
+							margin-top: -0.5%;
+							margin-bottom: -0.5%;							
+						}
+
+						img.reportPatientQueueAccountingIcon:Hover {
+							background-color: #d9eeff;
+							
+							width: 5%;
+							height: auto;
+							vertical-align: middle;
+							margin-left: 2%;
+							margin-right: 1%;
+							margin-top: -0.5%;
+							margin-bottom: -0.5%;							
+						}
+
+						img.reportMedIcon {
+							width: 5%;
+							height: auto;
+							vertical-align: middle;
+							margin-left: 0.5%;
+							margin-right: 1%;
+							margin-top: -0.5%;
+							margin-bottom: -0.5%;							
+						}
+
+						img.reportMedIcon:Hover {
+							background-color: #d9eeff;
+							
+							width: 5%;
+							height: auto;
+							vertical-align: middle;
+							margin-left: 0.5%;
+							margin-right: 1%;
+							margin-top: -0.5%;
+							margin-bottom: -0.5%;							
 						}
 						
 						table.imageTable
@@ -319,33 +385,44 @@
 ?>
 <h2>Computer Web Address List (MOSC)</h2>
 <h2>I. SEARCH</h2>
-<h3>1)<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchPatient"><img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432">Search Patient</a></h3>
+<h3>1.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchPatient"><img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432">Search Patient</a></h3>
 
-<h3>2)<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchMedicine"><img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250806T1432">Search Medicine</a></h3>
+<h3>2.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchMedicine"><img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250806T1432">Search Medicine</a></h3>
 
-<h3>3)<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchNonMedicine"><img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250806T1432">Search Non-Medicine</a></h3>
+<h3>3.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchNonMedicine"><img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250806T1432">Search Non-Medicine</a></h3>
 
-<h3>4) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchSnack"><img class="snackIcon" src="<?php echo base_url('assets/images/snackIcon.png');?>?lastmod=20250806T1432">Search Snack</a></h3>
+<h3>4.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchSnack"><img class="snackIcon" src="<?php echo base_url('assets/images/snackIcon.png');?>?lastmod=20250806T1432">Search Snack</a></h3>
 
 <h2>II. INFORMATION DESK + ACCOUNTING UNIT</h2>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportPatientQueueAccounting">http://192.168.11.12/usbong_kms/index.php/report/viewReportPatientQueueAccounting</a><br/>
+<h3><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportPatientQueueAccounting"><img class="reportPatientQueueAccountingIcon" src="<?php echo base_url('assets/images/reportPatientQueueAccountingIcon.png');?>?lastmod=20250812T1054">View Report Patient Queue Accounting</a></h3>
 
 <h2><span id="summaryReportsHeaderId" class="moreTextSpanIIISummaryReportsHeader" onclick="toggleMore('summaryReportsHeaderId')">III. SUMMARY REPORTS FOR THE DAY</span></h2>
 <span id="summaryReportsId" class="moreTextSpanIIISummaryReports">
-<h3>1) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
+<h3>1. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified</a>
-<h3>2) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
+<h3>2. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay</a>
 
-<!-- added by Mike, 20210915 -->
-<h3>3) <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewSummaryReportForEndDay.php">View Summary Report for End Day</a></h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewSummaryReportForEndDay.php">http://192.168.11.12/usbong_kms/server/viewSummaryReportForEndDay.php</a>
-
+<!-- edited by Mike, 20250812; from 20210915 -->
+<h3>3. <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewSummaryReportForEndDay.php"><img class="reportSummaryEndDayIcon" src="<?php echo base_url('assets/images/reportSummaryEndDayIcon.png');?>?lastmod=20250812T1247">View Summary Report for End Day</a></h3>
 </span>
 
 <h2>IV. PAYSLIPS</h2>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Pedro">Payslip SYSON, PEDRO (MOSC)</a><br/>
-<br/>
+<h3><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Pedro"><img class="reportPatientQueueAccountingIcon" src="<?php echo base_url('assets/images/reportPayslipPedroIcon.png');?>?lastmod=20250812T1207">Payslip SYSON, PEDRO (MOSC)</a></h3>
+<h3>
+<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Peter">Payslip SYSON, PETER</a>
+</h3>
+<h3>
+<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">Payslip REJUSO-MORALES, CHASTITY</a>
+</h3>
+<h3>
+<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Rodil">Payslip DELA PAZ, RODIL</a>
+</h3>
+<h3>
+<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Honesto</">Payslip LASAM, HONESTO</a>
+</h3>
+
+<!-- //removed by Mike, 20250812
 http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/name<br/>
 <br/>
 where: name = keyword of medical doctor name<br/>
@@ -358,28 +435,42 @@ Examples:<br/>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Honesto">http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Honesto</a><br/>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Gracia">http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Gracia</a><br/>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel">http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel</a><br/>
+-->
 
 <h2>V. REPORTS</h2>
-<b>1) MEDICINE</b><br/>
-a) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicine">
-http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicine</a><br/>
-b) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineUnified">
-http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineUnified</a><br/>
-<br/>
-<b>2) MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)</b><br/>
-a) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsterisk">
-http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsterisk</a><br/>
-b) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified">
-http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified</a><br/>
-<br/>
-<b>3) NON-MEDICINE</b><br/>
-a) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportNonMedicine">
-http://192.168.11.12/usbong_kms/index.php/report/viewReportNonMedicine</a><br/>
+<h3>
+1. MEDICINE
+</h3>
+<h3>
+a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicine"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedIcon.png');?>?lastmod=20250812T1413">VIEW REPORT MED</a><br/>
+</h3>
+<h3>
+b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineUnified">
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedUnifiedIcon.png');?>?lastmod=20250812T1413">VIEW REPORT MED UNIFIED</a>
+</h3>
+<h3>
+2. MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)
+</h3>
+<h3>
+a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsterisk">
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskIcon.png');?>?lastmod=20250812T1413">VIEW REPORT MED *</a>
+</h3>
+<h3>
+b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskUnifiedIcon.png');?>?lastmod=20250812T1413">VIEW REPORT MED * UNIFIED</a>
+</h3>
+<h3>
+3. NON-MEDICINE
+</h3>
+<h3>
+a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportNonMedicine">
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportNonMedIcon.png');?>?lastmod=20250812T1443">VIEW REPORT NON-MED</a>
+</h3>
+
 <!-- removed by Mike, 20210712
 b) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportNonMedicineUnified">
 http://192.168.11.12/usbong_kms/index.php/report/viewReportNonMedicineUnified</a><br/>
 -->
-<br/>
+
 <b>4) SNACK</b><br/>
 a) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportSnack">
 http://192.168.11.12/usbong_kms/index.php/report/viewReportSnack</a><br/>
@@ -444,6 +535,7 @@ where "06" = "June 2020"<br/>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewXRayPriceList.php">
 http://192.168.11.12/usbong_kms/server/viewXRayPriceList.php<br/>
 </a>
+<br/>
 <b>2) LAB UNIT</b><br/>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewLabPriceList.php">
 http://192.168.11.12/usbong_kms/server/viewLabPriceList.php<br/>
