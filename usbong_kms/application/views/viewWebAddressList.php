@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20250813; from 20250812
+  @date updated: 20250815; from 20250814
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -144,10 +144,14 @@
 						
 						a
 						{
-							padding-right: 50%;
+							padding-right: 35%;
 						}
 
-
+						span.indentSpan
+						{
+							padding-left: 2.5%;
+						}
+						
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -392,14 +396,15 @@
     </style>
   </head>
 	  <script>
-	  <!-- added by Mike, 20230417 -->	  
+	  <!-- edited by Mike, 20250815; from 20230417 -->	  
 	  function toggleMore(sParamId) {
-		  var summaryReportsId = document.getElementById("summaryReportsId");
-		  
 		  //alert(sParamId);
 		  //alert(summaryReportsHeaderId);
+		 
+			var summaryReportsId = document.getElementById("summaryReportsId");
+			var summaryReportsVReportsId = document.getElementById("summaryReportsVReportsId");
 		  
-		  if (sParamId=="summaryReportsHeaderId") {
+			if (sParamId=="summaryReportsHeaderId") {
 			  //alert("dito"+summaryReportsId.style.display);
 			  //note: 1st summaryReportsId.style.display value is blank, i.e. "";
 			  if (summaryReportsId.style.display === "") {
@@ -411,7 +416,19 @@
 			  else {
 				  summaryReportsId.style.display = "none";
 			  }
-		  }
+			}
+			else if (sParamId=="summaryReportsHeaderVReportsId") {
+			  if (summaryReportsVReportsId.style.display === "") {
+				  summaryReportsVReportsId.style.display = "inline";
+			  }
+			  else if (summaryReportsVReportsId.style.display === "none") {
+				  summaryReportsVReportsId.style.display = "inline";
+			  }
+			  else {
+				  summaryReportsVReportsId.style.display = "none";
+			  }
+			}
+
 		} 
 	  
 	  </script>
@@ -431,41 +448,45 @@
 ?>
 <h2>Computer Web Address List (MOSC)</h2>
 <h2>I. SEARCH</h2>
-<h3>1.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchPatient"><img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432">Search Patient</a></h3>
+<h3><span class="indentSpan"></span>1.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchPatient"><img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432">Search Patient</a></h3>
 
-<h3>2.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchMedicine"><img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250806T1432">Search Medicine</a></h3>
+<h3><span class="indentSpan"></span>2.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchMedicine"><img class="medIcon" src="<?php echo base_url('assets/images/medIcon.png');?>?lastmod=20250806T1432">Search Medicine</a></h3>
 
-<h3>3.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchNonMedicine"><img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250806T1432">Search Non-Medicine</a></h3>
+<h3><span class="indentSpan"></span>3.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchNonMedicine"><img class="nonMedIcon" src="<?php echo base_url('assets/images/nonMedIcon.png');?>?lastmod=20250806T1432">Search Non-Medicine</a></h3>
 
-<h3>4.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchSnack"><img class="snackIcon" src="<?php echo base_url('assets/images/snackIcon.png');?>?lastmod=20250806T1432">Search Snack</a></h3>
+<h3><span class="indentSpan"></span>4.<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/browse/searchSnack"><img class="snackIcon" src="<?php echo base_url('assets/images/snackIcon.png');?>?lastmod=20250806T1432">Search Snack</a></h3>
 
 <h2>II. INFORMATION DESK + ACCOUNTING UNIT</h2>
 <h3><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportPatientQueueAccounting"><img class="reportPatientQueueAccountingIcon" src="<?php echo base_url('assets/images/reportPatientQueueAccountingIcon.png');?>?lastmod=20250812T1054">View Report Patient Queue Accounting</a></h3>
 
 <h2><span id="summaryReportsHeaderId" class="moreTextSpanIIISummaryReportsHeader" onclick="toggleMore('summaryReportsHeaderId')">III. SUMMARY REPORTS FOR THE DAY</span></h2>
 <span id="summaryReportsId" class="moreTextSpanIIISummaryReports">
-<h3>1. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
+<h3><span class="indentSpan"></span>1. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">View All Summary Reports (Unified)</a></h3>
+<!--
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified">http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDayUnified</a>
-<h3>2. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
+-->
+<h3><span class="indentSpan"></span>2. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">View All Summary Reports (Time-based)</a></h3>
+<!--
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay">http://192.168.11.12/usbong_kms/index.php/report/viewAllSummaryReportsForTheDay</a>
+-->
 
 <!-- edited by Mike, 20250812; from 20210915 -->
-<h3>3. <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewSummaryReportForEndDay.php"><img class="reportSummaryEndDayIcon" src="<?php echo base_url('assets/images/reportSummaryEndDayIcon.png');?>?lastmod=20250812T1247">View Summary Report for End Day</a></h3>
+<h3><span class="indentSpan"></span>3. <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewSummaryReportForEndDay.php"><img class="reportSummaryEndDayIcon" src="<?php echo base_url('assets/images/reportSummaryEndDayIcon.png');?>?lastmod=20250812T1247">View Summary Report for End Day</a></h3>
 </span>
 
 <h2>IV. PAYSLIPS</h2>
 <h3><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Pedro"><img class="reportPatientQueueAccountingIcon" src="<?php echo base_url('assets/images/reportPayslipPedroIcon.png');?>?lastmod=20250812T1207">Payslip SYSON, PEDRO (MOSC)</a></h3>
 <h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Peter">Payslip SYSON, PETER</a>
+<span class="indentSpan"></span><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Peter">Payslip SYSON, PETER</a>
 </h3>
 <h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">Payslip REJUSO-MORALES, CHASTITY</a>
+<span class="indentSpan"></span><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">Payslip REJUSO-MORALES, CHASTITY</a>
 </h3>
 <h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Rodil">Payslip DELA PAZ, RODIL</a>
+<span class="indentSpan"></span><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Rodil">Payslip DELA PAZ, RODIL</a>
 </h3>
 <h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Honesto">Payslip LASAM, HONESTO</a>
+<span class="indentSpan"></span><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Honesto">Payslip LASAM, HONESTO</a>
 </h3>
 
 <!-- //removed by Mike, 20250812
@@ -483,32 +504,37 @@ Examples:<br/>
 <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel">http://192.168.11.12/usbong_kms/index.php/report/viewpayslipwebfor/Jhonsel</a><br/>
 -->
 
+<!-- //TODO: -reverify: this
+<h2><span id="summaryReportsHeaderVReportsId" class="moreTextSpanIIISummaryReportsHeader" onclick="toggleMore('summaryReportsHeaderVReportsId')">V. REPORTS</span></h2>
+<span id="summaryReportsVReportsId" class="moreTextSpanIIISummaryReports">
+-->
 <h2>V. REPORTS</h2>
+
 <h3>
-1. MEDICINE
+<span class="indentSpan"></span>1. MEDICINE
 </h3>
 <h3>
-a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicine"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedIcon.png');?>?lastmod=20250812T1520">VIEW REPORT MED</a><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicine"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedIcon.png');?>?lastmod=20250812T1520">VIEW REPORT MED</a><br/>
 </h3>
 <h3>
-b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineUnified">
+<span class="indentSpan"></span><span class="indentSpan"></span>b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineUnified">
 <img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedUnifiedIcon.png');?>?lastmod=20250812T1520">VIEW REPORT MED UNIFIED</a>
 </h3>
 <h3>
-2. MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)
+<span class="indentSpan"></span>2. MEDICINE (GLUCOSAMINE SULPHATE & CALCIUM + VITAMIN D)
 </h3>
 <h3>
-a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsterisk">
+<span class="indentSpan"></span><span class="indentSpan"></span>a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsterisk">
 <img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskIcon.png');?>?lastmod=20250812T1542">VIEW REPORT MED *</a>
 </h3>
 <h3>
-b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskUnifiedIcon.png');?>?lastmod=20250812T1542">VIEW REPORT MED * UNIFIED</a>
+<span class="indentSpan"></span><span class="indentSpan"></span>b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportMedicineAsteriskUnified"><img class="reportMedIcon" src="<?php echo base_url('assets/images/reportMedAsteriskUnifiedIcon.png');?>?lastmod=20250812T1542">VIEW REPORT MED * UNIFIED</a>
 </h3>
 <h3>
-3. NON-MEDICINE
+<span class="indentSpan"></span>3. NON-MEDICINE
 </h3>
 <h3>
-a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportNonMedicine">
+<span class="indentSpan"></span><span class="indentSpan"></span>a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportNonMedicine">
 <img class="reportMedIcon" src="<?php echo base_url('assets/images/reportNonMedIcon.png');?>?lastmod=20250812T1443">VIEW REPORT NON-MED</a>
 </h3>
 
@@ -517,44 +543,45 @@ b) <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/vie
 http://192.168.11.12/usbong_kms/index.php/report/viewReportNonMedicineUnified</a><br/>
 -->
 <h3>
-4. SNACK
+<span class="indentSpan"></span>4. SNACK
 </h3>
 <h3>
-a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportSnack">
+<span class="indentSpan"></span><span class="indentSpan"></span>a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportSnack">
 <img class="reportMedIcon" src="<?php echo base_url('assets/images/reportSnackIcon.png');?>?lastmod=20250814T1059">VIEW REPORT SNACK</a>
 </h3>
 </a>
 </h3>
 <h3>
-b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportSnackUnified">
+<span class="indentSpan"></span><span class="indentSpan"></span>b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportSnackUnified">
 <img class="reportMedIcon" src="<?php echo base_url('assets/images/reportSnackUnifiedIcon.png');?>?lastmod=20250814T1059">VIEW REPORT SNACK UNIFIED</a>
 </h3>
 
 <h3>
-5. X-RAY
+<span class="indentSpan"></span>5. X-RAY
 </h3>
 <h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportXray">
+<span class="indentSpan"></span><span class="indentSpan"></span><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportXray">
 <img class="reportXrayIcon" src="<?php echo base_url('assets/images/reportXrayIcon.png');?>?lastmod=20250813T1451">VIEW REPORT X-RAY</a>
 </h3>
 
 <h3>
-6. LAB
+<span class="indentSpan"></span>6. LAB
 </h3>
 <h3>
-<a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportLab"><img class="reportLabIcon" src="<?php echo base_url('assets/images/reportLabIcon.png');?>?lastmod=20250813T1542">VIEW REPORT LAB</a>
+<span class="indentSpan"></span><span class="indentSpan"></span><a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReportLab"><img class="reportLabIcon" src="<?php echo base_url('assets/images/reportLabIcon.png');?>?lastmod=20250813T1542">VIEW REPORT LAB</a>
 </h3>
+</span>
 
 <h2>VI. OFFICIAL RECEIPTS:</h2>
-<h3>1. MOSC</h3>
+<h3><span class="indentSpan"></span>1. MOSC</h3>
 <h3>
-a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReportForTheDay">
-<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportReceiptMOSCIcon.png');?>?lastmod=20250814T1145">VIEW REPORT FOR THE DAY</a>
+<span class="indentSpan"></span><span class="indentSpan"></span>a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReportForTheDay">
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportReceiptMOSCIcon.png');?>?lastmod=20250814T1145">VIEW MOSC REPORT FOR THE DAY</a>
 </h3>
 
 <h3>
-b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReport">
-<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportReceiptMOSCMonthIcon.png');?>?lastmod=20250814T1145">VIEW REPORT FOR PREVIOUS MONTH</a>
+<span class="indentSpan"></span><span class="indentSpan"></span>b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReport">
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportReceiptMOSCMonthIcon.png');?>?lastmod=20250814T1145">VIEW MOSC REPORT FOR PREVIOUS MONTH</a>
 </h3>
 <!-- TO-DO: -add: year -->
 <!--
@@ -569,12 +596,14 @@ http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReportFor/06</a><br/
 <br/>
 where "06" = "June 2020"<br/>
 -->
-<h3>2. PAS</h3>
-<h3>a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReportPASForTheDay">
-<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportReceiptPASIcon.png');?>?lastmod=20250814T1200">VIEW REPORT FOR THE DAY</a></h3>
+<h3><span class="indentSpan"></span>2. PAS</h3>
+<h3>
+<span class="indentSpan"></span><span class="indentSpan"></span>a. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReportPASForTheDay">
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportReceiptPASIcon.png');?>?lastmod=20250814T1200">VIEW PAS REPORT FOR THE DAY</a></h3>
 
-<h3>b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReportPAS">
-<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportReceiptPASMonthIcon.png');?>?lastmod=20250814T1200">VIEW REPORT FOR PREVIOUS MONTH</a></h3>
+<h3>
+<span class="indentSpan"></span><span class="indentSpan"></span>b. <a target="_blank" href="http://192.168.11.12/usbong_kms/index.php/report/viewReceiptReportPAS">
+<img class="reportMedIcon" src="<?php echo base_url('assets/images/reportReceiptPASMonthIcon.png');?>?lastmod=20250814T1200">VIEW PAS REPORT FOR PREVIOUS MONTH</a></h3>
 
 <!--
 <b>c. SET SPECIFIC MONTH</b><br/>
@@ -592,38 +621,38 @@ where "06" = "June 2020"<br/>
 <!-- added by Mike, 2021530 -->
 <h2>VII. PRICE LISTS:</h2>
 <h3>
-1. <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewXRayPriceList.php">
+<span class="indentSpan"></span>1. <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewXRayPriceList.php">
 <img class="priceListIcon" src="<?php echo base_url('assets/images/xrayIcon.png');?>?lastmod=20250814T1112">X-RAY UNIT PRICE LIST</a>
 </h3>
 <h3>
-2. <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewLabPriceList.php">
+<span class="indentSpan"></span>2. <a target="_blank" href="http://192.168.11.12/usbong_kms/server/viewLabPriceList.php">
 <img class="priceListIcon" src="<?php echo base_url('assets/images/labIcon.png');?>?lastmod=20250814T1113">LAB UNIT PRICE LIST</a>
 </h3>
 
 <h2>VIII. CONTACTS LIST:</h2>
-<b>1. MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
-TEL#1: 02-8-942-4011<br/>
-TEL#2: 02-8-941-4888<br/>
-TEL#3: 02-8-533-4651<br/>
+<span class="indentSpan"></span><b>1. MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-942-4011<br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#2: 02-8-941-4888<br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#3: 02-8-533-4651<br/>
 <br/>
-<b>2. ST. VINCENT GEN. HOSPITAL</b><br/>
-TEL#1: 02-8-359-3986<br/>
-TEL#2: 02-8-531-5080<br/>
+<span class="indentSpan"></span><b>2. ST. VINCENT GEN. HOSPITAL</b><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-359-3986<br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#2: 02-8-531-5080<br/>
 <br/>
-<b>3. MARIKINA VALLEY MEDICAL CENTER</b><br/>
-TEL#1: 02-8-682-2222<br/>
+<span class="indentSpan"></span><b>3. MARIKINA VALLEY MEDICAL CENTER</b><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-682-2222<br/>
 <br/>
-<b>4. METRO ANTIPOLO HOSPITAL AND MEDICAL CENTER</b><br/>
-TEL#1: 02-8-722-3208<br/>
+<span class="indentSpan"></span><b>4. METRO ANTIPOLO HOSPITAL AND MEDICAL CENTER</b><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-722-3208<br/>
 <br/>
-<b>5. 'AMANG' RODRIGUEZ MEMORIAL MEDICAL CENTER</b><br/>
-TEL#1: 02-8-948-0595<br/>
-TEL#2: 02-8-941-0342<br/>
+<span class="indentSpan"></span><b>5. 'AMANG' RODRIGUEZ MEMORIAL MEDICAL CENTER</b><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-948-0595<br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#2: 02-8-941-0342<br/>
 <br/>
-<b>6. STA. LUCIA HEALTH CARE CENTER</b><br/>
-TEL#1: 02-8-647-2545<br/>
+<span class="indentSpan"></span><b>6. STA. LUCIA HEALTH CARE CENTER</b><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-647-2545<br/>
 <br/>
-<b>7. I-SCAN DIAGNOSTIC CENTER (J.P. LAUREL, MARIKINA CITY BRANCH)</b><br/>
+<span class="indentSpan"></span><b>7. I-SCAN DIAGNOSTIC CENTER (J.P. LAUREL, MARIKINA CITY BRANCH)</b><br/>
 <!--
 7.1) Dimasalang Rd., Manila City Branch<br/> 
 TEL#1: (02)241-8888; 0917-1227226<br/>
@@ -632,14 +661,14 @@ TEL#2: (02)928-6197; (02)927-2659;0925-8647226<br/>
 7.3) MacArthur Highway, Valenzuela Branch<br/>
 TEL#3: (02)961-2371; 0925-5847226<br/>
 -->
-TEL#1: 02-8-584-6788<br/>
-MOBILE#1: 0998-952-7226<br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-584-6788<br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>MOBILE#1: 0998-952-7226<br/>
 <br/>
-<b>8. BARANGAY STO. NIÑO</b><br/>
-TEL#1: 02-8-534-9703<br/>
+<span class="indentSpan"></span><b>8. BARANGAY STO. NIÑO</b><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-534-9703<br/>
 <br/>
-<b>9. OFFICE OF PUBLIC SAFETY AND SECURITY (OPSS)-MARIKINA</b><br/>
-TEL#1: 02-8-655-3061<br/>
+<span class="indentSpan"></span><b>9. OFFICE OF PUBLIC SAFETY AND SECURITY (OPSS)-MARIKINA</b><br/>
+<span class="indentSpan"></span><span class="indentSpan"></span>TEL#1: 02-8-655-3061<br/>
 <br/>
 	<br />
 	<div>***NOTHING FOLLOWS***</div>
