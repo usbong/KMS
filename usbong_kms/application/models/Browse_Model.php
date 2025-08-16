@@ -1528,6 +1528,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->where('patient_id', $param['patientId']); //$param['patientIdParam']);
 		$this->db->where('item_id', 0);
 		
+		//added by Mike, 20250816
+		$this->db->not_like('notes',"ONLY");
+		
         $this->db->update('transaction', $data);
 	}	
 	
