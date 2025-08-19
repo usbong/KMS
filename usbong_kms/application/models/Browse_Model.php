@@ -1507,13 +1507,65 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	public function updateTransactionServicePurchaseIndexCardPage($param) 
 	{			
 		$iTransactionId = $param['transactionId'];
-
+		
 		//note identify the transactions to be updated;
 		//not only the combined transaction;
 		//$param['transactionDate'];
 		//$param['patientIdParam']
 		//$param['professionalFee'];
 
+
+		//added by Mike, 20250819
+		//$data['transactionDate'] = str_replace("DEL","",$data['transactionDate']);
+
+		//---------------------------------------		
+		$this->db->select('notes');
+		$this->db->where('transaction_id',$iTransactionId);
+		$query = $this->db->get('transaction');
+		$row = $query->row();
+
+		if ($row != null) {	
+			//echo ">>>>".$row->notes;
+			//echo ">>>>".$param['bIsPrivate'];
+			
+			if (((int)$param['iIsPrivate'])==0) {
+				$param['updatedNotes'] = trim(str_replace("PRIVATE;","",$row->notes));
+				//$sOffset="";
+				
+				if (strpos($row->notes, "SC;")!==false) {
+					$param['updatedNotes'] = trim(str_replace(" PAID","PAID",$param['updatedNotes']));
+				}
+				else if (strpos($row->notes, "PWD;")!==false) {
+					$param['updatedNotes'] = trim(str_replace(" PAID","PAID",$param['updatedNotes']));
+				}
+				else {
+					//if has space
+					$param['updatedNotes'] = trim(str_replace(" PAID","NONE; PAID",$param['updatedNotes']));
+					$param['updatedNotes'] = trim(str_replace("PAID","NONE; PAID",$param['updatedNotes']));
+				}
+				
+				//$param['updatedNotes'] = trim(str_replace($sOffset+"PAID","NONE; PAID",$param['updatedNotes']));
+			}
+			else {
+				$param['updatedNotes'] = trim(str_replace("NONE;","",$row->notes));
+				//$sOffset="";
+				
+				//echo ">>>>>".$sOffset;
+				
+				if (strpos($row->notes, "SC;")!==false) {
+					//$sOffset=" ";
+					//$param['updatedNotes'] = trim(str_replace(" PAID","PRIVATE; PAID",$param['updatedNotes']));
+				}
+				else if (strpos($row->notes, "PWD;")!==false) {
+					//$sOffset=" ";
+					//$param['updatedNotes'] = trim(str_replace(" PAID","PRIVATE; PAID",$param['updatedNotes']));
+				}
+				//else {
+					$param['updatedNotes'] = str_replace("PAID","PRIVATE; PAID",$param['updatedNotes']);
+				//}
+			}
+		}
+		//---------------------------------------
 		
 		//TODO: -update: this;
 
@@ -1521,6 +1573,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 					'fee' => $param['professionalFee'],
 					'x_ray_fee' => $param['xRayFee'],
 					'lab_fee' => $param['labFee'],
+					'notes' => $param['updatedNotes']
 				);
 
 		//$this->db->where('transaction_id', $iTransactionId);
