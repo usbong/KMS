@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250628; from 20250627
+  @date updated: 20250819; from 20250628
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -352,24 +352,16 @@
 							float: left;
 						}
 
-						/* added by Mike, 20210210 */
-						input[type=checkbox]
-						{
-						  /* Double-sized Checkboxes */
-						  -ms-transform: scale(1.7); /* IE */
-						  -moz-transform: scale(1.7); /* FF */
-						  -webkit-transform: scale(1.7); /* Safari and Chrome */
-						  -o-transform: scale(1.7); /* Opera */
-						  transform: scale(1.7);
-						  padding: 10px;
-						}						
+						input[type="checkbox"] {
+							transform: scale(1.0);
+							margin-left: 1.0em;					
+						}		
 
-						/* added by Mike, 20210210 */
-						input[type=checkbox]:focus-within
-						{
-							outline :2px solid #0011f1; //blue
-						}
-
+						input[type="radio"] {
+							transform: scale(1.0);
+							margin-left: 1.0em;					
+						}		
+						
 						input.inputAgeTextBox { 
 							background-color: #fCfCfC;
 							color: #68502b;
@@ -463,7 +455,7 @@
 							border: 0px solid #333333;
 							font-size: 20px;
 							padding: 0;
-						}						
+						}				
 						
 <!-- added by Mike, 20210210 -->
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
@@ -589,11 +581,23 @@
 			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
 		}	
 		
-		//added by Mike, 20250404
+		//added by Mike, 20250819; from 20250404
 		function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId) {				
+		//function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId,bIsPrivate) {
 			var professionalFee = document.getElementById("professionalFeeParam").value;			
 			var xRayFee = document.getElementById("xRayFeeParam").value;			
 			var labFee = document.getElementById("labFeeParam").value;		
+			
+			//added by Mike, 20250819
+			var bIsPrivate = document.getElementById("privCheckBoxParam").checked;		
+/*			
+			alert(bIsPrivate);			
+			return;
+*/			
+			var iIsPrivate=0;
+			if (bIsPrivate) {
+				iIsPrivate=1;
+			}
 
 			//added by Mike, 20200523
 //			alert(medicalDoctorId);
@@ -606,8 +610,13 @@
 			//window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
 			
 			//	public function updateTransactionServicePurchaseIndexCardPage($medicalDoctorId, $patientId, $transactionId, $professionalFee, $xRayFee, $labFee)
-				
-			window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"');?>";
+			
+			//edited by Mike, 20250819			
+			//window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"');?>";
+
+			//alert(notes);
+			
+			window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+iIsPrivate+"');?>";
 		}	
 		
 		//added by Mike, 20250414
@@ -1780,6 +1789,11 @@
 					</td>
 					<td class ="columnTableHeader">				
 						<?php
+							echo "PRIV";
+						?>
+					</td>
+					<td class ="columnTableHeader">				
+						<?php
 							echo "PF";
 						?>
 					</td>
@@ -1855,7 +1869,35 @@
 			?>		
 							</div>								
 						</a>				
-					</td>							
+					</td>		
+					<td class ="columnName">
+						<?php 
+							if ($bIsEditable) {
+								if (strpos($value['notes'],"PRIVATE")!==false) {
+						?>
+									<input type="checkbox" id="privCheckBoxParam" checked>
+						<?php
+								}
+								else {
+						?>
+									<input type="checkbox" id="privCheckBoxParam">
+						<?php
+								}
+							}
+							else {
+								if (strpos($value['notes'],"PRIVATE")!==false) {
+						?>
+									<input type="radio" id="privCheckBoxParam" onclick="return false;" checked>
+						<?php
+								}
+								else {
+						?>
+									<input type="radio" id="privCheckBoxParam" onclick="return false;">
+						<?php
+								}
+							}
+						?>
+					</td>
 					<td class ="columnNumber">				
 						<?php
 							//edited by Mike, 20250401
@@ -1948,10 +1990,19 @@
 								if (strpos($value['notes'],"ONLY")==false) {
 */
 							if ($bIsEditable) {							
-									
-							//TODO: -update: this;
+//echo $value['notes'];
+
+							  $bIsPrivate=0;
+							  if (strpos($value['notes'],"PRIVATE")!==false) {						
+								$bIsPrivate=1;
+							  }
 						?>
-						<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'];?>)">💾</button>
+						
+<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'];?>)">💾</button>
+
+<!--
+						<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'].','.$bIsPrivate;?>)">💾</button>
+-->						
 						<?php
 							}
 						?>
