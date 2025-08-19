@@ -5459,8 +5459,9 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 */		
 	}
 	
-	//added by Mike, 20250404
-	public function updateTransactionServicePurchaseIndexCardPage($medicalDoctorId, $patientId, $transactionId, $professionalFee, $xRayFee, $labFee)
+	//edited by Mike, 20250819; from 20250404
+	//public function updateTransactionServicePurchaseIndexCardPage($medicalDoctorId, $patientId, $transactionId, $professionalFee, $xRayFee, $labFee)
+	public function updateTransactionServicePurchaseIndexCardPage($medicalDoctorId, $patientId, $transactionId, $professionalFee, $xRayFee, $labFee, $iIsPrivate)
 	{
 		$data['medicalDoctorId'] = $medicalDoctorId;
 		$data['patientId'] = $patientId;
@@ -5470,6 +5471,8 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 		$data['xRayFee'] = $xRayFee;
 		$data['labFee'] = $labFee;
 
+		$data['iIsPrivate'] = $iIsPrivate;
+		
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 		
