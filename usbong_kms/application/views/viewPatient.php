@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250718; from 20250702
+' @date updated: 20250820; from 20250718
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -818,8 +818,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				
 			</td>			
 <?php 
-//added by Mike, 20240307
-if (strpos($result[0]['patient_name'],"NONE")!==false) {
+
+//ECHO ">>>>".$result[0]['patient_name'];
+
+//edited by Mike, 20250820; from 20240307
+//if (strpos($result[0]['patient_name'],"NONE")!==false) {
+//if patient name uses "NONE", example "SANONE"
+//get last name
+$patientLastNameTemp=explode(",",$result[0]['patient_name']);
+
+if (((strpos(strtoupper($result[0]['patient_name']),"NONE")!==false) 
+	and (strlen($patientLastNameTemp[0])==strlen("NONE")))
+	or (strpos(strtoupper($result[0]['patient_name']),"WALA")!==false)) {
+
 ?>
 <td class="columnTableHeaderIndexCard">
 	NO AVAILABLE INDEX CARD

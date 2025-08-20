@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250819; from 20250628
+  @date updated: 20250820; from 20250819
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -204,6 +204,15 @@
 							padding-left: 2em;
 						}						
 
+						td.columnTableHeaderClassification
+						{
+							font-weight: bold;
+							background-color: #00ff00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 15%;
+						}								
+
 						td.columnNumberQuantityTotal
 						{
 							border: 1px dotted #ab9c7d;		
@@ -214,7 +223,13 @@
 						td.columnNotes
 						{
 							border: 1px dotted #ab9c7d;		
-							text-align: left
+							text-align: center;
+						}
+						
+						td.columnClassification
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;	
 						}
 
 						td.columnFieldNameAge
@@ -412,6 +427,17 @@
 						{
 							border: 2px solid #00ddaa; /*river sea blue green;*/
 						}
+						
+						.Classification-select { 
+							background-color: #fCfCfC;
+							color: #68502b;
+							padding: 12px;
+							font-size: 16px;
+							border: 1px solid #68502b;
+							width: 100%;
+							border-radius: 3px;	    	    
+							float: left;
+						}
 
 						button.saveButton {
 							background-color: #ffffff;
@@ -589,7 +615,24 @@
 			var labFee = document.getElementById("labFeeParam").value;		
 			
 			//added by Mike, 20250819
-			var bIsPrivate = document.getElementById("privCheckBoxParam").checked;		
+			var bIsPrivate = document.getElementById("privCheckBoxParam").checked;	
+
+			//added by Mike, 20250820
+			var iClassParam = document.getElementById("classificationParam").selectedIndex;
+
+			//alert(iClassParam);
+			
+			var sClass = "WI";
+			
+			if (iClassParam===1) {
+				sClass = "SC";
+			}
+			else if (iClassParam===2) {
+				sClass = "PWD";
+			}
+			
+			//alert(sClass);
+			
 /*			
 			alert(bIsPrivate);			
 			return;
@@ -615,8 +658,11 @@
 			//window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"');?>";
 
 			//alert(notes);
+			//edited by Mike, 20250820
+			//window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+iIsPrivate+"');?>";
+
+			window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+iIsPrivate+"/"+sClass+"');?>";
 			
-			window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+iIsPrivate+"');?>";
 		}	
 		
 		//added by Mike, 20250414
@@ -1807,12 +1853,18 @@
 							echo "LAB";
 						?>
 					</td>
+					<td class ="columnTableHeaderClassification">				
+						<?php
+							echo "CLASS";//"CLASSIFI-<br/>CATION";
+						?>
+					</td>
+
 					<!-- added by Mike, 20250401 -->
 					<td>				
 					</td>
 					<td class ="columnTableHeaderNotes">				
 						<?php
-							echo "CLASSIFICATION<br/>& NOTES";
+							echo "NOTES";
 						?>
 					</td>
 
@@ -1980,6 +2032,61 @@
 							}
 ?>									
 					</td>
+					<td class="columnClassification">
+					<?php
+						if ($bIsEditable) {		
+					?>
+							<select id="classificationParam" class="Classification-select">
+<?php
+							  if (isset($value["notes"])) {
+								  if (strpos($value['notes'],"DISCOUNTED")!==false) {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1'>SC</option>";
+									echo "<option value='2'>PWD</option>";
+								  }
+								  else if (strpos($value["notes"],"SC")!==false) {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1' selected='selected'>SC</option>";
+									echo "<option value='2'>PWD</option>";
+								  }
+								  else if (strpos($value["notes"],"PWD")!==false) {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1'>SC</option>";
+									echo "<option value='2' selected='selected'>PWD</option>";
+								  }
+								  else {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1'>SC</option>";
+									echo "<option value='2'>PWD</option>";
+								  }
+							  }			  	  
+							  else {
+									echo "<option value='0'>WI</option>";
+									echo "<option value='1'>SC</option>";
+									echo "<option value='2'>PWD</option>";
+							  }				
+?>
+							</select>		
+<?php
+						}
+						else {
+							 if (isset($value["notes"])) {
+								  /*if (strpos($value['notes'],"DISCOUNTED")!==false) {
+								  }
+								  else*/ if (strpos($value["notes"],"SC;")!==false) {
+									  echo "SC";
+								  }
+								  else if (strpos($value["notes"],"PWD;")!==false) {
+									  echo "PWD";
+								  }
+								  else {
+									  echo "WI";
+								  }
+							 }
+						}
+?>							
+					</td>
+						
 					<!-- added by Mike, 20250401 -->
 					<td>			
 						<?php //if (date("m-d-Y",strtotime($value['transaction_date']))
@@ -2016,7 +2123,21 @@
 								echo "NONE";
 							}
 							else {
-								echo $value['notes'];
+								//edited by Mike, 20250820
+								//echo $value['notes'];
+								$updatedNotesOutput=$value['notes'];
+								
+								$updatedNotesOutput=str_replace("PWD;","",$updatedNotesOutput);
+
+								$updatedNotesOutput=str_replace("SC;","",$updatedNotesOutput);
+								
+								$updatedNotesOutput=str_replace("NONE;","",$updatedNotesOutput);
+								
+								$updatedNotesOutput=str_replace("PRIVATE;","",$updatedNotesOutput);
+
+								$updatedNotesOutput=str_replace("PAID;","",$updatedNotesOutput);
+								
+								echo $updatedNotesOutput;
 							}
 						?>
 					</td>
