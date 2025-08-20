@@ -239,9 +239,20 @@ class Browse_Model extends CI_Model
 		//TO-DO: update: due to patient name has keywords "NONE" and/or "WALA"
 		//reminder: we use "NONE, WALA" for transactions
 		//whose patient_id is not certain
+		//edited by Mike, 20250820
+/*
 		if ((strpos(strtoupper($param['nameParam']),"NONE")!==false)
 			or (strpos(strtoupper($param['nameParam']),"WALA")!==false)) {
-								
+*/
+
+		//if patient name uses "NONE", example "SANONE"
+		//get last name
+		$patientLastNameTemp=explode(",",$param['nameParam']);
+
+		if (((strpos(strtoupper($param['nameParam']),"NONE")!==false) 
+			and (strlen($patientLastNameTemp[0])==strlen("NONE")))
+			or (strpos(strtoupper($param['nameParam']),"WALA")!==false)) {
+
 			//added by Mike, 20210723; edited by Mike, 20211205
 			//execute even if no patient transaction in transactions table yet
 			//objective: speed-up system
@@ -1543,31 +1554,32 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 					$param['updatedNotes'] = trim(str_replace(" PAID","NONE; PAID",$param['updatedNotes']));
 					$param['updatedNotes'] = trim(str_replace("PAID","NONE; PAID",$param['updatedNotes']));
 				}
-				
-				//$param['updatedNotes'] = trim(str_replace($sOffset+"PAID","NONE; PAID",$param['updatedNotes']));
 			}
 			else {
 				$param['updatedNotes'] = trim(str_replace("NONE;","",$row->notes));
-				//$sOffset="";
-				
-				//echo ">>>>>".$sOffset;
 				
 				if (strpos($row->notes, "SC;")!==false) {
-					//$sOffset=" ";
-					//$param['updatedNotes'] = trim(str_replace(" PAID","PRIVATE; PAID",$param['updatedNotes']));
 				}
 				else if (strpos($row->notes, "PWD;")!==false) {
-					//$sOffset=" ";
-					//$param['updatedNotes'] = trim(str_replace(" PAID","PRIVATE; PAID",$param['updatedNotes']));
 				}
-				//else {
-					$param['updatedNotes'] = str_replace("PAID","PRIVATE; PAID",$param['updatedNotes']);
-				//}
+				$param['updatedNotes'] = str_replace("PAID","PRIVATE; PAID",$param['updatedNotes']);
 			}
 		}
 		//---------------------------------------
-		
-		//TODO: -update: this;
+		$param['updatedNotes'] = trim(str_replace("NONE;","",$param['updatedNotes']));
+		$param['updatedNotes'] = trim(str_replace("SC;","",$param['updatedNotes']));
+		$param['updatedNotes'] = trim(str_replace("PWD;","",$param['updatedNotes']));
+
+		if (strpos($param['sClass'], "SC")!==false) {
+			$param['updatedNotes'] = trim(str_replace("PAID","SC; PAID",$param['updatedNotes']));
+		}
+		else if (strpos($param['sClass'], "PWD")!==false) {
+			$param['updatedNotes'] = trim(str_replace("PAID","PWD; PAID",$param['updatedNotes']));
+		}
+		else if (strpos($param['sClass'], "WI")!==false) {
+			$param['updatedNotes'] = trim(str_replace("PAID","NONE; PAID",$param['updatedNotes']));
+		}
+		//---------------------------------------
 
 		$data = array(
 					'fee' => $param['professionalFee'],
