@@ -4888,11 +4888,22 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		//echo ">>>>".$param['isReturnedItemCheckBoxParam'];
 		
-		//echo ">>>>>>>>>>>>>".$param['priceParam']."<br/><br/>";
+		//echo ">>>>>>>>>>>>>nameParam: ".$param['nameParam']."<br/><br/>";
+		//echo ">>>>>>>>>>>>>priceParam: ".$param['priceParam']."<br/><br/>";
 		
 		//verify if item name already exists
 		$this->db->select('item_name, item_id');
+		//edited by Mike, 20250821
 		$this->db->where('item_name', $param['nameParam']);
+		
+		//TODO: -solve; item names in DB with excess space inside
+		//result: item not found even if exactly the same
+		//example:
+		//PRIME TALL SPINAL SUPPORT THORACOLUMBAR (SGXHBS007L) -LARGE UPDATED
+		//PRIME TALL SPINAL SUPPORT THORACOLUMBAR  (SGXHBS007L) -LARGE UPDATED
+
+		$this->db->where('is_hidden', 0);
+
 		$this->db->where('item_price', $param['priceParam']);
 
 		$query = $this->db->get('item');	
