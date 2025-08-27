@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250722; 20250721
+' @date updated: 20250827; 20250722
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -570,7 +570,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 				}
 				else {
-					alert("HALLO!");
+					//alert("HALLO!");
 					
 					//add VAT
 					numericalFee = eval(fee);
