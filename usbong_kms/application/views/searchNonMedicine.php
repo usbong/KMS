@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250724; from 20250627
+' @date updated: 20250828; from 20250824
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -63,14 +63,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 						}
 						
+						h2 {
+							font-size: 18pt;
+						}
+						
 						div.copyright
 						{
 							text-align: center;
+							
+							margin-top: 2em;
 						}
 						
 						div.itemName
 						{
 							text-align: left;
+							font-size: 13pt;
+						}
+
+						div.expirationDate, div.itemPrice
+						{
+							text-align: center;
+							font-size: 13pt;
 						}
 
 						div.tableHeader
@@ -125,18 +138,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						div.quantityInStockDiv
 						{
-							text-align: center;							
+							text-align: center;		
+							font-size: 13pt;
 						}
 						
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
+							max-width: 350px;
 														
 							resize: none;
 
 							height: 100%;
+
+							transform: scale(1.5);
+							transform-origin: 0 0;		
 						}	
+						
+						button.Button-login
+						{
+							transform: scale(1.5);
+							transform-origin: 0 0;		
+						}
 
 						img.Image-companyLogo {
 							max-width: 60%;
@@ -173,6 +196,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
 							width: 46%;
+							
+							transform: scale(1.2);
+							transform-origin: 0 0;		
 						}	
 						
 						td.tableHeaderAddNewNonMedItemTd {
@@ -241,18 +267,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}		
 
 /*
-						.Price-textbox { 
-							background-color: #fCfCfC;
-							color: #68502b;
-							padding: 10px;
-							font-size: 16px;
-							border: 1px solid #68502b;
-							border-radius: 3px;	    	    
-							width: 72%;
-
-							float: left;
+						.item-input, .Price-textbox, .Quantity-textbox { 
+							transform: scale(1.5);
+							transform-origin: 0 0;		
 						}
-*/						
+*/
 						.Button-delete {
 							background-color: #E9E9E9;
 							color: #000000;
@@ -987,7 +1006,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class =column>				
-								<div id=expirationId<?php echo $iCount?>>
+								<div id="expirationId<?php echo $iCount?>" class="expirationDate">
 							<?php
 								//echo ">>>>".$value['expiration_date'];
 							
@@ -1008,7 +1027,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
+								<div id="itemPriceId<?php echo $iCount?>" class="itemPrice">
 							<?php
 								echo $value['item_price'];
 							?>
