@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250828; from 20250824
+' @date updated: 20250829; from 20250828
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. 
 								width: 670px
@@ -64,7 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 						
 						h2 {
-							font-size: 18pt;
+							font-size: 20pt;
 						}
 						
 						div.copyright
@@ -90,8 +90,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
 						div.tableHeaderAddNewNonMedItem
@@ -145,20 +145,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 350px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
-
-							transform: scale(1.5);
-							transform-origin: 0 0;		
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
 						
 						button.Button-login
 						{
-							transform: scale(1.5);
-							transform-origin: 0 0;		
+							font-size: 16pt;
 						}
 
 						img.Image-companyLogo {
@@ -196,7 +193,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
 							width: 46%;
-							
+/*														
+							font-size: 14pt;
+*/							
 							transform: scale(1.2);
 							transform-origin: 0 0;		
 						}	
@@ -238,19 +237,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
+							background-color: #00dd00; <!--#93d151; lime green-->
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+							
+							font-size: 14pt;
+							padding: 0.2em;
 						}						
 
 						td.columnTableHeaderItemName
 						{
 							font-weight: bold;
-							background-color: #00ff00;
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 80%;
+							
+							font-size: 14pt;
+							padding: 0.2em;
 						}						
 												
 						td.imageColumn
@@ -278,6 +283,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/*font-weight: bold;*/
 							border: 1px dotted #333333;
 							/*border-radius: 3px;*/
+							
+							font-size: 12pt;
+							padding: 0.2em;
 						}						
 
 						.Button-delete:hover {
@@ -312,7 +320,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							float: right;
 						}
-						
     /**/
     </style>
     <title>
@@ -582,22 +589,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
 -->
 
-		<div>
-			<table width="100%">
-<!--
-			  <tr>
-				<td>
-				  <b><span>Pangalan</span></b>
-				</td>
-			  </tr>
--->
-			  <tr>
-				<td>				
-				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
-				</td>
-			  </tr>
-			</table>
-		</div>
+	    <input type="text" class="browse-input" placeholder="" name="nameParam" required>
 		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
