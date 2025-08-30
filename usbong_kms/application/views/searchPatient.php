@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
                             font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 							width: 780px;							
                         }
 						
@@ -48,54 +48,78 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								padding: 2pt;
 								display: inline-block;
 						}
+
+						h2 {
+							font-size: 20pt;
+						}
 						
 						div.copyright
 						{
 							text-align: center;
+							margin-top: 2em;
 						}
 						
 						div.patientName
 						{
 							text-align: left;
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}						
 
 						div.medicalDoctorName
 						{
 							text-align: left;
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}						
 						
 						div.tableHeader
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
 						div.tableHeaderAddNewPatient
 						{
+							font-size: 12pt;
 							font-weight: bold;
 							text-align: center;
 							background-color: #ff8000;
 							border: 1pt solid #ff8000;
+
 							padding-bottom: 0.2em;
 							padding-top: 0.2em;
 						}						
 
 						div.transactionDateDiv
 						{
+							font-size: 13pt;
 							text-align: center;
 						}
 						
+						div.quantityInStockDiv
+						{
+							text-align: center;		
+							font-size: 13pt;
+						}
+
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
+
+						button.Button-login
+						{
+							font-size: 16pt;
+						}
 
 						img.Image-companyLogo {
 							max-width: 60%;
@@ -123,6 +147,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
+							width: 30%;
+							
+							transform: scale(1.2);
+							transform-origin: 0 0;		
 						}						
 						
 						table.search-result
@@ -142,7 +170,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: right
-						}						
+						}	
+
+						td.columnTableHeader
+						{
+							font-weight: bold;
+							background-color: #00dd00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							
+							padding-left: 0.5em;
+							padding-right: 0.5em;
+						}							
 						
 						td.imageColumn
 						{
@@ -186,7 +225,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 0px solid #333333;
 							font-size: 20px;
 							padding: 0;
-						}							
+						}		
+
+						button.addNewPatientButton 
+						{
+							float: right;
+						}
+						
+						input.patient-input {
+							width: 90%;
+						}
 
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
 	last accessed: 20200321
@@ -401,7 +449,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
 			Enter
@@ -442,26 +489,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//add: table headers
 ?>
 				<tr class="row">
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="columnTableHeader">				
 				<?php
 								echo "PATIENT NAME";
 				?>		
-								</div>								
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="columnTableHeader">				
 							<?php
 								echo "DATE";
 							?>
-								</div>
 						</td>
-						<td class ="column">				
-								<div class="tableHeader">
+						<td class ="columnTableHeader">				
 							<?php
 									echo "MEDICAL DOCTOR";
 							?>
-								</div>
 						</td>			
 						<td>
 						</td>
@@ -676,7 +717,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>	
 			<br />
 			<!-- Buttons -->
-			<button type="submit" class="Button-login">
+			<button type="submit" class="addNewPatientButton">
 				Submit
 			</button>
 		</form>

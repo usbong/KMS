@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250716; from 20250715
+' @date updated: 20250830; from 20250716
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							width: 780px
@@ -54,19 +54,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						div.copyright
 						{
 							text-align: center;
+							margin-top: 2em;
 						}
 						
 						div.itemName
 						{
 							text-align: left;
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}
+
+						div.expirationDate, div.itemPrice
+						{
+							text-align: center;
+							font-size: 13pt;
+						}							
 
 						div.tableHeader
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
 						div.tableHeaderAddNewNonMedItem
@@ -81,19 +90,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						div.quantityInStockDiv
 						{
-							text-align: center;							
+							text-align: center;		
+							font-size: 13pt;
 						}
-						
+
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
 
+						button.Button-login
+						{
+							font-size: 16pt;
+						}
+						
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -116,12 +132,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							vertical-align: middle;
 						}
 						
-						table.addNonMedItemTable
+						table.addSnackItemTable
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
 							width: 25%;
-						}							
+
+							transform: scale(1.2);
+							transform-origin: 0 0;		
+						}		
+
 						
 						table.search-result
 						{
@@ -145,10 +165,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+							
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}						
 												
 						td.imageColumn
@@ -166,7 +189,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						td.addSnackTableInputColumn
 						{
-							padding-left: 0.6em;
+							padding-left: 0.5em;
 						}
 						
 						.Button-delete {
@@ -175,6 +198,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/*font-weight: bold;*/
 							border: 1px dotted #333333;
 							/*border-radius: 3px;*/
+							
+							font-size: 12pt;
+							padding: 0.2em;									
 						}						
 
 						.Button-delete:hover {
@@ -203,7 +229,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 0px solid #333333;
 							font-size: 20px;
 							padding: 0;
-						}								
+						}		
+
+						button.addNewSnackButton 
+						{
+							float: right;
+						}						
+						
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */	
     /**/
     </style>
     <title>
@@ -423,7 +459,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
 			Enter
@@ -571,7 +606,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class="column">				
-								<div id="expirationId<?php echo $iCount?>">
+								<div id="expirationId<?php echo $iCount?>" class="expirationDate">
 							<?php
 								//echo $value['expiration_date']."<BR/>";
 								//if ($value['expiration_date']==0) {
@@ -591,7 +626,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="itemPriceId<?php echo $iCount?>">
+								<div id="itemPriceId<?php echo $iCount?>" class="itemPrice">
 							<?php
 								echo $value['item_price'];
 							?>
@@ -649,7 +684,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	
-	<table class="addNonMedItemTable">
+	<table class="addSnackItemTable">
 	<tr>
 		<td>
 			<div class="tableHeaderAddNewNonMedItem">
@@ -741,7 +776,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>				
 			<br />
 			<!-- Buttons -->
-			<button type="submit" class="Button-login">
+			<button type="submit" class="addNewSnackButton">
 				Submit
 			</button>
 		</form>

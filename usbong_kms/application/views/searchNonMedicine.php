@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250829; from 20250828
+' @date updated: 20250830; from 20250829
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -70,17 +70,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						div.copyright
 						{
 							text-align: center;
-							
 							margin-top: 2em;
 						}
 						
 						div.itemName
 						{
 							text-align: left;
-							font-size: 13pt;
+							font-size: 12pt;
+
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}
 
-						div.expirationDate, div.itemPrice
+						div.expirationDate
+						{
+							text-align: center;
+							font-size: 12pt;
+						}
+
+						div.itemPrice
 						{
 							text-align: center;
 							font-size: 13pt;
@@ -241,9 +249,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--							border: 1pt solid #00ff00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							
-							font-size: 14pt;
-							padding: 0.2em;
+
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}						
 
 						td.columnTableHeaderItemName
@@ -253,9 +261,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 80%;
-							
+/*							
 							font-size: 14pt;
 							padding: 0.2em;
+*/							
 						}						
 												
 						td.imageColumn
@@ -271,12 +280,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right;
 						}		
 
-/*
-						.item-input, .Price-textbox, .Quantity-textbox { 
-							transform: scale(1.5);
-							transform-origin: 0 0;		
-						}
-*/
 						.Button-delete {
 							background-color: #E9E9E9;
 							color: #000000;
@@ -320,6 +323,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							float: right;
 						}
+						
+<!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
+	last accessed: 20200321
+	answer by: Rich Bradshaw on 20110903T0759
+	edited by: Peter Mortensen on 20190511T2239
+-->
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */			
     /**/
     </style>
     <title>
@@ -582,13 +595,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 	<!-- Form -->
 	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmNonMedicine')?>">
-		<?php
-			$itemCounter = 1;
-		?>
-<!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
-		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
--->
-
 	    <input type="text" class="browse-input" placeholder="" name="nameParam" required>
 		<br />
 		<!-- Buttons -->

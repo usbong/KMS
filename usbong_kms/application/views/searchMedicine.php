@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. 
 								width: 670px
@@ -69,23 +69,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 2pt;
 							display: inline-block;
 						}
+
+						h2 {
+							font-size: 20pt;
+						}
 						
 						div.copyright
 						{
 							text-align: center;
+							margin-top: 2em;
 						}
 						
 						div.itemName
 						{
 							text-align: left;
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}
+						
+						div.expirationDate, div.itemPrice
+						{
+							text-align: center;
+							font-size: 13pt;
+						}						
 
 						div.tableHeader
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 						
 						div.tableHeaderAddNewMedItem
@@ -96,27 +109,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #ff8000; 
 							padding: 0.2em;							
 						}	
-
+						
 						div.quantityInStockDiv
 						{
-							text-align: center;							
+							text-align: center;		
+							font-size: 13pt;
 						}
-						
+
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
-/*						
-						input.item-input 
+
+						button.Button-login
 						{
-							width: 100%;
+							font-size: 16pt;
 						}
-*/
+						
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -152,6 +167,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
 							width: 46%;
+							
+							transform: scale(1.2);
+							transform-origin: 0 0;		
 						}	
 						
 						td.tableHeaderAddNewMedItemTd {
@@ -202,15 +220,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00;
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+							
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}						
 /*						
 						td.columnTableHeaderName
 						{
 							font-weight: bold;
-							background-color: #00ff00;
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 60%;
@@ -235,6 +256,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/*font-weight: bold;*/
 							border: 1px dotted #333333;
 							/*border-radius: 3px;*/
+							
+							font-size: 12pt;
+							padding: 0.2em;							
 						}						
 
 						.Button-delete:hover {
@@ -301,6 +325,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							float: right;
 						}
+						
+<!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
+	last accessed: 20200321
+	answer by: Rich Bradshaw on 20110903T0759
+	edited by: Peter Mortensen on 20190511T2239
+-->
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */							
     /**/
     </style>
     <title>
@@ -565,29 +599,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 	<!-- Form -->
 	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmMedicine')?>">
-		<?php
-			$itemCounter = 1;
-		?>
-<!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
-		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
--->
-
-		<div>
-			<table width="100%">
-<!--
-			  <tr>
-				<td>
-				  <b><span>Pangalan</span></b>
-				</td>
-			  </tr>
--->
-			  <tr>
-				<td>				
-				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
-				</td>
-			  </tr>
-			</table>
-		</div>
+		<input type="text" class="browse-input" placeholder="" name="nameParam" required>
 		<br />
 		<!-- Buttons -->
 		<button type="submit" class="Button-login">
@@ -950,7 +962,7 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
 						</td>						
 						<td class="column">				
-								<div class="quantityInStockDiv" id=quantityInStockId<?php echo $iCount?>>
+								<div class="quantityInStockDiv" id="quantityInStockId<?php echo $iCount?>">
 							<?php
 								//echo $value['quantity_in_stock'];
 
@@ -1001,7 +1013,7 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 								</div>
 						</td>
 						<td class ="column">				
-								<div id="expirationId<?php echo $iCount?>">
+								<div id="expirationId<?php echo $iCount?>" class="expirationDate">
 							<?php
 								//edited by Mike, 20250424
 								if (strpos(strtoupper($value['item_name']),"*")!==false) {
@@ -1036,8 +1048,8 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 							?>
 								</div>
 						</td>
-						<td class =column>				
-								<div id=itemPriceId<?php echo $iCount?>>
+						<td class ="column">			
+								<div id="itemPriceId<?php echo $iCount?>" class="itemPrice">
 							<?php
 								echo $value['item_price'];
 							?>
