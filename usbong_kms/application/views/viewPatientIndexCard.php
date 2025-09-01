@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250820; from 20250819
+  @date updated: 20250901; from 20250820
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -98,21 +98,27 @@
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
+
+						button.Button-search
+						{
+							font-size: 16pt;
+						}
 
 						span.spanAgeFieldName
 						{
-							background-color: #00ff00; <!--#93d151; lime green-->
+							background-color: #00dd00; <!--#93d151; lime green-->
 						}
 
 						span.spanSexFieldName
 						{
-							background-color: #00ff00; <!--#93d151; lime green-->
+							background-color: #00dd00; <!--#93d151; lime green-->
 						}								
 
 						span.spanTotalFeeGold
@@ -132,13 +138,13 @@
 
 						tr.rowEvenNumber {
 							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
-							border: 1pt solid #00ff00;		
+							border: 1pt solid #00dd00;		
 						}
 						
 						td.tableHeaderColumn
 						{
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 							text-align: left;
 							font-weight: bold;							
 							width: 16%; <!-- 17%; --> <!-- 84% -->
@@ -207,7 +213,7 @@
 						td.columnTableHeaderClassification
 						{
 							font-weight: bold;
-							background-color: #00ff00;
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 15%;
@@ -242,7 +248,7 @@
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; 
+							background-color: #00dd00; 
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}		
@@ -272,8 +278,8 @@
 						td.columnTableHeaderNotes
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 26%;
@@ -289,8 +295,8 @@
 						td.columnTableHeaderDate
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;
 							padding-left: 0px;
 							text-align: center;
@@ -809,9 +815,8 @@
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-search">
 			Enter
 		</button>
 	</form>

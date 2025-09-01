@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 
 							/* edited by Mike, 20201001 */
 							/* TO-DO: -add: auto-identify if Tablet PC */
@@ -53,15 +53,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 						}
 						
+						div.columnTotalLabel
+						{
+							text-align: left;
+							padding-left: 1.0em;
+						}
+
+						div.cartItemQuantityDiv
+						{
+							text-align: left;
+							width: 100%;
+						}
+						
+						h2 {
+							font-size: 20pt;
+						}
+
 						div.copyright
 						{
 							text-align: center;
 						}
-						
+
 						div.itemName
 						{
 							text-align: left;
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}
+						
+						div.itemNameCartList
+						{
+							text-align: left;
+						}
+						
+						div.expirationDate, div.itemPrice, div.transactionDate
+						{
+							text-align: center;
+							font-size: 13pt;
+						}							
 
 						div.itemPurchasedHistory
 						{
@@ -74,25 +103,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
 						div.quantityInStockDiv
 						{
-							text-align: center;							
+							text-align: center;		
+							font-size: 13pt;							
 						}
 						
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
 
+						button.Button-search
+						{
+							font-size: 16pt;
+						}
+						
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -122,7 +158,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						table.cartListResult
 						{
-							width: 82%;
+							width: 80%;
 						}	
 						
 						table.imageTable
@@ -166,16 +202,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}		
 						
 						td.columnTableHeaderName
 						{
 							font-weight: bold;
-							background-color: #00ff00;
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 34%;
@@ -184,8 +222,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderFee
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 9%;
@@ -201,8 +239,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderPatientNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 20%;
@@ -211,8 +249,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderItemNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 28%;
@@ -221,8 +259,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 2%;
@@ -231,8 +269,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderFeeHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 2%;
@@ -262,8 +300,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Fee-textbox { 
 							background-color: #fCfCfC;
 							color: #68502b;
-							padding: 10px;
-							font-size: 16px;
+
+							padding: 12px;
+							margin-top: 2px;							
+							margin-bottom: 5px;
+							padding-right: 5px;
+							font-size: 17px;
+							
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
 							width: 72%;
@@ -275,8 +318,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							color: #68502b;
 							padding: 12px;
 							padding-right: 0;
+
+							margin-top: 2px;							
+							margin-bottom: 5px;
+							padding-right: 5px;
+							font-size: 17px;
 							
-							font-size: 16px;
 							border: 1px solid #68502b;
 							width: 15%;
 							border-radius: 3px;	    	    
@@ -308,6 +355,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase:focus {
 							background-color: #d4be00;
 						}
+
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */	
 
         /*------------------*/
         /* Modal            */
@@ -750,9 +802,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-search">
 			Enter
 		</button>
 	</form>
@@ -846,8 +897,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 
 //				}
-		?>				
-		
+		?>						
 					  <tr class="row">
 						<td class ="column">				
 							<a href='<?php echo site_url('browse/viewItemSnack/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
@@ -938,7 +988,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class="columnCentered">				
-								<div id="itemExpirationId<?php echo $iCount?>">
+								<div id="itemExpirationId<?php echo $iCount?>" class="expirationDate">
 							<?php
 								//echo $value['expiration_date'];
 								//edited by Mike, 20210110
@@ -981,7 +1031,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<input type="hidden" value="<?php echo $value['item_price']?>">
 								</input>
 					
-								<div id="itemPriceId<?php echo $iCount?>">
+								<div id="itemPriceId<?php echo $iCount?>" class="itemPrice">
 							<?php
 								echo $value['item_price'];
 							?>
@@ -1156,7 +1206,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>SERVICE TOTAL</b>";
 					?>		
@@ -1187,7 +1237,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>MED TOTAL</b>";
 					?>		
@@ -1216,7 +1266,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>NON-MED TOTAL</b>";
 					?>		
@@ -1258,7 +1308,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 							<div class="transactionDate">
 				<?php
-								echo $cartValue['transaction_date'];
+								//edited by Mike, 20250902
+								//echo $cartValue['transaction_date'];
+								
+								echo date("Y-m-d",strtotime($cartValue['transaction_date']));
 				?>		
 							</div>								
 						</td>
@@ -1283,7 +1336,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								}								
 								?>'>
-								<div class="itemName">
+								<div class="itemNameCartList">
 				<?php
 								//edited by Mike, 20200519
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
@@ -1320,7 +1373,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						x
 						</td>
 						<td class ="columnFee">				
-								<div id="cartItemQuantityId<?php echo $iCount?>">
+								<div id="cartItemQuantityId<?php echo $iCount?>" class="cartItemQuantityDiv">
 							<?php
 /*							
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
@@ -1398,7 +1451,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>MED TOTAL</b>";
 				?>		
@@ -1429,7 +1482,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>NON-MED TOTAL</b>";
 				?>		
@@ -1460,7 +1513,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>SNACK TOTAL</b>";
 				?>		

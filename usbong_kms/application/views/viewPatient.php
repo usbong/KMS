@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250820; from 20250718
+' @date updated: 20250901; from 20250820
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 							width: 720px;
                         }
 						
@@ -51,39 +51,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 2pt;
 							display: inline-block;
 						}
+
+						div.columnTotalLabel
+						{
+							text-align: left;
+							padding-left: 1.0em;
+						}						
 						
 						div.copyright
 						{
 							text-align: center;
 						}
-						
+
+						div.patientName
+						{
+							text-align: left;
+							padding-left: 0.5em;
+							padding-right: 0.5em;
+						}						
+
 						div.itemName
 						{
 							text-align: left;
-						}
-
-						div.cartItemName
+							padding-left: 0.5em;
+							padding-right: 0.5em;
+						}						
+						
+						div.itemNameCartList
 						{
 							text-align: left;
 						}
+						
+						div.expirationDate, div.itemPrice, div.transactionDate
+						{
+							text-align: center;
+							font-size: 13pt;
+						}							
+						
+						div.itemPurchasedHistory
+						{
+							font-weight: bold;
+							text-align: right;
+							margin-right: 10%; /*22%;*/	
+						}							
 
 						div.tableHeader
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
+						div.quantityInStockDiv
+						{
+							text-align: center;							
+							font-size: 13pt;							
+						}
+						
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
+
+						button.Button-search
+						{
+							font-size: 16pt;
+						}
 
 						img.Image-companyLogo {
 							max-width: 60%;
@@ -141,8 +181,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 26%;
@@ -151,8 +191,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderFee
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 13%;
@@ -161,8 +201,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderClassification
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 12%;
@@ -171,8 +211,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderNotes
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 26%;
@@ -283,6 +323,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #d4be00;
 						}
 
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */	
+						
         /*------------------*/
         /* Modal            */
         /*------------------*/
@@ -794,9 +839,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-search">
 			Enter
 		</button>
 	</form>
@@ -847,7 +891,7 @@ else {
 -->
 					<a target='_blank' href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
 					
-						<div class="patientName">
+						<div class="">
 		<?php
 						//echo $value['patient_name'];
 	//					echo str_replace("ï¿½","Ã‘",$value['patient_name']);
@@ -1306,7 +1350,7 @@ else {
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>SERVICE TOTAL</b>";
 					?>		
@@ -1337,7 +1381,7 @@ else {
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>MED TOTAL</b>";
 					?>		
@@ -1366,7 +1410,7 @@ else {
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>NON-MED TOTAL</b>";
 					?>		
@@ -1409,7 +1453,10 @@ else {
 						<td class ="column">				
 							<div class="transactionDate">
 				<?php
-								echo $cartValue['transaction_date'];
+								//edited by Mike, 20250902
+								//echo $cartValue['transaction_date'];
+								
+								echo date("Y-m-d",strtotime($cartValue['transaction_date']));
 				?>		
 							</div>								
 						</td>
@@ -1432,7 +1479,7 @@ else {
 								}								
 								?>'>
 								<!-- edited by Mike, 20200806 -->
-								<div class="cartItemName">
+								<div class="itemNameCartList">
 				<?php
 								//edited by Mike, 20200806
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
@@ -1608,7 +1655,7 @@ else {
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>NON-MED TOTAL</b>";
 				?>		
@@ -1639,7 +1686,7 @@ else {
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>SNACK TOTAL</b>";
 				?>		

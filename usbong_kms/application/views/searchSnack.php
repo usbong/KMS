@@ -50,6 +50,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 2pt;
 							display: inline-block;
 						}
+
+						h2 {
+							font-size: 20pt;
+						}
 						
 						div.copyright
 						{

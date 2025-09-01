@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20250815; from 20250814
+  @date updated: 20250901; from 20250815
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -128,13 +128,11 @@
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 							
 							/*background-color: #FEFEFE;*/
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							/* Legal Size; Landscape*/							
-							width: 800px; /*802px;*/ /* 670px */
+							width: 820px;
                         }
 						
 						div.copyright
