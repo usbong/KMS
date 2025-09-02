@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200529
-' @date updated: 20250703; from 20250628
+' @date updated: 20250902; from 20250703
 ' @website address: www.usbong.ph
 -->
 <?php
@@ -61,6 +61,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						div.copyright
 						{
 							text-align: center;
+							margin-top: 2em;
 						}
 						
 						div.itemName
@@ -72,8 +73,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 						
 						div.patientName
@@ -83,14 +84,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						div.tableHeaderAddNewPatient
 						{
+							font-size: 12pt;
 							font-weight: bold;
 							text-align: center;
-							background-color: #ff8000; <!--#93d151; lime green-->
+							background-color: #ff8000;
 							border: 1pt solid #ff8000;
-						}						
+
+							padding-bottom: 0.2em;
+							padding-top: 0.2em;
+						}					
 
 						div.tableHeaderaveWaitToDoneTime
 						{
+							font-size: 12pt;
 							text-align: center;							
 							background-color: #ffdd00; <!--#93d151; lime green-->
 							border: 1pt solid #ff8000;
@@ -98,13 +104,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						div.tableHeaderAddedAtCashierUnitCount
 						{
+							font-size: 12pt;
 							text-align: right;							
-
-/*							
-							text-align: center;							
-							background-color: #ffdd00; <!--#93d151; lime green-->
-							border: 1pt solid #ff8000;
-*/							
 						}						
 
 						span.spanAddedAtCashierUnitCount
@@ -126,15 +127,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							color: #ff0000;
 						}
 
+						div.tableHeaderAddNewPatient
+						{
+							font-size: 12pt;
+							font-weight: bold;
+							text-align: center;
+							background-color: #ff8000;
+							border: 1pt solid #ff8000;
+
+							padding-bottom: 0.2em;
+							padding-top: 0.2em;
+						}						
+
+						div.transactionDateDiv
+						{
+							font-size: 13pt;
+							text-align: center;
+						}
+						
+						div.quantityInStockDiv
+						{
+							text-align: center;		
+							font-size: 13pt;
+						}
+
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
+
+						button.Button-login
+						{
+							font-size: 16pt;
+						}
 
 						img.Image-companyLogo {
 							max-width: 60%;
@@ -173,16 +204,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 						}						
 
+						img.patientIcon {
+							width: 14%;
+							height: auto;
+							vertical-align: middle;
+						}
+						
 						table.addPatientTable
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
+							width: 30%;
+							
+							transform: scale(1.2);
+							transform-origin: 0 0;								
 						}						
 
 						table.aveWaitToDoneTimeTable
 						{
 							border: 2px dotted #ab9c7d;		
 							margin-top: 10px;
+							float: right;
 						}						
 
 						table.imageTable
@@ -219,8 +261,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 26%;
@@ -229,8 +271,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderCount
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 8%; /*12%;*/
@@ -239,7 +281,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderName
 						{
 							font-weight: bold;
-							background-color: #00ff00;
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 34%;
@@ -248,8 +290,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderFee
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 13%;
@@ -258,8 +300,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderClassification
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 12%;
@@ -268,8 +310,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderNotes
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 26%;
@@ -283,7 +325,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 55%;
 							display: inline-block;
 							text-align: right;
 							font-size: 22px;
@@ -363,6 +405,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase:focus {
 							background-color: #d4be00;
 						}
+						
+						button.addNewPatientButton 
+						{
+							float: right;
+						}
+						
+						input.patient-input {
+							width: 90%;
+						}
+
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */		
 
         /*------------------*/
         /* Modal            */
@@ -682,9 +738,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-search">
 			Enter
 		</button>
 	</form>
@@ -1130,7 +1185,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		?>
 
-	<!-- added by Mike, 20210117 -->
+	<!-- edited by Mike, 20250902; from 20210117 -->
+	<br/>
 	<table class="aveWaitToDoneTimeTable">
 	<tr>
 		<td>
@@ -1195,20 +1251,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</td>
 	</tr>
+	</table>
 
-	<!-- added by Mike, 20200530 -->
 	<table class="addPatientTable">
 	<tr>
 		<td>
 			<div class="tableHeaderAddNewPatient">
-				ADD NEW PATIENT
+				ADD NEW PATIENT <img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250709T1547">
 			</div>
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="addPatientTableInputColumn">
 		<!-- Form -->
-		<form method="post" action="<?php echo site_url('browse/addPatientNameAccounting/')?>">
+		<!-- note: "browse/addPatientNameAccounting" to redirect to patient wait list -->
+		<!-- "browse/addPatientName" faster -->
+		<form method="post" action="<?php echo site_url('browse/addPatientName/')?>">
 			<div>
 				<table width="100%">
 				  <tr>
@@ -1237,31 +1295,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  </tr>
 				</table>
 			</div>	
-	<!--		<br /> -->
-	<?php
-				//added by Mike, 20200530
-				//TO-DO: -update: this
-	/*			
-				$medicalDoctorId = 1; //SYSON, PEDRO
-
-				echo "<div>";
-				echo "<select id='medicalDoctorIdParam'>";			
-					foreach ($medicalDoctorList as $medicalDoctorValue) {
-						  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
-							echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
-						  }			  	  
-						  else {
-							echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
-						  }				
-					   }
-				echo "</select>";
-				echo "</div>";
-	*/			
-	?>
-
 			<br />
 			<!-- Buttons -->
-			<button type="submit" class="Button-login">
+			<button type="submit" class="addNewPatientButton">
 				Submit
 			</button>
 		</form>
