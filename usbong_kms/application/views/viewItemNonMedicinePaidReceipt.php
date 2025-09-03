@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250827; from 20250718
+' @date updated: 20250903; from 20250827
 ' @website: http://www.usbong.ph
 -->
 <?php
@@ -32,10 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
-
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							font-size: 12pt;
+							width: 780px;
                         }
 						
 						div.checkBox
@@ -50,6 +48,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 2pt;
 							display: inline-block;
 						}
+
+						h2 {
+							font-size: 20pt;
+						}						
 						
 						div.copyright
 						{
@@ -72,13 +74,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
 
+						button.Button-search
+						{
+							font-size: 16pt;
+						}
+						
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -196,7 +204,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -581,9 +589,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-search">
 			Enter
 		</button>
 	</form>
@@ -651,6 +658,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</table>
 		</div>	
 -->
+		<?php
+			//added by Mike, 20250903
+			$bHasORTextbox=false;
+		?>
+
 		<div>
 			<table width="100%">
 			<?php
@@ -658,14 +670,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				//we do not show if purchased items are non-medicine and patient is not SYSON, PEDRO's
 				if ($patientId!=0){
 					if (isset($outputTransaction)) {	
-/*					//edited by Mike, 20200721
-						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
-*/
-						//edited by Mike, 20200910
-/*						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0) or (($outputTransaction['fee']!=0) and ($outputTransaction['medical_doctor_id']==1))) {							
-*/
 						//Dr. Honesto
 						if ((strpos(strtoupper($medicalDoctorList[$medicalDoctorId]['medical_doctor_name']), "HONESTO")!==false) or (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0) or (($outputTransaction['fee']!=0) and ($outputTransaction['medical_doctor_id']==1)))) {
+							//added by Mike, 20250903
+							$bHasORTextbox=true;							
 			?>
 						  <tr>
 							<td>
@@ -687,6 +695,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			    if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")==false) {
 					//added by Mike, 20200608
 					if ($medicalDoctorId!=0) {
+						//added by Mike, 20250903
+						$bHasORTextbox=true;							
 			 ?>
 				  <tr>
 				    <td>
@@ -708,8 +718,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 					if (isset($outputTransaction)) {						
 						if ($outputTransaction['pas_fee']!=0) {
-//						if ($outputTransaction->pas_fee!==0) {
-
+							//added by Mike, 20250903
+							$bHasORTextbox=true;							
 ?>
 				  <tr>
 				    <td>
@@ -741,6 +751,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//added by Mike, 20250519
 		//TODO: -reverify: sometimes no OR input box is displayed
 		if (isset($outputTransaction)) {
+			//added by Mike, 20250903
+			if ($bHasORTextbox) {
 ?>		
 			<br />
 			<!-- Button -->
@@ -748,6 +760,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				Submit
 			</button>
 <?php
+			//added by Mike, 20250903
+			}
 		//added by Mike, 20250519
 		}
 ?>
@@ -953,7 +967,7 @@ echo "<a href='".site_url('browse/viewAcknowledgmentForm/'.$patientId.'/'.date("
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~2020. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>

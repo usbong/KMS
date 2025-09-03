@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250902; from 20250827
+' @date updated: 20250903; from 20250902
 ' @website: http://www.usbong.ph
 -->
 <?php
@@ -32,10 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
-
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							font-size: 12pt;
+							width: 780px;
                         }
 						
 						div.checkBox
@@ -50,6 +48,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 2pt;
 							display: inline-block;
 						}
+
+						h2 {
+							font-size: 20pt;
+						}						
 						
 						div.copyright
 						{
@@ -202,7 +204,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -992,7 +994,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>

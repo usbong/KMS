@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250901; 20250827
+' @date updated: 20250903; 20250901
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 12pt;
-							width: 850px
+							width: 780px;
                         }
 						
 						div.checkBox
@@ -97,7 +97,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: right;
-							margin-right: 10%; /*22%;*/	
+							margin-right: 2%;	
 						}							
 
 						div.tableHeader
@@ -215,6 +215,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							float: center;							
 							display: inline-block;
+
+							margin-top: 2px;							
+							margin-bottom: 5px;
 							
 							padding: 2px;
 							margin-left: 5%; /*40px*/
@@ -237,7 +240,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 34%;
+							width: 30%;
 						}	
 						
 						td.columnTableHeaderFee
@@ -312,7 +315,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%; /*38%;*/
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -320,13 +323,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-delete {
 							margin-left: 4px;
 						}
-
-						td.pageNameColumn
-						{
-							width: 50%; /*38%;*/
-							display: inline-block;
-							text-align: right;
-						}						
 
 						.Fee-textbox { 
 							background-color: #fCfCfC;
@@ -348,15 +344,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 12px;
-							padding-right: 0;
 
 							margin-top: 2px;							
 							margin-bottom: 5px;
-							padding-right: 5px;
-							font-size: 17px;
+									
+							margin-right: 4px;
+							font-size: 15px;
 							
 							border: 1px solid #68502b;
-							width: 15%;
+							width: 12%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -370,6 +366,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							color: #222222;
 							font-size: 16px;
 							font-weight: bold;
+
+							margin-top: 2px;							
+							margin-bottom: 5px;
 
 							border: 0px solid;		
 							border-radius: 4px;
@@ -1082,7 +1081,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class ="columnCentered">				
-								<div id="itemPriceId<?php echo $iCount?>" class="expirationDate">
+								<div id="itemExpirationDateId<?php echo $iCount?>" class="expirationDate">
 							<?php
 								//echo $value['expiration_date'];
 								//edited by Mike, 20210110
@@ -1359,7 +1358,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>NON-MED TOTAL</b>";
 					?>		
