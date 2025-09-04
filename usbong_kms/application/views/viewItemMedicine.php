@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250901; from 20250717
+' @date updated: 20250904; from 20250901
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -33,11 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 12pt;
-
-							/* edited by Mike, 20201001 */
-							/* TO-DO: -add: auto-identify if Tablet PC */
-							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 850px							
+							width: 780px;						
                         }
 						
 						div.checkBox
@@ -58,12 +54,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 							padding-left: 1.0em;
 						}						
+
+						h2 {
+							font-size: 20pt;
+						}						
 						
 						div.copyright
 						{
 							text-align: center;
 						}
-						
+
 						div.itemName
 						{
 							text-align: left;
@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: right;
-							margin-right: 10%; /*22%;*/	
+							margin-right: 2%;	
 						}							
 
 						div.tableHeader
@@ -197,8 +197,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00dd00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00dd00; -->
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 
@@ -212,7 +211,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 34%;
+							width: 40%;
 						}		
 
 						td.columnTableHeaderItemNameCartList
@@ -297,7 +296,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%; /*38%;*/
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -322,14 +321,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 12px;
-							padding-right: 0;
-							
+
+							margin-top: 2px;							
 							margin-bottom: 5px;
-							padding-right: 5px;
+									
+							margin-right: 4px;
 							font-size: 17px;
 							
 							border: 1px solid #68502b;
-							width: 15%;
+							width: 20%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -342,11 +342,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase {
 /*							padding: 8px 42px 8px 42px;
 */
-							padding: 12px;
+							padding: 14px;
 							background-color: #ffe400;
 							color: #222222;
 							font-size: 16px;
 							font-weight: bold;
+
+							margin-top: 2px;							
+							margin-bottom: 5px;
 
 							border: 0px solid;		
 							border-radius: 4px;
@@ -914,7 +917,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="column">				
 							<a href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-								<div>
+								<div class="itemName">
 				<?php
 								//edited by Mike, 20250421
 								echo strtoupper($value['item_name']);

@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250718; from 20250628
+' @date updated: 20250904; from 20250718
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -32,12 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
-
-							/* edited by Mike, 20201001 */
-							/* TO-DO: -add: auto-identify if Tablet PC */
-							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 850px							
+							font-size: 12pt;
+							width: 780px							
                         }
 						
 						div.checkBox
@@ -52,6 +48,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 2pt;
 							display: inline-block;
 						}
+
+						h2 {
+							font-size: 20pt;
+						}						
 						
 						div.copyright
 						{
@@ -61,38 +61,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						div.itemName
 						{
 							text-align: left;
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}
+
+						div.expirationDate, div.itemPrice, div.transactionDate
+						{
+							text-align: center;
+							font-size: 13pt;
+						}							
 
 						div.itemPurchasedHistory
 						{
 							font-weight: bold;
 							text-align: right;
-							margin-right: 10%; /*22%;*/	
+							margin-right: 2%;	
 						}							
 
 						div.tableHeader
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
 						div.quantityInStockDiv
 						{
-							text-align: center;							
+							text-align: center;		
+							font-size: 13pt;							
 						}
 						
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
 
+						button.Button-search
+						{
+							font-size: 16pt;
+						}
+						
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -165,26 +180,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}		
 
 						td.columnTableHeaderName
 						{
 							font-weight: bold;
-							background-color: #00ff00;
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 34%;
+							width: 40%;
 						}		
 
 						td.columnTableHeaderFee
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 9%;
@@ -200,8 +217,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderPatientNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 20%;
@@ -210,8 +227,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderItemNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 30%; /*28*/
@@ -220,7 +237,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; 
+							background-color: #00dd00; 
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 1%;
@@ -230,8 +247,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderFeeHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 2%;
@@ -253,7 +270,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%; /*38%;*/
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -261,10 +278,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Fee-textbox { 
 							background-color: #fCfCfC;
 							color: #68502b;
-							padding: 10px;							
-							font-size: 16px;
+
+							padding: 12px;
+							margin-top: 2px;
+							margin-bottom: 5px;
+							padding-right: 5px;
+							font-size: 17px;
+							
 							border: 1px solid #68502b;
-							border-radius: 3px;	  							
+							border-radius: 3px;	    	    
 							width: 72%;
 							float: left;
 						}
@@ -273,11 +295,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 12px;
-							padding-right: 0;
+
+							margin-top: 2px;							
+							margin-bottom: 5px;
+									
+							margin-right: 4px;
+							font-size: 17px;
 							
-							font-size: 16px;
 							border: 1px solid #68502b;
-							width: 15%;
+							width: 20%;
 							border-radius: 3px;	    	    
 
 							float: left;
@@ -286,11 +312,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase {
 /*							padding: 8px 42px 8px 42px;
 */
-							padding: 12px;
+							padding: 14px;
 							background-color: #ffe400;
 							color: #222222;
 							font-size: 16px;
 							font-weight: bold;
+
+							margin-top: 2px;							
+							margin-bottom: 5px;
 
 							border: 0px solid;		
 							border-radius: 4px;
@@ -307,6 +336,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Button-purchase:focus {
 							background-color: #d4be00;
 						}
+						
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */							
 
         /*------------------*/
         /* Modal            */
@@ -752,9 +786,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-search">
 			Enter
 		</button>
 	</form>
@@ -960,7 +993,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 						</td>
 						<td class="columnCentered">				
-								<div id="itemExpirationId<?php echo $iCount?>">
+								<div id="itemExpirationId<?php echo $iCount?>" class="expirationDate">
 							<?php
 								//echo $value['expiration_date'];
 								//edited by Mike, 20210110
@@ -1003,7 +1036,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<input type="hidden" value="<?php echo $value['item_price']?>">
 								</input>
 					
-								<div id="itemPriceId<?php echo $iCount?>">
+								<div id="itemPriceId<?php echo $iCount?>" class="itemPrice">
 							<?php
 								echo $value['item_price'];
 							?>

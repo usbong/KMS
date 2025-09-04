@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250903; 20250901
+' @date updated: 20250904; 20250903
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -70,11 +70,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}
 						
-						div.itemName
-						{
-							text-align: left;
-						}
-
 						div.itemName
 						{
 							text-align: left;
@@ -329,15 +324,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							color: #68502b;
 
 							padding: 12px;
+							padding-right: 5px;
+							padding-left: 5px;
+
 							margin-top: 2px;
 							margin-bottom: 5px;
-							padding-right: 5px;
+							margin-left: 2px;
+							
 							font-size: 17px;
 							
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
-							width: 72%;
-							float: left;
+							width: 80%;
+							/*float: left;*/
+							text-align: center;
 						}
 
 						.Quantity-textbox { 
