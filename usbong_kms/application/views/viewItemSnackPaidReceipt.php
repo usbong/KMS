@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250903; from 20250902
+' @date updated: 20250906; from 20250905
 ' @website: http://www.usbong.ph
 -->
 <?php
@@ -85,6 +85,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						button.Button-search
 						{
 							font-size: 16pt;
+						}
+						
+						button.Button-submit
+						{
+							font-size: 14pt;
 						}
 						
 						img.Image-companyLogo {
@@ -786,7 +791,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<br />
 				
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-submit">
 			Submit
 		</button>
 	</form>

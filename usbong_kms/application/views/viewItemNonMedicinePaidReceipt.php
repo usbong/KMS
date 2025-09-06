@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250903; from 20250827
+' @date updated: 20250905; from 20250903
 ' @website: http://www.usbong.ph
 -->
 <?php
@@ -67,8 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
 						input.browse-input
@@ -85,6 +85,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						button.Button-search
 						{
 							font-size: 16pt;
+						}
+						
+						button.Button-submit
+						{
+							font-size: 14pt;
 						}
 						
 						img.Image-companyLogo {
@@ -135,8 +140,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
@@ -151,8 +156,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderPatientNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 20%;
@@ -161,8 +166,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderItemNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 28%;
@@ -171,8 +176,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 2%;
@@ -181,8 +186,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderFeeHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 2%;
@@ -756,7 +761,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>		
 			<br />
 			<!-- Button -->
-			<button type="submit" class="Button-login">
+			<button type="submit" class="Button-submit">
 				Submit
 			</button>
 <?php

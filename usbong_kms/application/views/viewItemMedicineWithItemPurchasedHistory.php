@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250904; from 20250718
+' @date updated: 20250906; from 20250905
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -283,11 +283,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							margin-top: 2px;
 							margin-bottom: 5px;
 							padding-right: 5px;
+							padding-left: 5px;
 							font-size: 17px;
 							
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
-							width: 72%;
+							width: 78%;
+							text-align: center;
 							float: left;
 						}
 
@@ -306,6 +308,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 20%;
 							border-radius: 3px;	    	    
 
+							text-align: center;
 							float: left;
 						}
 						
@@ -1156,6 +1159,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$dPatientServiceTotal=0;
 				$iCountTransactionTypes=0;
 				
+				//added by Mike, 20250906
+				$bHasServiceTotal=false;
+				
 				foreach ($cartListResult as $cartValue) { 
 /*	
 				$value = $result[0];
@@ -1166,6 +1172,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					
 					//added by Mike, 20250428
 					$patientId=$cartValue['patient_id'];
+					
+					$bHasServiceTotal=true;
 					
 					$iCountTransactionTypes++;
 				}
@@ -1195,8 +1203,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						//patient service
 						if ($iCurrType==0) {
-							if ($dPatientServiceTotal!=0) {				
-							//echo "DITO!!!<br/><br/>";
+							//edited by Mike, 20250906; from 20250905
+							//echo ">>>>".$dPatientServiceTotal;
+							//if ($dPatientServiceTotal!=0) {	
+							if ($bHasServiceTotal) {	
 	?>					
 							<tr class="row">
 							<td class ="column">				

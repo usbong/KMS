@@ -1151,6 +1151,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$dPatientServiceTotal=0;			
 				$iCountTransactionTypes=0;
 				
+				//added by Mike, 20250906
+				$bHasServiceTotal=false;
+				
 				foreach ($cartListResult as $cartValue) { 
 /*	
 				$value = $result[0];
@@ -1170,6 +1173,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				
 				if (intval($cartValue['patient_id'])!=0) {
 					$dPatientServiceTotal=$cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
+					
+					$bHasServiceTotal=true;
 					
 					$iCountTransactionTypes++;
 				}
@@ -1199,8 +1204,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						//patient service
 						if ($iCurrType==0) {
-							if ($dPatientServiceTotal!=0) {				
-							//echo "DITO!!!<br/><br/>";
+							//edited by Mike, 20250906; from 20250905
+							//echo ">>>>".$dPatientServiceTotal;
+							//if ($dPatientServiceTotal!=0) {	
+							if ($bHasServiceTotal) {							
 	?>					
 							<tr class="row">
 							<td class ="column">				
@@ -1225,7 +1232,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "<b>".number_format($dPatientServiceTotal, 2, '.', '')."</b>";
 							?>
 							</td>
-	<?php						
+	<?php					
+							//edited by Mike, 20250906; from 20250905	
 							}
 						}
 						//med item

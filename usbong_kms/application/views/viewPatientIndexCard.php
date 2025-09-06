@@ -113,6 +113,7 @@
 
 						span.spanAgeFieldName
 						{
+							
 							background-color: #00dd00; <!--#93d151; lime green-->
 						}
 
@@ -216,7 +217,7 @@
 							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 15%;
+							width: 10%;
 						}								
 
 						td.columnNumberQuantityTotal
@@ -252,6 +253,15 @@
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}		
+
+						td.columnTableHeaderPF, td.columnTableHeaderXray
+						{
+							font-weight: bold;
+							background-color: #00dd00; 
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 10%;
+						}		
 						
 						td.columnBorderBottom
 						{
@@ -282,7 +292,7 @@
 <!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 26%;
+							width: 18%;
 						}								
 						
 						td.columnDateToday
@@ -324,6 +334,22 @@
 							font-size: 22px;
 						}						
 
+						.Button-delete {
+							background-color: #E9E9E9;
+							color: #000000;
+							border: 1px dotted #333333;
+							border-radius: 3px;	  
+							font-size: 12pt;
+							padding: 0.2em;							
+						}						
+
+						.Button-delete:hover {
+							background-color: #C0C0C0;
+							color: #000000;
+							border: 1px dotted #333333;
+							border-radius: 3px;	  
+						}	
+						
 						.Fee-textbox { 
 							background-color: #fCfCfC;
 							color: #68502b;
@@ -346,7 +372,7 @@
 
 						td.updateIndexCardColumn
 						{
-							width: 100%; /*90%*/
+							width: 100%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -396,21 +422,9 @@
 							width: 30%;
 						}
 
-						/* added by Mike, 20210210 */
-/* removed by Mike, 20210307						
-						input[type=tel]:focus 
-						{
-							/*color:#0011f1;*/
-							border: 1.7px solid #0011f1; /*black;*/
-*/						}
-						
-
-						div.buttonSubmitUpdate
+						button.buttonSubmitUpdate
 						{
 							font-size: 16px;
-/*							//removed by Mike, 20210210
-							font-weight: bold;
-*/
 						}
 
 						div.buttonDeleteImage
@@ -438,10 +452,14 @@
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 12px;
-							font-size: 16px;
+							padding-left: 4px;
+							padding-right: 0px;
+							
+							font-size: 14.5px;
 							border: 1px solid #68502b;
 							width: 100%;
 							border-radius: 3px;	    	    
+							text-align: center;
 							float: left;
 						}
 
@@ -857,6 +875,85 @@
 		</tr>
 	</table>
 
+<?php
+
+  //added by Mike, 20250906; from 20250404
+  if (!isset($value['last_visited_date'])) {
+	  $value['last_visited_date']="";
+  }
+  if (!isset($value['transaction_date'])) {
+	  $value['transaction_date']="";
+  }
+  if (!isset($value['transaction_id'])) {
+	  $value['transaction_id']="";
+  }
+
+  if (!isset($bFoldImageListValue)) {
+	  $bFoldImageListValue=0;
+  }
+  
+  
+    
+  //added by Mike, 20230408
+//  if (trim($sDateToday)=="") {
+  //edited by Mike, 20230409
+  if (trim($value['last_visited_date'])=="") {
+	//edited by Mike, 20230410
+	//$sDateToday="NEW";
+	if (isset($value['transaction_date'])) {
+		$sDateToday= Date('Y-m-d', strtotime($value['transaction_date']));
+	}
+	else {
+		$sDateToday="NEW";
+	}
+  }
+  //note: last_visit_date auto-updated @ start, et cetera
+  //Windows Task Scheduler; Triggers, Actions, Conditions; STARCRAFT; SAP
+  //edited by Mike, 20230409
+  else if (strpos($value['last_visited_date'],"DEL")!==false) {				  
+	//edited by Mike, 20250906
+	//$sDateToday = $value['last_visited_date'];
+	
+	$sDateToday=str_replace("DEL","",$value['last_visited_date']);
+	//$sDateToday=str_replace("/","-",$sDateToday);
+	
+	$sDateTodayTokArray = explode("/",$sDateToday);
+/*	
+	echo ">>>>>".$sDateToday."<br/>";
+	
+	echo "TOK: ".$sDateTodayTokArray[2]."<br/>";
+	echo "TOK: ".$sDateTodayTokArray[1]."<br/>";
+	echo "TOK: ".$sDateTodayTokArray[0]."<br/>";
+*/	
+	$sDateToday = ($sDateTodayTokArray[2]."-".$sDateTodayTokArray[0]."-".$sDateTodayTokArray[1])."DEL";
+	
+//	echo ">>>".$sDateToday."<br/>";
+  }
+  else {
+	$sDateToday = Date('Y-m-d', strtotime($value['last_visited_date']));
+  }
+
+  //added by Mike, 20250513
+  if (strpos($sDateToday,"1970-01-01")!==false) {
+	//$sDateToday = $value['last_visited_date'];
+	
+	//echo "DITO!!!";
+	
+	if (isset($resultPaid[0]['added_datetime_stamp'])) {		
+		//input: 2025-05-10 11:56:46;
+		//output: 2025-05-10
+		$sDateToday=strtok($resultPaid[0]['added_datetime_stamp']," ");
+	}
+	//added by Mike, 20250605
+	else {
+		$sDateToday="NEW; NONE YET";
+	}
+  }
+/* 
+  echo ">>>>>>>>>>>>>>".$sDateToday."<br/>";
+  echo ">>>".strtoupper(date("Y-m-d"))."<br/>";
+*/
+?>
 
 <!-- added by Mike, 20210209 -->
 <!-- TO-DO: -add: lab request list for the day -->
@@ -892,62 +989,85 @@
 				$medicalDoctorId = $result[0]["medical_doctor_id"];				
 			}
 			
-			//edited by Mike, 20210318
-			//echo "<select id='medicalDoctorIdParam'>"
-			echo "<select id='medicalDoctorIdParam' name='selectMedicalDoctorNameParam'>";			
-				foreach ($medicalDoctorList as $medicalDoctorValue) {
-				  //added by Mike, 20230328
-				  //note: "SUMMARY" ID NOW SET TO BE LAST IN MEDICAL DOCTOR TABLE LIST
-				  if (strpos($medicalDoctorValue["medical_doctor_name"],"SUMMARY")!==false) {				  
-					continue;
-				  }
+			//added by Mike, 20250906
+			//if (not new and not today) or not deleted
+			if ((strpos($sDateToday,"DEL")!==false) or				
+				((strpos($sDateToday,strtoupper(date("Y-m-d")))===false) and
+				(strpos($sDateToday,"NEW")===false))) {
 
-				  //added by Mike, 20230327
-				  //note: "BALCE, GRACIA CIELO" ID NOW SET TO BE LAST before "SUMMARY" IN MEDICAL DOCTOR TABLE LIST
-				  if (strpos($medicalDoctorValue["medical_doctor_name"],"BALCE, GRACIA CIELO")!==false) {				  
-					continue;
-				  }
-
-				  //added by Mike, 20230331
-				  if (strpos($medicalDoctorValue["medical_doctor_name"],"ESPINOSA, JHONSEL")!==false) {				
-
-					$medicalDoctorValue["medical_doctor_name"]="--";
-				  
-					//continue;
-				  }
-				  
-/*				
-				  //added: by Mike, 20230328; remove: in list, ESPINOSA, JHONSEL (ID#3); note: select OPTIONS count;
-				  //note: select options count when page is loaded
-				  if (strpos($medicalDoctorValue["medical_doctor_name"],"ESPINOSA, JHONSEL")!==false) {				  
-					continue;
-				  }
-*/
+/*										
+					echo "DITO!!!<br/>";
+					echo "sDateToday: ".$sDateToday."<br/>";
+					echo "strtoupper(date('Y-m-d')): ".strtoupper(date("Y-m-d"))."<br/>";
+					echo "".$sDateToday."<br/>";
+					echo "".strtoupper(date("Y-m-d"))."<br/>";
+*/					
 					
-				  //edited by Mike, 20200523
-				  //TO-DO: -update: this
-/*				  
-				  if (($medicalDoctorValue["medical_doctor_id"]=="0") || (($medicalDoctorValue["medical_doctor_id"]=="3"))) {
-				  }
-				  else {
-*/					  
-	//				  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {					  
-					  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
-						echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
-					  }			  	  
-	/*
-					  else if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
-						echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
-					  }				  
-	*/				  
-					  else {
-						echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
-					  }				
-				   }
-/*
+				foreach ($medicalDoctorList as $medicalDoctorValue) {
+					if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
+						echo "<span id='medicalDoctorIdParam'>".$medicalDoctorValue["medical_doctor_name"]."</span>";
+					}
 				}
-*/				
-			echo "</select>";
+			}
+			else {
+				
+				//edited by Mike, 20210318
+				//echo "<select id='medicalDoctorIdParam'>"
+				echo "<select id='medicalDoctorIdParam' name='selectMedicalDoctorNameParam'>";			
+					foreach ($medicalDoctorList as $medicalDoctorValue) {
+					  //added by Mike, 20230328
+					  //note: "SUMMARY" ID NOW SET TO BE LAST IN MEDICAL DOCTOR TABLE LIST
+					  if (strpos($medicalDoctorValue["medical_doctor_name"],"SUMMARY")!==false) {				  
+						continue;
+					  }
+
+					  //added by Mike, 20230327
+					  //note: "BALCE, GRACIA CIELO" ID NOW SET TO BE LAST before "SUMMARY" IN MEDICAL DOCTOR TABLE LIST
+					  if (strpos($medicalDoctorValue["medical_doctor_name"],"BALCE, GRACIA CIELO")!==false) {				  
+						continue;
+					  }
+
+					  //added by Mike, 20230331
+					  if (strpos($medicalDoctorValue["medical_doctor_name"],"ESPINOSA, JHONSEL")!==false) {				
+
+						$medicalDoctorValue["medical_doctor_name"]="--";
+					  
+						//continue;
+					  }
+					  
+	/*				
+					  //added: by Mike, 20230328; remove: in list, ESPINOSA, JHONSEL (ID#3); note: select OPTIONS count;
+					  //note: select options count when page is loaded
+					  if (strpos($medicalDoctorValue["medical_doctor_name"],"ESPINOSA, JHONSEL")!==false) {				  
+						continue;
+					  }
+	*/
+						
+					  //edited by Mike, 20200523
+					  //TO-DO: -update: this
+	/*				  
+					  if (($medicalDoctorValue["medical_doctor_id"]=="0") || (($medicalDoctorValue["medical_doctor_id"]=="3"))) {
+					  }
+					  else {
+	*/					  
+		//				  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {					  
+						  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
+							echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+						  }			  	  
+		/*
+						  else if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
+							echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+						  }				  
+		*/				  
+						  else {
+							echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
+						  }				
+					   }
+	/*
+					}
+	*/				
+				echo "</select>";
+			}
 	?>
 	<br/>
 <?php
@@ -1562,13 +1682,8 @@
 	<table class="bottomSectionTable">
 	  <tr>
 		  <td class="updateIndexCardColumn">
-			<br/>			
-			<!-- Buttons -->
-<!--
-			<button type="submit" onclick="myPopupFunction(<?php echo $value['patient_id'];?>)">
--->			
-			<button type="submit">			
-				<div class="buttonSubmitUpdate">Update</div>
+			<button type="submit" class="buttonSubmitUpdate">			
+				Update
 			</button>
 		  </td>
 	  </tr>
@@ -1590,7 +1705,7 @@
   //edited by Mike, 20230408
 //  $sDateToday = Date('Y-m-d', strtotime($value['last_visit_date']));
   
-    
+/* //removed by Mike, 20250906    
   //added by Mike, 20250404
   if (!isset($value['last_visited_date'])) {
 	  $value['last_visited_date']="";
@@ -1606,8 +1721,6 @@
 	  $bFoldImageListValue=0;
   }
   
-  
-    
   //added by Mike, 20230408
 //  if (trim($sDateToday)=="") {
   //edited by Mike, 20230409
@@ -1649,6 +1762,7 @@
   }
   
   //echo ">>>>>>>>>>>>>>".$sDateToday."<br/>";
+*/
   
   //edited by Mike, 20250513
   //echo "<b>LAST VISITED:</b> ".$sDateToday;
@@ -1734,8 +1848,8 @@
 							<td class="column">
 								<!-- added by Mike, 20210630 -->
 <?php								
-								echo '<button onclick="myDeleteIndexCardImageFunction('.$result[0]['patient_id'].','.$indexCardImageListValue['image_id'].')">								
-									<div class="buttonDeleteImage">Delete</div>
+								echo '<button onclick="myDeleteIndexCardImageFunction('.$result[0]['patient_id'].','.$indexCardImageListValue['image_id'].')">							
+									Delete
 								</button>';
 ?>
 								<br/>
@@ -1840,15 +1954,15 @@
 					</td>
 					<td class ="columnTableHeader">				
 						<?php
-							echo "PRIV";
+							echo "PRV";
 						?>
 					</td>
-					<td class ="columnTableHeader">				
+					<td class ="columnTableHeaderPF">				
 						<?php
 							echo "PF";
 						?>
 					</td>
-					<td class ="columnTableHeader">				
+					<td class ="columnTableHeaderXray">				
 						<?php
 							echo "X-RAY";
 						?>
@@ -3198,7 +3312,8 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidMedItemCount;
 
 		}
 ?>
-
+	<br/>
+	<br/>
 	<br/>
 	<div class="copyright">
 		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>

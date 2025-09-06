@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250827; from 20250331
+' @date updated: 20250906; from 20250905
 ' @website: http://www.usbong.ph
 -->
 <?php
@@ -32,10 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
-
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 670px
+							font-size: 12pt;
+							width: 780px
                         }
 						
 						div.checkBox
@@ -49,6 +47,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							padding: 2pt;
 							display: inline-block;
+						}
+
+						h2 {
+							font-size: 20pt;
 						}
 						
 						div.copyright
@@ -65,19 +67,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
+
+						button.Button-search
+						{
+							font-size: 16pt;
+						}
+						
+						button.Button-submit
+						{
+							font-size: 14pt;
+						}
 
 						img.Image-companyLogo {
 							max-width: 60%;
@@ -127,8 +140,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
@@ -143,8 +156,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderPatientNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 20%;
@@ -153,8 +166,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderItemNameHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 28%;
@@ -163,8 +176,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 2%;
@@ -173,8 +186,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderFeeHistory
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 							width: 2%;
@@ -196,7 +209,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -569,9 +582,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-search">
 			Enter
 		</button>
 	</form>
@@ -685,7 +697,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php 
 		if ($bHasFoundReceiptType) {
 ?>		
-			<button type="submit" class="Button-login">
+			<button type="submit" class="Button-submit">
 				Submit
 			</button>
 <?php 
@@ -896,7 +908,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br />
 	<br />
 	<div class="copyright">
-		<span>© Usbong Social Systems, Inc. 2011~<?php echo date("Y");?>. All rights reserved.</span>
+		<span>© <b>www.usbong.ph</b> 2011~<?php echo date("Y");?>. All rights reserved.</span>
 	</div>		 
   </body>
 </html>

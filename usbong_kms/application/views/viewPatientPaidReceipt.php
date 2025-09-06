@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200517
-' @date updated: 20250822; from 20250627
+' @date updated: 20250905; from 20250822
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -33,17 +33,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 12pt;
-
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							/* Legal Size; Landscape*/							
-							width: 860px; /*860px;*/ /* 802px;*//* 670px */
-							
-							/* //TO-DO: -reverify: this if necessary */
-							/* use zoom 67% (prev) scale*/
-							zoom: 90%; /* at present, command not supported in Mozilla Firefox */				
+							width: 780px
+/*							
+							zoom: 90%;				
 							transform: scale(0.90);
 							transform-origin: 0 0;							
-                        }
+ */
+                       }
 						
 						div.checkBox
 						{
@@ -56,6 +52,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							padding: 2pt;
 							display: inline-block;
+						}
+
+						h2 {
+							font-size: 20pt;
 						}
 						
 						div.copyright
@@ -72,19 +72,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 80%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							margin-bottom: 0.5em;
 						}	
+
+						button.Button-search
+						{
+							font-size: 16pt;
+						}
+						
+						button.Button-submit
+						{
+							font-size: 14pt;
+						}
 
 						img.Image-companyLogo {
 							max-width: 60%;
@@ -147,8 +158,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00; <!--#93d151; lime green-->
+<!--							border: 1pt solid #00dd00; -->
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
 						}						
@@ -544,9 +555,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </tr>
 			</table>
 		</div>
-		<br />
 		<!-- Buttons -->
-		<button type="submit" class="Button-login">
+		<button type="submit" class="Button-search">
 			Enter
 		</button>
 	</form>
@@ -882,7 +892,7 @@ else {
 			<br />
 		
 			<!-- Buttons -->
-			<button type="submit" class="Button-login">
+			<button type="submit" class="Button-submit">
 				Submit
 			</button>
 <?php

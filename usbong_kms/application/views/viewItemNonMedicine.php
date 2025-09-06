@@ -1252,6 +1252,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$dPatientServiceTotal=0;
 				$iCountTransactionTypes=0;
 				
+				//added by Mike, 20250906
+				$bHasServiceTotal=false;
+				
 				foreach ($cartListResult as $cartValue) {
 /*	
 				$value = $result[0];
@@ -1262,6 +1265,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					
 					//added by Mike, 20250428
 					$patientId=$cartValue['patient_id'];
+					
+					$bHasServiceTotal=true;
 					
 					$iCountTransactionTypes++;
 				}
@@ -1291,8 +1296,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						//patient service
 						if ($iCurrType==0) {
-							if ($dPatientServiceTotal!=0) {				
-								//echo "DITO!!!<br/><br/>";
+							//edited by Mike, 20250906; from 20250905
+							//echo ">>>>".$dPatientServiceTotal;
+							//if ($dPatientServiceTotal!=0) {	
+							if ($bHasServiceTotal) {		
 		?>					
 								<tr class="row">
 								<td class ="column">				
@@ -1318,6 +1325,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								?>
 								</td>
 		<?php						
+							//edited by Mike, 20250906; from 20250905	
 							}
 						}
 						//med item
@@ -1377,7 +1385,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo "<b>".number_format($dNonMedItemTotal, 2, '.', '')."</b>";
 							?>
 							</td>							
-	<?php						
+	<?php				
+						//added by Mike, 20250906; from 20250905
 						}						
 						//snack item
 						//put before the GRAND TOTAL row			

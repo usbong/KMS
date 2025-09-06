@@ -1303,6 +1303,9 @@ else {
 				$dPatientServiceTotal=0;
 				$iCountTransactionTypes=0;
 				
+				//added by Mike, 20250906
+				$bHasServiceTotal=false;
+					
 				foreach ($cartListResult as $cartValue) {
 /*	
 				$value = $result[0];
@@ -1314,6 +1317,8 @@ else {
 				
 				if (intval($cartValue['patient_id'])!=0) {
 					$dPatientServiceTotal=$cartValue['fee']+$cartValue['x_ray_fee']+$cartValue['lab_fee'];
+					
+					$bHasServiceTotal=true;
 					
 					$iCountTransactionTypes++;
 				}
@@ -1343,8 +1348,10 @@ else {
 						
 						//patient service
 						if ($iCurrType==0) {
-							if ($dPatientServiceTotal!=0) {				
-							//echo "DITO!!!<br/><br/>";
+							//edited by Mike, 20250906; from 20250905
+							//echo ">>>>".$dPatientServiceTotal;
+							//if ($dPatientServiceTotal!=0) {	
+							if ($bHasServiceTotal) {
 	?>					
 							<tr class="row">
 							<td class ="column">				
@@ -1369,7 +1376,8 @@ else {
 								echo "<b>".number_format($dPatientServiceTotal, 2, '.', '')."</b>";
 							?>
 							</td>
-	<?php						
+	<?php					
+							//edited by Mike, 20250905
 							}
 						}
 						//med item
@@ -1624,7 +1632,7 @@ else {
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>MED TOTAL</b>";
 				?>		
