@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20250520; from 20211229
+  @date updated: 20250906; from 20250906
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -42,16 +42,14 @@
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
+							font-size: 12pt;
 
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							/* Legal Size; Landscape*/							
-							width: 860px;/* 802px;*//* 670px */
-							
-							/* use zoom 67% scale*/
-							zoom: 80%; /* at present, command not support in Mozilla Firefox */				
+
+							width: 860px;
+/*							
 							transform: scale(0.80);
 							transform-origin: 0 0;							
+*/							
                         }
 						
 						div.copyright
@@ -236,13 +234,14 @@
 	//removed by Mike, 20230925
 	//$fileBasePath = "G:\Usbong MOSC\Everyone\Information Desk\output\informationDesk\cashier\\";
 	
-
-/* //edited by Mike, 20210916; note: use to set date
+/*
+	//edited by Mike, 20210916; note: use to set date
 	//added by Mike, 20200902
 	//$sDateToday = date("Y-m-d");
-	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-1 Day"));
-	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-1 Day"));
+	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")."-2 Day"));
+	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")."-2 Day"));
 */	
+
 	$sDateToday = date("Y-m-d", strtotime(date("Y-m-d")));
 	$sDateTodayTransactionFormat = date("m/d/Y", strtotime(date("Y-m-d")));
 	
@@ -609,50 +608,63 @@
 			$iFeeTotalCount = 0;				
 			$iQuantityTotalCount = 0;
 
-			foreach ($selectedNonMedicineResultArray as $value) {				
-				//added by Mike, 20200708
+			foreach ($selectedNonMedicineResultArray as $value) {	
+/*
+echo $value['transaction_id']."; ";
+echo $value['fee']."<br/>";
+*/
+//echo $value['fee'];//."<br/>";
+//echo "; ".$iFeeTotalCount."<br/>";
+			
+				//edited by Mike, 20250905; from 20200708
 				//identify non-medicine item transaction if with VAT
-				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
+				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
 				{
-					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
-/*						//edited by Mike, 20200916						
-						$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
-						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
-*/						
+					//edited by Mike, 20250906
+					//TODO: -reverify: this
+					$row = $selectedNonMedicineTransactionReceiptResultArray->fetch_assoc(); 
+					
+					//echo ">>>>".$row['receipt_type_id']."<br/>";
 
-						//TO-DO: -ADD: SC/PWD IN ITEM NOTES
-						//echo $value['notes'];
-						//edited by Mike, 20201222
-//						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
-						if (strpos($value['notes'],"DISCOUNTED")!==false) {
-							//computation equal with "WI"
-							$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
-						}
-						else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
-							$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+					//edited by Mike, 20250908; from 20250906
+					//if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
+					//if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_type_id']===2)){
+					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!==0)){
+
+							//TO-DO: -ADD: SC/PWD IN ITEM NOTES
+							//echo $value['notes'];
+							//edited by Mike, 20201222
+	//						if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+							if (strpos($value['notes'],"DISCOUNTED")!==false) {
+								//computation equal with "WI"
+								$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
+							}
+							else if ((strpos($value['notes'],"SC")!==false) or (strpos($value['notes'],"PWD")!==false)) {
+								$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+							}
+							else {
+								$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
+							}
+
+							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
+
+							//added by Mike, 20200812
+							//Reference: https://www.php.net/number_format;
+							//last accessed: 20200812
+							//Note: Rounding Rules
+							//input: 60.00000000000006
+							//output: 60.00
+							//input: 60.005
+							//output: 60.01
+							//input: 60.004
+							//output: 60.00
+							$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
 						}
 						else {
-							$iFeeTotalCount = $iFeeTotalCount + ($value['fee']/(1 + 0.12));
+							$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
+							$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
 						}
-
-						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
-
-						//added by Mike, 20200812
-						//Reference: https://www.php.net/number_format;
-						//last accessed: 20200812
-						//Note: Rounding Rules
-						//input: 60.00000000000006
-						//output: 60.00
-						//input: 60.005
-						//output: 60.01
-						//input: 60.004
-						//output: 60.00
-						$iFeeTotalCount = floatval(number_format($iFeeTotalCount, 2, '.', ''));
-					}
-					else {
-						$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
-						$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
-					}
+					//}
 				}
 				// show an error if there is an issue with the database query
 				else
