@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250901; from 20250820
+  @date updated: 20250901; from 20250901
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -534,6 +534,7 @@
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
 			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;			
+			
 			var sexId = document.getElementById("selectSexIdParam").selectedIndex;			
 			var ageUnitId = document.getElementById("selectAgeUnitIdParam").selectedIndex;			
 
@@ -988,21 +989,21 @@
 			else {				
 				$medicalDoctorId = $result[0]["medical_doctor_id"];				
 			}
-			
+
+/*			//removed by Mike, 20250908
 			//added by Mike, 20250906
 			//if (not new and not today) or not deleted
 			if ((strpos($sDateToday,"DEL")!==false) or				
 				((strpos($sDateToday,strtoupper(date("Y-m-d")))===false) and
 				(strpos($sDateToday,"NEW")===false))) {
 
-/*										
-					echo "DITO!!!<br/>";
-					echo "sDateToday: ".$sDateToday."<br/>";
-					echo "strtoupper(date('Y-m-d')): ".strtoupper(date("Y-m-d"))."<br/>";
-					echo "".$sDateToday."<br/>";
-					echo "".strtoupper(date("Y-m-d"))."<br/>";
-*/					
-					
+										
+////					echo "DITO!!!<br/>";
+////					echo "sDateToday: ".$sDateToday."<br/>";
+////					echo "strtoupper(date('Y-m-d')): ".strtoupper(date("Y-m-d"))."<br/>";
+////					echo "".$sDateToday."<br/>";
+////					echo "".strtoupper(date("Y-m-d"))."<br/>";
+									
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
 					if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
 						echo "<span id='medicalDoctorIdParam'>".$medicalDoctorValue["medical_doctor_name"]."</span>";
@@ -1010,7 +1011,7 @@
 				}
 			}
 			else {
-				
+*/				
 				//edited by Mike, 20210318
 				//echo "<select id='medicalDoctorIdParam'>"
 				echo "<select id='medicalDoctorIdParam' name='selectMedicalDoctorNameParam'>";			
@@ -1034,40 +1035,27 @@
 					  
 						//continue;
 					  }
-					  
-	/*				
-					  //added: by Mike, 20230328; remove: in list, ESPINOSA, JHONSEL (ID#3); note: select OPTIONS count;
-					  //note: select options count when page is loaded
-					  if (strpos($medicalDoctorValue["medical_doctor_name"],"ESPINOSA, JHONSEL")!==false) {				  
-						continue;
-					  }
-	*/
-						
-					  //edited by Mike, 20200523
-					  //TO-DO: -update: this
-	/*				  
-					  if (($medicalDoctorValue["medical_doctor_id"]=="0") || (($medicalDoctorValue["medical_doctor_id"]=="3"))) {
-					  }
-					  else {
-	*/					  
-		//				  if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {					  
+					   
 						  if (isset($medicalDoctorId) and ($medicalDoctorValue["medical_doctor_id"]==$medicalDoctorId)) {
 							echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
 						  }			  	  
-		/*
-						  else if ($result[0]["medical_doctor_id"]==$medicalDoctorValue["medical_doctor_id"]) {
-							echo "<option value='".$medicalDoctorValue["medical_doctor_id"]."' selected='selected'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
-						  }				  
-		*/				  
 						  else {
-							echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";			  
+							//edited by Mike, 20250908
+							//echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+							if ((strpos($sDateToday,"DEL")!==false) or				
+							((strpos($sDateToday,strtoupper(date("Y-m-d")))===false) and
+							(strpos($sDateToday,"NEW")===false))) {
+							}					
+							else {
+								echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
+							}							
 						  }				
 					   }
-	/*
-					}
-	*/				
 				echo "</select>";
+/*			//removed by Mike, 20250908
 			}
+*/			
+			
 	?>
 	<br/>
 <?php
