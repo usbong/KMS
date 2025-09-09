@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250906; from 20250905
+' @date updated: 20250909; from 20250906
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -308,7 +308,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							width: 20%;
 							border-radius: 3px;	    	    
 
-							text-align: center;
+							text-align: left;
 							float: left;
 						}
 						
@@ -750,6 +750,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  </script>
   <!-- edited by Mike, 20200613 -->
   <body onload="onLoad();">
+  
+  <?php
+	//added by Mike, 20250909
+	//echo "<body><font color='#FF0000'><b>PAALALA: <a style='color:#222222' target='_blank' href='".site_url('browse/searchPatient')."'>ADD PATIENT</a> FIRST BEFORE ADDING NON-MED ITEMS.</b></font><br/></body>";
+	
+	if (isset($warningMessage)) {
+		echo $warningMessage;
+	}
+	
+  ?>
+  
 	<table class="imageTable">
 	  <tr>
 		<td class="imageColumn">				

@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250905; from 20250904
+' @date updated: 20250909; from 20250905
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -329,12 +329,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									
 							margin-right: 4px;
 							font-size: 17px;
-							
+														
 							border: 1px solid #68502b;
 							width: 20%;
 							border-radius: 3px;	    	    
 
-							text-align: center;
+							text-align: left;
 							float: left;
 						}
 

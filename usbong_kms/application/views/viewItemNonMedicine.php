@@ -808,6 +808,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  </script>
   <!-- edited by Mike, 20200613 -->
   <body onload="onLoad();">
+  
+  <?php
+	//added by Mike, 20250909
+	//echo "<body><font color='#FF0000'><b>PAALALA: <a style='color:#222222' target='_blank' href='".site_url('browse/searchPatient')."'>ADD PATIENT</a> FIRST BEFORE ADDING NON-MED ITEMS.</b></font><br/></body>";
+	
+	if (isset($warningMessage)) {
+		echo $warningMessage;
+	}
+	
+  ?>
+  
 	<table class="imageTable">
 	  <tr>
 		<td class="imageColumn">				
