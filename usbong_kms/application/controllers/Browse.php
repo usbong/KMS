@@ -5079,8 +5079,10 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 			}
 			else {
 				//echo "<font color='#FF0000'><b>PAALALA: ADD PATIENT FIRST BEFORE ADDING NON-MED ITEMS.</b></font><br/>";
+				//edited by Mike, 20250909
+				//echo "<font color='#FF0000'><b>PAALALA: <a style='color:#222222' target='_blank' href='".site_url('browse/searchPatient')."'>ADD PATIENT</a> FIRST BEFORE ADDING NON-MED ITEMS.</b></font><br/>";
 				
-				echo "<font color='#FF0000'><b>PAALALA: <a style='color:#222222' target='_blank' href='".site_url('browse/searchPatient')."'>ADD PATIENT</a> FIRST BEFORE ADDING NON-MED ITEMS.</b></font><br/>";
+				$data['warningMessage']="<font color='#FF0000'><b>PAALALA: <a style='color:#222222' target='_blank' href='".site_url('browse/searchPatient')."'>ADD PATIENT</a> FIRST BEFORE ADDING NON-MED ITEMS.</b></font><br/>";
 			}
 		}
 		else {
@@ -5100,7 +5102,10 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 				$sText = "searchSnack";
 			}	
 			
-			echo "<font color='#FF0000'><b>PAALALA: THIS ITEM HAS ALREADY BEEN REMOVED.</font> <a style='color:#222222' target='_blank' href='".site_url('browse/'.$sText)."'>SEARCH ITEM</a>.</b><br/>";
+			//edited by Mike, 20250909
+			//echo "<font color='#FF0000'><b>PAALALA: THIS ITEM HAS ALREADY BEEN REMOVED.</font> <a style='color:#222222' target='_blank' href='".site_url('browse/'.$sText)."'>SEARCH ITEM</a>.</b><br/>";
+			
+			$data['warningMessage']="<font color='#FF0000'><b>PAALALA: THIS ITEM HAS ALREADY BEEN REMOVED.</font> <a style='color:#222222' target='_blank' href='".site_url('browse/'.$sText)."'>SEARCH ITEM</a>.</b><br/>";
 		}
 		
 
