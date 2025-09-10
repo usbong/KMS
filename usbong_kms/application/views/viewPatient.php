@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250901; from 20250820
+' @date updated: 20250910; from 20250901
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 12pt;
-							width: 720px;
+							width: 750px;	
                         }
 						
 						div.checkBox
@@ -57,6 +57,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 							padding-left: 1.0em;
 						}						
+
+						h2 {
+							margin: 0px;
+							font-size: 20pt;
+						}
 						
 						div.copyright
 						{
@@ -112,17 +117,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 80%;
+							max-width: 75%;
 							height: 100%;
 														
 							resize: none;							
 							font-size: 18pt;
-							margin-bottom: 0.5em;
+							/*margin-bottom: 0.5em;*/
 						}	
 
 						button.Button-search
 						{
-							font-size: 16pt;
+							font-size: 18pt;
 						}
 
 						img.Image-companyLogo {
@@ -231,7 +236,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: right;
 							width: 26%;
 						}						
-
 						
 						td.imageColumn
 						{
@@ -321,6 +325,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						/*added by Mike, 20201013*/
 						.Button-purchase:focus {
 							background-color: #d4be00;
+						}
+
+						select.medicalDoctorSelect {
+							font-size: 16px;
 						}
 
 						a {color:#0011f1;}         /* Unvisited link  */
@@ -835,16 +843,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+					Enter
+				  </button>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<!-- Buttons -->
-		<button type="submit" class="Button-search">
-			Enter
-		</button>
 	</form>
 	<br/>
+	<br/>
+
 <!--	//removed by Mike, 20210220
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
@@ -946,7 +957,7 @@ else {
 				$medicalDoctorId = 0; //set default to ANY
 			}
 																						
-			echo "<select id='medicalDoctorIdParam'>";			
+			echo "<select id='medicalDoctorIdParam' class='medicalDoctorSelect'>";			
 			
 				foreach ($medicalDoctorList as $medicalDoctorValue) {
 				  //added by Mike, 20220520

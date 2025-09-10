@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250715; from 20250710
+' @date updated: 20250910; from 20250715
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
                             font-family: Arial;
 							font-size: 12pt;
-							width: 780px;							
+							width: 750px;							
                         }
 						
 						div.checkBox
@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 
 						h2 {
+							margin: 0px;
 							font-size: 20pt;
 						}
 						
@@ -108,17 +109,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 80%;
+							max-width: 75%;
 							height: 100%;
 														
 							resize: none;							
 							font-size: 18pt;
-							margin-bottom: 0.5em;
+							/*margin-bottom: 0.5em;*/
 						}	
 
-						button.Button-login
+						button.Button-search
 						{
-							font-size: 16pt;
+							font-size: 18pt;
 						}
 
 						img.Image-companyLogo {
@@ -230,6 +231,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						button.addNewPatientButton 
 						{
 							float: right;
+							margin-bottom: 0.25em;
+							margin-right: 0.25em;
 						}
 						
 						input.patient-input {
@@ -445,14 +448,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+						Enter
+				  </button>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Enter
-		</button>
 	</form>
 
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
@@ -649,6 +653,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "</table>";				
 				echo "<br/>";				
 				echo '<div>***NOTHING FOLLOWS***';	
+				echo "<br/>"; //added by Mike, 20250910
 			}
 			else {					
 				//added by Mike, 20220105
@@ -670,9 +675,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}			
 		}
 	?>
+<!-- //removed by Mike, 20250910	
 	<br />
+-->		
 	<br />
-		
+
 	<table class="addPatientTable">
 	<tr>
 		<td>

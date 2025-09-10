@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250717; from 20250627
+' @date updated: 20250910; from 20250717
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -33,11 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 12pt;
-
-							/* edited by Mike, 20201001 */
-							/* TO-DO: -add: auto-identify if Tablet PC */
-							/* 670 makes the width of the output page that is displayed on a browser equal with that of the printed page. */
-							width: 800px
+							width: 780px
                         }
 						
 						div.checkBox
@@ -66,6 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 						
 						h2 {
+							margin: 0px;							
 							font-size: 20pt;
 						}
 
@@ -96,7 +93,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: right;
-							margin-right: 10%; /*22%;*/	
 						}							
 
 						div.tableHeader
@@ -116,17 +112,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 80%;
+							max-width: 75%;
 							height: 100%;
 														
 							resize: none;							
 							font-size: 18pt;
-							margin-bottom: 0.5em;
+							/*margin-bottom: 0.5em;*/
 						}	
 
 						button.Button-search
 						{
-							font-size: 16pt;
+							font-size: 18pt;
 						}
 						
 						img.Image-companyLogo {
@@ -216,7 +212,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-							width: 34%;
+							width: 40%;
 						}							
 
 						td.columnTableHeaderFee
@@ -292,7 +288,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%; /*38%;*/
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -302,14 +298,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							color: #68502b;
 
 							padding: 12px;
-							margin-top: 2px;							
+							margin-top: 2px;
 							margin-bottom: 5px;
 							padding-right: 5px;
+							padding-left: 5px;
 							font-size: 17px;
 							
 							border: 1px solid #68502b;
 							border-radius: 3px;	    	    
-							width: 72%;
+							width: 78%;
+							text-align: center;
 							float: left;
 						}
 
@@ -317,28 +315,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #fCfCfC;
 							color: #68502b;
 							padding: 12px;
-							padding-right: 0;
 
 							margin-top: 2px;							
 							margin-bottom: 5px;
-							padding-right: 5px;
+									
+							margin-right: 4px;
 							font-size: 17px;
-							
+														
 							border: 1px solid #68502b;
-							width: 15%;
+							width: 20%;
 							border-radius: 3px;	    	    
 
+							text-align: left;
 							float: left;
 						}
 						
 						.Button-purchase {
-/*							padding: 8px 42px 8px 42px;
-*/
-							padding: 12px;
+							padding: 14px;
 							background-color: #ffe400;
 							color: #222222;
 							font-size: 16px;
 							font-weight: bold;
+
+							margin-top: 2px;							
+							margin-bottom: 5px;
 
 							border: 0px solid;		
 							border-radius: 4px;
@@ -798,16 +798,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+				    Enter
+				  </button>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<!-- Buttons -->
-		<button type="submit" class="Button-search">
-			Enter
-		</button>
 	</form>
-		
+	<br/>
+	<br/>
 		<a target='_blank' href='<?php echo site_url('browse/viewItemSnackWithItemPurchasedHistory/'.$itemId)?>' id="viewItemPurchasedHistory">
 			<div class="itemPurchasedHistory">
 <?php

@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250906; from 20250905
+' @date updated: 20250910; from 20250906
 ' @website: http://www.usbong.ph
 -->
 <?php
@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 
 						h2 {
+							margin: 0px;							
 							font-size: 20pt;
 						}						
 						
@@ -74,19 +75,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 80%;
+							max-width: 75%;
 							height: 100%;
 														
 							resize: none;							
 							font-size: 18pt;
-							margin-bottom: 0.5em;
+							/*margin-bottom: 0.5em;*/
 						}	
 
 						button.Button-search
 						{
-							font-size: 16pt;
+							font-size: 18pt;
 						}
-						
+
 						button.Button-submit
 						{
 							font-size: 14pt;
@@ -575,31 +576,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php
 			$itemCounter = 1;
 		?>
-<!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
-		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
--->
-
 		<div>
 			<table width="100%">
-<!--
-			  <tr>
-				<td>
-				  <b><span>Pangalan</span></b>
-				</td>
-			  </tr>
--->
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+					Enter
+				  </button>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<!-- Buttons -->
-		<button type="submit" class="Button-search">
-			Enter
-		</button>
 	</form>
+	<br/>
+	<br/>	
 	<table class="receiptDetailsTable">
 	  <tr>
 		<td>

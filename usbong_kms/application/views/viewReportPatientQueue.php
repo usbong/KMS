@@ -137,19 +137,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 80%;
+							max-width: 75%;
 							height: 100%;
 														
 							resize: none;							
 							font-size: 18pt;
-							margin-bottom: 0.5em;
+							/*margin-bottom: 0.5em;*/
 						}	
 
 						button.Button-search
 						{
-							font-size: 16pt;
+							font-size: 18pt;
 						}
-
+						
 						img.Image-companyLogo {
 							max-width: 60%;
 							height: auto;
@@ -392,6 +392,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						button.addNewPatientButton 
 						{
 							float: right;
+							margin-bottom: 0.25em;
+							margin-right: 0.25em;
 						}
 						
 						input.patient-input {
@@ -743,24 +745,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<div>
 			<table width="100%">
-<!--
-			  <tr>
-				<td>
-				  <b><span>Pangalan</span></b>
-				</td>
-			  </tr>
--->
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+					Enter
+				  </button>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<!-- Buttons -->
-		<button type="submit" class="Button-search">
-			Enter
-		</button>
 	</form>
 	<br/>
 	<br/>

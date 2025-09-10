@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250901; from 20250723
+' @date updated: 20250910; from 20250901
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -71,6 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 
 						h2 {
+							margin: 0px;							
 							font-size: 20pt;
 						}
 						
@@ -119,17 +120,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 80%;
+							max-width: 75%;
 							height: 100%;
 														
 							resize: none;							
 							font-size: 18pt;
-							margin-bottom: 0.5em;
+							/*margin-bottom: 0.5em;*/
 						}	
 
-						button.Button-login
+						button.Button-search
 						{
-							font-size: 16pt;
+							font-size: 18pt;
 						}
 						
 						img.Image-companyLogo {
@@ -599,12 +600,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 	<!-- Form -->
 	<form id="browse-form" method="post" action="<?php echo site_url('browse/confirmMedicine')?>">
-		<input type="text" class="browse-input" placeholder="" name="nameParam" required>
-		<br />
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Enter
-		</button>
+		<div>
+			<table width="100%">
+			  <tr>
+				<td>				
+				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+					Enter
+				  </button>
+				</td>
+			  </tr>
+			</table>
+		</div>
 	</form>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>

@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250901; from 20250901
+  @date updated: 20250910; from 20250901
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -98,19 +98,19 @@
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 80%;
+							max-width: 75%;
 							height: 100%;
 														
 							resize: none;							
 							font-size: 18pt;
-							margin-bottom: 0.5em;
+							/*margin-bottom: 0.5em;*/
 						}	
 
 						button.Button-search
 						{
-							font-size: 16pt;
+							font-size: 18pt;
 						}
-
+						
 						span.spanAgeFieldName
 						{
 							
@@ -431,13 +431,17 @@
 						{
 							font-size: 16px;
 						}
-
+/*
 						select.medicalDoctorSelect
 						{
 							font-size: 12pt;
 							text-align: right;							
 						}
-						
+*/						
+						select.medicalDoctorSelect {
+							font-size: 16px;
+						}
+
 						option.medicalDoctorOption
 						{
 							font-size: 12pt;
@@ -505,7 +509,11 @@
 							border: 0px solid #333333;
 							font-size: 20px;
 							padding: 0;
-						}				
+						}		
+
+						.medicalDoctorSelect {
+							font-size: 16px;
+						}						
 						
 <!-- added by Mike, 20210210 -->
 <!-- Reference: https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited; 
@@ -830,15 +838,17 @@
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+					Enter
+				  </button>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<!-- Buttons -->
-		<button type="submit" class="Button-search">
-			Enter
-		</button>
 	</form>
+	<br/>
 	<br/>
 	<table>
 		<tr>
@@ -1012,9 +1022,9 @@
 			}
 			else {
 */				
-				//edited by Mike, 20210318
+				//edited by Mike, 20250910; from 20210318
 				//echo "<select id='medicalDoctorIdParam'>"
-				echo "<select id='medicalDoctorIdParam' name='selectMedicalDoctorNameParam'>";			
+				echo "<select id='medicalDoctorIdParam' name='selectMedicalDoctorNameParam' class='medicalDoctorSelect'>";			
 					foreach ($medicalDoctorList as $medicalDoctorValue) {
 					  //added by Mike, 20230328
 					  //note: "SUMMARY" ID NOW SET TO BE LAST IN MEDICAL DOCTOR TABLE LIST

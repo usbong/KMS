@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250830; from 20250716
+' @date updated: 20250910; from 20250830
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -33,8 +33,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         {
 							font-family: Arial;
 							font-size: 12pt;
-
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							width: 780px
                         }
 						
@@ -52,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 
 						h2 {
+							margin: 0px;							
 							font-size: 20pt;
 						}
 						
@@ -101,17 +100,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 80%;
+							max-width: 75%;
 							height: 100%;
 														
 							resize: none;							
 							font-size: 18pt;
-							margin-bottom: 0.5em;
+							/*margin-bottom: 0.5em;*/
 						}	
 
-						button.Button-login
+						button.Button-search
 						{
-							font-size: 16pt;
+							font-size: 18pt;
 						}
 						
 						img.Image-companyLogo {
@@ -186,7 +185,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 52%;
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -238,6 +237,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						button.addNewSnackButton 
 						{
 							float: right;
+							margin-bottom: 0.25em;
+							margin-right: 0.25em;
 						}						
 						
 						a {color:#0011f1;}         /* Unvisited link  */
@@ -459,14 +460,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+					Enter
+				  </button>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Enter
-		</button>
 	</form>
 
 	
@@ -677,7 +679,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			else {					
 
-				echo '<div>';					
+				echo '<div>';		
+				echo "<br/>"; //added by Mike, 20250910				
+				echo "<br/>"; //added by Mike, 20250910				
 				echo 'Your search <b>- '.$nameParam.' -</b> did not match any of our medicine names.';
 				echo '<br><br>Recommendation:';
 				echo '<br>&#x25CF; Reverify that the spelling is correct.';				
