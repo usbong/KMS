@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250910; from 20250909
+' @date updated: 20250911; from 20250910
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -87,8 +87,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: right;
-							margin-right: 2%;	
-						}							
+
+							text-decoration: underline;	
+							text-decoration-thickness: 1px;							
+							display: inline-block;
+							float: right;
+
+							margin-right: 2%;
+						}		
 
 						div.tableHeader
 						{
@@ -823,6 +829,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>		
 			</div>								
 		</a>
+		<br/>
 		<br/>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
