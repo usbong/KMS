@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20250902; from 20250901
+  @date updated: 20250911; from 20250902
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -235,7 +235,7 @@
 							opacity: 0.6;
 						}
 						
-						img.reportSummaryEndDayIcon {
+						img.reportSummaryEndDayIcon, img.reportPayslipIcon {
 							width: 5%;
 							height: auto;
 							vertical-align: middle;
@@ -473,18 +473,14 @@
 </span>
 
 <h2>IV. PAYSLIPS</h2>
-<h3><a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Pedro"><img class="reportPatientQueueAccountingIcon" src="<?php echo base_url('assets/images/reportPayslipPedroIcon.png');?>?lastmod=20250812T1207">Payslip SYSON, PEDRO (MOSC)</a></h3>
-<h3>
-<span class="indentSpan"></span><a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Peter">Payslip SYSON, PETER</a>
+<h3><span class="indentSpan"></span>1. <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Pedro"><img class="reportPayslipIcon" src="<?php echo base_url('assets/images/reportPayslipPedroIcon.png');?>?lastmod=20250812T1207">Payslip SYSON, PEDRO (MOSC)</a></h3>
+<h3><span class="indentSpan"></span>2. <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Peter">Payslip SYSON, PETER</a>
 </h3>
-<h3>
-<span class="indentSpan"></span><a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">Payslip REJUSO-MORALES, CHASTITY</a>
+<h3><span class="indentSpan"></span>3. <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Chastity">Payslip REJUSO-MORALES, CHASTITY</a>
 </h3>
-<h3>
-<span class="indentSpan"></span><a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Rodil">Payslip DELA PAZ, RODIL</a>
+<h3><span class="indentSpan"></span>4. <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Rodil">Payslip DELA PAZ, RODIL</a>
 </h3>
-<h3>
-<span class="indentSpan"></span><a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Honesto">Payslip LASAM, HONESTO</a>
+<h3><span class="indentSpan"></span>5. <a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/report/viewpayslipwebfor/Honesto">Payslip LASAM, HONESTO</a>
 </h3>
 
 <!-- //removed by Mike, 20250812
