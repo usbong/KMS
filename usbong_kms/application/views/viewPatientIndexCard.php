@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250910; from 20250901
+  @date updated: 20250911; from 20250910
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -43,6 +43,11 @@
 							font-size: 12pt;
 							width: 780px; /*960px*/
                         }
+
+						h2 {
+							margin: 0px;							
+							font-size: 18pt;
+						}
 						
 						div.copyright
 						{
@@ -328,10 +333,9 @@
 
 						td.pageNameColumn
 						{
-							width: 58%; /*59%*/
+							width: 58%;
 							display: inline-block;
 							text-align: right;
-							font-size: 22px;
 						}						
 
 						.Button-delete {
@@ -800,19 +804,17 @@
 			<img class="Image-companyLogo" src="<?php echo base_url('assets/images/usbongLogo.png');?>">	
 		</td>
 		<td class="pageNameColumn">
-			<b>
-				Search Patient<br/>
+			<h2>
+				Search Patient
 
 <!--				@INDEX CARD PAGE
 -->				
 					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
-						<div class="patientName">
 		<?php
 						echo "@INDEX CARD PAGE"
 		?>		
-						</div>								
 					</a>				
-			</b>		
+			</h2>
 		</td>
 	  </tr>
 	</table>

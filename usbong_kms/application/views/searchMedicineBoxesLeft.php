@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250529; from 20250424
+' @date updated: 20250911; from 20250529
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -35,12 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    body
                         {
 							font-family: Arial;
-							font-size: 11pt;
-
-							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. 
-								width: 670px
-							*/
-							width: 800px
+							font-size: 12pt;
+							width: 780px
                         }
 
 						span.asterisk
@@ -64,6 +60,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 2pt;
 							display: inline-block;
 						}
+
+						h2 {
+							margin: 0px;							
+							font-size: 20pt;
+						}
 						
 						div.copyright
 						{
@@ -79,8 +80,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;
 						}
 						
 						div.tableHeaderAddNewMedItem
@@ -99,11 +100,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.browse-input
 						{
 							width: 100%;
-							max-width: 500px;
-														
-							resize: none;
-
+							max-width: 75%;
 							height: 100%;
+														
+							resize: none;							
+							font-size: 18pt;
+							/*margin-bottom: 0.5em;*/
+						}	
+
+						button.Button-search
+						{
+							font-size: 18pt;
 						}	
 
 						img.Image-companyLogo {
@@ -164,11 +171,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00ff00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00ff00; -->
+							background-color: #00dd00;
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
+							
+							padding-left: 0.5em;
+							padding-right: 0.5em;
 						}						
+						
+						td.columnTableHeaderQty
+						{
+							font-size: 12pt;
+							font-weight: bold;
+							background-color: #00dd00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							
+							padding-left: 0.5em;
+							padding-right: 0.5em;
+						}
 						
 						td.imageColumn
 						{
@@ -178,7 +199,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.pageNameColumn
 						{
-							width: 50%;
+							width: 58%;
 							display: inline-block;
 							text-align: right;
 						}						
@@ -239,6 +260,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							background-color: #eeeeee;
 							border: 0px solid #333333;
 						}	
+
+						a {color:#0011f1;}         /* Unvisited link  */
+						a:visited {color:#0011f1;} /* Visited link    */
+						a:hover {color:#0011f1;}   /* Mouse over link */
+						a:active {color:#593baa;}  /* Selected link */							
     /**/
     </style>
     <title>
@@ -488,31 +514,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php
 			$itemCounter = 1;
 		?>
-<!--		<input type="hidden" name="reportTypeIdParam" value="1" required>
-		<input type="hidden" name="reportTypeNameParam" value="Incident Report" required>
--->
-
 		<div>
 			<table width="100%">
-<!--
-			  <tr>
-				<td>
-				  <b><span>Pangalan</span></b>
-				</td>
-			  </tr>
--->
 			  <tr>
 				<td>				
 				  <input type="text" class="browse-input" placeholder="" name="nameParam" required>
+
+				  <!-- Buttons -->
+				  <button type="submit" class="Button-search">
+						Enter
+				  </button>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<br />
-		<!-- Buttons -->
-		<button type="submit" class="Button-login">
-			Enter
-		</button>
 	</form>
 	
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
@@ -768,12 +783,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</td>							
 						<td class="columnTableHeader">				
 							<?php
-								echo "AVAILABLE"; //IN-STOCK;
+								echo "AVAIL"; //IN-STOCK;
 							?>
 						</td>
-						<td class="columnTableHeader">				
+						<td class="columnTableHeaderQty">				
 							<?php
-								echo "QTY<br/>PER BOX";
+								echo "QTY PER BOX";
 							?>
 						</td>						
 						<td class="columnTableHeader">				
