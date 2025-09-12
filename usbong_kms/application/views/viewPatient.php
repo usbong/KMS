@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250910; from 20250901
+' @date updated: 20250912; from 20250910
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -93,11 +93,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 13pt;
 						}							
 						
-						div.itemPurchasedHistory
+						div.indexCardDiv
 						{
 							font-weight: bold;
 							text-align: right;
-							margin-right: 10%; /*22%;*/	
+
+							text-decoration: underline;	
+							text-decoration-thickness: 1px;							
+							display: inline-block;
+							float: right;
+
+							margin-right: 2%;
 						}							
 
 						div.tableHeader
@@ -234,6 +240,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: right;
+
 							width: 26%;
 						}						
 						
@@ -895,14 +902,9 @@ if (((strpos(strtoupper($result[0]['patient_name']),"NONE")!==false)
 else {
 ?>			
 			<td class="columnTableHeaderIndexCard">
-<!-- edited by Mike, 20210320
-					<a href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'])?>' id="viewPatientIndexCard">
--->					
-<!-- edited by Mike, 20220526
--->
 					<a target='_blank' href='<?php echo site_url('browse/viewPatientIndexCard/'.$result[0]['patient_id'].'/0')?>' id="viewPatientIndexCard">
 					
-						<div class="">
+						<div class="indexCardDiv">
 		<?php
 						//echo $value['patient_name'];
 	//					echo str_replace("ï¿½","Ã‘",$value['patient_name']);
