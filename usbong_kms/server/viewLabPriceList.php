@@ -1,5 +1,5 @@
 <!--
-  Copyright 2022~2022 SYSON, MICHAEL B.
+  Copyright 2022~2025 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,8 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20220411; from 20210105
+  @date updated: 20250917; from 20220411
+  @website: http://www.usbong.ph
   
   Input:
   1) MySQL Database with Lab Price List at the Marikina Orthopedic Specialty Clinic (MOSC)
@@ -82,18 +83,20 @@
 						}						
 
 						tr.rowEvenNumber {
-							background-color: #dddddd; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
-							border: 1pt solid #00ff00;		
+							background-color: #eeeeee; <!--#dddddd; = gray #95b3d7; = sky blue; use as row background color-->
+							border: 1pt solid #00ee00;		
 						}
 
 						td.tableHeaderColumn
 						{
-							background-color: #00ff00; <!--#93d151; lime green-->
-							border: 1pt solid #00ff00;		
+							background-color: #00dd00; <!--#93d151; lime green-->
+							border: 1pt solid #00dd00;		
 							text-align: center;
-							font-weight: bold;
-						}						
-
+							/*font-weight: bold;*/
+							padding-left: 0.5em;
+							padding-right: 0.5em;
+						}		
+						
 						td.column
 						{
 							border: 1px dotted #ab9c7d;		
