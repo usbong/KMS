@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250913; from 20250912
+' @date updated: 20250918; from 20250913
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -71,11 +71,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 						}
 						
-						div.itemName
-						{
-							text-align: left;
-						}
-
 						div.itemName
 						{
 							text-align: left;
@@ -161,7 +156,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						table.cartListResult
 						{
-							width: 86%;
+							width: 100%; /*86*/
 						}								
 
 						table.imageTable
@@ -1258,7 +1253,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td class ="column">				
 								</td>
 								<td class ="column">				
-									<div class="">
+									<div class="columnTotalLabel">
 						<?php
 										echo "<b>SERVICE TOTAL</b>";
 						?>		
@@ -1289,7 +1284,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>MED TOTAL</b>";
 					?>		
@@ -1380,7 +1375,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 							<div class="transactionDate">
 				<?php
-								echo $cartValue['transaction_date'];
+								//edited by Mike, 20250918
+								//echo $cartValue['transaction_date'];
+								
+								echo date("Y-m-d",strtotime($cartValue['transaction_date']));
 				?>		
 							</div>								
 						</td>
@@ -1581,7 +1579,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>MED TOTAL</b>";
 				?>		
@@ -1612,7 +1610,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>NON-MED TOTAL</b>";
 				?>		
@@ -1643,7 +1641,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>SNACK TOTAL</b>";
 				?>		

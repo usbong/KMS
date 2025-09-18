@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250912; from 20250910
+' @date updated: 20250918; from 20250912
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -161,7 +161,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						table.cartListResult
 						{
-							width: 80%;
+							width: 95%; /*82*/
 						}	
 						
 						table.imageTable
@@ -1354,8 +1354,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								}								
 								?>'>
-								<div class="itemNameCartList">
+								<div class="itemName">
 				<?php
+								//itemNameCartList
+								
 								//edited by Mike, 20200519
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									//TO-DO: -update: this

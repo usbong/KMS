@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250911; from 20250910
+' @date updated: 20250918; from 20250911
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -155,7 +155,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						table.cartListResult
 						{
-							width: 80%;
+							width: 95%; /*80*/
 						}						
 
 						table.imageTable
@@ -1377,6 +1377,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								//echo $cartValue['transaction_date'];
 								
 								echo date("Y-m-d",strtotime($cartValue['transaction_date']));
+									
 				?>		
 							</div>								
 						</td>
@@ -1400,8 +1401,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 								}								
 								?>'>
-								<div class="itemNameCartList">
+								<div class="itemName">
 				<?php
+								//itemNameCartList
+								
 								//edited by Mike, 20200519
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									//TO-DO: -update: this
@@ -1529,7 +1532,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>MED TOTAL</b>";
 				?>		

@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250912; from 20250910
+' @date updated: 20250918; from 20250912
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -1296,7 +1296,7 @@ else {
 				}			
 				echo '<br/>';
 				
-				echo "<table class='search-result'>";
+				echo "<table class='cartListResult'>";
 				
 				//add: table headers
 				$iCount = 1;

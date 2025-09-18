@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250913; from 20250912
+' @date updated: 20250918; from 20250913
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -49,6 +49,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							display: inline-block;
 						}
 
+						div.columnTotalLabel
+						{
+							text-align: left;
+							padding-left: 1.0em;
+						}
+						
 						h2 {
 							margin: 0px;							
 							font-size: 20pt;
@@ -149,7 +155,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						table.cartListResult
 						{
-							width: 82%;
+							width: 95%; /*82*/
 						}							
 
 						table.imageTable
@@ -904,7 +910,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>								
 							</a>
 						</td>
-						<td class ="column">	
+						<td class="column">	
 								<!-- added by Mike, 20200504; edited by Mike, 20200505 -->							
 								<input type="hidden" id="resultQuantityInStockNowParam" value="<?php 
 									if (($resultQuantityInStockNow<0) || ($value['quantity_in_stock']==-1)) {										
@@ -1210,7 +1216,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>SERVICE TOTAL</b>";
 					?>		
@@ -1241,7 +1247,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>MED TOTAL</b>";
 					?>		
@@ -1270,7 +1276,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>NON-MED TOTAL</b>";
 					?>		
@@ -1312,7 +1318,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 							<div class="transactionDate">
 				<?php
-								echo $cartValue['transaction_date'];
+								//edited by Mike, 20250918
+								//echo $cartValue['transaction_date'];
+								
+								echo date("Y-m-d",strtotime($cartValue['transaction_date']));
 				?>		
 							</div>								
 						</td>
@@ -1452,7 +1461,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>MED TOTAL</b>";
 				?>		
@@ -1483,7 +1492,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>NON-MED TOTAL</b>";
 				?>		
@@ -1514,7 +1523,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>SNACK TOTAL</b>";
 				?>		

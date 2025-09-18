@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250913; from 20250912
+' @date updated: 20250918; from 20250913
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -48,6 +48,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 2pt;
 							display: inline-block;
 						}
+
+						div.columnTotalLabel
+						{
+							text-align: left;
+							padding-left: 1.0em;
+						}						
 
 						h2 {
 							margin: 0px;							
@@ -144,8 +150,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						table.cartListResult
 						{
-							width: 80%;
-						}	
+							width: 95%; /*80*/
+						}		
 						
 						table.imageTable
 						{
@@ -317,6 +323,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 							text-align: left;
 							float: left;
+						}
+
+						.Button-delete {
+							margin-left: 4px;
 						}
 						
 						.Button-purchase {
@@ -1223,7 +1233,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>SERVICE TOTAL</b>";
 					?>		
@@ -1254,7 +1264,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>MED TOTAL</b>";
 					?>		
@@ -1283,7 +1293,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class ="column">				
 							</td>
 							<td class ="column">				
-								<div class="">
+								<div class="columnTotalLabel">
 					<?php
 									echo "<b>NON-MED TOTAL</b>";
 					?>		
@@ -1329,7 +1339,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 							<div class="transactionDate">
 				<?php
-								echo $cartValue['transaction_date'];
+								//edited by Mike, 20250918
+								//echo $cartValue['transaction_date'];
+								
+								echo date("Y-m-d",strtotime($cartValue['transaction_date']));
 				?>		
 							</div>								
 						</td>
@@ -1482,7 +1495,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>MED TOTAL</b>";
 				?>		
@@ -1513,7 +1526,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>NON-MED TOTAL</b>";
 				?>		
@@ -1544,7 +1557,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td class ="column">				
 						</td>
 						<td class ="column">				
-							<div class="">
+							<div class="columnTotalLabel">
 				<?php
 								echo "<b>SNACK TOTAL</b>";
 				?>		
@@ -1740,6 +1753,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$sDay = substr($value['transaction_date'],3,2); //day
 									
 									echo $sYear."-".$sMonth."-".$sDay;
+									
 
 //									echo str_replace(" ","<br/>T",$value['added_datetime_stamp']);
 					?>		
