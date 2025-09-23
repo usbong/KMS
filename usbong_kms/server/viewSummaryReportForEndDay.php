@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20250906; from 20250906
+  @date updated: 20250923; from 20250906
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -629,7 +629,9 @@ echo $value['fee']."<br/>";
 					//edited by Mike, 20250908; from 20250906
 					//if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
 					//if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_type_id']===2)){
-					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!==0)){
+					//edited by Mike, 20250923
+					//if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!==0)){
+					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!==0) and ($row['receipt_type_id']===2)){
 
 							//TO-DO: -ADD: SC/PWD IN ITEM NOTES
 							//echo $value['notes'];
@@ -1428,17 +1430,22 @@ echo $value['fee']."<br/>";
 			$iQuantityTotalCount = 0;
 
 			foreach ($selectedNonMedicineResultArray as $value) {
-				//added by Mike, 20200708
-				//identify non-medicine item transaction if with VAT
-				//edited by Mike, 20201120
-				//TO-DO: -update: this due to incorret quantity total count
+/*				//edited by Mike, 20250923; from 20201120
 				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
-//				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' group by t1.receipt_id"))
 				{
+*/
+				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
+				{
+					
 /*					echo $value['item_name'];
 					echo "dito".$value['transaction_id']."<br/>";
 */
-					if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {						
+					$row = $selectedNonMedicineTransactionReceiptResultArray->fetch_assoc(); 
+
+					//edited by Mike, 20250923
+					//if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {						
+					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!==0) and ($row['receipt_type_id']===2)){					
+					
 						//edited by Mike, 20201223
 						if (strpos($value['notes'],"DISCOUNTED")!==false) {
 						}
