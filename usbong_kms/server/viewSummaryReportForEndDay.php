@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20250923; from 20250906
+  @date updated: 20250924; from 20250923
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -629,9 +629,11 @@ echo $value['fee']."<br/>";
 					//edited by Mike, 20250908; from 20250906
 					//if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
 					//if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_type_id']===2)){
-					//edited by Mike, 20250923
+					
+					//edited by Mike, 20250924; from 20250923
 					//if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!==0)){
-					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!==0) and ($row['receipt_type_id']===2)){
+					
+					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!=="0") and ($row['receipt_type_id']==="2")){
 
 							//TO-DO: -ADD: SC/PWD IN ITEM NOTES
 							//echo $value['notes'];
@@ -1436,16 +1438,23 @@ echo $value['fee']."<br/>";
 */
 				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
 				{
-					
-/*					echo $value['item_name'];
+/*					
+					echo $value['item_name']."<br/>";
 					echo "dito".$value['transaction_id']."<br/>";
 */
-					$row = $selectedNonMedicineTransactionReceiptResultArray->fetch_assoc(); 
+					$row = $selectedNonMedicineTransactionReceiptResultArray->fetch_assoc();
+/*					
+					echo ">>>>".$row['receipt_type_id']."<br/>";
+					echo ">>>>".$row['receipt_number']."<br/>";
+					echo ">>>>".$selectedNonMedicineTransactionReceiptResultArray->num_rows."<br/>";
+*/					
 
-					//edited by Mike, 20250923
+					//edited by Mike, 20250924; from 20250923
 					//if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {						
-					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!==0) and ($row['receipt_type_id']===2)){					
-					
+					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!=="0") and ($row['receipt_type_id']==="2")){
+						
+						//echo ">>>>DITO!";
+						
 						//edited by Mike, 20201223
 						if (strpos($value['notes'],"DISCOUNTED")!==false) {
 						}
