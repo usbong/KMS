@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250911; from 20250529
+' @date updated: 20251014; from 20250911
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -953,20 +953,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									else {
 										$output = floor($value['resultQuantityInStockNow']/$value['item_quantity_per_box']);
 										
-										$outputDenominator = floor($value['quantity_in_stock']/$value['item_quantity_per_box']);
-																				
+										//removed by Mike, 20251014
+										//$outputDenominator = floor($value['quantity_in_stock']/$value['item_quantity_per_box']);
+
 										if ($output<=0) {
 											if ($outputDenominator<=0) {
 												//echo "<b><span style='color:red'>NONE</span></b>";
 												echo "<b><span style='color:red'>0</span></b>";
 											}
-											else {											
-												echo "<b><span style='color:red'>".$output." / ".$outputDenominator."</span></b>";
-											}												
+											else {
+												//edited by Mike, 20251014
+												//echo "<b><span style='color:red'>".$output." / ".$outputDenominator."</span></b>";
+											
+												echo "<b><span style='color:red'>".$output."</span></b>";
+											}	
 											//echo "<b><span style='color:red'>NONE</span></b>";
 										}
 										else {
-											echo $output." / ".$outputDenominator;
+											//edited by Mike, 20251014
+											//echo $output." / ".$outputDenominator;
+											echo $output;//." / ".$outputDenominator;
 										}
 									}
 								}
