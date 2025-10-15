@@ -5262,7 +5262,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			//edited by Mike, 20250604
 			//$this->db->select('t1.patient_name, t1.patient_id, t1.added_datetime_stamp, t1.last_visited_date, t2.notes, t3.medical_doctor_id, t3.medical_doctor_name');
 			
-			$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t3.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t1.added_datetime_stamp, t2.notes");
+			//edited by Mike, 20251015
+			//$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t3.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t1.added_datetime_stamp, t2.notes");
+						
+			$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t3.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t1.added_datetime_stamp, t2.notes, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.transaction_date");
+
 			
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
