@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250918; from 20250912
+' @date updated: 20251015; from 20250918
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -509,6 +509,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var classification = document.getElementById("classificationParam").value;
 			var notes = document.getElementById("notesParam").value;
 
+			//added by Mike, 20251015
+			var existingProfessionalFee = document.getElementById("existingProfessionalFeeParam").value;			
+			var existingNotes = document.getElementById("existingNotesParam").value;
+			var existingXRayFee = document.getElementById("existingXRayFeeParam").value;
+			var existingLabFee = document.getElementById("existingLabFeeParam").value;
+
+			var sIsExistingTransactionToday = document.getElementById("sIsExistingTransactionTodayParam").value;
+			
+			//TODO: -reverify: this due to Xray or Lab can still be added after already adding, for example, an Xray payment
+			if (sIsExistingTransactionToday==="1") {
+				if (existingNotes.indexOf("PAID")!==-1) {
+					if (existingNotes.indexOf("ONLY")==-1) { //no "ONLY" keyword
+						if ((existingProfessionalFee!=0) && (professionalFee!=0)) { 
+							alert("May nailagay nang PF sa record ng pasyente ngayong araw.");
+							return;
+						}
+						
+						if (professionalFee!=0) { 
+							//if ((existingXRayFee!=0) && (xRayFee!=0)) {
+							if (existingXRayFee!=0) {
+								alert("May nailagay nang XRAY sa record ng pasyente ngayong araw.");
+								return;
+							}
+
+							//if ((existingLabFee!=0) && (labFee!=0)) {
+							if (existingLabFee!=0) {
+								alert("May nailagay nang LAB sa record ng pasyente ngayong araw.");
+								return;
+							}
+						}
+					}
+				}
+			}
 
 			//added by Mike, 20200806
 			//verified: if a patient id already exists in the cart list
@@ -1125,7 +1158,38 @@ else {
 								</div>								
 							</a>
 						</td>
-						<td class ="column">				
+						<td class ="column">
+<?php		
+	//added by Mike, 20251015
+/*
+	//$result['fee']
+	//if (isset($value['notes'])) {
+		echo ">>>>>".$value['notes']."<br/>";
+		echo ">>>>>".$value['fee']."<br/>";
+	//}
+*/	
+/*
+	echo ">>>>>".$value['transaction_date']."<br/>";
+	echo "date today: ".date('m/d/Y');
+*/	
+	//if the transaction was added today;
+	if (isset($value['transaction_date']) and (strpos($value['transaction_date'],date('m/d/Y'))!==false)) {
+?>					
+		<input type="hidden" id="sIsExistingTransactionTodayParam" value="1">
+<?php
+	}
+	else {
+?>
+		<input type="hidden" id="sIsExistingTransactionTodayParam" value="0">
+<?php
+	}
+?>
+
+		<input type="hidden" id="existingNotesParam" value="<?php echo $value['notes'];?>">
+		<input type="hidden" id="existingProfessionalFeeParam" value="<?php echo $value['fee'];?>">
+		<input type="hidden" id="existingXRayFeeParam" value="<?php echo $value['x_ray_fee'];?>">
+		<input type="hidden" id="existingLabFeeParam" value="<?php echo $value['lab_fee'];?>">
+
 							<!-- edited by Mike, 20200602 -->
 							<!-- default value is now 800, instead of 600 -->
 							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="800" min="1" max="99999" 
