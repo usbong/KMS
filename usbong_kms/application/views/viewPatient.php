@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251015; from 20250918
+' @date updated: 20251016; from 20251015
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -536,6 +536,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							//if ((existingLabFee!=0) && (labFee!=0)) {
 							if (existingLabFee!=0) {
 								alert("May nailagay nang LAB sa record ng pasyente ngayong araw.");
+								return;
+							}
+						}
+						//added by Mike, 20251016
+						else {
+							if (xRayFee!=0) { 
+								alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
+								return;
+							}
+
+							if (labFee!=0) { 
+								alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
 								return;
 							}
 						}
@@ -1185,10 +1197,10 @@ else {
 	}
 ?>
 
-		<input type="hidden" id="existingNotesParam" value="<?php echo $value['notes'];?>">
-		<input type="hidden" id="existingProfessionalFeeParam" value="<?php echo $value['fee'];?>">
-		<input type="hidden" id="existingXRayFeeParam" value="<?php echo $value['x_ray_fee'];?>">
-		<input type="hidden" id="existingLabFeeParam" value="<?php echo $value['lab_fee'];?>">
+		<input type="hidden" id="existingNotesParam" value="<?php if (isset($value['notes'])){ echo $value['notes'];}?>">
+		<input type="hidden" id="existingProfessionalFeeParam" value="<?php if (isset($value['notes'])){ echo $value['fee'];}?>">
+		<input type="hidden" id="existingXRayFeeParam" value="<?php if (isset($value['notes'])){ echo $value['x_ray_fee'];}?>">
+		<input type="hidden" id="existingLabFeeParam" value="<?php if (isset($value['notes'])){ echo $value['lab_fee'];}?>">
 
 							<!-- edited by Mike, 20200602 -->
 							<!-- default value is now 800, instead of 600 -->
