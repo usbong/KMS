@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250901; from 20250830
+' @date updated: 20251024; from 20250901
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -974,16 +974,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//echo "0/0";
 									//edited by Mike, 20250624
 									//echo "0";
-									echo "<span style='color:red;font-weight:bold;'>0</span>";							
+									echo "<span style='color:red;font-weight:bold;'>0</span>";		
 								}
 								else {
 									//edited by Mike, 20250624; from 20250623
 									//echo ">>>".$value['resultQuantityInStockNow']."<br/>";
-									
+																		
 									//TODO: -reverify: $value['resultQuantityInStockNow']
 									//≤
 									if ($value['resultQuantityInStockNow']<=0) {
-										echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+										//edited by Mike, 20251024
+										//echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+										
+										//edited by Mike, 20251024
+										//echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+										if ($value['resultQuantityInStockNow']<0) {
+											echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
+										}
+										else { //if 0; not indicated if less; 
+											//in non-med;
+											//item_total_sold could be more than consolidated total quantity_in_stock
+											
+											echo "<span style='color:red;font-weight:bold;'>0 or NEG</span>";
+										}
 										
 										//echo "<span style='color:red;font-weight:bold;'>0</span>";
 									}
