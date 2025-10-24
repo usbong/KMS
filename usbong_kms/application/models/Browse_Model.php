@@ -4696,6 +4696,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//remove all commas; then, add only one comma later
 		$param['patientLastNameParam'] = str_replace(",","",$param['patientLastNameParam']);
 		$param['patientFirstNameParam'] = str_replace(",","",$param['patientFirstNameParam']);
+
+		//added by Mike, 20251024
+		$param['patientLastNameParam'] = str_replace("'","",$param['patientLastNameParam']);
+		$param['patientFirstNameParam'] = str_replace("'","",$param['patientFirstNameParam']);
+		$param['patientLastNameParam'] = str_replace("’","",$param['patientLastNameParam']);
+		$param['patientFirstNameParam'] = str_replace("’","",$param['patientFirstNameParam']);
 	
 		//added by Mike, 20230328
 		$param['nameParam'] = trim($param['patientLastNameParam']).", ".trim($param['patientFirstNameParam']);
@@ -5248,6 +5254,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			($nameId==16186) || ($nameId==17904)){
 			
 			$this->db->select('t1.patient_name, t1.patient_id, t1.medical_doctor_id');
+			
 			$this->db->from('patient as t1');
 		}
 		else {
