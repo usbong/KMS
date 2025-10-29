@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20250924; from 20250923
+  @date updated: 20251029; from 20250924
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -910,7 +910,12 @@ echo $value['fee']."<br/>";
 			
 			//edited by Mike, 20250520
 			//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' group by patient_id"))
-			if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 order by transaction_id ASC"))
+				
+			//edited by Mike, 20251029
+			//reverify this
+			//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 order by transaction_id ASC"))
+				
+			if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 order by transaction_id ASC"))
 			{
 /* //removed by Mike, 20210915						
 				echo "--<br />";
@@ -938,6 +943,9 @@ echo $value['fee']."<br/>";
 //					$iTransactionQuantity = 0;
 
 					foreach ($selectedMedicalDoctorResultArray as $value) {
+						
+						//echo $value['fee']."<br/>";
+						
 		//				if (strpos($value['item_name'], "*") === false) {
 						//removed by Mike, 20200712
 /*	
@@ -970,8 +978,12 @@ echo $value['fee']."<br/>";
 							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
 //										echo $value['notes'];
 //										echo $value['transaction_id'];
-								//TO-DO: -update: this
-								//$transactionId = $value['transaction_id'] + 1;
+
+								//edited by Mike, 20251029
+								//TODO: -reverify: this
+								$iTransactionId = $value['transaction_id'];
+
+/*
 								//edited by Mike, 20201127
 								$iTransactionId = $value['transaction_id'] + 1;
 								
@@ -980,12 +992,14 @@ echo $value['fee']."<br/>";
 								
 								//added by Mike, 20201127
 								//--------------------------------------------------
+								
 			//						echo $iTransactionId."<br/>";
 
 									//added by Mike, 20200910
 									//identify newest transactionId
 									$iTransactionIdMax = -1;
 
+									//edited by Mike, 20251029
 									if ($rowTransactionIdMaxArray = $mysqli->query("select max(transaction_id) As transactionIdMax from transaction")) {
 										if ($rowTransactionIdMaxArray->num_rows > 0) {
 											$iTransactionIdMax = mysqli_fetch_array($rowTransactionIdMaxArray)[0]; //'transactionIdMax'];
@@ -1004,9 +1018,10 @@ echo $value['fee']."<br/>";
 										
 										if ($rowTransactionQuantityArray = $mysqli->query("select transaction_quantity from transaction where transaction_id='".$iTransactionId."'")) {
 											if ($rowTransactionQuantityArray->num_rows > 0) {												
+												//removed by Mike, 20251029
 												$iTransactionId = $iTransactionId + 1;
 
-												//echo "iTransactionId: ".$iTransactionId;
+												echo "iTransactionId: ".$iTransactionId."<br/>";
 												
 												//this is due to the transaction count can skip
 												$iTransactionQuantity = -1;
@@ -1022,13 +1037,15 @@ echo $value['fee']."<br/>";
 													break;
 												}						
 												
-												/*if ($iTransactionId>=$iTransactionIdMax) {
-												}*//* //removed by Mike, 20201211
-												else {
-													$iTransactionId = $iTransactionId -1;
-												}*/
+////												if ($iTransactionId>=$iTransactionIdMax) {
+////												} //removed by Mike, 20201211
+////												else {
+////													$iTransactionId = $iTransactionId -1;
+////												}
 												
 //												echo "iTransactionQuantity: ".$iTransactionQuantity;
+
+											
 											}
 											//added by Mike, 20201217
 											else {
@@ -1049,7 +1066,10 @@ echo $value['fee']."<br/>";
 
 								//edited by Mike, 20201127
 								//if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
-//									echo $iTransactionId;
+									
+									echo $iTransactionId." : ";
+*/									
+									
 								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$iTransactionId."'")) {
 									$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
 
@@ -1057,6 +1077,9 @@ echo $value['fee']."<br/>";
 
 									if($receiptArrayRowValue) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
+
+											//echo "RECEIPT!!!: ".$iTransactionId."<br/>";
+
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 										}
 									}
@@ -1070,7 +1093,10 @@ echo $value['fee']."<br/>";
 									echo "Error: " . $mysqli->error;
 								}
 							}									
-
+							
+/*							
+							echo $myNetFeeValue." : ".$value['patient_id']."<br/>";
+*/
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;										
 							
 
