@@ -916,6 +916,11 @@ echo "hallo<br/>";
 												$iCurrExtraFeeValue+=300;
 											}
 										}
+										//added by Mike, 20251106
+										//TODO: -update: so that the number after "MEDCERT" is used;
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
+											$iCurrExtraFeeValue+=300*2;
+										}
 										else {	
 											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
 												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
@@ -1248,6 +1253,11 @@ echo "hallo<br/>";
 									
 									$iCurrExtraFeeValue+=300;
 								}
+							}
+							//added by Mike, 20251106
+							//TODO: -update: so that the number after "MEDCERT" is used;
+							else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
+								$iCurrExtraFeeValue+=300*2;
 							}
 							else {	
 								//edited by Mike, 20240510
