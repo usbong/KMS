@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251016; from 20250703
+' @date updated: 20251106; from 20251016
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -516,10 +516,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										echo $iFee;
 									}									
 									else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
-										//edited by Mike, 20240510
+										//edited by Mike, 20251106; from 20240510
 										//echo ($iFee-300)." + 300";
-										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {	
-											echo ($iFee-300*2)." + 300*2";										
+										//if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {	
+										//TODO: -update: so that the number after "MEDCERT" is used;
+										
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
+											echo ($iFee-300*2)." + 300*2";
 										}
 										//added by Mike, 20250219
 										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {	
@@ -529,6 +532,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											echo ($iFee-300)." + 300";
 										}
 									}
+									//added by Mike, 20251106
+									//TODO: -update: so that the number after "MEDCERT" is used;
+									else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
+										echo ($iFee-300*2)." + 300*2";
+									}									
 									else {										
 										//edited by Mike, 20240510
 										//echo ($iFee-200)." + 200";
@@ -657,9 +665,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											$iCurrExtraFeeValue = 0;
 										}										
 										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {	
-											//edited by Mike, 20240510
+											//edited by Mike, 20251106; from 20240510
 											//$iMOSC = ($value['fee']-300)*.30;
+											//if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
 											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
+	
 												//$iMOSC = ($value['fee']-300*2)*.30;
 												$iCurrExtraFeeValue += (300*2);//*.30;
 
@@ -673,6 +683,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												$iCurrExtraFeeValue += (300);//*.30;
 											}											
 										}
+										//added by Mike, 20251106
+										//TODO: -update: so that the number after "MEDCERT" is used;
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
+											$iCurrExtraFeeValue += (300*2);//*.30;
+										}										
 										else {				
 											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
 												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
@@ -911,8 +926,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											$iCurrExtraFeeValue = 0;
 										}
 										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
-						
+											//edited by Mike, 20251106
+											//if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
 											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
+	
 												//$iNetPF = ($value['fee']-200)*.70;//+200;
 												//$iNetPF = ($value['fee']-300*2)*.70+300*2;
 												
@@ -938,6 +955,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												//echo floor((($iNetPF-300)*100)/100)." + 300";
 											}
 										}
+										//added by Mike, 20251106
+										//TODO: -update: so that the number after "MEDCERT" is used;
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
+											$iCurrExtraFeeValue += 300*2;
+										}												
 										else {										
 
 											//if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) {
