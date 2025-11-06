@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20251029; from 20250924
+  @date updated: 20251106; from 20251029
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -920,7 +920,9 @@ echo $value['fee']."<br/>";
 /* //removed by Mike, 20210915						
 				echo "--<br />";
 */
+
 				if ($selectedMedicalDoctorResultArray->num_rows > 0) {
+
 /* //removed by Mike, 20210915							
 					//added by Mike, 20200524
 					if ($selectedMedicalDoctorResultArray->num_rows == 1) {
@@ -1251,7 +1253,57 @@ echo $value['fee']."<br/>";
 
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
 					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+				
 
+					//added by Mike, 20251106
+					//TODO: -reverify: this
+					$iCurrExtraFeeValue=0;
+					
+					if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+						//edited by Mike, 20241029
+						if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT0")!==false) {
+							$iCurrExtraFeeValue = 0;
+						}									
+						else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
+							if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + (300*2)*.30;
+								
+								$iCurrExtraFeeValue+=300*2;
+							}
+							//added by Mike, 20250219
+							else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {
+								$iCurrExtraFeeValue+=300*3;
+							}
+							else {
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + 300*.30;
+																		
+								$iCurrExtraFeeValue+=300;
+							}
+						}
+						//added by Mike, 20251106
+						//TODO: -update: so that the number after "MEDCERT" is used;
+						else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
+							$iCurrExtraFeeValue+=300*2;
+						}
+						else {	
+							if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
+								(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + (200*2)*.30;
+																																				$iCurrExtraFeeValue+=200*2;
+							}
+							//added by Mike, 20250219
+							else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
+								(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false)) {
+								$iCurrExtraFeeValue+=200*3;
+							}
+							else {
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + 200*.30;
+								
+								$iCurrExtraFeeValue+=200;										
+							}
+						}
+					}
+						
 					if (strpos($value['notes'],"PRIVATE")!==false) {
 						//removed by Mike, 20200829
 						//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
@@ -1272,7 +1324,7 @@ echo $value['fee']."<br/>";
 						}
 					}
 					else {
-						//edited by Mike, 20200829
+						//edited by Mike, 20251106; from 20200829
 						if (strpos($value['notes'],"DEXA")!==false) {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
@@ -1286,8 +1338,12 @@ echo $value['fee']."<br/>";
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 						}
 						else {
-							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
-						}												
+							//edited by Mike, 20251106
+							//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
+							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
+						}					
+
+						
 					}
 										
 					if (strpos($value['notes'],"MINORSET")!==false) {
