@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20251106; from 20251029
+  @date updated: 20251108; from 20251106
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -1311,8 +1311,9 @@ echo $value['fee']."<br/>";
 						//added by Mike, 20200531
 						$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;
 						
-						//TO-DO: -reverify: if +DEXA
-						//added by Mike, 20200829
+						//TO-DO: -reverify; use number after DEXA
+						//edited by Mike, 20251108; from 20200829
+/*
 						if (strpos($value['notes'],"DEXA")!==false) {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
@@ -1322,14 +1323,66 @@ echo $value['fee']."<br/>";
 						else {
 							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
 						}
+*/
+							if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX2")!==false)){								
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*2)*0.70 + 500*2;
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
+							}
+							else if ((strpos(strtoupper($value['notes']), "DEXA3")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX3")!==false)){								
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*3)*0.70 + 500*3;
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 3;
+							}
+							else if ((strpos(strtoupper($value['notes']), "DEXA4")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX4")!==false)){								
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*4)*0.70 + 500*4;
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 4;
+							}							
+							else {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+								
+								//added by Mike, 20200531
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+							}	
 					}
 					else {
-						//edited by Mike, 20251106; from 20200829
+						//edited by Mike, 20251108; from 20251106
 						if (strpos($value['notes'],"DEXA")!==false) {
+/*
 							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
 							
 							//added by Mike, 20200531
 							$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+*/							
+							
+							if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX2")!==false)){								
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*2)*0.70 + 500*2;
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
+							}
+							else if ((strpos(strtoupper($value['notes']), "DEXA3")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX3")!==false)){								
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*3)*0.70 + 500*3;
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 3;
+							}
+							else if ((strpos(strtoupper($value['notes']), "DEXA4")!==false) ||
+								(strpos(strtoupper($value['notes']), "DEXAX4")!==false)){								
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*4)*0.70 + 500*4;
+
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 4;
+							}							
+							else {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+								
+								//added by Mike, 20200531
+								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
+							}	
 						}
 						else if (strpos($value['notes'],"NC")!==false) {
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
