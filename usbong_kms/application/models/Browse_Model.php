@@ -1107,7 +1107,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		//edited by Mike, 20250416
 		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t2.quantity_in_stock, t2.expiration_date');
-		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t2.quantity_in_stock, t2.expiration_date, t2.is_lost_item');
+		
+		//edited by Mike, 20251119
+		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t2.quantity_in_stock, t2.expiration_date, t2.is_lost_item');
+
+		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date, t2.is_lost_item');
  
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
