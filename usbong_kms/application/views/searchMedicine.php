@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250910; from 20250901
+' @date updated: 20251119; from 20250910
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -704,9 +704,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								
 								//edited by Mike, 20250630
 								//if ($value['resultQuantityInStockNow']==0) {
-								if ($value['resultQuantityInStockNow']<=0) {
-									$iCount++;
+								//edited by Mike, 20251119
+								//echo $value['expiration_date']."<br/>";
+								//echo strtok($value['expiration_date'],"-")."<br/>";
+								
+								$expirationDate=strtok($value['expiration_date'],"-");
+								
+								$expDateDiffOutput=date("Y")-$expirationDate;
+								$expDateDiffOutputMax=2;
+								
+								//echo "expDateDiffOutput: ".$expDateDiffOutput."<br/>";
+								
+								if (strpos($value['expiration_date'],"NONE")!==false) {
 									continue;
+								}
+								else if ($expDateDiffOutput>$expDateDiffOutputMax) {
+									continue;
+								}
+								else {
+									if ($value['is_hidden']==0) {
+										if ($value['resultQuantityInStockNow']<=0) {
+											//$iCount++;
+	/*										
+											echo $value['item_name']."<br/>";
+											echo $value['is_hidden']."<br/>";
+											echo "DITO";
+	*/								
+											//continue;
+										}
+									}
 								}
 							}
 						}
@@ -946,7 +972,9 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 					}
 					else {					
 						if ($value['resultQuantityInStockNow']==0) {
+							
 							//echo "DITO";
+							
 							//edited by Mike, 20250402
 							if ($updatedResultCount==0) {
 								continue;
@@ -956,7 +984,14 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 		?>				
 		
 					  <tr class="row">
-						<td class="column">				
+						<td class="column">			
+<?php 
+						if ($value['resultQuantityInStockNow']<=0) {
+							echo "<div id='itemNameDivId".$iCount."' class='itemName'>";
+							echo strtoupper($value['item_name']);
+						}
+						else {
+?>							
 							<a target='_blank' href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div id="itemNameDivId<?php echo $iCount?>" class="itemName">
 				<?php
@@ -966,6 +1001,9 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 				?>		
 								</div>								
 							</a>
+<?php
+						}
+?>
 						</td>
 						<td class="column">		
 							<button class="copyToClipboardButton" onclick="myCopyToClipboardFunction('<?php echo $iCount;/*$value['item_name'];*/?>')">⿻</button>
