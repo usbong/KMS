@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251119; from 20250910
+' @date updated: 20251122; from 20251119
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -986,7 +986,9 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 					  <tr class="row">
 						<td class="column">			
 <?php 
-						if ($value['resultQuantityInStockNow']<=0) {
+						//edited by Mike, 20251122
+						//if ($value['resultQuantityInStockNow']<=0) {
+						if (($value['resultQuantityInStockNow']<=0) && (strpos(strtoupper($value['item_name']),"*")===false)) {
 							echo "<div id='itemNameDivId".$iCount."' class='itemName'>";
 							echo strtoupper($value['item_name']);
 						}
