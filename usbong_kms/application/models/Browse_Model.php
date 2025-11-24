@@ -1112,7 +1112,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t2.quantity_in_stock, t2.expiration_date, t2.is_lost_item');
 
 		$this->db->select('t1.item_name, t1.item_price, t1.item_id, t1.item_total_sold, t1.item_quantity_per_box, t1.is_hidden, t2.quantity_in_stock, t2.expiration_date, t2.is_lost_item');
- 
+  
 		$this->db->from('item as t1');
 		$this->db->join('inventory as t2', 't1.item_id = t2.item_id', 'LEFT');
 
@@ -1131,7 +1131,15 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//note: -re-verify: if this solves the issue with inventory items that use the same added_timestamp, i.e. 2020-04-06 08:40:44
 //		$this->db->group_by('t2.expiration_date'); //added by Mike, 20200406
 //		$this->db->group_by('t2.added_datetime_stamp'); //added by Mike, 20200406
+		
+		//edited by Mike, 20251124
+		//TODO: fix: problem; some items would have the same name but actually different item_id's
+		//current solution; make sure not to add a new item with a name that already exists;
 		$this->db->group_by('t2.inventory_id');
+/*		
+		$this->db->group_by('t1.item_id');
+		$this->db->group_by('t1.item_price');
+*/
 		
 		//added by Mike, 20200521
 		$this->db->where('t1.item_id!=', 0); //0 = NONE
@@ -4817,8 +4825,30 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$itemId = $rowArray[0]['item_id'];
 		}
 		else {
+			$paramNameExtra="";
+			
+			//verify the items with the input item name already exist
+			$this->db->select('item_name, item_id');
+			$this->db->where('item_name', $param['nameParam']);
+			$this->db->where('is_hidden', 0);
+			$queryTwo = $this->db->get('item');	
+			$rowArrayTwo = $queryTwo->result_array();
+			
+			//ECHO $rowArrayTwo."<br/>";
+			
+			if (isset($rowArrayTwo) and (count($rowArrayTwo)>0)) {
+				if (strpos($rowArrayTwo[0]['item_name'],$param['nameParam'])!==false) {
+					//$paramNameExtra="_".strval(count($rowArrayTwo)+1);
+					//echo "paramNameExtra: ".$paramNameExtra."<br/>";
+					
+					return null;
+				}
+			}
+			
+			
 			$data = array(
-						'item_name' => $param['nameParam'],
+						//'item_name' => $param['nameParam'],
+						'item_name' => $param['nameParam'].$paramNameExtra,
 						'item_price' => $param['priceParam'],
 						'item_type_id' => 1,
 					);
