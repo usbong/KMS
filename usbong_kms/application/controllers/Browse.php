@@ -812,8 +812,44 @@ class Browse extends CI_Controller { //MY_Controller {
 				//echo "SAME!!!".$outputTempValue['resultQuantityInStockNow']."<br/>";
 
 				if ($outputTempValue['resultQuantityInStockNow'] < 0) {
+					//edited by Mike, 20251024
 					$outputTempValue['resultQuantityInStockNow']=0;
 					//echo "DITO!!!";
+					
+					//TODO: -reverify: this
+/*		
+					echo $outputTempValue['item_id']."<br/>";	
+					echo $outputTempValue['item_total_sold']."<br/>";
+					echo "resultQuantityInStockNow: ".$outputTempValue['resultQuantityInStockNow']."<br/>";
+*/					
+/*
+					//check if total sold is more than the quantity
+					$resultQuantityInStockNowAbs=abs($outputTempValue['resultQuantityInStockNow']);
+					
+					//example: if 3 > 2; expected output: -1
+					if ($outputTempValue['item_total_sold']>$resultQuantityInStockNowAbs) {
+							
+							echo "item_total_sold: ".$outputTempValue['item_total_sold']."<br/>";	
+							echo "resultQuantityInStockNowAbs: ".$resultQuantityInStockNowAbs."<br/>";	
+						
+						//negative
+						if ($outputTempValue['resultQuantityInStockNow']<0) {
+							echo "DITO!!!";
+							
+							$outputTempValue['resultQuantityInStockNow']=($outputTempValue['item_total_sold']-$resultQuantityInStockNowAbs)*-1;
+							
+							echo $outputTempValue['resultQuantityInStockNow']."<br/>";
+							
+						}
+						//positive
+						else {
+							$outputTempValue['resultQuantityInStockNow']=($outputTempValue['item_total_sold']-$outputTempValue['resultQuantityInStockNow']);
+						}
+					}
+					else {
+						$outputTempValue['resultQuantityInStockNow']=0;
+					}
+*/
 				}
 				else {
 					//array_push($outputArrayTemp, $outputTempValue);		
@@ -835,6 +871,10 @@ class Browse extends CI_Controller { //MY_Controller {
 		//sort($outputArrayTemp);
 		
 		$data['result']=$outputArrayTemp;
+/*
+		echo $data['result'][2]['item_id']."<br/>";	
+		echo $data['result'][2]['item_total_sold']."<br/>";
+*/		
 		//rsort($data['result']);
 		
 		$this->load->view('searchNonMedicine', $data);
@@ -4863,11 +4903,17 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 			$this->load->model('Browse_Model');
 		
 			$data['itemId'] = $this->Browse_Model->addMedItem($data);
+
+			//added by Mike, 20251124
+			if (!isset($data['itemId'])) {
+				echo "<font color='#FF0000'><b>PAALALA: GUMAMIT NG IBANG</font> <font color='#000000'><u>ITEM NAME</u></font> <font color='#FF0000'>UPANG MAKAGPDAGDAG.</b></font><br/>";
+			}
 			
 			//TODO: -reverify: this
 			//$data['result'] = $this->Browse_Model->getNonMedicineDetailsListViaId($data);
 
 			$_POST['nameParam'] = $data['nameParam'];
+			
 			$this->confirmMedicine();
 		}
 
