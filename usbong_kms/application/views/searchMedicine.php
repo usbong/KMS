@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251122; from 20251119
+' @date updated: 20251124; from 20251122
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -788,7 +788,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						  }
 
-						  ////echo ">>>".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
+						  //echo ">>>".current($cleanedupdatedResult)['resultQuantityInStockNow']."<br/>";
 						  
 						  continue;
 						}
@@ -838,7 +838,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						foreach ($consolidatedUpdatedResult as &$consolidatedValueTemp) {
 							if ($valueTemp['item_id']==$consolidatedValueTemp['item_id']) {
 								//echo "DITO!";
-								//echo $valueTemp['resultQuantityInStockNow'];
+								//echo $valueTemp['resultQuantityInStockNow']."<br/>";
 
 								$consolidatedValueTemp['resultQuantityInStockNow']+=$valueTemp['resultQuantityInStockNow'];
 								
@@ -1039,12 +1039,14 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 										echo "<span style='color:red;font-weight:bold;'>".$value['resultQuantityInStockNow']."</span>";
 									}
 									else {
+										
 	//									echo $value['quantity_in_stock'];
 										//edited by Mike, 20250423; from 20221008
 										//echo $value['resultQuantityInStockNow']." / ".$value['quantity_in_stock'];
 
-										//edited by Mike, 20250424
+										//edited by Mike, 20251124; from 20250424
 										//echo $value['resultQuantityInStockNow'];
+/*										
 										if (!isset($bIsDeleteItemFromSearch)) {
 											echo $value['resultQuantityInStockNow'];
 										}
@@ -1056,6 +1058,19 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 												echo $value['resultQuantityInStockNow'];
 											}
 										}
+*/
+										if (!isset($bIsDeleteItemFromSearch)) {
+											echo $value['resultQuantityInStockNow'];
+										}
+										else {
+											if ($value['is_lost_item']) {
+												echo "<span style='color:red;font-weight:bold;'>-".$value['resultQuantityInStockNow']."</span>";
+											}
+											else {
+												echo $value['resultQuantityInStockNow'];
+											}
+										}
+										
 									}
 								}
 							?>
