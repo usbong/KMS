@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20251201; from 20250531
+  @date updated: 20251202; from 20251201
   @website address: www.usbong.ph
   
   Input:
@@ -1440,8 +1440,9 @@ echo "hallo<br/>";
 	//edited by Mike, 20251201
 	//if ($selectedNonMedicineResultArray = $mysqli->query("select t1.item_name, t2.transaction_id, t2.fee, t2.fee_quantity, t2.notes from item as t1 left join transaction as t2 on t1.item_id = t2.item_id where t1.item_type_id=2 and t1.item_id!=0 and t2.transaction_date='".$sDateTodayTransactionFormat."' and t2.notes like '%PAID' and t2.transaction_quantity='0'"))
 
+	//edited by Mike, 20251202
 	//includes when ACK+ used to add the PAS official receipt 
-	if ($selectedNonMedicineResultArray = $mysqli->query("select transaction_id, pas_fee, fee_quantity, notes from transaction where transaction_date='".$sDateTodayTransactionFormat."' and notes like '%PAID%' and transaction_quantity='0'"))
+	if ($selectedNonMedicineResultArray = $mysqli->query("select transaction_id, pas_fee, fee_quantity, notes, patient_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and notes like '%PAID%' and transaction_quantity='0'"))
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -1475,7 +1476,6 @@ echo "hallo<br/>";
 					//if ($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) {
 					if (($selectedNonMedicineTransactionReceiptResultArray->num_rows > 0) and ($row['receipt_number']!=="0") and ($row['receipt_type_id']==="2")){
 
-
 					//echo $value['item_name'];
 					//echo ">>>>dito".$value['transaction_id']."<br/>";
 
@@ -1500,8 +1500,28 @@ echo "hallo<br/>";
 
 							//TODO: -update: if $value['fee_quantity']==0 due to "PAID; TRANSACTION 12/01/2025" in notes; must find the transaction of the patient with the non-med items (id not 0) and then add their fee quantities;
 
+/*
 							if ($iQuantityTotalCount==0) {
-								$iQuantityTotalCount=1;
+								$iQuantityTotalCount+=1;
+							}
+*/							
+							if ($value['fee_quantity']==0) {
+								
+								//echo $sDateTodayTransactionFormat;
+								
+								if ($selectedNonMedItemsResultArray = $mysqli->query("select fee_quantity from transaction where transaction_date='".$sDateTodayTransactionFormat."' and patient_id='".$value['patient_id']."' and fee_quantity!='0'"))		
+								{
+									$rowNonMedItems = $selectedNonMedItemsResultArray->fetch_assoc();
+									
+									//echo ">>>".$selectedNonMedItemsResultArray->num_rows."<br/>";
+
+									if ($selectedNonMedItemsResultArray->num_rows > 0) {
+																				
+										$iQuantityTotalCount = $iQuantityTotalCount + $rowNonMedItems['fee_quantity'];
+										
+										//echo $rowNonMedItems['fee_quantity']."<br/>";
+									}
+								}
 							}
 							else {
 								$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
