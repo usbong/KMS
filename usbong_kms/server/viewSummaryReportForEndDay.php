@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20251202; from 20251201
+  @date updated: 20251203; from 20251202
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -916,10 +916,13 @@ echo $value['fee']."<br/>";
 			//if ($selectedMedicalDoctorResultArray = $mysqli->query("select fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 order by transaction_id ASC"))
 				
 			if ($selectedMedicalDoctorResultArray = $mysqli->query("select patient_id, fee, notes, transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and medical_doctor_id='".$listValue['medical_doctor_id']."' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' and notes NOT Like '%ONLY%' and transaction_quantity!=0 order by transaction_id ASC"))
+				
 			{
 /* //removed by Mike, 20210915						
 				echo "--<br />";
 */
+
+				//echo $selectedMedicalDoctorResultArray->num_rows."<br/>";
 
 				if ($selectedMedicalDoctorResultArray->num_rows > 0) {
 
@@ -945,8 +948,10 @@ echo $value['fee']."<br/>";
 //					$iTransactionQuantity = 0;
 
 					foreach ($selectedMedicalDoctorResultArray as $value) {
-						
-						//echo $value['fee']."<br/>";
+/*
+						echo $value['transaction_id'].": ";
+						echo $value['fee']."<br/>";
+*/
 						
 		//				if (strpos($value['item_name'], "*") === false) {
 						//removed by Mike, 20200712
@@ -981,7 +986,7 @@ echo $value['fee']."<br/>";
 			
 */
 
-$iCurrExtraFeeValue=0;
+					$iCurrExtraFeeValue=0;
 					
 					if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
 						//edited by Mike, 20241029
@@ -1129,24 +1134,14 @@ $iCurrExtraFeeValue=0;
 							}
 							//edited by Mike, 20251124
 							else {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
-							}	
-							
-							if (strpos($value['notes'],"MINORSET")!==false) {
-								$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
-							}
-					}
-							
-/*
-						}					
-*/						
-					}
-					
-					
 
+								
+								
+								
+								
 							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
 //										echo $value['notes'];
-//										echo $value['transaction_id'];
+										//echo "DR HONESTO: ".$value['transaction_id'];
 
 								//edited by Mike, 20251029
 								//TODO: -reverify: this
@@ -1154,8 +1149,10 @@ $iCurrExtraFeeValue=0;
 									
 								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$iTransactionId."'")) {
 									$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
+									
+									//echo ">>>>".$iTransactionId;
 
-//									echo "dito".$receiptArrayRowValue['receipt_number'];
+									//echo "dito".$receiptArrayRowValue['receipt_number'];
 
 									if($receiptArrayRowValue) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
@@ -1163,7 +1160,14 @@ $iCurrExtraFeeValue=0;
 											//echo "RECEIPT!!!: ".$iTransactionId."<br/>";
 
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+											
+											
+											$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;		
 										}
+									}
+									else {
+										$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
+
 									}
 
 									// free result set
@@ -1174,9 +1178,30 @@ $iCurrExtraFeeValue=0;
 								{
 									echo "Error: " . $mysqli->error;
 								}
-							}				
-
+							}
+							else {
 							
+								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
+							}
+								
+							}	
+							
+							if (strpos($value['notes'],"MINORSET")!==false) {
+								$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+							}
+					}
+							
+/*
+						}					
+*/						
+
+
+					//}
+					
+					
+			
+
+					}
 					
 					//echo "iNetFeeTotalCount: ".$iNetFeeTotalCount."<br/>";
 
