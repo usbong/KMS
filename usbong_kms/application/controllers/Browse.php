@@ -6070,6 +6070,13 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 		$data['transactionDate'] = date('m/d/Y');
 		
 		$this->load->model('Browse_Model');
+		
+		//-------------------------------
+		//added by Mike, 20251206
+		$data['patientIdParam'] = $data['patientId'];
+		$data['selectMedicalDoctorIdParam'] = $data['medicalDoctorId'];	
+		$this->Browse_Model->updateIndexCardFormLite($data);
+		//-------------------------------
 	
 //		$data['result'] = $this->Browse_Model->getMedicineDetailsListViaName($data);
 
