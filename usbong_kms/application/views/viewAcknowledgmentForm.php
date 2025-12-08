@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250712; from 20250610
+  @date updated: 20251208; from 20250712
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -1189,7 +1189,9 @@ echo "</a>";
 ?>		
 
 		<!-- snack item transaction -->
-<?php		
+<?php	
+		$dTotalSnackFee=0;
+
 		//edited by Mike, 20210628
 		if (($resultPaidSnackItem!=null) and (count($resultPaidSnackItem) > 0)) {
 			if ((isset($resultPaidSnackItem)) and ($resultPaidSnackItem!=False)) {
@@ -1226,9 +1228,54 @@ echo "</a>";
 							echo "</td>";
 						echo "</tr>";			
 
+						//added by Mike, 20251208
+						$dTotalSnackFee+=$value['fee'];
+
 						$totalAmountFee+=$value['fee'];
 					}
 				}
+				
+				
+				
+				//added by Mike, 20251208
+				echo "<tr>";
+					echo "<td class='columnFee'>";
+					echo "</td>";			
+					echo "<td class='column'>";
+					echo "</td>";			
+					echo "<td class='columnItemHeaderList'>";
+/*
+					$dTotalNonMedFeeWithDiscount=$dTotalNonMedFee*0.12;
+
+					if ((strpos($resultPaid[0]['notes'],"SC;")!==false) or
+						((strpos($resultPaid[0]['notes'],"PWD;")!==false))) {
+						echo "PAS RECEIPT TOTAL (discounted: ".number_format($dTotalNonMedFeeWithDiscount, 2, '.', ',').")";
+					}
+					else {
+						//edited by Mike, 20220317
+						//echo "PAS RECEIPT TOTAL";
+
+						if (isset($resultPaidNonMedItem[0]['receipt_id'])) {
+							
+							$dTotalNonMedVATFee=$dTotalNonMedFee-$dTotalNonMedFee/(1+0.12);
+							
+							echo "PAS RECEIPT TOTAL (WITH 12% VAT: @".number_format($dTotalNonMedVATFee, 2, '.', ',').")";
+						}
+						else {
+							echo "PAS RECEIPT TOTAL";
+						}
+					}
+*/					
+					echo "SNACK TOTAL";
+
+					echo "</td>";
+					echo "<td class='columnFee'>";
+					echo "</td>";	
+					echo "<td class='columnFee'>";
+					//echo "<b>".number_format($dTotalNonMedFee, 2, '.', ',')."</b>";
+					echo "<b>".number_format($dTotalSnackFee, 2, '.', ',')."</b>";
+					echo "</td>";
+				echo "</tr>";	
 			}
 		}
 ?>
