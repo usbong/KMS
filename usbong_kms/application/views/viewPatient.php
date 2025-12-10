@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251016; from 20251015
+' @date updated: 20251210; from 20251016
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -519,36 +519,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			//TODO: -reverify: this due to Xray or Lab can still be added after already adding, for example, an Xray payment
 			if (sIsExistingTransactionToday==="1") {
-				if (existingNotes.indexOf("PAID")!==-1) {
-					if (existingNotes.indexOf("ONLY")==-1) { //no "ONLY" keyword
-						if ((existingProfessionalFee!=0) && (professionalFee!=0)) { 
-							alert("May nailagay nang PF sa record ng pasyente ngayong araw.");
-							return;
-						}
-						
-						if (professionalFee!=0) { 
-							//if ((existingXRayFee!=0) && (xRayFee!=0)) {
-							if (existingXRayFee!=0) {
-								alert("May nailagay nang XRAY sa record ng pasyente ngayong araw.");
+				//edited by Mike, 20251210
+				//if (existingNotes.indexOf("PAID")!==-1) {
+				if (existingNotes.indexOf("IN-QUEUE; UNPAID")!==-1) {
+				} else {
+					if (existingNotes.indexOf("PAID")!==-1) {
+						if (existingNotes.indexOf("ONLY")==-1) { //no "ONLY" keyword
+							if ((existingProfessionalFee!=0) && (professionalFee!=0)) { 
+								alert("May nailagay nang PF sa record ng pasyente ngayong araw.");
 								return;
 							}
+							
+							if (professionalFee!=0) { 
+								//if ((existingXRayFee!=0) && (xRayFee!=0)) {
+								if (existingXRayFee!=0) {
+									alert("May nailagay nang XRAY sa record ng pasyente ngayong araw.");
+									return;
+								}
 
-							//if ((existingLabFee!=0) && (labFee!=0)) {
-							if (existingLabFee!=0) {
-								alert("May nailagay nang LAB sa record ng pasyente ngayong araw.");
-								return;
+								//if ((existingLabFee!=0) && (labFee!=0)) {
+								if (existingLabFee!=0) {
+									alert("May nailagay nang LAB sa record ng pasyente ngayong araw.");
+									return;
+								}
 							}
-						}
-						//added by Mike, 20251016
-						else {
-							if (xRayFee!=0) { 
-								alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
-								return;
-							}
+							//added by Mike, 20251016
+							else {
+								if (xRayFee!=0) { 
+									alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
+									return;
+								}
 
-							if (labFee!=0) { 
-								alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
-								return;
+								if (labFee!=0) { 
+									alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
+									return;
+								}
 							}
 						}
 					}
