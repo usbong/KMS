@@ -4729,6 +4729,12 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$param['nameParam'] = str_replace("\\","",$param['nameParam']);
 		$param['nameParam'] = str_replace("[","",$param['nameParam']);
 		$param['nameParam'] = str_replace("]","",$param['nameParam']);
+		
+		//added by Mike, 20251217
+		//echo ">>>>>>>".$param['nameParam']."<br/>";
+		$param['nameParam'] = str_replace("ñ","N",$param['nameParam']);
+		$param['nameParam'] = str_replace("Ñ","N",$param['nameParam']);
+
 			
 		//added by Mike, 20210817; removed by Mike, 20210817
 /*		echo ">>".$param['nameParam'];		
@@ -7966,8 +7972,8 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	public function updateIndexCardFormLite($param) {
 		$data = array(
 			'medical_doctor_id' => $param['selectMedicalDoctorIdParam'],
-			//edited by Mike, 20230409
-			'last_visited_date' => $param['transactionDate'],
+			//edited by Mike, 20251206; from 20230409
+			'last_visited_date' => $param['transactionDate']
 		);
 
 		$this->db->where('patient_id',$param['patientIdParam']);
