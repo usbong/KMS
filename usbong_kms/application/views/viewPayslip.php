@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251106; from 20251016
+' @date updated: 20251229; from 20251106
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -65,8 +65,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							font-weight: bold;
 							text-align: center;
-							background-color: #00dd00; <!--#93d151; lime green-->
-							border: 1pt solid #00dd00;
+							background-color: #00dd00;
+							border: 0pt solid #00dd00;
 						}
 
 						input.browse-input
@@ -97,15 +97,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 						table.search-result
 						{
-<!--							border: 1px solid #ab9c7d;		
--->
 						}						
 
 						table.imageTable
 						{
 							width: 100%;
-<!--							border: 1px solid #ab9c7d;		
--->
 						}						
 
 						td.column
@@ -117,9 +113,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeader
 						{
 							font-weight: bold;
-							background-color: #00dd00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00dd00; -->
-							border: 1px dotted #ab9c7d;		
+							background-color: #00dd00;
+							border: 1px dotted #000000;	
 							text-align: center;
 							width: 26%;
 						}							
@@ -127,9 +122,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderCount
 						{
 							font-weight: bold;
-							background-color: #00dd00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00dd00; -->
-							border: 1px dotted #ab9c7d;		
+							background-color: #00dd00;
+							border: 1px dotted #000000;	
 							text-align: center;
 							width: 12%;
 						}		
@@ -137,9 +131,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderFee
 						{
 							font-weight: bold;
-							background-color: #00dd00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00dd00; -->
-							border: 1px dotted #ab9c7d;		
+							background-color: #00dd00;
+							border: 1px dotted #000000;		
 							text-align: center;
 							width: 13%;
 						}		
@@ -147,9 +140,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderClassification
 						{
 							font-weight: bold;
-							background-color: #00dd00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00dd00; -->
-							border: 1px dotted #ab9c7d;		
+							background-color: #00dd00;
+							border: 1px dotted #000000;	
 							text-align: center;
 							width: 12%;
 						}		
@@ -157,9 +149,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						td.columnTableHeaderNotes
 						{
 							font-weight: bold;
-							background-color: #00dd00; <!--#93d151; lime green-->
-<!--							border: 1pt solid #00dd00; -->
-							border: 1px dotted #ab9c7d;		
+							background-color: #00dd00;
+							border: 1px dotted #000000;
 							text-align: center;
 							width: 26%;
 						}		
