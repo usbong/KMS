@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251210; from 20251016
+' @date updated: 20260102; from 20251210
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -517,6 +517,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			var sIsExistingTransactionToday = document.getElementById("sIsExistingTransactionTodayParam").value;
 			
+			
+			
 			//TODO: -reverify: this due to Xray or Lab can still be added after already adding, for example, an Xray payment
 			if (sIsExistingTransactionToday==="1") {
 				//edited by Mike, 20251210
@@ -741,6 +743,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//do the following only if value is a Number, i.e. not NaN
 			if ((!isNaN(professionalFee)) && (!isNaN(xRayFee)) && (!isNaN(labFee))) {				
 				window.location.href = "<?php echo site_url('browse/addTransactionServicePurchase/"+medicalDoctorId+"/"+patientId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+classification+"/"+notes+"');?>";
+			}
+			//added by Mike, 20260102
+			else {
+				if (isNaN(professionalFee)) {
+					alert("ALERT! PF isn't a NUMBER: \""+professionalFee+"\"");
+				}					
+				else if (isNaN(xRayFee)) {
+					alert("ALERT! X-RAY Fee isn't a NUMBER: \""+xRayFee+"\"");
+				}					
+				else if (isNaN(labFee)) {
+					alert("ALERT! LAB Fee isn't a NUMBER: \""+labFee+"\"");
+				}			
+				
+				window.location.reload();
 			}
 
 			//added by Mike, 20210424
