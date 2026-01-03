@@ -6147,6 +6147,32 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		return $rowArray;
 	}		
 
+	//added by Mike, 20260103
+	public function getItemNameOnly($itemTypeId, $itemId) 
+	{		
+		$this->db->select('t1.item_name');
+
+		$this->db->from('item as t1');
+		$this->db->distinct('t1.item_name');
+		$this->db->where('t1.item_id', $itemId);
+		$this->db->where('t1.item_type_id', $itemTypeId);
+
+		//$this->db->where('t1.is_hidden', 0); //not hidden
+
+		$this->db->limit(1); //8
+		
+		$query = $this->db->get('item');
+
+		$row = $query->row();		
+		//$rowArray = $query->result_array();
+		
+		if ($row == null) {			
+			return False;
+		}
+		
+		return $row->item_name;
+	}		
+	
 	//added by Mike, 20200517
 	public function getPaidPatientDetailsList($medicalDoctorId, $patientId) 
 	{		
