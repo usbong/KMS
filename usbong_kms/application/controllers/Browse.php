@@ -1414,6 +1414,14 @@ class Browse extends CI_Controller { //MY_Controller {
 		date_default_timezone_set('Asia/Hong_Kong');
 		$dateTimeStamp = date('Y/m/d H:i:s');
 
+		//added by Mike, 20260103
+		//if ((isset($_SESSION["bIsRedirected"])) && ($_SESSION["bIsRedirected"])) {
+		if (isset($_SESSION["bIsRedirected"])) {
+
+			echo "<font color='#FF0000'><b>PAALALA: WALA NANG </font> <font color='#000000'><u>".$_SESSION["bIsRedirected"]."</u></font></b><br/>";
+		}
+		$this->session->unset_userdata('bIsRedirected');
+
 		$this->load->view('searchMedicine', $data);
 	}
 	
@@ -2276,8 +2284,15 @@ class Browse extends CI_Controller { //MY_Controller {
 
 		$data['result'] = $this->Browse_Model->getItemDetailsList($itemTypeId, $itemId);
 		
-		//added by Mike, 20250627
+		//edited by Mike, 20260103; from 20250627
+		$this->session->unset_userdata('bIsRedirected');
 		if (!isset($data['result'][0]['item_name'])) {
+			//$this->session->set_userdata('bIsRedirected', True);
+			
+			$sItemName = $this->Browse_Model->getItemNameOnly($itemTypeId, $itemId);
+			
+			$this->session->set_userdata('bIsRedirected', $sItemName);
+		
 			redirect('browse/searchMedicine');
 		}	
 		
@@ -3913,8 +3928,16 @@ class Browse extends CI_Controller { //MY_Controller {
 
 	//$lastVisitedDate = str_replace("DEL","",$data['result'][0]['last_visited_date']);	
 	
-	$lastVisitedDate = $data['result'][0]['last_visited_date'];	
-	
+	//edited by Mike, 20260103
+	//$lastVisitedDate = $data['result'][0]['last_visited_date'];	
+	if (isset($data['result'][0]['last_visited_date'])) {
+		$lastVisitedDate = $data['result'][0]['last_visited_date'];	
+	}
+	else {
+		//patient record in patient table has been deleted;
+		redirect('browse/searchPatient');
+	}
+		
 	//edited by Mike, 20250603; from 20250507
 	//$iTranMDID=$this->Browse_Model->getMedicalDoctorIdViaTransactionId($data['result'][0]['transaction_id']);
 	
