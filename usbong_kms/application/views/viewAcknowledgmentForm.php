@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20251208; from 20250712
+  @date updated: 20260106; from 20251208
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -707,7 +707,9 @@ echo "notes".$value['fee']."<br/>";
 							
 							//echo "<b>WITH MEDCERT: @".$dMedCertPrice."</b>";
 							//echo "<b>WITH DEXA</b>";
-							echo "<b>WITH DEXA X".($dDexaPrice/500)." @500.00</b>";
+							//edited by Mike, 20260106
+							//echo "<b>WITH DEXA X".($dDexaPrice/500)." @500.00</b>";
+							echo "<b>WITH DEXAMETHASONE X".($dDexaPrice/500)." @500.00</b>";
 							
 							echo "</td>";	
 							echo "<td class='columnFee'>";
