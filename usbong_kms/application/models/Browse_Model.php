@@ -7957,25 +7957,66 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 
 		//echo ">>>>".$param['selectMedicalDoctorNameParam'];
 
-		$data = array(
-			//added by Mike, 20250414
-			'patient_name' => $param['inputTextPatientNameNameParam'],
+		//debug
+		//$param['selectMedicalDoctorNameParam']="";
+		//$param['inputTextPatientNameNameParam']="";
 
-			'sex_id' => $param['selectSexNameParam'],
-			'age' => $param['inputAgeNameParam'],
-			'age_unit' => $param['selectAgeUnitNameParam'],
-			'medical_doctor_id' => $param['selectMedicalDoctorNameParam'],
-			//added by Mike, 20210319
-			'pwd_senior_id' => $param['inputTextPwdSeniorIdNameParam'],
-			'civil_status_id' => $param['selectCivilStatusNameParam'],
-			'occupation' => $param['inputTextOccupationIdNameParam'],		
-			'birthday' => $param['inputTextBirthdayIdNameParam'],
-			'contact_number' => $param['inputTextContactNumberIdNameParam'],
-			'location_address' => $param['inputTextLocationAddressIdNameParam'],
-			'barangay_address' => $param['inputTextBarangayAddressIdNameParam'],
-			'postal_address' => $param['inputTextPostalAddressIdNameParam'],	
-			'province_city_ph_address' => $param['inputTextProvinceCityPhAddressIdNameParam']			
-		);
+		//added by Mike, 20260106
+		if (trim($param['selectMedicalDoctorNameParam']) === '') {
+			$param['selectMedicalDoctorNameParam']=1;
+
+			//echo "<font color='#FF0000'><b>PAALALA:</font> <font color='#000000'><u>MEDICAL DOCTOR FIELD</font></u> <font color='#FF0000'>cannot be blank. Value now set to default.</b></font><br/>";
+
+			echo "<font color='#FF0000'><b>PAALALA:</font> <font color='#000000'><u>MEDICAL DOCTOR FIELD</font></u> <font color='#FF0000'>cannot be set to blank.</b></font><br/>";
+		}
+	
+		if (trim($param['inputTextPatientNameNameParam']) === '') {
+			
+			//echo "<font color='#FF0000'><b>PAALALA:</font> <font color='#000000'><u>PATIENT NAME FIELD</font></u> <font color='#FF0000'>cannot be blank. Value now set to its original value.</b></font><br/>";
+			
+			echo "<font color='#FF0000'><b>PAALALA:</font> <font color='#000000'><u>PATIENT NAME FIELD</font></u> <font color='#FF0000'>cannot be set to blank.</b></font><br/>";
+		
+			$data = array(
+				//'patient_name' => $param['inputTextPatientNameNameParam'],
+
+				'sex_id' => $param['selectSexNameParam'],
+				'age' => $param['inputAgeNameParam'],
+				'age_unit' => $param['selectAgeUnitNameParam'],
+				'medical_doctor_id' => $param['selectMedicalDoctorNameParam'],
+				//added by Mike, 20210319
+				'pwd_senior_id' => $param['inputTextPwdSeniorIdNameParam'],
+				'civil_status_id' => $param['selectCivilStatusNameParam'],
+				'occupation' => $param['inputTextOccupationIdNameParam'],		
+				'birthday' => $param['inputTextBirthdayIdNameParam'],
+				'contact_number' => $param['inputTextContactNumberIdNameParam'],
+				'location_address' => $param['inputTextLocationAddressIdNameParam'],
+				'barangay_address' => $param['inputTextBarangayAddressIdNameParam'],
+				'postal_address' => $param['inputTextPostalAddressIdNameParam'],	
+				'province_city_ph_address' => $param['inputTextProvinceCityPhAddressIdNameParam']			
+			);
+		}
+		else {
+			$data = array(
+				//added by Mike, 20250414
+				'patient_name' => $param['inputTextPatientNameNameParam'],
+
+				'sex_id' => $param['selectSexNameParam'],
+				'age' => $param['inputAgeNameParam'],
+				'age_unit' => $param['selectAgeUnitNameParam'],
+				'medical_doctor_id' => $param['selectMedicalDoctorNameParam'],
+				//added by Mike, 20210319
+				'pwd_senior_id' => $param['inputTextPwdSeniorIdNameParam'],
+				'civil_status_id' => $param['selectCivilStatusNameParam'],
+				'occupation' => $param['inputTextOccupationIdNameParam'],		
+				'birthday' => $param['inputTextBirthdayIdNameParam'],
+				'contact_number' => $param['inputTextContactNumberIdNameParam'],
+				'location_address' => $param['inputTextLocationAddressIdNameParam'],
+				'barangay_address' => $param['inputTextBarangayAddressIdNameParam'],
+				'postal_address' => $param['inputTextPostalAddressIdNameParam'],	
+				'province_city_ph_address' => $param['inputTextProvinceCityPhAddressIdNameParam']			
+			);
+		}
+
 
 		$this->db->where('patient_id',$param['patientIdNameParam']);
 		$this->db->update('patient', $data);
