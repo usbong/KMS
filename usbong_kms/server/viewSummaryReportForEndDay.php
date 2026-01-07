@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2025 SYSON, MICHAEL B.
+  Copyright 2020~2026 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20251203; from 20251202
+  @date updated: 20260107; from 20251203
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -1154,18 +1154,27 @@ echo $value['fee']."<br/>";
 
 									//echo "dito".$receiptArrayRowValue['receipt_number'];
 
+									//edited by Mike, 20260107
+/*
 									if($receiptArrayRowValue) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
+*/
+									if (($receiptArrayRowValue) && ($receiptArrayRowValue['receipt_number']!=0)) {
 
 											//echo "RECEIPT!!!: ".$iTransactionId."<br/>";
 
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 											
 											
-											$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;		
+											$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;
+/*											
 										}
+*/										
 									}
 									else {
+										
+										//echo "NET FEE: ".($value['fee']*0.70)."<br/>";
+										
 										$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
 
 									}

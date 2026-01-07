@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright 2020~2025 USBONG
+  Copyright 2020~2026 USBONG
   
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20251202; from 20251201
+  @date updated: 20260107; from 20251202
   @website address: www.usbong.ph
   
   Input:
@@ -843,13 +843,19 @@ echo "hallo<br/>";
 									echo "fee: ".$value['fee']."<br/>";
 									echo "receipt number: ".$receiptArrayRowValue['receipt_number']."<br/>";
 */									
-									//edited by Mike, 20221110
+									//edited by Mike, 20260107; from 20221110
 //									if($receiptArrayRowValue) {
+/*							
 									if (isset($receiptArrayRowValue)) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
+*/
+									if ((isset($receiptArrayRowValue)) && ($receiptArrayRowValue['receipt_number']!=0)) {
+
 											//TODO: -reverify: this if Private
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+/*
 										}
+*/										
 									}
 
 									// free result set
@@ -878,7 +884,9 @@ echo "hallo<br/>";
 										
 										//echo "dito: ".$value['transaction_id'];
 										
-										if($receiptArrayRowValue) {
+										//edited by Mike, 20260107
+										//if($receiptArrayRowValue) {
+										if ((isset($receiptArrayRowValue)) && ($receiptArrayRowValue['receipt_number']!=0)) {	
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 										}
 										// free result set
