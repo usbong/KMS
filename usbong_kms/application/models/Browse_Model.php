@@ -5337,6 +5337,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		$this->db->where('t1.patient_id', $nameId);		
 
+		//added by Mike, 20260212
+		//TODO: -reverify this;
+		$this->db->where('t2.transaction_quantity!=', 0);		
+
+
 		//edited by Mike, 20210906
 //		$this->db->group_by('t1.patient_id`', 'DESC');//ASC');
 		//removed by Mike, 20210907
