@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20260107; from 20251203
+  @date updated: 20260118; from 20260117
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -1668,6 +1668,7 @@ echo $value['fee']."<br/>";
 			//count total
 			$iFeeTotalCount = 0;				
 			$iQuantityTotalCount = 0;
+			$bHasPrevTransactionForPASOR = false; //added by Mike, 20260218
 
 			foreach ($selectedNonMedicineResultArray as $value) {
 /*				//edited by Mike, 20250923; from 20201120
@@ -1679,7 +1680,9 @@ echo $value['fee']."<br/>";
 				//if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."'"))
 					
 				//identify non-medicine item transaction if with VAT
-				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2'"))				
+				//edited by Mike, 20260218
+				//if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2'"))
+				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2' and t2.pas_fee!='0'"))					
 				{
 /*					
 					echo $value['item_name']."<br/>";
@@ -1738,21 +1741,35 @@ echo $value['fee']."<br/>";
 								
 								//echo $sDateTodayTransactionFormat;
 								
-								if ($selectedNonMedItemsResultArray = $mysqli->query("select fee_quantity from transaction where transaction_date='".$sDateTodayTransactionFormat."' and patient_id='".$value['patient_id']."' and fee_quantity!='0'"))		
+								if ($selectedNonMedItemsResultArray = $mysqli->query("select fee_quantity from transaction where transaction_date='".$sDateTodayTransactionFormat."' and patient_id='".$value['patient_id']."' and fee_quantity!='0'"))	
 								{
 									$rowNonMedItems = $selectedNonMedItemsResultArray->fetch_assoc();
 									
 									//echo ">>>".$selectedNonMedItemsResultArray->num_rows."<br/>";
 
+									//edited by Mike, 20260218
 									if ($selectedNonMedItemsResultArray->num_rows > 0) {
-																				
+										
 										$iQuantityTotalCount = $iQuantityTotalCount + $rowNonMedItems['fee_quantity'];
 										
 										//echo $rowNonMedItems['fee_quantity']."<br/>";
 									}
+									//edited by Mike, 20260218
+									else {
+										//example: PAS OR added at a later date
+										if ($selectedNonMedItemsResultArray = $mysqli->query("select transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and patient_id='".$value['patient_id']."' and fee_quantity='0' and notes Like '%TRANSACTION%'"))	{
+											//echo "DITO!!";
+										
+											$iQuantityTotalCount = $iQuantityTotalCount + 1;
+											$bHasPrevTransactionForPASOR=true;
+										}
+									}
 								}
 							}							
 							else {
+								//echo $value['transaction_id']."<br/>";
+								
+								//edited by Mike, 20260218
 								$iQuantityTotalCount = $iQuantityTotalCount + $value['fee_quantity'];
 							}
 
@@ -2110,6 +2127,13 @@ echo $value['fee']."<br/>";
 				//added by Mike, 20210915
 				if (($iRowCount==18) and ($iColumnCount==2)) {
 					$cellValue = $pfTotal;
+				}
+
+				//added by Mike, 20260218
+				if ($bHasPrevTransactionForPASOR) {
+					if (($iRowCount==17) and ($iColumnCount==5)) {
+						$cellValue = "INCLUDES PREV TRANS";
+					}
 				}
 				
 				

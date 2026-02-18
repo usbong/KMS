@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20260107; from 20251202
+  @date updated: 20260218; from 20260107
   @website address: www.usbong.ph
   
   Input:
@@ -1468,6 +1468,7 @@ echo "hallo<br/>";
 			//count total
 			$iFeeTotalCount = 0;				
 			$iQuantityTotalCount = 0;
+			$bHasPrevTransactionForPASOR = false; //added by Mike, 20260218
 
 			foreach ($selectedNonMedicineResultArray as $value) {
 				
@@ -1475,7 +1476,10 @@ echo "hallo<br/>";
 				//echo $value['transaction_id']."<br/>";
 				
 				//identify non-medicine item transaction if with VAT
-				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2'"))		
+				//edited by Mike, 20260218
+				//if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2'"))	
+
+				if ($selectedNonMedicineTransactionReceiptResultArray = $mysqli->query("select t1.receipt_number, t1.receipt_type_id from receipt as t1 left join transaction as t2 on t1.transaction_id = t2.transaction_id where t2.transaction_id='".$value['transaction_id']."' and t1.receipt_type_id='2' and t2.pas_fee!='0'"))					
 				{
 					
 					$row = $selectedNonMedicineTransactionReceiptResultArray->fetch_assoc();
@@ -1529,6 +1533,16 @@ echo "hallo<br/>";
 										
 										//echo $rowNonMedItems['fee_quantity']."<br/>";
 									}
+									//edited by Mike, 20260218
+									else {
+										//example: PAS OR added at a later date
+										if ($selectedNonMedItemsResultArray = $mysqli->query("select transaction_id from transaction where transaction_date='".$sDateTodayTransactionFormat."' and patient_id='".$value['patient_id']."' and fee_quantity!='0' and notes Like '%TRANSACTION%'"))	{
+											//echo "DITO!!";
+										
+											$iQuantityTotalCount = $iQuantityTotalCount + 1;
+											$bHasPrevTransactionForPASOR=true;
+										}
+									}									
 								}
 							}
 							else {
@@ -1596,7 +1610,8 @@ echo "hallo<br/>";
 			$jsonResponse = array(
 					"iFeeTotalCount" => $iFeeTotalCount,
 					"iQuantityTotalCount" => $iQuantityTotalCount,
-					"iNetFeeTotalCount" => $iFeeTotalCount //$iNetFeeTotalCount //added by Mike, 20200530					
+					"iNetFeeTotalCount" => $iFeeTotalCount, //$iNetFeeTotalCount //added by Mike, 20200530		
+					"bHasPrevTransactionForPASOR" => $bHasPrevTransactionForPASOR
 			);
 			$responses[] = $jsonResponse;
 			
