@@ -69,3 +69,5 @@ Amazon DynamoDB to a SQL (relational) database is a significant undertaking that
 > AI Overview
 
 > NoSQL databases typically do not support or enforce foreign keys or joins across tables. Instead of enforcing relational integrity at the database level, NoSQL relies on application-level logic to maintain data relationships and uses embedding or referencing to handle data association, enhancing write performance and scalability.
+
+no foreign keys 
