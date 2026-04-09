@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260103; from 20260102
+' @date updated: 20260409; from 20260103
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -1223,9 +1223,15 @@ else {
 		<input type="hidden" id="existingXRayFeeParam" value="<?php if (isset($value['notes'])){ echo $value['x_ray_fee'];}?>">
 		<input type="hidden" id="existingLabFeeParam" value="<?php if (isset($value['notes'])){ echo $value['lab_fee'];}?>">
 
-							<!-- edited by Mike, 20200602 -->
+							<!-- edited by Mike, 20260409; from 20200602 -->
 							<!-- default value is now 800, instead of 600 -->
-							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="800" min="1" max="99999" 
+							<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="<?php
+							if (strpos($value['patient_name'],"NONE, WALA")!==false) {
+								echo 0;
+							}
+							else {
+								echo 800;
+							}?>" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
