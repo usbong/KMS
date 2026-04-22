@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20260422; from 20260218
+  @date updated: 20260218; from 20260107
   @website address: www.usbong.ph
   
   Input:
@@ -707,7 +707,6 @@
 							$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
 							$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
 
-/*							//edited by Mike, 20260422; TODO: -reverify;
 							if (strpos($value['notes'],"PRIVATE")!==false) {
 								//edited by Mike, 20201026
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
@@ -727,185 +726,136 @@
 								//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
 								$myNetFeeValue = $value['fee']*0.70;
 							}							
+							
+							
+							//edited by Mike, 20220815
+							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+							//edited by Mike, 20230530
+/*
+							if ((strpos($listValue['medical_doctor_name'],"HONESTO")!==false) or
+								(strpos($listValue['medical_doctor_name'],"CHASTITY")!==false)) {
+*/
+//										echo $value['notes'];
+//										echo $value['transaction_id'];
+								//TO-DO: -update: this
+								//$transactionId = $value['transaction_id'] + 1;
+								//edited by Mike, 20201127
+								//edited by Mike, 20211023
+//								$iTransactionId = $value['transaction_id'] + 1;
+								$iTransactionId = $value['transaction_id'];
+								
+								//removed by Mike, 20201003
+//								echo $iTransactionId;
+								
+								//added by Mike, 20201127
+								//--------------------------------------------------
+			//						echo $iTransactionId."<br/>";
+
+									//added by Mike, 20200910
+									//identify newest transactionId
+									$iTransactionIdMax = -1;
+
+									if ($rowTransactionIdMaxArray = $mysqli->query("select max(transaction_id) As transactionIdMax from transaction")) {
+										if ($rowTransactionIdMaxArray->num_rows > 0) {
+											$iTransactionIdMax = mysqli_fetch_array($rowTransactionIdMaxArray)[0]; //'transactionIdMax'];
+										}
+									}				
+									// show an error if there is an issue with the database query
+									else
+									{
+										echo "Error: " . $mysqli->error;
+									}									
+
+//										echo "iTransactionIdMax: ".$iTransactionIdMax."<br/>";
+
+//removed by Mike, 20211023; transaction with combine fee now already has transaction_quantity value
+/*									
+				//identify transaction with the combined fees
+				//					while ($transactionId==0) {
+									do {
+										echo "iTransactionId: ".$iTransactionId." : ";
+										
+										if ($rowTransactionQuantityArray = $mysqli->query("select transaction_quantity from transaction where transaction_id='".$iTransactionId."'")) {
+											
+//echo ">>><br/>";											
+											if ($rowTransactionQuantityArray->num_rows > 0) {												
+												$iTransactionId = $iTransactionId + 1;
+echo "hallo<br/>";
+												//echo "iTransactionId: ".$iTransactionId;
+												
+												//this is due to the transaction count can skip
+												$iTransactionQuantity = -1;
+												if (isset($rowTransactionQuantityArray)) {
+//													$iTransactionQuantity = $rowTransactionQuantityArray->transaction_quantity;
+													$iTransactionQuantity = mysqli_fetch_array($rowTransactionQuantityArray)[0];
+												}
+												//note: if last transaction in database
+												//we use >= to be equal with the "break" command of while ($iTransactionQuantity <= 0);												
+												if ($iTransactionId>=$iTransactionIdMax) {
+													break;
+												}						
+												
+												
+//												echo "iTransactionId: ".($iTransactionId-1)." : ";
+												echo "iTransactionQuantity: ".$iTransactionQuantity."<br/>";
+											}
+											//added by Mike, 20201217
+											else {
+												//added by Mike, 20211023
+	echo "DITO<br/>";
+												//if next transaction was deleted; 
+												//verify previous transaction's quantity if NOT zero
+												//i.e. combined transaction
+												break;
+//												$iTransactionId=$iTransactionId+1;
+											}
+										}
+										// show an error if there is an issue with the database query
+										else
+										{
+											echo "Error: " . $mysqli->error;
+										}
+									}
+									while ($iTransactionQuantity <= 0);								
+								//--------------------------------------------------
+								
+								//added by Mike, 20201216; edited by Mike, 20210120
+								//$iTransactionId = $iTransactionId -1;
+								if ($iTransactionId>=$iTransactionIdMax) {
+									$iTransactionId = $iTransactionIdMax;
+								}
+								else {
+									$iTransactionId = $iTransactionId -1;
+								}									
 */
 
-					$iCurrExtraFeeValue=0;
-					
-					if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
-						//edited by Mike, 20241029
-						if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT0")!==false) {
-							$iCurrExtraFeeValue = 0;
-						}									
-						else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
-							if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
-								//$iNetFeeTotalCount = $iNetFeeTotalCount + (300*2)*.30;
-								
-								$iCurrExtraFeeValue+=300*2;
-							}
-							//added by Mike, 20250219
-							else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {
-								$iCurrExtraFeeValue+=300*3;
-							}
-							else {
-								//$iNetFeeTotalCount = $iNetFeeTotalCount + 300*.30;
-																		
-								$iCurrExtraFeeValue+=300;
-							}
-						}
-						//added by Mike, 20251106
-						//TODO: -update: so that the number after "MEDCERT" is used;
-						else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
-							$iCurrExtraFeeValue+=300*2;
-						}
-						else {	
-							if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
-								(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
-								//$iNetFeeTotalCount = $iNetFeeTotalCount + (200*2)*.30;
-																																				$iCurrExtraFeeValue+=200*2;
-							}
-							//added by Mike, 20250219
-							else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
-								(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false)) {
-								$iCurrExtraFeeValue+=200*3;
-							}
-							else {
-								//$iNetFeeTotalCount = $iNetFeeTotalCount + 200*.30;
-								
-								$iCurrExtraFeeValue+=200;										
-							}
-						}
-					}		
-
-					if (strpos($value['notes'],"PRIVATE")!==false) {
-						//removed by Mike, 20200829
-						//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
-						
-						//added by Mike, 20200531
-						$iPrivateQuantityTotalCount = $iPrivateQuantityTotalCount + 1;
-						
-						//TO-DO: -reverify; use number after DEXA
-						
-						if (strpos($value['notes'],"DEXA")!==false) {						
-
-							if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) ||
-								(strpos(strtoupper($value['notes']), "DEXAX2")!==false)){								
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*2)*0.70 + 500*2;
-
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
-							}
-							else if ((strpos(strtoupper($value['notes']), "DEXA3")!==false) ||
-								(strpos(strtoupper($value['notes']), "DEXAX3")!==false)){								
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*3)*0.70 + 500*3;
-
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 3;
-							}
-							else if ((strpos(strtoupper($value['notes']), "DEXA4")!==false) ||
-								(strpos(strtoupper($value['notes']), "DEXAX4")!==false)){								
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*4)*0.70 + 500*4;
-
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 4;
-							}							
-							else {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
-								
-								//added by Mike, 20200531
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-							}	
-						}
-						else {
-							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee'];
-						}						
-					}
-					else {
-						
-
-							//TO-DO: -reverify: this
-							if (strpos($value['notes'],"DEXA")!==false) {
-/*								edited by Mike, 20251124
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
-								
-								//added by Mike, 20200531
-								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-*/								
-								
-								if ((strpos(strtoupper($value['notes']), "DEXA2")!==false) ||
-									(strpos(strtoupper($value['notes']), "DEXAX2")!==false)){								
-									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*2)*0.70 + 500*2;
-
-									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 2;
-								}
-								else if ((strpos(strtoupper($value['notes']), "DEXA3")!==false) ||
-									(strpos(strtoupper($value['notes']), "DEXAX3")!==false)){								
-									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*3)*0.70 + 500*3;
-
-									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 3;
-								}
-								else if ((strpos(strtoupper($value['notes']), "DEXA4")!==false) ||
-									(strpos(strtoupper($value['notes']), "DEXAX4")!==false)){								
-									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500*4)*0.70 + 500*4;
-
-									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 4;
-								}							
-								else {
-									$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
-									
-									//added by Mike, 20200531
-									$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
-								}
-
-							
-							}
-							else if (strpos($value['notes'],"NC")!==false) {
-								$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
-							}
-							else if (strpos($value['notes'],"NO CHARGE")!==false) {
-								$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
-							}
-							//edited by Mike, 20251124
-							else {
-
-								
-								
-								
-								
-							if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
-//										echo $value['notes'];
-										//echo "DR HONESTO: ".$value['transaction_id'];
-
-								//edited by Mike, 20251029
-								//TODO: -reverify: this
-								$iTransactionId = $value['transaction_id'];
-									
+								//edited by Mike, 20201127
+								//if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$transactionId."'")) {
+//									echo $iTransactionId;
 								if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$iTransactionId."'")) {
 									$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
-									
-									//echo ">>>>".$iTransactionId;
 
-									//echo "dito".$receiptArrayRowValue['receipt_number'];
-
-									//edited by Mike, 20260107
 /*
-									if($receiptArrayRowValue) {
+//removed by Mike, 20221110
+//TO-DO: -reverify: 2022-11-07
+									echo "iTransactionId: ".$iTransactionId."<br/>";
+//									echo "patient name: ".$value['patient_name']."<br/>";
+									echo "fee: ".$value['fee']."<br/>";
+									echo "receipt number: ".$receiptArrayRowValue['receipt_number']."<br/>";
+*/									
+									//edited by Mike, 20260107; from 20221110
+//									if($receiptArrayRowValue) {
+/*							
+									if (isset($receiptArrayRowValue)) {
 										if ($receiptArrayRowValue['receipt_number']!=0) {
 */
-									if (($receiptArrayRowValue) && ($receiptArrayRowValue['receipt_number']!=0)) {
+									if ((isset($receiptArrayRowValue)) && ($receiptArrayRowValue['receipt_number']!=0)) {
 
-											//echo "RECEIPT!!!: ".$iTransactionId."<br/>";
-
+											//TODO: -reverify: this if Private
 											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
-											
-											
-											$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;
-/*											
+/*
 										}
 */										
-									}
-									else {
-										
-										//echo "NET FEE: ".($value['fee']*0.70)."<br/>";
-										
-										$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
-
 									}
 
 									// free result set
@@ -916,31 +866,111 @@
 								{
 									echo "Error: " . $mysqli->error;
 								}
+							}									
+							
+							if (strpos($value['notes'],"NC")!==false) {
+									$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
+							}
+							else if (strpos($value['notes'],"NO CHARGE")!==false) {
+									$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 							}
 							else {
+								//edited by Mike, 20240927; from 20230530
+								if (strpos($listValue['medical_doctor_name'],"HONESTO")!==false) {
+									
+									//note: with Dr Honesto's case, his med cert payment is included in the 70/30 sharing with MOSC
+									if ($receiptArray = $mysqli->query("select receipt_type_id, receipt_number from receipt where transaction_id='".$value['transaction_id']."'")) {
+										$receiptArrayRowValue = mysqli_fetch_assoc($receiptArray);
+										
+										//echo "dito: ".$value['transaction_id'];
+										
+										//edited by Mike, 20260107
+										//if($receiptArrayRowValue) {
+										if ((isset($receiptArrayRowValue)) && ($receiptArrayRowValue['receipt_number']!=0)) {	
+											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+										}
+										// free result set
+										mysqli_free_result($receiptArray);											
+									}
+									// show an error if there is an issue with the database query
+									else
+									{
+										echo "Error: " . $mysqli->error;
+									}									
+								}
+								else {
 							
-								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
-							}
-								
-							}	
-							
-							if (strpos($value['notes'],"MINORSET")!==false) {
-								$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+									//removed by Mike, 20240927
+									//$iCurrExtraFeeValue=0;
+
+									if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT")!==false) {
+										//edited by Mike, 20241029
+										if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT0")!==false) {
+											$iCurrExtraFeeValue = 0;
+										}									
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3")!==false) {
+											if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X2")!==false) {
+												//$iNetFeeTotalCount = $iNetFeeTotalCount + (300*2)*.30;
+												
+												$iCurrExtraFeeValue+=300*2;
+											}
+											//added by Mike, 20250219
+											else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT3X3")!==false) {
+												$iCurrExtraFeeValue+=300*3;
+											}
+											else {
+												//$iNetFeeTotalCount = $iNetFeeTotalCount + 300*.30;
+																						
+												$iCurrExtraFeeValue+=300;
+											}
+										}
+										//added by Mike, 20251106
+										//TODO: -update: so that the number after "MEDCERT" is used;
+										else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
+											$iCurrExtraFeeValue+=300*2;
+										}
+										else {	
+											if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
+												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
+												//$iNetFeeTotalCount = $iNetFeeTotalCount + (200*2)*.30;
+																																								$iCurrExtraFeeValue+=200*2;
+											}
+											//added by Mike, 20250219
+											else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
+												(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false)) {
+												$iCurrExtraFeeValue+=200*3;
+											}
+											else {
+												//$iNetFeeTotalCount = $iNetFeeTotalCount + 200*.30;
+												
+												$iCurrExtraFeeValue+=200;										
+											}
+										}
+									}
+									
+									//added by Mike, 20250528
+									//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;								
+								}
+
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
+
+								//edited by Mike, 20250528
+								//note variation with Dr Peter's due to medical doctor includes special case with Dr Honesto
+								if (strpos($value['notes'],"PRIVATE")!==false) {
+									$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;	
+								}
+								else {
+									$iNetFeeTotalCount = $iNetFeeTotalCount + ($iCurrExtraFeeValue*.30) + $myNetFeeValue;	
+								}
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;								
+								//echo $value['patient_name'].": ".$myNetFeeValue."<br/>";
+
+															
+								if (strpos($value['notes'],"MINORSET")!==false) {
+									$iMinorsetQuantityTotalCount = $iMinorsetQuantityTotalCount + 1;						
+								}								
 							}
 					}
-							
-/*
-						}					
-*/						
-
-
-					//}
-					
-					
-			
-
-					}
-
 
 					//write as .txt file
 					$jsonResponse = array(
