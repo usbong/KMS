@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2025 USBONG
+' Copyright 2020~2026 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251229; from 20251106
+' @date updated: 20260424; from 20251229
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -477,7 +477,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //								echo $value['fee'];
 								//output: whole numbers							
 //								echo floor(($value['fee']*100)/100);
-								$iFee = floor(($value['fee']*100)/100);
+								//edited by Mike, 20260424
+								$iFee = (($value['fee']*100)/100);
 								
 								//added by Mike, 20200819
 								$iMinorsetFee = 0;
@@ -742,7 +743,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*	//removed by Mike, 20250527
 									$iMOSC = $value['fee']*.30;
 */									
-									echo floor(($iMOSC*100)/100);
+									//edited by Mike, 20260424
+									//echo floor(($iMOSC*100)/100);
+									echo (($iMOSC*100)/100);
 								
 								//added by Mike, 20250523
 								if (strpos(strtoupper($value['medical_doctor_name']), "HONESTO")!==false) {
@@ -1039,8 +1042,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									
 /*	//removed by Mike, 20250527
 									$iNetPF = $value['fee']*.70;
-*/
-									echo floor(($iNetPF*100)/100);
+*/									
+									//edited by Mike, 20260424
+									//echo floor(($iNetPF*100)/100);
+									echo (($iNetPF*100)/100);
 									
 										
 /*	//removed by Mike, 20221110
