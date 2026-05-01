@@ -1,5 +1,5 @@
 @echo off
-REM Copyright 2020~2024 SYSON, MICHAEL B.
+REM Copyright 2020~2026 SYSON, MICHAEL B.
 REM
 REM Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 REM
@@ -12,7 +12,7 @@ REM
 REM @company: USBONG
 REM @author: SYSON, MICHAEL B.
 REM @date created: 20201001
-REM @last modified: 20240302; from 20231206
+REM @last modified: 20260501; from 20240302
 REM @website address: www.usbong.ph
 REM
 
@@ -74,7 +74,9 @@ REM set source="\\MOSC-ACCOUNTING\"information desk"
 REM reminder: File Explorer -> Network -> halimbawa_unit;
 REM connect via username and password
 REM set source="\\ORTHOANDPTUNIT\MOSC\DB"
-set source="\\USBONG-HAL\MOSC\DB\"
+REM edited by Mike, 20260501
+REM set source="\\USBONG-HMR\MOSC\DB\"
+set source="\\USBONG-HMR-S\MOSC\DB\"
 
 REM echo "source: "$source
 REM echo "source: "%source%
