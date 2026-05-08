@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2025 USBONG
+  Copyright 2020~2026 USBONG
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20260106; from 20251208
+  @date updated: 20260508; from 20260106
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -576,6 +576,7 @@ echo "</a>";
 		$dTotalLabFee=0;
 		$dTotalMedItemFee=0;
 		$dTotalMDDiscountedFeePlus=0;
+		$dDexaPrice=0; //added by Mike, 20260508
 		
 		//DR. HONESTO ONLY;
 		$sWithDoctorWhoUsesMOSCOfficialReceipt="";
@@ -744,8 +745,9 @@ echo "notes".$value['fee']."<br/>";
 						($value['medical_doctor_id']==2) //drPeter 						
 						) {
 */
-						//edited by Mike, 20220317
+						//edited by Mike, 20260508; from 20220317
 						$dTotalMDXrayFee+=$value['fee'];
+						//$dTotalMDXrayFee+=($value['fee']-$dDexaPrice);
 
 						if ($value['medical_doctor_id']==6) {
 							$sWithDoctorWhoUsesMOSCOfficialReceipt=" (WITH DR. HONESTO)";						
@@ -766,6 +768,8 @@ echo "notes".$value['fee']."<br/>";
 				//added by Mike, 20220317
 				$dTotalMDFee=$value['fee'];
 				$dTotalMDFeeWithDiscount=($dTotalMDFee/(1-0.20))*0.20;
+				
+				//echo "dTotalMDFee: ".$dTotalMDFee."<br/>";
 
 				if (!isset($dTotalMDXrayFeeWithDiscount)) {
 					$dTotalMDXrayFeeWithDiscount=0;
@@ -807,7 +811,7 @@ echo "notes".$value['fee']."<br/>";
 						echo "<td class='column'>";
 						echo "</td>";			
 						echo "<td class='columnItemHeaderList'>";
-	
+		
 						if ((strpos($resultPaid[0]['notes'],"SC;")!==false) or
 							((strpos($resultPaid[0]['notes'],"PWD;")!==false))) {
 							
@@ -1067,7 +1071,10 @@ echo "</a>";
 					echo "<td class='columnFee'>";
 					echo "</td>";	
 					echo "<td class='columnFee'>";
+					//edited by Mike, 20260508
+					//DEXA price already discounted
 					echo "<b>".number_format($dTotalMDXrayFee+$dTotalLabFee+$dTotalMedItemFee, 2, '.', ',')."</b>";
+					//echo "<b>".number_format($dTotalMDXrayFee+$dTotalLabFee+$dTotalMedItemFee+$dDexaPrice, 2, '.', ',')."</b>";
 					echo "</td>";
 				echo "</tr>";	
 		
