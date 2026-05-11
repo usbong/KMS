@@ -1531,6 +1531,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 	{			
 		$iTransactionId = $param['transactionId'];
 		
+		//added by Mike, 20260511
+		$bIsSCOrPWDDiscountedNow = false;
+		$bIsSCOrPWDDiscountedPrev = false;
+
 		//note identify the transactions to be updated;
 		//not only the combined transaction;
 		//$param['transactionDate'];
@@ -1584,9 +1588,28 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 		if (strpos($param['sClass'], "SC")!==false) {
 			$param['updatedNotes'] = trim(str_replace("PAID","SC; PAID",$param['updatedNotes']));
+			
+			//added by Mike, 20260511
+/*
+			echo ">>param['sClass']: ".$param['sClass']."<br/>";
+			echo ">>row->notes: ".$row->notes."<br/>";
+*/
+			$bIsSCOrPWDDiscountedNow = true;
+
+			if (strpos($row->notes, "PWD")!==false) {
+				$bIsSCOrPWDDiscountedPrev=true;
+			}
 		}
 		else if (strpos($param['sClass'], "PWD")!==false) {
 			$param['updatedNotes'] = trim(str_replace("PAID","PWD; PAID",$param['updatedNotes']));
+
+			//added by Mike, 20260511
+			$bIsSCOrPWDDiscountedNow = true;
+
+			//had already been set to SC; therefore, discounted already
+			if (strpos($row->notes, "SC")!==false) {
+				$bIsSCOrPWDDiscountedPrev=true;
+			}
 		}
 		else if (strpos($param['sClass'], "WI")!==false) {
 			$param['updatedNotes'] = trim(str_replace("PAID","NONE; PAID",$param['updatedNotes']));
@@ -1609,6 +1632,77 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->not_like('notes',"ONLY");
 		
         $this->db->update('transaction', $data);
+
+		//---------------------------------------
+		
+		//added by Mike, 20260511
+		//TODO: -reverify further
+		//update non-med items if available with SC/PWD in notes;
+		//update non-med items if available with SC/PWD discounted or not;
+		
+		//removed by Mike, 20260511
+/*		
+		$bIsSCOrPWDDiscountedNow = false;
+		
+		if (strpos($param['updatedNotes'], "SC")!==false) {
+			$bIsSCOrPWDDiscountedNow = true;
+		}
+*/
+
+		//echo "patientId: ".$param['patientId']."<br/>";
+		//echo "transactionDate: ".$param['transactionDate']."<br/>";
+
+		$this->db->select('transaction_id, pas_fee');
+		$this->db->where('patient_id',$param['patientId']);
+		$this->db->where('pas_fee!=',0);
+		$this->db->where('transaction_quantity',0);
+		$this->db->where('transaction_date', $param['transactionDate']);
+
+		$query = $this->db->get('transaction');
+		$rowArray = $query->result_array();
+
+		//echo "> DITO!!!!";
+		
+		if ($rowArray == null) {	
+			return False;
+		}
+		
+		//echo ">> DITO!!!!";
+		
+		//if there are reports
+		$iRowArrayCount = 0;
+		$iRowArrayCountMax = count($rowArray);
+					
+		while ($iRowArrayCount < $iRowArrayCountMax) {
+			if ($bIsSCOrPWDDiscountedNow) {
+				//if had not yet been set to SC or PWD previously;
+				if (!$bIsSCOrPWDDiscountedPrev) {
+					//non-med's pas_fee should now be adjusted to have 12% VAT
+					//example: 250 PHP becomes 280 PHP
+					$rowArray[$iRowArrayCount]['pas_fee'] += $rowArray[$iRowArrayCount]['pas_fee']*0.12;
+				}
+			}
+			else {
+				//280 PHP becomes 250 PHP
+				$rowArray[$iRowArrayCount]['pas_fee'] = $rowArray[$iRowArrayCount]['pas_fee']/(1.12);
+			}
+			
+			$data = array(
+						'pas_fee' => $rowArray[$iRowArrayCount]['pas_fee'],
+						'notes' => str_replace("NONE; ","",$param['updatedNotes']),
+						'fee' => $rowArray[$iRowArrayCount]['pas_fee'],
+					);
+
+			$this->db->where('transaction_id', $rowArray[$iRowArrayCount]['transaction_id']);
+			
+			$this->db->where('transaction_date', $param['transactionDate']);
+			$this->db->where('patient_id', $param['patientId']); 
+			$this->db->not_like('notes',"ONLY");
+			
+			$this->db->update('transaction', $data);
+			
+			$iRowArrayCount++;
+		}
 	}	
 	
 	
@@ -7536,8 +7630,10 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 		//$filename="C:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt";
 		
 		$sFilenameArray=array();
+
 		array_push($sFilenameArray, "C:\MOSC\KMS\\usbongKMSItemListTransaction2020OK.txt");	
 		array_push($sFilenameArray, "C:\MOSC\KMS\\usbongKMSItemListTransaction2021OK.txt");	
+		array_push($sFilenameArray, "C:\MOSC\KMS\\usbongKMSItemListTransaction2022OK.txt");	
 
 		$outputArray = array();
 
@@ -7699,8 +7795,11 @@ echo "bought:".floor($value['fee']/$value['item_price']*100/100)."<br/>";
 	//		$this->db->group_by('t1.item_id'); //added by Mike, 20200406
 			$this->db->group_by('t2.transaction_id'); //added by Mike, 20200406
 
-			//edited by Mike, 20250402; from 20230412
+			//edited by Mike, 20260227; from 20250402
 			$this->db->join('transaction as t2', 't1.item_id = t2.item_id', 'LEFT');
+
+			//$this->db->join('transaction2022 as t2', 't1.item_id = t2.item_id', 'LEFT');
+
 			//$this->db->join('transaction2021 as t2', 't1.item_id = t2.item_id', 'LEFT');
 			//$this->db->join('transaction2020 as t2', 't1.item_id = t2.item_id', 'LEFT');
 
