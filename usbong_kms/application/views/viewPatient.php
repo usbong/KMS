@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260409; from 20260103
+' @date updated: 20260512; from 20260409
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -171,6 +171,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}						
 
+						td.columnPrivate
+						{
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+						}						
+
 						td.columnGrandTotal
 						{
 							border: 1px dotted #ab9c7d;		
@@ -208,6 +214,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							width: 13%;
 						}		
+						
+						td.columnTableHeaderPrivate
+						{
+							font-weight: bold;
+							background-color: #00dd00;
+							border: 1px dotted #ab9c7d;		
+							text-align: center;
+							width: 5%;
+						}
 
 						td.columnTableHeaderClassification
 						{
@@ -508,6 +523,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var labFee = document.getElementById("labFeeParam").value;
 			var classification = document.getElementById("classificationParam").value;
 			var notes = document.getElementById("notesParam").value;
+			
+			//added by Mike, 20260512
+			var bIsPrivCheckboxTicked = document.getElementById("privCheckBoxParam").checked;
+			//alert(bIsPrivCheckboxTicked);
 
 			//added by Mike, 20251015
 			var existingProfessionalFee = document.getElementById("existingProfessionalFeeParam").value;			
@@ -571,8 +590,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				return;
 			}
 	
-			//added by Mike, 20200525
-//			alert(notes);
+			//edited by Mike, 20260512; from 20200525
+			if (bIsPrivCheckboxTicked) {
+				//alert(">"+notes);
+				if (notes=="NONE") {
+					notes = "PRIVATE";
+				}
+				else {
+					notes = notes.concat("u003B PRIVATE");
+				}
+				//alert(">>"+notes);
+			}
+			
 			notes = notes.replace(";", "u003B"); //semicolon
 			notes = notes.replace(",", "u002C"); //comma
 	
@@ -1141,6 +1170,11 @@ else {
 							echo "PATIENT NAME";
 				?>		
 						</td>
+						<td class ="columnTableHeaderPrivate">				
+						<?php
+							echo "PRV";
+						?>
+						</td>
 						<td class ="columnTableHeaderFee">				
 							<?php
 								echo "PF";
@@ -1190,6 +1224,31 @@ else {
 				?>		
 								</div>								
 							</a>
+						</td>
+						<td class ="columnPrivate">
+						<?php 
+							//$bIsEditable = true;
+/*							
+							if ($bIsEditable) {
+*/							
+							if (isset($value['notes'])) {
+								if (strpos($value['notes'],"PRIVATE")!==false) {
+						?>
+									<input type="checkbox" id="privCheckBoxParam" checked>
+						<?php
+								}
+								else {
+						?>
+									<input type="checkbox" id="privCheckBoxParam">
+						<?php
+								}
+							}
+							else {
+						?>
+									<input type="checkbox" id="privCheckBoxParam">
+						<?php
+							}
+						?>
 						</td>
 						<td class ="column">
 <?php		
