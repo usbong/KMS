@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20260118; from 20260117
+  @date updated: 20260515; from 20260118
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -1009,16 +1009,25 @@ echo $value['fee']."<br/>";
 								$iCurrExtraFeeValue+=300;
 							}
 						}
-						//added by Mike, 20251106
+						//edited by Mike, 20260515; from 20251106
 						//TODO: -update: so that the number after "MEDCERT" is used;
 						else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT6")!==false) {	
 							$iCurrExtraFeeValue+=300*2;
 						}
 						else {	
-							if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false) ||
-								(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false)) {
-								//$iNetFeeTotalCount = $iNetFeeTotalCount + (200*2)*.30;
-																																				$iCurrExtraFeeValue+=200*2;
+							if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2")!==false) ||
+								(strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX2")!==false)) {
+									
+								if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X2")!==false) {
+									//$iNetFeeTotalCount = $iNetFeeTotalCount + (200*2)*.30;
+									$iCurrExtraFeeValue+=200*2;
+								}
+								else if (strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERT2X3")!==false) {
+									$iCurrExtraFeeValue+=200*3;
+								}								
+								else {
+									$iCurrExtraFeeValue+=200;
+								}
 							}
 							//added by Mike, 20250219
 							else if ((strpos(str_replace(" ","",strtoupper($value['notes'])), "MEDCERTX3")!==false) ||
@@ -1162,10 +1171,17 @@ echo $value['fee']."<br/>";
 									if (($receiptArrayRowValue) && ($receiptArrayRowValue['receipt_number']!=0)) {
 
 											//echo "RECEIPT!!!: ".$iTransactionId."<br/>";
-
-											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+/*											
+											echo "fee: ".$value['fee']."<br/>";
+											echo ">>>ExtraFee: ".$iCurrExtraFeeValue."<br/>";
+*/											
+											//edited by Mike, 20260515
+											//$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 											
-											
+											$myNetFeeValue = ($value['fee']-$iCurrExtraFeeValue)*0.70+ $iCurrExtraFeeValue - ($value['fee'])*.12;
+/*
+											echo ">>>myNetFeeValue: ".$myNetFeeValue."<br/>";
+*/											
 											$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;
 /*											
 										}

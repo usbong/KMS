@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20260422; from 20260218
+  @date updated: 20260515; from 20260422
   @website address: www.usbong.ph
   
   Input:
@@ -892,9 +892,11 @@
 
 											//echo "RECEIPT!!!: ".$iTransactionId."<br/>";
 
-											$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
+											//edited by Mike, 20260515
+											//$myNetFeeValue = $value['fee']*0.70 - $value['fee']*.12;
 											
-											
+											$myNetFeeValue = ($value['fee']-$iCurrExtraFeeValue)*0.70+ $iCurrExtraFeeValue - ($value['fee'])*.12;
+																						
 											$iNetFeeTotalCount = $iNetFeeTotalCount + $myNetFeeValue;
 /*											
 										}
