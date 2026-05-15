@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020~2025 SYSON, MICHAEL B.
+  Copyright 2020~2026 SYSON, MICHAEL B.
   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
   http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20250911; from 20250902
+  @date updated: 20260515; from 20250911
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -130,7 +130,7 @@
 							font-family: Arial;
 							font-size: 12pt;
 							
-							/*background-color: #FEFEFE;*/
+							/*background-color: #ffffef;*/
 
 							width: 820px;
                         }
@@ -148,6 +148,11 @@
 						span.indentSpan
 						{
 							padding-left: 2.5%;
+						}
+
+						img.Image-usbongCalcLogo {
+							width: 40%;
+							height: auto;
 						}
 						
 						img.Image-companyLogo {
@@ -322,13 +327,23 @@
 							margin-top: -0.5%;
 							margin-bottom: -0.5%;							
 						}
+
+						h2 {
+							margin: 0;
+							padding: 0;
+						}
+						
+						table {
+							margin: 0;
+							padding: 0;
+						}
 						
 						table.imageTable
 						{
 							width: 100%;
 <!--							border: 1px solid #ab9c7d;		
 -->
-						}						
+						}			
 
 						td.tableHeaderColumn
 						{
@@ -384,6 +399,32 @@
 						  color: rgb(95,204,250); /*rgb(73,156,191);*/
 						}
 						
+						a.usbongCalcLink
+						{
+							margin-left: 20%;
+/*
+							padding-top: 10%;
+							padding-bottom: 10%;
+							padding-left: 5%;
+							padding-right: 5%;
+*/							
+						}
+						
+						a.usbongCalcLink:hover
+						{
+							margin-left: 20%;
+/*
+							background-color: #f3f3f3;
+							padding-top: 10%;
+							padding-bottom: 10%;
+							padding-left: 5%;
+							padding-right: 5%;
+							border-radius: 10px;							
+*/
+							opacity: 0.6;
+							
+						}
+
     /**/
     </style>
     <title>
@@ -444,7 +485,23 @@
 	//ini_set('auto_detect_line_endings', true);
 	
 ?>
+<!--
 <h2>Computer Web Address List (MOSC)</h2>
+-->
+
+<table>
+<tr>
+<td>
+<h2>Computer Web Address List (MOSC)</h2>
+</td>
+<td>
+	<a class="usbongCalcLink" target="_blank" href="http://store.usbong.ph/server/calc/calc.html">
+	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcfaviconLarge.png');?>?lastmod=20260515T1524">
+	</a>
+</td>
+</tr>
+</table>
+		
 <h2>I. SEARCH</h2>
 <h3><span class="indentSpan"></span>1.<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchPatient"><img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432">Search Patient</a></h3>
 
