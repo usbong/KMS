@@ -151,8 +151,8 @@
 						}
 
 						img.Image-usbongCalcLogo {
-							width: 40%;
-							height: auto;
+							width: 30%;
+							height: 30%;
 						}
 						
 						img.Image-companyLogo {
@@ -331,6 +331,8 @@
 						h2 {
 							margin: 0;
 							padding: 0;
+							margin-top: 2%;
+							margin-bottom: 2%;
 						}
 						
 						table {
@@ -407,7 +409,7 @@
 							padding-bottom: 10%;
 							padding-left: 5%;
 							padding-right: 5%;
-*/							
+*/
 						}
 						
 						a.usbongCalcLink:hover
@@ -422,7 +424,6 @@
 							border-radius: 10px;							
 */
 							opacity: 0.6;
-							
 						}
 
     /**/
@@ -485,10 +486,9 @@
 	//ini_set('auto_detect_line_endings', true);
 	
 ?>
-<!--
 <h2>Computer Web Address List (MOSC)</h2>
--->
 
+<!-- TODO: -fix: this 
 <table>
 <tr>
 <td>
@@ -501,7 +501,7 @@
 </td>
 </tr>
 </table>
-		
+-->		
 <h2>I. SEARCH</h2>
 <h3><span class="indentSpan"></span>1.<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchPatient"><img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432">Search Patient</a></h3>
 
