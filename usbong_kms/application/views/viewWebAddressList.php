@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20260515; from 20250911
+  @date updated: 20260516; from 20260515
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -151,8 +151,8 @@
 						}
 
 						img.Image-usbongCalcLogo {
-							width: 30%;
-							height: 30%;
+							padding: 0;
+							margin-left: 20%;
 						}
 						
 						img.Image-companyLogo {
@@ -401,30 +401,6 @@
 						  color: rgb(95,204,250); /*rgb(73,156,191);*/
 						}
 						
-						a.usbongCalcLink
-						{
-							margin-left: 20%;
-/*
-							padding-top: 10%;
-							padding-bottom: 10%;
-							padding-left: 5%;
-							padding-right: 5%;
-*/
-						}
-						
-						a.usbongCalcLink:hover
-						{
-							margin-left: 20%;
-/*
-							background-color: #f3f3f3;
-							padding-top: 10%;
-							padding-bottom: 10%;
-							padding-left: 5%;
-							padding-right: 5%;
-							border-radius: 10px;							
-*/
-							opacity: 0.6;
-						}
 
     /**/
     </style>
@@ -486,22 +462,22 @@
 	//ini_set('auto_detect_line_endings', true);
 	
 ?>
+<!--
 <h2>Computer Web Address List (MOSC)</h2>
-
-<!-- TODO: -fix: this 
+-->
 <table>
 <tr>
 <td>
 <h2>Computer Web Address List (MOSC)</h2>
 </td>
 <td>
-	<a class="usbongCalcLink" target="_blank" href="http://store.usbong.ph/server/calc/calc.html">
-	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcfaviconLarge.png');?>?lastmod=20260515T1524">
+	<a target="_blank" href="http://192.168.11.10/usbong_kms/server/calc/calc.html">
+	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcfaviconMedium.png');?>">
 	</a>
 </td>
 </tr>
 </table>
--->		
+
 <h2>I. SEARCH</h2>
 <h3><span class="indentSpan"></span>1.<a target="_blank" href="http://192.168.11.10/usbong_kms/index.php/browse/searchPatient"><img class="patientIcon" src="<?php echo base_url('assets/images/patientIcon3.png');?>?lastmod=20250806T1432">Search Patient</a></h3>
 
