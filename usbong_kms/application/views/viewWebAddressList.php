@@ -151,8 +151,15 @@
 						}
 
 						img.Image-usbongCalcLogo {
+							width: 50%;
+							height: auto;
+							vertical-align: middle;
 							padding: 0;
+							margin: 0;
+/*							
+							margin-top: 30%;
 							margin-left: 20%;
+*/							
 						}
 						
 						img.Image-companyLogo {
@@ -339,6 +346,11 @@
 							margin: 0;
 							padding: 0;
 						}
+
+						table.computerWebAddressListRowTable {
+							margin-bottom: -2%;
+							padding: 0;
+						}
 						
 						table.imageTable
 						{
@@ -465,7 +477,7 @@
 <!--
 <h2>Computer Web Address List (MOSC)</h2>
 -->
-<table>
+<table class="computerWebAddressListRowTable">
 <tr>
 <td>
 <h2>Computer Web Address List (MOSC)</h2>
