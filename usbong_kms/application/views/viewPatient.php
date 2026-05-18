@@ -536,8 +536,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			var sIsExistingTransactionToday = document.getElementById("sIsExistingTransactionTodayParam").value;
 			
-			
-			
+			//added by Mike, 20260518
+			const iDexaPriceDefault = 1000;
+
 			//TODO: -reverify: this due to Xray or Lab can still be added after already adding, for example, an Xray payment
 			if (sIsExistingTransactionToday==="1") {
 				//edited by Mike, 20251210
@@ -661,7 +662,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//the following instruction is not yet supported by all computer web browsers
 //			if (notes.includes("DEXA")) {
 	
-			//edited by Mike, 20231027; from 20210122
+/*			//edited by Mike, 20260518; from 20231027
 			if ((notes.indexOf("DEXA2")!==-1) ||
 				(notes.indexOf("DEXA 2")!==-1) ||
 				(notes.indexOf("DEXAX2")!==-1) ||
@@ -685,6 +686,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			else if (notes.indexOf("DEXA")!==-1) {
 			//else
 				professionalFee = parseInt(professionalFee) + 500;
+			}
+*/
+			
+			if ((notes.indexOf("DEXA2")!==-1) ||
+				(notes.indexOf("DEXA 2")!==-1) ||
+				(notes.indexOf("DEXAX2")!==-1) ||
+				(notes.indexOf("DEXA X2")!==-1)){
+				professionalFee = parseInt(professionalFee) + iDexaPriceDefault*2;
+			}
+			//added by Mike, 20240907
+			else if ((notes.indexOf("DEXA3")!==-1) ||
+				(notes.indexOf("DEXA 3")!==-1) ||
+				(notes.indexOf("DEXAX3")!==-1) ||
+				(notes.indexOf("DEXA X3")!==-1)){
+				professionalFee = parseInt(professionalFee) + iDexaPriceDefault*3;
+			}
+			else if ((notes.indexOf("DEXA4")!==-1) ||
+				(notes.indexOf("DEXA 4")!==-1) ||
+				(notes.indexOf("DEXAX4")!==-1) ||
+				(notes.indexOf("DEXA X4")!==-1)){
+				professionalFee = parseInt(professionalFee) + iDexaPriceDefault*4;
+			}		
+			//default
+			else if (notes.indexOf("DEXA")!==-1) {
+			//else
+				professionalFee = parseInt(professionalFee) + iDexaPriceDefault;
 			}
 			
 			//added by Mike, 20240403

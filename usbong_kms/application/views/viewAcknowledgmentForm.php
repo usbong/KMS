@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20260508; from 20260106
+  @date updated: 20260518; from 20260508
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -613,6 +613,9 @@ echo "notes".$value['fee']."<br/>";
 						
 						$dMedCertPrice=0;
 						$dDexaPrice=0; //added by Mike, 20250410
+						//added by Mike, 20260518
+						$dDexaPriceDefault=1000; 
+						$dDexaCount=0;
 
 						if (strpos($value['notes'],"MEDCERT")!==false) {
 							$sMedCertToken=substr($value['notes'],strpos($value['notes'],"MEDCERT"),strlen("MEDCERT")+1);
@@ -633,13 +636,23 @@ echo "notes".$value['fee']."<br/>";
 						if (strpos($value['notes'],"DEXA")!==false) {
 							$sDexaToken=substr($value['notes'],strpos($value['notes'],"DEXA"),strlen("DEXA")+1);
 							
-							$dDexaPrice=str_replace("DEXA","",$sDexaToken);
+							$dDexaCount=floatval(str_replace("DEXA","",$sDexaToken));
+							
+							//echo ">>>>".$dDexaCount."<br/>";
+							
+							if ($dDexaCount==0) {
+								$dDexaCount=1;
+							}
 							
 							if (strpos($dDexaPrice,";")!==false) {
-								$dDexaPrice=500;
+								//edited by Mike, 20260518
+								//$dDexaPrice=500;
+								$$dDexaPrice=$dDexaPriceDefault;
 							}
 							else {
-								$dDexaPrice=$dDexaPrice*500;
+								//edited by Mike, 20260518
+								//$dDexaPrice=$dDexaPrice*500;
+								$dDexaPrice=$dDexaCount*$dDexaPriceDefault;
 							}
 							
 							//echo "<b>PROF FEE: DR. ".$value['medical_doctor_name']."<br/>(WITH MEDCERT: @".$dMedCertPrice.")</b>";
@@ -710,7 +723,9 @@ echo "notes".$value['fee']."<br/>";
 							//echo "<b>WITH DEXA</b>";
 							//edited by Mike, 20260106
 							//echo "<b>WITH DEXA X".($dDexaPrice/500)." @500.00</b>";
-							echo "<b>WITH DEXAMETHASONE X".($dDexaPrice/500)." @500.00</b>";
+							//edited by Mike, 20260518
+							//echo "<b>WITH DEXAMETHASONE X".($dDexaPrice/500)." @500.00</b>";
+							echo "<b>WITH DEXAMETHASONE X".($dDexaPrice/$dDexaPriceDefault)." @".$dDexaPriceDefault.".00</b>";
 							
 							echo "</td>";	
 							echo "<td class='columnFee'>";

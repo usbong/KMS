@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260424; from 20251229
+' @date updated: 20260518; from 20260424
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -1047,12 +1047,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//echo floor(($iNetPF*100)/100);
 									echo (($iNetPF*100)/100);
 									
-										
-/*	//removed by Mike, 20221110
+/*										
+	//removed by Mike, 20221110
 echo "<br/>";
 echo $value['transaction_id']."<br/>";
-//echo $value['patient_name']."<br/>";
-//echo $value['receipt_number']."<br/>";
+echo $value['patient_name']."<br/>";
+echo $value['receipt_number']."<br/>";
 */
 
 								//added by Mike, 20250523
