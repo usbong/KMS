@@ -1672,9 +1672,29 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//if there are reports
 		$iRowArrayCount = 0;
 		$iRowArrayCountMax = count($rowArray);
-					
+		
+		//added by Mike, 20260520
+		$dTotalPassFee = 0;
+		
+		//edited by Mike, 20260520
 		while ($iRowArrayCount < $iRowArrayCountMax) {
 			if ($bIsSCOrPWDDiscountedNow) {
+				//WI -> SC
+				//noted there's no way to know if the amounts have already been adjusted
+				//example: 60 is already 67.5; or is the amount still 60
+				//TODO: -add: verify the base price of the item based on the item_id
+				//to check if it changed or not; however, if the item's price was modified,
+				//it would mean that it didn't use the base price at all
+/*
+				//if had not yet been set to SC or PWD previously;
+				if (!$bIsSCOrPWDDiscountedPrev) {
+					//280 PHP becomes 250 PHP
+					$rowArray[$iRowArrayCount]['pas_fee'] = $rowArray[$iRowArrayCount]['pas_fee']/(1.12);
+				}
+*/				
+			}
+			else {
+				//SC -> WI
 				//if had not yet been set to SC or PWD previously;
 				if (!$bIsSCOrPWDDiscountedPrev) {
 					//non-med's pas_fee should now be adjusted to have 12% VAT
@@ -1682,10 +1702,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 					$rowArray[$iRowArrayCount]['pas_fee'] += $rowArray[$iRowArrayCount]['pas_fee']*0.12;
 				}
 			}
-			else {
-				//280 PHP becomes 250 PHP
-				$rowArray[$iRowArrayCount]['pas_fee'] = $rowArray[$iRowArrayCount]['pas_fee']/(1.12);
-			}
+			
+			$dTotalPassFee += $rowArray[$iRowArrayCount]['pas_fee'];
 			
 			$data = array(
 						'pas_fee' => $rowArray[$iRowArrayCount]['pas_fee'],
@@ -1703,6 +1721,18 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			
 			$iRowArrayCount++;
 		}
+		
+		//added by Mike, 20260520
+		$data = array(
+						'pas_fee' => $dTotalPassFee
+					);
+
+		$this->db->where('transaction_quantity!=', 0);
+		$this->db->where('transaction_date', $param['transactionDate']);
+		$this->db->where('patient_id', $param['patientId']); 
+		$this->db->not_like('notes',"ONLY");
+		
+		$this->db->update('transaction', $data);		
 	}	
 	
 	
