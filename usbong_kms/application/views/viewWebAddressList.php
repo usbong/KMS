@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20260516; from 20260515
+  @date updated: 20260525; from 20260516
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -484,7 +484,7 @@
 </td>
 <td>
 	<a target="_blank" href="http://192.168.11.10/usbong_kms/server/calc/calc.html">
-	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcfaviconMedium.png');?>">
+	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcalphaiconMedium.png');?>">
 	</a>
 </td>
 </tr>
