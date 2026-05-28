@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20260518; from 20260508
+  @date updated: 20260528; from 20260518
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -1043,7 +1043,10 @@ echo "</a>";
 					echo "</td>";			
 					echo "<td class='columnItemHeaderList'>";
 
-					$dTotalMDXrayFeeWithDiscount=($dTotalMDXrayFee/(1-0.20))*0.20;
+					//edited by Mike, 20260528
+					//no need to put a discount for med cert
+					//$dTotalMDXrayFeeWithDiscount=($dTotalMDXrayFee/(1-0.20))*0.20;
+					$dTotalMDXrayFeeWithDiscount=(($dTotalMDXrayFee-$dMedCertPrice)/(1-0.20))*0.20;
 
 /*
 					//note: 800 -> 600; gives over 20% discount for SC classification;
