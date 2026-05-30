@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2025 USBONG
+' Copyright 2020~2026 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B
 ' @date created: 20200529
-' @date updated: 20250909; from 20240209
+' @date updated: 20260530; from 20250909
 ' @website address: www.usbong.ph
 -->
 <?php
@@ -148,6 +148,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						button.Button-search
 						{
 							font-size: 18pt;
+						}
+
+						img.Image-usbongCalcLogo, img.Image-usbongConvLogo {
+							width: 3%;
+							height: auto;
+							vertical-align: middle;
+							padding: 0;
+							margin: 0;
+/*							
+							margin-top: 30%;
+							margin-left: 20%;
+*/							
 						}
 						
 						img.Image-companyLogo {
@@ -763,7 +775,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
 	<br/>
-	<div><b>PATIENT QUEUE TODAY</b></div>
+	<div><b>PATIENT QUEUE TODAY</b>
+<!--	
+	<a target="_blank" href="http://192.168.11.12/usbong_kms/server/calc/calc.html">
+	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcalphaiconMedium.png');?>">
+	</a>
+-->
+	<a target="_blank" href="http://192.168.11.12/usbong_kms/server/conv/conv.html">
+	<img class='Image-usbongConvLogo' src="<?php echo base_url('assets/images/convalphaiconMedium.png');?>">
+	</a>	
+	</div>
 	<br/>
 
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
