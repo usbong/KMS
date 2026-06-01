@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20260528; from 20260518
+  @date updated: 20260601; from 20260528
   @website address: http://www.usbong.ph  
 -->
 <?php
@@ -1189,8 +1189,12 @@ echo "</a>";
 						echo "PAS RECEIPT TOTAL (discounted: ".number_format($dTotalNonMedFeeWithDiscount, 2, '.', ',').")";
 					}
 					else {
-						//edited by Mike, 20220317
+						//edited by Mike, 20260601; from 20220317
 						//echo "PAS RECEIPT TOTAL";
+						
+						//while the cashier must write down the paid VAT fee in the printed form, the PAS OR report includes the newly added payment; the item fees in this form aren't automatically increased anymore if the patient paid not on the transaction day itself;
+						
+						//echo ">>>>>".$resultPaidNonMedItem[0]['fee']."<br/>";
 
 						if (isset($resultPaidNonMedItem[0]['receipt_id'])) {
 							

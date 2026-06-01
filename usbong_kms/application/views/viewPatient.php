@@ -546,7 +546,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				if (existingNotes.indexOf("IN-QUEUE; UNPAID")!==-1) {
 				} else {
 					if (existingNotes.indexOf("PAID")!==-1) {
-						if (existingNotes.indexOf("ONLY")==-1) { //no "ONLY" keyword
+						//edited by Mike, 20260601; TODO: -reverity this
+						//if (existingNotes.indexOf("ONLY")==-1) { //no "ONLY" keyword
+						if ((existingNotes.indexOf("ONLY")==-1) || (existingNotes.indexOf("TRANSACTION")==-1)) { //no "ONLY" keyword
+
 							if ((existingProfessionalFee!=0) && (professionalFee!=0)) { 
 								alert("May nailagay nang PF sa record ng pasyente ngayong araw.");
 								return;
