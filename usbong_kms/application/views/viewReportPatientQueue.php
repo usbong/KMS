@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B
 ' @date created: 20200529
-' @date updated: 20260530; from 20250909
+' @date updated: 20260603; from 20260530
 ' @website address: www.usbong.ph
 -->
 <?php
@@ -150,7 +150,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							font-size: 18pt;
 						}
 
-						img.Image-usbongCalcLogo, img.Image-usbongConvLogo {
+						img.Image-usbongCalcLogo {
 							width: 3%;
 							height: auto;
 							vertical-align: middle;
@@ -160,6 +160,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							margin-top: 30%;
 							margin-left: 20%;
 */							
+						}
+
+						img.Image-usbongConvLogo {
+							width: 6%;
+							height: auto;
+							vertical-align: middle;
+							padding: 0;
+							margin: 0;
 						}
 						
 						img.Image-companyLogo {
@@ -782,7 +790,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</a>
 -->
 	<a target="_blank" href="http://192.168.11.12/usbong_kms/server/conv/conv.html">
-	<img class='Image-usbongConvLogo' src="<?php echo base_url('assets/images/convalphaiconMedium.png');?>">
+	<img class='Image-usbongConvLogo' src="<?php echo base_url('assets/images/convalphaicon.png');?>">
 	</a>	
 	</div>
 	<br/>
