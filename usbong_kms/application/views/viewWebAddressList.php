@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20260525; from 20260516
+  @date updated: 20260604; from 20260525
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -151,15 +151,34 @@
 						}
 
 						img.Image-usbongCalcLogo {
-							width: 50%;
+							width: 30%;
 							height: auto;
 							vertical-align: middle;
 							padding: 0;
 							margin: 0;
-/*							
-							margin-top: 30%;
-							margin-left: 20%;
-*/							
+						}
+
+						a.usbongCalcLink
+						{
+							margin-right: 0;
+							margin-left: 5%;
+							padding-top:15%;
+							padding-bottom:15%;
+							padding-left:10%;
+							padding-right:10%;
+						}
+						
+						a.usbongCalcLink:hover
+						{
+							margin-right: 0;
+							margin-left: 5%;
+
+							background-color: #f3f3f3;
+							padding-top:15%;
+							padding-bottom:15%;
+							padding-left:10%;
+							padding-right:10%;
+							border-radius: 10px;							
 						}
 						
 						img.Image-companyLogo {
@@ -483,8 +502,8 @@
 <h2>Computer Web Address List (MOSC)</h2>
 </td>
 <td>
-	<a target="_blank" href="http://192.168.11.10/usbong_kms/server/calc/calc.html">
-	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcalphaiconMedium.png');?>">
+	<a class="usbongCalcLink" target="_blank" href="http://192.168.11.10/usbong_kms/server/calc/calc.html">
+	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcalphaicon.png');?>">
 	</a>
 </td>
 </tr>

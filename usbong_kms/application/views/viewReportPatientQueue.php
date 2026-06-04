@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B
 ' @date created: 20200529
-' @date updated: 20260603; from 20260530
+' @date updated: 20260604; from 20260603
 ' @website address: www.usbong.ph
 -->
 <?php
@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							width: 720px
                         }
-						
+												
 						div.checkBox
 						{
 							border: 1.5pt solid black; height: 9pt; width: 9pt;
@@ -782,7 +782,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br/>
 	<div><b>DATE: </b><?php echo strtoupper(date("Y-m-d, l"));?>
 	</div>
-	<br/>
+
+<!--	<br/> -->
+
 	<div><b>PATIENT QUEUE TODAY</b>
 <!--	
 	<a target="_blank" href="http://192.168.11.12/usbong_kms/server/calc/calc.html">
@@ -793,7 +795,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<img class='Image-usbongConvLogo' src="<?php echo base_url('assets/images/convalphaicon.png');?>">
 	</a>	
 	</div>
+<!--	
 	<br/>
+-->
 
 <!--	<div id="myText" onclick="copyText(1)">Text you want to copy</div>
 -->	
