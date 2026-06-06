@@ -162,7 +162,7 @@
 						{
 							margin-right: 0;
 							margin-left: 5%;
-							padding-top:15%;
+							padding-top:12%;
 							padding-bottom:15%;
 							padding-left:10%;
 							padding-right:10%;
@@ -174,7 +174,7 @@
 							margin-left: 5%;
 
 							background-color: #f3f3f3;
-							padding-top:15%;
+							padding-top:12%;
 							padding-bottom:15%;
 							padding-left:10%;
 							padding-right:10%;
@@ -503,7 +503,7 @@
 </td>
 <td>
 	<a class="usbongCalcLink" target="_blank" href="http://192.168.11.10/usbong_kms/server/calc/calc.html">
-	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcalphaicon.png');?>">
+	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcalphaicon3.png');?>">
 	</a>
 </td>
 </tr>

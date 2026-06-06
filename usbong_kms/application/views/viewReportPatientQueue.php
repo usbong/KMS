@@ -419,6 +419,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						input.patient-input {
 							width: 90%;
 						}
+						
+						a.usbongConvLink
+						{
+							margin-right: 0;
+							margin-left: 0;
+							padding-top:1%;
+							padding-bottom:2%;
+							padding-left:1%;
+							padding-right:1%;
+						}
+						
+						a.usbongConvLink:hover
+						{
+							margin-right: 0;
+							margin-left: 0;
+
+							background-color: #f3f3f3;
+							padding-top:1%;
+							padding-bottom:2%;
+							padding-left:1%;
+							padding-right:1%;
+							border-radius: 10px;							
+						}							
 
 						a {color:#0011f1;}         /* Unvisited link  */
 						a:visited {color:#0011f1;} /* Visited link    */
@@ -791,7 +814,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<img class='Image-usbongCalcLogo' src="<?php echo base_url('assets/images/calcalphaiconMedium.png');?>">
 	</a>
 -->
-	<a target="_blank" href="http://192.168.11.12/usbong_kms/server/conv/conv.html">
+	<a class="usbongConvLink" target="_blank" href="http://192.168.11.12/usbong_kms/server/conv/conv.html">
 	<img class='Image-usbongConvLogo' src="<?php echo base_url('assets/images/convalphaicon.png');?>">
 	</a>	
 	</div>
