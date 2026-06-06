@@ -1694,12 +1694,29 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 */				
 			}
 			else {
-				//SC -> WI
-				//if had not yet been set to SC or PWD previously;
-				if (!$bIsSCOrPWDDiscountedPrev) {
-					//non-med's pas_fee should now be adjusted to have 12% VAT
-					//example: 250 PHP becomes 280 PHP
-					$rowArray[$iRowArrayCount]['pas_fee'] += $rowArray[$iRowArrayCount]['pas_fee']*0.12;
+				//edited by Mike, 20260606
+				//TODO: -reverify: this;
+				//if no change; example; WI -> WI
+/*
+				echo ">>>>>> param sClass".$param['sClass']."<br/>";
+				echo ">>>>>> row->notes".$row->notes."<br/>";
+*/				
+				$sClassTemp = $param['sClass'];
+				
+				if (strpos($sClassTemp, "WI")!==false) {
+					$sClassTemp = "NONE;";
+				}
+	
+				if (strpos($row->notes, $sClassTemp)!==false) {
+				}
+				else {
+					//SC -> WI
+					//if had not yet been set to SC or PWD previously;
+					if (!$bIsSCOrPWDDiscountedPrev) {
+						//non-med's pas_fee should now be adjusted to have 12% VAT
+						//example: 250 PHP becomes 280 PHP
+						$rowArray[$iRowArrayCount]['pas_fee'] += $rowArray[$iRowArrayCount]['pas_fee']*0.12;
+					}
 				}
 			}
 			
@@ -6687,6 +6704,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$this->db->select('t1.receipt_number, t1.receipt_id');
 			$this->db->from('receipt as t1');
 			$this->db->where('t1.transaction_id',$rowArray[0]['transaction_id']);
+						
 			$query = $this->db->get('receipt');
 
 			$receiptTransactionRowArray = $query->result_array();
