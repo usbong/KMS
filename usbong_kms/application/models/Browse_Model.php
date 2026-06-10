@@ -4860,6 +4860,23 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$param['nameParam'] = trim($param['patientLastNameParam']).", ".trim($param['patientFirstNameParam']);
 		$param['nameParam'] = strtoupper($param['nameParam']);		
 
+		//added by Mike, 20260610
+		//---------------------------
+		//fixes human error input such as: DELA CRUZ, JUAN  B
+		//two spaces between "JUAN" and "B"
+		$nameParamArray = explode(" ",$param['nameParam']);
+		
+		$param['nameParam'] = "";
+		
+		foreach ($nameParamArray as $nameParamValue) {
+			if (trim($nameParamValue)!=="") {
+				$param['nameParam'] .= trim($nameParamValue)." ";
+			}
+		}
+		
+		$param['nameParam'] = trim($param['nameParam']);
+		//---------------------------
+		
 		//added by Mike, 20250208
 		//NOTE: MYSQL COMMAND to update existing database:
 		//UPDATE `patient` SET `patient_name`=replace(`patient_name`, '.', '');
