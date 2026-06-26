@@ -1711,12 +1711,16 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 				}
 				else {
 					//SC -> WI
+/*					//removed by Mike, 20260626; 
+					//multiple changes from SC to WI then WI to SC eventually results to wrong output
+					//just add again the items with the correct price
 					//if had not yet been set to SC or PWD previously;
 					if (!$bIsSCOrPWDDiscountedPrev) {
 						//non-med's pas_fee should now be adjusted to have 12% VAT
 						//example: 250 PHP becomes 280 PHP
 						$rowArray[$iRowArrayCount]['pas_fee'] += $rowArray[$iRowArrayCount]['pas_fee']*0.12;
 					}
+*/					
 				}
 			}
 			
