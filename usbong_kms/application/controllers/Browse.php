@@ -4156,8 +4156,23 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 			$data['sMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaid'][0]['medical_doctor_id'])[0]['medical_doctor_name'];
 		}
 */		
-		$data['sMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaid'][0]['medical_doctor_id'])[0]['medical_doctor_name'];
+		//edited by Mike, 20260630
+		//$data['sMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaid'][0]['medical_doctor_id'])[0]['medical_doctor_name'];
+		
+		//$data['arrayMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaid'][0]['medical_doctor_id']);
 
+		$mdCount=0;
+
+		while (isset($data['resultPaid'][$mdCount])) {
+			$data['sMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaid'][$mdCount]['medical_doctor_id'])[0]['medical_doctor_name'];
+
+			$data['arrayMedicalDoctorName'][$mdCount] = $data['sMedicalDoctorName'];
+			
+			//echo ">>>>>".$data['arrayMedicalDoctorName'][$mdCount]."<br/>";
+			
+			$mdCount++;
+		}
+		
 		
 //echo $data['resultPaid'][0]['patient_name'];
 //echo $data['resultPaid'][0]['transaction_id'];
