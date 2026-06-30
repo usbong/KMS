@@ -1541,6 +1541,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//$param['patientIdParam']
 		//$param['professionalFee'];
 
+		//echo ">>>iTransactionId: ".$iTransactionId."<br/>";
 
 		//added by Mike, 20250819
 		//$data['transactionDate'] = str_replace("DEL","",$data['transactionDate']);
@@ -1615,6 +1616,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$param['updatedNotes'] = trim(str_replace("PAID","NONE; PAID",$param['updatedNotes']));
 		}
 		//---------------------------------------
+		
+		//echo ">>>>>".$param['medicalDoctorId']."<br/>";
+
+		//added by Mike, 20260630
+		//echo ">>>medicalDoctorId: ".$param['medicalDoctorId']."<br/>";
 
 		$data = array(
 					'fee' => $param['professionalFee'],
@@ -1627,6 +1633,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->where('transaction_date', $param['transactionDate']);
 		$this->db->where('patient_id', $param['patientId']); //$param['patientIdParam']);
 		$this->db->where('item_id', 0);
+		
+		//added by Mike, 20260630
+		$this->db->where('medical_doctor_id', $param['medicalDoctorId']); 
 		
 		//added by Mike, 20250816
 		$this->db->not_like('notes',"ONLY");
@@ -1657,6 +1666,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->where('pas_fee!=',0);
 		$this->db->where('transaction_quantity',0);
 		$this->db->where('transaction_date', $param['transactionDate']);
+
+		//added by Mike, 20260630
+		$this->db->where('medical_doctor_id', $param['medicalDoctorId']); 
 
 		$query = $this->db->get('transaction');
 		$rowArray = $query->result_array();
@@ -1736,6 +1748,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			
 			$this->db->where('transaction_date', $param['transactionDate']);
 			$this->db->where('patient_id', $param['patientId']); 
+
+			//added by Mike, 20260630
+			$this->db->where('medical_doctor_id', $param['medicalDoctorId']); 
+		
 			$this->db->not_like('notes',"ONLY");
 			
 			$this->db->update('transaction', $data);
@@ -1751,11 +1767,14 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->where('transaction_quantity!=', 0);
 		$this->db->where('transaction_date', $param['transactionDate']);
 		$this->db->where('patient_id', $param['patientId']); 
+
+		//added by Mike, 20260630
+		$this->db->where('medical_doctor_id', $param['medicalDoctorId']); 
+
 		$this->db->not_like('notes',"ONLY");
 		
-		$this->db->update('transaction', $data);		
+		$this->db->update('transaction', $data);
 	}	
-	
 	
 	//added by Mike, 20200517; edited by Mike, 20200616
 	//note: if we delete the patient health service transaction, all the medicine and non-medicne items included in the cart after payment are also deleted
