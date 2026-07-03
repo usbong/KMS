@@ -682,10 +682,11 @@ class Report extends CI_Controller { //MY_Controller {
 
 		//added by Mike, 20200908
 		//TO-DO: -reverify: this with cart list that includes med and non-med items
-		
+				
 		//added by Mike, 20200910
 		//identify newest transactionId
 		$this->db->select_max('transaction_id');
+		
 
 /*	//removed by Mike, 20221110		
 		//added by Mike, 20221108
