@@ -648,8 +648,10 @@ class Report_Model extends CI_Model
 
 		//edited by Mike, 20200601
 		//$this->db->distinct('t1.patient_name');
-		$this->db->group_by('t1.patient_id');
 		
+		$this->db->group_by('t1.patient_id');
+		//$this->db->group_by('t2.transaction_id');
+
 //		$this->db->where('t2.report_id=',$row->report_id);
 		
 		//added by Mike, 20200324; edited by Mike, 20200607
