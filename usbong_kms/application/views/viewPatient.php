@@ -517,7 +517,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//edited by Mike, 20200522
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
-			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;			
+			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
+						
 			var professionalFee = document.getElementById("professionalFeeParam").value;
 			var xRayFee = document.getElementById("xRayFeeParam").value;
 			var labFee = document.getElementById("labFeeParam").value;
@@ -528,6 +529,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			var bIsPrivCheckboxTicked = document.getElementById("privCheckBoxParam").checked;
 			//alert(bIsPrivCheckboxTicked);
 
+			//added by Mike, 20260630
+			var existingMedicalDoctorId = document.getElementById("existingMedicalDoctorIdParam").value;
+			
 			//added by Mike, 20251015
 			var existingProfessionalFee = document.getElementById("existingProfessionalFeeParam").value;			
 			var existingNotes = document.getElementById("existingNotesParam").value;
@@ -550,35 +554,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						//if (existingNotes.indexOf("ONLY")==-1) { //no "ONLY" keyword
 						if ((existingNotes.indexOf("ONLY")==-1) || (existingNotes.indexOf("TRANSACTION")==-1)) { //no "ONLY" keyword
 
-							if ((existingProfessionalFee!=0) && (professionalFee!=0)) { 
-								alert("May nailagay nang PF sa record ng pasyente ngayong araw.");
+							if ((existingProfessionalFee!=0) && (professionalFee!=0)) {
+								//edited by Mike, 20260630
+								//alert("May nailagay nang PF sa record ng pasyente ngayong araw.");
+								
+								//if the prior transaction for the day has the same ID as the one being added
+								if (existingMedicalDoctorId==medicalDoctorId) {
+									alert("May nailagay nang PF sa record ng pasyente ngayong araw.");
+									return;
+								}
+							}
+
+							//edited by Mike, 20260703; multiple xray or lab transactions can be added on the same day, but for different MDs
+							if (existingMedicalDoctorId==medicalDoctorId) {
+								alert("May nailagay nang transaction sa record ng pasyente para sa parehong MD ngayong araw.");
 								return;
 							}
-							
-							if (professionalFee!=0) { 
-								//if ((existingXRayFee!=0) && (xRayFee!=0)) {
-								if (existingXRayFee!=0) {
-									alert("May nailagay nang XRAY sa record ng pasyente ngayong araw.");
-									return;
-								}
-
-								//if ((existingLabFee!=0) && (labFee!=0)) {
-								if (existingLabFee!=0) {
-									alert("May nailagay nang LAB sa record ng pasyente ngayong araw.");
-									return;
-								}
-							}
-							//added by Mike, 20251016
 							else {
-								if (xRayFee!=0) { 
-									alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
-									return;
-								}
+/*								//removed by Mike, 20260703
+								if (professionalFee!=0) { 
+									//if ((existingXRayFee!=0) && (xRayFee!=0)) {
+									if (existingXRayFee!=0) {
+										alert("May nailagay nang XRAY sa record ng pasyente ngayong araw.");
+										return;
+									}
 
-								if (labFee!=0) { 
-									alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
-									return;
+									//if ((existingLabFee!=0) && (labFee!=0)) {
+									if (existingLabFee!=0) {
+										alert("May nailagay nang LAB sa record ng pasyente ngayong araw.");
+										return;
+									}
 								}
+								//added by Mike, 20251016
+								else {
+									if (xRayFee!=0) { 
+										alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
+										return;
+									}
+
+									if (labFee!=0) { 
+										alert("May nailagay nang XRAY o LAB sa record ng pasyente ngayong araw.");
+										return;
+									}
+								}	
+*/								
 							}
 						}
 					}
@@ -587,7 +606,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			//added by Mike, 20200806
 			//verified: if a patient id already exists in the cart list
-			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;
+			var hasPatientInCartList = document.getElementById("hasPatientInCartListParam").value;			
 	
 			if (hasPatientInCartList) {
 				alert("Isang (1) pasyente lamang ang maaaring idagdag sa bawat Cart List.");
@@ -1308,6 +1327,10 @@ else {
 ?>
 
 		<input type="hidden" id="existingNotesParam" value="<?php if (isset($value['notes'])){ echo $value['notes'];}?>">
+		
+		<!-- added by Mike, 20260630 -->
+		<input type="hidden" id="existingMedicalDoctorIdParam" value="<?php if (isset($medicalDoctorId)){ echo $medicalDoctorId;}?>">		
+		
 		<input type="hidden" id="existingProfessionalFeeParam" value="<?php if (isset($value['notes'])){ echo $value['fee'];}?>">
 		<input type="hidden" id="existingXRayFeeParam" value="<?php if (isset($value['notes'])){ echo $value['x_ray_fee'];}?>">
 		<input type="hidden" id="existingLabFeeParam" value="<?php if (isset($value['notes'])){ echo $value['lab_fee'];}?>">

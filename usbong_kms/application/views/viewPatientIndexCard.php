@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200818
-  @date updated: 20250911; from 20250910
+  @date updated: 20251206; from 20250911
   @website address: http://www.usbong.ph
 
   //TO-DO: -add: search earlier transactions, e.g. earlier than 2 years ago; 
@@ -644,12 +644,31 @@
 			window.location.href = "<?php echo site_url('browse/deleteTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"');?>";
 		}	
 		
-		//added by Mike, 20250819; from 20250404
-		function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId) {				
+		//edited by Mike, 20260630; from 20250819
+		//function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId) {
+		function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId,pfCount,xRayFee,labFee) {
+			
 		//function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId,bIsPrivate) {
-			var professionalFee = document.getElementById("professionalFeeParam").value;			
-			var xRayFee = document.getElementById("xRayFeeParam").value;			
-			var labFee = document.getElementById("labFeeParam").value;		
+			
+			//var professionalFee = professionalFee; //document.getElementById("professionalFeeParam").value;			
+			
+			var professionalFee = document.getElementById("professionalFeeParam"+pfCount).value;
+			
+			//edited by Mike, 20260703
+			var xRayFee = xRayFee; 
+			var xRayFeeInput = document.getElementById("xRayFeeParam").value;			
+			var labFee = labFee; 
+			var labFeeInput = document.getElementById("labFeeParam").value;	
+
+			if (xRayFee!=xRayFeeInput) {
+				xRayFee=xRayFeeInput;
+			}
+
+			if (labFee!=labFeeInput) {
+				labFee=labFeeInput;
+			}
+
+			//alert(professionalFee);			
 			
 			//added by Mike, 20250819
 			var bIsPrivate = document.getElementById("privCheckBoxParam").checked;	
@@ -999,7 +1018,9 @@
 			if (isset($medicalDoctorId)) {
 			}
 			else {				
-				$medicalDoctorId = $result[0]["medical_doctor_id"];				
+				$medicalDoctorId = $result[0]["medical_doctor_id"];		
+
+//ECHO "dito!!!";				
 			}
 
 /*			//removed by Mike, 20250908
@@ -1061,7 +1082,7 @@
 							else {
 								echo "<option value='".$medicalDoctorValue['medical_doctor_id']."'>".$medicalDoctorValue["medical_doctor_name"]."</option>";
 							}							
-						  }				
+						  }
 					   }
 				echo "</select>";
 /*			//removed by Mike, 20250908
@@ -2071,11 +2092,13 @@
 					</td>
 					<td class ="columnNumber">				
 						<?php
-							//edited by Mike, 20250401
-							//echo $value['fee'];
+							//edited by Mike, 20260630; from 20250401
+							
+							//echo ">>>".$iCount."<br/>";
+							
 							if ($bIsEditable) {
 						?>
-						<input type="tel" id="professionalFeeParam" class="Fee-textbox no-spin" value="<?php echo intval($value['fee']);?>" min="1" max="99999" 
+						<input type="tel" id="professionalFeeParam<?php echo $iCount;?>" class="Fee-textbox no-spin" value="<?php echo intval($value['fee']);?>" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -2223,8 +2246,11 @@
 								$bIsPrivate=1;
 							  }
 						?>
-						
+<!--						
 <button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'];?>)">💾</button>
+-->
+
+<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'].','.$iCount.','.$value['x_ray_fee'].','.$value['lab_fee'];?>)">💾</button>
 
 <!--
 						<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'].','.$bIsPrivate;?>)">💾</button>
@@ -2255,8 +2281,11 @@
 								$updatedNotesOutput=str_replace("PRIVATE;","",$updatedNotesOutput);
 
 								$updatedNotesOutput=str_replace("PAID;","",$updatedNotesOutput);
-								
+
+								//edited by Mike, 20260630
 								echo $updatedNotesOutput;
+								
+								//echo $updatedNotesOutput.$value['medical_doctor_id'];
 							}
 						?>
 					</td>
