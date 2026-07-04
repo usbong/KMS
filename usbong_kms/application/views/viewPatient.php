@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260512; from 20260409
+' @date updated: 20260704; from 20260703
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -566,7 +566,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							}
 
 							//edited by Mike, 20260703; multiple xray or lab transactions can be added on the same day, but for different MDs
-							if (existingMedicalDoctorId==medicalDoctorId) {
+							//edited by Mike, 20260704
+							//if (existingMedicalDoctorId==medicalDoctorId) {
+							if ((existingMedicalDoctorId==medicalDoctorId) && (professionalFee!=0)) {
 								alert("May nailagay nang transaction sa record ng pasyente para sa parehong MD ngayong araw.");
 								return;
 							}
