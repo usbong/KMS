@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260704; from 20260703
+' @date updated: 20260713; from 20260704
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -858,11 +858,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.location.href = "<?php echo site_url('browse/deleteTransactionMedicinePurchase/"+itemId +"/"+transactionId+"');?>";
 		}	
 */
-		function myPopupFunctionDelete(medicalDoctorId,patientId,transactionId) {				
+		function myPopupFunctionDelete(medicalDoctorId,patientId,transactionId) {	
 			//note: if the unit member selects an option that is not the default, the computer server receives a blank value
 			//var medicalDoctorId = document.getElementById("medicalDoctorIdParam").value;
 			var medicalDoctorId = document.getElementById("medicalDoctorIdParam").selectedIndex;
-
+			
 			//added by Mike, 20200523
 //			alert(medicalDoctorId);
 /*
@@ -1838,14 +1838,9 @@ else {
 							?>
 								</div>
 						</td>
-						<td>				
-							<!-- TO-DO: -reverify: delete for medicine and non-medicine items -->
-							<!-- edited by Mike, 20201212 -->
-							<!--
-							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$value['patient_id'].",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>							-->		
-							<button onclick="myPopupFunctionDelete(<?php echo $value['medical_doctor_id'].",".$cartValuePatientId.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>														
-<!--							<button onclick="myPopupFunction()" class="Button-purchase">BUY</button>
--->
+						<td>
+							<!-- edited by Mike, 20260713 -->
+							<button onclick="myPopupFunctionDelete(<?php $temp=0; if (isset($value['medical_doctor_id'])){$temp=$value['medical_doctor_id'];} echo $temp.",".$cartValuePatientId.",".$cartValue['transaction_id'];?>)" class="Button-delete">DELETE</button>
 						</td>						
 					  </tr>
 		<?php				
