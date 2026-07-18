@@ -1660,18 +1660,23 @@ class Report extends CI_Controller { //MY_Controller {
 		//last accessed: 20200820
 		//answer by: Paul Dixon, 20090914T0848
 		#run the external command, break output into lines
-		$arp=`arp -a $ipAddress`;
-		$lines=explode("\n", $arp);
+		$arp=`arp -a $ipAddress`;		
 
-		#look for the output line describing our IP address
-		foreach($lines as $line)
-		{
-		   $cols=preg_split('/\s+/', trim($line));
-		   if ($cols[0]==$ipAddress)
-		   {
-			   $machineAddress=$cols[1];
-//			   echo $macAddress;
-		   }
+		//edited by Mike, 20260718
+		//results to false when the computer's name is used instead of its ip address
+		if (isset($arp)) {
+			$lines=explode("\n", $arp);
+
+			#look for the output line describing our IP address
+			foreach($lines as $line)
+			{
+			   $cols=preg_split('/\s+/', trim($line));
+			   if ($cols[0]==$ipAddress)
+			   {
+				   $machineAddress=$cols[1];
+	//			   echo $macAddress;
+			   }
+			}
 		}
 
 /*		$_SESSION["client_ip_address"] = $ipAddress;
