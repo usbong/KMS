@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200602
-  @date updated: 20260606; from 20260604
+  @date updated: 20260718; from 20260604
   @website address: http://www.usbong.ph
 	
   Computer Web Browser Address (Example):
@@ -20,7 +20,7 @@
     Example#1: http://192.168.1.110/usbong_kms/server/viewWebAddressList.php
     Example#2: http://192.168.11.10/usbong_kms/server/viewWebAddressList.php
 	Example#3:
-	192.168.11.10/usbong_kms/server/viewWebAddressList.php
+	192.168.11.12/usbong_kms/server/viewWebAddressList.php
 -->
 <?php
 //defined('BASEPATH') OR exit('No direct script access allowed');
@@ -54,8 +54,10 @@
 			//TO-DO: -reverify: this
 			$machineAddress = "SERVER MACHINE ADDRESS";
 
-			//added by Mike, 20201022
-			echo "<font color='#FF0000'><b>Please set as default in the Computer Server Browser,<br/>the Computer Server Internet Protocol (IP) Address<br/>that is not \"localhost\".<br/><br/></b></font>";
+			//added by Mike, 20260717; from 20201022
+			//echo "<font color='#FF0000'><b>Please set as default in the Computer Server Browser,<br/>the Computer Server Internet Protocol (IP) Address<br/>that is not \"localhost\".<br/><br/></b></font>";
+			
+			echo "<font color='#FF0000'><b>Please be reminded to set the server's IP address to <u>NOT</u> be \"localhost\".<br/><br/></b></font>";
 		}
 
 		//added by Mike, 20201010
