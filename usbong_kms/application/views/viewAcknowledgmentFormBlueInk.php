@@ -31,6 +31,8 @@
                         {
 							font-family: Arial;
 							font-size: 12pt;
+							
+							color: rgb(14,18,188); /* dark blue */
 
 							/* This makes the width of the output page that is displayed on a browser equal with that of the printed page. */
 							/* Legal Size; Landscape*/							
@@ -46,6 +48,11 @@
 							transform-origin: 0 0;	
 */							
                         }
+						
+						a
+						{
+							color: rgb(14,18,188); /* dark blue */
+						}
 						
 						div.copyright
 						{
@@ -77,6 +84,8 @@
 						
 						select.cashierNameSelect {
 							font-size: 12pt;
+							
+							color: rgb(14,18,188); /* dark blue */
 						}
 						
 						table.imageTable
@@ -96,13 +105,18 @@
 						table.tablePart2
 						{
 							width: 100%;
-							
-<!--							border: 1px solid #ab9c7d;		
--->
+/*							
 							border: 1px solid rgb(255,255,255);
+*/
+							border: 1px dotted rgb(14,18,188);
+							
 							border-collapse: collapse;							 
-						}						
-
+						}	
+/*
+						tr {
+							border: 1px dotted rgb(14,18,188);
+						}
+*/
 						table.tablePart3
 						{
 							width: 100%;
@@ -124,7 +138,12 @@
 
 						td.tableHeaderColumnPart2
 						{
+/*							
 							border: 1px solid #000000;		
+*/							
+							border: 1px solid rgb(14,18,188);
+							
+							
 							text-align: center;
 /*							font-weight: bold;
 */
@@ -149,34 +168,54 @@
 
 						td.column
 						{
+/*							
 							border: 1px dotted #000000;		
+*/							
+							border: 1px dotted rgb(14,18,188);
+							
 							text-align: center;
 						}						
 
 						td.columnItemHeaderList
 						{
+/*							
 							border: 1px dotted #000000;		
+*/							
+							border: 1px dotted rgb(14,18,188);
+							
 							text-align: left;
 							font-weight: bold;
 						}						
 
 						td.columnItemHeaderListGrandTotal
 						{
+/*							
 							border: 1px dotted #000000;		
+*/							
+							border: 1px dotted rgb(14,18,188);
+
 							text-align: left;
 							font-weight: bold;
 							text-align: right;
 						}						
 
 						td.columnFee
-						{
+						{							
+/*							
 							border: 1px dotted #000000;		
+*/							
+							border: 1px dotted rgb(14,18,188);
+							
 							text-align: right;
 						}
 
 						td.columnFeeTotal
 						{
+/*							
 							border: 1px dotted #000000;		
+*/							
+							border: 1px dotted rgb(14,18,188);
+
 							text-align: right;
 							font-size: 14pt;
 							font-weight: bold;
@@ -235,7 +274,10 @@
 						
 						a.rowLink
 						{
-							color: rgb(0,0,0); /* black */
+							/*color: rgb(0,0,0);*/ /* black */
+
+							color: rgb(14,18,188); /* dark blue */
+							
 							text-decoration: none;
 						}
 						
@@ -248,7 +290,7 @@
 							text-decoration: none;
 							background: transparent;
 						}						
-								
+							
     /**/
     </style>
     <title>
@@ -289,19 +331,19 @@
 	else {
 		$dateToday = date('Y-m-d',strtotime($resultPaid[0]['transaction_date']));
 	}
-	
+
 	//TO-DO: -update: this
 	
 	$totalAmountFee=0;
 
-?>			
+?>
 	<div class="formTitle">
-
+	
 	<!-- added by Mike, 20260729 -->
-	<a class="blueInkLink" target='_blank' href='<?php echo site_url('browse/viewAcknowledgmentFormBlueInk/'.$resultPaid[0]['patient_id'].'/'.date('m-d-Y', strtotime($dateToday)).'/0'); ?>'>
+	<a class="blueInkLink" target='_blank' href='<?php echo site_url('browse/viewAcknowledgmentForm/'.$resultPaid[0]['patient_id'].'/'.date('m-d-Y', strtotime($dateToday)).'/0'); ?>'>
 		<b>・</b>
 	</a>
-			
+	
 		<b>MARIKINA ORTHOPEDIC SPECIALTY CLINIC</b><br/>
 		<!-- edited by Mike, 20210901; 
 			TO-DO: -update: this due to increased web address length-->
