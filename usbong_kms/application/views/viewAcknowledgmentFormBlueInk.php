@@ -282,7 +282,7 @@
 						}
 						
 						a.blueInkLink {
-							display: none !important;
+							/*display: none !important;*/
 							float: left;
 							color: white;
 							background-color: white;
