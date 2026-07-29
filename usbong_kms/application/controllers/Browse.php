@@ -4097,6 +4097,39 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 		$this->viewPatientIndexCard($patientId, 0); //$bFoldImageListValue
 	}
 	
+	//added by Mike, 20260729
+	public function viewAcknowledgmentFormBlueInk($patientId, $transactionDate)
+	{
+		date_default_timezone_set('Asia/Hong_Kong');
+		$dateTimeStamp = date('Y/m/d H:i:s');
+
+		$this->load->model('Browse_Model');
+		
+		$data['cashierList'] = $this->Browse_Model->getCashierList();
+
+		$transactionDate = str_replace("-","/",$transactionDate);
+
+		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsListForTheDayNoItemFee($patientId, $transactionDate);
+
+		$mdCount=0;
+
+		while (isset($data['resultPaid'][$mdCount])) {
+			$data['sMedicalDoctorName'] = $this->Browse_Model->getMedicalDoctorNameFromId($data['resultPaid'][$mdCount]['medical_doctor_id'])[0]['medical_doctor_name'];
+
+			$data['arrayMedicalDoctorName'][$mdCount] = $data['sMedicalDoctorName'];
+						
+			$mdCount++;
+		}
+		
+		$data['resultPaidMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(1, $patientId, $transactionDate); //1 = MED ITEM
+
+		$data['resultPaidNonMedItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(2, $patientId, $transactionDate); //2 = NON-MED ITEM
+
+		$data['resultPaidSnackItem'] = $this->Browse_Model->getPaidItemDetailsListForPatientForTheDay(3, $patientId, $transactionDate); //3 = SNACK ITEM
+
+		$this->load->view('viewAcknowledgmentFormBlueInk', $data);		
+	}
+	
 	//added by Mike, 20210626; edited by Mike, 20210720
 	//TO-DO: -reuse: parts to auto-generate page to enter Official Receipt numbers
 //	public function viewAcknowledgmentForm($patientId)	
