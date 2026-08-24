@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20260822; from 20260515
+  @date updated: 20260824; from 20260822
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -127,7 +127,24 @@
 							width: 50%;
 							display: inline-block;
 							text-align: right;
-						}												
+						}			
+
+						input.inputAnswer
+						{
+							width: 60px;
+							height: 20px;
+/*							
+							margin-top: 2px;
+							margin-bottom: 4px;
+*/						
+							margin: 0;
+							padding: 0;
+							
+							font-family: Arial;
+							font-size: 1rem;
+
+							text-align: right;
+						}		
     /**/
     </style>
     <title>
@@ -138,8 +155,30 @@
     </style>
   </head>
 	  <script>
+		function onLoad() {
+			for (iRowCount=2; iRowCount<=17; iRowCount++) {
+				processAnswerInput(iRowCount);
+			}
+		}
+
+		function processAnswerInput(iRowCount) {
+			//alert(iRowCount);
+			var answerInput = document.getElementById("answerInputId"+iRowCount);			
+			var comAnswer = document.getElementById("comId"+iRowCount);
+			var pfCell = document.getElementById("pfId"+iRowCount);
+			
+			//alert(pfCell.innerHTML);
+			
+			if (Number.isNaN(Number(answerInput.value))) {
+				answerInput.value="0";
+			}
+			
+			fOutput = (Number(pfCell.innerHTML)-Number(answerInput.value)).toFixed(2);
+			
+			comAnswer.innerHTML=fOutput;//answerInput.value;
+		}
 	  </script>
-  <body>
+  <body onload="onLoad();">
 <?php
 	date_default_timezone_set('Asia/Hong_Kong');
 
@@ -250,6 +289,9 @@
 
 	//added by Mike, 20200819
 	$iMinorsetQuantityTotalCount = 0;
+	
+	//added by Mike, 20260824
+	$bHasPrevTransactionForPASOR = false;
 	
 	//medical doctor; SYSON, PEDRO
 	//edited by Mike, 20250520
@@ -2344,11 +2386,16 @@ echo $value['fee']."<br/>";
 //					if (($iColumnCount!=4) and ($iColumnCount!=5) and ($iColumnCount!=9)) {
 					//edited by Mike, 20210914
 //					if (($iColumnCount!=1) and ($iColumnCount!=5) and ($iColumnCount<9)) {
-					if (($iColumnCount>=2) and ($iColumnCount<=4)) {
+					//edited by Mike, 20260824
+					//if (($iColumnCount>=2) and ($iColumnCount<=4)) {
+					if (($iColumnCount>=2) and ($iColumnCount<=6)) {
 
 //						echo $cellValue;
 						if (strpos($cellValue,"NET PF")!==false) {
 							$cellValue = "MOSC<br/>NET PF";
+						}
+						else if (strpos($cellValue,"DIRECT")!==false) {
+							$cellValue = "DIRECT<br/>PAYMENT";
 						}
 
 						//background color green
@@ -2363,6 +2410,22 @@ echo $value['fee']."<br/>";
 				else if (($iRowCount>=2) and ($iRowCount<=18) and ($iColumnCount>=1) and ($iColumnCount<=1)) {					
 					echo "<td class='column' style='text-align:left'><b>".$cellValue."</b></td>";
 				}
+				//added by Mike, 20260824
+				else if (($iRowCount>=2) and ($iRowCount<=17) and ($iColumnCount>=5) and ($iColumnCount<=5)) {					
+					//echo "<td class='column' style='text-align:left'><b>".$cellValue."</b></td>";
+					
+					//echo "<td class='column'>"."HALLO"."</td>";
+					
+					echo "<td class='column'>";
+
+					echo "<input type='text' id='answerInputId".$iRowCount."' class='inputAnswer' value='' min='-99999' max='99999' oninput='processAnswerInput(".$iRowCount.")' autofocus required>";
+
+					echo "</td>";
+				}				
+				else if (($iRowCount>=2) and ($iRowCount<=17) and ($iColumnCount>=6) and ($iColumnCount<=6)) {					
+					echo "<td id='comId".$iRowCount."' class='column' style='text-align:right'>"."0.00"."</td>";
+					echo "</td>";
+				}				
 				else {
 					//echo "<td class='column'>".utf8_encode($data[$iColumnCount])."</td>";
 					//edited by Mike, 20200726
@@ -2422,7 +2485,16 @@ echo $value['fee']."<br/>";
 							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
 						}
 */						
-						echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+
+						//echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+						
+						//PF column
+						if (($iRowCount>=2) and ($iRowCount<=17) and ($iColumnCount>=2) and ($iColumnCount<=2)) {	
+							echo "<td id='pfId".$iRowCount."' class='column' style='text-align:right'>".$cellValue."</td>";
+						}
+						else {
+							echo "<td class='column' style='text-align:right'>".$cellValue."</td>";
+						}
 					}
 					else {
 						//echo "<td class='column'><b>".$cellValue."</b></td>";
