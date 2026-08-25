@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20260824; from 20260822
+  @date updated: 20260825; from 20260824
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -92,7 +92,26 @@
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: center;
-						}						
+						}	
+
+						td.columnTotal
+						{
+							border-top: 2px solid #111111; /*#ab9c7d;*/
+							text-align: right;
+						}
+
+						td.columnDirectPaymentTotal
+						{
+							border-top: 2px solid #111111;		
+							border-bottom: 2px solid #111111; /*#ab9c7d;*/		
+							text-align: right;
+						}
+						
+						td.columnGrandTotal
+						{
+							border-bottom: 2px solid #111111; /*#ab9c7d;*/		
+							text-align: right;
+						}
 
 						td.columnBorderBottom
 						{
@@ -157,25 +176,96 @@
 	  <script>
 		function onLoad() {
 			for (iRowCount=2; iRowCount<=17; iRowCount++) {
-				processAnswerInput(iRowCount);
+				processdirectPaymentInput(iRowCount);
 			}
+			
+			document.body.onkeydown = function(e){
+				const focusedElement = document.activeElement;
+
+				//alert("e.keyCode: "+e.keyCode);
+
+				if (e.keyCode==38) { //key up
+//reference; Google AI Overview; stackoverflow
+					//if active element is INPUT;
+					if (focusedElement && focusedElement.tagName === "INPUT") {
+						var iCurrIndex = Number(focusedElement.id.substring(focusedElement.id.indexOf("Id")+2));
+						
+						iCurrIndex-=1;
+
+						if (iCurrIndex<2) {
+							iCurrIndex=2;
+						}
+						
+						var directPaymentInput = document.getElementById("directPaymentInputId"+(iCurrIndex));	
+						
+						directPaymentInput.focus();
+					}				
+				}
+				//else if (e.keyCode==40) { //key down
+				else if ((e.keyCode==40) || (e.keyCode==13)) { //key down OR ENTER
+					//reference; Google AI Overview; stackoverflow
+					//if active element is INPUT;
+					if (focusedElement && focusedElement.tagName === "INPUT") {
+						//alert(focusedElement.id);						//alert(focusedElement.id.substring(focusedElement.id.indexOf("Id")+2));
+						
+						var iCurrIndex = Number(focusedElement.id.substring(focusedElement.id.indexOf("Id")+2));
+						
+						//alert(iCurrIndex);
+						
+						iCurrIndex+=1;
+
+						if (iCurrIndex>17) {
+							iCurrIndex=17;
+						}
+
+						//alert(">>"iCurrIndex);
+						
+						var directPaymentInput = document.getElementById("directPaymentInputId"+(iCurrIndex));
+						
+						directPaymentInput.focus();
+					}
+				}			
+			}			
 		}
 
-		function processAnswerInput(iRowCount) {
+		function processdirectPaymentInput(iRowCount) {
 			//alert(iRowCount);
-			var answerInput = document.getElementById("answerInputId"+iRowCount);			
+			var directPaymentInput = document.getElementById("directPaymentInputId"+iRowCount);			
 			var comAnswer = document.getElementById("comId"+iRowCount);
 			var pfCell = document.getElementById("pfId"+iRowCount);
+
+			var grossTotal = document.getElementById("grossTotalId");
+			var directPaymentTotal = document.getElementById("directPaymentTotalId");
+			var grandTotal = document.getElementById("grandTotalId");
 			
 			//alert(pfCell.innerHTML);
 			
-			if (Number.isNaN(Number(answerInput.value))) {
-				answerInput.value="0";
+			if (Number.isNaN(Number(directPaymentInput.value))) {
+				directPaymentInput.value="0";
 			}
 			
-			fOutput = (Number(pfCell.innerHTML)-Number(answerInput.value)).toFixed(2);
+			fOutput = (Number(pfCell.innerHTML)-Number(directPaymentInput.value)).toFixed(2);
 			
-			comAnswer.innerHTML=fOutput;//answerInput.value;
+			comAnswer.innerHTML=fOutput;//directPaymentInput.value;
+			
+			//-----------------------------
+			//TOTAL PART
+			//-----------------------------
+			
+			//added by Mike, 20260825
+			iDirectPaymentTotal=0;
+			for (iRowCount=2; iRowCount<=17; iRowCount++) {
+				iDirectPaymentTotal += Number(document.getElementById("directPaymentInputId"+iRowCount).value);
+			}
+			
+			//alert(iDirectPaymentTotal);
+			
+			//add negative
+			directPaymentTotal.innerHTML=(iDirectPaymentTotal*(-1)).toFixed(2);
+			
+			//alert(Number(directPaymentTotal.innerHTML));
+						
+			grandTotal.innerHTML=(Number(grossTotal.innerHTML)-iDirectPaymentTotal).toFixed(2);
 		}
 	  </script>
   <body onload="onLoad();">
@@ -2405,6 +2495,26 @@ echo $value['fee']."<br/>";
 						echo "<td class='column'>".$cellValue."</td>";
 					}
 				}
+				//added by Mike, 20260825
+				else if (($iRowCount==19) and ($iColumnCount==1)) {
+					if (strpos($cellValue,"DIRECT")!==false) {
+						$cellValue = "DIRECT<br/>PAYMENT";
+					}					
+					echo "<td class='column' style='text-align:left'><b>".$cellValue."</b></td>";
+				}		
+				//added by Mike, 20260825
+				//TOTAL
+				else if (($iRowCount==18) and ($iColumnCount==2)) {
+					echo "<td id='grossTotalId' class='columnTotal'>".number_format($cellValue, 2, '.', '')."</td>";
+				}
+				//DIRECT PAYMENT TOTAL			
+				else if (($iRowCount==19) and ($iColumnCount==2)) {
+					echo "<td id='directPaymentTotalId' class='columnDirectPaymentTotal'>0.00</td>";
+				}	
+				//GRAND TOTAL			
+				else if (($iRowCount==20) and ($iColumnCount==2)) {
+					echo "<td id='grandTotalId' class='columnGrandTotal'>0.00</td>";
+				}					
 				//edited by Mike, 20210914
 				//"CASH REGISTER RECEIPT" cells; text
 				else if (($iRowCount>=2) and ($iRowCount<=18) and ($iColumnCount>=1) and ($iColumnCount<=1)) {					
@@ -2418,7 +2528,7 @@ echo $value['fee']."<br/>";
 					
 					echo "<td class='column'>";
 
-					echo "<input type='text' id='answerInputId".$iRowCount."' class='inputAnswer' value='' min='-99999' max='99999' oninput='processAnswerInput(".$iRowCount.")' autofocus required>";
+					echo "<input type='text' id='directPaymentInputId".$iRowCount."' class='inputAnswer' value='' min='-99999' max='99999' oninput='processdirectPaymentInput(".$iRowCount.")' autofocus required>";
 
 					echo "</td>";
 				}				
@@ -2499,6 +2609,7 @@ echo $value['fee']."<br/>";
 					else {
 						//echo "<td class='column'><b>".$cellValue."</b></td>";
 
+/*					//removed by Mike, 20260825					
 						//added by Mike, 20200726
 						if ($cellValue=="PREV TOTAL") {
 							//background color green
@@ -2508,9 +2619,13 @@ echo $value['fee']."<br/>";
 							//background color yellow
 							echo "<td class='column' bgcolor='#FFFF00'><b>".$cellValue."</b></td>";
 						}
+*/
+						if ($cellValue=="GRAND") {
+							echo "<td class='column'></td>";
+						}
 						else {
 							echo "<td class='column'><b>".$cellValue."</b></td>";
-						}						
+						}		
 					}															
 				}
 			}
