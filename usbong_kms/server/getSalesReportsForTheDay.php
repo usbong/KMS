@@ -9,7 +9,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200521
-  @date updated: 20260703; from 20260515
+  @date updated: 20260828; from 20260703
   @website address: www.usbong.ph
   
   Input:
@@ -134,7 +134,10 @@
 
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
 
-					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+					//edited by Mike, 20260828
+					if ($value['fee']!=0) {
+						$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+					}
 					
 					//added by Mike, 20201027; edited by Mike, 20201031
 					//note: order/sequence is important

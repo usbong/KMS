@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20260825; from 20260824
+  @date updated: 20260828; from 20260825
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -427,7 +427,10 @@
 
 					$iFeeTotalCount = $iFeeTotalCount + $value['fee'];
 
-					$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+					//edited by Mike, 20260828
+					if ($value['fee']!=0) {
+						$iQuantityTotalCount = $iQuantityTotalCount + 1; //$value['fee_quantity'];
+					}
 					
 					//added by Mike, 20201027; edited by Mike, 20201031
 					//note: order/sequence is important
@@ -1768,7 +1771,7 @@ echo $value['fee']."<br/>";
 */			
 			$decodedJSONFile = json_decode($outputReportMedicineAsterisk);					
 			$decodedJSONFileArray[14][1] = $decodedJSONFile[0];
-
+			
 //removed by Mike, 20210915						
 //			echo $decodedJSONFileArray[14][1]->iFeeTotalCount;
 		}
@@ -1776,7 +1779,7 @@ echo $value['fee']."<br/>";
 /* //removed by Mike, 20210915					
 			echo "There are no Medicine item (Asterisk), i.e. Glucosamine Sulphate and Calcium with Vitamin D,  transactions for the day.";
 */
-		}
+		}				
 	}		
 	// show an error if there is an issue with the database query
 	else
@@ -2623,7 +2626,7 @@ echo $value['fee']."<br/>";
 						if ($cellValue=="GRAND") {
 							echo "<td class='column'></td>";
 						}
-						else {
+						else {							
 							echo "<td class='column'><b>".$cellValue."</b></td>";
 						}		
 					}															
