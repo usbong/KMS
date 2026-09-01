@@ -7,7 +7,7 @@
   @company: USBONG
   @author: SYSON, MICHAEL B.
   @date created: 20200522
-  @date updated: 20260828; from 20260825
+  @date updated: 20260901; from 20260828
   
   Input:
   1) Summary Worksheet with counts and amounts in .csv (comma-separated value) file at the Accounting/Cashier Unit
@@ -1326,8 +1326,14 @@ echo $value['fee']."<br/>";
 										
 										//echo "NET FEE: ".($value['fee']*0.70)."<br/>";
 										
-										$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
-
+										//edited by Mike, 20260901
+										//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
+										
+										if ($value['fee']<=0) {
+										}
+										else {
+											$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
+										}
 									}
 
 									// free result set
@@ -1340,8 +1346,14 @@ echo $value['fee']."<br/>";
 								}
 							}
 							else {
-							
-								$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
+								//edited by Mike, 20260901
+								//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
+								
+								if ($value['fee']<=0) {
+								}
+								else {
+									$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
+								}
 							}
 								
 							}	
@@ -1588,7 +1600,7 @@ echo $value['fee']."<br/>";
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 4;
 							}							
 							else {
-								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-500)*0.70 + 500;								
 								
 								//added by Mike, 20200531
 								$iDexaQuantityTotalCount = $iDexaQuantityTotalCount + 1;
@@ -1640,12 +1652,23 @@ echo $value['fee']."<br/>";
 							$iNoChargeQuantityTotalCount = $iNoChargeQuantityTotalCount + 1;
 						}
 						else {
+							
 							//edited by Mike, 20251106
 							//$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70;
-							$iNetFeeTotalCount = $iNetFeeTotalCount + $value['fee']*0.70 + ($iCurrExtraFeeValue*.30);	
-						}					
-
-						
+							
+							//edited by Mike, 20250527; from 20250522
+							//due to med cert3; not private;
+							//TODO: -reverify this
+/*							
+							//edited by Mike, 20260901
+							$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;
+*/													
+							if ($value['fee']<=0) {
+							}
+							else {
+								$iNetFeeTotalCount = $iNetFeeTotalCount + ($value['fee']-$iCurrExtraFeeValue)*0.70+$iCurrExtraFeeValue;
+							}
+						}
 					}
 										
 					if (strpos($value['notes'],"MINORSET")!==false) {
