@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260518; from 20260424
+' @date updated: 20260901; from 20260518
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -714,7 +714,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									//echo "iCurrExtraFeeValue: ".$iCurrExtraFeeValue."<br>";
 									//echo "value['fee']: ".$value['fee']."<br>";
 									
-									$iMOSC=($value['fee']-$iCurrExtraFeeValue)*.30;	
+									//edited by Mike, 20260901
+									//$iMOSC=($value['fee']-$iCurrExtraFeeValue)*.30;	
+
+									if ($value['fee']<=0) {
+										$iMOSC=0;	
+									}
+									else {
+										$iMOSC=($value['fee']-$iCurrExtraFeeValue)*.30;	
+									}
 								}
 
 
@@ -1000,7 +1008,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									}
 */									
 									
-									$iNetPF = ($value['fee']-$iCurrExtraFeeValue)*.70+$iCurrExtraFeeValue;
+									//edited by Mike, 20260901
+									//$iNetPF = ($value['fee']-$iCurrExtraFeeValue)*.70+$iCurrExtraFeeValue;
+
+									if ($value['fee']<=0) {
+										$iNetPF=0;	
+									}
+									else {
+										$iNetPF = ($value['fee']-$iCurrExtraFeeValue)*.70+$iCurrExtraFeeValue;
+									}									
 									
 									//removed by Mike, 20240924
 									//output: whole numbers

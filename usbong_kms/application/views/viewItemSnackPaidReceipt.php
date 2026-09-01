@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2025 SYSON, MICHAEL B.
+' Copyright 2020~2026 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250913; from 20250911
+' @date updated: 20260901; from 20250913
 ' @website: http://www.usbong.ph
 -->
 <?php
@@ -620,18 +620,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 -->
 
 <?php
-	//edited by Mike, 20210928
+	//edited by Mike, 20260901; from 20210928
 	//snack item NOT yet added in Official Receipt
 	$isSnackItem=true;
 
 	if (isset($outputTransaction)) {
+/*
 		if (($outputTransaction['med_fee']!=0) or 
 			($outputTransaction['x_ray_fee']!=0) or
 			($outputTransaction['lab_fee']!=0) or
 			($outputTransaction['pas_fee']!=0)) {
 			$isSnackItem=false;
 		}
+*/
+		if (($outputTransaction['med_fee']!=0) or 
+			($outputTransaction['x_ray_fee']!=0) or
+			($outputTransaction['lab_fee']!=0) or
+			($outputTransaction['pas_fee']!=0) or 
+			($outputTransaction['fee']!=0)) {
+			$isSnackItem=false;
+		}
 	}
+
 	
 	if ($isSnackItem) {
 		echo "<h4><span style='color:red'>SNACK ITEM NOT YET ADDED IN OFFICIAL RECEIPT</span></h4>";
@@ -703,19 +713,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionIdParam" value="<?php echo $resultPaid[0]['transaction_id'] ?> "required>
 		<br />
 -->
+<?php
+			//added by Mike, 20250903
+			$bHasORTextbox=false;
+		?>
+
 		<div>
 			<table width="100%">
 			<?php
 				//added by Mike, 20200608
-				//note: this is for medicine items
-				//removed by Mike, 20200611
-//				if ($patientId!=0) {
-				//added by Mike, 20200608
 				//we do not show if purchased items are non-medicine and patient is not SYSON, PEDRO's
-//				if ($patientId!=0){
-					
-					if (isset($outputTransaction)) {						
-						if (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0)){
+				if ($patientId!=0){
+					if (isset($outputTransaction)) {	
+						//Dr. Honesto
+						if ((strpos(strtoupper($medicalDoctorList[$medicalDoctorId]['medical_doctor_name']), "HONESTO")!==false) or (($outputTransaction['med_fee']!=0) or ($outputTransaction['x_ray_fee']!=0) or ($outputTransaction['lab_fee']!=0) or (($outputTransaction['fee']!=0) and ($outputTransaction['medical_doctor_id']==1)))) {
+							//added by Mike, 20250903
+							$bHasORTextbox=true;							
 			?>
 						  <tr>
 							<td>
@@ -730,13 +743,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			 <?php 
 						}
 					}
-//				}
+				}
 			  
 				//edited by Mike, 20200529
 //			    if (strpos($medicalDoctorList[$medicalDoctorId-1]['medical_doctor_name'], "PEDRO")==false) {
 			    if (strpos($medicalDoctorList[$medicalDoctorId]['medical_doctor_name'], "PEDRO")==false) {
 					//added by Mike, 20200608
 					if ($medicalDoctorId!=0) {
+						//added by Mike, 20250903
+						$bHasORTextbox=true;							
 			 ?>
 				  <tr>
 				    <td>
@@ -758,8 +773,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 					if (isset($outputTransaction)) {						
 						if ($outputTransaction['pas_fee']!=0) {
-//						if ($outputTransaction->pas_fee!==0) {
-
+							//added by Mike, 20250903
+							$bHasORTextbox=true;							
 ?>
 				  <tr>
 				    <td>
@@ -787,19 +802,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- added by Mike, 20200610 -->
 		<input type="hidden" class="receipt-input" placeholder="" name="transactionQuantityParam" value="<?php echo $outputTransaction['transaction_quantity'] ?> "required>
 
-		<br />
-				
-		<!-- Buttons -->
-		<button type="submit" class="Button-submit">
-			Submit
-		</button>
+<?php
+		//added by Mike, 20250519
+		//TODO: -reverify: sometimes no OR input box is displayed
+		if (isset($outputTransaction)) {
+			//added by Mike, 20250903
+			if ($bHasORTextbox) {
+?>		
+			<br />
+			<!-- Button -->
+			<button type="submit" class="Button-submit">
+				Submit
+			</button>
+<?php
+			//added by Mike, 20250903
+			}
+		//added by Mike, 20250519
+		}
+?>
 	</form>
-	<br />
+	<br />		
 
 <?php
-	//added by Mike, 20210928
+	//edited by Mike, 20210928
 	}
-
 
 //			echo "<br/>";
 
