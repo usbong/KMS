@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2025 SYSON, MICHAEL B.
+' Copyright 2020~2026 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250918; 20250912
+' @date updated: 20260909; 20250918
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -88,7 +88,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: center;
 							font-size: 13pt;
 						}		
-
+						
 						div.itemPurchasedHistory
 						{
 							font-weight: bold;
@@ -170,7 +170,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						{
 							border: 1px dotted #ab9c7d;		
 							text-align: left;
-						}						
+						}		
+
+						td.columnTransactionDate
+						{
+							width: 15%;
+							border: 1px dotted #ab9c7d;		
+							text-align: left;
+						}
 
 						td.columnCentered
 						{
@@ -209,10 +216,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						div.vatDiv
 						{
 							background-color: #ffe400;
+							font-size: 16px;
 							font-weight: bold;
 							background-color: #00aaff;
 							
-							border: 2px dotted #ab9c7d;									
+							border: 2px solid #00aaff; /*#ab9c7d*/
+							
 							border-radius: 3px;	    
 							text-align: center;
 							float: center;							
@@ -323,8 +332,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}						
 						
 						.Button-delete {
+							background-color: #E9E9E9;
+							color: #000000;
+							/*font-weight: bold;*/
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+							
+							font-size: 12pt;
+							padding: 0.2em;
+
 							margin-left: 4px;
-						}
+						}						
+
+						.Button-delete:hover {
+							background-color: #C0C0C0;
+							color: #000000;
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+
+							margin-left: 4px;
+						}							
 
 						.Fee-textbox { 
 							background-color: #fCfCfC;
@@ -371,13 +398,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							padding: 14px;
 							background-color: #ffe400;
 							color: #222222;
-							font-size: 16px;
+							font-size: 15px;
 							font-weight: bold;
 
 							margin-top: 2px;							
 							margin-bottom: 5px;
 
-							border: 0px solid;		
+							border: 1px solid #ffe400;
+							/*border: 0px solid;*/
 							border-radius: 4px;
 
 							float: left;
@@ -398,7 +426,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*							padding: 8px 42px 8px 42px;
 */
 							padding: 12px;
-							background-color: #ffe400;
+							color: #222222;
 							font-weight: bold;
 							background-color: #00aaff; <!--#93d151; lime green-->
 							border: 2px dotted #ab9c7d;		
@@ -1442,7 +1470,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>				
 		
 					  <tr class="row">
-						<td class ="column">				
+						<td class ="columnTransactionDate">				
 							<div class="transactionDate">
 				<?php
 								//edited by Mike, 20250902

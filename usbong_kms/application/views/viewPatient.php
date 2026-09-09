@@ -167,9 +167,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						td.column
 						{
+							height: 100%;
+							
 							border: 1px dotted #ab9c7d;		
 							text-align: left;
-						}						
+						}	
+
+						td.columnTransactionDate
+						{
+							width: 15%;
+							border: 1px dotted #ab9c7d;		
+							text-align: left;
+						}					
 
 						td.columnPrivate
 						{
@@ -281,6 +290,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							border-radius: 3px;	    	    
 							text-align: right;
 							width: 70%;
+							height: 100%;
 
 							float: left;
 						}
@@ -312,17 +322,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						.Classification-select { 
 							background-color: #fCfCfC;
 							color: #68502b;
-							padding: 12px;
+							padding: 0.75em;
 							font-size: 16px;
 							border: 1px solid #68502b;
 							width: 100%;
+							height: 100%;
+
 							border-radius: 3px;	    	    
 							float: left;
 						}
-						
+
 						.Button-delete {
+							background-color: #E9E9E9;
+							color: #000000;
+							/*font-weight: bold;*/
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+							
+							font-size: 12pt;
+							padding: 0.2em;
+
 							margin-left: 4px;
-						}
+						}						
+
+						.Button-delete:hover {
+							background-color: #C0C0C0;
+							color: #000000;
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+
+							margin-left: 4px;
+						}							
 						
 						.Button-purchase {
 /*							padding: 8px 42px 8px 42px;
@@ -542,6 +572,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			//added by Mike, 20260518
 			const iDexaPriceDefault = 1000;
+			
+			//added by Mike, 20260909
+			if (patientId==-1) { //-1 : CANCELLED patient id
+				alert("Hindi maaaring magdagdag ng CANCELLED.");
+				return;
+			}
 
 			//TODO: -reverify: this due to Xray or Lab can still be added after already adding, for example, an Xray payment
 			if (sIsExistingTransactionToday==="1") {
@@ -917,6 +953,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			if (!hasPatientInCartList) {
 				alert("Kailangang may isang (1) pasyente sa bawat Cart List.");
+				return;
+			}
+			
+			//added by Mike, 20260909
+			if (patientId==-1) { //-1 : CANCELLED patient id
+				alert("Hindi maaaring magbayad ang CANCELLED.");
 				return;
 			}
 			
@@ -1690,7 +1732,7 @@ else {
 		?>				
 		
 					  <tr class="row">
-						<td class ="column">				
+						<td class ="columnTransactionDate">				
 							<div class="transactionDate">
 				<?php
 								//edited by Mike, 20250902

@@ -171,6 +171,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}						
 
+						td.columnTransactionDate
+						{
+							width: 15%;
+							border: 1px dotted #ab9c7d;		
+							text-align: left;
+						}
+						
 						td.columnItemName
 						{
 							border: 1px dotted #ab9c7d;		
@@ -346,9 +353,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 
 						.Button-delete {
-							margin-left: 4px;
-						}
+							background-color: #E9E9E9;
+							color: #000000;
+							/*font-weight: bold;*/
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+							
+							font-size: 12pt;
+							padding: 0.2em;
 
+							margin-left: 4px;
+						}						
+
+						.Button-delete:hover {
+							background-color: #C0C0C0;
+							color: #000000;
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+
+							margin-left: 4px;
+						}							
+						
 						.Button-purchase {
 							padding: 14px;
 							background-color: #ffe400;
@@ -1370,7 +1395,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>				
 		
 					  <tr class="row">
-						<td class ="column">				
+						<td class ="columnTransactionDate">				
 							<div class="transactionDate">
 				<?php
 								//edited by Mike, 20250902

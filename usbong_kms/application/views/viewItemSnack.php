@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2025 SYSON, MICHAEL B.
+' Copyright 2020~2026 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250918; from 20250912
+' @date updated: 20260909; from 20250918
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -177,6 +177,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 						}		
 
+						td.columnTransactionDate
+						{
+							width: 15%;
+							border: 1px dotted #ab9c7d;		
+							text-align: left;
+						}
+						
 						td.columnCentered
 						{
 							border: 1px dotted #ab9c7d;		
@@ -336,6 +343,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							text-align: left;
 							float: left;
 						}
+
+						.Button-delete {
+							background-color: #E9E9E9;
+							color: #000000;
+							/*font-weight: bold;*/
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+							
+							font-size: 12pt;
+							padding: 0.2em;
+
+							margin-left: 4px;
+						}						
+
+						.Button-delete:hover {
+							background-color: #C0C0C0;
+							color: #000000;
+							border: 1px dotted #333333;
+							/*border-radius: 3px;*/
+
+							margin-left: 4px;
+						}							
 						
 						.Button-purchase {
 							padding: 14px;
@@ -1323,7 +1352,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 		?>						
 					  <tr class="row">
-						<td class ="column">				
+						<td class ="columnTransactionDate">				
 							<div class="transactionDate">
 				<?php
 								//edited by Mike, 20250902
