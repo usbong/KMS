@@ -5517,6 +5517,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			
 			//added by Mike, 20230331
 			$this->db->order_by('t2.added_datetime_stamp`', 'DESC');
+			
+			//added by Mike, 20260910
+			//TODO: -reverify: this; related to PRV
+			$this->db->group_by('t2.notes`', 'DESC');
 		}
 		
 		$this->db->where('t1.patient_id', $nameId);		
@@ -5542,7 +5546,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			$this->db->order_by('t2.added_datetime_stamp`', 'DESC');
 		}	
 */		
-		$this->db->limit(1);
+		$this->db->limit(2);
 		
 		$query = $this->db->get('patient');
 
@@ -5551,6 +5555,18 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		
 		if ($rowArray == null) {			
 			return False; //edited by Mike, 20190722
+		}
+		
+		//added by Mike, 20260910
+		//TODO: -reverify: this
+		//check if patient was set to PRIVATE in prior visit;
+		if (count($rowArray)>1) {			
+			//echo count($rowArray);	
+			if (strpos($rowArray[0]['notes'],"IN-QUEUE")!==false) {
+				//echo "DITO!!!".$rowArray[1]['notes'];
+				$rowArray[0]=array();
+				$rowArray[0]+=$rowArray[1];
+			}
 		}
 		
 		return $rowArray;
