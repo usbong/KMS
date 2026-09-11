@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260901; from 20260713
+' @date updated: 20260911; from 20260901
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -1448,6 +1448,11 @@ else {
 							</select>						
 						</td>
 -->
+<?php
+//echo ">>>>".$result[0]["notes"];
+
+
+?>
 						<td class="column">
 							<select id="classificationParam" class="Classification-select">
 <?php
