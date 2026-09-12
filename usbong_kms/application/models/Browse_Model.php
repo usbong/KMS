@@ -5499,8 +5499,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 
 			//edited by Mike, 20260911
 			//$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t3.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t2.added_datetime_stamp, t2.notes, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.transaction_date");
-
-			$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t3.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t2.added_datetime_stamp, t2.notes, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.transaction_date, t2.transaction_id");
+			
+			//edited by Mike, 20260912
+			$this->db->select("t1.patient_name, t1.patient_id, t1.last_visited_date, t3.medical_doctor_id, t3.medical_doctor_name, t1.sex_id, t1.age, t1.age_unit, t1.pwd_senior_id, t1.civil_status_id, t1.occupation, t1.birthday, t1.contact_number, t1.location_address, t1.barangay_address, t1.postal_address, t1.province_city_ph_address, t2.added_datetime_stamp, t2.notes, t2.fee, t2.x_ray_fee, t2.lab_fee, t2.transaction_date, t2.transaction_id, t2.item_id");
 
 			$this->db->from('patient as t1');
 			$this->db->join('transaction as t2', 't1.patient_id = t2.patient_id', 'LEFT');
@@ -5521,9 +5522,10 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			//added by Mike, 20230331
 			$this->db->order_by('t2.added_datetime_stamp`', 'DESC');
 
-			//added by Mike, 20260910
+			//edited by Mike, 20260912; from 20260910
 			//TODO: -reverify: this; related to PRV
-			$this->db->group_by('t2.notes`', 'DESC');
+			//$this->db->group_by('t2.notes`', 'DESC');
+			$this->db->group_by('t2.transaction_id`', 'DESC');
 
 			//removed by Mike, 20260911
 			//error when no transaction yet; newly added patient;
@@ -5575,11 +5577,14 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			
 			for ($iCount=1; $iCount<$iCountTotal; $iCount++) {
 				if (isset($rowArray[$iCount]['notes'])) { //NONE, WALA doesn't have 'notes';
-					//echo "HALLO".$rowArray[$iCount]['notes']."<br/>";
+					//echo $rowArray[$iCount]['transaction_date'].": ".$rowArray[$iCount]['notes']."<br/>";
 					
-					if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE")===false) && (strpos($rowArray[$iCount]['notes'],"NC")===false)) {
+					//edited by Mike, 20260912
+					//if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE")===false) && (strpos($rowArray[$iCount]['notes'],"NC")===false)) {
+					if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE")===false) && (strpos($rowArray[$iCount]['notes'],"NC")===false) && ($rowArray[$iCount]['medical_doctor_id']!==0) && ($rowArray[$iCount]['item_id']===0)) {
 						//echo "DITO!!!".$rowArray[$iCount]['notes'];
 						//echo "DITO!!!".$rowArray[$iCount]['medical_doctor_id'];
+						//echo "DITO!!!".$rowArray[$iCount]['transaction_id'];
 
 						$rowArray[0]=array();
 						$rowArray[0]=$rowArray[$iCount];
@@ -5590,6 +5595,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 				}
 			}
 		}
+		
+		//echo ">>>>>DITO!!!".$rowArray[0]['transaction_id'];
 		
 		return $rowArray;
 	}	
