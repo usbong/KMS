@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2025 SYSON, MICHAEL B.
+' Copyright 2020~2026 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20251124; from 20251122
+' @date updated: 20260915; from 20251124
 ' @website address: http://www.usbong.ph
 
 //TODO: -fix: count when med item has lost item and the list shows other items with different ids
@@ -996,12 +996,9 @@ echo "<br/><span style='color:red'><b>OUT-OF-STOCK (".$iCurrentTotal.")</b></spa
 ?>							
 							<a target='_blank' href='<?php echo site_url('browse/viewItemMedicine/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
 								<div id="itemNameDivId<?php echo $iCount?>" class="itemName">
-				<?php
-								//edited by Mike, 20250214
-								//echo $value['item_name'];
-								echo strtoupper($value['item_name']);
-				?>		
-								</div>								
+								<?php //edited by Mike, 20260915; from 20250214; to remove the extra space after the item name;
+									echo strtoupper($value['item_name']);
+								?></div>
 							</a>
 <?php
 						}

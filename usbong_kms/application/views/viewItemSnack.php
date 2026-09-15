@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260909; from 20250918
+' @date updated: 20260915; from 20260909
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -940,11 +940,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					  <tr class="row">
 						<td class ="column">				
 							<a href='<?php echo site_url('browse/viewItemSnack/'.$value['item_id'])?>' id="viewItemId<?php echo $iCount?>">
-								<div class="itemName">
-				<?php
-								echo $value['item_name'];
-				?>		
-								</div>								
+								<div id="itemNameDivId<?php echo $iCount?>" class="itemName">
+								<?php //edited by Mike, 20260915 to remove the extra space after the item name;
+									echo strtoupper($value['item_name']);
+								?></div>	
 							</a>
 						</td>						
 						<td class="column">	

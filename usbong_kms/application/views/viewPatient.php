@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260912; from 20260911
+' @date updated: 20260915; from 20260912
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -1309,15 +1309,13 @@ else {
 					  <tr class="row">
 						<td class ="column">				
 							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
-								<div class="patientName">
-				<?php
-								//TO-DO: -update: this
-								//echo $value['patient_name'];
-								//edited by Mike, 20220317
-//								echo str_replace("ï¿½","Ã‘",$value['patient_name']);							
+								<div class="patientName"><?php
+								//edited by Mike, 20260915; from 20220317 to remove the extra space after the item name;
+
+//								echo str_replace("ï¿½","Ã‘",$value['patient_name']);
+					
 								echo str_replace("�","Ñ",$value['patient_name']);
-				?>		
-								</div>								
+							?></div>								
 							</a>
 						</td>
 						<td class ="columnPrivate">

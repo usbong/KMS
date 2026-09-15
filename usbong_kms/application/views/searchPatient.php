@@ -1,5 +1,5 @@
 <!--
-' Copyright 2020~2025 SYSON, MICHAEL B.
+' Copyright 2020~2026 SYSON, MICHAEL B.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20250910; from 20250715
+' @date updated: 20260915; from 20250910
 ' @website address: http://www.usbong.ph
 -->
 <?php
@@ -562,10 +562,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<?php
 							}
 ?>							
-								<div class="patientName">
-				<?php
-//								echo $value['patient_name'];
-								//edited by Mike, 20250513
+							<div class="patientName"><?php
+								//edited by Mike, 20260915; from 20250513 to remove the extra space after the item name;
+
 								//echo str_replace("�","Ñ",$value['patient_name']);
 								
 								$sPatientName=str_replace("�","Ñ",$value['patient_name']);
@@ -573,8 +572,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								echo $sPatientName;
 								
 //								echo str_replace("ufffd","Ñ",$value['patient_name']);
-				?>		
-								</div>								
+							?></div>
 							</a>
 						</td>
 						<td class ="column">				
