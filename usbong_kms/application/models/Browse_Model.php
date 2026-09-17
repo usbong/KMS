@@ -5577,11 +5577,17 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			
 			for ($iCount=1; $iCount<$iCountTotal; $iCount++) {
 				if (isset($rowArray[$iCount]['notes'])) { //NONE, WALA doesn't have 'notes';
+					
 					//echo $rowArray[$iCount]['transaction_date'].": ".$rowArray[$iCount]['notes']."<br/>";
+					
+					//echo $rowArray[$iCount]['transaction_date'].": ".$rowArray[$iCount]['notes']."; ".$rowArray[$iCount]['transaction_id']."<br/>";
 					
 					//edited by Mike, 20260912
 					//if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE")===false) && (strpos($rowArray[$iCount]['notes'],"NC")===false)) {
-					if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE")===false) && (strpos($rowArray[$iCount]['notes'],"NC")===false) && ($rowArray[$iCount]['medical_doctor_id']!==0) && ($rowArray[$iCount]['item_id']===0)) {
+					
+					//edited by Mike, 20260917
+					if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE;")===false) && (strpos($rowArray[$iCount]['notes'],"NC;")===false) && ($rowArray[$iCount]['medical_doctor_id']!=0) && ($rowArray[$iCount]['item_id']==0)) {
+						
 						//echo "DITO!!!".$rowArray[$iCount]['notes'];
 						//echo "DITO!!!".$rowArray[$iCount]['medical_doctor_id'];
 						//echo "DITO!!!".$rowArray[$iCount]['transaction_id'];
