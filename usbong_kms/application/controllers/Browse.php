@@ -6373,6 +6373,14 @@ $data['outputTransaction']['item_id'] = $data['result'][0]['item_id'];
 		//after consultation service purchase transaction
 		//edited by Mike, 20210901
 		$data['outputTransaction'] = $this->Browse_Model->getTransactionPurchaseDetails($transactionId);
+		
+		//added by Mike, 20260925
+		//if patient's record was deleted due to duplicate, etc;
+		if (!isset($data['outputTransaction'])) {
+			redirect('browse/searchPatient');			
+		}
+		
+		
 		$data['transactionDate'] = $data['outputTransaction']['transaction_date'];
 
 /*		//TO-DO: -update: this; viewPatientPaidReceipt submit action uses only 1 transactionId
