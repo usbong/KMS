@@ -4361,6 +4361,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$query = $this->db->get('transaction');		
 		$rowArray = $query->result_array();
 
+		//edited by Mike, 20260925
+		if (!isset($rowArray[0])) {
+			return null;
+		}
+
 		return $rowArray[0];		
 
 /*		//added by Mike, 20210901
