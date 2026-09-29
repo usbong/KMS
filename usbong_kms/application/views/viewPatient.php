@@ -10,7 +10,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200306
-' @date updated: 20260915; from 20260912
+' @date updated: 20260929; from 20260915
 ' @website address: http://www.usbong.ph
 
 //TO-DO: -fix: computer adds patient after pressing reload
@@ -1260,38 +1260,38 @@ else {
 				//add: table headers
 ?>				
 					  <tr class="row">
-						<td class ="columnTableHeader">				
+						<td class="columnTableHeader">				
 				<?php
 							echo "PATIENT NAME";
 				?>		
 						</td>
-						<td class ="columnTableHeaderPrivate">				
+						<td class="columnTableHeaderPrivate">				
 						<?php
 							echo "PRV";
 						?>
 						</td>
-						<td class ="columnTableHeaderFee">				
+						<td class="columnTableHeaderFee">				
 							<?php
 								echo "PF";
 							?>
 						</td>
-						<td class ="columnTableHeaderFee">				
+						<td class="columnTableHeaderFee">				
 							<?php
 								echo "X-RAY";
 							?>
 						</td>
-						<td class ="columnTableHeaderFee">				
+						<td class="columnTableHeaderFee">				
 							<?php
 								echo "LAB";
 							?>
 						</td>
-						<td class ="columnTableHeaderClassification">				
+						<td class="columnTableHeaderClassification">				
 							<?php
 								echo "CLASSIFI-<br/>CATION";
 							?>
 						</td>
 
-						<td class ="columnTableHeaderNotes">				
+						<td class="columnTableHeaderNotes">				
 							<?php
 								echo "ADDITIONAL<br/>NOTES";
 							?>
@@ -1307,7 +1307,7 @@ else {
 		?>				
 		
 					  <tr class="row">
-						<td class ="column">				
+						<td class="column">				
 							<a href='<?php echo site_url('browse/viewPatient/'.$value['patient_id'])?>' id="viewPatientId<?php echo $iCount?>">
 								<div class="patientName"><?php
 								//edited by Mike, 20260915; from 20220317 to remove the extra space after the item name;
@@ -1318,7 +1318,7 @@ else {
 							?></div>								
 							</a>
 						</td>
-						<td class ="columnPrivate">
+						<td class="columnPrivate">
 						<?php 
 							//$bIsEditable = true;
 /*							
@@ -1343,7 +1343,7 @@ else {
 							}
 						?>
 						</td>
-						<td class ="column">
+						<td class="column">
 <?php		
 	//added by Mike, 20251015
 /*
@@ -1403,7 +1403,7 @@ else {
 										}
 									}" required>						
 						</td>
-						<td class ="column">				
+						<td class="column">				
 							<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
@@ -1420,7 +1420,7 @@ else {
 										}
 									}" required>
 						</td>
-						<td class ="column">
+						<td class="column">
 							<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="0" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
@@ -1631,22 +1631,22 @@ else {
 							if ($bHasServiceTotal) {
 	?>					
 							<tr class="row">
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 								<div class="columnTotalLabel">
 					<?php
 									echo "<b>SERVICE TOTAL</b>";
 					?>		
 								</div>								
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
 							<td class="columnFee">
 							<?php
@@ -1663,22 +1663,22 @@ else {
 							//echo "DITO!!!<br/><br/>";
 	?>					
 							<tr class="row">
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 								<div class="columnTotalLabel">
 					<?php
 									echo "<b>MED TOTAL</b>";
 					?>		
 								</div>								
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
 							<td class="columnFee">
 							<?php
@@ -1692,22 +1692,22 @@ else {
 						else if ($iCurrType==2) {
 	?>					
 							<tr class="row">
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 								<div class="columnTotalLabel">
 					<?php
 									echo "<b>NON-MED TOTAL</b>";
 					?>		
 								</div>								
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
-							<td class ="column">				
+							<td class="column">				
 							</td>
 							<td class="columnFee">
 							<?php
@@ -1735,7 +1735,7 @@ else {
 		?>				
 		
 					  <tr class="row">
-						<td class ="columnTransactionDate">				
+						<td class="columnTransactionDate">				
 							<div class="transactionDate">
 				<?php
 								//edited by Mike, 20250902
@@ -1745,7 +1745,7 @@ else {
 				?>		
 							</div>								
 						</td>
-						<td class ="column">		
+						<td class="column">		
 							<a href='<?php 
 								if ((isset($cartValue['patient_name'])) && ($cartValue['patient_name']!=="NONE")) {
 									echo site_url('browse/viewPatient/'.$cartValue['patient_id']);
@@ -1819,10 +1819,10 @@ else {
 									}
 								}
 							?>
-						<td class ="column">				
+						<td class="column">				
 						x
 						</td>
-						<td class ="columnFee">				
+						<td class="columnFee">				
 								<div id="cartItemQuantityId<?php echo $iCount?>">
 							<?php
 //								echo $cartValue['fee']/$cartValue['item_price'];
@@ -1841,7 +1841,7 @@ else {
 							?>
 								</div>
 						</td>
-						<td class ="columnFee">				
+						<td class="columnFee">				
 								<div id="cartItemPriceId<?php echo $iCount?>">
 							<?php
 //edited by Mike, 20210622							
@@ -1859,10 +1859,10 @@ else {
 								</div>
 						</td>
 
-						<td class ="column">				
+						<td class="column">				
 						=
 						</td>
-						<td class ="columnFee">				
+						<td class="columnFee">				
 								<div id="cartFeeId<?php echo $iCount?>">
 							<?php
 								//echo $cartValue['fee'];
@@ -1901,9 +1901,9 @@ else {
 					if ($cartValue['med_fee']!=0) {
 ?>
 					<tr class="row">
-						<td class ="column">				
+						<td class="column">				
 						</td>
-						<td class ="column">				
+						<td class="column">				
 							<div class="columnTotalLabel">
 				<?php
 								echo "<b>MED TOTAL</b>";
@@ -1911,13 +1911,13 @@ else {
 							</div>								
 						</td>		
 	</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
 								<td class="columnFee">
 								<?php
@@ -1932,9 +1932,9 @@ else {
 					if ($cartValue['pas_fee']!=0) {
 	?>
 					<tr class="row">
-						<td class ="column">				
+						<td class="column">				
 						</td>
-						<td class ="column">				
+						<td class="column">				
 							<div class="columnTotalLabel">
 				<?php
 								echo "<b>NON-MED TOTAL</b>";
@@ -1942,13 +1942,13 @@ else {
 							</div>								
 						</td>		
 	</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
 								<td class="columnFee">
 								<?php
@@ -1963,9 +1963,9 @@ else {
 					if ($cartValue['snack_fee']!=0) {
 	?>
 					<tr class="row">
-						<td class ="column">				
+						<td class="column">				
 						</td>
-						<td class ="column">				
+						<td class="column">				
 							<div class="columnTotalLabel">
 				<?php
 								echo "<b>SNACK TOTAL</b>";
@@ -1973,13 +1973,13 @@ else {
 							</div>								
 						</td>		
 	</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
-								<td class ="column">				
+								<td class="column">				
 								</td>
 								<td class="columnFee">
 								<?php
@@ -1994,25 +1994,25 @@ else {
 ?>
 				<!-- TOTAL -->		
 					  <tr class="row">
-						<td class ="column">				
+						<td class="column">				
 						</td>
-						<td class ="column">				
+						<td class="column">				
 						</td>
-						<td class ="column">				
+						<td class="column">				
 						</td>
-						<td class ="column">				
+						<td class="column">				
 						</td>
-						<td class ="columnGrandTotal">				
+						<td class="columnGrandTotal">				
 							<div class="total">
 				<?php
 								echo "<b>GRAND TOTAL</b>";
 				?>		
 							</div>								
 						</td>
-						<td class ="column">				
+						<td class="column">				
 						=
 						</td>
-						<td class ="column">				
+						<td class="columnFee">				
 								<div id="feeTotalId<?php echo $iCount?>">
 							<?php
 //								echo "<b>".$cartFeeTotal."<b/>";
