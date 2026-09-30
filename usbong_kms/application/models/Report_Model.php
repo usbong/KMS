@@ -649,7 +649,9 @@ class Report_Model extends CI_Model
 		//edited by Mike, 20200601
 		//$this->db->distinct('t1.patient_name');
 		
-		$this->db->group_by('t1.patient_id');
+		//removed by Mike, 20260930
+		//$this->db->group_by('t1.patient_id');
+
 		//$this->db->group_by('t2.transaction_id');
 
 //		$this->db->where('t2.report_id=',$row->report_id);
@@ -695,6 +697,7 @@ class Report_Model extends CI_Model
 		$this->db->order_by('t2.transaction_id', 'ASC');//ASC');
 
 		//$this->db->limit(8);//1);
+		//$this->db->limit(10);//1);
 		
 		$query = $this->db->get('patient');
 
@@ -714,7 +717,35 @@ class Report_Model extends CI_Model
 */
 //		return $rowArray[0]['report_description'];
 
-		return $rowArray;
+		
+		//added by Mike, 20260930
+		//show two or more transactions of the same patient;
+		//remove copies with the same transaction_id;
+		//----------------------------------------
+		$iCount=0;
+		$iTotalCount=count($rowArray);
+		
+		$iCurrTransactionId=-1;
+		
+		$outputRowArray = array();
+		
+		while ($iCount < $iTotalCount) {			
+			
+			$iCurrTransactionIdTemp=$rowArray[$iCount]['transaction_id'];
+			
+			if ($iCurrTransactionIdTemp!=$iCurrTransactionId) {
+				$iCurrTransactionId=$rowArray[$iCount]['transaction_id'];
+				array_push($outputRowArray,$rowArray[$iCount]);
+				
+				//echo $iCurrTransactionIdTemp."<br/>";
+			}
+			
+			$iCount++;
+		}
+		//----------------------------------------
+			
+		//return $rowArray;
+		return $outputRowArray;
 	}
 
 

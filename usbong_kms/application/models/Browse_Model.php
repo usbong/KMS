@@ -1634,6 +1634,9 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->where('patient_id', $param['patientId']); //$param['patientIdParam']);
 		$this->db->where('item_id', 0);
 		
+		//added by Mike, 20260930
+		$this->db->where('transaction_id',$iTransactionId);
+		
 		//added by Mike, 20260630
 		$this->db->where('medical_doctor_id', $param['medicalDoctorId']); 
 		
