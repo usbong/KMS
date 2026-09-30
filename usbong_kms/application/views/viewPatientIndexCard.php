@@ -646,19 +646,26 @@
 		
 		//edited by Mike, 20260630; from 20250819
 		//function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId) {
-		function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId,pfCount,xRayFee,labFee) {
-			
+		function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId,iCount,pfCount,xRayFee,labFee) {
+						
 		//function mySaveFunctionItemName(medicalDoctorId,patientId,transactionId,bIsPrivate) {
 			
 			//var professionalFee = professionalFee; //document.getElementById("professionalFeeParam").value;			
 			
-			var professionalFee = document.getElementById("professionalFeeParam"+pfCount).value;
+			var professionalFee = document.getElementById("professionalFeeParam"+iCount).value;
 			
 			//edited by Mike, 20260703
 			var xRayFee = xRayFee; 
-			var xRayFeeInput = document.getElementById("xRayFeeParam").value;			
+			var xRayFeeInput = document.getElementById("xRayFeeParam"+iCount).value;			
 			var labFee = labFee; 
-			var labFeeInput = document.getElementById("labFeeParam").value;	
+			var labFeeInput = document.getElementById("labFeeParam"+iCount).value;	
+
+			//added by Mike, 20250819
+			var bIsPrivate = document.getElementById("privCheckBoxParam"+iCount).checked;	
+
+			//added by Mike, 20250820
+			var iClassParam = document.getElementById("classificationParam"+iCount).selectedIndex;
+
 
 			if (xRayFee!=xRayFeeInput) {
 				xRayFee=xRayFeeInput;
@@ -669,13 +676,6 @@
 			}
 
 			//alert(professionalFee);			
-			
-			//added by Mike, 20250819
-			var bIsPrivate = document.getElementById("privCheckBoxParam").checked;	
-
-			//added by Mike, 20250820
-			var iClassParam = document.getElementById("classificationParam").selectedIndex;
-
 			//alert(iClassParam);
 			
 			var sClass = "WI";
@@ -716,6 +716,11 @@
 			//alert(notes);
 			//edited by Mike, 20250820
 			//window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+iIsPrivate+"');?>";
+
+
+//alert(xRayFee);
+alert(iCount);
+
 
 			window.location.href = "<?php echo site_url('browse/updateTransactionServicePurchaseIndexCardPage/"+medicalDoctorId+"/"+patientId +"/"+transactionId+"/"+professionalFee+"/"+xRayFee+"/"+labFee+"/"+iIsPrivate+"/"+sClass+"');?>";
 			
@@ -811,8 +816,8 @@
 	//added by Mike, 20210208
 	$iCheckboxCount=0;
 	
-	//added by Mike, 20210209
-	$iCount = 1;
+	//edited by Mike, 20260930; from 20210209
+	$iCount = 0;//1;
 	$value = $result[0];
 	
 ?>
@@ -2017,7 +2022,7 @@
 	<?php
 
 
-			$iCount = 1;
+			$iCount = 0; //edited by Mike, 20260930
 			foreach ($resultPaid as $value) {
 /*	
 			$value = $result[0];
@@ -2067,24 +2072,24 @@
 							if ($bIsEditable) {
 								if (strpos($value['notes'],"PRIVATE")!==false) {
 						?>
-									<input type="checkbox" id="privCheckBoxParam" checked>
+									<input type="checkbox" id="privCheckBoxParam<?php echo $iCount?>" checked>
 						<?php
 								}
 								else {
 						?>
-									<input type="checkbox" id="privCheckBoxParam">
+									<input type="checkbox" id="privCheckBoxParam<?php echo $iCount?>">
 						<?php
 								}
 							}
 							else {
 								if (strpos($value['notes'],"PRIVATE")!==false) {
 						?>
-									<input type="radio" id="privCheckBoxParam" onclick="return false;" checked>
+									<input type="radio" id="privCheckBoxParam<?php echo $iCount?>" onclick="return false;" checked>
 						<?php
 								}
 								else {
 						?>
-									<input type="radio" id="privCheckBoxParam" onclick="return false;">
+									<input type="radio" id="privCheckBoxParam<?php echo $iCount?>" onclick="return false;">
 						<?php
 								}
 							}
@@ -2125,7 +2130,7 @@
 							//echo $value['x_ray_fee'];
 							if ($bIsEditable) {
 						?>
-						<input type="tel" id="xRayFeeParam" class="Fee-textbox no-spin" value="<?php echo intval($value['x_ray_fee']);?>" min="1" max="99999" 
+						<input type="tel" id="xRayFeeParam<?php echo $iCount?>" class="Fee-textbox no-spin" value="<?php echo intval($value['x_ray_fee']);?>" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -2152,7 +2157,7 @@
 							//echo $value['lab_fee'];
 							if ($bIsEditable) {							
 						?>
-						<input type="tel" id="labFeeParam" class="Fee-textbox no-spin" value="<?php echo intval($value['lab_fee']);?>" min="1" max="99999" 
+						<input type="tel" id="labFeeParam<?php echo $iCount?>" class="Fee-textbox no-spin" value="<?php echo intval($value['lab_fee']);?>" min="1" max="99999" 
 						onKeyPress="var key = event.keyCode || event.charCode;		
 									const keyBackspace = 8;
 									const keyDelete = 46;
@@ -2178,7 +2183,7 @@
 					<?php
 						if ($bIsEditable) {		
 					?>
-							<select id="classificationParam" class="Classification-select">
+							<select id="classificationParam<?php echo $iCount?>" class="Classification-select">
 <?php
 							  if (isset($value["notes"])) {
 								  if (strpos($value['notes'],"DISCOUNTED")!==false) {
@@ -2250,7 +2255,7 @@
 <button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'];?>)">💾</button>
 -->
 
-<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'].','.$iCount.','.$value['x_ray_fee'].','.$value['lab_fee'];?>)">💾</button>
+<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'].','.$iCount.','.$value['fee'].','.$value['x_ray_fee'].','.$value['lab_fee'];?>)">💾</button>
 
 <!--
 						<button class='saveButton' onclick="mySaveFunctionItemName(<?php echo $value['medical_doctor_id'].','.$value['patient_id'].','.$value['transaction_id'].','.$bIsPrivate;?>)">💾</button>
@@ -3082,7 +3087,9 @@ echo "iTotalResultPaidNonMedItemCount: ".$iTotalResultPaidNonMedItemCount;
 						</td>
 					  </tr>
 <?php				
-				  $iCount=1;
+				  //edited by Mike, 20260930
+				  $iCount=0; //1;
+
 				  $iCountForTheDay=0;
 				  $sCurrentTransactionDate="";
 				  
