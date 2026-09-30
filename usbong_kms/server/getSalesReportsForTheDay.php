@@ -260,7 +260,11 @@
 	//x-ray
 	//edited by Mike, 20260703
 	//if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and x_ray_fee!='0' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
-	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and x_ray_fee!='0' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!=''  and transaction_quantity!='0' group by transaction_id"))
+	
+	//edited by Mike, 20260930; allow multiple transactions for the same patient
+	//if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and x_ray_fee!='0' and notes!='IN-QUEUE; PAID' and ip_address_id!='' and machine_address_id!=''  and transaction_quantity!='0' group by transaction_id"))
+
+	if ($selectedXRayResultArray = $mysqli->query("select x_ray_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and x_ray_fee!='0' and ip_address_id!='' and machine_address_id!='' and transaction_quantity!='0' group by transaction_id"))	
 	{
 		//added by Mike, 20200524
 		echo "--<br />";
@@ -515,8 +519,9 @@
 	$responses = [];
 		
 	//lab
-	//edited by Mike, 20260703
+	//edited by Mike, 20260930; from 20260703; allow multiple transactions for the same patient
 	//if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and ip_address_id!='' and machine_address_id!='' group by patient_id"))
+		
 	if ($selectedLabResultArray = $mysqli->query("select lab_fee from transaction where transaction_date='".$sDateTodayTransactionFormat."' and lab_fee!='0' and ip_address_id!='' and machine_address_id!='' and transaction_quantity!='0' group by transaction_id"))
 	{
 		//added by Mike, 20200524
