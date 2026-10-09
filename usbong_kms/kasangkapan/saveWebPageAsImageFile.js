@@ -1,6 +1,6 @@
 /*
 '
-' Copyright 2020~2024 USBONG
+' Copyright 2020~2026 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
 '
@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20200724
-' @date updated: 20240425; from 20231002
+' @date updated: 20261009; from 20240425
 ' @website address: http://www.usbong.ph
 '
 ' Reference:
@@ -170,9 +170,16 @@ page.open(webAddress+fileName+fileExtension, 'post', data, function(status) {
 			page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+'V'+getDateToISOStringWithTimeStamp()+'.png');
 		}
 		else {
-			//edited by Mike, 20221202
-			//page.render('output/'+dateToday.toISOString()+'/'+fileName+'1.png');
-			page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+'1.png');
+			//edited by Mike, 20261009; from 20221202
+			//page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+'1.png');
+			
+			//"autoScreenCaptureReportUpdateTotalQuantitySoldPerItem.bat" is called again when the computer is restarted, thereby overwriting the original, task-scheduled output report with an error message;
+			if (iUpdateTotalQuantitySoldPerItemPositionInFilename !== -1) {
+				page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+'V'+getDateToISOStringWithTimeStamp()+'.png');			
+			}
+			else {
+				page.render('output/'+dateToday.toISOString()+'/'+sReceiptFolder+fileName+'1.png');
+			}
 		}		
 	}
 	else {
