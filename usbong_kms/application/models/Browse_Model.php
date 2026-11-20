@@ -1613,6 +1613,13 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			}
 		}
 		else if (strpos($param['sClass'], "WI")!==false) {
+			
+			//echo "DITO!!".$param['updatedNotes'];
+			
+			//added by Mike, 20261120
+			$param['updatedNotes'] = trim(str_replace("SC; PAID","PAID",$param['updatedNotes']));
+			$param['updatedNotes'] = trim(str_replace("PWD; PAID","PAID",$param['updatedNotes']));
+
 			$param['updatedNotes'] = trim(str_replace("PAID","NONE; PAID",$param['updatedNotes']));
 		}
 		//---------------------------------------
@@ -1622,16 +1629,48 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//added by Mike, 20260630
 		//echo ">>>medicalDoctorId: ".$param['medicalDoctorId']."<br/>";
 
+		//edited by Mike, 20261120
 		$data = array(
-					'fee' => $param['professionalFee'],
-					'x_ray_fee' => $param['xRayFee'],
-					'lab_fee' => $param['labFee'],
 					'notes' => $param['updatedNotes']
 				);
 
 		//$this->db->where('transaction_id', $iTransactionId);
 		$this->db->where('transaction_date', $param['transactionDate']);
 		$this->db->where('patient_id', $param['patientId']); //$param['patientIdParam']);
+		
+		//removed by Mike, 20261120;
+		//update even the non-med items
+		//TODO: -reverify: this
+/*		
+		$this->db->where('item_id', 0);
+		
+		//added by Mike, 20260930
+		$this->db->where('transaction_id',$iTransactionId);
+		
+		//added by Mike, 20260630
+		$this->db->where('medical_doctor_id', $param['medicalDoctorId']); 
+*/
+		//added by Mike, 20261120
+		$this->db->not_like('notes',"IN-QUEUE;");
+		
+		//added by Mike, 20250816
+		$this->db->not_like('notes',"ONLY");
+		
+        $this->db->update('transaction', $data);
+
+		//---------------------------------------
+
+		//edited by Mike, 20261120
+		$data = array(
+					'fee' => $param['professionalFee'],
+					'x_ray_fee' => $param['xRayFee'],
+					'lab_fee' => $param['labFee']
+				);
+
+		//$this->db->where('transaction_id', $iTransactionId);
+		$this->db->where('transaction_date', $param['transactionDate']);
+		$this->db->where('patient_id', $param['patientId']); //$param['patientIdParam']);
+		
 		$this->db->where('item_id', 0);
 		
 		//added by Mike, 20260930
@@ -1646,6 +1685,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
         $this->db->update('transaction', $data);
 
 		//---------------------------------------
+
 		
 		//added by Mike, 20260511
 		//TODO: -reverify further
@@ -1740,7 +1780,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 			}
 			
 			$dTotalPassFee += $rowArray[$iRowArrayCount]['pas_fee'];
-			
+						
 			$data = array(
 						'pas_fee' => $rowArray[$iRowArrayCount]['pas_fee'],
 						'notes' => str_replace("NONE; ","",$param['updatedNotes']),
