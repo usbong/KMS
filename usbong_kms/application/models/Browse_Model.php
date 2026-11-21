@@ -5607,6 +5607,7 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		$this->db->limit(5); //1
 		
 		$query = $this->db->get('patient');
+		
 
 //		$row = $query->row();		
 		$rowArray = $query->result_array();
@@ -5614,6 +5615,8 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		if ($rowArray == null) {			
 			return False; //edited by Mike, 20190722
 		}
+
+		//echo $rowArray[0]["medical_doctor_id"]."<br/>";
 		
 		//added by Mike, 20260910
 		//TODO: -reverify: this
@@ -5633,23 +5636,41 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 					//edited by Mike, 20260912
 					//if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE")===false) && (strpos($rowArray[$iCount]['notes'],"NC")===false)) {
 					
-					//edited by Mike, 20260917
-					if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE;")===false) && (strpos($rowArray[$iCount]['notes'],"NC;")===false) && ($rowArray[$iCount]['medical_doctor_id']!=0) && ($rowArray[$iCount]['item_id']==0)) {
+					//edited by Mike, 20261121; from 20261121; from 20260917
+					//if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE;")===false) && (strpos($rowArray[$iCount]['notes'],"NC;")===false) && ($rowArray[$iCount]['medical_doctor_id']!=0) && ($rowArray[$iCount]['item_id']==0)) {
+					
+					if ((strpos($rowArray[$iCount]['notes'],"IN-QUEUE;")===false) && (strpos($rowArray[$iCount]['notes'],"NC;")===false) && ($rowArray[$iCount]['medical_doctor_id']!=0) && ($rowArray[$iCount]['item_id']==0) && (strpos($rowArray[$iCount]['notes'],"PRIVATE")!==false)&& ($rowArray[$iCount]['medical_doctor_id']===$rowArray[0]['medical_doctor_id'])) {
+
+					
 						
 						//echo "DITO!!!".$rowArray[$iCount]['notes'];
 						//echo "DITO!!!".$rowArray[$iCount]['medical_doctor_id'];
 						//echo "DITO!!!".$rowArray[$iCount]['transaction_id'];
 
+						//edited by Mike, 20261121
+						//noted; private transaction should be private for the same MD;
+						//$rowArray[0]['notes']=$rowArray[$iCount]['notes'];
+
 						$rowArray[0]=array();
 						$rowArray[0]=$rowArray[$iCount];
+
+						
 						
 						//echo "DITO!!!".$rowArray[$iCount]['medical_doctor_id'];
+
+						//echo "DITO!!!".$rowArray[0]['medical_doctor_id'];
+
 						break;
 					}
 				}
 			}
 		}
 		
+
+		//echo "DITO!!!".$rowArray[0]['medical_doctor_id'];
+
+		//echo "DITO!!!".$rowArray[0]['notes'];
+
 		//echo ">>>>>DITO!!!".$rowArray[0]['transaction_id'];
 		
 		return $rowArray;
@@ -5861,7 +5882,11 @@ ice, t1.item_id, t1.item_total_sold, t2.quantity_in_stock, t2.expiration_date');
 		//removed by Mike, 20250523
 		//$this->db->where('patient_id', $patientId);
 
-		$this->db->where('transaction_quantity!=', 0);
+		//removed by Mike, 20261121
+		//if newly added today at the cashier; unpaid;
+		//that transaction won't be taken
+		//TODO: -reverify: this
+		//$this->db->where('transaction_quantity!=', 0);
 		
 		//removed by Mike, 20250523; from 20250514; 
 		//newly added for the day; still unpaid
