@@ -3675,7 +3675,9 @@ class Browse extends CI_Controller { //MY_Controller {
 			
 			$lastVisitedDate=$lastVisitedDateArray[2]."-".$lastVisitedDateArray[0]."-".$lastVisitedDateArray[1];
 
-			//echo "lastVisitedDate: ".$lastVisitedDate."<br/>";
+			echo "lastVisitedDate: ".$lastVisitedDate."<br/>";
+			
+			echo "!!!".$transactionDate."<br/>";
 
 			//if ("2023-04-13" > "2025-04-11") {
 
@@ -3685,7 +3687,11 @@ class Browse extends CI_Controller { //MY_Controller {
 				//use the $lastVisitedDate already in 	$data['result'][0]["medical_doctor_id"];
 			}
 			else {
+				echo $data['result'][0]["medical_doctor_id"]."<br/>";
+
 				$data['result'][0]["medical_doctor_id"]=$iTranMDID;
+				
+				echo ">>>".$iTranMDID;
 			}
 			//----------
 		}
@@ -4654,6 +4660,9 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 		$data['medicalDoctorList'] = $this->Browse_Model->getMedicalDoctorList();
 		$data['result'] = $this->Browse_Model->getDetailsListViaId($patientId);
 
+		//echo "DITO!!!".$data['result'][0]['medical_doctor_id'];
+
+
 /* //removed by Mike, 20230309
 		$data['resultPaid'] = $this->Browse_Model->getPaidPatientDetailsList($medicalDoctorId, $patientId);
 
@@ -4662,7 +4671,11 @@ $data['tranMedicalDoctorName']=$data['result'][0]["medical_doctor_name"];
 */
 		//added by Mike, 202005019;
 		//TO-DO: reverify: use $patientId instead of join command
+
 		$data['cartListResult'] = $this->Browse_Model->getServiceAndItemDetailsListViaNotesUnpaid();
+
+
+
 
 /*		//removed by Mike, 20230304
 		//added by Mike, 20230304
