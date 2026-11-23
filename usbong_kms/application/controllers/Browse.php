@@ -3675,9 +3675,9 @@ class Browse extends CI_Controller { //MY_Controller {
 			
 			$lastVisitedDate=$lastVisitedDateArray[2]."-".$lastVisitedDateArray[0]."-".$lastVisitedDateArray[1];
 
-			echo "lastVisitedDate: ".$lastVisitedDate."<br/>";
+			//echo "lastVisitedDate: ".$lastVisitedDate."<br/>";
 			
-			echo "!!!".$transactionDate."<br/>";
+			//echo "!!!".$transactionDate."<br/>";
 
 			//if ("2023-04-13" > "2025-04-11") {
 
@@ -3691,7 +3691,7 @@ class Browse extends CI_Controller { //MY_Controller {
 
 				$data['result'][0]["medical_doctor_id"]=$iTranMDID;
 				
-				echo ">>>".$iTranMDID;
+				//echo ">>>".$iTranMDID;
 			}
 			//----------
 		}
